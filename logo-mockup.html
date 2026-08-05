@@ -1,0 +1,47 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AD final — one source, theme-aware</title>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+  /* the mark inherits color; theme sets it. crimson bar is fixed inside the svg */
+  .stage{--ink:#1E3A8A;--bg:#ffffff;--panel:#f1f5f9;--txt:#0f172a;--muted:#64748b;
+         background:var(--bg);color:var(--txt);min-height:100vh;transition:background .2s}
+  .stage[data-theme="dark"]{--ink:#ffffff;--bg:#111620;--panel:#0b0f16;--txt:#e5e7eb;--muted:#94a3b8}
+  .brand-mark{color:var(--ink)}            /* currentColor of the letters follows this */
+  .top{display:flex;justify-content:space-between;align-items:center;padding:16px 22px}
+  .toggle{border:1px solid var(--muted);background:transparent;color:var(--txt);border-radius:20px;padding:7px 14px;font-size:13px;cursor:pointer}
+  h1{font-size:19px;margin:6px 22px 2px}
+  .sub{margin:0 22px 20px;color:var(--muted);font-size:14px}
+  .hdr{display:flex;align-items:center;gap:13px;background:var(--panel);border-radius:12px;padding:11px 15px;margin:0 22px 22px;width:max-content}
+  .wm{font-weight:800;font-size:19px;line-height:1.05}
+  .wm small{display:block;font-weight:600;font-size:10.5px;letter-spacing:.14em;color:var(--muted);margin-top:2px}
+  .ramp{display:flex;align-items:flex-end;gap:26px;margin:0 22px}
+  .u{display:flex;flex-direction:column;align-items:center;gap:7px;font-size:11px;color:var(--muted)}
+  .tab{display:inline-flex;align-items:center;gap:8px;background:var(--panel);border-radius:9px;padding:8px 14px 8px 11px;font-size:12px;margin:22px 22px 0;width:max-content}
+  svg{display:block}
+</style></head><body>
+<div class="stage" id="stage" data-theme="light">
+  <div class="top"><div style="font-size:13px;color:var(--muted)">Toggle the theme &rarr; one SVG, letters flip, crimson bar stays</div>
+    <button class="toggle" onclick="const s=document.getElementById('stage');s.dataset.theme=s.dataset.theme==='dark'?'light':'dark';this.textContent=s.dataset.theme==='dark'?'☀ Light':'☾ Dark'">☾ Dark</button></div>
+  <h1>AD monogram — final, single source</h1>
+  <p class="sub">The same one SVG in the header, at 16/24/48/64px, and in a browser tab. Letters use currentColor (indigo in light, white in dark); the crimson bar is fixed.</p>
+
+  <div class="hdr"><span class="brand-mark">MARK38</span><span class="wm">Amit Dusane<small>LEARNING PLATFORM</small></span></div>
+
+  <div class="ramp">
+    <div class="u"><span class="brand-mark">MARK16</span>16</div>
+    <div class="u"><span class="brand-mark">MARK24</span>24</div>
+    <div class="u"><span class="brand-mark">MARK48</span>48</div>
+    <div class="u"><span class="brand-mark">MARK64</span>64</div>
+  </div>
+
+  <div class="tab"><span class="brand-mark">MARKT</span><span>Amit Dusane — Learning Platform</span></div>
+</div>
+<script>
+const mark = s => `<svg viewBox="0 0 64 64" width="${s}" height="${s}" role="img" aria-label="Amit Dusane"><path fill="currentColor" d="M18 50 L32 18 L46 50 H40 L35 39 H29 L24 50 Z"/><path fill="currentColor" d="M34 18 H44 C54 18 58 24 58 32 C58 40 54 46 44 46 H38 L41 40 H44 C49 40 52 37 52 32 C52 27 49 24 44 24 H37 Z"/><rect x="24" y="44" width="20" height="3.5" rx="1.7" fill="#C8102E"/></svg>`;
+document.querySelectorAll('.brand-mark').forEach(el=>{
+  const m=el.textContent.match(/MARK(\d+|T)/);
+  const s = m[1]==='T' ? 16 : parseInt(m[1]);
+  el.innerHTML = mark(s);
+});
+</script></body></html>

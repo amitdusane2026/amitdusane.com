@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Content Component Rulebook</title>
+<style>
+:root{
+  --bg1:#f8fafc; --bg2:#ffffff; --bg3:#f1f5f9; --card:#ffffff;
+  --text1:#0f172a; --text2:#475569; --text3:#94a3b8; --border:#e2e8f0;
+  --accent:#e11d48; --accent2:#be123c; --accent-light:rgba(225,29,72,.10);
+  --success:#10b981; --warning:#f59e0b; --info:#3b82f6;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg1);color:var(--text1);
+ font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;line-height:1.62;font-size:16px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 26px 100px}
+header.top{background:var(--text1);color:#fff;padding:52px 26px 44px;margin-bottom:38px}
+header.top .in{max-width:1080px;margin:0 auto}
+header.top h1{margin:0 0 8px;font-size:36px;letter-spacing:-.7px}
+header.top p{margin:0;color:#94a3b8;font-size:16px;max-width:760px}
+header.top .badge{display:inline-block;background:var(--accent);color:#fff;font-size:11px;font-weight:700;
+ letter-spacing:1.2px;padding:4px 11px;border-radius:20px;margin-bottom:16px;text-transform:uppercase}
+h2{font-size:13px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);
+ margin:56px 0 18px;padding-bottom:9px;border-bottom:2px solid var(--border)}
+h3{font-size:22px;margin:0 0 4px;letter-spacing:-.3px}
+.sub{color:var(--text2);margin:0 0 16px;font-size:14px}
+section{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:26px 28px;margin:0 0 22px}
+.ico{display:inline-block;width:26px}
+.ico.pin{width:22px;height:22px;border-radius:5px;vertical-align:-4px;
+ background:#534AB7 url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23ffffff%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M9%2011a3%203%200%201%200%206%200a3%203%200%200%200%20-6%200%22%2F%3E%3Cpath%20d%3D%22M17.657%2016.657l-4.243%204.243a2%202%200%200%201%20-2.827%200l-4.244%20-4.243a8%208%200%201%201%2011.314%200z%22%2F%3E%3C%2Fsvg%3E") center/13px no-repeat}
+table.spec{width:100%;border-collapse:collapse;font-size:14px;margin:0 0 6px}
+table.spec td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:top}
+table.spec td.k{width:180px;font-weight:700;color:var(--text2);font-size:13px}
+table.spec tr:last-child td{border-bottom:none}
+.note{background:var(--bg3);border-left:3px solid var(--text3);padding:11px 15px;margin:14px 0 0;
+ font-size:14px;border-radius:0 6px 6px 0;color:var(--text2)}
+.note strong{color:var(--text1)}
+.lbl{font-size:10px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--text3);
+ margin:22px 0 8px}
+.demo{border:1px dashed var(--border);border-radius:10px;padding:8px 20px;background:var(--bg2)}
+pre.src{background:#0d1117;color:#c9d1d9;border-radius:8px;padding:16px 18px;overflow-x:auto;
+ font-size:12.5px;line-height:1.55;margin:0;font-family:Consolas,Monaco,monospace}
+pre.src code{background:none;padding:0;color:inherit;font-size:inherit}
+.rules{list-style:none;padding:0;margin:0;counter-reset:r}
+.rules li{counter-increment:r;background:var(--card);border:1px solid var(--border);border-left:4px solid var(--accent);
+ border-radius:0 10px 10px 0;padding:16px 20px 16px 58px;margin:0 0 12px;position:relative;font-size:15px}
+.rules li::before{content:counter(r);position:absolute;left:18px;top:15px;width:26px;height:26px;
+ background:var(--accent);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;
+ font-weight:700;font-size:13px}
+.rules b{display:block;margin-bottom:3px;font-size:16px}
+.rules span{color:var(--text2);font-size:14px}
+table.tok{width:100%;border-collapse:collapse;font-size:14px;background:var(--card);
+ border:1px solid var(--border);border-radius:10px;overflow:hidden}
+table.tok th{background:var(--bg3);text-align:left;padding:11px 14px;font-size:11px;
+ text-transform:uppercase;letter-spacing:.8px;color:var(--text2)}
+table.tok td{padding:11px 14px;border-top:1px solid var(--border);vertical-align:middle}
+.sw{display:inline-block;width:16px;height:16px;border-radius:4px;border:1px solid rgba(0,0,0,.15);
+ vertical-align:-3px;margin-right:8px}
+.bad,.good{border-radius:8px;padding:14px 16px;font-size:14px;margin:0 0 10px}
+.bad{background:rgba(225,29,72,.07);border:1px solid rgba(225,29,72,.25)}
+.good{background:rgba(16,185,129,.07);border:1px solid rgba(16,185,129,.25)}
+.bad b{color:var(--accent)} .good b{color:var(--success)}
+.bad code,.good code{background:rgba(0,0,0,.06);padding:2px 6px;border-radius:4px;font-size:13px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:760px){.two{grid-template-columns:1fr}}
+ul.chk{list-style:none;padding:0;margin:0;column-count:2;column-gap:30px}
+ul.chk li{margin:0 0 9px;break-inside:avoid;font-size:14px}
+ul.chk label{display:flex;gap:9px;align-items:flex-start;cursor:pointer}
+ul.chk input{margin-top:4px;flex:none;accent-color:var(--accent)}
+@media(max-width:760px){ul.chk{column-count:1}}
+code{background:var(--bg3);padding:2px 6px;border-radius:4px;font-size:13px;font-family:Consolas,Monaco,monospace}
+.foot{margin-top:50px;padding-top:22px;border-top:1px solid var(--border);color:var(--text3);font-size:13px}
+@media print{section,.rules li{page-break-inside:avoid} header.top{background:#fff;color:#000} header.top p{color:#555}}
+
+/* ===== COMPONENT CSS, copied verbatim from world-learning.css, scoped to .demo ===== */
+.demo .warn-box{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);border-radius:6px;padding:14px 16px;margin:16px 0}
+.demo .warn-box p{margin:0;font-size:15px}
+.demo .warn-hdr{display:flex;align-items:center;gap:6px;font-weight:700;color:var(--warning);margin-bottom:8px;font-size:16px}
+.demo .pro-tip{background:var(--accent-light);border:1px solid rgba(225,29,72,.2);border-radius:6px;padding:14px 16px;margin:16px 0}
+.demo .pro-tip p{margin:0;font-size:15px}
+.demo .pro-tip-hdr{display:flex;align-items:center;gap:6px;font-weight:700;color:var(--accent);margin-bottom:8px;font-size:16px}
+.demo .info-box{background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.2);border-radius:6px;padding:14px 16px;margin:16px 0}
+.demo .info-box p{margin:0;font-size:15px}
+.demo .info-hdr{display:flex;align-items:center;gap:6px;font-weight:700;color:var(--info);margin-bottom:8px;font-size:16px}
+.demo .path-box{background:rgba(167,139,250,.12);border:1px solid rgba(167,139,250,.35);border-radius:8px;padding:16px 18px;margin:20px 0}
+.demo .path-box p{margin:5px 0;font-size:14px}
+.demo .path-title{display:flex;align-items:center;gap:10px;font-weight:700;color:#534AB7;margin-bottom:10px;font-size:16px}
+.demo [data-theme="dark"] .path-title{color:#CECBF6}
+.demo .path-ico{flex:none;width:30px;height:30px;border-radius:7px;background:#534AB7 url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23ffffff%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M9%2011a3%203%200%201%200%206%200a3%203%200%200%200%20-6%200%22%2F%3E%3Cpath%20d%3D%22M17.657%2016.657l-4.243%204.243a2%202%200%200%201%20-2.827%200l-4.244%20-4.243a8%208%200%201%201%2011.314%200z%22%2F%3E%3C%2Fsvg%3E") center/17px no-repeat}
+.demo .section .ref-box a{text-decoration:none}
+.demo .section .ref-box a:hover{text-decoration:underline}
+.demo .ref-box{background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2);border-radius:6px;padding:14px 16px;margin:16px 0}
+.demo .ref-box ul{margin:0;padding-left:18px}
+.demo .ref-box li{margin-bottom:4px;font-size:13px}
+.demo .ref-box a{color:var(--success);text-decoration:none}
+.demo .ref-box a:hover{text-decoration:underline}
+.demo .ref-title{font-weight:700;color:var(--success);margin-bottom:10px;font-size:16px}
+.demo .doc-note{margin:20px 0 8px;padding:3px 0 3px 14px;background:transparent;border:none;border-left:3px solid var(--accent);border-radius:0}
+.demo .doc-note p{margin:0;font-size:11.5px !important;font-style:italic !important;color:var(--accent2) !important;line-height:1.45}
+.demo .doc-note-t{font-weight:700;font-style:italic;color:var(--accent) !important;font-size:11.5px !important;letter-spacing:0;text-transform:none;margin-bottom:2px}
+.demo .code-block{background:#0d1117;border:1px solid var(--border);border-radius:6px;margin:14px 0;overflow:hidden}
+.demo .code-hdr{display:flex;justify-content:space-between;padding:6px 12px;background:#161b22;border-bottom:1px solid var(--border)}
+.demo .code-lang{font-size:11px;color:var(--text3);text-transform:uppercase}
+.demo .code-copy{background:none;border:none;color:rgba(255,255,255,.55);cursor:pointer;font-size:11px}
+.demo .code-copy:hover{color:#fff}
+.demo .code-body{padding:12px;overflow-x:auto}
+.demo .code-body pre{font-family:Consolas,monospace;font-size:12px;line-height:1.5;color:#e6edf3;margin:0}
+.demo .diagram-box{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:24px;margin:24px 0}
+.demo .diagram-title{font-weight:700;color:var(--text1);margin-bottom:16px;font-size:16px}
+.demo .diagram-content{display:flex;justify-content:center}
+.demo .tbl-wrap{overflow-x:auto;margin:14px 0;border:1px solid var(--border);border-radius:6px}
+.demo .subsec-title{font-size:16px;font-weight:600;margin:16px 0 10px;color:var(--text1)}
+.demo .comparison-grid{display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap}
+.demo .comp-item{background:var(--bg3);padding:16px 24px;border-radius:8px;text-align:center;min-width:150px}
+.demo .comp-label{font-weight:600;color:var(--text1);margin-bottom:6px}
+.demo .comp-desc{font-size:12px;color:var(--text3)}
+.demo .comp-vs{font-weight:700;color:var(--accent);font-size:16px}
+.demo .strategy-diagram{display:flex;gap:30px;justify-content:center;flex-wrap:wrap}
+.demo .strategy-col{text-align:center}
+.demo .strategy-header{padding:8px 16px;border-radius:5px;font-size:12px;font-weight:600;margin-bottom:10px}
+.demo .strategy-item{font-size:12px;color:var(--text2);margin:4px 0}
+.demo .flow-horizontal{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap}
+.demo .flow-vertical{display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center}
+.demo .flow-step{background:var(--bg3);padding:12px 20px;border-radius:8px;font-size:15px;font-weight:600}
+.demo .flow-step.highlight{background:var(--accent-light);border:1px solid rgba(225,29,72,.3);color:var(--accent)}
+.demo .flow-arrow{color:var(--accent);font-size:22px;font-weight:700}
+.demo .flow-arrow-down{color:var(--accent);font-size:18px}
+.demo table{width:100%;border-collapse:collapse;font-size:13px}
+.demo th{background:var(--bg3);font-weight:600;font-size:11px;color:var(--text3);text-transform:uppercase}
+.demo td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--border)}
+.demo td{color:var(--text2)}
+.demo code{font-family:Consolas,monospace;font-size:12px;background:var(--bg3);padding:2px 5px;border-radius:3px;color:#fb7185}
+.demo .path{background:#CECBF6;padding:3px 9px;border-radius:4px;font-family:Consolas,monospace;font-size:13px;color:#3C3489}
+.demo .path{background:#3C3489;color:#E6E4FB}
+.demo .ref-box a{text-decoration:none}
+</style></head><body>
+
+<header class="top"><div class="in">
+  <div class="badge">Rulebook &middot; Last updated 15 July 2026</div>
+  <h1>Content Component Rulebook</h1>
+  <p>Every component on this site, what it looks like, when to use it, and when not to. Written for the Adobe Analytics world, designed to be reused unchanged for Customer Journey Analytics, AEP, or any world built after. Verified against <code style="background:rgba(255,255,255,.12);color:#fff">world-learning.css</code>, July 2026.</p>
+</div></header>
+
+<div class="wrap">
+
+<section style="border-left:4px solid var(--accent)">
+<h3>Why any of this exists</h3>
+<p style="margin:0;color:var(--text2)">These components are not decoration. Most people who arrive from a search <strong style="color:var(--text1)">do not read. They scan.</strong> Their eye skips prose and stops on anything that looks different. Every rule below is a decision about what stops the eye, and why. A component used well is the difference between a reader finding their answer in ten seconds and closing the tab.</p>
+</section>
+
+<h2>The five rules that govern everything</h2>
+<ol class="rules">
+<li><b>No new CSS classes in content. Ever.</b><span>A content author never invents a class. If it is not in <code>world-learning.css</code>, it does not exist.<br><br><b>The exception, and its conditions:</b> the <i>stylesheet</i> may gain a site-level component, added once, wired into the layout, and recorded in this rulebook. To date there is exactly one: <code>.lupdated</code>. The test: is this a component the whole site needs, added deliberately to the layout? Or is it one author reaching for something on one page? The second is always forbidden.</span></li>
+<li><b>The header states the content, not the category.</b><span>A header that names its own category is a wasted line. A scanner's eye lands on it and bounces off.</span></li>
+<li><b>A component is earned, never decorative.</b><span>Three warning boxes on one page and the reader stops seeing warning boxes. But do not enforce a number. A subject with four real traps gets four warnings. Judge each one on whether it is earning its place, not against a quota.</span></li>
+<li><b>Absence is a valid answer.</b><span>A section whose subject has no screen gets no path box. Forcing a component because other sections have one is the error, not the fix.</span></li>
+<li><b>Never assume a journey the reader may not have taken.</b><span>Any back-reference must name the concept, link to it immediately, and recap it in a few words. "As we saw earlier" is simply false to someone who arrived from a search, and most readers arrive from a search.</span></li>
+<li><b>Nothing ships without a real build.</b><span>The source passing every check proves nothing. A site can be flawless in source and broken in output. Build it, count the pages, crawl the links. This rule exists because a silent build failure once dropped 103 pages while reporting success.</span></li>
+</ol>
+
+<div class="two" style="margin-top:18px">
+<div class="bad"><b>✗ Wrong</b><br><code>💡 Pro Tip</code><br><span style="color:var(--text2)">Names its category. Tells a scanner nothing.</span></div>
+<div class="good"><b>✓ Right</b><br><code>💡 Contains is where good rule sets go to die</code><br><span style="color:var(--text2)">Names the thing. Stops the eye.</span></div>
+</div>
+<div class="two">
+<div class="bad"><b>✗ Wrong</b><br>"We have met the tag manager already in this guide."<br><span style="color:var(--text2)">False to a search-lander. They have met nothing.</span></div>
+<div class="good"><b>✓ Right</b><br>"Tag management has surfaced before, most directly in <u>Deployment: TMS vs Direct</u>, where the choice was framed as a trade."<br><span style="color:var(--text2)">Names it, links it, recaps it. True for both readers.</span></div>
+</div>
+
+<h2>Design tokens</h2>
+<p class="sub" style="margin-bottom:14px">Every colour comes from <code>:root</code>. Never hard-code a hex in content.</p>
+<table class="tok"><thead><tr><th>Token</th><th>Value</th><th>Meaning</th></tr></thead><tbody><tr><td><span class="sw" style="background:#e11d48"></span><code>--accent</code></td><td><code>#e11d48</code></td><td>The World's identity colour. <strong>Change this per World.</strong> Crimson = Analytics. Blue = Migration Guide.</td></tr><tr><td><span class="sw" style="background:#be123c"></span><code>--accent2</code></td><td><code>#be123c</code></td><td>Accent, darker</td></tr><tr><td><span class="sw" style="background:rgba(225,29,72,.10)"></span><code>--accent-light</code></td><td><code>rgba(225,29,72,.10)</code></td><td>Accent wash, for backgrounds</td></tr><tr><td><span class="sw" style="background:#f59e0b"></span><code>--warning</code></td><td><code>#f59e0b</code></td><td>Amber. Danger, cost, irreversibility.</td></tr><tr><td><span class="sw" style="background:#3b82f6"></span><code>--info</code></td><td><code>#3b82f6</code></td><td>Blue. Context, nuance, boundary.</td></tr><tr><td><span class="sw" style="background:#10b981"></span><code>--success</code></td><td><code>#10b981</code></td><td>Green. Resources, confirmation.</td></tr><tr><td><span class="sw" style="background:#0f172a"></span><code>--text1</code></td><td><code>#0f172a</code></td><td>Primary text</td></tr><tr><td><span class="sw" style="background:#475569"></span><code>--text2</code></td><td><code>#475569</code></td><td>Secondary text</td></tr><tr><td><span class="sw" style="background:#94a3b8"></span><code>--text3</code></td><td><code>#94a3b8</code></td><td>Muted, captions</td></tr><tr><td><span class="sw" style="background:#e2e8f0"></span><code>--border</code></td><td><code>#e2e8f0</code></td><td>Borders and rules</td></tr><tr><td><span class="sw" style="background:#ffffff"></span><code>--card</code></td><td><code>#ffffff</code></td><td>Card surface</td></tr><tr><td><span class="sw" style="background:#f1f5f9"></span><code>--bg3</code></td><td><code>#f1f5f9</code></td><td>Inset surface</td></tr><tr><td><span class="sw" style="background:#534AB7"></span><code>path violet</code></td><td><code>#534AB7</code></td><td><strong>Fixed. Never keyed to the accent.</strong> Amber must mean "this will hurt you" in every World, or the reader relearns your visual language each time.</td></tr></tbody></table>
+
+<h2>The components</h2>
+
+<section id="ref">
+  <h3><span class='ico'>📚</span> ref-box</h3>
+  <p class="sub">Tier 1 &middot; Structural &middot; Every section, no exceptions.</p>
+  <table class="spec"><tbody><tr><td class="k">Icon</td><td>📚</td></tr><tr><td class="k">Colour</td><td>Green <code>--success</code> <code>#10b981</code>, 8% wash</td></tr><tr><td class="k">Position</td><td><strong>Always last on the page.</strong> Nothing follows it.</td></tr><tr><td class="k">Frequency</td><td><strong>Exactly one. Mandatory.</strong></td></tr><tr><td class="k">Contains</td><td>Two to four links to <strong>official product documentation only.</strong> Never blogs, never third-party tutorials.</td></tr><tr><td class="k">Why it exists</td><td>The site's promise is that a reader finishes knowing where to go deeper. This box is that promise, kept. It is also what separates a guide from a content farm.</td></tr></tbody></table>
+  <div class="note"><strong>Automatic behaviour.</strong> The layout injects the grey <code>doc-note</code> block immediately above every <code>ref-box</code>. You do not write it and must not duplicate it. That is why <code>.doc-note</code> exists in the CSS but never appears in content.</div>
+  <div class="lbl">Renders as</div>
+  <div class="demo"><div class="doc-note">
+  <div class="doc-note-t">Need implementation steps?</div>
+  <p>This article focuses on the concepts, architecture, and practical guidance behind the topic. For the latest UI walkthroughs and step-by-step implementation instructions, refer to the official Adobe documentation below.</p>
+</div>
+<div class="ref-box">
+    <div class="ref-title">📚 Learn More</div>
+    <ul>
+        <li><a href="#">Adobe Docs: Classification Set File Formats</a></li>
+        <li><a href="#">Adobe Docs: Classification Set Schema</a></li>
+    </ul>
+</div></div>
+  <div class="lbl">Markup</div>
+  <pre class="src"><code>&lt;div class=&quot;ref-box&quot;&gt;
+    &lt;div class=&quot;ref-title&quot;&gt;📚 Learn More&lt;/div&gt;
+    &lt;ul&gt;
+        &lt;li&gt;&lt;a href=&quot;https://experienceleague.adobe.com/...&quot; target=&quot;_blank&quot;&gt;Adobe Docs: Classification Set File Formats&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;!-- The doc-note above it is injected by the layout. Do NOT write it. --&gt;</code></pre>
+</section>
+<section id="path">
+  <h3><span class='ico pin'></span> path-box</h3>
+  <p class="sub">Tier 2 &middot; Conditional &middot; Only when the subject has a screen.</p>
+  <table class="spec"><tbody><tr><td class="k">Icon</td><td>A map pin, drawn by CSS via <code>.path-ico</code>. You supply an empty <code>&lt;span&gt;</code>.</td></tr><tr><td class="k">Colour</td><td>Violet <code>#534AB7</code>. <strong>Fixed across every World.</strong> Do not key it to the accent.</td></tr><tr><td class="k">Position</td><td>Second to last. Immediately before the <code>ref-box</code>.</td></tr><tr><td class="k">Frequency</td><td>One, <strong>if and only if</strong> the subject has a UI location.</td></tr><tr><td class="k">Required when</td><td>The section describes something with a screen.</td></tr><tr><td class="k">Correctly absent when</td><td>The subject is code, a concept, or an argument. There is no click path for a data layer: it lives in the customer's own website. There is no click path for an opinion.</td></tr><tr><td class="k">Strongest use</td><td><strong>Saying where a thing is <em>not</em>.</strong> See the second example below.</td></tr></tbody></table>
+  <div class="note">Use the inline <code>&lt;span class="path"&gt;</code> for any product path fragment, inside the box or in running prose.</div>
+  <div class="lbl">Renders as</div>
+  <div class="demo"><div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Analytics</div>
+    <p>Analytics &gt; <span class="path">Components &gt; Classification Sets</span>. Access needs a product admin account or the <span class="path">Report Suite Tools &gt; Classifications</span> permission.</p>
+</div>
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Analytics</div>
+    <p>Nowhere, and that is the point of this section. The key is decided in your implementation, not in the classification interface.</p>
+</div></div>
+  <div class="lbl">Markup</div>
+  <pre class="src"><code>&lt;div class=&quot;path-box&quot;&gt;
+    &lt;div class=&quot;path-title&quot;&gt;&lt;span class=&quot;path-ico&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;Where to find it in Adobe Analytics&lt;/div&gt;
+    &lt;p&gt;Analytics &amp;gt; &lt;span class=&quot;path&quot;&gt;Components &amp;gt; Classification Sets&lt;/span&gt;.&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+</section>
+<section id="warn">
+  <h3><span class='ico'>⚠️</span> warn-box</h3>
+  <p class="sub">Tier 3 &middot; Semantic &middot; Earned, never decorative.</p>
+  <table class="spec"><tbody><tr><td class="k">Icon</td><td>⚠️ &nbsp;<strong>U+26A0 U+FE0F, with the variation selector.</strong> A bare <code>⚠</code> renders as a monochrome glyph and is a defect.</td></tr><tr><td class="k">Colour</td><td>Amber <code>--warning</code> <code>#f59e0b</code>, 10% wash</td></tr><tr><td class="k">Earns it</td><td>Irreversible. Expensive. <strong>Silent.</strong> The failure nobody notices for a quarter.</td></tr><tr><td class="k">Does not earn it</td><td>Ordinary caution. "Be careful here" is not a warning.</td></tr><tr><td class="k">Second mandatory use</td><td><strong>Every perishable fact.</strong> Dates, deprecations, version numbers, limits Adobe might raise. Headed with the month it was verified.</td></tr><tr><td class="k">Density</td><td><strong>Guidance, not a cap.</strong> If a section carries more than three, check each is still earning its place. Do not enforce a number: the best-scoring section in the guide carries four warning boxes, and is right to.</td></tr></tbody></table>
+  <div class="note"><strong>Why perishable facts are boxed:</strong> a hard date welded into evergreen prose rots the whole page at the speed of its most perishable sentence, and a stale date is the loudest signal a site can send that it has been abandoned. Boxed and dated, a reader in 2031 discounts it correctly and the prose around it still reads as authoritative. It is also a thirty-second edit rather than a rewrite. <strong>Never put a date in running prose. Never put one inside an SVG.</strong></div>
+  <div class="lbl">Renders as</div>
+  <div class="demo"><div class="warn-box">
+    <div class="warn-hdr">⚠️ A recycled key rewrites history silently</div>
+    <p>No validation catches this, because nothing failed. The upload succeeded. The report renders. The totals still reconcile, because no hits were added or removed. Only the labels moved, and they moved backward through every report anyone has ever run.</p>
+</div>
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ Current status, verified July 2026</div>
+    <p>The legacy Classification importer is deprecated after <strong>August 31, 2026</strong>. Deprecation schedules move, so confirm against the official documentation before you commit to a migration plan.</p>
+</div></div>
+  <div class="lbl">Markup</div>
+  <pre class="src"><code>&lt;div class=&quot;warn-box&quot;&gt;
+    &lt;div class=&quot;warn-hdr&quot;&gt;⚠️ A recycled key rewrites history silently&lt;/div&gt;
+    &lt;p&gt;No validation catches this, because nothing failed. The upload succeeded...&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+</section>
+<section id="tip">
+  <h3><span class='ico'>💡</span> pro-tip</h3>
+  <p class="sub">Tier 3 &middot; Semantic &middot; Earned, never decorative.</p>
+  <table class="spec"><tbody><tr><td class="k">Icon</td><td>💡</td></tr><tr><td class="k">Colour</td><td>The World accent <code>--accent</code> on <code>--accent-light</code></td></tr><tr><td class="k">Earns it</td><td>The insider move. A habit learned the hard way. The thing that saves an afternoon.</td></tr><tr><td class="k">Does not earn it</td><td>A restatement of the paragraph above it.</td></tr><tr><td class="k">Density</td><td><strong>Guidance, not a cap.</strong> If a section carries more than three, check each is still earning its place. Do not enforce a number: the best-scoring section in the guide carries four warning boxes, and is right to.</td></tr></tbody></table>
+  <div class="note"><strong>This is the component the header rule was written for.</strong> A box headed only <code>💡 Pro Tip</code> tells a scanner nothing and their eye bounces off it. The header must name the <em>thing</em>.</div>
+  <div class="lbl">Renders as</div>
+  <div class="demo"><div class="pro-tip">
+    <div class="pro-tip-hdr">💡 Contains is where good rule sets go to die</div>
+    <p>It is tempting to write <code>Contains "07"</code> to set Month to July. Then a campaign called <code>eml_2026_11_bogo07_in</code> arrives, and November is quietly reported as July. Contains does not know <em>where</em> in the key it matched, and it does not care.</p>
+</div></div>
+  <div class="lbl">Markup</div>
+  <pre class="src"><code>&lt;div class=&quot;pro-tip&quot;&gt;
+    &lt;div class=&quot;pro-tip-hdr&quot;&gt;💡 Contains is where good rule sets go to die&lt;/div&gt;
+    &lt;p&gt;It is tempting to write &lt;code&gt;Contains &quot;07&quot;&lt;/code&gt; to set Month to July...&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+</section>
+<section id="info">
+  <h3><span class='ico'>ℹ️</span> info-box</h3>
+  <p class="sub">Tier 3 &middot; Semantic &middot; Earned, never decorative.</p>
+  <table class="spec"><tbody><tr><td class="k">Icon</td><td>ℹ️</td></tr><tr><td class="k">Colour</td><td>Blue <code>--info</code> <code>#3b82f6</code>, 10% wash</td></tr><tr><td class="k">Earns it</td><td>A boundary, a nuance, a "worth knowing" that would derail the prose if left inline.</td></tr><tr><td class="k">Does not earn it</td><td>Anything that belongs in the prose.</td></tr><tr><td class="k">Density</td><td><strong>Guidance, not a cap.</strong> If a section carries more than three, check each is still earning its place. Do not enforce a number: the best-scoring section in the guide carries four warning boxes, and is right to.</td></tr></tbody></table>
+  
+  <div class="lbl">Renders as</div>
+  <div class="demo"><div class="info-box">
+    <div class="info-hdr">ℹ️ Rules for the living, files for the dead</div>
+    <p><strong>Rules</strong> handle keys that keep arriving. New campaigns, new SKUs, values that will still be appearing next Tuesday. <strong>Files</strong> handle history, and anything a rule cannot see.</p>
+</div></div>
+  <div class="lbl">Markup</div>
+  <pre class="src"><code>&lt;div class=&quot;info-box&quot;&gt;
+    &lt;div class=&quot;info-hdr&quot;&gt;ℹ️ Rules for the living, files for the dead&lt;/div&gt;
+    &lt;p&gt;&lt;strong&gt;Rules&lt;/strong&gt; handle keys that keep arriving...&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+</section>
+<section id="code">
+  <h3><span class='ico'>&lt;/&gt;</span> code-block</h3>
+  <p class="sub">Tier 4 &middot; Content. <strong>The most misunderstood component on the site.</strong></p>
+  <table class="spec"><tbody><tr><td class="k">It is NOT only for code</td><td>It is for <strong>anything a reader will follow at a screen, or copy out.</strong></td></tr><tr><td class="k">Use it for</td><td>1. Actual code &nbsp;&middot;&nbsp; 2. <strong>UI configuration walkthroughs</strong> (its most valuable use) &nbsp;&middot;&nbsp; 3. Convention and standards documents &nbsp;&middot;&nbsp; 4. File contents and data samples</td></tr><tr><td class="k">Why UI walkthroughs belong here</td><td>A reader must be able to return months later and follow the steps <em>exactly</em>. A code block is monospaced, aligned, and copyable. Prose is none of those.</td></tr><tr><td class="k"><code>code-lang</code></td><td>A <strong>label</strong>, not a language. <code>Rule 1</code>, <code>club-members.csv</code>, <code>Tracking Code Convention</code> are all correct.</td></tr><tr><td class="k">Copy button</td><td><code>onclick="copyCode(this)"</code> is a global handler. Always include it.</td></tr><tr><td class="k">Background</td><td><code>#0d1117</code>, regardless of World.</td></tr></tbody></table>
+  
+  <div class="lbl">Renders as</div>
+  <div class="demo"><div class="code-block">
+    <div class="code-hdr"><span class="code-lang">Add New Classification Set</span><button class="code-copy">Copy</button></div>
+    <div class="code-body"><pre>Components &gt; Classification sets &gt; New
+
+Name:          Club Member Attributes
+Type:          Primary
+
+Subscriptions
+    Report Suite        Key Dimension
+    club-prod           eVar12  (User ID)
+
+Save</pre></div>
+</div></div>
+  <div class="lbl">Markup</div>
+  <pre class="src"><code>&lt;div class=&quot;code-block&quot;&gt;
+    &lt;div class=&quot;code-hdr&quot;&gt;&lt;span class=&quot;code-lang&quot;&gt;Add New Classification Set&lt;/span&gt;&lt;button class=&quot;code-copy&quot; onclick=&quot;copyCode(this)&quot;&gt;Copy&lt;/button&gt;&lt;/div&gt;
+    &lt;div class=&quot;code-body&quot;&gt;&lt;pre&gt;Components &gt; Classification sets &gt; New
+
+Name:          Club Member Attributes
+Type:          Primary
+
+Save&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+</section>
+<section id="diagram">
+  <h3><span class='ico'>📊</span> diagram-box</h3>
+  <p class="sub">Tier 4 &middot; Content &middot; Wraps every visual. Nothing renders bare.</p>
+  <table class="spec"><tbody><tr><td class="k">Contains</td><td>Either an inline <code>&lt;svg&gt;</code> directly, or a layout component wrapped in <code>diagram-content</code>.</td></tr><tr><td class="k">Layout components</td><td><code>comparison-grid</code> (two things side by side) &nbsp;&middot;&nbsp; <code>strategy-diagram</code> (columns of points) &nbsp;&middot;&nbsp; <code>flow-horizontal</code> / <code>flow-vertical</code> (a sequence; add <code>highlight</code> to the key step)</td></tr><tr><td class="k">SVG colour</td><td><strong>Must be in a <code>style</code> attribute with a hex fallback.</strong> See the hard constraints below. This is the single most common rendering failure.</td></tr></tbody></table>
+  
+  <div class="lbl">Renders as</div>
+  <div class="demo"><div class="diagram-box">
+    <div class="diagram-title">📊 One key, as many columns as you need</div>
+    <svg viewBox="0 0 640 130" style="width:100%;height:auto;display:block" role="img" aria-label="A key value resolves into four classification columns">
+  <rect x="10" y="35" width="150" height="50" rx="6" style="fill:var(--card,#ffffff);stroke:var(--accent,#e11d48);stroke-width:2"/>
+  <text x="85" y="58" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:15px;font-weight:700;font-family:monospace">M-10482</text>
+  <text x="85" y="76" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">the key</text>
+  <line x1="166" y1="60" x2="240" y2="60" style="stroke:var(--border,#e2e8f0);stroke-width:2"/>
+  <polygon points="240,60 230,55 230,65" style="fill:var(--border,#e2e8f0)"/>
+  <rect x="255" y="18" width="375" height="26" rx="4" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0)"/>
+  <text x="268" y="36" style="fill:var(--text2,#475569);font-size:12px;font-family:sans-serif">Age Band</text>
+  <text x="616" y="36" text-anchor="end" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">60+</text>
+  <rect x="255" y="49" width="375" height="26" rx="4" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0)"/>
+  <text x="268" y="67" style="fill:var(--text2,#475569);font-size:12px;font-family:sans-serif">Membership Tier</text>
+  <text x="616" y="67" text-anchor="end" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">Gold</text>
+  <rect x="255" y="80" width="375" height="26" rx="4" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0)"/>
+  <text x="268" y="98" style="fill:var(--text2,#475569);font-size:12px;font-family:sans-serif">Join Year</text>
+  <text x="616" y="98" text-anchor="end" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">2019</text>
+</svg>
+</div>
+<div class="diagram-box">
+    <div class="diagram-title">Same campaign, two keys, two very different futures</div>
+    <div class="diagram-content">
+        <div class="comparison-grid">
+            <div class="comp-item">
+                <div class="comp-label">emljul26wb</div>
+                <div class="comp-desc">Short, tidy, completely opaque. Every attribute typed by a human, forever.</div>
+            </div>
+            <span class="comp-vs">vs</span>
+            <div class="comp-item">
+                <div class="comp-label">eml_2026_07_winback_in</div>
+                <div class="comp-desc">Carries its own meaning. One rule reads it and produces five dimensions.</div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="diagram-box">
+    <div class="diagram-title">Primary and lookup, working together</div>
+    <div class="diagram-content">
+        <div class="flow-horizontal">
+            <div class="flow-step">Product SKU</div>
+            <span class="flow-arrow">&rarr;</span>
+            <div class="flow-step">Color Code: C-114</div>
+            <span class="flow-arrow">&rarr;</span>
+            <div class="flow-step highlight">Color Name: Midnight Blue</div>
+        </div>
+    </div>
+</div></div>
+  <div class="lbl">Markup</div>
+  <pre class="src"><code>&lt;div class=&quot;diagram-box&quot;&gt;
+    &lt;div class=&quot;diagram-title&quot;&gt;📊 One key, as many columns as you need&lt;/div&gt;
+    &lt;svg viewBox=&quot;0 0 640 130&quot; style=&quot;width:100%;height:auto;display:block&quot;
+         role=&quot;img&quot; aria-label=&quot;A key value resolves into four classification columns&quot;&gt;
+      &lt;rect style=&quot;fill:var(--card,#ffffff);stroke:var(--accent,#e11d48);stroke-width:2&quot;/&gt;
+      &lt;text style=&quot;fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif&quot;&gt;Age Band&lt;/text&gt;
+    &lt;/svg&gt;
+&lt;/div&gt;
+
+&lt;!-- With a layout component instead of SVG, wrap it in diagram-content --&gt;
+&lt;div class=&quot;diagram-box&quot;&gt;
+    &lt;div class=&quot;diagram-title&quot;&gt;Same campaign, two keys&lt;/div&gt;
+    &lt;div class=&quot;diagram-content&quot;&gt;
+        &lt;div class=&quot;comparison-grid&quot;&gt;
+            &lt;div class=&quot;comp-item&quot;&gt;
+                &lt;div class=&quot;comp-label&quot;&gt;emljul26wb&lt;/div&gt;
+                &lt;div class=&quot;comp-desc&quot;&gt;Short, tidy, completely opaque.&lt;/div&gt;
+            &lt;/div&gt;
+            &lt;span class=&quot;comp-vs&quot;&gt;vs&lt;/span&gt;
+            &lt;div class=&quot;comp-item&quot;&gt;
+                &lt;div class=&quot;comp-label&quot;&gt;eml_2026_07_winback_in&lt;/div&gt;
+                &lt;div class=&quot;comp-desc&quot;&gt;Carries its own meaning.&lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+</section>
+<section id="strategy">
+  <h3><span class='ico'>▥</span> strategy-diagram</h3>
+  <p class="sub">Tier 4 &middot; Content &middot; Two or more approaches, side by side.</p>
+  <table class="spec"><tbody><tr><td class="k">Lives inside</td><td><code>diagram-box</code> &gt; <code>diagram-content</code></td></tr><tr><td class="k">Structure</td><td><code>strategy-col</code> &gt; <code>strategy-header</code> + several <code>strategy-item</code></td></tr><tr><td class="k">Inline override</td><td>The header background is the one place an inline style is expected. <strong>Always include the hex fallback.</strong></td></tr></tbody></table>
+  
+  <div class="lbl">Renders as</div>
+  <div class="demo"><div class="diagram-box">
+    <div class="diagram-title">The same job, before and after</div>
+    <div class="diagram-content">
+        <div class="strategy-diagram">
+            <div class="strategy-col">
+                <div class="strategy-header" style="background:var(--text2, #475569);color:#fff">Legacy classifications</div>
+                <div class="strategy-item">Report suite settings: create the columns</div>
+                <div class="strategy-item">Rule Builder: write the rules</div>
+                <div class="strategy-item">Importer: upload the files</div>
+            </div>
+            <div class="strategy-col">
+                <div class="strategy-header" style="background:var(--accent, #e11d48);color:#fff">Classification sets</div>
+                <div class="strategy-item">Subscriptions: which suites, which key</div>
+                <div class="strategy-item">Schema: the columns</div>
+                <div class="strategy-item">Rules: the patterns that fill them</div>
+            </div>
+        </div>
+    </div>
+</div></div>
+  <div class="lbl">Markup</div>
+  <pre class="src"><code>&lt;div class=&quot;strategy-diagram&quot;&gt;
+    &lt;div class=&quot;strategy-col&quot;&gt;
+        &lt;div class=&quot;strategy-header&quot; style=&quot;background:var(--text2, #475569);color:#fff&quot;&gt;Legacy&lt;/div&gt;
+        &lt;div class=&quot;strategy-item&quot;&gt;Report suite settings&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;strategy-col&quot;&gt;
+        &lt;div class=&quot;strategy-header&quot; style=&quot;background:var(--accent, #e11d48);color:#fff&quot;&gt;Classification sets&lt;/div&gt;
+        &lt;div class=&quot;strategy-item&quot;&gt;Subscriptions&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Inline style overrides on strategy-header are permitted.
+     ALWAYS include the hex fallback: var(--accent, #e11d48) --&gt;</code></pre>
+</section>
+<section id="tbl">
+  <h3><span class='ico'>▦</span> tbl-wrap</h3>
+  <p class="sub">Tier 4 &middot; Content &middot; Every table. Always.</p>
+  <table class="spec"><tbody><tr><td class="k">Rule</td><td><strong>Never a bare <code>&lt;table&gt;</code>.</strong></td></tr><tr><td class="k">Why</td><td><code>tbl-wrap</code> supplies the horizontal scroll that keeps a wide table usable on a phone. Without it, the table breaks the page layout.</td></tr><tr><td class="k">Do not</td><td>Nest a table inside a <code>diagram-box</code>. Tables live at top level, in <code>tbl-wrap</code>.</td></tr></tbody></table>
+  
+  <div class="lbl">Renders as</div>
+  <div class="demo"><div class="tbl-wrap">
+    <table>
+        <thead><tr><th>Rule</th><th>What happens when you break it</th></tr></thead>
+        <tbody>
+            <tr><td>The first header must be exactly <code>Key</code>, capital K</td><td>The import fails. Lowercase <code>key</code> is a different string.</td></tr>
+            <tr><td>No value of <code>0</code>, including <code>00</code> and <code>000</code></td><td>An error, for reasons that will never feel satisfying.</td></tr>
+            <tr><td>Encode as UTF-8 without a BOM</td><td>The BOM attaches to the first header, so <code>Key</code> stops being <code>Key</code>.</td></tr>
+        </tbody>
+    </table>
+</div></div>
+  <div class="lbl">Markup</div>
+  <pre class="src"><code>&lt;div class=&quot;tbl-wrap&quot;&gt;
+    &lt;table&gt;
+        &lt;thead&gt;&lt;tr&gt;&lt;th&gt;Rule&lt;/th&gt;&lt;th&gt;What happens when you break it&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+        &lt;tbody&gt;
+            &lt;tr&gt;&lt;td&gt;The first header must be exactly &lt;code&gt;Key&lt;/code&gt;&lt;/td&gt;&lt;td&gt;The import fails.&lt;/td&gt;&lt;/tr&gt;
+        &lt;/tbody&gt;
+    &lt;/table&gt;
+&lt;/div&gt;</code></pre>
+</section>
+
+
+<h2>The last-updated stamp</h2>
+<section id="lastmod">
+<h3>The <code>lastmod</code> field, and why it lives on the page</h3>
+<p class="sub">Tier 2 &middot; Required on every section page.</p>
+<table class="spec"><tbody>
+<tr><td class="k">Where</td><td>Front matter. <strong>One line, per page, owned by that page.</strong></td></tr>
+<tr><td class="k">Why per page</td><td>The product moves unevenly. Adobe rewrites classification sets and Module 10 needs a new date. Nothing about VISTA changes for three years and Module 8 must keep its old one, honestly. A single site-wide date would be a lie on most pages.</td></tr>
+<tr><td class="k">Why not from git</td><td>Hugo can derive it from the git commit date automatically. <strong>Do not.</strong> Fix one typo and the date jumps to today, telling every reader "this changed" when nothing did. <strong>A date that lies is worse than no date</strong>, because it trains people to ignore it. The manual discipline is the point.</td></tr>
+<tr><td class="k">Why no version number</td><td>A version needs a changelog to mean anything, and a changelog nobody maintains is worse than nothing. The date already answers the reader's real question: <em>can I trust this today?</em></td></tr>
+</tbody></table>
+<div class="lbl">Front matter</div>
+<pre class="src"><code>---
+slug: "designing-the-key"
+title: "Designing the Key"
+lastmod: 2026-07-15
+description: "..."
+---</code></pre>
+<div class="lbl">In the layout, once</div>
+<pre class="src"><code>&lt;h1 class="lsec-title"&gt;{ .Title }&lt;/h1&gt;
+{ with .Lastmod }&lt;p class="lupdated"&gt;Last updated: &lt;time datetime="{ .Format "2006-01-02" }"&gt;{ .Format "2 January 2006" }&lt;/time&gt;&lt;/p&gt;{ end }</code></pre>
+<div class="lbl">Renders as</div>
+<div class="demo"><p style="font-size:12.5px;color:#94a3b8;letter-spacing:.2px;margin:6px 0">Last updated: <time style="font-weight:600">15 July 2026</time></p></div>
+<table class="spec" style="margin-top:14px"><tbody>
+<tr><td class="k">Weight</td><td>12.5px, muted. <strong>Visible, never dominant.</strong> The date is semibold so the eye finds it; the label is not.</td></tr>
+<tr><td class="k">Markup</td><td>A real <code>&lt;time datetime="2026-07-15"&gt;</code>, so search engines read it as a machine-readable date rather than guessing from prose.</td></tr>
+<tr><td class="k">Dark theme</td><td>Needs its own override. <code>--text3</code> (<code>#64748b</code>) is too dim against <code>#0f172a</code>.</td></tr>
+<tr><td class="k">Print</td><td>Works automatically, and <strong>only because it sits inside <code>.lcontent</code></strong>. <code>lFillPrintDoc()</code> copies that container's innerHTML into the print document. Put it outside <code>.lcontent</code> and it silently vanishes from every printout.</td></tr>
+</tbody></table>
+</section>
+
+<h2>The two constraints that took the site down</h2>
+<section style="border-left:4px solid #e11d48">
+<h3>The <code>lastmod</code> trap that silently deletes your entire site</h3>
+<p class="sub">Read this twice. It dropped 103 pages at once, and the build reported success.</p>
+<p>By default, Hugo derives a page's <code>date</code> from <code>lastmod</code>, then derives <code>publishDate</code> from <code>date</code>. So a <code>lastmod</code> that is even <strong>one day ahead of the build server's clock</strong> gives the page a future publish date, and <strong>Hugo silently drops it from the build.</strong> No error. No warning. The page simply 404s.</p>
+<div class="bad"><b>&#10007; What actually happened</b><br>GitHub Actions builds in <b>UTC</b>. The dates were written in <b>IST (UTC+5:30)</b>. Any page dated "today" in IST is "tomorrow" in UTC for <b>five and a half hours of every single day</b>. All 103 section pages vanished. The only visible symptom was empty navigation dropdowns.</div>
+<div class="good"><b>&#10003; The fix, in <code>hugo.toml</code>. Not optional.</b>
+<pre class="src" style="margin-top:8px"><code>[frontmatter]
+  date = ["date", "publishDate"]
+  lastmod = ["lastmod"]
+  publishDate = ["publishDate", "date"]
+  expiryDate = ["expiryDate"]</code></pre></div>
+<div class="note">This decouples <code>lastmod</code> from the date cascade permanently. <code>lastmod</code> now means only "when was this content last revised", which is all it should ever have meant. <strong>Do not remove these lines.</strong></div>
+</section>
+
+<section style="border-left:4px solid #e11d48">
+<h3>Nothing ships without a real build</h3>
+<p class="sub">Static inspection of the source is not verification.</p>
+<p>The source can pass every check and the site can still be broken, because the bug lives in the interaction between source and build. Every check written against the source passed. The site was still dead.</p>
+<div class="lbl">The gate, in order</div>
+<table class="spec"><tbody>
+<tr><td class="k">1. Build</td><td><code>hugo --gc</code> with the pinned binary. Never <code>--minify</code>.</td></tr>
+<tr><td class="k">2. Assert the count</td><td><strong>If pages generated is fewer than pages expected, stop.</strong> This single check would have caught the outage in one second.</td></tr>
+<tr><td class="k">3. Crawl the output</td><td>Check the <em>built HTML</em> for dead links, not the source.</td></tr>
+<tr><td class="k">4. Confirm the navigation</td><td>Every module, every section, rendered.</td></tr>
+<tr><td class="k">5. Confirm aliases</td><td>If any slug changed, the redirect must exist.</td></tr>
+</tbody></table>
+<div class="note">Hugo installs in about thirty seconds. There is no excuse for skipping this.</div>
+</section>
+
+<h2>Hard technical constraints</h2>
+<section>
+<h3>SVG colour must go in a <code>style</code> attribute, with a hex fallback</h3>
+<p class="sub">The single most common rendering failure on this site.</p>
+<div class="bad"><b>✗ BROKEN. Does not resolve. The element renders black or invisible.</b>
+<pre class="src" style="margin-top:8px"><code>&lt;rect fill="var(--card)" stroke="var(--accent)"/&gt;</code></pre></div>
+<div class="good"><b>✓ CORRECT</b>
+<pre class="src" style="margin-top:8px"><code>&lt;rect style="fill:var(--card, #ffffff);stroke:var(--accent, #e11d48);stroke-width:2"/&gt;
+&lt;text style="fill:var(--text1, #0f172a);font-size:12px;font-family:sans-serif"&gt;Label&lt;/text&gt;</code></pre></div>
+<div class="note"><strong>Why:</strong> a CSS <code>var()</code> does <strong>not</strong> resolve inside an SVG <em>presentation attribute</em>. It only resolves inside a <code>style</code> attribute. The hex fallback covers the case where the variable is unavailable.</div>
+
+<div class="lbl">Every SVG also needs</div>
+<pre class="src"><code>&lt;svg viewBox="0 0 700 250" style="width:100%;height:auto;display:block;margin:4px 0 8px"
+     role="img" aria-label="Plain-language description of what the diagram shows"&gt;</code></pre>
+</section>
+
+<section>
+<h3>Three more that will bite you</h3>
+<table class="spec"><tbody>
+<tr><td class="k">Build command</td><td><code>hugo --gc</code> &nbsp;&nbsp;<strong>Never</strong> <code>hugo --minify</code>. The minifier destroys inline SVG text elements.</td></tr>
+<tr><td class="k">No nesting</td><td>A <code>code-block</code> inside a <code>warn-box</code>, <code>pro-tip</code>, or <code>info-box</code> is untested and unrendered. State the rule in the box; put the code block after it, at normal level.</td></tr>
+<tr><td class="k">Inline overrides</td><td>Permitted, sparingly, on an existing class. <strong>Always carry the hex fallback:</strong><br><code>&lt;div class="strategy-header" style="background:var(--accent, #e11d48);color:#fff"&gt;</code></td></tr>
+</tbody></table>
+</section>
+
+<h2>Voice and prose rules</h2>
+<section>
+<p class="sub">These travel with the components. A component with bad copy in it is worse than no component.</p>
+<table class="spec"><tbody>
+<tr><td class="k">No dashes</td><td>No em-dashes or en-dashes anywhere. Not in prose, not in tables, not in SVG. Use commas, colons, or a full stop.</td></tr>
+<tr><td class="k">No author voice</td><td>No <code>I</code>, <code>my</code>, <code>we</code>, <code>our</code>, <code>us</code>. Reader-facing <code>you</code> only.<br><strong>Exception: quoted speech.</strong> A team saying <em>"we set up a CNAME"</em> is a character speaking, and stays.</td></tr>
+<tr><td class="k">American spelling</td><td>Throughout.</td></tr>
+<tr><td class="k">Link casing</td><td>A link whose anchor <em>names</em> a module or section uses that section's exact Title Case. A genuine common noun ("inside report suites") stays lowercase.</td></tr>
+<tr><td class="k">Length</td><td>A requirement of the topic, never apologized for in prose. A short section is correct when the subject is short.</td></tr>
+<tr><td class="k">Analogies</td><td>They arrive, or they do not. Never placed into a designated slot.</td></tr>
+</tbody></table>
+</section>
+
+<h2>Front matter</h2>
+<section>
+<h3>Required on every page</h3>
+<div class="lbl">Section page</div>
+<pre class="src"><code>---
+slug: "designing-the-key"
+title: "Designing the Key"
+description: "The key is not a setting. It is the raw value you already collect. Five rules
+              that decide whether classifications work for you or against you."
+type: lesson
+modulenum: 10
+sectionnum: 2
+weight: 2
+---</code></pre>
+<div class="lbl">Module index (_index.md)</div>
+<pre class="src"><code>---
+title: "Classifications"
+description: "Give collected data meaning it never carried, retroactively, without touching
+              a line of code. Keys, sets, imports, rules, and silent failure."
+type: module
+modulenum: 10
+weight: 10
+---</code></pre>
+<div class="note"><strong>The <code>description</code> field is not optional.</strong> It is the <strong>Google search snippet</strong> and the <strong>LinkedIn share preview</strong> for that page. Omit it and the layout falls back to the first 150 characters of prose, truncated mid-word, which reads as a broken page in a search result.</div>
+<table class="spec" style="margin-top:14px"><tbody>
+<tr><td class="k">Length</td><td>110 to 160 characters. Over 160 truncates in Google.</td></tr>
+<tr><td class="k">Register</td><td>A <strong>promise about content</strong>, not a summary.<br>✓ <em>"Five rules that decide whether classifications work for you or against you"</em><br>✗ <em>"An overview of classification keys"</em></td></tr>
+<tr><td class="k">Voice</td><td>The guide's voice, not marketing copy. No "Learn about", no "Master the".</td></tr>
+</tbody></table>
+<div class="lbl">Changing a slug on a live page</div>
+<p class="sub" style="margin-bottom:8px">Add an alias. Never let an old URL 404.</p>
+<pre class="src"><code>---
+slug: "marketing-channel-processing-rules"
+aliases:
+  - /adobe-analytics-learning/marketing-channels/processing-rules/
+---</code></pre>
+</section>
+
+<h2>The section checklist</h2>
+<section>
+<p class="sub">Run before every delivery. Eighteen items.</p>
+<ul class="chk"><li><label><input type="checkbox"> <span><code>description</code> present, 110 to 160 characters</span></label></li><li><label><input type="checkbox"> <span>Zero em-dashes or en-dashes</span></label></li><li><label><input type="checkbox"> <span>Zero <code>I</code> / <code>my</code> / <code>we</code> / <code>our</code> / <code>us</code> outside quoted speech</span></label></li><li><label><input type="checkbox"> <span>American spelling</span></label></li><li><label><input type="checkbox"> <span>Every box header names its <strong>content</strong>, never its category</span></label></li><li><label><input type="checkbox"> <span>Icons correct: ⚠️ &nbsp; 💡 &nbsp; ℹ️ &nbsp; 📚</span></label></li><li><label><input type="checkbox"> <span>Each box earns its place (no quota, but no filler either)</span></label></li><li><label><input type="checkbox"> <span>Every table wrapped in <code>tbl-wrap</code></span></label></li><li><label><input type="checkbox"> <span>Every SVG colour in a <code>style</code> attribute with a hex fallback</span></label></li><li><label><input type="checkbox"> <span>No <code>code-block</code> nested inside a box</span></label></li><li><label><input type="checkbox"> <span>No CSS class used that is absent from the stylesheet</span></label></li><li><label><input type="checkbox"> <span>Every perishable fact inside a dated snapshot <code>warn-box</code></span></label></li><li><label><input type="checkbox"> <span><code>path-box</code> present <strong>if and only if</strong> the subject has a screen</span></label></li><li><label><input type="checkbox"> <span><code>ref-box</code> present, last on the page, official docs only</span></label></li><li><label><input type="checkbox"> <span>Every back-reference names the concept, links it, and recaps it</span></label></li><li><label><input type="checkbox"> <span>Every internal link resolves</span></label></li><li><label><input type="checkbox"> <span>Tags balanced: <code>&lt;p&gt;</code> <code>&lt;div&gt;</code> <code>&lt;a&gt;</code> <code>&lt;table&gt;</code> <code>&lt;pre&gt;</code></span></label></li><li><label><input type="checkbox"> <span>Section closes with a forward handoff that makes the reader want the next one</span></label></li><li><label><input type="checkbox"> <span><code>lastmod</code> present, and <strong>not</strong> in the future vs a UTC build clock</span></label></li><li><label><input type="checkbox"> <span><strong>The site builds.</strong> Page count asserted, built HTML crawled, navigation confirmed</span></label></li></ul>
+</section>
+
+<h2>Porting to a new World</h2>
+<section>
+<ol class="rules" style="counter-reset:p">
+<li><b>Copy <code>world-learning.css</code> unchanged.</b><span>Then change <strong>one line</strong>: <code>--accent</code>. That is the World's identity. Crimson for Analytics. Blue for the Migration Guide. Something else for CJA.</span></li>
+<li><b>Do not change the semantic colours.</b><span><code>--warning</code>, <code>--info</code>, <code>--success</code>, and the path-box violet stay fixed. A reader who learns "amber means this will hurt you" in one World must find it true in the next, or they relearn your visual language every time.</span></li>
+<li><b>Every rule above carries over unchanged.</b><span>The components are product-agnostic. Only the accent and the content change.</span></li>
+</ol>
+</section>
+
+<h2>Revision history</h2>
+<table class="tok"><thead><tr><th style="width:130px">Date</th><th>Change</th></tr></thead><tbody>
+<tr><td><b>15 July 2026</b></td><td>Added the <code>lastmod</code> field and the <code>.lupdated</code> component. Added the two hard constraints that came out of a live outage: the <b>lastmod / publishDate trap</b>, and the <b>build-and-crawl delivery gate</b>. Amended Rule 1 to distinguish content classes (never) from site-level components (deliberately, once, recorded here).</td></tr>
+<tr><td><b>14 July 2026</b></td><td>Density cap removed. It was wrong: the best-scoring section in the guide carries four warning boxes and is right to. Replaced with guidance.</td></tr>
+<tr><td><b>13 July 2026</b></td><td>First edition.</td></tr>
+</tbody></table>
+
+<div class="foot">
+  <strong>Source of truth:</strong> <code>static/world-learning.css</code>. The component CSS embedded in this page was copied verbatim from it and verified in July 2026. If the two ever disagree, <strong>the stylesheet wins</strong> and this page needs updating.
+</div>
+
+</div></body></html>

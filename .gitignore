@@ -1,10 +1,5 @@
-# Hugo build output — regenerated on every build, published by CI
-/public/
-
-# Hugo lock and caches
-.hugo_build.lock
-/resources/_gen/
-/.hugo_cache/
+# Machine-local Claude Code permissions, not shared
+.claude/settings.local.json
 
 # OS / editor noise
 Thumbs.db
@@ -13,3 +8,6 @@ Desktop.ini
 .DS_Store
 *.swp
 *~
+
+# Note: amitdusane-site-complete/.gitignore handles Hugo build output
+# (public/, .hugo_build.lock, resources/_gen/) relative to its own directory.
