@@ -178,3 +178,19 @@ Changing a slug on a live page requires an `aliases` entry. Never let an old URL
 Per-section loop: notes, then a proposed h3 skeleton with component placement for approval, then the full `.html`, then verification, then his accuracy edits.
 
 Before declaring any section done: the rulebook's 20-item checklist, then the QA Rulebook's 13 points, then a real build with the page count asserted.
+
+---
+
+## Session close-out routine
+
+Run this whenever Amit says to close out, wrap up, or end the session. It is what makes the next session start from truth instead of from a stale snapshot.
+
+1. **Update `completion-tracker.xlsx`.** Mark every section touched this session: `Content created?`, `Content QA'd?`, and the SEO columns. The tracker is the single record of where the project stands; a future session reads it to decide what to do next.
+2. **Update `development-plan.md`** if a phase completed, an estimate moved, or the order changed.
+3. **Correct any source document** proven wrong during the session, per the precedence rule above, and add a revision-history entry.
+4. **Build once more**: `hugo --gc`, assert the page count, confirm it is clean.
+5. **Commit everything** with a message describing what was written and what remains. The working tree must be clean at the end of a session.
+6. **Write a memory** only if something durable was learned that is not already captured in a file.
+7. **Report** in two lines: what shipped, and what the next session should pick up first.
+
+At session start, read `development-plan.md` and the tracker before proposing work.
