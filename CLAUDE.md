@@ -74,6 +74,24 @@ Then crawl the built HTML, not the source. Source passing every check proves not
 
 ## Voice
 
+### The governing intent, in Amit's own words
+
+> My writing is not about explaining Adobe features; it is about explaining the engineering decisions behind them. Every topic begins with a real problem, then answers why the technology exists before explaining how it works. I want readers to understand the design intent, not just memorize terminology. Whether I'm writing about Report Suites, eVars, Web SDK, or Tag Management, the goal is always the same: help the reader think like an implementation architect rather than simply operate a tool.
+>
+> I deliberately connect business requirements, architecture, implementation, and practical experience into one continuous story. I don't just define concepts—I explain when to use them, when not to use them, what trade-offs they introduce, and the mistakes people commonly make in real projects. Analogies, diagrams, warnings, and implementation tips are not decoration; they are there to convert complex technical ideas into intuitive mental models that readers can remember long after they finish the article.
+>
+> Above all, every article should leave the reader thinking differently, not just knowing more. If someone finishes a section and understands why a technology exists, what problem it solves, how to make better implementation decisions, and where to go deeper in the official documentation, then the article has achieved its purpose. My role is not to replace Adobe documentation, but to make the journey of learning Adobe Analytics clear, practical, connected, and enjoyable.
+
+This is the test a draft has to pass. Everything below is mechanics in service of it.
+
+Three things follow directly, and they are easy to get wrong:
+
+- **Problem first, then why, then how.** A section that opens by defining the feature has already failed. Open with the real problem, establish why the technology exists, and only then explain its mechanics.
+- **Components are load-bearing, not decorative.** An analogy, a diagram, a warning, or a tip is there to build a mental model that survives the reader closing the tab. This is the same judgment the rulebook enforces when it says a component is earned.
+- **The reader should finish thinking differently.** Not merely informed. If a draft only transfers facts, it is not done, however accurate it is.
+
+### Mechanics
+
 The rulebook states the prose rules. What follows is measured from the corpus and is not written down anywhere else.
 
 **Second person only. Zero first person.** Measured: 1,756 "you" and 0 "I" across the learning world. The only "I" on the whole site is in `content/about.html`. The documented exception is quoted speech, and it is used sparingly: a team saying "we set up a CNAME" is a character speaking.
