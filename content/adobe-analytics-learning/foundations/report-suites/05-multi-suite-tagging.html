@@ -1,0 +1,82 @@
+---
+slug: "multi-suite-tagging"
+title: "Multi-Suite Tagging"
+seotitle: "Multi-Suite Tagging in Adobe Analytics"
+lastmod: 2026-07-18
+description: "Sending one hit to several report suites at once. When multi-suite tagging is right, when a virtual report suite is cheaper, and how to choose."
+type: lesson
+modulenum: 2
+sectionnum: 5
+weight: 5
+---
+<p>Earlier, in <a href="/adobe-analytics-learning/foundations/report-suites/global-vs-individual-report-suites/">Global vs Individual Report Suites</a>, the hybrid strategy promised one implementation feeding both a global suite and individual team suites. <strong>Multi-suite tagging</strong> is the mechanism that delivers it: a single visitor interaction is duplicated and sent to several report suites at once, so the same page view lands in your global suite <em>and</em> your regional suite in one go. By now you have effectively met it twice already, in the global-suite discussion and again in virtual report suites, so this section is less a new idea than the place it finally gets named.</p>
+<p>More than a coding technique, this is an architectural decision, and you make it once, at setup. The question is simply how many real suites you collect into, and there are three common shapes.</p>
+<div class="cards">
+    <div class="card">
+        <div class="card-icon" style="background:rgba(16,185,129,0.2);">★</div>
+        <div class="card-title">Global suite + VRS</div>
+        <div class="card-desc">One global suite collects everything; each team gets a virtual report suite carved from it. No duplicate hits, no extra server calls. The default for most new implementations.</div>
+    </div>
+    <div class="card">
+        <div class="card-icon" style="background:rgba(148,163,184,0.25);">▢</div>
+        <div class="card-title">One suite per property</div>
+        <div class="card-desc">Each site or app collects into its own isolated suite. Clean separation, but the data can never be recombined, so you choose it only when separation is genuinely required.</div>
+    </div>
+    <div class="card">
+        <div class="card-icon" style="background:rgba(239,68,68,0.2);">⧉</div>
+        <div class="card-title">Global + individual together</div>
+        <div class="card-desc">A real global suite and real individual suites collect side by side, fed at the same time. This is the shape multi-suite tagging exists to build, and the one that carries a per-copy cost.</div>
+    </div>
+</div>
+<p>Most teams land on the first shape. Multi-suite tagging is what you reach for when you genuinely need the third. Mechanically, in a library (AppMeasurement) implementation, you list the report suite IDs a hit should be sent to:</p>
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">JavaScript</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>// Static: send every hit to all three suites
+s.account = "globalrsid,regionrsid,brandrsid";
+
+// Dynamic: decide the regional suite by context
+var rsids = "globalrsid";
+if (pageRegion === "us")      rsids += ",usrsid";
+else if (pageRegion === "uk") rsids += ",ukrsid";
+s.account = rsids;</pre></div>
+</div>
+<div class="diagram-box">
+    <div class="diagram-title">📊 One interaction, copied to every suite</div>
+    <div class="diagram-content">
+        <div class="flow-vertical">
+            <div class="flow-step highlight">Single page view</div>
+            <div class="h-arrow">↓ sends to</div>
+            <div class="flow-multi">
+                <div class="flow-step-sm">Global RS</div>
+                <div class="flow-step-sm">Region RS</div>
+                <div class="flow-step-sm">Brand RS</div>
+            </div>
+            <div class="h-arrow">= 3 server calls</div>
+        </div>
+    </div>
+</div>
+<p>In practice you will rarely type that by hand. In an Adobe Launch (Tags) implementation, which is almost certainly how you will deploy, you choose the destination suites in the interface: in the Adobe Analytics extension for a library setup, or on the datastream for a Web SDK setup. There is no page code to maintain. The full deployment story is the <a href="/adobe-analytics-learning/collect/data-collection/">data collection module</a>, so for now you can relax: the concept matters here, the clicking comes later.</p>
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ You pay for every copy</div>
+    <p>Each suite a hit is sent to is a separate, billable server call. Send to three suites and every single visitor interaction costs three server calls instead of one, tripling the volume Adobe meters you on. At scale that is real money. Always model the cost before turning it on, and never add a suite to the list "just in case."</p>
+</div>
+<h3 class="subsec-title">The decision that saves you the most: multi-suite or a VRS?</h3>
+<p>This is where <a href="/adobe-analytics-learning/foundations/report-suites/virtual-report-suites/">virtual report suites</a> pay off. People reach for multi-suite tagging to give a regional team "their own data," and quietly triple their bill, when a virtual report suite would have done the job for free. The two solve different problems:</p>
+<ul>
+    <li><strong>Use a virtual report suite</strong> when you need a focused <em>view</em> of data that already lives in one suite. It is free, query-time, and adds no server calls. This covers most "give this team their slice" needs.</li>
+    <li><strong>Use multi-suite tagging</strong> only when you need genuinely <em>separate</em> suites: ones with their own settings, their own variable definitions, or that must serve as independent sources for Data Feeds or Data Warehouse, which a VRS cannot do.</li>
+</ul>
+<p>The short rule: if you only need a different lens on the same data, that is a VRS. If you need a truly independent suite, that is multi-suite tagging, and you accept the per-call cost for it.</p>
+<div class="info-box">
+    <div class="info-hdr">ℹ️ This is the AppMeasurement way</div>
+    <p>Listing report suite IDs in <code>s.account</code> is the classic library-based approach. In a <a href="/adobe-analytics-learning/collect/data-collection/adobe-web-sdk/">Web SDK</a> / Edge implementation the page no longer names report suites at all; you list them on the datastream instead (the Add Report Suite control), and a single datastream can forward to several suites. The concept, one event sent to several destinations, survives the migration; where you configure it moves from the page to the Edge.</p>
+
+<p>Multi-suite tagging was the last of the structural choices: how many suites, how to divide them, how to view them, how to configure them, and how to feed several at once. What has been assumed throughout, though, is that every hit that reaches a suite belongs there. Not all of it does. A large share of raw traffic is automated, and left in place it quietly inflates every number you report. <a href="/adobe-analytics-learning/foundations/report-suites/bot-filtering/">Bot Filtering</a> is where that traffic gets removed before it is ever counted.</p>
+</div>
+<div class="ref-box">
+    <div class="ref-title">📚 Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/docs/analytics/implementation/prepare/multi-suite-tagging.html" target="_blank">Adobe Docs: Multi-Suite Tagging</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/experience-platform/datastreams/overrides" target="_blank">Adobe Docs: Datastream Report Suite Overrides (Web SDK)</a></li>
+    </ul>
+</div>

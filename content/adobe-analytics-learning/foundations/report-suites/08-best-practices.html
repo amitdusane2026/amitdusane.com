@@ -1,0 +1,63 @@
+---
+slug: "best-practices"
+title: "Report Suite Best Practices"
+seotitle: "Report Suite Best Practices in Adobe Analytics"
+lastmod: 2026-07-18
+description: "Naming conventions, mirrored production and non-production suites, foundational variables before go-live, and why documentation is the organization's decision."
+type: lesson
+modulenum: 2
+sectionnum: 8
+weight: 8
+---
+<p>The last two sections dealt with what to keep out of a suite and what to do with the data once it is in: bot filtering strips the automated traffic, and privacy and data retention governs how long the data lives and how it must be handled. Both are settings you get right once and revisit rarely. This closing section steps back from any single setting to the discipline that ties all of them together, because across this whole module one fact has kept returning: settings affect future data only, and almost nothing backfills. That single rule is what makes the setup of a report suite the highest-leverage moment in its entire life. The day you create and configure a suite, you are deciding how it will behave five and ten years from now. A mistake made later is usually trivial and correctable; a mistake made here compounds quietly with every day of data collected under it. There are organizations running the same Adobe Analytics implementation for over a decade, and the good ones share a trait: the system does not depend on any single person. It was built to outlive whoever set it up. The practices below are the unwritten rules that get you there.</p>
+<h3 class="subsec-title">1. Decide a naming convention before you create anything</h3>
+<p>The most common first mistake is naming a suite after whatever exists today, calling it <code>abc.com</code> because that is the one website in front of you. Then the business grows, a second market, a new language site, a shift from regional to global collection, and the names become a museum of past assumptions. Spend an hour on a naming model before the first suite exists. You do not need to predict the future perfectly, just enough structure to absorb it: a convention that encodes company, property or region, and environment, with a delimiter you have agreed on (a dash or an underscore, chosen once and used everywhere). For example, <code>company-property-environment</code> gives you <code>acme-store-prod</code> and its twin <code>acme-store-dev</code>. Decide it as a small group, write it down, and never drift from it.</p>
+<h3 class="subsec-title">2. Create production and non-production suites together, as mirrors</h3>
+<p>Here is a question that catches almost everyone. You are running three websites, one suite each. How many report suites do you create? The obvious answer is three. The right answer is six. Every production suite needs a non-production twin, a dev or stage suite where the implementation is built and tested before anything touches live data. Production stays clean; the dev suite is the playground.</p>
+<div class="diagram-box">
+    <div class="diagram-title">🪞 Three properties, six report suites</div>
+    <div class="diagram-content">
+        <div class="strategy-diagram">
+            <div class="strategy-col">
+                <div class="strategy-header global-hdr">Production</div>
+                <div class="strategy-item">acme-store-prod</div>
+                <div class="strategy-item">acme-blog-prod</div>
+                <div class="strategy-item">acme-help-prod</div>
+            </div>
+            <div class="strategy-col">
+                <div class="strategy-header individual-hdr">Non-production</div>
+                <div class="strategy-item">acme-store-dev</div>
+                <div class="strategy-item">acme-blog-dev</div>
+                <div class="strategy-item">acme-help-dev</div>
+            </div>
+        </div>
+    </div>
+</div>
+<p>Create the pair at the same time, with identical settings. Currency, time zone, variables, processing rules, all the same, so the dev suite is a true mirror of production. The only field that legitimately differs is the expected page views per day, which is naturally far lower for a dev suite and worth setting accurately, because the estimate affects how smoothly Adobe provisions and processes the suite. From then on, treat them as a pair: any setting you change in production, change in dev in the same breath, or the mirror cracks and your testing stops predicting reality.</p>
+<p>One clarification, because it trips people up: Adobe Launch (Tags) gives you three environments, development, staging, and production, but that does not mean three report suites. Two suites, one production and one non-production, are enough; your development and staging Tags environments can both point at the single non-production suite.</p>
+<h3 class="subsec-title">3. Lay down a foundational variable set before go-live</h3>
+<p>You cannot plan every variable and processing rule before the first suite exists, and you should not try. But declare a small foundational set: a page name, a page type, and a custom event that mirrors page views. The reason is practical. When the web development team deploys the Tags script and you need to verify it works, debugger values alone are not proof. Stakeholders, and good QA discipline, want to see data land in an actual report. That handful of variables and one event is what gives you something real to validate against on day one. The full variable craft is <a href="/adobe-analytics-learning/foundations/variables/">the variables module</a>.</p>
+<h3 class="subsec-title">4. Know what "live" actually means</h3>
+<p>A freshly created suite is effectively usable straight away: it appears in Tags for selection, and once your implementation sends to it, data shows up after the normal processing latency, which Adobe puts at roughly two hours. The one real exception is scale. A suite created with a very high expected-traffic estimate goes through a longer approval step before it is fully provisioned. So for a dev suite or a modest production suite, do not sit waiting on a multi-day delay; but for a large launch, build that approval lead time into your plan.</p>
+<h3 class="subsec-title">5. Spend the most time on the architecture itself</h3>
+<p>If you take one thing from this module, take this: the architectural decisions you make at setup matter more than any single setting, and they deserve the most time you can give them. Two decisions sit at the center. First, the data-model shape, one global suite with virtual report suites (the modern default), separate individual suites, or multi-suite tagging, decided against the digital assets you actually need to track. Second, the topology between Tags and your suites: how many Tags properties you will run, and whether one property feeds several suites or several properties feed one. Draw it. A simple diagram of properties, suites, and the lines between them surfaces problems that prose hides. And decide it with the people who genuinely own the product, not in isolation.</p>
+<div class="pro-tip">
+    <div class="pro-tip-hdr">💡 Before you create, ask one question</div>
+    <p>Before spinning up any new report suite, ask: could a virtual report suite do this instead? Most "this team needs its own data" requests are really requests for a view, which a VRS delivers for free. Reach for a real new suite only when you need genuinely separate collection. <a href="/adobe-analytics-learning/foundations/report-suites/virtual-report-suites/">Virtual Report Suites</a> covers exactly where that line falls.</p>
+</div>
+<h3 class="subsec-title">6. Document everything, and make it the organization's decision</h3>
+<p>All of this technical and architectural work happens under business pressure, and the discipline that protects it is documentation. Record every significant decision, the why, the what, the where, and the how, and take a sign-off at each critical stage. Business stakeholders will not follow every technical detail, and they do not need to; it is your job to translate, to hand them a small set of clear options with a recommendation, and to make them comfortable enough to choose. Because at this stage the decision must belong to the organization, not to one person. You supply the thinking; the organization owns the outcome. That is what lets the system survive the day you, or anyone, moves on. The course returns to this in the <a href="/adobe-analytics-learning/deliver/solution-design-reference/">solution design reference</a>.</p>
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ This is the phase you cannot redo cheaply</div>
+    <p>Everywhere else in Adobe Analytics, a mistake is a Tuesday: you fix the setting and move on. At setup, the same mistake is structural. A careless suite split can never be merged, a wrong time zone seams every trend, a missing foundational variable means there is simply no history to recover. Treat the setup phase with the weight it deserves, slow, deliberate, and documented, because it is the one phase whose mistakes you pay for in years, not minutes.</p>
+</div>
+<p>That closes the module. You now know what a report suite is and why it sits at the center of collection, how to choose between global and individual, how virtual report suites hand teams their own views at no extra cost, what the settings panel really controls, how multi-suite tagging works and what it bills, and how to set the whole thing up to last. The variables module goes one level deeper.</p>
+
+<p>Because a report suite, for all its architectural weight, is still just an empty box. Nothing in it yet. What actually fills it, hit after hit, are the variables: the props, the eVars, the events, and the products string that carries an entire ecommerce funnel through a single line of text. Choose them badly and no amount of report suite architecture will save the reporting. <a href="/adobe-analytics-learning/foundations/variables/">The variables module</a> is where the box gets filled.</p>
+<div class="ref-box">
+    <div class="ref-title">📚 Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/admin/admin-tools/manage-report-suites/c-new-report-suite/new-report-suite" target="_blank">Adobe Docs: Create a Report Suite</a></li>
+        <li><a href="https://experienceleague.adobe.com/docs/analytics/implementation/prepare/global-rs.html" target="_blank">Adobe Docs: Global Report Suite Considerations</a></li>
+    </ul>
+</div>

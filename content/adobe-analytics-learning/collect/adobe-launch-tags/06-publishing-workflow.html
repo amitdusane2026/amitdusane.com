@@ -1,0 +1,161 @@
+---
+slug: "publishing-workflow"
+title: "Publishing Workflow"
+seotitle: "The Adobe Launch Publishing Workflow"
+lastmod: 2026-07-15
+description: "The four states a library moves through, the approval gates and why they exist, publishing day, and what to do when production goes wrong."
+type: lesson
+modulenum: 6
+sectionnum: 6
+weight: 6
+---
+<p>By now you have done the heavy lifting. The <a href="/adobe-analytics-learning/collect/adobe-launch-tags/properties/">property</a> exists, its library is hosted on the site, the <a href="/adobe-analytics-learning/collect/adobe-launch-tags/extensions/">extensions</a> are installed, the <a href="/adobe-analytics-learning/collect/adobe-launch-tags/data-elements/">data elements</a> are built, and the <a href="/adobe-analytics-learning/collect/adobe-launch-tags/rules/">rules</a> are ready to tell AppMeasurement how to construct the image request. What is left is not difficult, you are past the hard part, but it is not something you do on the fly either, because it involves testing, approval, and the discipline of moving work safely from your screen to a live site. That is the <strong>publishing workflow</strong>.</p>
+
+<p>Here is the question that exposes why it exists: right now all your changes are sitting in Launch, but are they on any environment yet? No. Nothing reaches a page until you deliberately bundle it and build it. The unit you bundle it into is a <strong>library</strong>, and a library is best understood as a single set of changes that you test, approve, and publish together. You create libraries, move them through stages, and edit them, all inside the publishing workflow.</p>
+
+<h3 class="subsec-title">The four states a library moves through</h3>
+<p>Every library lives in one of four states, shown as the four columns of the Publishing Flow tab. A library moves left to right through them, and a specific action carries it across each boundary.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">A library's journey to the live site</div>
+    <div class="diagram-content">
+        <div class="flow-horizontal">
+            <div class="flow-step">Development<br><span style="font-weight:400;color:var(--text2)">build &amp; test</span></div>
+            <span class="flow-arrow">&rarr;</span>
+            <div class="flow-step">Submitted<br><span style="font-weight:400;color:var(--text2)">staging</span></div>
+            <span class="flow-arrow">&rarr;</span>
+            <div class="flow-step">Approved<br><span style="font-weight:400;color:var(--text2)">cleared to ship</span></div>
+            <span class="flow-arrow">&rarr;</span>
+            <div class="flow-step highlight">Published<br><span style="font-weight:400;color:var(--text2)">live</span></div>
+        </div>
+    </div>
+</div>
+
+<p>One rule about these states matters more than any other, so hold onto it: <strong>changes can only be made while a library is in Development.</strong> Once it has been submitted, approved, or published, it is a snapshot you can no longer edit. If a library further along needs a change, it gets rejected back to Development, fixed there, and sent through again.</p>
+
+<h3 class="subsec-title">Build and name your first library</h3>
+<p>With everything ready, go to the publishing workflow and create your first library. Assign it to your development environment, add your changed resources, and build it. Then comes one of the genuine pleasures of a tag management system: the moment that build completes, the change is live on whatever page carries your development embed script. Open that page, hard reload it with Shift+Ctrl+R, and your work is right there to test. No deployment ticket, no waiting on a release window.</p>
+
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">A library, all the way from Development to Production</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>Data Collection > Tags > "Club Web" > Publishing Flow
+
+
+DEVELOPMENT  ....................................  needs the Develop right
+
+    Add Library
+        Name:         Foundation Library v1.0
+        Environment:  Development
+
+        + Add All Changed Resources
+            -> picks up the rule, the data element, and the Core and
+               Analytics extensions you just created
+
+        Save & Build to Development
+            -> a status dot appears. Wait for it to turn green.
+               Red means the build failed, and it almost always failed
+               because a rule depends on something you left out.
+
+    [ Now go and test. Load your site with the development embed code.
+      Watch the network tab. Do not skip this. ]
+
+    ... > Submit for Approval
+
+
+SUBMITTED  ......................................  needs the Approve right
+
+    ... > Build to Staging          -> QA tests here, on the real site
+    ... > Approve for Publishing
+
+
+APPROVED  .......................................  needs the Publish right
+
+    ... > Build & Publish to Production
+
+    -> the production build is now live on every page carrying the
+       production embed code. There is no undo button.
+
+
+PUBLISHED
+    The library is now the baseline. Every library you create after this
+    inherits it automatically, so the next one only carries your changes.</pre></div>
+</div>
+
+<p>Before you build, give the library a real name. It feels trivial on day one, when you have exactly one library. It stops feeling trivial the day you have eighty, and you are trying to find which one changed the tracking code last March.</p>
+
+<div class="pro-tip">
+    <div class="pro-tip-hdr">💡 Name libraries so future-you can read the history</div>
+    <p>Pick a naming convention and keep it. A first library can simply be <code>Foundation Library</code> or <code>SiteName Analytics v1.0</code>. After that, name by intent, <code>Exclude downloads from articles</code>, <code>Added APAC countries to Meta pixel</code>, or stamp them with dates, <code>Download changes 22/Jun/2026</code>, <code>Disabled old product string 04/May/2025</code>. Versioning, dates, or plain-English intent all work. A pile of libraries called "Library 1" through "Library 80" does not.</p>
+</div>
+
+<h3 class="subsec-title">QA in the lower environment</h3>
+<p>What follows is a working introduction to QA in the publishing flow; the discipline in full, the tools, the systematic test approaches, and the debugging workflow, is the subject of its own module, <a href="/adobe-analytics-learning/deliver/testing-debugging/">Testing and Debugging</a>. Now the library is on your development environment, and the real work of this stage begins: quality assurance. Good QA does not start by clicking around. It starts by building <strong>use cases</strong>, and the difference between testing one thing and testing the right things is where most data quality is won or lost.</p>
+
+<p>Say you need to test a download rule. Do not check a single download and call it done. Think about the full surface: there may be several places on the site where downloads happen, several ways a visitor can trigger one, several file types that can be downloaded, and several paths a visitor takes to reach the download. List all of those, build the permutations, and that set of permutations is your test plan. A typical testing document captures, for each case:</p>
+
+<ul>
+    <li>The requirement, what the business asked for.</li>
+    <li>What you are testing, the specific case.</li>
+    <li>Findings, what actually happened.</li>
+    <li>Error details, when something is wrong.</li>
+    <li>The URL and the component where the issue was found.</li>
+    <li>A screenshot, so anyone reading it later sees exactly what you saw.</li>
+</ul>
+
+<p>It also helps to categorise what you find, because "it's broken" is not actionable. Common categories: the variable is not available at all, available but in the wrong format, carrying unexpected values, a direct call that double-fires, or a server call that should fire once but fires more. Naming the failure mode is half of fixing it.</p>
+
+<p>QA realistically runs in several rounds, back and forth between you and the web developer, until both sides agree the data is right. And when you reach that point, do one more thing that people routinely skip.</p>
+
+<div class="pro-tip">
+    <div class="pro-tip-hdr">💡 Get a formal sign-off</div>
+    <p>Once the analytics developer and the web developer are satisfied, get explicit sign-off from everyone involved. It has no technical effect at all, which is exactly why people overlook it. But the day someone asks why the numbers changed, or whether a thing was ever agreed, that sign-off is what protects you. Be disciplined about the paperwork, not just the code.</p>
+</div>
+
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ Only one library can sit in Submitted or Approved at a time</div>
+    <p>The workflow is a single lane, not a queue. While one library is waiting for approval, nobody else can submit. On a small team that is invisible. On a team of six, all shipping in the same week, it becomes the thing everyone is waiting on, and the temptation is to bundle unrelated changes into one library to get them through together. Resist it: a library is the unit you roll back, and a library carrying four teams' work is a library you cannot roll back.</p>
+</div>
+
+<h3 class="subsec-title">The approval gates, and why they exist</h3>
+<p>The move from Development to live is deliberately gated, and the gates map to three separate rights. They are not bundled together: a person has each one only if it is granted to them.</p>
+
+<div class="info-box">
+    <div class="info-hdr">ℹ️ The three rights are separate by design</div>
+    <p><strong>Develop</strong> lets someone create libraries, build for development, and submit for approval. <strong>Approve</strong> lets someone build to staging and approve a staged build. <strong>Publish</strong> lets someone publish an approved library to production. They are not inclusive, so for one person to run the whole flow alone, they need all three. This separation is the point: it lets an organisation keep the person who builds, the person who approves, and the person who ships as different people, which is how you stop a single mistake from walking straight onto the live site.</p>
+</div>
+
+<p>So the path is: you submit the development library for approval, an approver tests it in staging and approves it, and a publisher pushes the approved library to production. At any gate a library can be rejected, which sends it back to Development for changes before the flow starts again.</p>
+
+<h3 class="subsec-title">Publishing, and the days after</h3>
+<p>When QA is signed off, ask whoever holds the approve and publish rights to move the library to production. Production deserves its own high-level check once the library lands. And then the part people get wrong: do not celebrate early.</p>
+
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ Watch the reports before you call it a win</div>
+    <p>A clean QA does not guarantee clean production data. Watch your reports for the first two or three days, or however long your plan calls for. If the numbers look factual and correct after that window, that is your real first win. The beacon firing in a debugger and the data being right in a report are two different confirmations, and only the second one counts.</p>
+</div>
+
+<h3 class="subsec-title">When production goes wrong</h3>
+<p>Suppose the reports show something off, and you trace it to a bug in the production library that slipped past QA. First, do not panic, and second, understand the real constraint: a published library is a snapshot, so you cannot edit it in place. That sounds alarming the first time you hit it, but you are not stuck. You have two clean routes out.</p>
+
+<p>You can <strong>fix forward</strong>: make the correction in a new library back in Development, test it, take it through approval, and publish it. Or you can <strong>roll back</strong>: republish a previous, known-good library. Launch keeps your published history, the currently live library is marked with a green dot, and republishing an earlier one restores it. Either way the situation is recoverable.</p>
+
+<div class="info-box">
+    <div class="info-hdr">ℹ️ Why this works: libraries layer on a baseline</div>
+    <p>A library is not a complete copy of your whole implementation. A library in Development, Submitted, or Approved inherits the rules, data elements, and extensions of the libraries upstream as its baseline. So each new library is really just a set of changes laid on top of what is already live. That is why a small fix can ship as a small library, and why republishing an old one cleanly returns you to a known state.</p>
+</div>
+
+<p>That is the publishing workflow. It is fairly simple once the shape is clear, but it is important, and worth one last observation. This flow does not belong to Adobe Analytics. It is product-independent, exactly like Launch itself. Tomorrow your work might be the Web SDK, or AEP and its relatives like CJA, but all of it ships through this same Launch publishing workflow. Learn it once, and you have learned how everything in this world reaches a live site. <a href="/adobe-analytics-learning/collect/adobe-launch-tags/environments/">Environments</a> looks more closely at the places these libraries are built and published to, and the embed codes that carry them.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it</div>
+    <p>Inside a property, open <span class="path">Publishing Flow</span>, then <span class="path">Add Library</span> to create one. The four columns are <span class="path">Development, Submitted, Approved, Published</span>.</p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title">📚 Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/experience-platform/tags/publish/publishing-flow" target="_blank">Adobe Docs: Publishing Flow</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/experience-platform/tags/publish/libraries" target="_blank">Adobe Docs: Libraries</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/experience-platform/tags/publish/overview" target="_blank">Adobe Docs: Publishing Overview</a></li>
+    </ul>
+</div>

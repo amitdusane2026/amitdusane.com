@@ -1,0 +1,15 @@
+# Hugo build output — regenerated on every build, published by CI
+/public/
+
+# Hugo lock and caches
+.hugo_build.lock
+/resources/_gen/
+/.hugo_cache/
+
+# OS / editor noise
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
+*.swp
+*~

@@ -1,0 +1,240 @@
+---
+slug: "troubleshooting-maintenance"
+title: "Troubleshooting and Maintenance"
+seotitle: "Troubleshooting Classifications in Adobe Analytics"
+lastmod: 2026-07-15
+description: "Classifications do not break. They produce a confident, well-formatted, wrong report. The symptoms, the causes, and why Unspecified is your only witness."
+type: lesson
+modulenum: 11
+sectionnum: 6
+weight: 6
+---
+<p>There is no error message in this section.</p>
+
+<p>Every troubleshooting guide you have ever read opens with something going red. A failed job. A broken build. A stack trace, a 500, a console full of warnings. Something that stands up and announces itself.</p>
+
+<p>Classifications do not do that. A broken classification produces a report. A complete, well-formatted, perfectly plausible report, with totals that reconcile and columns that add up and a chart that renders beautifully. It just happens to be wrong.</p>
+
+<p>Which changes what you are actually doing here. You are not debugging. Debugging is what you do when a machine tells you it is unhappy. <strong>You are auditing</strong>, which is what you do when a machine tells you nothing at all, and you have to go and find out whether it was telling the truth.</p>
+
+<h3 class="subsec-title">Where a classification can break</h3>
+<p>Four places, and every symptom in this section traces back to one of them.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">📊 The four break points</div>
+    <svg viewBox="0 0 700 220" style="width:100%;height:auto;display:block;margin:4px 0 8px" role="img" aria-label="A classification can break at four points: the key was never collected, the set is misconfigured, the data never arrived from a file or rule, or the data arrived but was wrong. Only the first two are visible. The last two produce a report that looks correct.">
+        <rect x="14" y="50" width="156" height="60" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <text x="92" y="74" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">1. The key</text>
+        <text x="92" y="93" text-anchor="middle" style="fill:var(--text2,#475569);font-size:10px;font-family:sans-serif">never collected on the hit</text>
+
+        <line x1="172" y1="80" x2="192" y2="80" style="stroke:var(--text2,#475569);stroke-width:1.5"/>
+        <polygon points="196,80 186,75 186,85" style="fill:var(--text2,#475569)"/>
+
+        <rect x="196" y="50" width="156" height="60" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <text x="274" y="74" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">2. The set</text>
+        <text x="274" y="93" text-anchor="middle" style="fill:var(--text2,#475569);font-size:10px;font-family:sans-serif">wrong suite, wrong key</text>
+
+        <line x1="354" y1="80" x2="374" y2="80" style="stroke:var(--text2,#475569);stroke-width:1.5"/>
+        <polygon points="378,80 368,75 368,85" style="fill:var(--text2,#475569)"/>
+
+        <rect x="378" y="50" width="156" height="60" rx="6" style="fill:var(--card,#ffffff);stroke:var(--warning,#f59e0b);stroke-width:2"/>
+        <text x="456" y="74" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">3. The data</text>
+        <text x="456" y="93" text-anchor="middle" style="fill:var(--text2,#475569);font-size:10px;font-family:sans-serif">never arrived</text>
+
+        <line x1="536" y1="80" x2="556" y2="80" style="stroke:var(--text2,#475569);stroke-width:1.5"/>
+        <polygon points="560,80 550,75 550,85" style="fill:var(--text2,#475569)"/>
+
+        <rect x="560" y="50" width="126" height="60" rx="6" style="fill:var(--card,#ffffff);stroke:var(--warning,#f59e0b);stroke-width:2"/>
+        <text x="623" y="74" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">4. The value</text>
+        <text x="623" y="93" text-anchor="middle" style="fill:var(--text2,#475569);font-size:10px;font-family:sans-serif">arrived, but wrong</text>
+
+        <line x1="14" y1="132" x2="352" y2="132" style="stroke:var(--success,#10b981);stroke-width:2"/>
+        <text x="14" y="152" style="fill:var(--success,#10b981);font-size:11px;font-weight:700;font-family:sans-serif">These two show up as Unspecified.</text>
+        <text x="14" y="168" style="fill:var(--text2,#475569);font-size:10px;font-family:sans-serif">The report looks empty. You will notice.</text>
+
+        <line x1="378" y1="132" x2="686" y2="132" style="stroke:var(--warning,#f59e0b);stroke-width:2"/>
+        <text x="378" y="152" style="fill:var(--warning,#f59e0b);font-size:11px;font-weight:700;font-family:sans-serif">These two produce a normal report.</text>
+        <text x="378" y="168" style="fill:var(--text2,#475569);font-size:10px;font-family:sans-serif">The report looks fine. It is not fine.</text>
+        <text x="378" y="184" style="fill:var(--text2,#475569);font-size:10px;font-family:sans-serif">Nobody notices for a quarter.</text>
+
+        <text x="14" y="212" style="fill:var(--text3,#94a3b8);font-size:10px;font-family:sans-serif">The dangerous half is on the right. Everything in this section is about learning to see it.</text>
+    </svg>
+</div>
+
+<h3 class="subsec-title">The index</h3>
+<p>Come back to this table. That is what it is for.</p>
+
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>Symptom</th><th>Most likely cause</th><th>Where to look</th></tr></thead>
+        <tbody>
+            <tr><td>Every row says Unspecified</td><td>The key is not on those hits, or nothing was ever uploaded</td><td>Check the parent dimension first. If <em>it</em> is empty, the classification was never the problem.</td></tr>
+            <tr><td>Some keys classified, others not</td><td>Key mismatch: an internal space, an encoding difference, a value of <code>0</code></td><td>Download, Data Returned = <strong>All columns empty</strong></td></tr>
+            <tr><td>One column is blank, the others are fine</td><td>That column was missing or misspelled in the file</td><td>Download, Data Returned = <strong>Any columns empty</strong></td></tr>
+            <tr><td>Uploaded hours ago, still nothing</td><td>Processing time, or the job failed and nobody was told</td><td><strong>Jobs</strong> tab</td></tr>
+            <tr><td>A classification exists that nobody created</td><td>A typo in a file header. Adobe created it on import, as designed.</td><td><strong>Schema</strong> tab</td></tr>
+            <tr><td>Curated values keep reverting to raw ones</td><td>A rule is overwriting the file, every four hours</td><td><strong>Rules</strong> tab, the <strong>Rules overwrite</strong> setting</td></tr>
+            <tr><td>Rules classify nothing at all</td><td>The key is URL encoded, so no rule can read it</td><td>Look at the raw dimension. If you see <code>%5F</code>, that is your answer.</td></tr>
+            <tr><td>Right column, wrong value</td><td>Two rules touch the same column, and precedence is inverted from what you assumed</td><td><strong>Rules overwrite</strong>, then rule order</td></tr>
+            <tr><td>Old campaigns never classify, new ones do</td><td>The lookback window. Rules cannot see keys that stopped arriving.</td><td>Upload a file. A rule will never fix this.</td></tr>
+            <tr><td>History changed and nobody touched anything</td><td>A key was recycled by the source system</td><td>Not in Adobe. Go and ask the system that mints the key.</td></tr>
+            <tr><td>The set gets slower every week</td><td>Files are not being removed from the cloud location, so everything reimports on every run</td><td>The bucket, and the <strong>Jobs</strong> tab, which will show the same import over and over</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<h3 class="subsec-title">Start by checking whether it is even a classification problem</h3>
+<p>Before touching a set, look at the parent dimension.</p>
+
+<p>If the club's Membership Tier report is empty, open the User ID report. If <em>that</em> is also empty, then no User ID was collected, nothing was there to classify, and the classification behaved perfectly. You have an implementation problem wearing a classification costume, and no amount of uploading will fix it.</p>
+
+<p>This one check would resolve a large share of the classification tickets ever raised. It takes eleven seconds. People skip it because the symptom appears in a classification report, and the eye follows the symptom rather than the cause.</p>
+
+<h3 class="subsec-title">The mismatch family, and why they are so hard to see</h3>
+<p>Now the group that produces the most wasted afternoons. The key <em>is</em> there. The file <em>was</em> uploaded. And the row is still Unspecified.</p>
+
+<p>Which means Adobe looked up your key, and did not find it, because the key in the file is not the key in the data. They look identical on a screen. They are not identical to a machine.</p>
+
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>What differs</th><th>What it looks like</th><th>Forgiven?</th></tr></thead>
+        <tbody>
+            <tr><td>Trailing space</td><td><code>M-10482&nbsp;</code></td><td><strong>Yes.</strong> Trimmed automatically, on both sides.</td></tr>
+            <tr><td>Internal space</td><td><code>M- 10482</code></td><td><strong>No.</strong> A different key entirely.</td></tr>
+            <tr><td>URL encoding</td><td><code>eml%5F2026</code></td><td><strong>No.</strong> And no rule will ever read it.</td></tr>
+            <tr><td>A value of zero</td><td><code>0</code>, <code>00</code>, <code>000</code></td><td><strong>No.</strong> It errors, for reasons that never feel satisfying.</td></tr>
+            <tr><td>An invisible BOM on the header</td><td><code>Key</code> that is not quite <code>Key</code></td><td><strong>No.</strong> Save as UTF-8 without BOM.</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<p>Two of those come from the source system and cannot be fixed in Adobe at all. If your tracking codes arrive URL encoded, no rule, no file, and no amount of cleverness inside the classification interface will save you. That is a conversation with whoever builds the campaign links, and it is better to have it on a Tuesday than during a quarterly review.</p>
+
+<h3 class="subsec-title">Which is where Unspecified deserves a second look</h3>
+<p>Practitioners spend their careers trying to get rid of Unspecified. It looks like failure. It looks untidy. Stakeholders ask about it.</p>
+
+<p>Stop. Look at what it is actually doing.</p>
+
+<div class="info-box">
+    <div class="info-hdr">ℹ️ Unspecified is not your enemy. It is your only witness.</div>
+    <p>Of the four ways a classification can break, Unspecified is the <strong>only one that tells you</strong>. It is the feature standing up and saying, out loud, that it could not resolve this key. No other failure in this module has the decency to do that. A rule overwriting your curated file does not produce Unspecified. It produces <code>winback</code>. A misspelled header does not produce Unspecified. It produces a whole new dimension, quietly filling with correct data under a name nobody meant.</p>
+    <p>Unspecified is the honest failure. Learn to read it and it becomes a diagnostic instrument. Suppress it, and you have blinded the one part of this system that was trying to help you.</p>
+</div>
+
+<p>So the goal is not zero Unspecified. The goal is a number you can <em>explain</em>. Unspecified holding steady at 3% because that is the share of traffic that genuinely arrives before login is a healthy report. Unspecified at 0% because somebody classified everything with a catch-all rule is a report that has stopped telling you anything.</p>
+
+<h3 class="subsec-title">The values are wrong, which is worse than missing</h3>
+<p>Missing data raises a question. Wrong data answers one, incorrectly, and nobody thinks to check.</p>
+
+<p>Two causes, and both were built in Classification Rule Builder.</p>
+
+<p><strong>Rule precedence is inverted from your instinct.</strong> With Rules overwrite set to apply to all values, the <em>last</em> matching rule wins, so moving a rule to the top of the table takes its priority away. With apply to only unset values, the <em>first</em> wins. Same rules, same order, opposite answer. When a column holds a value you cannot account for, check that dropdown before you check anything else.</p>
+
+<p><strong>Something is fighting your file.</strong> If curated values keep reverting, a rule is rewriting them every four hours, and it will keep doing so forever. Nobody is at fault. The rule is doing exactly what it was told.</p>
+
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ And the one that will genuinely frighten you</div>
+    <p>A recycled key rewrites history silently. The upload succeeds, the report renders, the totals reconcile, and two years of activity by one member is now attributed to somebody else. Nothing failed. Nothing is logged. There is no Adobe screen that will ever show you this, because from Adobe's point of view nothing went wrong.</p>
+    <p>If a historical report changes and nobody touched anything, stop looking inside Adobe Analytics. Go and ask the system that generates the key whether it reuses identifiers. That is where the answer lives, and it is the only failure in this module that Adobe genuinely cannot help you find.</p>
+</div>
+
+<h3 class="subsec-title">Three instruments, and almost nobody uses them</h3>
+<p>Everything above is diagnosable, and the tools have been sitting in the interface the whole time.</p>
+
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>Instrument</th><th>Where</th><th>What it answers</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Jobs</strong></td><td>Components &gt; Classification sets &gt; Jobs</td><td>Did it actually run? Did it fail? Is the same file importing over and over?</td></tr>
+            <tr><td><strong>Download</strong></td><td>Schema tab &gt; Download</td><td>What is <em>actually</em> in there right now, as opposed to what you believe you uploaded</td></tr>
+            <tr><td><strong>Test rule set</strong></td><td>Rules tab &gt; Test rule set</td><td>What these rules <em>would</em> do, before they do it to production</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<p>The Jobs tab is the one to build a habit around. It is the only place in this entire feature where a failure is written down in plain language, and it is the first place to look when something is missing and you cannot say why. If an import silently failed at 2am, the Jobs tab knows. Nothing else does.</p>
+
+<p>And Download with Data Returned set to <strong>Any columns empty</strong> is the single most useful diagnostic in the module. It turns "something feels wrong with the tier data" into a list of exactly which keys are missing exactly which columns. Vague suspicion becomes a spreadsheet you can act on.</p>
+
+<h3 class="subsec-title">Maintenance, which is really just deciding things once</h3>
+<p>Almost every failure in this section is a failure of ownership rather than a failure of technology. Two systems wrote to one column because nobody said which one should. A file stopped arriving because the person who uploaded it left. A bucket filled up because nobody agreed to empty it.</p>
+
+<p>So the maintenance discipline is small, and it fits on one page.</p>
+
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">Classification Ownership Register</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>SET: Campaign Tracking          KEY: Tracking Code (eVar1)
+SUBSCRIPTIONS: club-prod, club-dev
+
+COLUMN          OWNED BY   SOURCE                 CADENCE      OVERWRITE
+--------------  ---------  ---------------------  -----------  ---------------
+Channel         Rule       Split on "_"           every 4 hrs  all values
+Year            Rule       Split on "_"           every 4 hrs  all values
+Month           Rule       Split on "_"           every 4 hrs  all values
+Campaign        FILE       Marketing display      weekly       only unset
+                           names, curated         (manual)     <- protects file
+Country         Rule       Split on "_"           every 4 hrs  all values
+
+NEVER let a rule and a file own the same column.
+Every column above has exactly one owner. That is not tidiness. That is the
+only thing preventing the rule from eating the file every four hours.
+
+MONITORING
+  Notify on failure:     ON  -> analytics@club.example
+  Notify on success:     OFF (nobody reads a daily "it worked" email)
+  Jobs tab review:       weekly
+  Unspecified baseline:  3%. Investigate at 5%.
+
+CLOUD LOCATION
+  Bucket:    club-analytics/classifications/
+  Cleanup:   lifecycle rule, delete after 7 days
+             (Adobe does NOT delete imported files. Unclean bucket = reimport
+              of the entire history, on every single run, forever.)
+
+KEY RISK
+  Source system: club-crm. CONFIRMED: member IDs are never reused.
+  Re-confirm on any CRM migration. A recycled key rewrites history.</pre></div>
+</div>
+
+<p>That document is the bookend to the tracking code convention from <a href="/adobe-analytics-learning/shape/classifications/designing-the-key/">Designing the Key</a>. One decides what the key looks like. This one decides who is allowed to write to it. Between them they prevent most of what this section exists to diagnose.</p>
+
+<div class="pro-tip">
+    <div class="pro-tip-hdr">💡 Set an Unspecified baseline while things are healthy</div>
+    <p>Nobody can tell whether 4% Unspecified is a problem, because nobody knows what normal looks like. So write down what it is today, on a day when everything works. Then a drift from 3% to 11% is not a debate, it is an alarm. This costs one minute and it converts the module's only honest signal into an actual monitor.</p>
+</div>
+
+<h3 class="subsec-title">What was actually built here</h3>
+<p>Step back from the interface for a second.</p>
+
+<p>This module took a value the business could not read, <code>M-10482</code> or <code>eml_2026_07_winback_in</code>, and gave it meaning it never carried. No developer shipped code. No server call changed. Not one byte of collected data was altered. And yet a report that could only say "one hundred members did things" can now say which of them were over sixty, on which nights, in which halls.</p>
+
+<p>That is what report-time shaping buys you, and it is why classifications sit where they do. Processing rules and VISTA rules shaped the data before it landed, permanently, with no way back. Classifications shaped it afterward, reversibly, retroactively, forever. Same goal, opposite end of the pipeline, and now you know when to reach for each.</p>
+
+<p>And with that, the shaping is done. That closes Classifications, and with it the whole of the <strong><a href="/adobe-analytics-learning/shape/">Shape the data</a></strong> phase. Foundations built the understanding, collection captured the behavior, and shaping made it legible: processing rules, VISTA rules, marketing channels, and classifications, each adding a layer of meaning the raw hit never carried. Three of the five phases are behind you, and the data is as meaningful as it is ever going to get.</p>
+
+<h3 class="subsec-title">Which raises a question this module cannot answer</h3>
+<p>Everything from processing rules to classifications has been about one question: <em>what does this value mean?</em></p>
+
+<p>Not once has anything asked a different question, and it is the question every stakeholder actually has.</p>
+
+<p><em>Which of these people are worth looking at?</em></p>
+
+<p>Members over sixty who booked a hall but never a gym slot. Visitors who arrived on a Winback campaign, came back twice, and then vanished. People who did one thing and not another, in that order, within a week.</p>
+
+<p>No amount of shaping answers that. Shaping tells you what a value means. It does not let you carve the audience. For that you need something that can hold a condition, nest it, sequence it, and apply it across every report you own, and that is a different instrument entirely.</p>
+
+<p>It is called a segment, and it lives in the next phase of this curriculum: <strong><a href="/adobe-analytics-learning/analyze/">Analyze the data</a></strong>, where the question stops being what a value means and becomes which of the people behind those values are worth your attention. That phase begins with <a href="/adobe-analytics-learning/analyze/calculated-metrics/">Calculated Metrics</a>, the measures you define for yourself, and then reaches <a href="/adobe-analytics-learning/analyze/segments/">Segments</a>, the instrument built to carve an audience into exactly the groups this section kept asking about.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Analytics</div>
+    <p>Job results and failures: <span class="path">Components &gt; Classification sets &gt; Jobs</span>. What is actually stored: <span class="path">[your set] &gt; Schema &gt; Download</span>. Rule behavior before you commit to it: <span class="path">[your set] &gt; Rules &gt; Test rule set</span>. Failure notifications are set on the set itself, in its <span class="path">Settings</span>.</p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title">📚 Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/classifications/sets/job-manager" target="_blank">Adobe Docs: Classification Sets Job Manager</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/classifications/sets/data-files" target="_blank">Adobe Docs: Classification Set File Formats</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/classifications/sets/set/rules" target="_blank">Adobe Docs: Classification Set Rules</a></li>
+    </ul>
+</div>

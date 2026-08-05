@@ -1,0 +1,148 @@
+---
+slug: "use-cases-examples"
+title: "Use Cases and Examples"
+seotitle: "Processing Rule Use Cases and Examples"
+lastmod: 2026-07-18
+description: "Five worked processing rules, built one at a time, including one that shows the moment a processing rule is the wrong tool for the job."
+type: lesson
+modulenum: 8
+sectionnum: 3
+weight: 3
+---
+<p><a href="/adobe-analytics-learning/shape/processing-rules/conditions-actions/">Conditions and Actions</a> handed you the grammar of processing rules: conditions for when, actions for what, read top to bottom, order is logic. Grammar is theory, and here is the honest limit of theory. Imagine you have studied everything about football. The rules, the techniques, the strength and flexibility a player needs, the plain fact that the goal is to put the ball into the opponent's net. You know all of it. Now you walk onto the pitch for your first match. Will you win? Set winning aside: will you even be able to play? Almost certainly not, not well. A game is not what you know, it is what you have played, and every match makes the next one easier. Processing rules are the same. You can recite every condition and action and still fumble the first real one.</p>
+<p>So this section does two things at once. It walks through the situations you will actually meet, each told the same way, the problem that creates the need, the decision the rule expresses, and the trade-off or mistake waiting on the other side. And it asks you to build them as you read, because reading about a rule and creating one are different kinds of knowing.</p>
+
+<h3 class="subsec-title">Get on the ground and play along</h3>
+<p>Open the interface now and follow the same path each time:</p>
+<ol>
+    <li>Sign in to the Adobe Experience Cloud and open Adobe Analytics.</li>
+    <li>Go to <span class="path">Admin &rarr; Report Suites</span> and select a report suite. Choose a non-production suite on purpose, so a clumsy first rule costs you nothing real.</li>
+    <li>Open <span class="path">Edit Settings &rarr; General &rarr; Processing Rules</span> and start a new rule.</li>
+</ol>
+<p>Not every example below can be built this minute. The ones that map context data need that context data to be arriving in the suite first, and you may not have it yet. But several can be built right now with data you already have: anything keyed off an existing variable, or the query string example. Build those as you go and let the rest wait.</p>
+<div class="info-box">
+    <div class="info-hdr">ℹ️ If your setup is not ready yet</div>
+    <p>This assumes you have followed the earlier modules: you have access to Analytics, your variables are set up and populating through <a href="/adobe-analytics-learning/collect/adobe-launch-tags/">Launch</a>, and you have a report suite of your own. If you are not there yet, do not stall. Read the theory now for the insight it gives, and come back to build when your setup is ready. The understanding will still be waiting, and it will land faster the second time.</p>
+</div>
+
+<h3 class="subsec-title">Example 1: Give context data a home</h3>
+<p>Your developers send a value on every hit as a context data variable, say <code>user.loginStatus</code>. Here is the part that surprises people the first time: on its own, that value populates nothing. A context data variable that is never mapped is invisible in every report, and if you never map it, its value is discarded for good. Context data is deliberately inert until a processing rule gives it a home.</p>
+<p>That inertness is the design intent, not a limitation. It lets developers send clean, well-named keys without knowing or caring which eVar or prop each one belongs in, and it lets the analyst own that mapping decision where it belongs. The rule is the seam between the two roles.</p>
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">Processing Rule</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>Rule title: Map login status into reporting
+
+Condition: if ALL are true
+    Context data "user.loginStatus" is set
+
+Then do the following
+    Overwrite eVar5 with the value of "user.loginStatus"
+
+Implementation sends:  s.contextData["user.loginStatus"] = "logged-in"
+Result:                eVar5 = "logged-in"</pre></div>
+</div>
+<div class="info-box">
+    <div class="info-hdr">ℹ️ The scaling trick</div>
+    <p>This looks fragile if you imagine one rule per variable and dozens of variables. You do not need that. A single rule can hold many conditional actions, and a report suite allows up to 150 rules, so a handful of well-organized rules can map an entire implementation's worth of context data without ever approaching the limit.</p>
+</div>
+
+<h3 class="subsec-title">Example 2: Pull a value out of the query string</h3>
+<p>Your site's internal search puts the search term in the page URL as <code>?q=</code>, and reporting needs it in an eVar. The clean fix is to capture it in your implementation, but suppose a release is weeks away and you need the data now. A processing rule can read the query string parameter directly and route it into the eVar you keep for internal search terms.</p>
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">Processing Rule</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>Rule title: Capture internal search term from the URL
+
+Condition: if ALL are true
+    Query string parameter "q" is set
+
+Then do the following
+    Overwrite eVar10 with the value of query string parameter "q"
+
+URL:     https://site.com/search?q=blue+widgets
+Result:  eVar10 = "blue widgets"</pre></div>
+</div>
+<p>Two things to hold onto here. First, the value must be UTF-8 or Unicode encoded for the rule to read it, so an oddly encoded parameter will silently fail. Second, this is a patch, not a home. Adobe's own guidance is to capture query string values in the implementation when you reasonably can, because a URL parameter is exposed, easily changed by marketing links, and outside your governance. Reach for the rule when the timeline forces your hand, then plan the proper capture.</p>
+
+<h3 class="subsec-title">Example 3: Manufacture an event from data you already have</h3>
+<p>You need to count form completions, but the confirmation page's template is locked behind a release you cannot influence today. The page already sends its page type, and it arrives in <code>eVar1</code> as <code>confirmation</code>. That is enough. A rule can watch for that value and set the success event itself, with no page code at all.</p>
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">Processing Rule</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>Rule title: Count form completions on the confirmation page
+
+Condition: if ALL are true
+    eVar1 (Page Type) equals "confirmation"
+
+Then do the following
+    Set event5 (Form Complete)
+
+Result: on every hit where eVar1 = "confirmation", event5 = 1</pre></div>
+</div>
+<p>This is where the sequencing lesson from Conditions and Actions stops being abstract. The rule can only test <code>eVar1</code> if <code>eVar1</code> already holds its value by the time this rule runs. If page type is itself set by a later processing rule, this one reads an empty value and quietly does nothing. Two more things worth knowing: the same action set to a custom value of 0 instead of 1 will discard an event, which is the clean way to drop a mistakenly fired metric, and this mechanism cannot set product-specific (merchandising) events or the products variable, so purchase-level events still belong in your implementation.</p>
+
+<h3 class="subsec-title">Example 4: Copy an eVar into a prop to see paths</h3>
+<p>A value lives in an eVar, and you want to see the sequence, the flow from one value to the next across a visit. You open the pathing reports and the eVar is not available in them. That is not a bug. Pathing lives on traffic variables (props), and eVars do not support it. Rather than re-implement the value a second time as a prop, a rule can copy it across.</p>
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">Processing Rule</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>Rule title: Enable pathing on page type
+
+Condition: if ALL are true
+    eVar1 (Page Type) is set
+
+Then do the following
+    Overwrite prop1 with the value of eVar1
+
+Result: prop1 mirrors page type, and now supports flow and next/previous reports</pre></div>
+</div>
+<p>The trade-off is that you now maintain the same fact in two places. They will stay in sync only as long as this rule does, and the prop and the eVar carry different expiration and allocation behavior, so the pathing view and the eVar view answer subtly different questions. Copy for a reason you can name, not reflexively.</p>
+
+<h3 class="subsec-title">Example 5: When a processing rule is the wrong tool</h3>
+<p>The most useful example in this section is the one you should not build. Campaign codes are arriving messy, <code>email_spring</code>, <code>email_q3</code>, <code>social_reels</code>, and someone suggests a rule that buckets them into tidy labels.</p>
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">Tempting, but reconsider</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>Rule title: Bucket campaign codes
+
+Condition: if ANY are true
+    Tracking Code contains "email_"
+
+Then do the following
+    Overwrite eVar20 with "Email Campaign"
+
+...then another rule for "social_", and another, and another.</pre></div>
+</div>
+<p>A single typo fix, correcting a misspelled site section as it arrives, is a fair use of a rule. But systematic bucketing is a different task wearing the same clothes, and a processing rule is the wrong tool for it for two reasons you already know. It only acts going forward, so every campaign code collected before today stays messy. And it needs a rule or condition per bucket, which grows without end. The tools built for this job are <a href="/adobe-analytics-learning/shape/classifications/">Classifications</a>, which relabel values through a lookup and apply backward across data already collected, and for traffic categorization specifically, <a href="/adobe-analytics-learning/shape/marketing-channels/">Marketing Channels</a>. Recognizing which tool a problem belongs to is the real skill; the rule is just one instrument in a set.</p>
+
+<h3 class="subsec-title">Choosing the right instrument</h3>
+<p>Pulling the examples together, the question is rarely "how do you write this rule" and more often "does this belong in a rule at all." This is the map.</p>
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>What you need to do</th><th>The right tool</th></tr></thead>
+        <tbody>
+            <tr><td>Give context data a home; set, copy, or concatenate a value as it is collected</td><td>Processing rules (this module)</td></tr>
+            <tr><td>Set or discard an event based on data already in the hit, going forward</td><td>Processing rules (this module)</td></tr>
+            <tr><td>Relabel or bucket values, especially across data already collected</td><td><a href="/adobe-analytics-learning/shape/classifications/">Classifications</a> (retroactive, lookup-based)</td></tr>
+            <tr><td>Categorize traffic into channels such as Paid Search, Email, or Direct</td><td><a href="/adobe-analytics-learning/shape/marketing-channels/">Marketing Channels</a></td></tr>
+            <tr><td>Apply visitor-level logic or an external lookup a rule cannot express</td><td><a href="/adobe-analytics-learning/shape/vista-rules/">VISTA Rules</a> (Adobe-managed)</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="pro-tip">
+    <div class="pro-tip-hdr">💡 A fair question: could Launch have done this?</div>
+    <p>Look back at these examples, copying one variable into another, pulling a value out of the URL, correcting a value, and a suspicion should form: most of this could also be done in your tag manager. It could. In <a href="/adobe-analytics-learning/collect/adobe-launch-tags/">Launch</a>, a data element carries far more capability than a processing rule, close to unlimited, so for many of these it is the better instrument. That is not a contradiction, it is the point. The two do not compete; they are two levers, and skill is knowing which to pull.</p>
+    <p>The exception is the one that keeps processing rules essential. If your primary platform is a mobile app, there is no tag manager running inside it. You cannot deploy Launch there, and a mobile app ships on its own release cycle that you often cannot wait for. That is exactly where a processing rule earns its place: server-side, immediate, no deployment. Launch and processing rules also sit in different layers, Launch shaping data before it is sent, a processing rule acting inside collection on the raw data itself, so neither is superior. Choose by use case, urgency, and platform.</p>
+</div>
+
+<p>You now have the grammar, a working sense of where it applies, and a first feel for when a rule is the right layer at all. The final section of this module, <a href="/adobe-analytics-learning/shape/processing-rules/limitations-best-practices/">Limitations and Best Practices</a>, gathers the cautions that have surfaced across these examples, the empty-source overwrite, the no-undo reality, the order traps, and sets them beside the Launch-versus-rule decision, into one disciplined checklist you can carry into a real report suite.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Analytics</div>
+    <p>Processing Rules: <span class="path">Admin &rarr; Report Suites &rarr; Edit Settings &rarr; General &rarr; Processing Rules</span></p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title">📚 Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/admin/admin-tools/manage-report-suites/edit-report-suite/report-suite-general/processing-rules/pr-use-cases" target="_blank">Adobe Docs: Processing Rules Use Cases</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/admin/admin-tools/manage-report-suites/edit-report-suite/report-suite-general/processing-rules/pr-variables" target="_blank">Adobe Docs: Dimensions and Metrics Available to Processing Rules</a></li>
+    </ul>
+</div>

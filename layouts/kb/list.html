@@ -1,0 +1,15 @@
+{{ define "main" }}
+<section class="view active">
+  <p class="crumb"><a href="{{ "/web-sdk-migration/" | relURL }}">Migration</a> &rsaquo; Knowledge Base</p>
+  <div class="eyebrow">Knowledge Base</div>
+  <h1>The &ldquo;why&rdquo; behind every step</h1>
+  <p class="kb-intro">Everything the migration steps lean on &mdash; concepts, decisions, and reference &mdash; organized so you can browse it directly, or reach any topic in context via a step's <b>&ldquo;Why?&rdquo;</b> link.</p>
+  {{ $labels := dict "concepts" "Concepts" "decisions" "Decisions" "reference" "Reference" "program" "Program & strategy" }}
+  {{ range $g := slice "concepts" "decisions" "reference" "program" }}
+    <div class="kb-grp-h">{{ index $labels $g }}</div>
+    <div class="kb-cards">
+      {{ range (where $.Pages "Params.group" $g).ByWeight }}<a class="kb-card" href="{{ .RelPermalink }}"><div class="t">{{ .Title }}</div><div class="d">{{ .Description }}</div></a>{{ end }}
+    </div>
+  {{ end }}
+</section>
+{{ end }}

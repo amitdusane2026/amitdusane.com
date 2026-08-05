@@ -1,0 +1,53 @@
+---
+slug: "feed-configuration"
+title: "Feed Configuration"
+lastmod: 2026-07-15
+type: lesson
+modulenum: 17
+sectionnum: 2
+weight: 2
+---
+<p>Setting up a Data Feed involves configuring the feed details, selecting columns, and specifying delivery options.</p>
+                <h3 class="subsec-title">Configuration Steps</h3>
+                <div class="flow">
+                    <div class="flow-step">1. Name & Report Suite</div>
+                    <span class="flow-arrow">→</span>
+                    <div class="flow-step">2. Delivery Interval</div>
+                    <span class="flow-arrow">→</span>
+                    <div class="flow-step">3. Destination</div>
+                    <span class="flow-arrow">→</span>
+                    <div class="flow-step">4. Column Selection</div>
+                    <span class="flow-arrow">→</span>
+                    <div class="flow-step">5. Activate</div>
+                </div>
+
+                <h3 class="subsec-title">Delivery Intervals</h3>
+                <div class="tbl-wrap">
+                    <table>
+                        <thead><tr><th>Interval</th><th>Delivery Time</th><th>Best For</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>Hourly</strong></td><td>~2 hours after hour ends</td><td>Near real-time pipelines, streaming</td></tr>
+                            <tr><td><strong>Daily</strong></td><td>~2-4 hours after day ends</td><td>Standard ETL, daily reporting</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 class="subsec-title">Destination Options</h3>
+                <ul>
+                    <li><strong>FTP/SFTP:</strong> Traditional file transfer to your servers</li>
+                    <li><strong>Amazon S3:</strong> Direct delivery to AWS buckets</li>
+                    <li><strong>Google Cloud Platform:</strong> Delivery to GCS buckets</li>
+                    <li><strong>Azure Blob Storage:</strong> Delivery to Azure containers</li>
+                </ul>
+
+                <div class="info-box">
+                    <div class="info-hdr">ℹ️ Multiple Feeds</div>
+                    <p>You can create multiple feeds for the same report suite with different configurations - for example, one hourly feed for real-time dashboards and one daily feed for your data warehouse.</p>
+                </div>
+                <div class="ref-box">
+                    <div class="ref-title">📚 Learn More</div>
+                    <ul>
+                        <li><a href="https://experienceleague.adobe.com/docs/analytics/export/analytics-data-feed/create-feed.html" target="_blank">Adobe Docs: Create Data Feed</a></li>
+                    </ul>
+                </div>
+            

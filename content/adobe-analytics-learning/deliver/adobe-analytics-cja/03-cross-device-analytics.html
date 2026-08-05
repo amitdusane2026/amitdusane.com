@@ -1,0 +1,54 @@
+---
+slug: "cross-device-analytics"
+title: "Cross-Device Analytics"
+seotitle: "Cross-Device Analytics in Adobe"
+lastmod: 2026-07-15
+type: lesson
+modulenum: 21
+sectionnum: 3
+weight: 3
+---
+<p>Cross-Device Analytics (CDA) stitches visitor data across devices to provide a unified view of the customer journey, reducing duplicate visitor counts and improving attribution.</p>
+                <h3 class="subsec-title">Stitching Methods</h3>
+                <div class="tbl-wrap">
+                    <table>
+                        <thead><tr><th>Method</th><th>How It Works</th><th>Requirements</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>Field-Based</strong></td><td>Uses a consistent identifier (login ID) you provide</td><td>Authenticated users, Customer ID set</td></tr>
+                            <tr><td><strong>Device Graph</strong></td><td>Uses Adobe's Co-op or Private Graph</td><td>Device Graph subscription</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 class="subsec-title">How CDA Works</h3>
+                <div class="code-block">
+                    <div class="code-hdr"><span class="code-lang">Cross-Device Stitching Example</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+                    <div class="code-body"><pre>Before CDA:
+├── Mobile Visitor A: Browse products
+├── Desktop Visitor B: Add to cart
+├── Tablet Visitor C: Complete purchase
+└── Result: 3 unique visitors, unclear journey
+
+After CDA (same person logged in):
+├── Person 1 on Mobile: Browse products
+├── Person 1 on Desktop: Add to cart
+├── Person 1 on Tablet: Complete purchase
+└── Result: 1 unique visitor, complete journey visible
+
+Benefits:
+- Accurate unique visitor counts
+- Complete conversion paths
+- Better attribution across touchpoints
+- Reduced audience duplication</pre></div>
+                </div>
+                <div class="info-box">
+                    <div class="info-hdr">ℹ️ Virtual Report Suite Required</div>
+                    <p>CDA works through Virtual Report Suites with cross-device stitching enabled. The base report suite contains raw data; the VRS provides the stitched view.</p>
+                </div>
+                <div class="ref-box">
+                    <div class="ref-title">📚 Learn More</div>
+                    <ul>
+                        <li><a href="https://experienceleague.adobe.com/docs/analytics/components/cda/overview.html" target="_blank">Adobe Docs: Cross-Device Analytics</a></li>
+                    </ul>
+                </div>
+            

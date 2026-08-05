@@ -1,0 +1,240 @@
+---
+slug: "sequential-segments"
+title: "Sequential Segments"
+seotitle: "Sequential Segments in Adobe Analytics"
+description: "And asks whether things happened. THEN asks whether they happened in order. Sequential segments turn a set of conditions into a journey with direction."
+lastmod: 2026-07-15
+type: lesson
+modulenum: 13
+sectionnum: 4
+weight: 4
+---
+<p><a href="/adobe-analytics-learning/analyze/segments/segment-logic-operators/">Segment Logic and Operators</a> closed on a promise. It showed how <code>And</code> and <code>Or</code> combine conditions, and admitted the one thing they cannot see: the difference between "saw the demo and then bought" and "bought and then saw the demo." To <code>And</code>, both are simply two things that happened. But those are opposite stories. One is a demo that earns a sale. The other is a customer being onboarded after they already paid. Same two events, reversed order, entirely different meaning, and a segment built on <code>And</code> would fold them together and hide the distinction completely.</p>
+
+<p>Order is often the whole point. Did they read the pricing page before starting a trial, or stumble onto it afterward? Did they abandon the cart before the discount banner appeared, or after? Questions like these are not about whether events occurred. They are about the direction of the journey. Answering them needs a third join operator and a different way of thinking.</p>
+
+<h3 class="subsec-title">THEN: putting events in order</h3>
+<p>Where <code>And</code> and <code>Or</code> sit between conditions and ask "both?" or "either?", <code>THEN</code> sits between them and asks "this, and then that?" A segment of Page A <code>THEN</code> Page B returns the visitors who saw Page A and later saw Page B, in that order, in that direction. Reverse the two checkpoints and the group changes. <code>THEN</code> is the operator that finally lets a segment express a path rather than a pile.</p>
+
+<p>Two details matter from the outset. A sequence needs at least two checkpoints, since a single event has nothing to follow. And the first checkpoint is part of the result, not merely a trigger. Page A <code>THEN</code> Page B does not return only the Page B moment; it returns the matched journey that began at Page A.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">📊 AND ignores order, THEN enforces it</div>
+    <svg viewBox="0 0 700 176" style="width:100%;height:auto;display:block;margin:4px 0 8px" role="img" aria-label="On the left, AND: both A-then-B and B-then-A qualify, because order is ignored. On the right, THEN: only A-then-B qualifies and B-then-A does not, because order is enforced.">
+        <text x="30" y="26" style="fill:var(--accent,#e11d48);font-size:14px;font-weight:700;font-family:sans-serif">AND: both happened</text>
+        <rect x="30" y="42" width="30" height="24" rx="4" style="fill:var(--card,#ffffff);stroke:var(--text2,#475569);stroke-width:1.5"/><text x="45" y="59" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">A</text>
+        <rect x="70" y="42" width="30" height="24" rx="4" style="fill:var(--card,#ffffff);stroke:var(--text2,#475569);stroke-width:1.5"/><text x="85" y="59" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">B</text>
+        <text x="120" y="59" style="fill:var(--success,#10b981);font-size:15px;font-weight:700;font-family:sans-serif">&#10003;</text>
+        <rect x="30" y="78" width="30" height="24" rx="4" style="fill:var(--card,#ffffff);stroke:var(--text2,#475569);stroke-width:1.5"/><text x="45" y="95" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">B</text>
+        <rect x="70" y="78" width="30" height="24" rx="4" style="fill:var(--card,#ffffff);stroke:var(--text2,#475569);stroke-width:1.5"/><text x="85" y="95" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">A</text>
+        <text x="120" y="95" style="fill:var(--success,#10b981);font-size:15px;font-weight:700;font-family:sans-serif">&#10003;</text>
+        <text x="30" y="134" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">Order ignored. Both orderings qualify.</text>
+
+        <line x1="350" y1="20" x2="350" y2="150" style="stroke:var(--border,#e2e8f0);stroke-width:1"/>
+
+        <text x="384" y="26" style="fill:var(--accent,#e11d48);font-size:14px;font-weight:700;font-family:sans-serif">THEN: A before B</text>
+        <rect x="384" y="42" width="30" height="24" rx="4" style="fill:var(--card,#ffffff);stroke:var(--accent,#e11d48);stroke-width:1.5"/><text x="399" y="59" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">A</text>
+        <text x="420" y="59" style="fill:var(--accent,#e11d48);font-size:13px;font-family:sans-serif">&#8594;</text>
+        <rect x="436" y="42" width="30" height="24" rx="4" style="fill:var(--card,#ffffff);stroke:var(--accent,#e11d48);stroke-width:1.5"/><text x="451" y="59" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">B</text>
+        <text x="486" y="59" style="fill:var(--success,#10b981);font-size:15px;font-weight:700;font-family:sans-serif">&#10003;</text>
+        <rect x="384" y="78" width="30" height="24" rx="4" style="fill:var(--card,#ffffff);stroke:var(--text2,#475569);stroke-width:1.5"/><text x="399" y="95" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12px;font-weight:700;font-family:sans-serif">B</text>
+        <text x="420" y="95" style="fill:var(--text3,#94a3b8);font-size:13px;font-family:sans-serif">&#8594;</text>
+        <rect x="436" y="78" width="30" height="24" rx="4" style="fill:var(--card,#ffffff);stroke:var(--text2,#475569);stroke-width:1.5"/><text x="451" y="95" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12px;font-weight:700;font-family:sans-serif">A</text>
+        <text x="486" y="95" style="fill:var(--text3,#94a3b8);font-size:15px;font-weight:700;font-family:sans-serif">&#10007;</text>
+        <text x="384" y="134" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">Order enforced. Only the first qualifies.</text>
+    </svg>
+</div>
+
+<h3 class="subsec-title">Why a sequence cannot live at Hit scope</h3>
+<p>A sequential segment must be scoped to Visit or Visitor. It can never be a Hit-scoped segment, and the reason follows directly from what a hit is. A hit is a single server call, one moment, as defined in <a href="/adobe-analytics-learning/analyze/segments/segment-containers/">Segment Containers</a>. A single moment has no "later." For "A then B" to mean anything, there has to be room for B to happen after A, which means the segment must span at least a visit. So the top of a sequence is always a Visit or a Visitor. Individual Hit checkpoints can still sit inside that sequence, marking specific moments along the way, but the sequence as a whole lives at the wider scope.</p>
+
+<h3 class="subsec-title">The greedy default, and how to rein it in</h3>
+<p>Sequential segments are greedy by design. Left alone, a sequence returns the largest set of data that matches the pattern, and Adobe labels this default "Include Everyone." For Page A <code>THEN</code> Page B, Include Everyone hands back the entire matched journeys: everything from before A, between A and B, and after B, for every visitor who followed the path. That is often far more than the question wanted, and it is the most common reason a sequential segment comes back looking bloated.</p>
+
+<p>Two options carve it down. "Only Before Sequence" keeps the sequence and everything leading up to it, the run-up. "Only After Sequence" keeps the sequence and everything that followed, the aftermath. Both include the matched sequence itself; they differ only in which side of it they keep. To learn what visitors did on their way to starting a trial, use Only Before. To learn what they did once they converted, use Only After.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">📊 What each sequence option returns from one matched journey</div>
+    <svg viewBox="0 0 700 224" style="width:100%;height:auto;display:block;margin:4px 0 8px" role="img" aria-label="A timeline of one visitor's hits with checkpoint A and checkpoint B marked. Include Everyone returns the whole timeline. Only Before returns from the start through B. Only After returns from A through the end. All three include the sequence A to B.">
+        <line x1="180" y1="40" x2="620" y2="40" style="stroke:var(--border,#e2e8f0);stroke-width:2"/>
+        <circle cx="180" cy="40" r="5" style="fill:var(--text3,#94a3b8)"/>
+        <circle cx="250" cy="40" r="7" style="fill:var(--accent,#e11d48)"/>
+        <circle cx="340" cy="40" r="5" style="fill:var(--text3,#94a3b8)"/>
+        <circle cx="430" cy="40" r="7" style="fill:var(--accent,#e11d48)"/>
+        <circle cx="520" cy="40" r="5" style="fill:var(--text3,#94a3b8)"/>
+        <circle cx="610" cy="40" r="5" style="fill:var(--text3,#94a3b8)"/>
+        <text x="250" y="24" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:12px;font-weight:700;font-family:sans-serif">A</text>
+        <text x="430" y="24" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:12px;font-weight:700;font-family:sans-serif">B</text>
+
+        <text x="16" y="86" style="fill:var(--text2,#475569);font-size:11px;font-weight:600;font-family:sans-serif">Include Everyone</text>
+        <rect x="180" y="74" width="430" height="22" rx="4" style="fill:var(--accent,#e11d48);opacity:.16"/>
+        <rect x="180" y="74" width="430" height="22" rx="4" style="fill:none;stroke:var(--accent,#e11d48);stroke-width:1.2"/>
+
+        <text x="16" y="128" style="fill:var(--text2,#475569);font-size:11px;font-weight:600;font-family:sans-serif">Only Before</text>
+        <rect x="180" y="116" width="250" height="22" rx="4" style="fill:var(--info,#3b82f6);opacity:.16"/>
+        <rect x="180" y="116" width="250" height="22" rx="4" style="fill:none;stroke:var(--info,#3b82f6);stroke-width:1.2"/>
+
+        <text x="16" y="170" style="fill:var(--text2,#475569);font-size:11px;font-weight:600;font-family:sans-serif">Only After</text>
+        <rect x="250" y="158" width="360" height="22" rx="4" style="fill:var(--success,#10b981);opacity:.16"/>
+        <rect x="250" y="158" width="360" height="22" rx="4" style="fill:none;stroke:var(--success,#10b981);stroke-width:1.2"/>
+
+        <text x="16" y="206" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">All three include the sequence itself (A to B). They differ in which side they keep.</text>
+    </svg>
+</div>
+
+<h3 class="subsec-title">Tightening the gap: After and Within</h3>
+<p>By default, "then" is patient. Page A <code>THEN</code> Page B matches whether B came one hit later or three months later. Sometimes that is fine. Often it is not: a trial that starts within a day of reading the pricing page is a different signal from one that starts a quarter later. Two modifiers on the <code>THEN</code> put limits on the gap. "Within" caps it, so <code>THEN</code> within 7 days or <code>THEN</code> within 1 hit requires B to arrive inside that window. "After" sets a floor, so B must come at least a stated interval later. Used well, these turn a loose "eventually" into a precise "soon after," which is usually what the business question actually meant.</p>
+
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>Control</th><th>What it does</th><th>Example</th></tr></thead>
+        <tbody>
+            <tr><td><strong>THEN</strong></td><td>the next checkpoint must occur after this one</td><td>Pricing THEN Trial start</td></tr>
+            <tr><td><strong>THEN within</strong></td><td>caps the gap between checkpoints</td><td>Cart THEN within 1 hour Purchase</td></tr>
+            <tr><td><strong>THEN after</strong></td><td>sets a minimum gap</td><td>Trial THEN after 7 days Purchase</td></tr>
+            <tr><td><strong>Only Before Sequence</strong></td><td>keeps the sequence and the run-up to it</td><td>behavior before reaching checkout</td></tr>
+            <tr><td><strong>Only After Sequence</strong></td><td>keeps the sequence and the aftermath</td><td>behavior after registering</td></tr>
+            <tr><td><strong>Exclude checkpoint</strong></td><td>requires a step to <em>not</em> happen at that position</td><td>checkout, then never confirmation</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">Follow along: build a basic sequence</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>Components > Segments > Add
+
+Title:  Pricing page, then a trial start
+
+Definition
+    Top container scope:  Visitors
+
+    Checkpoint 1:  Page          equals   Pricing
+    Join:          THEN  >  within  7  days
+    Checkpoint 2:  Trial Start   exists
+
+    Sequence returns:  Only After Sequence
+        (keeps the pricing-to-trial sequence and what followed,
+         instead of the default Include Everyone)
+
+Reads as: visitors who viewed Pricing and then, within 7 days,
+started a trial, plus everything they did afterward.
+
+Save</pre></div>
+</div>
+
+<h3 class="subsec-title">Excluding a step: the drop-off question</h3>
+<p>Some of the most valuable journeys are defined by what did not happen. A checkout funnel's real question is usually "who started but never finished." A sequence answers this with an Exclude checkpoint, and where the exclusion sits changes its meaning. Placed in the middle, it means "A then C, but never B in between," the visitors who skipped a step. Placed at the end, it means "did A, then never did B afterward," the classic drop-off. This is a truer way to build a funnel drop-off than a "does not equal" condition, which, as <a href="/adobe-analytics-learning/analyze/segments/segment-logic-operators/">Segment Logic and Operators</a> showed, negates a single hit rather than the whole step.</p>
+
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">Follow along: a funnel drop-off with an end Exclude</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>Components > Segments > Add
+
+Title:  Started checkout, never confirmed
+
+Definition
+    Top container scope:  Visits
+
+    Checkpoint 1:  Page   equals   Checkout
+    Join:          THEN
+    Checkpoint 2:  Page   equals   Order Confirmation
+        Set the EXCLUDE operator on Checkpoint 2
+
+Reads as: visits that reached Checkout and then never reached
+Order Confirmation afterward. A real funnel drop-off.
+
+Save</pre></div>
+</div>
+
+<h3 class="subsec-title">Logic Group: an unordered step inside an ordered sequence</h3>
+<p>Real journeys are not always strictly ordered end to end. Often part of a path is fixed and part is loose: a visitor must arrive from a campaign first and reach the order page last, but the two things they do in between, viewing a demo and viewing a coupon, can happen in either order. Expressing that needs a way to say "these steps, in any order, but as a group in this position." That is the Logic Group container, and it is the reason it was held back from the earlier sections: it exists only inside a sequence.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">📊 A Logic Group holds unordered steps inside an ordered sequence</div>
+    <svg viewBox="0 0 700 214" style="width:100%;height:auto;display:block;margin:4px 0 8px" role="img" aria-label="An ordered sequence. First, arrived from campaign. THEN a Logic Group holding viewed demo and viewed coupon, which may happen in any order. THEN reached confirmation. The group as a whole must fall between the arrival and the confirmation.">
+        <rect x="14" y="72" width="150" height="60" rx="8" style="fill:var(--card,#ffffff);stroke:var(--text2,#475569);stroke-width:1.5"/>
+        <text x="89" y="98" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">Arrived from</text>
+        <text x="89" y="114" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">a campaign</text>
+
+        <text x="190" y="92" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:11px;font-weight:700;font-family:sans-serif">THEN</text>
+        <line x1="166" y1="102" x2="212" y2="102" style="stroke:var(--accent,#e11d48);stroke-width:1.5"/>
+        <polygon points="218,102 207,97 207,107" style="fill:var(--accent,#e11d48)"/>
+
+        <rect x="222" y="46" width="230" height="112" rx="8" style="fill:var(--accent,#e11d48);opacity:.06"/>
+        <rect x="222" y="46" width="230" height="112" rx="8" style="fill:none;stroke:var(--accent,#e11d48);stroke-width:2.5"/>
+        <text x="238" y="66" style="fill:var(--accent,#e11d48);font-size:10px;font-weight:700;font-family:sans-serif;letter-spacing:.5px">LOGIC GROUP, ANY ORDER</text>
+        <rect x="238" y="76" width="198" height="26" rx="4" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1"/>
+        <text x="252" y="93" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">Viewed the demo page</text>
+        <text x="337" y="120" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:10px;font-style:italic;font-family:sans-serif">and, in either order</text>
+        <rect x="238" y="126" width="198" height="26" rx="4" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1"/>
+        <text x="252" y="143" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">Viewed the coupon page</text>
+
+        <text x="478" y="92" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:11px;font-weight:700;font-family:sans-serif">THEN</text>
+        <line x1="454" y1="102" x2="500" y2="102" style="stroke:var(--accent,#e11d48);stroke-width:1.5"/>
+        <polygon points="506,102 495,97 495,107" style="fill:var(--accent,#e11d48)"/>
+
+        <rect x="510" y="72" width="176" height="60" rx="8" style="fill:var(--card,#ffffff);stroke:var(--text2,#475569);stroke-width:1.5"/>
+        <text x="598" y="98" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">Reached order</text>
+        <text x="598" y="114" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">confirmation</text>
+
+        <text x="14" y="188" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">The two middle steps may occur in either order, but the group must fall between arrival and confirmation.</text>
+    </svg>
+</div>
+
+<p>The reason a Logic Group exists rather than an ordinary container is subtle and easy to get wrong.</p>
+
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ A plain container inside a THEN sequence misbehaves</div>
+    <p>It is tempting to drop an ordinary Hit or Visit container into a sequence to hold two order-independent steps. Do not. A non-sequential container does not require its conditions to fall inside the sequence, so the two grouped steps can be satisfied anywhere in the visitor's history, before the sequence, after it, or scattered apart, and the segment quietly returns more than intended. The Logic Group container is built precisely to prevent this: it holds unordered steps while still forcing the group as a whole to sit in its place in the sequence.</p>
+</div>
+
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">Follow along: build a Logic Group step</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>Components > Segments > Add
+
+Title:  Campaign, then demo and coupon in any order, then order
+
+Definition
+    Top container scope:  Visitors
+
+    Checkpoint 1:  Marketing Channel   equals   Paid Campaign
+    Join:          THEN
+
+    Middle steps:  Page equals Demo     Page equals Coupon
+        Select both > Options > Add container from selection
+        Change the container type to  Logic Group
+        (inside a Logic Group the two may occur in any order)
+    Join:          THEN
+
+    Last checkpoint:  Page   equals   Order Confirmation
+
+Reads as: arrived from a paid campaign, then viewed the demo and
+the coupon pages in either order, then reached order confirmation.
+
+Save</pre></div>
+</div>
+
+<h3 class="subsec-title">What to watch for</h3>
+<p>Three mistakes account for most sequential-segment trouble. The first is forgetting the greedy default: a sequence set to Include Everyone returns the whole matched journey, so a segment that looks far too large usually just needs Only Before or Only After. The second is confusing <code>THEN</code> with stacking. Stacking two saved segments together behaves like <code>And</code>, both must be true, in any order, while a sequence uses <code>THEN</code> to demand order. Teams sometimes stack segments and expect an ordered result, or build a sequence when they only needed co-occurrence, and then puzzle over why two reports disagree. If order matters, the segment needs <code>THEN</code>. If it does not, <code>And</code> or stacking is simpler and lighter.</p>
+
+<p>The third is cost. A sequence is more expensive to process than a plain condition, because the engine has to evaluate order across a visitor's timeline rather than check each hit in isolation. That is a fair price for the questions only a sequence can answer, but it is a reason to reach for one on purpose, not by habit.</p>
+
+<div class="pro-tip">
+    <div class="pro-tip-hdr">💡 Validate a sequence against data you already understand</div>
+    <p>Sequential logic is easy to get subtly wrong, and a segment that returns a plausible number is not the same as a correct one. The reliable way to trust a sequence is to build and test it against a small, known data set first, where the right answer is already obvious, before turning it loose on the full report. It is the fastest way to catch a greedy default or a misplaced checkpoint before it reaches a stakeholder.</p>
+</div>
+
+<h3 class="subsec-title">From building to sharing</h3>
+<p>A segment can now express three things: how wide it reaches, through the container; what must be true, through the logic and operators; and in what order events must occur, through the sequence. That is the full grammar of a definition. What remains is everything that happens around the definition: the different kinds of segments Adobe offers, how a segment is saved, shared with a team, reused across projects, and even published as an audience to other tools. That is Segment Types and Sharing.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Analytics</div>
+    <p>Sequences are built in the same Segment builder (Analytics &gt; <span class="path">Components &gt; Segments &gt; Add</span>). Drag two or more checkpoints onto the canvas, then change the join between them from And to <span class="path">THEN</span>. The <span class="path">Within</span> and <span class="path">After</span> limits attach to each THEN, and the <span class="path">Only Before / Only After Sequence</span> options sit on the sequence itself. To group unordered steps, select them and choose <span class="path">Options &gt; Add container from selection</span>, then set the container type to <span class="path">Logic Group</span>.</p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title">📚 Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/segmentation/segmentation-workflow/seg-sequential-build" target="_blank">Adobe Docs: Build Sequential Segments</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/segmentation/seg-containers" target="_blank">Adobe Docs: Segment Containers (Logic Group)</a></li>
+    </ul>
+</div>

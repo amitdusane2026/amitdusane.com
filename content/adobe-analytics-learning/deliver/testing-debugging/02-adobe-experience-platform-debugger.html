@@ -1,0 +1,60 @@
+---
+slug: "adobe-experience-platform-debugger"
+title: "Adobe Experience Platform Debugger"
+lastmod: 2026-07-15
+type: lesson
+modulenum: 20
+sectionnum: 2
+weight: 2
+---
+<p>The AEP Debugger is the primary tool for inspecting Adobe Experience Cloud implementations, including Analytics, Target, and Launch.</p>
+                <h3 class="subsec-title">Key Features</h3>
+                <ul>
+                    <li><strong>Summary view:</strong> Quick overview of all Adobe solutions on page</li>
+                    <li><strong>Analytics inspection:</strong> View all variables sent in each request</li>
+                    <li><strong>Launch validation:</strong> Check rules fired, data elements, extensions</li>
+                    <li><strong>Network requests:</strong> See actual beacon calls to Adobe</li>
+                    <li><strong>Experience Cloud ID:</strong> Verify visitor identification</li>
+                    <li><strong>Logs:</strong> Console-style logging of tag activity</li>
+                </ul>
+
+                <h3 class="subsec-title">Analytics Tab Details</h3>
+                <div class="code-block">
+                    <div class="code-hdr"><span class="code-lang">What to Inspect</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+                    <div class="code-body"><pre>Report Suite ID (rsid)
+├── Verify correct report suite
+└── Check for multi-suite tagging
+
+Page Variables
+├── pageName - Is it populated correctly?
+├── channel - Site section accurate?
+├── hier1-5 - Hierarchy values
+└── server - Server/domain
+
+Custom Variables
+├── eVar1-250 - Conversion variables
+├── prop1-75 - Traffic variables
+├── list1-3 - List variables
+└── products - Product string format
+
+Events
+├── events - Which events fired?
+├── purchaseID - Deduplication ID
+└── currencyCode - Currency setting
+
+Visitor Info
+├── Experience Cloud ID (mid)
+├── Analytics Visitor ID (aid)
+└── Customer ID (if set)</pre></div>
+                </div>
+                <div class="pro-tip">
+                    <div class="pro-tip-hdr">💡 Pro Tip</div>
+                    <p>Use the "Lock" feature in the debugger to keep inspecting a specific page even as you navigate. This is invaluable for debugging multi-page flows like checkout processes.</p>
+                </div>
+                <div class="ref-box">
+                    <div class="ref-title">📚 Learn More</div>
+                    <ul>
+                        <li><a href="https://experienceleague.adobe.com/docs/debugger/using/solutions.html" target="_blank">Adobe Docs: Debugging Analytics</a></li>
+                    </ul>
+                </div>
+            

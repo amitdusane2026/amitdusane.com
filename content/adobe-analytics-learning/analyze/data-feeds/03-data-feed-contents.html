@@ -1,0 +1,68 @@
+---
+slug: "data-feed-contents"
+title: "Data Feed Contents"
+lastmod: 2026-07-15
+type: lesson
+modulenum: 17
+sectionnum: 3
+weight: 3
+---
+<p>Data Feed deliveries contain multiple files that work together to provide complete hit-level data.</p>
+                <h3 class="subsec-title">File Structure</h3>
+                <div class="tbl-wrap">
+                    <table>
+                        <thead><tr><th>File</th><th>Format</th><th>Contents</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>hit_data.tsv</strong></td><td>Tab-delimited</td><td>Actual hit data with all columns</td></tr>
+                            <tr><td><strong>column_headers.tsv</strong></td><td>Tab-delimited</td><td>Column names matching data file</td></tr>
+                            <tr><td><strong>manifest.txt</strong></td><td>Text</td><td>File list and row counts</td></tr>
+                            <tr><td><strong>Lookup files</strong></td><td>Tab-delimited</td><td>ID-to-name mappings</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 class="subsec-title">Key Lookup Files</h3>
+                <div class="code-block">
+                    <div class="code-hdr"><span class="code-lang">Common Lookup Files</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+                    <div class="code-body"><pre>browser.tsv          → Browser ID to name
+browser_type.tsv     → Browser type ID to name
+color_depth.tsv      → Color depth ID to value
+connection_type.tsv  → Connection type ID to name
+country.tsv          → Country ID to name
+javascript_version.tsv → JS version ID to version
+languages.tsv        → Language ID to name
+operating_systems.tsv → OS ID to name
+plugins.tsv          → Plugin ID to name
+resolution.tsv       → Resolution ID to dimensions
+search_engines.tsv   → Search engine ID to name
+event.tsv            → Event ID to event name (custom)</pre></div>
+                </div>
+
+                <h3 class="subsec-title">Important Columns</h3>
+                <div class="tbl-wrap">
+                    <table>
+                        <thead><tr><th>Column</th><th>Description</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>hit_time_gmt</strong></td><td>Unix timestamp of hit</td></tr>
+                            <tr><td><strong>visid_high / visid_low</strong></td><td>Visitor ID components</td></tr>
+                            <tr><td><strong>visit_num</strong></td><td>Visit number for this visitor</td></tr>
+                            <tr><td><strong>visit_page_num</strong></td><td>Page number within visit</td></tr>
+                            <tr><td><strong>post_* columns</strong></td><td>Processed values (use these)</td></tr>
+                            <tr><td><strong>pre_* columns</strong></td><td>Raw values before processing</td></tr>
+                            <tr><td><strong>exclude_hit</strong></td><td>Bot filtering flag</td></tr>
+                            <tr><td><strong>post_product_list</strong></td><td>Products string (parsed format)</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="warn-box">
+                    <div class="warn-hdr">⚠️ Pre vs Post Columns</div>
+                    <p>Always use <strong>post_</strong> columns for analysis. These contain values after processing rules, VISTA rules, and bot filtering have been applied. Pre_ columns show raw, unprocessed values.</p>
+                </div>
+                <div class="ref-box">
+                    <div class="ref-title">📚 Learn More</div>
+                    <ul>
+                        <li><a href="https://experienceleague.adobe.com/docs/analytics/export/analytics-data-feed/c-df-contents/datafeeds-contents.html" target="_blank">Adobe Docs: Data Feed Contents</a></li>
+                        <li><a href="https://experienceleague.adobe.com/docs/analytics/export/analytics-data-feed/c-df-contents/datafeeds-reference.html" target="_blank">Adobe Docs: Column Reference</a></li>
+                    </ul>
+                </div>
+            

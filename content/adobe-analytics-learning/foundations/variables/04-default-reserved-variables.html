@@ -1,0 +1,97 @@
+---
+slug: "default-reserved-variables"
+title: "Default and Reserved Variables"
+seotitle: "Default and Reserved Variables in Adobe Analytics"
+lastmod: 2026-07-18
+description: "pageName, campaign, and the reserved variables Adobe fills for you. Small variables with big consequences, and the two IDs people constantly mix up."
+type: lesson
+modulenum: 3
+sectionnum: 4
+weight: 4
+---
+<p>Props, eVars, and events cover an enormous amount of ground, and you might reasonably think they are all you need. For a while, they are. But like any mature platform, Adobe Analytics ships with a set of built-ins: variables and dimensions its creators knew almost every customer would need, so rather than make you configure them from scratch, Adobe provides them ready to use. The logic is simple. This tool exists to measure behavior on websites and apps, and a website is a collection of pages, so it is a near-certainty you will want to know which pages were viewed. Page identity is not optional; Adobe bakes it in. The same reasoning extends outward: page details, commerce, campaigns, and the visitor's own environment are things almost everyone measures, so almost all of them come built-in.</p>
+<p>These built-ins fall into two families, and telling them apart is the key to this section. Some are <strong>reserved variables you still populate</strong>: Adobe fixes what they mean, but you set the value. Others are <strong>dimensions Adobe collects automatically</strong>, derived from the hit itself with no tagging at all.</p>
+<div class="cards">
+    <div class="card">
+        <div class="card-icon">✍️</div>
+        <div class="card-title">Reserved: you populate</div>
+        <div class="card-desc">Adobe fixes the meaning; you set the value. pageName, channel, campaign, products, purchaseID, and the commerce events.</div>
+    </div>
+    <div class="card">
+        <div class="card-icon">🛰️</div>
+        <div class="card-title">Automatic: Adobe collects</div>
+        <div class="card-desc">Read from the hit itself, no tagging at all. Browser, operating system, device, geolocation, referrer, screen, and time.</div>
+    </div>
+</div>
+<h3 class="subsec-title">Family one: reserved variables you populate</h3>
+<p>With a prop or eVar, the slot is blank until you decide what it holds. A reserved variable is the opposite: Adobe already knows what it means and will treat its contents in specific, built-in ways no matter what you intend. Your job is not to define it, but to populate it correctly.</p>
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>Variable</th><th>What Adobe does with it</th><th>Example</th></tr></thead>
+        <tbody>
+            <tr><td><code>pageName</code></td><td>The identity of a page, the backbone of all page reporting (set it well; see below)</td><td>"Home", "Product: Blue Widget"</td></tr>
+            <tr><td><code>channel</code></td><td>Site section / top-level grouping</td><td>"Products", "Support"</td></tr>
+            <tr><td><code>server</code></td><td>Domain or server name</td><td>"www.example.com"</td></tr>
+            <tr><td><code>campaign</code></td><td>Reserved eVar for external campaign tracking codes (feeds Marketing Channels)</td><td>"email_summer_2026"</td></tr>
+            <tr><td><code>products</code></td><td>The entire ecommerce funnel: products, quantity, revenue, and product-level events and eVars</td><td>";Blue Widget;1;99.99"</td></tr>
+            <tr><td><code>purchaseID</code></td><td>De-duplicates an entire order</td><td>"ORD-12345"</td></tr>
+            <tr><td><code>transactionID</code></td><td>Links this hit to offline data via Data Sources</td><td>"TXN-67890"</td></tr>
+            <tr><td><code>state</code> / <code>zip</code></td><td>Legacy reserved geo variables you set (rarely used now; not the automatic geo below)</td><td>"California" / "94105"</td></tr>
+        </tbody>
+    </table>
+</div>
+<h3 class="subsec-title">pageName: small variable, big consequences</h3>
+<p>It looks trivial, but <code>pageName</code> is the identity of every page in your reports. Adobe groups page views by this value, so two pages sharing a pageName merge into one line, and one page sent with three slightly different names fragments into three. A consistent, deliberate pageName strategy is the difference between clean page reporting and a Pages report no one trusts.</p>
+<h3 class="subsec-title">Two IDs people mix up</h3>
+<p><code>purchaseID</code> and <code>transactionID</code> sound alike and do completely different jobs. <strong>purchaseID</strong> de-duplicates a whole order: set it on the purchase, and a refresh cannot double-count the sale (the cleaner alternative to serializing the purchase event, from <a href="/adobe-analytics-learning/foundations/variables/events-success-events/">events</a>). <strong>transactionID</strong> is for <em>Data Sources</em>: it tags a hit so you can later stitch offline outcomes (a call-center sale, a returned order) back to the original online visit. One prevents duplicates; the other links worlds.</p>
+<h3 class="subsec-title">campaign: a reserved slot for marketing</h3>
+<p>One reserved variable deserves its own note. Marketing has always run on campaigns, and the internet only changed their form: instead of billboards and print, modern campaigns run through display ads, paid search, and affiliate links. Knowing which campaign drove traction is how a marketing team optimizes spend and lifts conversion, so Adobe reserves a dedicated variable for it. You capture the campaign's tracking code, usually pulled from the landing URL, into <code>campaign</code>, and it feeds the Tracking Code dimension and the Marketing Channels reports. Because it is really a reserved eVar under the hood, it persists and can be given an expiration, exactly the attribution behavior from the eVar section.</p>
+<p>Reserved names are not limited to variables. The commerce events the last section pointed here also carry fixed meanings you simply use rather than define:</p>
+<div class="diagram-box">
+    <div class="diagram-title">🛒 Reserved commerce events (fixed meanings, you just use them)</div>
+    <div class="diagram-content">
+        <div class="event-grid">
+            <div class="event-item"><code>purchase</code> Orders</div>
+            <div class="event-item"><code>prodView</code> Product Views</div>
+            <div class="event-item"><code>scAdd</code> Cart Additions</div>
+            <div class="event-item"><code>scRemove</code> Cart Removals</div>
+            <div class="event-item"><code>scView</code> Cart Views</div>
+            <div class="event-item"><code>scCheckout</code> Checkouts</div>
+            <div class="event-item"><code>scOpen</code> Cart Opens</div>
+        </div>
+    </div>
+</div>
+<p>Because Adobe knows what these mean, an entire commerce funnel, product views to cart to checkout to order, reports consistently across every Adobe Analytics implementation in the world. You populate them, usually alongside the products variable, and the standard commerce reports appear without any custom setup.</p>
+<h3 class="subsec-title">Family two: dimensions Adobe collects automatically</h3>
+<p>The second family costs you nothing to collect. Every hit already carries clues about the visitor's environment, and Adobe reads them for you. You do not tag any of this; it simply appears in your reports.</p>
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>Dimension</th><th>Derived from</th><th>Note</th></tr></thead>
+        <tbody>
+            <tr><td>Browser, Operating system, Device type</td><td>User agent</td><td>Broad type is automatic; exact version needs client hints</td></tr>
+            <tr><td>Mobile device details</td><td>User agent lookups</td><td>Web SDK requires Device Lookup on the datastream</td></tr>
+            <tr><td>Country, Region, City</td><td>IP address</td><td>Precision is configurable in report suite settings</td></tr>
+            <tr><td>Referrer, Referring domain</td><td>The referring URL</td><td>Where the visitor arrived from</td></tr>
+            <tr><td>Screen resolution, Color depth</td><td>Browser</td><td>Collected automatically</td></tr>
+            <tr><td>Time parting (hour, day, weekday)</td><td>Hit timestamp</td><td>Derived at processing, never sent</td></tr>
+        </tbody>
+    </table>
+</div>
+<p>Two modern caveats are worth knowing. First, only the broad signals come free: browser <em>type</em>, OS <em>type</em>, and desktop-versus-mobile are automatic, but precise versions (the exact browser build, device model, or OS version) now require configuring <strong>client hints</strong>, because browsers have tightened what they reveal by default. Second, on a <strong>Web SDK</strong> implementation these device, browser, and OS dimensions are not automatic the way they were in classic AppMeasurement; you must enable <strong>Device Lookup</strong> on the datastream to populate them. Geolocation precision is also yours to control: the same IP obfuscation setting from report suites decides how precise the country, region, and city data is allowed to be.</p>
+<div class="info-box">
+    <div class="info-hdr">ℹ️ One reserved variable is big enough to need its own section</div>
+    <p>You will have noticed <code>products</code> sitting in the reserved table above, untouched. That is deliberate. The products variable is the foundation of <em>all</em> ecommerce reporting in Adobe Analytics, and it is also the single most error-prone variable in the product. It earns a section of its own, <a href="/adobe-analytics-learning/foundations/variables/products-string/">The Products String</a>, which is the very next one.</p>
+</div>
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to Find in Adobe Analytics</div>
+    <p>Reserved variables are set in code or via Tags, not in report suite settings. Their reports appear under <span class="path">Components → Dimensions</span> and <span class="path">Components → Metrics</span>.</p>
+    <p>Geo precision (IP obfuscation): <span class="path">Admin → Report Suites → Edit Settings → General → General Account Settings</span></p>
+</div>
+<div class="ref-box">
+    <div class="ref-title">📚 Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/implementation/vars/page-vars/page-variables" target="_blank">Adobe Docs: Page Variables</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/dimensions/overview" target="_blank">Adobe Docs: Dimensions Overview (auto-collected)</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/implementation/vars/page-vars/purchaseid" target="_blank">Adobe Docs: Purchase ID</a></li>
+    </ul>
+</div>

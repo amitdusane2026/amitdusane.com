@@ -1,0 +1,268 @@
+---
+slug: "designing-the-key"
+title: "Designing the Key"
+seotitle: "Designing the Classification Key in Adobe Analytics"
+lastmod: 2026-07-18
+description: "The key is not a setting. It is the raw value you already collect. Five rules that decide whether classifications work for you or against you."
+type: lesson
+modulenum: 11
+sectionnum: 2
+weight: 2
+---
+<p>Open the classification interface in Adobe Analytics and go looking for the screen where you design the key.</p>
+
+<p>There is not one. There never was. You can create a set, define a schema, upload a file, write a rule, and at no point does Adobe ask you what the key should be. By the time you arrive at that interface the key already exists, and has existed for months. Somebody chose it. Maybe a marketer inventing a campaign code convention. Maybe a developer deciding what to push into an eVar. Maybe nobody chose it at all, and the key is simply whatever the system happened to emit.</p>
+
+<p>Which is a strange thing to sit with. The most important decision in this entire module gets made outside the tool that depends on it, long before anyone is thinking about classifications, and usually by people who have never heard the word.</p>
+
+<h3 class="subsec-title">The key is not a setting</h3>
+<p>The phrase "designing the key" invites the wrong mental picture, so it is worth clearing up straight away.</p>
+
+<p>The key is not a field you fill in anywhere. The key <em>is the raw dimension value itself</em>. Classify a tracking code, and the key is whatever string arrived in that tracking code. Classify an eVar holding a User ID, and the key is that User ID, exactly as the login page pushed it. No translation layer, no configuration, nowhere to step in. Whatever was collected is the key, and the classification either finds it or it does not.</p>
+
+<p>So designing the key is not an analytics task you perform in an analytics screen. It is a decision about <strong>what gets collected in the first place</strong>. It belongs in the same conversation as the rest of your variable planning, the one you have with marketing and with the developer, written down during <a href="/adobe-analytics-learning/foundations/variables/variable-planning/">variable planning</a> long before a single classification exists.</p>
+
+<p>Remember what Classifications Overview established. Classifications shape data at report time, not at collection time. That is what makes them retroactive and what makes them free of code. But it also means they have nothing of their own to hold on to. They grip the collected value, and only the collected value. The key is the one thing a classification can reach, which makes it the whole load-bearing structure.</p>
+
+<p>Five things make a key good. Here they are before the detail, so you know the shape of the walk.</p>
+
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>The rule</th><th>What it asks of the key</th><th>What it costs you when it is wrong</th></tr></thead>
+        <tbody>
+            <tr><td><strong>1.</strong> It has to be there</td><td>Present on the hits you actually want to report on</td><td>Everything you wanted quietly lands in Unspecified</td></tr>
+            <tr><td><strong>2.</strong> It has to mean one thing, forever</td><td>Never reused, never recycled, never reassigned</td><td>Your history rewrites itself, and nothing warns you</td></tr>
+            <tr><td><strong>3.</strong> It has to be readable</td><td>Structure, and a delimiter a machine can grip</td><td>Every attribute typed by hand, by someone, forever</td></tr>
+            <tr><td><strong>4.</strong> It has to survive the limits</td><td>Length, whitespace, zeros, duplicates</td><td>Rows fail to load, and nothing tells you why</td></tr>
+            <tr><td><strong>5.</strong> It has to be countable</td><td>A sane number of unique values</td><td>Slow, fragile, and eventually unusable</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<h3 class="subsec-title">One: the key has to be there</h3>
+<p>Start with the rule that sounds too obvious to bother stating, then watch how often it gets broken.</p>
+
+<p>A classification resolves a key on a hit. No key on the hit, nothing to resolve, and that dimension item goes into <strong>Unspecified</strong>. No error. No warning. Just a quiet line in the report absorbing everything the classification could not reach.</p>
+
+<p>So the real question is never "will the key be collected." It is "<strong>on which hits will the key actually be present</strong>," and the answer depends entirely on where you put it.</p>
+
+<p>Put the club's User ID in a prop and it lives only on the hits where the code explicitly set it. Realistically that means the login page and nothing else. Every classification hanging off it will describe the login page and go silent everywhere else. Run a report of Membership Tier against Hall Bookings and you get almost nothing, correctly, because the booking page never carried a User ID.</p>
+
+<p>Put that same User ID in an eVar with a thirty-day expiration and it persists. The member's whole month of activity now carries the key, and the classifications travel with it everywhere they go. Same data, same file, completely different report.</p>
+
+<p>You configured none of that in the classification screen. You configured it back when you decided which variable holds the key and how long it lives, which is a decision you made back in <a href="/adobe-analytics-learning/foundations/variables/">Variables</a>, and it has just come due.</p>
+
+<h3 class="subsec-title">Two: the key has to mean one thing, forever</h3>
+<p>This is the rule that gets broken most expensively, and it turns the best property of classifications into the most dangerous one. Slow down here.</p>
+
+<p>Retroactivity is not a one-time gift. It is a permanent, living relationship between the lookup table and every hit in your history. Change the table today and history changes today. Load a file with the same key in it twice, and the second row simply wins. There is no versioning. There is no effective date. One current value per key, and it applies to all of time.</p>
+
+<p>Now picture what happens when a key gets reused.</p>
+
+<p>Member M-10482 is a sixty-four year old Gold member who booked the community hall every month for two years. She leaves. Eighteen months later the membership system, which recycles IDs, hands M-10482 to a twenty-three year old new joiner. The CRM export runs on schedule that night. The file uploads cleanly. No error appears anywhere.</p>
+
+<p>And two years of hall bookings by a senior Gold member have just become two years of hall bookings by a twenty-three year old.</p>
+
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ A recycled key rewrites history silently</div>
+    <p>No validation catches this, because nothing failed. The upload succeeded. The report renders. The totals still reconcile, because no hits were added or removed. Only the labels moved, and they moved backward through every report anyone has ever run. If your key can be recycled, reassigned, or reused by the source system, <strong>it is not a key.</strong> It is a slot number, and slot numbers are not identities.</p>
+</div>
+
+<p>So before you accept any value as a key, go and ask the system that generates it one question. Can this value ever refer to something else later? Not "will it," but "can it." If the answer is yes, either fix it at the source and make the identifier permanent, or classify something else instead.</p>
+
+<p>That question quietly indicts a whole family of tempting keys. A campaign code reused next year because it worked well last year. A product SKU retired and later reissued for something different. An order number that resets each fiscal year. Every one of them looks fine on the day you upload it. Every one of them is a slow rewrite of your own history.</p>
+
+<h3 class="subsec-title">Three: the key has to be readable by a machine</h3>
+<p>The first two rules are about correctness. This one is about leverage, and it separates a key that merely works from a key that pays for itself.</p>
+
+<p>Classifications Overview introduced the rule builder, which reads the key you already have, matches it against a pattern, and fills classification columns without any file at all. Whether that is even possible has nothing to do with the rule builder. It was settled months earlier, by whoever wrote the campaign code convention.</p>
+
+<p>Look at two tracking codes for the same email campaign.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">Same campaign, two keys, two very different futures</div>
+    <div class="diagram-content">
+        <div class="comparison-grid">
+            <div class="comp-item">
+                <div class="comp-label">emljul26wb</div>
+                <div class="comp-desc">Short, tidy, and completely opaque. A machine sees ten characters and nothing more. Every attribute gets typed into a file by a human, forever, for every campaign.</div>
+            </div>
+            <span class="comp-vs">vs</span>
+            <div class="comp-item">
+                <div class="comp-label">eml_2026_07_winback_in</div>
+                <div class="comp-desc">Longer, and it carries its own meaning. A rule reads it once and produces five dimensions automatically, for every campaign that follows the convention, with nobody uploading anything.</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<p>The second key is not just nicer to look at. It has a <strong>structure</strong>, and structure is the thing a regular expression can grip.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">📊 The anatomy of a designed key</div>
+    <svg viewBox="0 0 700 230" style="width:100%;height:auto;display:block;margin:4px 0 8px" role="img" aria-label="The tracking code eml underscore 2026 underscore 07 underscore winback underscore in splits at each underscore into five classification columns: Channel equals Email, Year equals 2026, Month equals July, Campaign equals Winback, and Country equals India.">
+        <text x="20" y="24" style="fill:var(--text3,#94a3b8);font-size:10px;font-weight:700;letter-spacing:1px;font-family:sans-serif">ONE COLLECTED VALUE</text>
+
+        <rect x="20" y="38" width="660" height="42" rx="6" style="fill:var(--card,#ffffff);stroke:var(--accent,#e11d48);stroke-width:2"/>
+        <text x="80" y="65" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:15px;font-weight:700;font-family:monospace">eml</text>
+        <text x="145" y="65" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:15px;font-family:monospace">_</text>
+        <text x="215" y="65" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:15px;font-weight:700;font-family:monospace">2026</text>
+        <text x="280" y="65" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:15px;font-family:monospace">_</text>
+        <text x="345" y="65" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:15px;font-weight:700;font-family:monospace">07</text>
+        <text x="410" y="65" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:15px;font-family:monospace">_</text>
+        <text x="480" y="65" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:15px;font-weight:700;font-family:monospace">winback</text>
+        <text x="550" y="65" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:15px;font-family:monospace">_</text>
+        <text x="620" y="65" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:15px;font-weight:700;font-family:monospace">in</text>
+
+        <line x1="80" y1="84" x2="80" y2="122" style="stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <polygon points="80,128 75,118 85,118" style="fill:var(--border,#e2e8f0)"/>
+        <line x1="215" y1="84" x2="215" y2="122" style="stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <polygon points="215,128 210,118 220,118" style="fill:var(--border,#e2e8f0)"/>
+        <line x1="345" y1="84" x2="345" y2="122" style="stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <polygon points="345,128 340,118 350,118" style="fill:var(--border,#e2e8f0)"/>
+        <line x1="480" y1="84" x2="480" y2="122" style="stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <polygon points="480,128 475,118 485,118" style="fill:var(--border,#e2e8f0)"/>
+        <line x1="620" y1="84" x2="620" y2="122" style="stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <polygon points="620,128 615,118 625,118" style="fill:var(--border,#e2e8f0)"/>
+
+        <rect x="26" y="132" width="108" height="46" rx="5" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1"/>
+        <text x="80" y="150" text-anchor="middle" style="fill:var(--text2,#475569);font-size:10px;font-family:sans-serif">Channel</text>
+        <text x="80" y="167" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">Email</text>
+
+        <rect x="161" y="132" width="108" height="46" rx="5" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1"/>
+        <text x="215" y="150" text-anchor="middle" style="fill:var(--text2,#475569);font-size:10px;font-family:sans-serif">Year</text>
+        <text x="215" y="167" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">2026</text>
+
+        <rect x="291" y="132" width="108" height="46" rx="5" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1"/>
+        <text x="345" y="150" text-anchor="middle" style="fill:var(--text2,#475569);font-size:10px;font-family:sans-serif">Month</text>
+        <text x="345" y="167" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">July</text>
+
+        <rect x="426" y="132" width="108" height="46" rx="5" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1"/>
+        <text x="480" y="150" text-anchor="middle" style="fill:var(--text2,#475569);font-size:10px;font-family:sans-serif">Campaign</text>
+        <text x="480" y="167" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">Winback</text>
+
+        <rect x="566" y="132" width="108" height="46" rx="5" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1"/>
+        <text x="620" y="150" text-anchor="middle" style="fill:var(--text2,#475569);font-size:10px;font-family:sans-serif">Country</text>
+        <text x="620" y="167" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">India</text>
+
+        <text x="20" y="205" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">Five reportable dimensions. One eVar spent. No file uploaded, and no developer involved.</text>
+        <text x="20" y="222" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">The delimiter is what makes this possible. Remove it and the whole thing collapses into a string.</text>
+    </svg>
+</div>
+
+<p>Regular expressions work best on codes that use delimiters. Not codes of a fixed width, not codes you slice by character position, but codes with a separator between the parts. The reason is practical. Position-based parsing breaks the first time a campaign name runs one character long. Delimiter-based parsing does not care how long the parts are, only that something sits between them.</p>
+
+<p>So the delimiter matters more than it looks. It has to be a character that can never appear inside any of the values it separates. An underscore is safe, because campaign names rarely contain one. A hyphen is riskier, because <code>win-back</code> is a perfectly natural thing for a marketer to type, and the moment they do, your rule quietly produces a Campaign of <code>win</code> and a Country of <code>back</code>.</p>
+
+<div class="pro-tip">
+    <div class="pro-tip-hdr">💡 The trap that kills rule-based classification outright</div>
+    <p><strong>A URL-encoded tracking code will not be classified by the Rule Builder at all.</strong> This sounds like a bug, but it is a hard limit of the feature, and one worth knowing before you design a single rule. A beautifully delimited key that arrives as <code>eml%5F2026%5F07%5Fwinback</code> is simply unreadable to the rule builder, and no amount of regular expression skill will rescue it. The fix lives upstream, in how the campaign link is built and how the value is read into the variable. Which makes it a conversation with whoever owns the campaign URLs, not a configuration you can solve alone.</p>
+</div>
+
+<h3 class="subsec-title">Four: the key has to survive the boring constraints</h3>
+<p>None of this is exciting. All of it breaks real uploads, and the failures tend to arrive weeks after the key convention was agreed, when changing it has become expensive.</p>
+
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>Constraint</th><th>The rule</th><th>What it means for your key</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Length</strong></td><td>A key cannot exceed 255 bytes, and neither can any classification value</td><td>Generous, but not infinite. A key built by gluing several long free-text fields together can reach it.</td></tr>
+            <tr><td><strong>Empty keys</strong></td><td>A key cannot be empty or made only of whitespace</td><td>Those rows are rejected. Make sure the source system cannot emit one.</td></tr>
+            <tr><td><strong>Zero</strong></td><td>A key or value of <code>0</code> throws an error, and so do <code>00</code> and <code>000</code></td><td>The strangest limit in the feature. If your source can legitimately produce a zero, translate it at collection time into a text value such as <code>Zero</code>.</td></tr>
+            <tr><td><strong>Whitespace</strong></td><td>Leading and trailing blanks are truncated automatically, on hit data and classification data alike</td><td>A mercy, since a stray trailing space still matches. An <em>internal</em> stray space is a different key entirely, and will not.</td></tr>
+            <tr><td><strong>Duplicate keys</strong></td><td>The last occurrence in the file wins</td><td>No error, no warning. The same key twice in one file, and whichever row lands second is the one you get.</td></tr>
+            <tr><td><strong>Special characters</strong></td><td>Commas and quotes are allowed but awkward, and need correct escaping</td><td>Keep them out of keys entirely. There is no upside, and a whole category of file-parsing failure waiting.</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<p>Read that zero row twice, because nobody believes it until it happens to them. A store with a product whose SKU is genuinely <code>0</code>, or a campaign code that a system emits as <code>000</code> when it has nothing better to say, will fail to classify and will never tell you why.</p>
+
+<h3 class="subsec-title">Five: the key has to be countable</h3>
+<p>The last rule decides whether the whole approach is even viable, and it comes down to scale.</p>
+
+<p>Performance rests almost entirely on one number: how many unique values the key will ever hold. Variables carrying enormous numbers of unique values deserve real caution, and the caution grows when several of them are combined into a single classification set.</p>
+
+<p>So the question to ask of any candidate key is not "can this be classified." It is "how many distinct values will this key ever carry." A tracking code convention producing a few thousand campaigns a year is comfortable. A product catalog of two hundred thousand SKUs is a normal, working classification. A User ID for a club with three thousand members is entirely fine. A User ID for a retailer with forty million customers is not, and pushing it there gives you something slow, fragile, and eventually unusable, without ever producing an error that says so.</p>
+
+<p>That ceiling is not a reason to avoid classifications. It is a reason to find out, at design time, roughly how many unique values your key will carry. The source system can tell you in an afternoon, and almost nobody thinks to ask.</p>
+
+<h3 class="subsec-title">The fork this all leads to</h3>
+<p>Now the architectural decision Classifications Overview promised, and one you will make again and again for the rest of your career.</p>
+
+<p>The campaign above needs five attributes reportable. There are two entirely legitimate ways to get them, and choosing well is exactly the kind of judgment that separates an architect from someone following a tutorial.</p>
+
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th></th><th>Five separate variables</th><th>One structured key, classified</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Variable budget</strong></td><td>Spends five slots, permanently</td><td>Spends one</td></tr>
+            <tr><td><strong>Availability</strong></td><td>Immediate. The value is on the hit.</td><td>Delayed. Classification data takes time to process.</td></tr>
+            <tr><td><strong>In the data feed</strong></td><td>Yes. Each variable gets its own column.</td><td>No. Classifications do not travel in the feed.</td></tr>
+            <tr><td><strong>Adding a sixth attribute later</strong></td><td>Needs a code change, and it only applies going forward</td><td>Add a column, upload, and it applies to all of history</td></tr>
+            <tr><td><strong>Fixing a mistake</strong></td><td>Impossible. The wrong value is stored on the hit.</td><td>Upload a correction and the whole history heals</td></tr>
+            <tr><td><strong>Depends on</strong></td><td>The developer implementing it correctly on every page</td><td>The key being present, parseable, and never recycled</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<p>Neither column wins. They answer different questions.</p>
+
+<p>If the attribute is needed in real time, or has to reach a downstream data lake through the raw feed, give it its own variable and pay the slot. If it is descriptive, likely to grow, and read by humans in reports rather than by machines in pipelines, build it into a structured key and classify it. Usually the retroactive row is what decides it, because being able to add a sixth attribute two years from now and have it apply to every hit you have ever collected is something separate variables cannot offer at any price.</p>
+
+<h3 class="subsec-title">Which means somebody has to write it down</h3>
+<p>Look back over those five rules and notice what they share. Not one of them can be fixed later.</p>
+
+<p>A recycled key cannot be un-recycled. A key that was never collected cannot be collected retroactively. A tracking code convention without delimiters cannot be given delimiters after ten thousand campaigns have already used it. Classifications heal almost everything downstream of the key, and nothing at all upstream of it.</p>
+
+<p>Which is why the key convention becomes a document, in exactly the way the channel list has in <a href="/adobe-analytics-learning/shape/marketing-channels/">Marketing Channels</a>, and for exactly the same reason. It encodes a decision nobody can take back.</p>
+
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">Tracking Code Convention</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>Format:      channel _ year _ month _ campaign _ country
+Example:     eml_2026_07_winback_in
+
+Delimiter:   underscore
+             Underscores are FORBIDDEN inside any segment value.
+             Campaign names use no spaces and no hyphens.
+
+Segments:    exactly five, always. Never four, never six.
+             Unknown values use a literal token, never blank.
+             (country unknown -> "xx", never "")
+
+Case:        lowercase, enforced by the campaign URL builder
+Encoding:    the value must arrive UNENCODED
+             (URL-encoded codes cannot be classified by rules)
+
+Owner:       Marketing Operations
+Approved by: Marketing, Analytics, Web Development
+Reviewed:    annually, or before any new channel is added</pre></div>
+</div>
+
+<p>Hand that to a marketer and it looks like bureaucracy. It is not. It is the only thing standing between a business and the discovery, two years and forty thousand campaigns later, that all of its campaign reporting has to be rebuilt by hand because nobody ever decided what the code should look like.</p>
+
+<div class="info-box">
+    <div class="info-hdr">ℹ️ Who owns the key</div>
+    <p>Marketing owns the campaign codes. Web development owns what lands in the variable. The source system owns the User ID and the product SKU. You own none of them, and you depend on all of them. So the most valuable thing you can do at the start of a classification project is find out who generates each key, ask them whether it can ever be reused, and ask them how many unique values it will hold. Two questions, one afternoon, and between them they decide whether this module works for you or against you.</p>
+</div>
+
+<h3 class="subsec-title">Where the key goes next</h3>
+<p>Every rule here pointed the same way. The key has to be present where it matters, mean one thing forever, carry structure a machine can read, survive a short list of unglamorous limits, and stay countable.</p>
+
+<p>Get that right and the rest of this module is largely mechanical. The key is the hard part, and it is the part decided furthest from the classification screen.</p>
+
+<p>With a key worth classifying, the next question is where the classifications will actually live. That is <a href="/adobe-analytics-learning/shape/classifications/classification-sets/">Classification Sets</a>, the container that holds the schema, the subscriptions, and everything you are about to put into it.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Analytics</div>
+    <p>Nowhere, and that is the point of this section. The key is decided in your implementation, not in the classification interface. You will see it named as the key dimension when you build a subscription under <span class="path">Components &gt; Classification Sets</span>, but by then it is already whatever your implementation made it.</p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title">📚 Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/classifications/sets/data-files" target="_blank">Adobe Docs: Classification Set File Formats (key requirements and limits)</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/classifications/sets/overview" target="_blank">Adobe Docs: Classification Sets Overview (performance and unique keys)</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/classifications/classifications-rulebuilder/classification-quickstart-rules" target="_blank">Adobe Docs: Classification Rules (delimiters and URL encoding)</a></li>
+    </ul>
+</div>

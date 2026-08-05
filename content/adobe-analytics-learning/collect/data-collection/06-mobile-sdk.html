@@ -1,0 +1,144 @@
+---
+slug: "mobile-sdk"
+title: "Mobile SDK"
+seotitle: "The Adobe Mobile SDK for Analytics"
+lastmod: 2026-07-18
+description: "The Adobe Mobile SDK is compiled, and that changes everything. trackState, trackAction, context data, and why offline is the normal case."
+type: lesson
+modulenum: 4
+sectionnum: 6
+weight: 6
+---
+<p>Most of this module has quietly assumed a browser, and rightly so. The web is the elder sibling. Websites came first, the Yahoos and AOLs of the early internet, and Adobe Analytics was born into that world, designed around page loads and pixels. Then 2007 arrived with the iPhone and Android, and mobile apps went from novelty to everywhere. Today almost every website has a mirror app, and a growing set of experiences, ride-hailing, food delivery, mobile games, lives only in an app, because no one books a cab with a laptop balanced on their knees. The younger sibling has, in places, run well ahead of the elder. Apps are not a lesser afterthought to the web; they are equally important, and sometimes more.</p>
+<p>Adobe did not leave that younger sibling unmeasured. It provides a mobile SDK, and the first thing to get right is the name: SDK stands for <strong>Software Development Kit</strong>, a bundle of libraries a developer builds into an app to add a capability it did not have on its own. Here, that capability is Adobe Analytics. But do not picture web tracking on a smaller screen. Inside an app the collection model turns nearly upside down. A native app is a program already installed on the device, not a document fetched fresh on each visit. There is no page load to hook, no DOM, no pixel to drop. What does not change is everything you learned earlier: eVars, props, and events still exist, the screen-view-versus-action distinction still holds, and all of it still lands in the same raw data feed. The fundamentals stay; the way you collect them flips.</p>
+<h3 class="subsec-title">It is a compiled SDK, and that has a cost</h3>
+<p>Instead of a script you drop onto a page, mobile measurement is the Adobe Experience Platform Mobile SDK, a set of libraries (a Mobile Core plus extensions like Lifecycle, Identity, Analytics, and Edge) your developers build directly into the app and ship inside the app binary through the App Store and Google Play. That shipping path creates a split worth understanding, because it is where mobile teams get caught. The SDK code itself can only change when you release a new app version and it clears store review, slow, and not fully in your control. But the configuration and rules for that SDK live in a Tags mobile property (the same tag management covered in <a href="/adobe-analytics-learning/collect/data-collection/tag-management-systems/">Tag Management Systems</a>) and update remotely at runtime with no app release at all. So <em>what code runs</em> is locked to your release schedule, while <em>how it behaves</em> can still be tuned server-side. The decoupling a tag manager buys you is still here, it just has a hard floor set by whatever SDK version is baked into the installed app.</p>
+<h3 class="subsec-title">The thing a website simply cannot do</h3>
+<p>Here is where mobile earns its own treatment rather than being an afterthought to web: lifecycle metrics. With essentially one line of setup, the Lifecycle extension automatically collects the events that define an app's existence, things a website has no concept of at all.</p>
+<ul>
+    <li><strong>Installs</strong>, the first launch after the app is put on a device.</li>
+    <li><strong>Launches</strong>, every open, with engagement and days since last use.</li>
+    <li><strong>Upgrades</strong>, when a user moves to a new version.</li>
+    <li><strong>Crashes and closes</strong>, plus device and app dimensions like model and app version.</li>
+</ul>
+<p>A website never asks "was this an install or an upgrade," because those ideas do not exist there. For an app they are the heartbeat, which is why mobile analytics often starts here before a single custom event is written.</p>
+<h3 class="subsec-title">trackState and trackAction</h3>
+<p>For everything beyond lifecycle, mobile gives you two calls, and if you remember <code>s.t()</code> and <code>s.tl()</code> from the AppMeasurement section, these will feel familiar by design.</p>
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>Call</th><th>What it is for</th><th>Web equivalent</th></tr></thead>
+        <tbody>
+            <tr><td><code>trackState</code></td><td>A screen being shown. Increments the Page Views metric.</td><td>Page view, <code>s.t()</code></td></tr>
+            <tr><td><code>trackAction</code></td><td>An action inside a screen, a tap, a download, a form step. Does not increment page views.</td><td>Link/event, <code>s.tl()</code></td></tr>
+        </tbody>
+    </table>
+</div>
+<p>The mapping is deliberate: screens are the app's pages, actions are its interactions, so the mental model you already built carries straight over. Here is what these actually look like in an app.</p>
+<h3 class="subsec-title">Seeing it in real code</h3>
+<p>An app is built for exactly two platforms, Android and iOS, so a real implementation always exists in both. The calls are the same idea in each language. Notice the second argument every time: a small dictionary of key-value pairs. That is <a href="/adobe-analytics-learning/foundations/variables/context-data-variables/"><strong>context data</strong></a>, and it is doing all the real work, a point that returns in a moment.</p>
+<p><strong>A page load</strong> (a screen appears). Send the page name, page type, and channel, then fire <code>trackState</code>:</p>
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">Android (Kotlin)</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>val contextData = mapOf(
+    "app.pageName" to "Home",
+    "app.pageType" to "Landing",
+    "app.channel"  to "Marketing"
+)
+MobileCore.trackState("Home", contextData)</pre></div>
+</div>
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">iOS (Swift)</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>let contextData = [
+    "app.pageName": "Home",
+    "app.pageType": "Landing",
+    "app.channel":  "Marketing"
+]
+MobileCore.track(state: "Home", data: contextData)</pre></div>
+</div>
+<p><strong>A download</strong> (a user action). Send the document name and a download flag, then fire <code>trackAction</code>:</p>
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">Android (Kotlin)</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>val actionData = mapOf(
+    "app.documentName" to "Pricing Guide.pdf",
+    "app.download"     to "1"
+)
+MobileCore.trackAction("Download", actionData)</pre></div>
+</div>
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">iOS (Swift)</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>let actionData = [
+    "app.documentName": "Pricing Guide.pdf",
+    "app.download":     "1"
+]
+MobileCore.track(action: "Download", data: actionData)</pre></div>
+</div>
+<p>The languages differ, Kotlin and Swift, but look closely: the <em>keys</em> are identical across both. <code>app.pageName</code>, <code>app.documentName</code>, <code>app.download</code>, the same names on Android and iOS. That shared vocabulary is what makes the next step possible.</p>
+<h3 class="subsec-title">The flip: everything is context data</h3>
+<p>Here is the "upside down" moment. Notice what is <em>missing</em> from all that code: there is no <code>eVar4</code>, no <code>prop3</code>, no <code>event1</code>. From version 4 of the SDK onward, an app can no longer set Analytics variables directly at all. Everything you want to measure is sent as <strong>context data</strong>, those free-form key-value pairs, and nothing else.</p>
+<p>Context data behaves nothing like an eVar or a prop. Think of eVars and props as the planets: fixed in number, each in its assigned orbit, bound to the Sun. Context data is the comets and asteroids, not held to any orbit, following no fixed pattern, and effectively unlimited in number. You can name a context data key anything you like and create as many as you want. That freedom is the point, but it comes with a catch: a comet is not a planet. Context data does not automatically become part of your Analytics reports or your data feed. On its own, <code>app.documentName</code> is just a floating label Adobe received and set aside. It has to be handed to a real Analytics variable before it means anything, and the mechanism that does the handing is <a href="/adobe-analytics-learning/shape/processing-rules/"><strong>Processing Rules</strong></a>.</p>
+<h3 class="subsec-title">Processing Rules: turning context data into variables</h3>
+<p>Processing Rules live in the report suite's Admin, and they do one job: map incoming context data onto real Analytics variables, at collection time, with no code change. You write them once in the Adobe Analytics UI, each rule a simple condition plus an action, "if this context data key is present, set that variable to its value." And here is the elegant part of your app being built twice: because the context data keys are identical on Android and iOS, you write these rules <strong>once</strong>, and they serve both platforms equally. The code is per-platform; the mapping is shared.</p>
+<p>For the two calls above, the mapping looks like this:</p>
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>From the app (context data)</th><th>Processing Rule sets</th><th>Reports as</th></tr></thead>
+        <tbody>
+            <tr><td><code>app.pageName</code></td><td>Page Name</td><td>the Pages report</td></tr>
+            <tr><td><code>app.pageType</code></td><td><code>eVar2</code></td><td>Page Type</td></tr>
+            <tr><td><code>app.channel</code></td><td><code>eVar3</code></td><td>Channel</td></tr>
+            <tr><td><code>app.documentName</code></td><td><code>eVar4</code></td><td>Document Name</td></tr>
+            <tr><td><code>app.download</code></td><td><code>event1</code></td><td>Downloads (a metric)</td></tr>
+        </tbody>
+    </table>
+</div>
+<p>Each row is one rule. Two of them, written in the Processing Rules interface, read like this:</p>
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">Processing Rules (same for Android &amp; iOS)</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>Rule 1: Set Document Name
+  IF   app.documentName  is set
+  THEN Overwrite value of  eVar4  with  app.documentName
+
+Rule 2: Count a Download
+  IF   app.download  is set
+  THEN Set event  event1</pre></div>
+</div>
+<p>A useful rule of thumb when you inherit an app's context data: a key whose value looks like a label (<code>app.pageType = "Landing"</code>) usually belongs in an eVar or prop, while a key that is really just a flag (<code>app.download = "1"</code>) usually belongs on an event. One built-in exception is worth knowing: the <strong>products</strong> string is sent directly by the SDK (via a special <code>&amp;&amp;products</code> key) and does <em>not</em> need a processing rule. Everything else does. The full Processing Rules toolkit, conditions, ordering, the authorization it requires, is the entire subject of <a href="/adobe-analytics-learning/shape/processing-rules/">Processing Rules</a>; here you only need the shape of it.</p>
+<div class="diagram-box">
+    <div class="diagram-title">🔀 How one app action becomes an Adobe Analytics variable</div>
+    <div class="diagram-content">
+        <div class="flow-horizontal">
+            <div class="flow-step">App code<br><span style="font-size:11px;color:var(--text2,#475569)">trackAction sends app.documentName</span></div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-step">Context data<br><span style="font-size:11px;color:var(--text2,#475569)">arrives at Adobe, inert</span></div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-step">Processing Rule<br><span style="font-size:11px;color:var(--text2,#475569)">if app.documentName, set eVar4</span></div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-step highlight">Report<br><span style="font-size:11px;color:var(--text2,#475569)">eVar4 = "Pricing Guide.pdf"</span></div>
+        </div>
+    </div>
+</div>
+<h3 class="subsec-title">Offline is the normal case, not the exception</h3>
+<p>Phones lose connectivity constantly: tunnels, elevators, planes, dead zones. A browser hit assumes a live connection; an app cannot. So the SDK queues hits on the device and sends them later, stamped with when the action actually happened rather than when it finally reached Adobe. If that sounds familiar, it should, it is exactly the timestamped-data situation from <a href="/adobe-analytics-learning/collect/data-collection/server-side-collection/">Server-Side Collection</a>, which is why mobile data so often lives in a timestamp-enabled report suite. The timestamp decision, framed there as a server-side concern, turns out to be baked into mobile collection by its very nature.</p>
+<h3 class="subsec-title">The same two worlds, one more time</h3>
+<p>Mobile has the identical fork drawn for web. The <strong>Analytics extension</strong> sends your <code>trackState</code> and <code>trackAction</code> calls straight to Adobe Analytics, the classic path, and it is this path that relies on the context-data-plus-Processing-Rules mapping above. The <strong>Edge Network extension</strong> sends the same interactions as XDM to the very Edge Network that alloy.js feeds on the web, where a datastream maps and fans them out to Analytics, CJA, Journey Optimizer, and the rest, so the mapping moves from Processing Rules into the datastream. Same decision, same direction of travel: classic, or the Edge. One caution, running both paths at once double-counts your hits and lifecycle metrics, so it is one or the other, deliberately.</p>
+<h3 class="subsec-title">Debugging an app is its own skill</h3>
+<p>One hard truth to end on: once analytics is live in an app, it is genuinely harder to debug than a website. A browser has developer tools built in; a phone shows you nothing about the network calls leaving it. You have two good ways to see inside.</p>
+<p><strong>Adobe Assurance</strong> (formerly Project Griffon) is the modern, Adobe-native tool and the one to reach for first. You connect your app to a live Assurance session (by scanning a QR code or opening a deep link) and then watch every event stream out in real time, the lifecycle hits, your <code>trackState</code> and <code>trackAction</code> calls, and the exact context data on each. Its real power is that it can show you the event <em>after</em> Processing Rules have run, so you can confirm not just that <code>app.documentName</code> was sent, but that it correctly landed in <code>eVar4</code>. That is end-to-end validation in one screen.</p>
+<p><strong>A proxy debugger like Charles</strong> is the general-purpose fallback, and it works for any app, Adobe or not. The trick is to route the phone's traffic through your computer: set the phone's Wi-Fi proxy to your desktop's IP address and Charles's port, install Charles's security certificate on the device so it can read encrypted traffic, and from then on every network call the app makes appears in Charles on your desktop. Find the Analytics hit in that stream and you can inspect the raw context data keys exactly as they were sent. Assurance tells you whether the mapping worked; Charles shows you the unfiltered wire.</p>
+<div class="info-box">
+    <p>That is the working core of mobile collection: a compiled SDK with lifecycle metrics for free, two calls (<code>trackState</code> and <code>trackAction</code>) carrying context data, Processing Rules that turn that context data into real variables, offline-and-timestamp behavior built in, the same classic-versus-Edge choice as the rest of this module, and two ways to debug it. The deepest native territory beyond this, advertising IDs and push tokens, the full lifecycle metric reference, and the SDK installation itself, is a specialty of its own and a larger undertaking than one section can hold, but with the above you understand how app data is actually collected and shaped.</p>
+</div>
+<p>Every method in this module so far, web or app, has assumed the same thing: that somebody, somewhere, decided what data to hand over and in what shape. That decision is not made in Adobe and it is not made in your tag manager. It is made in the page itself, in an object your developers own and you do not. <a href="/adobe-analytics-learning/collect/data-layers/what-is-a-data-layer/">What Is a Data Layer</a> is where that contract gets written.</p>
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe</div>
+    <p>A mobile property is created under <span class="path">Data Collection &gt; Tags</span>, and it ships with a different default extension set from a web property. Datastreams for an app are wired through the Edge Network extension rather than the Web SDK one. For validating what an app actually sends, the tool is Assurance, not the browser debugger.</p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title">📚 Learn More</div>
+    <ul>
+        <li><a href="https://developer.adobe.com/client-sdks/home/" target="_blank">Adobe Docs: Experience Platform Mobile SDK</a></li>
+        <li><a href="https://developer.adobe.com/client-sdks/home/getting-started/track-events/" target="_blank">Adobe Docs: Track events (trackState and trackAction)</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/admin/admin-tools/manage-report-suites/edit-report-suite/report-suite-general/processing-rules/pr-overview" target="_blank">Adobe Docs: Processing Rules</a></li>
+    </ul>
+</div>

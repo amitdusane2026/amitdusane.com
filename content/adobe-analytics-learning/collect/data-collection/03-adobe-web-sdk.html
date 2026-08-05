@@ -1,0 +1,105 @@
+---
+slug: "adobe-web-sdk"
+title: "Adobe Web SDK"
+seotitle: "The Adobe Web SDK and alloy.js"
+lastmod: 2026-07-18
+description: "Why Adobe froze AppMeasurement and built the Web SDK instead. What alloy.js is, where it sits, and the honest catch nobody mentions."
+type: lesson
+modulenum: 4
+sectionnum: 3
+weight: 3
+---
+<p>Here is a frustration that anyone who has run Adobe Analytics for a while will recognize. Something was set up a year or two ago, a certain way, for certain questions. Now a business user comes to you and says, "I don't want this, I want that, and I need it for last year too." You know exactly how to solve it going forward. What you cannot do is travel back in time and re-collect data that was captured the old way. And the honest thing is, the business user is right. Their questions are supposed to change. You cannot tell a living business to stop asking new questions because the tool froze the answers in a particular shape on the day the data was collected.</p>
+<p>Think of how a detective works in any good thriller. The case breaks open not at the scene, but in the archives, the old records, the back issues, the files from five and ten years ago. They go back, lay the past out fresh, find the pattern that was invisible at the time. Take that ability away, no archives, no going back, only what someone happened to write down that day in the format they chose, and the case does not get solved. A business is exactly that kind of investigation, run continuously, and it needs to interrogate its own past on terms it did not set in advance.</p>
+<p>So the real question behind the Web SDK is not "what is the new library." It is: how do you stop freezing the answers? To see how Adobe got there, you have to see why the old way froze them in the first place.</p>
+
+<h3 class="subsec-title">Why the old way is frozen</h3>
+<p>Adobe Analytics is a superb tool with an old foundation. The names are current, but the engine traces back through Omniture's SiteCatalyst to the early 2000s, sitting on a measurement model from the late 1990s. Sit with that for a second. That was a web of desktop browsers and full page loads. No single-page apps, no heavy client-side JavaScript, no phones, no tablets, no smart TVs, and almost none of today's privacy law. For that web, it was an outstanding product, and it earned its place.</p>
+<p>But the world it was built for is gone. Far more people are online, doing far more, from far more kinds of devices, under far more regulation. You do not meet that kind of change by polishing a twenty-year-old foundation. At some point you need a different foundation, built on different assumptions. Adobe could have pushed back on the business. Instead they accepted the problem and started building for the new shape of things.</p>
+
+<h3 class="subsec-title">Why patching it was not enough</h3>
+<p>The first improvements were real but partial. <a href="/adobe-analytics-learning/collect/adobe-launch-tags/">Launch</a>, the tag management system, gave you one script to deploy across every page and made the development side much easier. One loader, then extensions inside it. Good progress, but notice what it fixed: the <em>collection</em> got simpler. The <em>data</em> did not change at all. It still landed in the old systems, in the old fixed structure, one library and one separate store per Adobe tool, Analytics here, Target there, Audience Manager somewhere else. If you needed the underlying data shaped differently, you were back to asking Adobe engineering to change it. Easier to deploy, just as rigid underneath.</p>
+<p>And that was still only thinking about online data. What about everything offline, the CRM, the call center, the point of sale? If you want to understand a customer, not just a browser, you cannot stop at the website.</p>
+
+<h3 class="subsec-title">What Adobe built instead: a platform and a shared language</h3>
+<p>So the thinking got bigger. Not a better web analytics tool, but something sitting between CRM, data pipelines, and digital analytics: a place that could take data from genuinely any system. That is the <a href="/adobe-analytics-learning/deliver/adobe-analytics-cja/adobe-experience-platform-integration/">Adobe Experience Platform</a> (AEP). One immediate problem with "any system," though, is that every system describes its data differently. A purchase from your website, your app, and your call center would arrive in three different shapes.</p>
+<p>Adobe's answer was XDM, the Experience Data Model. It helps to be honest about what XDM actually is, because the name sounds grander than the thing. It is not a new invention. It is a standardized schema, expressed as plain structured JSON, the same key-and-value shapes any developer already knows. Adobe simply took those basics and published one agreed structure so that everything flowing into the platform describes itself the same way. That is the whole trick: a common language, so a "purchase" means a purchase no matter where it came from.</p>
+
+<h3 class="subsec-title">Where the Web SDK sits</h3>
+<p>Now the Web SDK has a clean job to do, and a single library to do it with: alloy.js. It is the modern, lightweight engine that lives on your website, and what it does is take the customer's on-site behavior and express it as XDM. Just key-value pairs that you, the analytics developer, decide on. It does not process the data, it does not touch or reshape it, it does not make decisions about it. It collects it in XDM form and sends it straight to one place: the <a href="/web-sdk-migration/kb/edge/">Edge Network</a>, Adobe's collection layer.</p>
+<p>From the Edge, a thing called a datastream decides where that single stream of data goes. This is the part that pays off everything above. One format leaves the browser, and the Edge fans it out, server-side, to whichever Adobe products you have switched on: Analytics, Target, <a href="/adobe-analytics-learning/deliver/adobe-analytics-cja/">Customer Journey Analytics</a>, Journey Optimizer. Want to light up Target next quarter? You do not touch the website. You flip it on in the datastream. Remember the network tab from <a href="/adobe-analytics-learning/collect/data-collection/appmeasurement-library/">AppMeasurement Library</a>, the separate pixel firing per tool? Here you see essentially one request leaving the page, to <code>adobedc.net</code>, and the routing happens after it lands.</p>
+<div class="diagram-box">
+    <div class="diagram-title">One call out, many tools lit up</div>
+    <div class="diagram-content">
+        <div class="flow-horizontal">
+            <div class="flow-step">On-site behavior</div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-step highlight">alloy.js builds XDM</div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-step">Edge Network</div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-multi">
+                <div class="flow-dest">Analytics</div>
+                <div class="flow-dest">Target</div>
+                <div class="flow-dest">CJA</div>
+                <div class="flow-dest">Journey Optimizer</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h3 class="subsec-title">The honest catch: Analytics is still frozen</h3>
+<p>Here is where most "Web SDK is the future" explanations quietly skip a step, and you should not. Suppose you point the Web SDK at Adobe Analytics. Your data leaves as clean, flexible XDM, but the moment it reaches the Edge on its way to Analytics, the Edge translates it back into the shape Analytics has always understood: the same props, eVars, events, and report suites as always. Which means the data lands in Analytics in exactly the same fixed structure as before.</p>
+<p>So read this plainly: moving to the Web SDK, by itself, does not solve the time-travel problem for Adobe Analytics. The opening frustration is still there. And Adobe cannot simply switch Analytics off, it is a premium product that thousands of companies still run and rely on, so it keeps working the old way on purpose. The Web SDK is necessary for what comes next, but on its own, pointed at Analytics, it is not the resolution.</p>
+
+<h3 class="subsec-title">The resolution: Analytics becomes CJA</h3>
+<p>The resolution is what the Web SDK <em>unlocks</em>. Because alloy is already sending clean XDM to the Edge, you can also route that same data into AEP's data lake as datasets, the raw, unfrozen material. Point <a href="/adobe-analytics-learning/deliver/adobe-analytics-cja/what-is-customer-journey-analytics/">Customer Journey Analytics</a> at those datasets and the frustration this section opened with dissolves.</p>
+<p>In CJA there are no eVars, no props, no events. There is just data, and a layer on top called the data view where you define dimensions and metrics, what they mean, how they behave, when you want them, changed whenever you want them. The things that used to mean a re-implementation and a wait become settings:</p>
+<ul>
+    <li>Need a new marketing channel, applied to data you already collected? Done, in the data view.</li>
+    <li>Need to change a variable's persistence after the fact? Done.</li>
+    <li>Need the same field with two different persistences for two different analyses? Done.</li>
+    <li>Need to redefine a dimension six months in? Done, and your old data answers to the new definition.</li>
+</ul>
+<p>And the part that closes the loop completely: backfill. You can bring your historical Adobe Analytics data into the data lake alongside the new data, so CJA is not starting from today, it has the archive. The detective finally gets the back issues. You can fly back through time and ask the past questions it was never set up to answer, because nothing was ever frozen, the definitions live in the data view, not in the day the data was captured. That is the resolution of the problem this whole section started with.</p>
+
+<h3 class="subsec-title">And it opens more doors than reporting</h3>
+<p>Because alloy feeds the Edge as things happen, the Web SDK is also the front end of a near real-time chain, not just a reporting pipe. The same stream can build a unified customer profile in Real-Time CDP, and Adobe Journey Optimizer can act on a change in that profile, reaching the customer through the right channel close to the moment the behavior happened. That unified profile is also what finally collapses the old fiction that a person on your website, your app, and your store are three different "visitors", with one identity across channels, they are recognized as one human being.</p>
+<p>That is a horizon, not this section's subject, and CJA, Real-Time CDP, and Journey Optimizer each deserve their own treatment. The point here is only that the Web SDK is the doorway to all of it. Choose it, and these become things you can switch on. Skip it, and they stay out of reach.</p>
+
+<h3 class="subsec-title">So how to think about it</h3>
+<p>This is the reframe that matters most, and it is the one people get wrong. Do not think of the Web SDK as the new version of AppMeasurement. It is not an upgrade, not a replacement, not a faster analytics engine. It is a different thing entirely, an entry point into a different platform and a different way of working with data.</p>
+<p>Put it this way: AppMeasurement and Web SDK are not older and younger siblings. Peter Parker and Spider-Man are the same person in name only, one is an ordinary guy, the other operates by completely different rules with far larger powers. AppMeasurement was, and still is, a strong, capable tool that drove real revenue and real insight for a very long time. The Web SDK is not its grown-up version. It is someone else, built for a different world.</p>
+<div class="comparison-grid">
+    <div class="comp-item">
+        <div class="comp-label">AppMeasurement</div>
+        <div class="comp-desc">Browser-side library • A request per tool • Data fixed at collection • Mature and familiar</div>
+    </div>
+    <div class="comp-vs">vs</div>
+    <div class="comp-item">
+        <div class="comp-label">Web SDK (alloy.js)</div>
+        <div class="comp-desc">One lightweight library • One XDM call to the Edge • Tools toggled server-side • Doorway to AEP and CJA</div>
+    </div>
+</div>
+<p>It will feel different at first, and "different" is the honest word, not "harder." But the effort is front-loaded. Once alloy is picking up your data as XDM, the constant cycle of re-engineering the site every time the business wants something new largely goes away, because the answers stopped being frozen at collection time. Put the work in now and you collect the return for years. As <a href="/adobe-analytics-learning/collect/data-collection/collection-methods-overview/">Collection Methods Overview</a> put it, this is the biggest implementation decision a team makes this decade, and the full, step-by-step path for actually moving across lives in its own guide on this site.</p>
+
+<div class="info-box">
+    <div class="info-hdr">ℹ️ Go deeper in the Migration Guide</div>
+    <p>This section is the why. For the how, the end-to-end migration from AppMeasurement, see the dedicated guide: the <a href="/web-sdk-migration/kb/websdk/">Web SDK</a> overview, how the <a href="/web-sdk-migration/kb/edge/">Edge Network</a> works, and what actually goes on the page in the <a href="/web-sdk-migration/kb/library/">library</a> reference.</p>
+</div>
+
+<p>Both libraries this module has covered so far, the mature one and the modern one, still have to reach the page somehow. That is the second of the two decisions this module opened with, and it stays genuinely independent of which library you chose: the same Web SDK can be deployed either way. <a href="/adobe-analytics-learning/collect/data-collection/tag-management-systems/">Tag Management Systems</a> is where that question gets settled.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe</div>
+    <p>Not in Adobe Analytics at all, which is the point. The Web SDK is configured in Adobe Experience Platform Data Collection: the <span class="path">Datastreams</span> item in the left navigation decides which products receive your data, and the Adobe Experience Platform Web SDK extension inside a tag property points at the datastream ID for each environment.</p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title">📚 Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/implementation/aep-edge/overview" target="_blank">Adobe Docs: Implement Adobe Analytics with the Edge Network</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/experience-platform/collection/js/faq" target="_blank">Adobe Docs: Web SDK (alloy.js) FAQ</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics-platform/using/cja-data-ingestion/ingest-use-guides/edge-network/aepwebsdk" target="_blank">Adobe Docs: Ingest Web SDK data into Customer Journey Analytics</a></li>
+    </ul>
+</div>

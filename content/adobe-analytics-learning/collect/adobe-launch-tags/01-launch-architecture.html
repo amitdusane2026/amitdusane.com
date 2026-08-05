@@ -1,0 +1,109 @@
+---
+slug: "launch-architecture"
+title: "Launch Architecture"
+seotitle: "Adobe Launch (Tags) Architecture Explained"
+lastmod: 2026-07-18
+description: "What Launch actually is, why Adobe built it rather than leaving you on Tealium or Google Tag Manager, and how it is organized."
+type: lesson
+modulenum: 6
+sectionnum: 1
+weight: 1
+---
+<p>Tag management has surfaced repeatedly in this guide, most directly in <a href="/adobe-analytics-learning/collect/data-collection/tag-management-systems/">Tag Management Systems</a>, where the choice was framed as a trade. This module takes the thing head on, because saying a tag management system is "useful" or "good" is not enough. You need to know what the thing actually is, and why it earns your time as a subject in its own right. By now you understand <a href="/adobe-analytics-learning/collect/data-collection/appmeasurement-library/">AppMeasurement</a>, the <a href="/adobe-analytics-learning/collect/data-collection/adobe-web-sdk/">Web SDK</a>, the <a href="/adobe-analytics-learning/collect/data-layers/what-is-a-data-layer/">data layer</a>, the different kinds of <a href="/adobe-analytics-learning/foundations/variables/">variables</a>, and <a href="/adobe-analytics-learning/foundations/report-suites/">report suites</a>, and you understand them with their reasoning, their history, and their practical edges, not just at the surface. So why give this a separate module? Because this is where all of that turns into something running on a real website. This is the actual work.</p>
+
+<p>Think about what comes to mind when someone says "Adobe Analytics." Most people picture the reports: dimensions and metrics, trended lines, a Workspace project open on a screen, a room of people arguing about what the numbers mean. That is the visible half. The other half is the quieter question of where any of that data came from in the first place, and it has a name too. It is called <em>implementation</em>, and it means what it sounds like: installing Adobe Analytics onto your digital property, your website or your app.</p>
+
+<p>An analogy that holds up here: you can finalize every detail of an interior design, every color, every measurement, every piece of furniture, and still have nothing you can live in. The design is not the room. Skilled people have to show up, take real measurements against real walls, and install the furniture against the finalized plan. Implementation is that installation step for Analytics, and it matters more here than it does for some tools. <a href="/adobe-analytics-learning/foundations/adobe-analytics-fundamentals/adobe-analytics-vs-google-analytics/">Adobe Analytics vs Google Analytics</a> covered how Google Analytics is closer to plug and play, quick to stand up. Adobe Analytics can technically be plug and play too, but its real power only shows once you customize it to your business, which makes an Adobe Analytics implementation a more deliberate, more shaped thing than the GA equivalent. Both get implemented; the implemented versions simply have a different shape.</p>
+
+<p>So when you picture an Adobe Analytics implementation, the platform you are really picturing, the place where that work happens, is Launch.</p>
+
+<h3 class="subsec-title">What "Launch" actually is</h3>
+<p>"Launch" is the popular name, and like a lot of popular names it sits one rename behind the truth. There is a short history worth knowing, because it explains why the same product has three names floating around in conversation.</p>
+
+<p>Adobe's first tag management system that really mattered came from a 2013 acquisition: a product called Satellite, from Search Discovery, which Adobe renamed Dynamic Tag Management, or DTM. DTM was given away free to anyone who already held an Adobe marketing license, which is a large part of why it spread so widely. Then, around 2018, Adobe shipped something genuinely new and called it Launch. This is the part that people who have been in the Adobe ecosystem for a decade remember in their bones. Launch was not a fresh coat of paint on DTM. It was a ground-up rebuild on a new foundation, a new platform with a new interface, and moving an enterprise from DTM to Launch was real migration work, not a settings change. DTM was retired; Launch was the new living thing.</p>
+
+<p>Then came a quieter shift. Adobe did not announce this one with the same volume, but the product was folded into a larger home called Data Collection, and the client-side tag manager you knew as Launch was renamed Tags. Data Collection kept growing past tag management. It now also covers things like event forwarding, datastreams, and the secure storage of credentials, so it is fair to say Data Collection is no longer "a tag management system" so much as the hub through which data is collected and routed in every direction. The piece of it that you build your implementation in, the part everyone still calls Launch out of habit, is Tags.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">The same product, three names</div>
+    <div class="diagram-content">
+        <div class="flow-horizontal">
+            <div class="flow-step">DTM (2013)</div>
+            <span class="flow-arrow">&rarr;</span>
+            <div class="flow-step">Launch (2018)</div>
+            <span class="flow-arrow">&rarr;</span>
+            <div class="flow-step highlight">Tags, inside Data Collection (2021)</div>
+        </div>
+    </div>
+</div>
+
+<p>Throughout this module, Launch means Tags inside Adobe Experience Platform Data Collection. The habit name and the current name point at the same screen.</p>
+
+<div class="info-box">
+    <div class="info-hdr">ℹ️ Three names, one product</div>
+    <p>If you hear Launch, Tags, and Data Collection used interchangeably, it is because they name the same lineage at different moments. <strong>Launch</strong> is the habit name for the tag manager, <strong>Tags</strong> is its current name, and <strong>Data Collection</strong> is the larger interface it now lives inside. When this guide says Launch, it means Tags in Data Collection.</p>
+</div>
+
+<h3 class="subsec-title">Why Launch, and not Tealium or Google Tag Manager</h3>
+<p>The other tag managers, Tealium, Ensighten, and Google Tag Manager, are not off limits, and this is not a turf war. They are good products, and there are real companies running happily on them. But step back and ask the plain question a business asks. Adobe gives you its tag manager, Tags, included with your Experience Cloud license at no extra cost. Why pay for a third-party product on top of that, unless you have a very strong, specific reason to? For most accounts there is no such reason, which is why Tags is what the large majority of Adobe Analytics implementations actually run on. If you were standing up Adobe Analytics for a new website tomorrow, Tags would still be the recommendation.</p>
+
+<p>The case has only grown stronger, because Tags no longer stands alone. It is wired deeply into the rest of the Adobe stack: Analytics, Target, Audience Manager, Customer Journey Analytics, the Experience Platform, Journey Optimizer. That tight binding is something a neutral third-party tag manager cannot match by design. There is also the wider Data Collection capability sitting around it. If you are already on the Edge Network, for example, you can forward your collected data out to non-Adobe destinations from Adobe's own servers using event forwarding, rather than stacking more third-party pixels onto the page. That particular capability is a paid add-on rather than part of the free tier, and it is a topic for much later, but it is worth knowing that the platform reaches well past simple tag management now. No standalone tag manager offers that whole picture.</p>
+
+<p>That is the what and the why. The how is the rest of this module, and it starts with how Launch is put together.</p>
+
+<h3 class="subsec-title">How Launch is organized</h3>
+<div class="diagram-box">
+    <div class="diagram-title">How a Launch implementation is structured</div>
+    <div class="diagram-content">
+        <div class="launch-arch">
+            <div class="launch-layer">
+                <div class="launch-title">Property</div>
+                <div class="launch-components">
+                    <div class="launch-comp">Extensions</div>
+                    <div class="launch-comp">Data Elements</div>
+                    <div class="launch-comp">Rules</div>
+                </div>
+            </div>
+            <div class="h-arrow">&darr; built into</div>
+            <div class="launch-layer">
+                <div class="launch-title">Library</div>
+            </div>
+            <div class="h-arrow">&darr; deployed to</div>
+            <div class="launch-envs">
+                <div class="launch-env dev">Development</div>
+                <div class="launch-env stage">Staging</div>
+                <div class="launch-env prod">Production</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<p>Start at the top, with the <strong>property</strong>. A company may run one website or many. <a href="/adobe-analytics-learning/foundations/report-suites/">Report Suites</a> met the same reality: one global suite, or several, or virtual views carved from a parent, depending on how the business needs to see its data. Launch answers the same kind of question on the implementation side: a single Launch account can hold multiple properties, and a property is the container that takes care of a given site or app.</p>
+
+<p>The relationship between a property and a report suite is not fixed at one to one. One property might feed many report suites; many properties might feed a single report suite. Which arrangement is right is not a setting you look up, it is a design decision, and it lands on you, the architect. What does the business look like, what questions does it need to answer, and what structure will answer them cleanly? That is the property for you. Everything else in Launch lives inside it: the <a href="/adobe-analytics-learning/collect/adobe-launch-tags/rules/">rules</a>, the <a href="/adobe-analytics-learning/collect/adobe-launch-tags/data-elements/">data elements</a>, the <a href="/adobe-analytics-learning/collect/adobe-launch-tags/extensions/">extensions</a>, and the <a href="/adobe-analytics-learning/collect/adobe-launch-tags/publishing-workflow/">publishing flow</a> that ships them.</p>
+
+<p>Each of those has a full section of its own in this module. For now, here is the map.</p>
+
+<p><strong><a href="/adobe-analytics-learning/collect/adobe-launch-tags/rules/">Rules</a></strong> are the logic of the implementation. A rule is a construct that says, in effect, when this happens, collect this. The "this happens" is an event you care about, a download, a form completion, an on-site search, a page loading, and the rule defines both how that event is recognized and what data goes out when it does. Rules are where the implementation comes alive.</p>
+
+<p><strong><a href="/adobe-analytics-learning/collect/adobe-launch-tags/data-elements/">Data elements</a></strong> are, at first glance, Launch's version of variables: named things that hold a value. But they are more capable than a plain variable. A data element can read a value from the page, but it can also reshape it, make a decision based on it, and even correct it with a bit of code before anything is collected. They are the reusable building blocks the rules draw on.</p>
+
+<p><strong><a href="/adobe-analytics-learning/collect/adobe-launch-tags/extensions/">Extensions</a></strong> are not, despite the name, a phone line you dial to talk to Adobe. The cleaner way to picture them is as apps on a phone. Launch has a catalog, an app store, and any vendor that wants to put something on your website can build an extension for it and list it there. Once Launch is on your site, you generally do not need to hand-place third-party pixels or snippets; you install the relevant extension from the catalog and configure it. Meta, for example, publishes a Meta Pixel extension. You install it, make the handful of adjustments its own documentation calls for, and you are done. The Adobe Analytics and Web SDK extensions you will work with most are simply the Adobe-built members of the same catalog.</p>
+
+<p>And finally the <strong><a href="/adobe-analytics-learning/collect/adobe-launch-tags/publishing-workflow/">publishing flow</a></strong>. You build your rules, data elements, and extensions, and then, like any software, the changes have to be tested before they reach real visitors. A <strong>library</strong> is the collection of changes you are working on, and it is built and then deployed through a series of <strong><a href="/adobe-analytics-learning/collect/adobe-launch-tags/environments/">environments</a></strong>, development, then staging, then production, the same staged path a website or an application takes on its way to release. The good part is that the whole flow is tightly controlled by permissions. Some people can develop but not publish; some can review what has been published without changing it; some can push an approved library to production without being able to alter what is in it; and a few administrators can do everything. Who is allowed to do what is part of the design, and it is what keeps an implementation from sliding into chaos.</p>
+
+<p>That, in a nutshell, is Launch: a property that holds your extensions, data elements, and rules, built into a library, and deployed through controlled environments to your live site. It is a simple story at this height, and the sections ahead take each piece down to the level you will actually work at.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it</div>
+    <p>Open Launch at <span class="path">experience.adobe.com &rarr; Data Collection &rarr; Tags</span>.</p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title">📚 Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/experience-platform/tags/home" target="_blank">Adobe Docs: Tags Overview</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/experience-platform/tags/term-updates" target="_blank">Adobe Docs: Terminology Updates (Launch to Tags)</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/experience-platform/tags/get-started/quick-start" target="_blank">Adobe Docs: Tags Quick Start</a></li>
+    </ul>
+</div>

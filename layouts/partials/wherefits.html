@@ -1,0 +1,91 @@
+{{/*
+  "See where this fits" pocket map. Boxless, dark, green backlight = you-are-here.
+  Three tiers (category / module / section), one group shown per tier.
+  A downward green arrow-trail connects the lit category -> module -> section.
+*/}}
+{{ $cur := . }}
+{{ $curMod := .Parent }}
+{{ $curModNum := $curMod.Params.modulenum }}
+{{ $learnRoot := .Site.GetPage "/adobe-analytics-learning" }}
+{{ $allMods := sort (where .Site.Pages "Type" "module") "Params.modulenum" }}
+{{ $phases := slice }}
+{{ range $k, $v := .Site.Params.phases }}{{ $phases = $phases | append $v }}{{ end }}
+{{ $phases = sort $phases "order" }}
+{{ $curPhaseKey := "" }}
+{{ range $phases }}{{ if in .modules $curModNum }}{{ $curPhaseKey = .order }}{{ end }}{{ end }}
+
+<button class="wf-tab" id="wfFab" aria-label="See where this fits">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polygon points="15.5 8.5 13 13 8.5 15.5 11 11 15.5 8.5"/></svg>
+  <span class="wf-tab-txt"><span class="wf-tab-l1">See where</span><span class="wf-tab-l2">this fits</span></span>
+</button>
+
+<div class="wf-overlay" id="wfOverlay">
+  <div class="wf-map" role="dialog" aria-modal="true" aria-label="Where this fits">
+    <svg class="wf-arrows" aria-hidden="true">
+      <defs><marker id="wfHead" markerWidth="9" markerHeight="9" refX="6" refY="4.5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4.5 L0,9 Z" fill="#22c55e"/></marker></defs>
+      <line class="wf-a-cm" marker-end="url(#wfHead)"/>
+      <line class="wf-a-ms" marker-end="url(#wfHead)"/>
+    </svg>
+    <button class="wf-x" id="wfClose" aria-label="Close">&times;</button>
+
+    <div class="wf-here">
+      <span class="wf-here-lab">You are here</span>
+      <span class="wf-here-path">{{ $curMod.Title }} <i>&rsaquo;</i> {{ $cur.Title }}</span>
+      <span class="wf-guide"><span class="wf-guide-d">Click to explore. Click a topic to open it.</span><span class="wf-guide-m">Tap to explore. Tap a topic to open it.</span></span>
+    </div>
+
+    {{/* TIER 1: categories */}}
+    <div class="wf-tier">
+      <div class="wf-row wf-row-cat">
+        {{ range $phases }}
+          {{ $isCur := eq .order $curPhaseKey }}
+          <button class="wf-cat{{ if $isCur }} on{{ end }}" data-cat="{{ .order }}" type="button">
+            <span class="wf-lab">{{ .name }}</span>
+          </button>
+        {{ end }}
+      </div>
+    </div>
+
+    <div class="wf-arrow" data-arrow="cat-mod" aria-hidden="true"></div>
+
+    {{/* TIER 2: modules (one group per phase; current phase shown) */}}
+    <div class="wf-tier">
+    {{ range $phases }}
+      {{ $ph := . }}
+      {{ $isCurPh := eq .order $curPhaseKey }}
+      <div class="wf-row wf-row-mod{{ if $isCurPh }} show{{ end }}" data-catgroup="{{ .order }}">
+        {{ range $allMods }}
+          {{ if in $ph.modules .Params.modulenum }}
+            {{ $isCurMod := eq .Params.modulenum $curModNum }}
+            <button class="wf-mod{{ if $isCurMod }} on{{ end }}" data-mod="{{ .Params.modulenum }}" type="button">
+              <span class="wf-lab">{{ .Title }}</span>
+              {{ with .Params.tagline }}<span class="wf-tag">{{ . }}</span>{{ end }}
+            </button>
+          {{ end }}
+        {{ end }}
+      </div>
+    {{ end }}
+    </div>
+
+    <div class="wf-arrow" data-arrow="mod-sec" aria-hidden="true"></div>
+
+    {{/* TIER 3: sections (one group per module; current module shown) */}}
+    <div class="wf-tier">
+    {{ range $allMods }}
+      {{ $m := . }}
+      {{ $isCurMod := eq .Params.modulenum $curModNum }}
+      {{ $ready := 0 }}{{ range $m.Pages }}{{ if .Params.description }}{{ $ready = add $ready 1 }}{{ end }}{{ end }}
+      <div class="wf-row wf-row-sec{{ if $isCurMod }} show{{ end }}" data-modgroup="{{ .Params.modulenum }}">
+        {{ if gt $ready 0 }}
+          {{ range $m.Pages.ByWeight }}
+            <a class="wf-sec{{ if and $isCurMod (eq $cur.RelPermalink .RelPermalink) }} on{{ end }}{{ if not .Params.description }} soon{{ end }}" href="{{ .RelPermalink }}">
+              <span class="wf-lab">{{ .Title }}</span>
+            </a>
+          {{ end }}
+        {{ end }}
+      </div>
+    {{ end }}
+    </div>
+
+  </div>
+</div>

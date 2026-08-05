@@ -1,0 +1,172 @@
+---
+slug: "engagement-periods"
+title: "Engagement Periods"
+seotitle: "Marketing Channel Engagement Periods in Adobe Analytics"
+lastmod: 2026-07-18
+description: "Visit Engagement, Visitor Engagement, and Session Refresh. What each setting really does, and why engagement periods trip up experienced practitioners."
+type: lesson
+modulenum: 10
+sectionnum: 5
+weight: 5
+---
+<p>Everything built so far assigns a channel to a hit. The waterfall reads the arriving visitor, finds the first matching rule, and stamps a channel on it. That work is done.</p>
+
+<p>But there is a question none of it answers, and nobody has written a rule for it.</p>
+
+<p>A visitor arrives through paid search in March. They come back in April, this time typing the address directly, and they buy. Is paid search still the reason that person is on the site? Common sense says yes if it happened a week ago. Common sense says clearly no if it happened three years ago. So somewhere between one week and three years the answer flips from yes to no, and somebody has to decide where.</p>
+
+<p>Adobe cannot decide it for you, because the honest answer depends entirely on the business. Somebody buying a phone case decides in an afternoon. Somebody buying an enterprise automation system, the B2B business from <a href="/adobe-analytics-learning/shape/marketing-channels/channel-configuration/">Channel Configuration</a>, may deliberate for eight months across a procurement committee. The same thirty-day window would be far too long for one and absurdly short for the other.</p>
+
+<p>That decision has a name. It is the <strong>engagement period</strong>, and it is a single setting that quietly governs how long a channel keeps its claim on a visitor.</p>
+
+<h3 class="subsec-title">The shopkeeper who remembers</h3>
+<p>Picture a shop you visit often. The owner knows how you first found the place, because a friend sent you, and he mentions it now and then. Keep going back week after week and he keeps remembering. It stays part of who you are to him.</p>
+
+<p>Now stop going. Not for a fortnight, but for years. Eventually you walk back in and he greets you as a stranger, or at best as somebody who simply turned up. The story of how you first arrived has faded, not because it stopped being true, but because it stopped being relevant to a relationship that lapsed.</p>
+
+<p>That is the engagement period exactly. A channel is remembered as the reason a visitor keeps coming, for as long as the visitor keeps coming. Go quiet for long enough and the memory is cleared, and the next arrival starts a fresh story.</p>
+
+<h3 class="subsec-title">The setting itself</h3>
+<p>It lives at Analytics, then Admin, then Report Suites, then Edit Settings, then Marketing Channels, then Marketing Channel Expiration. The default is <strong>30 days</strong>, and most implementations never touch it, which is worth thinking about given what it controls.</p>
+
+<p>Now here is the part that catches nearly everybody, and it is the single most important idea in this section.</p>
+
+<div class="info-box">
+    <div class="info-hdr">ℹ️ It measures inactivity, not age</div>
+    <p>The engagement period is not thirty days from the first visit. It is thirty days of <strong>silence</strong>. Every time the visitor returns, the clock resets and starts counting again from that visit. The window rolls along with an active visitor and only closes once they have stayed away for the full period without a single hit.</p>
+</div>
+
+<p>So a visitor who returns every fortnight for two years never expires at all. Their first touch channel from two years ago is still recorded as the channel that brought them, because they have never once been quiet for thirty consecutive days. The window has simply been rolling forward beside them the entire time.</p>
+
+<h3 class="subsec-title">Why this trips up experienced practitioners</h3>
+<p>Because it behaves nothing like the expiration model everyone already knows.</p>
+
+<p>An eVar expiration is a stamped date. Set an eVar to expire after thirty days and it expires thirty days after the value was set, and returning to the site changes nothing about that. It is a carton of milk: the date was printed at the factory, and drinking from it does not extend it.</p>
+
+<p>The marketing channel engagement period is a membership that renews on use. It only lapses through neglect.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">Same 30 days, two completely different clocks</div>
+    <div class="diagram-content">
+        <div class="comparison-grid">
+            <div class="comp-item">
+                <div class="comp-label">eVar expiration: fixed</div>
+                <div class="comp-desc">Value set on day 1, expiring after 30 days. Visitor returns on day 20. The eVar still expires on day 30, exactly as originally stamped. Returning changed nothing.</div>
+            </div>
+            <span class="comp-vs">vs</span>
+            <div class="comp-item">
+                <div class="comp-label">Engagement period: rolling</div>
+                <div class="comp-desc">Channel set on day 1, engagement period 30 days. Visitor returns on day 20. The clock resets, and the channel now survives until day 50. Returning bought another 30 days.</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<p>Carry the eVar mental model into this setting and every prediction you make will be wrong, always in the same direction: you will consistently expect channels to expire far earlier than they actually do. A first touch channel report will show acquisition sources that feel impossibly old, and the setup will look broken when it is behaving exactly as designed.</p>
+
+<h3 class="subsec-title">Watch it happen</h3>
+<p>Follow one visitor, on a default thirty-day engagement period.</p>
+
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>Day</th><th>What the visitor does</th><th>First Touch Channel</th><th>Last Touch Channel</th></tr></thead>
+        <tbody>
+            <tr><td>1</td><td>Arrives from a display ad</td><td>Display</td><td>Display</td></tr>
+            <tr><td>2</td><td>Returns from an organic search</td><td>Display <span style="color:var(--text3)">(persists)</span></td><td>Natural Search</td></tr>
+            <tr><td>10</td><td>Returns directly, typing the URL</td><td>Display <span style="color:var(--text3)">(persists)</span></td><td>Natural Search <span style="color:var(--text3)">(persists)</span></td></tr>
+            <tr><td>45</td><td>Returns using a tab left open since day 10</td><td><strong>Session Refresh</strong></td><td><strong>Session Refresh</strong></td></tr>
+        </tbody>
+    </table>
+</div>
+
+<p>Read day 10 carefully. The visitor came directly, and yet Last Touch still says Natural Search. That is the <strong>Override Last-Touch</strong> checkbox doing its job, the one you deliberately left unchecked back in Channel Configuration. Direct was not permitted to take credit from a channel that was still persisting.</p>
+
+<p>Now day 45. The last activity was day 10, so thirty-five days of silence have passed, and thirty was the limit. The engagement period has closed. The marketing channel cookies expire, and <strong>both first and last touch reset together</strong>. The visitor then returns through a tab left open since day 10, which carries an internal referrer, so the waterfall drops them into Session Refresh. Both dimensions now read Session Refresh, and a channel that never bought a single click has quietly become somebody's acquisition source.</p>
+
+<p>Note how close that was. Had the visitor returned on day 39 instead, twenty-nine days of silence, nothing would have expired, Display would still be the first touch, and the report would tell a completely different story about where that customer came from. One day of difference, an entirely different answer.</p>
+
+<h3 class="subsec-title">Where Session Refresh really comes from</h3>
+<p>That channel confuses people, so it is worth naming its causes plainly. Session Refresh appears when a visit <em>begins</em> with a referrer from your own site, and there are four ordinary ways that happens:</p>
+
+<ul>
+    <li><strong>A tab left open.</strong> The visitor abandons a tab, the engagement period lapses, and they click on it weeks later. Internally referred, new visit.</li>
+    <li><strong>Cookies cleared mid-visit.</strong> Both channels reset instantly, and the very next page view arrives with an internal referrer.</li>
+    <li><strong>Untagged pages.</strong> A visitor lands on a page with no Analytics tag, then clicks through to a tagged one. The first page Adobe ever sees is referred from your own domain.</li>
+    <li><strong>Redirects that drop the referrer.</strong> The true entry referrer is lost in the redirect, and the redirecting page, usually one of yours, appears as the referring domain instead.</li>
+</ul>
+
+<p>Only the first is truly a session refresh. The other three are implementation defects wearing its clothing, which is why a large Session Refresh number is worth investigating rather than accepting.</p>
+
+<div class="pro-tip">
+    <div class="pro-tip-hdr">💡 The rule that finally explains the checkbox</div>
+    <p>Adobe states it plainly: <strong>Direct and Session Refresh can only receive last-touch credit if they were also the first touch.</strong> Read that again, because it closes a loop this module opened two sections ago. With Override Last-Touch unchecked, these channels cannot take credit from a persisting channel. And a channel persists precisely as long as the engagement period keeps it alive. So the checkbox in Channel Configuration and the setting in this section are not two features. They are one mechanism seen from opposite ends: one decides <em>who may claim</em>, the other decides <em>how long the claim survives</em>.</p>
+</div>
+
+<h3 class="subsec-title">The three settings, and the one you will need</h3>
+<p>Marketing Channel Expiration offers three things.</p>
+
+<p><strong>Days of Inactivity.</strong> The number of quiet days before a visitor's engagement expires. Default 30. This is the one to align with your real buying cycle.</p>
+
+<p><strong>Never.</strong> The engagement period does not expire, ever. The first touch channel becomes permanent for that browser. It sounds appealing, and organizations do choose it, wanting to always know how a customer originally found them. But think about what it means: a paid search click from four years ago is still claiming credit for acquisition today, and no amount of subsequent marketing can ever displace it. It also actively interferes with report-time attribution, which is covered below. Choose it deliberately or not at all.</p>
+
+<p><strong>Expire All.</strong> A button that immediately expires every visitor engagement period across the report suite. First and last touch channels reset for everybody, and repopulate as visitors return.</p>
+
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ Press Expire All after your first setup, and after every rule change</div>
+    <p>This is the most practical thing in this section, and skipping it will make you doubt work that was actually correct.</p>
+    <p>You already know marketing channel processing rules are not retroactive. The engagement period makes that worse in a way that is easy to miss. Suppose you discover a broken rule and fix it today. Last touch starts behaving correctly straight away, because it is reassigned on each new visit. But <strong>first touch does not</strong>. Every visitor already carrying a first touch channel keeps the wrong one, and keeps feeding it, until <em>their individual</em> engagement period expires. With a rolling thirty-day window, a frequently returning visitor may never expire at all. Your first touch report goes on collecting into the wrong channel indefinitely, long after the rule that caused it is gone.</p>
+    <p><strong>Expire All is the cure.</strong> Press it after the initial Marketing Channel setup, and press it again after any change to channels or rules. Adobe recommends exactly this. Skip it and you will spend a week convinced your corrected rules did not work.</p>
+</div>
+
+<h3 class="subsec-title">Two clocks that are constantly confused</h3>
+<p><a href="/adobe-analytics-learning/shape/marketing-channels/channel-attribution/">Channel Attribution</a> introduced the attribution lookback window, also often set to thirty days. This section introduces the engagement period, also thirty days by default. They are different clocks, running in different places, doing different jobs, and conflating them is one of the most common errors in this whole subject.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">Engagement period vs attribution lookback window</div>
+    <div class="diagram-content">
+        <div class="tbl-wrap">
+            <table>
+                <thead><tr><th></th><th>Engagement period</th><th>Attribution lookback window</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>Where it runs</strong></td><td>Collection time, as the hit arrives</td><td>Report time, when the report is run</td></tr>
+                    <tr><td><strong>Where it is set</strong></td><td>Admin, in report suite settings</td><td>Analysis Workspace, per column or panel</td></tr>
+                    <tr><td><strong>What it controls</strong></td><td>How long a channel persists on the visitor</td><td>How far back a model may reach for touch points</td></tr>
+                    <tr><td><strong>Stored where</strong></td><td>In a cookie, per browser</td><td>Nowhere. Calculated on the fly.</td></tr>
+                    <tr><td><strong>Changing it</strong></td><td>Affects future data only</td><td>Fully retroactive, change it freely</td></tr>
+                    <tr><td><strong>Maximum</strong></td><td>Unlimited, including Never</td><td>90 days</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <p style="text-align:center;margin-top:12px;font-size:13px;color:var(--text3)">Both default to 30 days. That is the only thing they have in common.</p>
+    </div>
+</div>
+
+<p>They also interfere with each other, and this is genuinely subtle. Report-time attribution awards credit based on channel <strong>instances</strong>, meaning the moments a channel was actually <em>set</em> on a hit, not the long stretches where it merely <em>persisted</em>. If a channel was set outside your reporting window and only its persisted value survives inside that window, a participation model will hand the credit to <strong>None</strong> rather than to the channel.</p>
+
+<p>Which produces Adobe's own recommendation, and it is counterintuitive enough to state directly: <strong>keep the engagement period as short as your business honestly allows.</strong> Long persistence, and especially Never, makes channels linger without generating instances, and that lingering quietly corrupts attribution analysis. A generous engagement period feels safe. It is not.</p>
+
+<h3 class="subsec-title">So what should you set it to?</h3>
+<p>Match it to how long your customers actually take to decide, and get that number from the business rather than from a default.</p>
+
+<p>For impulse retail, thirty days is generous and something shorter may be truer. For considered purchases, a laptop, a holiday, an insurance policy, thirty days is roughly right and is defensible. For the B2B industrial supplier, where a procurement cycle runs for months and involves a committee, thirty days will expire the channel that started everything long before the deal closes, and a longer window is genuinely justified. And if nobody in the business can tell you how long the buying cycle is, that is not a reason to accept the default. That is a question worth asking, and the answer belongs in the channel design document alongside everything else.</p>
+
+<h3 class="subsec-title">The whole module, in one visitor</h3>
+<p>Everything in this module now sits in a single line of causation, and it is worth seeing it whole.</p>
+
+<p>A visitor arrives. The <a href="/adobe-analytics-learning/shape/marketing-channels/marketing-channel-processing-rules/">marketing channel processing rules</a> read the hit and drop it into a channel, and only the first matching rule ever fires. That channel is one of the buckets the business argued over and approved, and it cannot be deleted. Whether the channel is allowed to seize last-touch credit depends on a checkbox nobody thinks about. How long it keeps that credit depends on a setting nobody opens. And when a report finally runs, the model chosen in <a href="/adobe-analytics-learning/shape/marketing-channels/channel-attribution/">Channel Attribution</a> decides how the credit is shared, and that model is an opinion, not a fact.</p>
+
+<p>Every one of those steps is invisible in the report. The numbers look confident either way. That is what makes Marketing Channels the part of Adobe Analytics where a good implementation and a badly broken one are the hardest to tell apart, and why an architect is somebody who knows which of these settings to check first when a marketer says the numbers look wrong.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Analytics</div>
+    <p>Analytics &gt; Admin &gt; Report Suites &gt; select suite &gt; Edit Settings &gt; <span class="path">Marketing Channels &gt; Marketing Channel Expiration</span>. Set Days of Inactivity, or Never, and use <span class="path">Expire All</span> to reset every visitor engagement period immediately after setup or after any rule change.</p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title">📚 Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/dimensions/last-touch-channel" target="_blank">Adobe Docs: Last Touch Channel and the Engagement Period</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/marketing-channels/c-faq" target="_blank">Adobe Docs: Marketing Channels FAQ</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/dimensions/first-touch-channel" target="_blank">Adobe Docs: First Touch Channel Dimension</a></li>
+    </ul>
+</div>

@@ -1,0 +1,377 @@
+---
+slug: "marketing-channel-processing-rules"
+aliases:
+  - /adobe-analytics-learning/shape/marketing-channels/processing-rules/
+title: "Marketing Channel Processing Rules"
+seotitle: "Marketing Channel Processing Rules in Adobe Analytics"
+lastmod: 2026-07-18
+description: "Marketing channel processing rules run as a waterfall, and order decides everything. What you can match on, and the three facts that will save you."
+type: lesson
+modulenum: 10
+sectionnum: 3
+weight: 3
+---
+<p>The variables are created. Now they get populated.</p>
+
+<p>Do not worry that the ground has shifted. This is still Marketing Channels, still the same module. <a href="/adobe-analytics-learning/shape/marketing-channels/channel-configuration/">Channel Configuration</a> established the analogy and it holds all the way through: creating a marketing channel is like declaring a variable, and filling it is a separate act performed somewhere else. That somewhere else is the Marketing Channel Processing Rules screen, and this section is about what you do there.</p>
+
+<p>Notice also who is driving now. The channel design document exists. The stakeholders discussed, argued, and signed. Their job is finished, and that approval is the business saying its marketing strategy is settled and handing the execution to you. From here the work is technical, and it is yours.</p>
+
+<h3 class="subsec-title">Why are they called processing rules?</h3>
+<p>The name is worth pausing on, because the answer explains the design of the whole feature.</p>
+
+<p>Adobe Analytics was not born whole. Nobody woke one morning to find VISTA, Processing Rules, Classifications, Segments, and Marketing Channels all sitting there together. These capabilities arrived across many years, built by different people at different times to solve different problems, and they carry the fingerprints of the eras that produced them.</p>
+
+<p>VISTA is the elder. It has existed essentially from the beginning, engineering-built and server-side. Classifications arrived under the name SAINT. Segmentation, long before Analysis Workspace existed, lived in a separate tool called Discover, later renamed Ad Hoc Analysis, and it was used heavily. Processing Rules came along to give practitioners a self-service way to shape data without filing an engineering request. And Marketing Channels arrived in 2013, well after all of them.</p>
+
+<p>So by 2013 the shelf was already full of ways to manipulate data. The question facing whoever built Marketing Channels was which of those paradigms fit the job of sorting a hit into a channel. Work through them and the answer arrives by elimination.</p>
+
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>Existing paradigm</th><th>How it works</th><th>Why it does not fit channel assignment</th></tr></thead>
+        <tbody>
+            <tr><td><strong><a href="/adobe-analytics-learning/shape/vista-rules/">VISTA</a></strong></td><td>Server-side logic, built and deployed by Adobe engineering</td><td>You get no self-service control. You cannot see the order, cannot reorder it, cannot iterate on it. Marketing changes campaigns faster than an engineering ticket can turn around.</td></tr>
+            <tr><td><strong><a href="/adobe-analytics-learning/shape/classifications/">Classifications</a></strong></td><td>A lookup table applied to a value after collection, and retroactive</td><td>Works on a value that already exists. Channel assignment has to happen while the hit is being collected, because there is no channel value to classify until something decides one.</td></tr>
+            <tr><td><strong><a href="/adobe-analytics-learning/analyze/segments/">Segments</a></strong></td><td>Filters applied at report time, when someone runs a report</td><td>Never writes anything into the data. A segment reads. Channel assignment must write a value that is then stored on the hit.</td></tr>
+            <tr><td><strong><a href="/adobe-analytics-learning/shape/processing-rules/">Processing Rules</a></strong></td><td>A rule builder you control, running at collection time, in an order you set</td><td>Nothing. This is the fit.</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<p>The processing-rule paradigm was the only one that gave all three things the job needs at once: a builder a practitioner can operate without engineering, execution at collection time so a value is written onto the hit, and, most importantly, <strong>an order the practitioner decides</strong>. That last one turns out to matter enormously, and the rest of this section is largely about why.</p>
+
+<div class="info-box">
+    <div class="info-hdr">ℹ️ Two features, one name</div>
+    <p>Marketing Channel Processing Rules are a <strong>separate feature</strong> from Processing Rules. They share a name, a philosophy, and a similar builder, but they are different screens, they run at different stages of the pipeline, and they do different jobs. Adobe's own documentation opens by disambiguating the two. Think of them as siblings rather than as the same thing wearing two hats.</p>
+</div>
+
+<h3 class="subsec-title">Where these rules run</h3>
+<p>Position in the pipeline is not trivia here, because it has a consequence you can use.</p>
+
+<p>Marketing channel rules run <strong>late</strong>. A hit arrives, the general processing rules run, VISTA runs, and then marketing channel rules run near the end, just before the hit is stored. Which means the data these rules are reading has already been shaped by everything upstream.</p>
+
+<div class="pro-tip">
+    <div class="pro-tip-hdr">💡 What VISTA gives you, and what it takes away</div>
+    <p>Marketing channel rules <strong>can read a variable that VISTA has set</strong>, but they <strong>cannot read data that VISTA has deleted</strong>. That is not a quirk, it is a lever. If a channel signal is buried somewhere awkward, a VISTA rule upstream can lift it into an eVar, and a marketing channel rule can then match on that eVar. But if something upstream stripped a referrer, no marketing channel rule can recover it, because by the time these rules run, it is gone.</p>
+</div>
+
+<h3 class="subsec-title">The anatomy of a rule</h3>
+<p>Every marketing channel rule has the same shape. Conditions on the left, two assignments on the right.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">The shape of every marketing channel rule</div>
+    <div class="diagram-content">
+        <div class="rule-structure">
+            <div class="rule-part">
+                <div class="rule-part-title">IF conditions match</div>
+                <div class="rule-part-desc">any / all of them</div>
+            </div>
+            <span class="rule-connector">&rarr;</span>
+            <div class="rule-part">
+                <div class="rule-part-title">Identify the channel as</div>
+                <div class="rule-part-desc">sets Marketing Channel</div>
+            </div>
+            <span class="rule-connector">+</span>
+            <div class="rule-part">
+                <div class="rule-part-title">Set the channel's value</div>
+                <div class="rule-part-desc">sets Marketing Channel Detail</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<p>Two assignments, not one. The channel is the bucket, and the detail is the label inside the bucket. A rule that sets a channel but forgets the detail produces a Paid Search line in the report with nothing underneath it, and no way to ask which campaign or keyword did the work. Setting the detail is not optional polish. It is half the rule.</p>
+
+<p>A single rule can carry multiple conditions, joined by <strong>any</strong> or <strong>all</strong>. And a single channel can be fed by multiple rules, which is useful when you want the same channel to record a different detail depending on how the visitor arrived.</p>
+
+<h3 class="subsec-title">What you can match on</h3>
+<p>The conditions available fall into three families.</p>
+
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>Family</th><th>Conditions</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Adobe-detected</strong><br><span style="font-size:13px;color:var(--text3)">No value to type. Adobe decides.</span></td><td>Matches Paid Search Detection Rules; Matches Natural Search Detection Rules; Referrer Matches Internal URL Filters; Referrer Does Not Match Internal URL Filters; Is First Hit of Visit; Referrer Is Social Network; Referrer Is Conversational AI</td></tr>
+            <tr><td><strong>Hit attributes</strong><br><span style="font-size:13px;color:var(--text3)">You pick a dimension, an operator, a value.</span></td><td>Page; Page Domain; Page Domain And Path; Page Root Domain; Page URL; Query String Parameter; Referrer; Referring Domain; Referring Domain And Path; Referring Parameter; Referring Root Domain; Search Engine; Search Keyword(s); Search Engine + Search Keyword(s); AMO ID; AMO EF ID</td></tr>
+            <tr><td><strong>Conversion variables</strong></td><td>eVar 1 to 250</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<p>Two things to notice. There is no condition called "tracking code." Campaign traffic is caught with <strong>Query String Parameter</strong>, matching on the parameter in the landing URL. And every text field is matched <strong>case-insensitively</strong>, so a parameter value of <code>EML</code> and <code>eml</code> are the same thing to a rule.</p>
+
+<h3 class="subsec-title">The waterfall, and why order decides everything</h3>
+<p>Here is the single mechanic that governs this entire screen.</p>
+
+<p>Rules are evaluated from the top down. Adobe tests the hit against rule one, then rule two, and so on. <strong>The moment a rule matches, that channel is assigned and processing stops.</strong> Every rule below the match is never evaluated at all. It is a waterfall, and each rule gets to catch only what the rules above it let fall through.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">First match wins, and the rest never run</div>
+    <div class="diagram-content">
+        <div class="flow-vertical">
+            <div class="flow-step">Hit arrives</div>
+            <span class="flow-arrow-down">&darr;</span>
+            <div class="flow-step">Rule 1: Paid Search? &nbsp;<span style="font-weight:400;color:var(--text2)">no match, fall through</span></div>
+            <span class="flow-arrow-down">&darr;</span>
+            <div class="flow-step">Rule 2: Natural Search? &nbsp;<span style="font-weight:400;color:var(--text2)">no match, fall through</span></div>
+            <span class="flow-arrow-down">&darr;</span>
+            <div class="flow-step highlight">Rule 3: Email? &nbsp;MATCH. Channel assigned. Processing stops.</div>
+            <span class="flow-arrow-down">&darr;</span>
+            <div class="flow-step"><span style="font-weight:400;color:var(--text3)">Rules 4 through 10 are never evaluated for this hit</span></div>
+        </div>
+    </div>
+</div>
+
+<p>This is why Adobe's guidance on ordering is not a style preference. <strong>Place the paid and managed channels first, and the organic and absorbent channels last.</strong> Paid Search sits above Natural Search because a click on a paid search ad also arrives carrying a search engine referrer. Put Natural Search first and every paid click is silently recorded as organic, and the campaign you are paying for shows nothing.</p>
+
+<h3 class="subsec-title">Three facts that will save you</h3>
+
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ These rules run on every hit, not just the first</div>
+    <p>This is the one that catches experienced practitioners. Marketing channel rules process <strong>every hit a visitor makes</strong>, not only the arrival. So a rule with a loose condition, the classic being <code>Page URL exists</code> with nothing else, matches on every single page view and reassigns the channel over and over. A page URL always exists. That is why the bottom rules carry the <strong>Is First Hit of Visit</strong> condition: it is what stops them from re-firing on every page a visitor touches.</p>
+</div>
+
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ The data is permanent. Fixing a rule does not fix history.</div>
+    <p>Marketing channel data is processed at collection time and written into the hit. It is not retroactive. Discover a broken rule after six months and you can correct it going forward, but every hit already collected under the broken rule stays wrong forever. There is no reprocessing, no backfill, no undo. This is the same irreversibility that made the channel list a business decision in Channel Configuration, and here it has a sharper edge, because a rule is far easier to get subtly wrong than a channel name is.</p>
+</div>
+
+<p>And one that quietly protects you: <strong>two marketing channels never receive credit for the same event.</strong> A single purchase cannot be counted under both Email and Paid Search. This is unlike eVars, where two variables can both take credit for one conversion. Because the waterfall stops at the first match, a hit belongs to exactly one channel, which is what makes a Marketing Channel report add up to one hundred percent of your traffic.</p>
+
+<h3 class="subsec-title">Building the default rules, one at a time</h3>
+<p>If the report suite had no channels, Auto Setup created both the channels and a first pass at their rules. Treat that as your starting document and walk it rule by rule. What follows is the standard set in Adobe's recommended order, and it is written so you can build it as you read.</p>
+
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ Build this in a test report suite, not production</div>
+    <p>If you are going to follow along and build these rules yourself, and you should, do it in a development or test report suite. Marketing channel data is written at collection time and is <strong>not retroactive</strong>. A rule you save and then think better of has already miscategorized every hit that arrived while it was live, permanently. Adobe recommends keeping a template report suite exactly for this, and pushing the finished rule set to production once it is settled. Practice where mistakes cost nothing.</p>
+</div>
+
+<p>Open Analytics, then Admin, then Report Suites, select your test suite, then Edit Settings, then Marketing Channels, then Marketing Channel Processing Rules. Keep that screen beside this page. Each rule below is shown as it appears in the builder: the conditions on top, the two assignments underneath. Add them in order, and drag them into position as you go.</p>
+
+<p>Here is the finished set at a glance, which is what you are building toward.</p>
+
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>#</th><th>Channel</th><th>Catches</th><th>Channel Detail</th></tr></thead>
+        <tbody>
+            <tr><td>1</td><td><strong>Paid Search</strong></td><td>Clicks on paid search ads</td><td>Search Engine + Keyword</td></tr>
+            <tr><td>2</td><td><strong>Natural Search</strong></td><td>Search traffic that was not paid</td><td>Search Engine + Keyword</td></tr>
+            <tr><td>3</td><td><strong>Display</strong></td><td>Banner and programmatic ads</td><td>Query string parameter value</td></tr>
+            <tr><td>4</td><td><strong>Email</strong></td><td>Clicks from email sends</td><td>Query string parameter value</td></tr>
+            <tr><td>5</td><td><strong>Affiliate</strong></td><td>Named partner domains</td><td>Referring Domain</td></tr>
+            <tr><td>6</td><td><strong>Other Campaigns</strong></td><td>Any tracked campaign not caught above</td><td>Query string parameter value</td></tr>
+            <tr><td>7</td><td><strong>Social Networks</strong></td><td>Known social platforms</td><td>Referring Domain</td></tr>
+            <tr><td>8</td><td><strong>Session Refresh</strong></td><td>Visits starting from your own domain</td><td>Page</td></tr>
+            <tr><td>9</td><td><strong>Direct</strong></td><td>No referrer at all</td><td>Page</td></tr>
+            <tr><td>10</td><td><strong>Referring Domains</strong></td><td>Everything else with a referrer</td><td>Referring Domain</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<p>Notice the shape of that list. Paid and managed channels at the top, organic and absorbent channels at the bottom, and a catch-all sitting on the boundary between them. Now build it.</p>
+
+<h3 class="subsec-title">1. Paid Search</h3>
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">Marketing Channel Rule</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>Rule: Paid Search
+Position: 1  (top of the waterfall)
+
+Condition: if ALL are true
+    Matches Paid Search Detection Rules
+
+Then do the following
+    Identify the channel as:  Paid Search
+    Set the channel's value:  Search Engine + Search Keyword(s)
+
+Depends on:  Edit Settings > General > Paid Search Detection</pre></div>
+</div>
+
+<p>This is an Adobe-detected condition, so there is nothing to type. It leans on a separate screen, Paid Search Detection, where you tell Adobe which query string parameters mark a click as paid. Configure that screen first or this rule catches nothing. It sits first because a paid click looks exactly like organic search traffic in every respect except the parameter marking it, so it has to be caught before anything else gets a look.</p>
+
+<h3 class="subsec-title">2. Natural Search</h3>
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">Marketing Channel Rule</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>Rule: Natural Search
+Position: 2
+
+Condition: if ALL are true
+    Matches Natural Search Detection Rules
+
+Then do the following
+    Identify the channel as:  Natural Search
+    Set the channel's value:  Search Engine + Search Keyword(s)</pre></div>
+</div>
+
+<p>Adobe-detected again, and it means: the hit came from a recognized search engine and did <em>not</em> match paid detection. Read that definition carefully, because this rule is defined by what the rule above it already removed. It only works because Paid Search ran first. That dependency is the waterfall in miniature.</p>
+
+<h3 class="subsec-title">3. Display</h3>
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">Marketing Channel Rule</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>Rule: Display
+Position: 3
+
+Condition: if ALL are true
+    Query String Parameter  "cid"  contains  "display"
+
+Then do the following
+    Identify the channel as:  Display
+    Set the channel's value:  Query String Parameter "cid"
+
+Landing URL:  https://site.com/offer?cid=display_q3_banner
+Result:       Channel = Display,  Detail = display_q3_banner</pre></div>
+</div>
+
+<p>Display traffic carries no natural signal. A banner click arrives looking like a referral from an ad server, so the only reliable marker is whatever marketing appended to the landing URL. Which means this rule is only as good as the parameter convention agreed in the design document. Substitute your own parameter name and value; the ones above are illustrative.</p>
+
+<h3 class="subsec-title">4. Email</h3>
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">Marketing Channel Rule</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>Rule: Email
+Position: 4
+
+Condition: if ALL are true
+    Query String Parameter  "cid"  contains  "eml"
+
+Then do the following
+    Identify the channel as:  Email
+    Set the channel's value:  Query String Parameter "cid"
+
+Landing URL:  https://site.com/sale?cid=eml_july_winback
+Result:       Channel = Email,  Detail = eml_july_winback</pre></div>
+</div>
+
+<p>Same principle as Display, and the detail is what earns its keep: it is how a marketer sees that the July winback send outperformed the others. Without the detail assignment, the report says Email produced revenue and nothing more, which is almost useless to the person who has to decide what to send next.</p>
+
+<h3 class="subsec-title">5. Affiliate</h3>
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">Marketing Channel Rule</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>Rule: Affiliate
+Position: 5
+
+Condition: if ANY are true
+    Referring Domain  contains  "partnersite.com"
+    Referring Domain  contains  "dealsite.net"
+
+Then do the following
+    Identify the channel as:  Affiliate
+    Set the channel's value:  Referring Domain
+
+Note: list root domains only, without the "www." prefix</pre></div>
+</div>
+
+<p>Affiliates are a managed channel with a real commercial relationship behind them, which is why they sit above the organic tier rather than being swept up by Referring Domains at the bottom. Use <strong>ANY</strong> here rather than ALL, since a visitor arrives from one partner, not all of them at once. Setting the detail to Referring Domain is what lets you see each partner separately and pay them accordingly.</p>
+
+<h3 class="subsec-title">6. Other Campaigns</h3>
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">Marketing Channel Rule</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>Rule: Other Campaigns
+Position: 6  (after every paid rule, before every organic rule)
+
+Condition: if ALL are true
+    Query String Parameter  "cid"  exists
+
+Then do the following
+    Identify the channel as:  Other Campaigns
+    Set the channel's value:  Query String Parameter "cid"</pre></div>
+</div>
+
+<p>This is the paid catch-all, and its position is exact. It sits after every specific paid rule and before every organic one. The reason is simple and it will happen to you: marketing launches something next quarter with a tracking parameter nobody told you about. Without this rule, that traffic falls straight past all your paid rules and lands in Referring Domains or Direct, and a campaign somebody spent real money on appears to have produced nothing at all. This rule catches anything tagged as a campaign that you have not written a specific rule for yet.</p>
+
+<h3 class="subsec-title">7. Social Networks</h3>
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">Marketing Channel Rule</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>Rule: Social Networks   (rename to "Organic Social")
+Position: 7
+
+Condition: if ALL are true
+    Referrer Is Social Network
+
+Then do the following
+    Identify the channel as:  Organic Social
+    Set the channel's value:  Referring Domain</pre></div>
+</div>
+
+<p>Adobe-detected, matched against a known list of platforms. Two things to do here. Rename the channel to <strong>Organic Social</strong> if you also run paid social, because otherwise no analyst will ever be sure which one a report is showing. And check Adobe's platform list against your own market, since the defaults will not include every network that matters to a regional or industry-specific audience.</p>
+
+<h3 class="subsec-title">8. Internal, renamed Session Refresh</h3>
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">Marketing Channel Rule</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>Rule: Session Refresh   (Adobe names this channel "Internal")
+Position: 8
+
+Condition: if ALL are true
+    Referrer Matches Internal URL Filters
+    Is First Hit of Visit
+
+Then do the following
+    Identify the channel as:  Session Refresh
+    Set the channel's value:  Page
+
+In Marketing Channel Manager:  leave Override Last-Touch UNCHECKED</pre></div>
+</div>
+
+<p>This catches a visit that <em>begins</em> with a referrer from your own domain, which sounds impossible until you picture it: a visitor leaves a tab open, goes to lunch, the session times out after thirty minutes, and they come back and click. New visit, internal referrer. Both conditions are load-bearing. Drop <em>Is First Hit of Visit</em> and this rule matches every internal click on your entire site. Rename it, because "Internal" gets confused with internal campaigns, which are a completely different feature and must never appear in this report.</p>
+
+<h3 class="subsec-title">9. Direct</h3>
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">Marketing Channel Rule</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>Rule: Direct
+Position: 9
+
+Condition: if ALL are true
+    Referrer  does not exist
+    Is First Hit of Visit
+
+Then do the following
+    Identify the channel as:  Direct
+    Set the channel's value:  Page
+
+In Marketing Channel Manager:  leave Override Last-Touch UNCHECKED</pre></div>
+</div>
+
+<p>A typed URL or a bookmark arrives with no referrer at all. Again, <em>Is First Hit of Visit</em> is doing essential work, since plenty of hits deep inside a visit can also arrive without a referrer. Leave Override Last-Touch unchecked so that a visitor who was acquired by a paid ad last week and returns today by bookmark does not hand the credit to Direct.</p>
+
+<h3 class="subsec-title">10. Referring Domains</h3>
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">Marketing Channel Rule</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>Rule: Referring Domains
+Position: 10  (LAST. This position is not negotiable.)
+
+Condition: if ALL are true
+    Referrer  exists
+    Referrer Does Not Match Internal URL Filters
+
+Then do the following
+    Identify the channel as:  Referring Domains
+    Set the channel's value:  Referring Domain</pre></div>
+</div>
+
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ This is the biggest sponge in the set</div>
+    <p>Almost every visitor who arrived from anywhere at all has a referring domain. Social platforms have one. Affiliates have one. Move this rule up even a few positions and it will quietly swallow every channel beneath it, and those channels will simply stop reporting. Nothing breaks, no error appears, and your Social and Affiliate lines just go quiet. If a channel that should have traffic is showing none, this rule's position is the first thing to check.</p>
+</div>
+
+<p>Save. Every rule is in place and every rule is in the right position, which on this screen are two different achievements.</p>
+
+<div class="info-box">
+    <div class="info-hdr">ℹ️ A newer condition worth knowing: Conversational AI</div>
+    <p>Adobe now offers <strong>Referrer Is Conversational AI</strong> as a detected condition, which identifies visitors arriving from AI chat tools. If a meaningful share of your traffic now comes from someone asking an assistant a question rather than a search engine, this deserves its own channel. Place it in the organic tier alongside Social Networks and above Referring Domains, with <em>Referring Domain</em> as the detail. Most channel configurations written before this existed are currently counting that traffic as Referring Domains, which is worth checking on your own report suite.</p>
+</div>
+
+<h3 class="subsec-title">What you have now</h3>
+<p>The channels exist and the rules fill them. Every arriving hit now falls through the waterfall and lands in exactly one bucket, with a detail recorded underneath it. Open a Marketing Channel report and there is finally something in it.</p>
+
+<p>Which surfaces the question this module has been building toward since the overview. A visitor arrives from Paid Search in March, returns from Email in April, and buys. Both channels are recorded. Both did work. So which one gets credit for the purchase? That is attribution, and it is where <a href="/adobe-analytics-learning/shape/marketing-channels/channel-attribution/">Channel Attribution</a> goes.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Analytics</div>
+    <p>Analytics &gt; Admin &gt; Report Suites &gt; select suite &gt; Edit Settings &gt; <span class="path">Marketing Channels &gt; Marketing Channel Processing Rules</span>. Drag and drop rules to set their order. Paid search detection is configured separately at <span class="path">Edit Settings &gt; General &gt; Paid Search Detection</span>, and internal URL filters at <span class="path">Edit Settings &gt; General &gt; Internal URL Filters</span>.</p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title">📚 Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/admin/admin-tools/manage-report-suites/edit-report-suite/marketing-channels/mc-proc-rules" target="_blank">Adobe Docs: Marketing Channel Processing Rules</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/marketing-channels/c-faq" target="_blank">Adobe Docs: Marketing Channels FAQ</a></li>
+    </ul>
+</div>

@@ -1,0 +1,62 @@
+---
+slug: "activity-map-best-practices"
+title: "Activity Map Best Practices"
+lastmod: 2026-07-15
+type: lesson
+modulenum: 18
+sectionnum: 4
+weight: 4
+---
+<p>Get the most out of Activity Map with these tips and solutions to common issues.</p>
+                <h3 class="subsec-title">Best Practices</h3>
+                <ul>
+                    <li><strong>Use s_objectID:</strong> Implement custom link IDs for consistent tracking</li>
+                    <li><strong>Define regions:</strong> Use HTML5 landmarks or data attributes for region tracking</li>
+                    <li><strong>Exclude navigation:</strong> Filter out persistent nav links to focus on content</li>
+                    <li><strong>Combine with Workspace:</strong> Export data for deeper analysis</li>
+                    <li><strong>Regular reviews:</strong> Check Activity Map monthly for UX insights</li>
+                </ul>
+
+                <h3 class="subsec-title">Common Issues & Solutions</h3>
+                <div class="tbl-wrap">
+                    <table>
+                        <thead><tr><th>Issue</th><th>Cause</th><th>Solution</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>No data showing</strong></td><td>Module not enabled</td><td>Verify AppMeasurement includes Activity Map</td></tr>
+                            <tr><td><strong>Links not tracked</strong></td><td>Dynamic content</td><td>Implement s_objectID for dynamic links</td></tr>
+                            <tr><td><strong>Wrong link names</strong></td><td>Duplicate link text</td><td>Use unique s_objectID values</td></tr>
+                            <tr><td><strong>Extension not working</strong></td><td>Permissions</td><td>Check user has Activity Map permission</td></tr>
+                            <tr><td><strong>Overlays misaligned</strong></td><td>Page changes after load</td><td>Click "Refresh" to realign overlays</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 class="subsec-title">Link Identification Hierarchy</h3>
+                <div class="code-block">
+                    <div class="code-hdr"><span class="code-lang">How Activity Map Identifies Links</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+                    <div class="code-body"><pre>Activity Map uses this priority order to name links:
+
+1. s_objectID (if set via onclick)
+2. Link text content
+3. Alt text (for image links)
+4. Title attribute
+5. href attribute (fallback)
+
+Best Practice: Always use s_objectID for:
+- Links with identical text ("Learn More", "Click Here")
+- Dynamic/JavaScript links
+- Image-only links
+- Links that change frequently</pre></div>
+                </div>
+
+                <div class="warn-box">
+                    <div class="warn-hdr">⚠️ Privacy Considerations</div>
+                    <p>Activity Map tracks link clicks which may include personally identifiable information if links contain user data. Review your implementation to ensure PII is not captured in link tracking.</p>
+                </div>
+                <div class="ref-box">
+                    <div class="ref-title">📚 Learn More</div>
+                    <ul>
+                        <li><a href="https://experienceleague.adobe.com/docs/analytics/analyze/activity-map/activitymap-faq.html" target="_blank">Adobe Docs: Activity Map FAQ</a></li>
+                    </ul>
+                </div>
+            

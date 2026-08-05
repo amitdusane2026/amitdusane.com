@@ -1,0 +1,274 @@
+---
+slug: "classification-sets"
+title: "Classification Sets"
+seotitle: "Classification Sets in Adobe Analytics"
+lastmod: 2026-07-15
+description: "Creating a classification set, step by step: subscriptions, the schema, primary and lookup types, and the identity name you can never change."
+type: lesson
+modulenum: 11
+sectionnum: 3
+weight: 3
+---
+<p>You have a key worth classifying. Now the classifications need somewhere to live.</p>
+
+<p>That somewhere is a <strong>classification set</strong>, and it is the screen where this feature stops being a concept and becomes something you build. Everything from here on is hands-on. Open Adobe Analytics alongside this section and follow it, because the rest of the module assumes the set exists.</p>
+
+<h3 class="subsec-title">Why sets exist at all</h3>
+<p>To understand the design, it helps to know what it replaced, because sets were not built to look nicer. They were built to kill a specific and genuinely painful problem.</p>
+
+<p>In the older system, classifying a single product SKU took three separate interfaces and three different mental models. You went into report suite settings to create the classification columns. You went into the Rule Builder to write the rules. You went into the Importer to upload the files. Three screens, none of which knew about the others.</p>
+
+<p>And then the real cost arrived. All of it was scoped to <em>one report suite</em>. Twelve report suites meant doing the whole thing twelve times, by hand, and keeping twelve copies in agreement forever.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">The same job, before and after</div>
+    <div class="diagram-content">
+        <div class="strategy-diagram">
+            <div class="strategy-col">
+                <div class="strategy-header" style="background:var(--text2, #475569);color:#fff">Legacy classifications</div>
+                <div class="strategy-item">Report suite settings: create the columns</div>
+                <div class="strategy-item">Rule Builder: write the rules</div>
+                <div class="strategy-item">Importer: upload the files</div>
+                <div class="strategy-item">Then repeat all of it, per report suite</div>
+            </div>
+            <div class="strategy-col">
+                <div class="strategy-header" style="background:var(--accent, #e11d48);color:#fff">Classification sets</div>
+                <div class="strategy-item">Subscriptions: which suites and which key</div>
+                <div class="strategy-item">Schema: the columns</div>
+                <div class="strategy-item">Rules: the patterns that fill them</div>
+                <div class="strategy-item">One set, serving every subscribed suite</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<p>Look at the left column and notice that creating the classification columns was a report suite setting. That step is gone. In a classification set, the columns are created inside the set itself, on the Schema tab. If you have worked with classifications before, this is the habit to unlearn first, because you will go looking for a screen that no longer has a job.</p>
+
+<h3 class="subsec-title">What a set actually contains</h3>
+<p>A classification set is three things bolted together, and holding them apart in your head makes everything else easy.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">📊 The three parts of a classification set</div>
+    <svg viewBox="0 0 700 250" style="width:100%;height:auto;display:block;margin:4px 0 8px" role="img" aria-label="A classification set contains three parts. Subscriptions pair report suites with a key dimension. The schema lists the classification columns such as Age Band, Gender, Membership Tier and Join Year. Rules hold the patterns that fill those columns automatically.">
+        <rect x="14" y="14" width="672" height="222" rx="10" style="fill:none;stroke:var(--accent,#e11d48);stroke-width:2"/>
+        <text x="30" y="40" style="fill:var(--accent,#e11d48);font-size:12px;font-weight:700;font-family:sans-serif">Classification Set: Club Member Attributes</text>
+
+        <rect x="30" y="56" width="200" height="164" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <text x="130" y="80" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">SUBSCRIPTIONS</text>
+        <text x="130" y="98" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:10px;font-family:sans-serif">where it applies</text>
+        <text x="46" y="126" style="fill:var(--text2,#475569);font-size:11px;font-family:monospace">club-prod</text>
+        <text x="214" y="126" text-anchor="end" style="fill:var(--text1,#0f172a);font-size:11px;font-family:monospace">eVar12</text>
+        <line x1="46" y1="136" x2="214" y2="136" style="stroke:var(--border,#e2e8f0);stroke-width:1"/>
+        <text x="46" y="156" style="fill:var(--text2,#475569);font-size:11px;font-family:monospace">club-dev</text>
+        <text x="214" y="156" text-anchor="end" style="fill:var(--text1,#0f172a);font-size:11px;font-family:monospace">eVar12</text>
+        <line x1="46" y1="166" x2="214" y2="166" style="stroke:var(--border,#e2e8f0);stroke-width:1"/>
+        <text x="130" y="192" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:10px;font-family:sans-serif">report suite + key dimension</text>
+        <text x="130" y="207" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:10px;font-family:sans-serif">one pair per line</text>
+
+        <rect x="250" y="56" width="200" height="164" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <text x="350" y="80" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">SCHEMA</text>
+        <text x="350" y="98" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:10px;font-family:sans-serif">the columns</text>
+        <text x="266" y="124" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">Age Band</text>
+        <text x="266" y="144" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">Gender</text>
+        <text x="266" y="164" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">Membership Tier</text>
+        <text x="266" y="184" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">Join Year</text>
+        <text x="350" y="207" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:10px;font-family:sans-serif">each becomes a dimension</text>
+
+        <rect x="470" y="56" width="200" height="164" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <text x="570" y="80" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">RULES</text>
+        <text x="570" y="98" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:10px;font-family:sans-serif">the automation</text>
+        <text x="570" y="132" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">Patterns that read the key</text>
+        <text x="570" y="150" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">and fill the columns</text>
+        <text x="570" y="168" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">without a file</text>
+        <text x="570" y="207" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:10px;font-family:sans-serif">optional, and covered later</text>
+    </svg>
+</div>
+
+<p>Subscriptions say <em>where</em>. Schema says <em>what</em>. Rules say <em>how, automatically</em>. This section builds the first two. The third has a section of its own.</p>
+
+<h3 class="subsec-title">Before you open anything</h3>
+<p>One prerequisite, and it catches people on their first attempt.</p>
+
+<p>The key dimension has to exist already. When you build a subscription, Adobe offers you a dropdown of dimensions in that report suite, and an eVar that was never enabled simply will not be in the list. There is nothing to fix inside the classification interface if that happens, because the problem is upstream, in report suite settings, where the variable is enabled and named.</p>
+
+<p>You also need the right access. Classification sets live under <strong>Components</strong>, and reaching them requires either a product admin account or membership of a product profile carrying the <span class="path">Report Suite Tools &gt; Classifications</span> permission. If the menu item is not there, that is why.</p>
+
+<h3 class="subsec-title">Step one: create the set</h3>
+<p>Go to <strong>Components</strong> in the top menu bar, then <strong>Classification sets</strong>. Select the <strong>Classification sets</strong> tab, then <strong>New</strong>.</p>
+
+<p>The Add New Classification Set dialog asks for everything at once. Here is the club's set, filled in.</p>
+
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">Add New Classification Set</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>Components > Classification sets > Classification sets tab > New
+
+Name:          Club Member Attributes
+Description:   CRM attributes classified against the member User ID
+Type:          Primary
+
+Job notifications
+    Notify on failure:   ON
+    Failure recipients:  analytics@club.example, crm-ops@club.example
+    Notify on success:   OFF
+
+Subscriptions
+    Report Suite        Key Dimension
+    club-prod           eVar12  (User ID)
+    club-dev            eVar12  (User ID)
+
+Save</pre></div>
+</div>
+
+<p>Four of those fields deserve more than a glance.</p>
+
+<h3 class="subsec-title">The Type field, and the idea hiding inside it</h3>
+<p><strong>Primary</strong> is what you want almost every time. A primary set classifies a dimension that Adobe Analytics actually collected: a User ID, a product SKU, a tracking code, an internal search term. The key is real data that arrived on a hit.</p>
+
+<p><strong>Lookup</strong> is stranger and more interesting. A lookup set classifies <em>a classification</em>, which sounds like a riddle until you see the case it solves.</p>
+
+<p>Picture a product catalog where the SKU carries a primary classification called Color Code, and the color code is <code>C-114</code>. Useful to a system, useless to a marketer. You could of course put the color name straight into the primary set, but then every SKU in that color repeats the name, and the day marketing renames the color you are editing thousands of rows.</p>
+
+<p>Instead you attach a <strong>lookup</strong>: a small second set whose key is the color code and whose column is the color name. One row per color, not one row per product. Rename the color once and every product inherits it.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">Primary and lookup, working together</div>
+    <div class="diagram-content">
+        <div class="flow-horizontal">
+            <div class="flow-step">Product SKU<br><span style="font-weight:400;color:var(--text2, #475569)">the collected key</span></div>
+            <span class="flow-arrow">&rarr;</span>
+            <div class="flow-step">Color Code: C-114<br><span style="font-weight:400;color:var(--text2, #475569)">primary classification</span></div>
+            <span class="flow-arrow">&rarr;</span>
+            <div class="flow-step highlight">Color Name: Midnight Blue<br><span style="font-weight:400;color:var(--text2, #475569)">lookup classification</span></div>
+        </div>
+        <p style="text-align:center;margin-top:12px;font-size:13px;color:var(--text3, #94a3b8)">Thousands of SKU rows on the left. One row per color on the right.</p>
+    </div>
+</div>
+
+<p>Lookups are how you avoid repeating yourself, and they are the reason classification data does not have to be flat. Reach for one whenever an attribute has attributes of its own.</p>
+
+<h3 class="subsec-title">Job notifications, which you should turn on</h3>
+<p>The dialog offers to email you when a classification job fails or succeeds, and it is tempting to skip past it. Do not.</p>
+
+<div class="pro-tip">
+    <div class="pro-tip-hdr">💡 Turn on Notify on failure. Leave Notify on success off.</div>
+    <p>Classifications fail quietly. A rejected upload does not break a report, does not raise an alarm, and does not empty a dimension. Yesterday's data simply keeps showing while today's never arrives, and the report looks completely normal. Failure notification is the only thing standing between a broken nightly import and a stakeholder discovering it three weeks later. Success notification, meanwhile, produces a daily email that everyone learns to ignore within a fortnight, which then teaches your team to ignore the failure ones too.</p>
+</div>
+
+<h3 class="subsec-title">Subscriptions, and the constraint nobody expects</h3>
+<p>A subscription is a pairing: one report suite, plus the one dimension in it that holds the key. Add as many pairs as you need, and the notation is deliberately loose about matching names. The club uses eVar12 in both suites, but a set can happily subscribe <code>rs-a</code> with Product ID and <code>rs-b</code> with Product SKU, because what matters is that both dimensions hold the same kind of value, not that they carry the same variable number.</p>
+
+<p>That flexibility is exactly what kills the twelve-copies problem. One product set, subscribed everywhere, maintained once.</p>
+
+<p>Then you will hit the rule that stops people cold.</p>
+
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ One report suite and key dimension pairing belongs to exactly one primary set</div>
+    <p>Try to subscribe a report suite and key dimension combination that is already subscribed to another classification set, and Adobe blocks it with a red message. Your only choices are to open the existing set and add your classifications to <em>its</em> schema, or to pick a different combination. There is no way to have two primary sets both classifying eVar12 in club-prod. This is not a limit you can design around later, so it shapes how you plan sets from the beginning: <strong>one set per key, not one set per project.</strong> If the marketing team wants campaign attributes and the finance team wants campaign margins, both are columns in the same tracking code set. They do not get a set each.</p>
+</div>
+
+<p>Save the set. The container exists. It is entirely empty.</p>
+
+<h3 class="subsec-title">Step two: define the schema</h3>
+<p>Reopen the set by selecting its name in the manager, and go to the <strong>Schema</strong> tab. This is where the classification columns get created, and it is the step that used to live in report suite settings.</p>
+
+<p>Select <strong>Add</strong>, type a name, select Add again. Repeat for each column.</p>
+
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">Classification Set Schema</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>Components > Classification sets > "Club Member Attributes" > Schema tab
+
+Add  ->  Classification Name:  Age Band
+Add  ->  Classification Name:  Gender
+Add  ->  Classification Name:  Membership Tier
+Add  ->  Classification Name:  Join Year
+
+Resulting list:
+
+    Classification name     Identity name        Classified by
+    Age Band                age_band             -
+    Gender                  gender               -
+    Membership Tier         membership_tier      -
+    Join Year               join_year            -</pre></div>
+</div>
+
+<p>Each of those names becomes a real, reportable dimension in Analysis Workspace, sitting under the parent variable. Four names typed into a dialog, and the club can now report Hall Bookings by Membership Tier. Nothing was deployed. No developer was involved.</p>
+
+<h3 class="subsec-title">Classification Name and Identity Name are not the same thing</h3>
+<p>Look again at that second column, because it is doing something you did not ask it to do and cannot undo.</p>
+
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th></th><th>Classification Name</th><th>Identity Name</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Who creates it</strong></td><td>You, by typing it</td><td>Adobe, generated from the first name you typed</td></tr>
+            <tr><td><strong>What it does</strong></td><td>The label people see in reports</td><td>Persists the classification, and IDs the reportable dimension</td></tr>
+            <tr><td><strong>Can it change</strong></td><td>Yes. Rename it whenever you like.</td><td><strong>Never.</strong> It is read-only, permanently.</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<p>So the very first name you type is the name that survives. Rename Age Band to Member Age Group next year and the reports will say Member Age Group, but underneath, forever, it is still <code>age_band</code>. That identity name is what the API returns, what integrations bind to, and what anybody debugging your implementation will actually see.</p>
+
+<div class="pro-tip">
+    <div class="pro-tip-hdr">💡 Type the name as if it were permanent, because half of it is</div>
+    <p>The five seconds you spend getting the first name right are the only five seconds you get. Name columns the way you would name a variable: clear, consistent, and free of the project code or team name that will be meaningless in two years. <code>Campaign Owner</code>, not <code>Q3 Owner Field v2</code>.</p>
+</div>
+
+<h3 class="subsec-title">Attaching a lookup</h3>
+<p>If a column needs attributes of its own, this is where the lookup set built earlier gets connected.</p>
+
+<p>Select the classification in the schema list, and the action bar appears with <strong>Add Lookup</strong>, <strong>Remove Lookup</strong>, <strong>Rename</strong>, and <strong>Delete</strong>. Choose Add Lookup, pick the lookup classification from the dropdown, and select Add. The <strong>Classified by</strong> column now shows the link, and the color code has become a color name everywhere it appears.</p>
+
+<h3 class="subsec-title">The rest of the toolbar</h3>
+<p>The Schema tab carries five more buttons across the top. You will use all of them, but only two belong to this section.</p>
+
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>Button</th><th>What it does</th><th>Where it is covered</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Add</strong></td><td>Creates a classification column</td><td>Here. You just used it.</td></tr>
+            <tr><td><strong>Template</strong></td><td>Downloads a correctly structured empty file, matching your schema</td><td><a href="/adobe-analytics-learning/shape/classifications/importing-classification-data/">Importing Classification Data</a></td></tr>
+            <tr><td><strong>Upload</strong></td><td>Loads a data file into the schema</td><td><a href="/adobe-analytics-learning/shape/classifications/importing-classification-data/">Importing Classification Data</a></td></tr>
+            <tr><td><strong>Download</strong></td><td>Exports the classification data currently held, for checking</td><td><a href="/adobe-analytics-learning/shape/classifications/importing-classification-data/">Importing Classification Data</a>, and <a href="/adobe-analytics-learning/shape/classifications/troubleshooting-maintenance/">Troubleshooting and Maintenance</a></td></tr>
+            <tr><td><strong>Automate</strong></td><td>Points the set at a cloud location so files ingest on their own</td><td><a href="/adobe-analytics-learning/shape/classifications/importing-classification-data/">Importing Classification Data</a></td></tr>
+            <tr><td><strong>Job History</strong></td><td>Shows every job run against this set, and whether it worked</td><td><a href="/adobe-analytics-learning/shape/classifications/troubleshooting-maintenance/">Troubleshooting and Maintenance</a></td></tr>
+        </tbody>
+    </table>
+</div>
+
+<p>Notice that the schema and the data are separate acts. Defining a column does not populate it. A brand new set with a perfect schema classifies precisely nothing until something puts values in, which is the whole job of Importing Classification Data and Classification Rule Builder.</p>
+
+<h3 class="subsec-title">Consolidations, and the mess migration leaves behind</h3>
+<p>The Classification Sets area has a third tab you have not touched, sitting beside Classification Sets and Jobs. It is called <strong>Consolidations</strong>, and its existence tells a story.</p>
+
+<p>When Adobe migrated existing customers off legacy classifications, it had to turn a per-report-suite system into a cross-suite one, and the safe way to do that automatically is to create one set per report suite. Which is exactly the duplication that classification sets were invented to eliminate. So a long-standing implementation arriving in the new interface often finds a pile of near-identical sets, one per suite, doing the same job in parallel.</p>
+
+<p>Consolidations merges them into one properly subscribed set. If you have inherited an older implementation, this is real work waiting for you, and it is worth doing rather than living with, because every duplicate set is a place where the definitions can silently drift apart.</p>
+
+<h3 class="subsec-title">The legacy screens, and why not to build there</h3>
+<p>The old interfaces are still reachable from the <strong>Admin</strong> menu rather than Components, and they still work. If you inherit an implementation, you will find classifications defined in report suite settings, rules living in the Rule Builder, and uploads going through the Importer.</p>
+
+<p>Learn to recognize them, because you will have to read them. Do not build new work there. Both legacy paths are on a published retirement schedule, and anything you create in them is work you have committed to migrating later.</p>
+
+<h3 class="subsec-title">What exists now, and what does not</h3>
+<p>The set exists. It knows which report suites and which key it applies to. It has four named columns, each one already a reportable dimension.</p>
+
+<p>And every one of those dimensions is completely empty.</p>
+
+<p>Open a report and Age Band will show a single line reading Unspecified, because nothing has told Adobe that member M-10482 is in the sixty and over band. The container is built and the shelves are labeled. Nothing is on them.</p>
+
+<p>Putting the data in is <a href="/adobe-analytics-learning/shape/classifications/importing-classification-data/">Importing Classification Data</a>, the most concrete thing in this module: a file, with a key column and some value columns, and several ways to get it into Adobe.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Analytics</div>
+    <p>Analytics &gt; <span class="path">Components &gt; Classification sets</span>, which has three tabs: <span class="path">Classification Sets</span> to create and edit, <span class="path">Jobs</span> to see what ran, and <span class="path">Consolidations</span> to merge duplicate sets. Access needs a product admin account or the <span class="path">Report Suite Tools &gt; Classifications</span> permission. The legacy interfaces live under <span class="path">Admin</span>, and the key dimension itself is enabled in <span class="path">Admin &gt; Report Suites &gt; Edit Settings</span>.</p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title">📚 Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/classifications/sets/create-set" target="_blank">Adobe Docs: Create and Edit Classification Sets</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/classifications/sets/set/schema" target="_blank">Adobe Docs: Classification Set Schema</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/classifications/sets/consolidations/manage" target="_blank">Adobe Docs: Consolidate Classification Sets</a></li>
+    </ul>
+</div>

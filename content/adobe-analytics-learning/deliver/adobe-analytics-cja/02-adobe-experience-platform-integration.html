@@ -1,0 +1,63 @@
+---
+slug: "adobe-experience-platform-integration"
+title: "Adobe Experience Platform Integration"
+seotitle: "Adobe Analytics and Experience Platform Integration"
+lastmod: 2026-07-15
+type: lesson
+modulenum: 21
+sectionnum: 2
+weight: 2
+---
+<p>Adobe Analytics integrates deeply with Adobe Experience Platform (AEP) for enhanced data collection, unified profiles, and advanced activation.</p>
+                <h3 class="subsec-title">Integration Methods</h3>
+                <div class="tbl-wrap">
+                    <table>
+                        <thead><tr><th>Method</th><th>Direction</th><th>Purpose</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>Analytics Source Connector</strong></td><td>Analytics → AEP</td><td>Backfill & stream Analytics data to Platform</td></tr>
+                            <tr><td><strong>Web SDK</strong></td><td>Website → Both</td><td>Single tag sends to Analytics & AEP</td></tr>
+                            <tr><td><strong>Server-Side Forwarding</strong></td><td>Analytics → AEP</td><td>Forward hit data to Experience Platform</td></tr>
+                            <tr><td><strong>Customer Journey Analytics</strong></td><td>AEP → CJA</td><td>Cross-channel analysis in CJA</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 class="subsec-title">Web SDK Architecture</h3>
+                <div class="diagram-box">
+                    <div class="diagram-title">📊 Web SDK Data Flow</div>
+                    <div class="diagram-content">
+                        <div class="flow-vertical">
+                            <div class="flow-step">Website (Web SDK / alloy.js)</div>
+                            <span class="flow-arrow-down">↓</span>
+                            <div class="flow-step">Edge Network (Datastream)</div>
+                            <span class="flow-arrow-down">↓</span>
+                            <div class="flow-step" style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+                                <span class="flow-dest">Analytics</span>
+                                <span class="flow-dest">AEP</span>
+                                <span class="flow-dest">Target</span>
+                                <span class="flow-dest">Audience Manager</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="subsec-title">Benefits of AEP Integration</h3>
+                <ul>
+                    <li><strong>Unified data collection:</strong> Single SDK for all Adobe solutions</li>
+                    <li><strong>Real-time profiles:</strong> Analytics data enriches customer profiles</li>
+                    <li><strong>Cross-channel analysis:</strong> Combine web, app, offline data in CJA</li>
+                    <li><strong>Activation:</strong> Use Analytics segments in RTCDP for personalization</li>
+                    <li><strong>Future-proof:</strong> Web SDK is Adobe's strategic collection method</li>
+                </ul>
+                <div class="pro-tip">
+                    <div class="pro-tip-hdr">💡 Pro Tip</div>
+                    <p>If starting a new implementation, strongly consider Web SDK over AppMeasurement. It provides a unified data collection approach and prepares you for Customer Journey Analytics and other AEP capabilities.</p>
+                </div>
+                <div class="ref-box">
+                    <div class="ref-title">📚 Learn More</div>
+                    <ul>
+                        <li><a href="https://experienceleague.adobe.com/docs/experience-platform/sources/connectors/adobe-applications/analytics.html" target="_blank">Adobe Docs: Analytics Source Connector</a></li>
+                        <li><a href="https://experienceleague.adobe.com/docs/experience-platform/web-sdk/home.html" target="_blank">Adobe Docs: Web SDK</a></li>
+                    </ul>
+                </div>
+            

@@ -1,0 +1,33 @@
+{{ define "main" }}
+{{ $mod := .Parent }}
+{{ $cur := . }}
+<p class="lcrumb"><a href="{{ "/adobe-analytics-learning/" | relURL }}">Adobe Analytics Learning</a> &rsaquo; <a href="{{ $mod.Parent.RelPermalink }}">{{ $mod.Parent.Title }}</a> &rsaquo; <a href="{{ $mod.RelPermalink }}">{{ $mod.Title }}</a></p>
+<h1 class="lsec-title">{{ .Title }}</h1>
+{{ with .Lastmod }}<p class="lupdated">Last updated: <time datetime="{{ .Format "2006-01-02" }}">{{ .Format "2 January 2006" }}</time></p>{{ end }}
+{{- /* Auto-insert the "Need implementation steps?" signpost just before the Adobe docs ref-box, but ONLY when that ref-box actually links to Adobe documentation. A ref-box of purely internal links does not get the note. */ -}}
+{{ $content := .Content }}
+{{ if findRE `<div class="ref-box">(?s).*?(experienceleague\.adobe\.com|adobe\.com/go|://adobe)` $content 1 }}
+  {{ $content = replaceRE `(<div class="ref-box")` (printf "%s$1" (partial "doc-note.html" .)) $content 1 }}
+{{ end }}
+<div class="section">{{ $content | safeHTML }}</div>
+{{ $all := where .Site.RegularPages "Type" "lesson" }}
+{{ $all = sort $all "Params.sectionnum" }}
+{{ $all = sort $all "Params.modulenum" }}
+{{ $prev := "" }}{{ $next := "" }}
+{{ range $i, $p := $all }}
+  {{ if eq $p $cur }}
+    {{ if gt $i 0 }}{{ $prev = index $all (sub $i 1) }}{{ end }}
+    {{ if lt $i (sub (len $all) 1) }}{{ $next = index $all (add $i 1) }}{{ end }}
+  {{ end }}
+{{ end }}
+<div class="lpn">
+  {{ if $prev }}
+    {{ $prevMod := $prev.Parent }}
+    <a href="{{ $prev.RelPermalink }}"><span class="lpn-lab">{{ if ne $prevMod $mod }}&larr; Previous module{{ else }}&larr; Previous{{ end }}</span>{{ $prev.Title }}</a>
+  {{ else }}<span></span>{{ end }}
+  {{ if $next }}
+    {{ $nextMod := $next.Parent }}
+    <a class="lpn-next" href="{{ $next.RelPermalink }}"><span class="lpn-lab">{{ if ne $nextMod $mod }}Next module &rarr;{{ else }}Next &rarr;{{ end }}</span>{{ $next.Title }}</a>
+  {{ else }}<span></span>{{ end }}
+</div>
+{{ end }}

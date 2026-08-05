@@ -1,0 +1,89 @@
+---
+slug: "report-suite-settings"
+title: "Report Suite Settings"
+seotitle: "Adobe Analytics Report Suite Settings"
+lastmod: 2026-07-15
+description: "The report suite settings panel, explained: general account settings, internal URL filters, bot rules, and the data-quality foundation underneath them."
+type: lesson
+modulenum: 2
+sectionnum: 4
+weight: 4
+---
+<p>Every app you use asks you to set things. Booking a flight, you choose the fare type; ordering food, you set a delivery address and pick express or standard; checking out online, you select a payment method. Settings are so ordinary they barely register as a concept. So when a section is titled "report suite settings," it is natural to picture the same kind of thing: a quiet preferences screen with a name field, a time zone, and a few toggles you set once and forget.</p>
+<p>They are nothing like that. Recall what the last three sections established: the report suite is not one feature among many, it is the center of data collection, and data collection is the soul of Adobe Analytics. Plenty of tools can draw a chart; what sets Adobe apart is how much control you have over collecting and shaping the data in the first place, and that shaping happens here. Report suite settings are not preferences sitting on top of your data, they <em>are</em> the data model. They decide what a visit is, what a variable means, how long a value persists, which touch earns credit for a conversion, and what gets silently discarded before you ever see it. Point the same raw hits at two differently configured suites and you get two different sets of numbers, each correct for its own settings. Whoever understands this panel understands how the data is shaped.</p>
+<p>So it is worth dropping the phrase "report suite settings" and thinking of this instead as the <strong>central settings panel for everything you do with data</strong>. Almost every later module in this course is, underneath, one row of this panel examined closely.</p>
+<div class="diagram-box">
+    <div class="diagram-title">⚙️ One panel, every data decision</div>
+    <div class="diagram-content">
+        <div class="flow-vertical">
+            <div class="flow-step highlight">Report Suite Settings</div>
+            <span class="flow-arrow-down">↓</span>
+            <div class="flow-multi">
+                <div class="flow-step">General</div>
+                <div class="flow-step">Traffic</div>
+                <div class="flow-step">Conversion</div>
+                <div class="flow-step">Processing Rules</div>
+                <div class="flow-step">Marketing Channels</div>
+            </div>
+        </div>
+    </div>
+</div>
+<h3 class="subsec-title">The whole panel, at a glance</h3>
+<p>The settings are organized into a handful of groups. Most of what lives in them earns a full module of its own later, so treat the table below as a map: what each area configures, and where its depth lives. The ones marked "this section" have no other home in the course, so they are the ones worth understanding now.</p>
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>Setting</th><th>What it configures</th><th>Where to go deep</th></tr></thead>
+        <tbody>
+            <tr><td><strong>General Account Settings</strong></td><td>Site title, time zone, base currency, default page, IP obfuscation</td><td>This section</td></tr>
+            <tr><td><strong>Internal URL Filters</strong></td><td>Which domains count as "you" rather than referrers</td><td>This section</td></tr>
+            <tr><td><strong>Bot Rules</strong></td><td>Remove IAB and custom bot traffic before processing</td><td><a href="/adobe-analytics-learning/foundations/report-suites/bot-filtering/">Bot Filtering</a></td></tr>
+            <tr><td><strong>Paid Search Detection</strong></td><td>Auto-classify paid versus organic search</td><td>This section</td></tr>
+            <tr><td><strong>Processing Rules</strong></td><td>Clean or modify data as it is collected</td><td><a href="/adobe-analytics-learning/shape/processing-rules/">Processing Rules</a></td></tr>
+            <tr><td><strong>VISTA Rules</strong></td><td>Server-side data transformation (set up with Adobe)</td><td><a href="/adobe-analytics-learning/shape/vista-rules/">VISTA Rules</a></td></tr>
+            <tr><td><strong>Traffic Variables (props)</strong></td><td>Traffic and pathing dimensions</td><td><a href="/adobe-analytics-learning/foundations/variables/props-traffic-variables/">Props</a></td></tr>
+            <tr><td><strong>Conversion Variables (eVars)</strong></td><td>Persistent attribution dimensions</td><td><a href="/adobe-analytics-learning/foundations/variables/evars-conversion-variables/">eVars</a></td></tr>
+            <tr><td><strong>Success Events</strong></td><td>Metrics and counts</td><td><a href="/adobe-analytics-learning/foundations/variables/events-success-events/">Events</a></td></tr>
+            <tr><td><strong>List Variables</strong></td><td>Multiple values held in one variable</td><td><a href="/adobe-analytics-learning/foundations/variables/list-variables-list-props/">List Variables</a></td></tr>
+            <tr><td><strong>Classifications</strong></td><td>Offline metadata layered onto existing values</td><td><a href="/adobe-analytics-learning/shape/classifications/">Classifications</a></td></tr>
+            <tr><td><strong>Marketing Channels</strong></td><td>First and last touch channel attribution</td><td><a href="/adobe-analytics-learning/shape/marketing-channels/">Marketing Channels</a></td></tr>
+            <tr><td><strong>Activity Map</strong></td><td>On-page click and link tracking</td><td><a href="/adobe-analytics-learning/analyze/activity-map/">Activity Map</a></td></tr>
+            <tr><td><strong>Traffic Management</strong></td><td>Planned server-call spike handling</td><td><a href="/adobe-analytics-learning/collect/tracking-calls/server-calls-billing/">Server Calls and Billing</a></td></tr>
+            <tr><td><strong>Privacy / Data Governance</strong></td><td>Labeling data for GDPR and CCPA handling</td><td><a href="/adobe-analytics-learning/foundations/report-suites/privacy-data-retention/">Privacy and Data Retention</a></td></tr>
+        </tbody>
+    </table>
+</div>
+<h3 class="subsec-title">General account settings: the data-quality foundation</h3>
+<ul>
+    <li><strong>Time zone:</strong> defines when every day and hour boundary falls, for all reporting and for the timing of scheduled deliveries. There is one per suite, and changing it on a live suite creates a visible spike or gap in the data, so it is a launch-day decision, not a later tweak.</li>
+    <li><strong>Base currency:</strong> the currency all revenue is normalized to. A hit that sends a different currency code is converted at that day's exchange rate, so the base currency is the lens all money is viewed through.</li>
+    <li><strong>Default page:</strong> strips default filenames so that <code>example.com</code> and <code>example.com/index.html</code> count as one page rather than two. Left blank, Adobe removes a standard list (index.html, default.asp, and the like).</li>
+    <li><strong>IP obfuscation:</strong> the privacy control. It can leave, obfuscate, or remove the visitor IP, and removal is the default for new suites. It is permanent, and it runs early, before bot rules and geo-lookup, so it shapes what those steps can even see.</li>
+</ul>
+<h3 class="subsec-title">Internal URL filters</h3>
+<p>These tell Adobe which domains are "you," so a visitor moving between your own pages is not miscounted as arriving from an external referrer. They feed the Referrer, Referring Domain, and Marketing Channel dimensions. There is a notorious default to watch for: a fresh suite often ships with a single internal filter set to a period, which marks all traffic as internal and leaves your referrer reports empty until you replace it with your real domains. Get this wrong and your entire traffic-source picture is quietly polluted.</p>
+<h3 class="subsec-title">Bot rules</h3>
+<p>Bot rules live in this panel, but they are consequential enough to warrant their own treatment: what they filter, what they cost, and what they cannot undo. <a href="/adobe-analytics-learning/foundations/report-suites/bot-filtering/">Bot Filtering</a> covers them in full.</p>
+<h3 class="subsec-title">The rule that governs all of it</h3>
+<p>One principle ties every setting together: they affect <strong>future data only</strong>. Adobe does not reprocess history when you change a setting. The day you change something is the day its new behavior begins, and everything before it stays exactly as it was collected. Picture a recording studio: you can change the mic setup for the next take, but you cannot re-EQ a take already recorded. The single exception is classifications, which are metadata layered on top of values you already have (post-production relabeling, not re-recording) and can be applied retroactively, covered in Classifications.</p>
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ Measure twice, cut once</div>
+    <p>Because nothing backfills, the cost of a wrong setting compounds with every day of data collected under it. Enable a variable late and you simply have no history for it. Change a suite's time zone partway through and you leave a visible seam in your trends, a shift that has nothing to do with real visitors. IP obfuscation is the harshest: set to remove, the original address is gone before anything downstream ever sees it, and no later change brings it back. Treat the core settings as deliberate launch-day decisions, the same discipline as drawing suite boundaries, not as dials to discover later.</p>
+</div>
+<p>The deep mechanics of each area live in their own modules, but the levers all sit in this one panel, and they all obey the forward-only rule. Learn to read this screen and you can read almost any Adobe Analytics implementation.</p>
+
+<p>One assumption has been sitting underneath everything so far, unexamined: that a hit goes to one report suite. It does not have to. A single implementation can feed several suites at once, which sounds like a free lunch and is billed like anything but. <a href="/adobe-analytics-learning/foundations/report-suites/multi-suite-tagging/">Multi-Suite Tagging</a> is where the bill arrives.</p>
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to Find in Adobe Analytics</div>
+    <p>Report Suite Settings: <span class="path">Admin → Report Suites → Edit Settings</span></p>
+    <p>General Account Settings: <span class="path">Edit Settings → General → General Account Settings</span></p>
+    <p>Internal URL Filters: <span class="path">Edit Settings → General → Internal URL Filters</span></p>
+    <p>Bot Rules: <span class="path">Edit Settings → General → Bot Rules</span></p>
+</div>
+<div class="ref-box">
+    <div class="ref-title">📚 Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/admin/admin-tools/manage-report-suites/c-new-report-suite/t-create-a-report-suite" target="_blank">Adobe Docs: Create and Configure a Report Suite</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/admin/admin-tools/manage-report-suites/edit-report-suite/report-suite-general/internal-url-filter-admin" target="_blank">Adobe Docs: Internal URL Filters</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/admin/admin-tools/manage-report-suites/edit-report-suite/report-suite-general/general-acct-settings-admin" target="_blank">Adobe Docs: General Account Settings</a></li>
+    </ul>
+</div>

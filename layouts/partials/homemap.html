@@ -1,0 +1,68 @@
+{{/*
+  Home-page map. Same pyramid as the locator, but THEMED (obeys light/dark)
+  and it is real page content, not an overlay. No "you are here": the home
+  page is an explorer, so glow cascades as the reader selects. Foundations
+  is pre-selected on load so the page shows a complete example, not a bare row.
+*/}}
+{{ $learnRoot := .Site.GetPage "/adobe-analytics-learning" }}
+{{ $allMods := sort (where .Site.Pages "Type" "module") "Params.modulenum" }}
+{{ $phases := slice }}
+{{ range $k, $v := .Site.Params.phases }}{{ $phases = $phases | append $v }}{{ end }}
+{{ $phases = sort $phases "order" }}
+{{ $firstOrder := (index $phases 0).order }}
+{{ $firstMods := slice }}
+{{ range $allMods }}{{ if in (index $phases 0).modules .Params.modulenum }}{{ $firstMods = $firstMods | append . }}{{ end }}{{ end }}
+{{ $firstMod := index (sort $firstMods "Params.modulenum") 0 }}
+{{ $firstModNum := $firstMod.Params.modulenum }}
+
+<div class="hm" id="homeMap">
+  {{/* TIER 1: categories */}}
+  <div class="hm-tier hm-tier-cat">
+    <div class="hm-row hm-row-cat">
+      {{ range $phases }}
+        <button class="hm-cat{{ if eq .order $firstOrder }} on{{ end }}" data-cat="{{ .order }}" type="button">
+          <span class="hm-lab">{{ .name }}</span>
+          <span class="hm-tag">{{ .blurb }}</span>
+        </button>
+      {{ end }}
+    </div>
+  </div>
+
+  <div class="hm-arrow" aria-hidden="true"><span></span></div>
+
+  {{/* TIER 2: modules, one group per phase; first phase shown */}}
+  <div class="hm-tier">
+  {{ range $phases }}
+    {{ $ph := . }}
+    <div class="hm-row hm-row-mod{{ if eq .order $firstOrder }} show{{ end }}" data-catgroup="{{ .order }}">
+      {{ range $allMods }}
+        {{ if in $ph.modules .Params.modulenum }}
+          <button class="hm-mod{{ if and (eq $ph.order $firstOrder) (eq .Params.modulenum $firstModNum) }} on{{ end }}" data-mod="{{ .Params.modulenum }}" type="button">
+            <span class="hm-lab">{{ .Title }}</span>
+            {{ with .Params.tagline }}<span class="hm-tag">{{ . }}</span>{{ end }}
+          </button>
+        {{ end }}
+      {{ end }}
+    </div>
+  {{ end }}
+  </div>
+
+  <div class="hm-arrow" aria-hidden="true"><span></span></div>
+
+  {{/* TIER 3: sections, one group per module; first module shown */}}
+  <div class="hm-tier">
+  {{ range $allMods }}
+    {{ $m := . }}
+    {{ $ready := 0 }}{{ range $m.Pages }}{{ if .Params.description }}{{ $ready = add $ready 1 }}{{ end }}{{ end }}
+    <div class="hm-row hm-row-sec{{ if eq .Params.modulenum $firstModNum }} show{{ end }}" data-modgroup="{{ .Params.modulenum }}">
+      {{ if gt $ready 0 }}
+        {{ range $m.Pages.ByWeight }}
+          <a class="hm-sec{{ if not .Params.description }} soon{{ end }}" href="{{ .RelPermalink }}"><span class="hm-lab">{{ .Title }}</span></a>
+        {{ end }}
+      {{ else }}
+        <a class="hm-sec hm-soonmod" href="{{ $m.RelPermalink }}"><span class="hm-lab">Coming soon</span></a>
+      {{ end }}
+    </div>
+  {{ end }}
+  </div>
+</div>

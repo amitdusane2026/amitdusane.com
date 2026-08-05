@@ -1,0 +1,171 @@
+---
+slug: "segment-types-sharing"
+title: "Segment Types and Sharing"
+seotitle: "Segment Types and Sharing in Adobe Analytics"
+description: "A segment is worth only as much as the people and tools that can reach it. Here is how one definition gets saved, shared, published, and reused everywhere."
+lastmod: 2026-07-15
+type: lesson
+modulenum: 13
+sectionnum: 5
+weight: 5
+---
+<p>Everything in this module so far built a single segment, alone, for a single analyst. That is where a segment starts, but it is not where its value comes from. The value shows up when an entire organization agrees on the same definition. If ten analysts each build their own version of "engaged purchasers," slightly differently, then ten reports quietly disagree and nobody trusts any of them. A segment kept in one person's account is a private note. A segment built once, correctly, and circulated is a shared source of truth.</p>
+
+<p>So this section is about everything that surrounds the definition rather than the definition itself: the kinds of segments Adobe offers, how one gets saved and shared with a team, and how a segment can even leave Adobe Analytics entirely to become an audience that Adobe Target or Campaign can act on. The move here is from building a segment to circulating one.</p>
+
+<h3 class="subsec-title">Two ways to build, and a shortcut</h3>
+<p>Not every segment deserves the same ceremony. Adobe offers two creation paths that trade speed against reach.</p>
+
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>Type</th><th>Where it is built</th><th>Where it lives</th><th>Best for</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Quick segment</strong></td><td>Inline, inside a Workspace project</td><td>That project only, unless promoted</td><td>A fast, project-specific or throwaway slice</td></tr>
+            <tr><td><strong>Saved segment</strong></td><td>The full Segment builder</td><td>The Segment manager, as a reusable component</td><td>A definition many reports and people will reuse</td></tr>
+            <tr><td><strong>Template</strong></td><td>Adobe-provided, opened in the builder</td><td>A starting point you adjust and save as your own</td><td>Common patterns like abandoned cart or first-time visits</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<p>A quick segment is the fast path. Built inside a single Workspace project, it does not appear in the Segment manager and cannot be shared, which is exactly right for a slice you need once. When a quick segment turns out to be worth keeping, opening it in the builder and making it available to all projects promotes it into a full saved segment. Templates run the other direction: Adobe ships ready-made definitions for common needs, and you open one, adjust it, and save it under your own name. The saved segment is the one that matters for everything that follows, because only a saved segment can be shared.</p>
+
+<h3 class="subsec-title">The Segment manager: where saved segments live</h3>
+<p>Every saved segment lands in the Segment manager, the hub for finding, organizing, and sharing them. It lists the segments you own, the ones scoped to all your projects, and the ones others have shared with you, each row showing its owner, the report suite it belongs to, its tags, and how many people it is shared with. Alongside its definition, every segment carries metadata that has nothing to do with logic and everything to do with keeping a library usable: a Title, a Description, and Tags. The description tells the next person what a segment is for without forcing them to open and decode its definition, and tags let the manager filter a crowded library down to what matters, so a search for everything tagged Funnel returns exactly those. This metadata is worth filling in even for a segment only you use today, because the moment it is shared it is the only thing standing between a useful component and an unlabeled mystery. How to name and structure it systematically, so a library stays sane at scale, is its own discipline and belongs to Segment Best Practices. That the fields exist, and that they carry the segment's intent rather than its logic, is this section's point.</p>
+
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">Follow along: save a segment and find it again</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>Components > Segments > Add          (opens the Segment builder)
+
+    Title:        Engaged mobile purchasers        (required)
+    Description:  Mobile visitors who purchased and spent
+                  over two minutes on the site
+    Tags:         Mobile, Purchasers
+
+    Build the definition, then  Save.
+
+To find it again:
+Components > Segments                (the Segment manager)
+    The segment appears in the list you own, showing its
+    title, report suite, owner, tags, and shared-with count.
+    Select the title to reopen it in the builder.</pre></div>
+</div>
+
+<h3 class="subsec-title">Sharing: one definition, many people</h3>
+<p>By default a saved segment is visible only to the person who created it. Sharing is what turns it from a personal asset into an organizational one, and Adobe offers three widening levels of reach, gated by permission.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">📊 Who can see a segment, from private to organization-wide</div>
+    <svg viewBox="0 0 700 218" style="width:100%;height:auto;display:block;margin:4px 0 8px" role="img" aria-label="Four widening levels of segment visibility. Owner only, the default. Then named individuals. Then groups. Then everyone in the organization. Any user can share their own segments with individuals, but only administrators can share with groups or with everyone.">
+        <rect x="240" y="16" width="220" height="38" rx="6" style="fill:var(--accent,#e11d48);opacity:.12"/>
+        <rect x="240" y="16" width="220" height="38" rx="6" style="fill:none;stroke:var(--accent,#e11d48);stroke-width:1.5"/>
+        <text x="350" y="40" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:600;font-family:sans-serif">Owner only (the default)</text>
+
+        <rect x="180" y="60" width="340" height="38" rx="6" style="fill:var(--accent,#e11d48);opacity:.20"/>
+        <rect x="180" y="60" width="340" height="38" rx="6" style="fill:none;stroke:var(--accent,#e11d48);stroke-width:1.5"/>
+        <text x="350" y="84" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:600;font-family:sans-serif">plus named individuals</text>
+
+        <rect x="120" y="104" width="460" height="38" rx="6" style="fill:var(--accent,#e11d48);opacity:.28"/>
+        <rect x="120" y="104" width="460" height="38" rx="6" style="fill:none;stroke:var(--accent,#e11d48);stroke-width:1.5"/>
+        <text x="350" y="128" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:600;font-family:sans-serif">plus groups</text>
+
+        <rect x="60" y="148" width="580" height="38" rx="6" style="fill:var(--accent,#e11d48);opacity:.36"/>
+        <rect x="60" y="148" width="580" height="38" rx="6" style="fill:none;stroke:var(--accent,#e11d48);stroke-width:2"/>
+        <text x="350" y="172" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">plus everyone in the organization (All)</text>
+
+        <text x="350" y="208" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">Any user can share their own segments with individuals. Only administrators can share with groups or with everyone.</text>
+    </svg>
+</div>
+
+<p>A regular user can share the segments they created, and only with individual users, which is the natural way to hand a segment to a colleague for a second opinion. An administrator can go wider, sharing with permission groups defined in the Admin Console, or with the entire organization at once. Sharing carries a subtlety that decides whether an organization's numbers stay aligned, and it is worth understanding precisely.</p>
+
+<div class="info-box">
+    <div class="info-hdr">ℹ️ A shared segment updates live, a copied one does not</div>
+    <p>When someone applies a shared segment directly to a report, they are using a live reference: edit the segment once and every report that applies it updates automatically. But if someone drags your segment inside a segment of their own, Adobe stores a copy of its definition at that moment, not a link, and later edits to your original never reach that copy. This is why a single shared, directly applied segment is the safest way to keep a whole organization counting the same thing.</p>
+</div>
+
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">Follow along: share a segment</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>Components > Segments                (the Segment manager)
+
+    Select the segment's row (its checkbox).
+    Select the  Share  icon  >  the Share Component dialog opens.
+
+    Search for and select one or more individuals to share with.
+    An Admin can also pick  Groups  or the whole  Organization.
+
+    Save.
+
+The recipient then finds it under:
+Components > Segments  >  Filters > Other Filters > Shared with Me</pre></div>
+</div>
+
+<p>The Segment manager also lets an administrator mark a segment as approved, a visible signal that it has been vetted and is safe to rely on. The mechanic sits here, but the policy behind it, who is allowed to approve, and how a shared library is curated over time, is a governance question, and this curriculum treats governance as its own subject later on rather than folding it in here.</p>
+
+<h3 class="subsec-title">Publishing: when a segment leaves Analytics</h3>
+<p>Sharing keeps a segment inside Adobe Analytics, available to other analysts. Publishing does something more ambitious: it turns the segment into an audience the rest of the Adobe Experience Cloud can act on. The same definition of high-value cart abandoners that you analyze in a report can, once published, become a targetable audience in Adobe Target, a campaign audience in Adobe Campaign, or a trait in Audience Manager. One definition serves both analysis and activation.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">📊 A published segment becomes an audience other tools can use</div>
+    <svg viewBox="0 0 700 210" style="width:100%;height:auto;display:block;margin:4px 0 8px" role="img" aria-label="A segment in Adobe Analytics is published to the Experience Cloud Audience Library, and from there becomes available as an audience in Adobe Target, Adobe Campaign, and Audience Manager.">
+        <rect x="14" y="76" width="176" height="58" rx="8" style="fill:var(--card,#ffffff);stroke:var(--accent,#e11d48);stroke-width:2.5"/>
+        <text x="102" y="100" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:10px;font-weight:700;font-family:sans-serif;letter-spacing:.5px">SEGMENT</text>
+        <text x="102" y="120" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:600;font-family:sans-serif">in Adobe Analytics</text>
+
+        <text x="222" y="98" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:10px;font-weight:700;font-family:sans-serif">publish</text>
+        <line x1="190" y1="105" x2="244" y2="105" style="stroke:var(--accent,#e11d48);stroke-width:1.5"/>
+        <polygon points="250,105 239,100 239,110" style="fill:var(--accent,#e11d48)"/>
+
+        <rect x="254" y="72" width="180" height="66" rx="8" style="fill:var(--accent,#e11d48);opacity:.08"/>
+        <rect x="254" y="72" width="180" height="66" rx="8" style="fill:none;stroke:var(--accent,#e11d48);stroke-width:2"/>
+        <text x="344" y="98" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:600;font-family:sans-serif">Experience Cloud</text>
+        <text x="344" y="116" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:600;font-family:sans-serif">Audience Library</text>
+
+        <line x1="434" y1="105" x2="466" y2="105" style="stroke:var(--text2,#475569);stroke-width:1.3"/>
+        <line x1="466" y1="35" x2="466" y2="177" style="stroke:var(--text2,#475569);stroke-width:1.3"/>
+        <line x1="466" y1="35" x2="494" y2="35" style="stroke:var(--text2,#475569);stroke-width:1.3"/>
+        <line x1="466" y1="105" x2="494" y2="105" style="stroke:var(--text2,#475569);stroke-width:1.3"/>
+        <line x1="466" y1="177" x2="494" y2="177" style="stroke:var(--text2,#475569);stroke-width:1.3"/>
+        <polygon points="500,35 490,30 490,40" style="fill:var(--text2,#475569)"/>
+        <polygon points="500,105 490,100 490,110" style="fill:var(--text2,#475569)"/>
+        <polygon points="500,177 490,172 490,182" style="fill:var(--text2,#475569)"/>
+
+        <rect x="500" y="16" width="186" height="38" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <text x="516" y="40" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">Adobe Target</text>
+        <rect x="500" y="86" width="186" height="38" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <text x="516" y="110" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">Adobe Campaign</text>
+        <rect x="500" y="158" width="186" height="38" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <text x="516" y="182" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">Audience Manager</text>
+    </svg>
+</div>
+
+<p>Publishing is not a casual toggle. It works only if the organization uses Experience Cloud IDs, the shared visitor ID that lets separate Adobe solutions recognize the same person, and an administrator has to grant the segment-publishing permission through a product profile before the option even appears. Once published, the segment's definition reaches the Experience Cloud almost at once, but its membership, the actual list of people, is evaluated on a schedule rather than in real time, so an audience takes a few hours to become fully actionable in the downstream tools. The exact ceilings and timings are the kind of number Adobe revises, so they are recorded here as a dated snapshot rather than stated as permanent fact.</p>
+
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ Current status, verified July 2026</div>
+    <p>A single report suite can have up to <strong>75</strong> published segments, and a published audience cannot exceed <strong>20 million</strong> unique members. The title and definition reach the Experience Cloud almost immediately; membership is re-evaluated roughly <strong>every 4 hours</strong>, and an audience generally becomes actionable in Target and Advertising within <strong>4 to 8 hours</strong>, with Adobe Campaign adding a further 24 hours or so. These limits and intervals have been raised and retuned before, so confirm them against Experience League before you design around them.</p>
+</div>
+
+<h3 class="subsec-title">A segment also defines a Virtual Report Suite</h3>
+<p>Publishing sends a segment outward to other tools, but a segment does structural work closer to home too. A Virtual Report Suite is the parent report suite narrowed to a single slice, one brand, one region, or one app, so a team sees only their own data, and the thing that defines that slice is a segment. <a href="/adobe-analytics-learning/foundations/report-suites/virtual-report-suites/">Virtual Report Suites</a> covered that mechanism in full; the point worth carrying forward here is that the segment built in this module is the very same object that defines a VRS there. A segment is a reusable unit of logic, and a report is only one of the things that consume it.</p>
+
+<h3 class="subsec-title">Not every segment works everywhere</h3>
+<p>A segment is not automatically valid in every tool. A definition that runs perfectly in Analysis Workspace can be incompatible with Data Warehouse or Report Builder, often because it mixes container scopes in a way those engines cannot process, or uses sequential logic they do not support. The Segment builder and manager flag this with a compatibility indicator for each destination. It is worth checking before you rely on a segment in an export, because an incompatible segment does not fail loudly at report time. It simply is not available where you expected it, which is a far more confusing way to discover the problem.</p>
+
+<h3 class="subsec-title">Reuse by stacking, not by rebuilding</h3>
+<p>One more habit separates a tidy segment library from a sprawling one. Rather than building a single elaborate segment for every combination a team asks about, build small, single-purpose segments and stack them: applying two segments to the same report behaves like <code>And</code>, both must be true. Fifty state segments and five channel segments, stacked, answer the same questions as two hundred and fifty combined segments, with a fraction of the upkeep. Stacking is a reuse strategy, and it also draws a clean line against the sequences from <a href="/adobe-analytics-learning/analyze/segments/sequential-segments/">Sequential Segments</a>: stacking asks whether things are both true, in any order, while a sequence asks whether one came before another.</p>
+
+<h3 class="subsec-title">From circulating to curating</h3>
+<p>A segment can now travel. It can be built quickly or saved deliberately, shared with a colleague or an entire company, published as an audience for tools well beyond Analytics, and reused by stacking rather than rebuilding. What none of that guarantees is that the library stays usable. Without discipline, a shared library fills with near-duplicates, cryptic names, and heavy segments nobody remembers the purpose of. Keeping it clean, naming segments so others can find them, knowing when not to create a new one, and watching the performance cost, is a craft of its own. That is Segment Best Practices.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Analytics</div>
+    <p>Saved segments and sharing live in Analytics &gt; <span class="path">Components &gt; Segments</span>, the Segment manager. The share control sits on each segment row, opening the <span class="path">Share Component</span> dialog. Publishing is set inside the builder itself, in the <span class="path">Experience Cloud publishing</span> section, with the <span class="path">Publish this segment to Experience Cloud</span> option. Quick segments are created in the <span class="path">Components</span> panel of a Workspace project.</p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title">📚 Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/segmentation/segmentation-workflow/t-seg-share" target="_blank">Adobe Docs: Share Segments</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/segmentation/segmentation-workflow/seg-publish" target="_blank">Adobe Docs: Publish Segments</a></li>
+    </ul>
+</div>

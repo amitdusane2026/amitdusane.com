@@ -1,0 +1,113 @@
+---
+slug: "spa-tracking"
+title: "SPA Tracking"
+seotitle: "SPA Tracking in Adobe Analytics"
+lastmod: 2026-07-18
+description: "Single page applications break analytics in two distinct ways. How to tell Adobe a screen changed, how to fix persistence, and why mobile sidesteps it all."
+type: lesson
+modulenum: 7
+sectionnum: 4
+weight: 4
+---
+<p>This topic has surfaced twice already, once when the <a href="/adobe-analytics-learning/collect/tracking-calls/page-view-tracking/">page view call</a> ran into the fact that some sites never really load a page, and again when Launch rules needed something other than a browser event to fire on. It is time to meet it directly. The single page application is where the tidy idea of "a page loads, so count a page view" quietly falls apart, and understanding how to put it back together tells you a lot about how the whole tracking model actually works.</p>
+
+<h3 class="subsec-title">What a single page application really is</h3>
+<p>A single page application, or SPA, is not one technology. It is a way of building a site. The idea is simple: the site is really one page, and instead of loading a fresh page every time the visitor moves around, it just changes the parts of the screen that need to change. Technically there are no page loads after the first one, only screen changes.</p>
+
+<p>Picture a web app for exam registration. It does not need many pages. When it opens, it shows the information that matters and asks for your details and documents. As you work through it, the interface updates in place, one step giving way to the next, and when everything is done you submit. From the visitor's point of view they moved through several screens. From the browser's point of view they never left the first one. One page served the whole journey, and that is exactly a SPA. The platforms used to build them, React, Angular, and their relatives, are the technology; the single page model is the methodology.</p>
+
+<p>SPAs exist because they feel fast and app-like. There is no white flash of a reloading page, no waiting for the whole document to rebuild. That smoothness is the point, and it is also precisely what removes the signal analytics was relying on.</p>
+
+<h3 class="subsec-title">Why this breaks analytics, in two ways</h3>
+<p>The <a href="/adobe-analytics-learning/collect/tracking-calls/page-view-tracking/">page view</a> is one of the most important metrics you have, so losing the ability to count it cleanly is a real problem. A SPA breaks page view tracking in two separate ways, and both have to be solved.</p>
+
+<p>The first is obvious once stated: there is no page load event to hang a rule on. The browser fires DOM Ready and Window Loaded once, at the very first load, and never again as the visitor moves through the app. The standard page load trigger simply goes quiet after the opening screen.</p>
+
+<p>The second problem is less obvious and catches almost everyone. On a normal site, every page load builds a brand new Analytics object, the <code>s</code> object, so whatever variables you set on one page cannot possibly leak onto the next; the refresh wipes the slate. In a SPA there is no refresh, so the same <code>s</code> object stays alive for the entire visit and is reused for every virtual page view. That means variables persist when you do not want them to. A search term eVar set on the search results screen is still sitting there on the next screen. An events string you set once keeps firing on every subsequent beacon. Unless you deal with this deliberately, your data slowly contaminates itself as the visitor moves around.</p>
+
+<h3 class="subsec-title">Fixing it: telling Adobe a screen changed</h3>
+<p>Start with the trigger. One important clarification: the first load of a SPA is a genuine page load, and you track it exactly as you always would. It is only the screen changes after that first load which need a new mechanism. In practice a single Launch rule can fire on the normal page load event or on a virtual signal, so both the opening screen and every screen after it are covered.</p>
+
+<p>There are two ways to raise that virtual signal, and they trade off against each other.</p>
+
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>Approach</th><th>Who triggers it</th><th>Reliability</th><th>Best for</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Direct call</strong> (e.g. <code>Virtual_Page_Load</code>)</td><td>The developer, from the app's router, at the moment a view is ready</td><td>High. Explicit and under your control.</td><td>The recommended default, especially with a data-layer-first setup.</td></tr>
+            <tr><td><strong>History Change</strong></td><td>Launch automatically, by listening for History API pushState and hash changes</td><td>Lower. Can miss real views or fire on URL changes that are not meaningful.</td><td>A fallback when developer changes are not possible.</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<p>The direct call is the approach your implementation should reach for first. You give the developer an identifier, something like <code>Virtual_Page_Load</code>, and one clear instruction: whenever the visitor experiences what feels like a new screen, fire this call, and fire it after the data layer has been updated for that screen. A <a href="/adobe-analytics-learning/collect/adobe-launch-tags/rules/">Launch rule</a> listens for that identifier and sends the page view, exactly as the Send Beacon action would on a normal page. The History Change trigger is tempting because it needs no developer effort, but relying on it alone is one of the most common SPA mistakes: a route change is not always a page view, and the data layer may not have caught up when it fires, which produces duplicate and mistimed hits. The dependable pattern is to let the app's router be the authoritative announcer of a new view, and treat automatic history listeners only as a backup.</p>
+
+<p>Timing is the quiet trap in all of this. The virtual page call must fire <em>after</em> the data layer holds the new screen's context, not before, or you will send the previous screen's data under the new screen's name. This is exactly why a data-layer-first approach helps so much in a SPA: the app updates the <a href="/adobe-analytics-learning/collect/data-layers/adobe-client-data-layer/">data layer</a> as each view becomes ready, and the analytics call reacts to that, rather than guessing at the right moment. The groundwork laid in <a href="/adobe-analytics-learning/collect/data-layers/what-is-a-data-layer/">What Is a Data Layer</a> is what makes SPA tracking manageable rather than fragile.</p>
+
+<h3 class="subsec-title">Fixing the persistence problem</h3>
+<p>Now the second problem. Because the <code>s</code> object survives between virtual views, you have to clear it yourself. The rule is an ordering rule: set the variables for this view, send the beacon, then clear the variables so nothing carries into the next view. In Launch this is simply the Clear Variables action placed after Send Beacon, calling <code>s.clearVars()</code> under the hood. The sequence matters more than any single piece of it.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">A virtual page view, in order</div>
+    <div class="diagram-content">
+        <div class="flow-horizontal">
+            <div class="flow-step">Screen change<br><span style="font-weight:400;color:var(--text2)">router signals a new view</span></div>
+            <span class="flow-arrow">&rarr;</span>
+            <div class="flow-step">Data layer updates<br><span style="font-weight:400;color:var(--text2)">new screen's context</span></div>
+            <span class="flow-arrow">&rarr;</span>
+            <div class="flow-step">Set variables</div>
+            <span class="flow-arrow">&rarr;</span>
+            <div class="flow-step highlight">Send beacon<br><span style="font-weight:400;color:var(--text2)">s.t()</span></div>
+            <span class="flow-arrow">&rarr;</span>
+            <div class="flow-step">Clear variables<br><span style="font-weight:400;color:var(--text2)">s.clearVars()</span></div>
+        </div>
+    </div>
+</div>
+
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">SPA virtual page view</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>// The developer fires this from the app's router, after the
+// data layer has been updated for the new screen:
+_satellite.track("Virtual_Page_Load");
+
+// The Launch rule listening for "Virtual_Page_Load" then does,
+// in this order: set variables, send the beacon, clear variables.
+
+// The same idea in manual code, showing why order matters:
+s.pageName = "Exam Registration: Upload Documents";
+s.channel  = "Registration";
+s.events   = "event3";
+s.t();            // send the page view
+s.clearVars();    // wipe the s object before the next screen
+
+// Alternatively, register clearVars to run automatically
+// after every successful hit:
+s.registerPostTrackCallback(function () { s.clearVars(); });</pre></div>
+</div>
+
+<div class="pro-tip">
+    <div class="pro-tip-hdr">💡 Set, send, clear, every time</div>
+    <p>The single habit that keeps SPA data clean is treating every virtual page view as a full cycle: set this view's variables, send the beacon, then clear. Skip the clear and old values haunt the next screen. Clear too early and you wipe the values before they are sent. The order is the whole game.</p>
+</div>
+
+<h3 class="subsec-title">A note on the Web SDK</h3>
+<p>If you are collecting with the <a href="/adobe-analytics-learning/collect/data-collection/adobe-web-sdk/">Web SDK</a> rather than AppMeasurement, the persistence problem looks different. Each <code>sendEvent</code> call is independent and carries its own data, so there is no long-lived <code>s</code> object quietly holding values between views. You still have to set the right data for each view, but you are building it fresh each time rather than clearing a shared object. The Web SDK also keeps the visitor's ECID in memory across route changes on its own, so identity stays intact as the visitor moves through the app without any re-fetching. This is one of the areas where the Web SDK smooths over old friction, and it is explored in depth in the <a href="/web-sdk-migration/">AppMeasurement to Web SDK migration guide</a>, a separate guide on this site.</p>
+
+<h3 class="subsec-title">Why mobile apps sidestep all of this</h3>
+<p>For a mobile app, the whole SPA question is beside the point. As covered in the <a href="/adobe-analytics-learning/collect/data-collection/mobile-sdk/">Mobile SDK</a> section, an app never had automatic page loads to begin with. The developer already decides when a screen has meaningfully changed and fires a trackState call for it. There is no browser page load to lose, so there is nothing to reconstruct. The developer simply chooses those moments wisely, and that takes care of it.</p>
+
+<p>The real shift to carry out of this section is this: in a SPA, a "page view" is no longer something the browser hands you. It is something you have to define. You decide which screen changes are worth counting, you announce them deliberately, and you clean up after each one. And because every one of those virtual views is a full <a href="/adobe-analytics-learning/collect/tracking-calls/server-calls-billing/">server call</a>, the discipline from the last section applies directly: count the screens that matter, not every flicker of the interface. Counting a view is only half the story. Each one belongs to a visitor, and how Adobe recognizes that visitor, across screens, across domains, and across return visits, rests on a single identifier: the <a href="/adobe-analytics-learning/collect/tracking-calls/experience-cloud-id-ecid/">Experience Cloud ID (ECID)</a>.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Analytics</div>
+    <p>Virtual page views appear in the same report as any page view: <span class="path">Workspace &rarr; Dimensions &rarr; Page</span></p>
+    <p>Check firing and order with the Adobe Experience Cloud debugger or browser network panel.</p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title">📚 Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/implementation/vars/functions/clearvars" target="_blank">Adobe Docs: clearVars()</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/implementation/vars/functions/registerposttrackcallback" target="_blank">Adobe Docs: registerPostTrackCallback</a></li>
+    </ul>
+</div>

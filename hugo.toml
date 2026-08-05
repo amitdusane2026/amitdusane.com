@@ -1,0 +1,88 @@
+baseURL = "https://amitdusane.com/"
+languageCode = "en-us"
+title = "Amit G. Dusane"
+enableRobotsTXT = true
+disableKinds = ["taxonomy", "term"]
+
+# ---------------------------------------------------------------------------
+# CRITICAL. Do not remove.
+# By default Hugo derives `date` from `lastmod`, then derives `publishDate`
+# from `date`. A `lastmod` that is even one day ahead of the BUILD SERVER's
+# clock therefore gives the page a future publishDate, and Hugo SILENTLY
+# DROPS it from the build. No error. No warning. The page simply 404s.
+#
+# This bites hard here: GitHub Actions builds in UTC, the author writes dates
+# in IST (UTC+5:30). Any page dated "today" in IST is "tomorrow" in UTC for
+# five and a half hours of every day.
+#
+# The lines below decouple lastmod from the date cascade entirely. lastmod
+# now means only "when was this content last revised", which is all it should
+# ever have meant.
+# ---------------------------------------------------------------------------
+[frontmatter]
+  date = ["date", "publishDate"]
+  lastmod = ["lastmod"]
+  publishDate = ["publishDate", "date"]
+  expiryDate = ["expiryDate"]
+
+[outputs]
+  home = ["HTML", "JSON"]
+
+[params]
+  author = "Amit G. Dusane"
+  jobTitle = "Adobe Experience Platform Architect"
+  linkedin = "https://www.linkedin.com/in/amitdusane/"
+
+[services]
+  [services.googleAnalytics]
+    ID = "G-9817PZWN9H"
+  # crimson brand + blue functional accent carried from the app (full look/feel = Phase 2)
+  brandColor = "#e11d48"
+  accentColor = "#1f5fae"
+
+[menu]
+  [[menu.main]]
+    name = "Home"
+    url = "/"
+    weight = 1
+  [[menu.main]]
+    name = "Web SDK Migration"
+    url = "/web-sdk-migration/"
+    weight = 2
+  [[menu.main]]
+    name = "About"
+    url = "/about/"
+    weight = 3
+
+# ---------------------------------------------------------------------------
+# Learning Hub phases. Editorial grouping for the "See where this fits" map
+# and the home page. Hugo knows a module exists; it does not know which phase
+# it belongs to. That judgment lives here. To add a module later, add its
+# modulenum to the right phase. Order of phases here is the order shown.
+# ---------------------------------------------------------------------------
+[params.phases]
+  [params.phases.foundations]
+    order = 1
+    name = "Start with the foundations"
+    blurb = "What the tool is, and what everything rests on."
+    modules = [1, 2, 3]
+  [params.phases.collect]
+    order = 2
+    name = "Collect the data"
+    blurb = "How data gets from a page or an app into Adobe."
+    modules = [4, 5, 6, 7]
+  [params.phases.shape]
+    order = 3
+    name = "Shape the data"
+    blurb = "Make the raw data mean something before anyone reads it."
+    modules = [8, 9, 10, 11]
+  [params.phases.analyze]
+    order = 4
+    name = "Analyze the data"
+    blurb = "Ask questions of the data and find the answers."
+    modules = [12, 13, 14, 15, 16, 17, 18]
+  [params.phases.deliver]
+    order = 5
+    name = "Deliver and maintain"
+    blurb = "Design it before it is built, prove it works, and know where it goes next."
+    modules = [19, 20, 21]

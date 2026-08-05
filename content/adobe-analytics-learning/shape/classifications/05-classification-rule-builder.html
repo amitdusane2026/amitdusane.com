@@ -1,0 +1,312 @@
+---
+slug: "classification-rule-builder"
+title: "Classification Rule Builder"
+seotitle: "Classification Rule Builder in Adobe Analytics"
+lastmod: 2026-07-15
+description: "Rules read the key you already have and fill the columns for you. Split, regular expressions, rule order, and the rule that quietly eats your curated file."
+type: lesson
+modulenum: 11
+sectionnum: 5
+weight: 5
+---
+<p>Everything Importing Classification Data taught you to do, this section is going to tell you to stop doing.</p>
+
+<p>Not because it was wrong. Because for a whole class of key, it is unnecessary, and somebody has been doing it by hand for years.</p>
+
+<p>Think about what a classification file for campaign tracking codes actually contains. Row after row explaining that <code>eml_2026_07_winback_in</code> is an Email campaign, from July, called Winback, in India. Every one of those facts is already sitting in the key, in plain sight, spelled out. And yet a person opens a spreadsheet every month and types them out again, so that Adobe can be told what Adobe could have read for itself.</p>
+
+<p>That spreadsheet should not exist. This section is how you make it stop existing.</p>
+
+<h3 class="subsec-title">A rule is not a different mechanism</h3>
+<p>Before the interface, one idea, because it makes the whole feature click into place.</p>
+
+<p>A rule does not classify data. <strong>A rule writes the file.</strong></p>
+
+<p>Every four hours, Adobe takes your rules, runs them against the keys it has seen, produces exactly the kind of file you built by hand in Importing Classification Data, and imports it. Same columns. Same key. Same lookup. The rule is not a parallel system with its own magic. It is a small tireless clerk sitting where you used to sit, filling in the same spreadsheet, and never once forgetting.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">📊 What a rule actually does, every four hours</div>
+    <svg viewBox="0 0 700 210" style="width:100%;height:auto;display:block;margin:4px 0 8px" role="img" aria-label="Adobe reads the keys it has seen, runs your rules against them, generates a classification file, and imports it. This loop repeats every four hours automatically.">
+        <rect x="16" y="56" width="130" height="52" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <text x="81" y="80" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">Keys it has seen</text>
+        <text x="81" y="97" text-anchor="middle" style="fill:var(--text2,#475569);font-size:10px;font-family:monospace">eml_2026_07_...</text>
+
+        <line x1="148" y1="82" x2="182" y2="82" style="stroke:var(--text2,#475569);stroke-width:1.5"/>
+        <polygon points="186,82 176,77 176,87" style="fill:var(--text2,#475569)"/>
+
+        <rect x="186" y="56" width="130" height="52" rx="6" style="fill:var(--card,#ffffff);stroke:var(--accent,#e11d48);stroke-width:2"/>
+        <text x="251" y="80" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:12px;font-weight:700;font-family:sans-serif">Your rules</text>
+        <text x="251" y="97" text-anchor="middle" style="fill:var(--text2,#475569);font-size:10px;font-family:sans-serif">match, then set</text>
+
+        <line x1="318" y1="82" x2="352" y2="82" style="stroke:var(--text2,#475569);stroke-width:1.5"/>
+        <polygon points="356,82 346,77 346,87" style="fill:var(--text2,#475569)"/>
+
+        <rect x="356" y="56" width="130" height="52" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <text x="421" y="80" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">A file</text>
+        <text x="421" y="97" text-anchor="middle" style="fill:var(--text2,#475569);font-size:10px;font-family:sans-serif">the same file you built</text>
+
+        <line x1="488" y1="82" x2="522" y2="82" style="stroke:var(--text2,#475569);stroke-width:1.5"/>
+        <polygon points="526,82 516,77 516,87" style="fill:var(--text2,#475569)"/>
+
+        <rect x="526" y="56" width="130" height="52" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--success,#10b981);stroke-width:2"/>
+        <text x="591" y="80" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">Imported</text>
+        <text x="591" y="97" text-anchor="middle" style="fill:var(--text2,#475569);font-size:10px;font-family:sans-serif">columns filled</text>
+
+        <path d="M 591 112 L 591 148 L 81 148 L 81 114" style="fill:none;stroke:var(--accent,#e11d48);stroke-width:1.5;stroke-dasharray:5 3"/>
+        <polygon points="81,106 76,117 86,117" style="fill:var(--accent,#e11d48)"/>
+        <text x="336" y="168" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:11px;font-weight:700;font-family:sans-serif">and again, four hours later, forever</text>
+        <text x="336" y="188" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:10px;font-family:sans-serif">Nobody opens a spreadsheet. Nobody forgets. Nobody is on holiday.</text>
+    </svg>
+</div>
+
+<p>Hold on to that. When something strange happens later in this section, and it will, the explanation is almost always that a rule quietly uploaded a file you did not know about.</p>
+
+<h3 class="subsec-title">Rules live inside the set now</h3>
+<p>In the old system, rule sets were their own thing. You built a rule set, then separately told it which report suites to apply to, and kept that mapping in your head.</p>
+
+<p>Not anymore. Rules are a tab inside the classification set, and they apply automatically to <strong>every report suite and key dimension combination subscribed to that set</strong>. Subscribe a new report suite tomorrow and your rules are already working there. You do not attach them. You do not remember to.</p>
+
+<p>Open the set and go to the <strong>Rules</strong> tab. It is empty. Time to fill it.</p>
+
+<h3 class="subsec-title">The first rule, and the three easy matches</h3>
+<p>A rule is two halves. A condition that looks at the key, and an action that sets a column.</p>
+
+<p>Three of the four condition types need no explanation at all.</p>
+
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>Rule type</th><th>Matches when the key</th><th>Good for</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Starts with</strong></td><td>Begins with your string</td><td>The first segment of a structured code. Channel prefixes.</td></tr>
+            <tr><td><strong>Ends with</strong></td><td>Finishes with your string</td><td>Suffixes. Country codes tacked on the end.</td></tr>
+            <tr><td><strong>Contains</strong></td><td>Has your string anywhere inside it</td><td>Keywords in free text. Search terms.</td></tr>
+            <tr><td><strong>Regular expression</strong></td><td>Fits a pattern you define</td><td>Everything the first three cannot do, which turns out to be a lot.</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<p>So the club's first rule is almost embarrassingly simple.</p>
+
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">Rule 1</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>Components > Classification sets > "Campaign Tracking" > Rules tab > Add rule
+
+Rule  Type          Match criteria    Set classification    To
+----  ------------  ----------------  --------------------  --------
+1     Starts with   eml_              Channel               Email
+2     Starts with   ppc_              Channel               Paid Search
+3     Starts with   soc_              Channel               Social
+4     Starts with   aff_              Channel               Affiliate</pre></div>
+</div>
+
+<p>Four rules, and the Channel column will fill itself forever, for every campaign anyone launches, without a single conversation. You have a handful of channels and you will have a handful of channels in five years. This is exactly what Starts With is for.</p>
+
+<p>Now try to do Campaign Name the same way.</p>
+
+<p>You cannot. There is no finite list of campaign names. Marketing will invent one tomorrow. Writing a Starts With rule per campaign is not automation, it is the spreadsheet again, wearing a different hat.</p>
+
+<h3 class="subsec-title">Where the easy three run out</h3>
+<p>Campaign Name is not a list. It is a <em>position</em>. It is whatever sits in the fourth slot of the key, between the third underscore and the fourth, whatever that turns out to be this month.</p>
+
+<p>So the rule you actually want is not a rule about strings at all. It is a rule about structure: <em>cut this key on the underscore, and put the pieces in these columns, in order.</em></p>
+
+<p>Classification sets will just do that.</p>
+
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">Rule 5</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>Components > Classification sets > "Campaign Tracking" > Rules tab > Add rule
+
+Rule  Type    Input (token)   Sets
+----  ------  --------------  ---------------------------------------
+5     Split   _               Channel, Year, Month, Campaign, Country
+
+Key:      eml_2026_07_winback_in
+          |    |    |   |       |
+          v    v    v   v       v
+Sets:  Channel Year Month Campaign Country
+       Email   2026  07    winback   in</pre></div>
+</div>
+
+<p>The <strong>Split</strong> function takes a token, cuts the key on it, and maps the resulting pieces to your classifications in order. One rule. One character. No anchors, no capture groups, nothing to get wrong at two in the morning, and nothing a colleague has to decode before they can change it.</p>
+
+<p>Campaign Name now works for every campaign that has ever existed and every campaign that ever will. Nobody typed a campaign name into anything.</p>
+
+<p>Which is the moment the whole module pays off. <a href="/adobe-analytics-learning/shape/classifications/designing-the-key/">Designing the Key</a> argued at length that a key needs a delimiter, that an underscore is safer than a hyphen, that the segment count must never vary. On the page it probably read like fussiness about punctuation. It was not.</p>
+
+<p>The delimiter was never a style preference. It was the interface.</p>
+
+<div class="pro-tip">
+    <div class="pro-tip-hdr">💡 Contains is where good rule sets go to die</div>
+    <p>It is tempting to skip all of this and write <code>Contains "07"</code> to set Month to July. Then a campaign called <code>eml_2026_11_bogo07_in</code> arrives, and November is quietly reported as July. Contains does not know <em>where</em> in the key it matched, and it does not care. Use it for genuinely unstructured text like search terms. For a structured key, position is the whole meaning, and Contains is blind to position.</p>
+</div>
+
+<h3 class="subsec-title">When Split cannot help you</h3>
+<p>Split is the right tool for a key you designed. It is often the wrong tool for a key you inherited, and most keys are inherited.</p>
+
+<div class="info-box">
+    <div class="info-hdr">ℹ️ Split needs a promise. A regular expression does not.</div>
+    <p>Split assumes the key keeps its word: the same delimiter every time, the same number of segments every time, and the delimiter never buried inside a value. Break any one of those and Split quietly puts the wrong piece in the wrong column.</p>
+    <p>Real keys break promises. A legacy code where some campaigns have five segments and some have four. A delimiter that shows up inside a campaign name because a marketer typed <code>win-back</code>. A pattern that holds for ninety percent of the traffic and not the rest.</p>
+    <p><strong>That is what regular expressions are for,</strong> and it is why they are still worth learning. Split is the shortcut for a key that behaves. A regular expression is the tool for a key that only mostly behaves.</p>
+</div>
+
+<p>A regular expression does not look for a string. It looks for a <em>shape</em>, and then it hands you back the pieces.</p>
+
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">The same key, matched as a shape</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>Key:      eml_2026_07_winback_in
+
+Pattern:  ^([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_]+)$
+
+          ^          start of the key
+          ([^_]+)    one or more characters that are not an underscore, captured
+          _          a literal underscore
+          ...        and so on, five times
+          $          end of the key
+
+Captures: $1 = eml      $2 = 2026     $3 = 07
+          $4 = winback  $5 = in</pre></div>
+</div>
+
+<p>The parentheses are the point. Each pair captures whatever it matched, numbered left to right, and those numbers become values you can assign to a column.</p>
+
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">The same job, done the long way</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>Rule  Type                Match criteria                            Set classification  To
+----  ------------------  ----------------------------------------  ------------------  ---
+5     Regular expression  ^([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_]+)$  Year                $2
+6     Regular expression  ^([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_]+)$  Month               $3
+7     Regular expression  ^([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_]+)$  Campaign            $4
+8     Regular expression  ^([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_]+)$  Country             $5
+
+Four rules where Split needed one. Every one of them carrying the same
+expression, which somebody now has to keep in agreement with the other three.</pre></div>
+</div>
+
+<p>Look at what that costs, and then look back at Rule 5. Four rules against one, the same pattern repeated four times, and a maintenance burden that lands on whoever inherits it. That is the price of a key that was never designed to be read.</p>
+
+<p>Pay it when you have to. A regular expression will handle a key with a variable segment count, a delimiter hiding inside a value, or a convention that only mostly held. Split will not. But when the key <em>was</em> designed, reaching for a regular expression is doing hard work that somebody already did for you, back in Designing the Key, when they chose the underscore.</p>
+
+<h3 class="subsec-title">Order matters, and it matters in two opposite directions</h3>
+<p>Rules run top to bottom, in the order shown in the table. Which raises the obvious question: what happens when two rules both want to set the same column?</p>
+
+<p>The answer depends on a setting called <strong>Rules overwrite</strong>, and it does not merely change the outcome. It <em>inverts</em> it.</p>
+
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>Rules overwrite</th><th>When several rules set the same classification</th><th>So precedence goes to</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Apply to all values</strong></td><td>Each match overwrites the one before it</td><td>The <strong>last</strong> matching rule. Rank the most important rule lowest in the table.</td></tr>
+            <tr><td><strong>Apply to only unset values</strong></td><td>A rule writes only into a blank. If a value is there, it does nothing.</td><td>The <strong>first</strong> matching rule. Rank the most important rule highest.</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<p>Read that twice, because it is the single most counterintuitive thing in this module. The same rule set, in the same order, produces opposite answers depending on one dropdown. Move a rule up to give it priority, and if the set is in "apply to all values" mode you have just taken its priority away.</p>
+
+<p>If your rules never touch the same column, none of this matters and you can forget it. The moment two do, it is the only thing that matters.</p>
+
+<h3 class="subsec-title">The rule that quietly eats your file</h3>
+<p>Now put this section and Importing Classification Data together, because that is where people actually get hurt.</p>
+
+<p>Suppose the club's marketing team maintains a hand-curated file of campaign display names, uploaded through the Schema tab. Proper title case, correct spelling, the names that appear in board reports. Meanwhile a rule sets Campaign from <code>$4</code>, which produces <code>winback</code>, lowercase, exactly as the tracking code spelled it.</p>
+
+<p>Both write to the Campaign column.</p>
+
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ Rules overwrite imports, and they do it every four hours</div>
+    <p>With Rules overwrite set to <strong>apply to all values</strong>, the rule wins. Not once. Every four hours, forever. Somebody uploads the curated file, the report looks right for an afternoon, and by evening the machine has scraped it back to lowercase. They upload it again. It happens again. And because nothing failed, nothing is logged as an error, and the report never goes blank, the team concludes that classifications are simply unreliable and stops trusting them.</p>
+    <p>They are not unreliable. They are doing precisely what they were told. Decide once, per column, who owns it: <strong>the rule or the file.</strong> If it is the file, set Rules overwrite to <em>apply to only unset values</em>, and the rule will fill gaps without touching curated data. If it is the rule, delete the file and stop maintaining it.</p>
+</div>
+
+<p>That decision, written down beside the key convention from Designing the Key, is worth more than any rule you will ever write.</p>
+
+<h3 class="subsec-title">Test it. It costs nothing and it is the only free look you get</h3>
+<p>The Rules tab has a <strong>Test rule set</strong> button, and it is the most underused control in Adobe Analytics.</p>
+
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">Test rule set</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>Rules tab > Test rule set
+
+Left panel   Paste sample keys, or drag in a classification file to test many at once
+             [x] Remember sample keys        (keeps them for next time)
+
+             eml_2026_07_winback_in
+             ppc_2026_07_brand_in
+             eml_2026_11_bogo07_in           <- the one designed to break Rule "Contains 07"
+             soc_2026_07_summer-fest_in      <- the one with a hyphen in the campaign name
+
+Right panel  What each key WOULD be classified as, if you activated
+
+Nothing is classified. No data changes. This is a rehearsal.</pre></div>
+</div>
+
+<p>Feed it the ugly keys. Not the clean ones. The clean ones always work, and testing them tells you nothing you did not already believe. Test the campaign with a hyphen in the name, the one with a missing segment, the one somebody URL encoded. Ten minutes here saves a week of explaining to a marketing director why November is being reported as July.</p>
+
+<h3 class="subsec-title">The lookback window, and the limit that separates rules from files</h3>
+<p>Now the constraint that decides when rules are the wrong tool entirely, and it contradicts something you have believed since the opening of this module.</p>
+
+<p>Classifications are retroactive. Upload a file today and it reaches every hit you have ever collected, back to the beginning.</p>
+
+<p><strong>Rules are not.</strong></p>
+
+<p>A rule set has a <strong>lookback window</strong>, a dropdown running from one month to six months, defaulting to roughly one. When you activate the rules, they run against every unique key seen <em>within that window</em>, and no further. There is a <strong>Perform lookback</strong> button to run one deliberately, and six months is the ceiling.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">How far back each one reaches</div>
+    <div class="diagram-content">
+        <div class="comparison-grid">
+            <div class="comp-item">
+                <div class="comp-label">A file you upload</div>
+                <div class="comp-desc">Reaches every hit that ever carried the key. Two years ago, five years ago, the first day of collection. There is no window, because the lookup happens at report time.</div>
+            </div>
+            <span class="comp-vs">vs</span>
+            <div class="comp-item">
+                <div class="comp-label">A rule you activate</div>
+                <div class="comp-desc">Reaches only keys seen inside the lookback window. Six months, at the absolute most. A key that stopped appearing before that is invisible to the rule, permanently.</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<p>So a campaign that ran two years ago and has not been seen since will never be classified by a rule, no matter how perfect the pattern is. The rule looks for keys in recent traffic and finds nothing there to work with.</p>
+
+<p>Which gives you the ownership rule for the whole module, and it is cleaner than most people expect:</p>
+
+<div class="info-box">
+    <div class="info-hdr">ℹ️ Rules for the living, files for the dead</div>
+    <p><strong>Rules</strong> handle keys that keep arriving. New campaigns, new SKUs, new search terms, values that will still be appearing next Tuesday. They are the right answer for anything that is constantly changing, which is exactly the case that makes manual upload unbearable.</p>
+    <p><strong>Files</strong> handle history, and anything a rule cannot see. Backfilling three years of old campaign codes is a file, and always will be. Correcting a value from 2023 is a file. If it stopped arriving before the lookback window closed, a rule cannot help you.</p>
+    <p>A mature implementation runs both. Rules keeping the present tidy, and a one-time historical file that somebody built carefully, once, and then never had to touch again.</p>
+</div>
+
+<h3 class="subsec-title">Activating, and what activation costs</h3>
+<p>When the test looks right, activate the rule set. From that moment the four-hour cycle begins and the columns start filling on their own.</p>
+
+<p>Editing later is not free. Modifying or deleting a rule deactivates the set, and reactivating triggers a reprocess that can take up to twenty-four hours. Which is not a disaster, but it is a reason to get the rules right in the tester rather than iterating live and wondering why nothing appears to be changing.</p>
+
+<h3 class="subsec-title">What a rule can never do for you</h3>
+<p>One last honest limit, and it is the boundary of the entire feature.</p>
+
+<p>A rule can only unpack what is already inside the key. It reads, it matches, it splits. It cannot know things.</p>
+
+<p>Which means the club's member attributes are permanently out of reach. No pattern in <code>M-10482</code> will ever reveal a Membership Tier, because the tier is not in there. It is in a CRM, in another building, and only a file can carry it across.</p>
+
+<p>Rules unpack. Files import. And a real implementation almost always needs both, on different columns, for different reasons.</p>
+
+<p>You now have a set, a schema, data flowing in from a file, and rules keeping the structured columns filled automatically. Everything works.</p>
+
+<p>Until one morning it does not, and nothing tells you. Which is <a href="/adobe-analytics-learning/shape/classifications/troubleshooting-maintenance/">Troubleshooting and Maintenance</a>, and it is the section that will earn its keep.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Analytics</div>
+    <p>Analytics &gt; <span class="path">Components &gt; Classification sets &gt; [your set] &gt; Rules</span>. Rules apply automatically to every subscription on the set. The legacy standalone Classification Rule Builder still lives under <span class="path">Admin</span>, and is on a retirement schedule.</p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title">📚 Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/classifications/sets/set/rules" target="_blank">Adobe Docs: Classification Set Rules (functions, lookback, testing)</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/classifications/classifications-rulebuilder/classification-quickstart-rules" target="_blank">Adobe Docs: Classification Rules and Rule Priority</a></li>
+    </ul>
+</div>

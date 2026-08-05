@@ -1,0 +1,141 @@
+---
+slug: "adobe-analytics-ecosystem"
+title: "Adobe Analytics Ecosystem"
+seotitle: "The Adobe Analytics Ecosystem Explained"
+lastmod: 2026-07-15
+description: "Adobe Analytics is not one tool but an ecosystem. What each piece does, which two you meet first, and how they fit together."
+type: lesson
+modulenum: 1
+sectionnum: 2
+weight: 2
+---
+<p><a href="/adobe-analytics-learning/foundations/adobe-analytics-fundamentals/what-is-adobe-analytics/">What Is Adobe Analytics</a> settled why the tool exists and what it is at its core: a behavioral data platform that makes visitor behavior visible again. True, but that one line does not really tell you what the thing <em>is</em> once you are standing in front of it. If you have ever watched someone use Adobe Analytics, or just image-searched it out of curiosity, you have seen the surface, reports and bar charts and pie charts and trend lines, and you have probably overheard words like visits, page views, and visitors. That surface is exactly where this section starts.</p>
+
+<p>Think of this as a deep-sea dive. You came to explore what is under the water, and What Is Adobe Analytics gave a fair sense of the place. This is the long jump down. Before anyone dives deep, they learn their gear first: the cylinder on your back, the suit, the protocols for when you are far below the surface. This section is that gear check. Welcome to the Adobe Analytics ecosystem.</p>
+
+<h3 class="subsec-title">Why it is an "ecosystem" and not just a tool</h3>
+<p>Adobe Analytics is doing many things at the same time. It collects data. It lets you customize how that data is collected. It hands the data back as many kinds of report. It filters and slices it, schedules deliveries, cleans it up, and controls who is allowed to see and touch which data. It is not just reports, not just collection, not just raw data, not just filtering, not just delivery. It is not any one of those things, and it is all of them at once. That "all of them at once" is what people mean by the ecosystem.</p>
+
+<p>A car makes the point. A car is not its engine, not its tyres, not its interior, not its headlights, not its color. Pick any single part and it is not the car. The car is all of those parts working as one. Adobe Analytics is the same: a set of distinct pieces that together become one thing. So look at the pieces.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">Adobe Analytics: one system, its parts inside</div>
+    <div class="diagram-content">
+        <svg width="100%" viewBox="0 0 720 350" role="img" style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif">
+            <title>Adobe Analytics as one system containing its parts</title>
+            <desc>One large container labelled Adobe Analytics holds the parts. On the left, Experience Platform Tags collects data and sends it to a central Adobe Analytics Platform core. From there, arrows lead to an Analyze group of Analysis Workspace and Activity Map, and an Export group of Data Warehouse, Data Feeds, and APIs.</desc>
+            <defs>
+                <marker id="ecoArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker>
+            </defs>
+            <rect x="8" y="8" width="704" height="330" rx="16" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1"/>
+            <text x="24" y="34" font-size="16" font-weight="700" style="fill:var(--text1,#0f172a)">Adobe Analytics</text>
+            <text x="24" y="52" font-size="12" style="fill:var(--text2,#475569)">One ecosystem, working as a single system</text>
+
+            <text x="30" y="86" font-size="11" font-weight="700" style="fill:var(--info,#3b82f6)">COLLECT</text>
+            <rect x="30" y="96" width="150" height="80" rx="10" style="fill:var(--bg3,#f1f5f9);stroke:var(--info,#3b82f6);stroke-width:1.5"/>
+            <text x="105" y="131" font-size="13" font-weight="600" text-anchor="middle" style="fill:var(--text1,#0f172a)">Adobe Launch (Tags)</text>
+            <text x="105" y="149" font-size="11" text-anchor="middle" style="fill:var(--text2,#475569)">gathers &amp; sends</text>
+
+            <rect x="205" y="96" width="150" height="204" rx="10" style="fill:var(--accent-light,rgba(225,29,72,.10));stroke:var(--accent,#e11d48);stroke-width:1.5"/>
+            <text x="280" y="182" font-size="13" font-weight="700" text-anchor="middle" style="fill:var(--text1,#0f172a)">Adobe</text>
+            <text x="280" y="202" font-size="13" font-weight="700" text-anchor="middle" style="fill:var(--text1,#0f172a)">Analytics</text>
+            <text x="280" y="222" font-size="13" font-weight="700" text-anchor="middle" style="fill:var(--text1,#0f172a)">Platform</text>
+            <text x="280" y="244" font-size="11" text-anchor="middle" style="fill:var(--text2,#475569)">normalizes the data</text>
+            <line x1="180" y1="136" x2="203" y2="136" style="stroke:var(--text2,#475569);stroke-width:1.5" fill="none" marker-end="url(#ecoArrow)"/>
+
+            <text x="380" y="86" font-size="11" font-weight="700" style="fill:var(--success,#10b981)">ANALYZE</text>
+            <rect x="380" y="96" width="150" height="80" rx="10" style="fill:var(--bg3,#f1f5f9);stroke:var(--success,#10b981);stroke-width:1.5"/>
+            <text x="455" y="131" font-size="13" font-weight="600" text-anchor="middle" style="fill:var(--text1,#0f172a)">Analysis Workspace</text>
+            <text x="455" y="149" font-size="11" text-anchor="middle" style="fill:var(--text2,#475569)">where you live</text>
+            <rect x="545" y="96" width="150" height="80" rx="10" style="fill:var(--bg3,#f1f5f9);stroke:var(--success,#10b981);stroke-width:1.5"/>
+            <text x="620" y="131" font-size="13" font-weight="600" text-anchor="middle" style="fill:var(--text1,#0f172a)">Activity Map</text>
+            <text x="620" y="149" font-size="11" text-anchor="middle" style="fill:var(--text2,#475569)">live click overlay</text>
+            <line x1="355" y1="150" x2="378" y2="132" style="stroke:var(--text2,#475569);stroke-width:1.5" fill="none" marker-end="url(#ecoArrow)"/>
+
+            <text x="380" y="214" font-size="11" font-weight="700" style="fill:var(--warning,#f59e0b)">EXPORT</text>
+            <rect x="380" y="226" width="96" height="74" rx="10" style="fill:var(--bg3,#f1f5f9);stroke:var(--warning,#f59e0b);stroke-width:1.5"/>
+            <text x="428" y="258" font-size="12" font-weight="600" text-anchor="middle" style="fill:var(--text1,#0f172a)">Data</text>
+            <text x="428" y="274" font-size="12" font-weight="600" text-anchor="middle" style="fill:var(--text1,#0f172a)">Warehouse</text>
+            <rect x="489" y="226" width="96" height="74" rx="10" style="fill:var(--bg3,#f1f5f9);stroke:var(--warning,#f59e0b);stroke-width:1.5"/>
+            <text x="537" y="258" font-size="12" font-weight="600" text-anchor="middle" style="fill:var(--text1,#0f172a)">Data</text>
+            <text x="537" y="274" font-size="12" font-weight="600" text-anchor="middle" style="fill:var(--text1,#0f172a)">Feeds</text>
+            <rect x="598" y="226" width="97" height="74" rx="10" style="fill:var(--bg3,#f1f5f9);stroke:var(--warning,#f59e0b);stroke-width:1.5"/>
+            <text x="646" y="267" font-size="12" font-weight="600" text-anchor="middle" style="fill:var(--text1,#0f172a)">APIs</text>
+            <line x1="355" y1="250" x2="378" y2="262" style="stroke:var(--text2,#475569);stroke-width:1.5" fill="none" marker-end="url(#ecoArrow)"/>
+        </svg>
+    </div>
+</div>
+
+<h3 class="subsec-title">The two you meet first</h3>
+<p>When you look at a person, you do not know them by their hands or their feet. You know them by their face. The face of Adobe Analytics is <a href="/adobe-analytics-learning/analyze/analysis-workspace/"><strong>Analysis Workspace</strong></a>, the space handed to you to build reports and play with data, and the part you will spend almost all your time in. The body underneath, the part that actually goes out and gathers everything, is the <a href="/adobe-analytics-learning/collect/"><strong>collection layer</strong></a>: Experience Platform Tags, still widely called <a href="/adobe-analytics-learning/collect/adobe-launch-tags/">Launch</a>. It quietly captures every page load, download, form submission, and link click, and sends it in. One thing worth being precise about: the collection layer gathers and sends, it does not store. The storing and the heavy processing happen on Adobe's side, out of sight.</p>
+
+<h3 class="subsec-title">The full ecosystem, part by part</h3>
+<p>Six pieces make up most of what you will touch, and they split cleanly into three jobs: getting data in, working with it, and taking it back out.</p>
+
+<div class="cards">
+    <a class="card" href="/adobe-analytics-learning/collect/adobe-launch-tags/">
+        <div class="card-icon">🏷️</div>
+        <div class="card-title">Adobe Launch (Tags) (the body)</div>
+        <div class="card-desc">How data gets gathered in the first place. Instead of asking engineering to hand-code tracking on every page, you configure data elements and rules here and publish them to your site. It gathers and sends, it is deployment, not reporting, so you will not analyze anything in it.</div>
+    </a>
+    <a class="card" href="/adobe-analytics-learning/analyze/analysis-workspace/">
+        <div class="card-icon">📈</div>
+        <div class="card-title">Analysis Workspace (the face)</div>
+        <div class="card-desc">Your home base. Drag dimensions and metrics onto freeform tables, layer on visualizations, build filters and event sequences, and stack panels into a Project you share. Most questions that can be answered in Adobe are answered here, interactively, in seconds.</div>
+    </a>
+    <a class="card" href="/adobe-analytics-learning/analyze/activity-map/">
+        <div class="card-icon">🗺️</div>
+        <div class="card-title">Activity Map</div>
+        <div class="card-desc">A live overlay on your real site showing which elements visitors actually click and engage with, right there on the page. It is like a surveillance room for your own website: you watch, in near real time, what is working and what is being ignored, without building a single report.</div>
+    </a>
+    <a class="card" href="/adobe-analytics-learning/analyze/data-warehouse/">
+        <div class="card-icon">🗄️</div>
+        <div class="card-title">Data Warehouse</div>
+        <div class="card-desc">For when Workspace's in-browser view hits its ceiling. Request a very large, historical, deduplicated extract of your processed data, delivered later, sometimes minutes, sometimes hours. This is what you pull when you need to feed Tableau, Power BI, or heavy big-data calculations. Not interactive, not real time.</div>
+    </a>
+    <a class="card" href="/adobe-analytics-learning/analyze/data-feeds/">
+        <div class="card-icon">📤</div>
+        <div class="card-title">Data Feeds</div>
+        <div class="card-desc">The raw counterpart. Where Workspace and Data Warehouse give you processed, normalized data, Data Feeds gives you the raw, hit-level data exactly as Adobe captured it, one row per hit, dropped to you on a schedule. This is what teams load into their own warehouse or pipe into Customer Journey Analytics.</div>
+    </a>
+    <div class="card">
+        <div class="card-icon">🔗</div>
+        <div class="card-title">APIs</div>
+        <div class="card-desc">The same data, reached by code instead of clicks. The Analytics APIs let you automate report pulls, feed external dashboards, and manage configuration at scale. When the interface itself becomes the bottleneck, this is the way through.</div>
+    </div>
+</div>
+
+<div class="info-box">
+    <div class="info-hdr">ℹ️ Normalized data versus raw data</div>
+    <p>This is the line that separates the export tools, and it is worth holding onto early. Analysis Workspace and Data Warehouse both work from Adobe's <strong>normalized</strong> data: the processed, business-ready version, where figures like visits and visitors are calculated for you at the moment you ask, against your dates and filters. Data Feeds is a different animal. It gives you the <strong>raw</strong> data, the technical record of each interaction as it was captured, before any of that calculation happens. The same events sit underneath both, in two very different shapes. Why the raw version matters, and what it looks like, is a story for its own module.</p>
+</div>
+
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ Not every part opens onto a live report</div>
+    <p>A classic first stumble: an analyst tries to pull two years of raw data into Workspace, watches it crawl or time out, and decides the tool is broken. It is not; that job was never Workspace's. Large historical and raw extracts are exactly what Data Warehouse and Data Feeds are for, while the collection layer is plumbing you deploy through, not analyze in. Match the part to the job and the friction disappears.</p>
+</div>
+
+<div class="pro-tip">
+    <div class="pro-tip-hdr">💡 Default to Workspace, reach out only when it can't</div>
+    <p>Start every question in Analysis Workspace. Reach for Data Warehouse, Data Feeds, or the APIs only when Workspace genuinely cannot do the job: when you need the data outside Adobe, at raw grain, or delivered on an automated schedule.</p>
+</div>
+
+<p>For now, hold your curiosity. You have seen the gear and the parts, but you have only touched the surface of the water. Each of these gets its own deep dive in this course, and by the time you come back up you will know exactly which part to reach for when someone hands you a question. Let yourself be surprised by what is down there.</p>
+
+<p>First, though, the words. Every conversation ahead of you, with a stakeholder, a developer, or Adobe's own documentation, quietly assumes a vocabulary nobody has handed you yet. <a href="/adobe-analytics-learning/foundations/adobe-analytics-fundamentals/key-terminology/">Key Terminology</a> hands it over.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to Find in Adobe Analytics</div>
+    <p>Analysis Workspace: <span class="path">Analytics → Workspace</span></p>
+    <p>Data Warehouse: <span class="path">Analytics → Tools → Data Warehouse</span></p>
+    <p>Activity Map: <span class="path">Analytics → Tools → Activity Map</span></p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title">📚 Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/docs/analytics/analyze/analysis-workspace/home.html" target="_blank">Analysis Workspace Documentation</a></li>
+        <li><a href="https://experienceleague.adobe.com/docs/analytics/export/data-warehouse/data-warehouse.html" target="_blank">Data Warehouse Guide</a></li>
+        <li><a href="https://experienceleague.adobe.com/docs/analytics/analyze/activity-map/activity-map.html" target="_blank">Activity Map Guide</a></li>
+    </ul>
+</div>

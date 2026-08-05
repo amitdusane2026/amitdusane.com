@@ -1,0 +1,60 @@
+---
+slug: "freeform-tables"
+title: "Freeform Tables"
+lastmod: 2026-07-15
+type: lesson
+modulenum: 14
+sectionnum: 3
+weight: 3
+---
+<p>Freeform tables are the foundation of Analysis Workspace, providing flexible, pivot-table-like analysis capabilities.</p>
+                <h3 class="subsec-title">Table Building Basics</h3>
+                <ul>
+                    <li><strong>Rows:</strong> Drag dimensions to add breakdown categories</li>
+                    <li><strong>Columns:</strong> Drag metrics to add measurements</li>
+                    <li><strong>Breakdown:</strong> Drag dimension onto a row to break it down further</li>
+                    <li><strong>Segments:</strong> Drop segments on rows or columns to filter</li>
+                    <li><strong>Date ranges:</strong> Apply different date ranges to columns</li>
+                </ul>
+
+                <h3 class="subsec-title">Table Features</h3>
+                <div class="tbl-wrap">
+                    <table>
+                        <thead><tr><th>Feature</th><th>How to Access</th><th>Purpose</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>Column Settings</strong></td><td>Click column header gear</td><td>Wrap text, show totals, format</td></tr>
+                            <tr><td><strong>Row Settings</strong></td><td>Right-click row</td><td>Breakdown, create segment, exclude</td></tr>
+                            <tr><td><strong>Conditional Formatting</strong></td><td>Column settings</td><td>Color-code values</td></tr>
+                            <tr><td><strong>Totals</strong></td><td>Table settings</td><td>Show/hide grand total, subtotals</td></tr>
+                            <tr><td><strong>Static Row</strong></td><td>Right-click row</td><td>Lock row position regardless of sort</td></tr>
+                            <tr><td><strong>Pagination</strong></td><td>Table bottom</td><td>Control rows shown (default 400)</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 class="subsec-title">Example: Multi-level Breakdown</h3>
+                <div class="code-block">
+                    <div class="code-hdr"><span class="code-lang">Table Structure</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+                    <div class="code-body"><pre>Marketing Channel (Dimension)
+├── Paid Search
+│   ├── Google (Tracking Code breakdown)
+│   │   ├── Brand Terms (Classification)
+│   │   └── Non-Brand Terms
+│   └── Bing
+│       ├── Brand Terms
+│       └── Non-Brand Terms
+├── Email
+│   └── Newsletter
+│       ├── Welcome Series
+│       └── Promotional
+└── Direct
+
+Columns: Visits | Revenue | Orders | Conversion Rate</pre></div>
+                </div>
+                <div class="ref-box">
+                    <div class="ref-title">📚 Learn More</div>
+                    <ul>
+                        <li><a href="https://experienceleague.adobe.com/docs/analytics/analyze/analysis-workspace/visualizations/freeform-table/freeform-table.html" target="_blank">Adobe Docs: Freeform Table</a></li>
+                    </ul>
+                </div>
+            

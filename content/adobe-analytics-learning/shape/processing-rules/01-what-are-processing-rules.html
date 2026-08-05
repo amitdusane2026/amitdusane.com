@@ -1,0 +1,97 @@
+---
+slug: "what-are-processing-rules"
+title: "What Are Processing Rules"
+seotitle: "What Are Processing Rules in Adobe Analytics"
+lastmod: 2026-07-18
+description: "Why anything sits between collection and reporting at all. What a processing rule is, where it runs in the pipeline, and the guardrails to understand first."
+type: lesson
+modulenum: 8
+sectionnum: 1
+weight: 1
+---
+<p>Look back at everything built so far. You know what Adobe Analytics is, how data is organized inside report suites, how it is stored across the different variable types, how it travels from a customer's activity to Adobe's servers, and how the whole thing gets installed on a real site through a tag management system. On top of that, Tracking Calls took the actual calls apart: page view calls, link calls, the server calls that carry them, and the billing and identity concerns that ride along. Data is now flowing, landing in the right variables, and sent through the right kind of call. That completes the <strong><a href="/adobe-analytics-learning/collect/">Collect the data</a></strong> phase.</p>
+
+<p>The natural next move is to open a report and start pulling insight. That instinct is right, just slightly early. Between the moment data is collected and the moment it becomes a clean, trustworthy report, there is a mechanical layer whose only job is to shape the data. This module opens the first tool in that layer, and with it the <strong><a href="/adobe-analytics-learning/shape/">Shape the data</a></strong> phase.</p>
+
+<h3 class="subsec-title">Why anything sits between collection and reporting</h3>
+<p>Think about building a home. You buy cement, bricks, and RCC, and you put up the structure. The structure is real and it is yours, but ask an honest question: would you move in the day the last wall is finished, with no electrical wiring, no water plumbing, and no furniture? For most people the answer is a mix of yes and no. Yes, if there is no roof over your head at all and any shelter beats none. No, if you can wait a few weeks, keep a temporary place to eat and sleep, and move in once the wiring, the plumbing, and at least some furniture are in. The finished version is the one that makes all the effort and money feel worth it.</p>
+
+<p>Analytics data is the same. Collection, variables, and server calls put up the structure. What turns that structure into something a business user can actually live in is the shaping layer: processing rules, VISTA rules, classifications, and marketing channels. Each one adds a utility the raw structure lacks. None of them can be poured in all at once, so they arrive one at a time, and the first is processing rules.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">From collection to insight: the shaping layer</div>
+    <div class="diagram-content">
+        <div class="flow-horizontal">
+            <div class="flow-step">Collect the data</div>
+            <span class="flow-arrow">&rarr;</span>
+            <div class="flow-step highlight">Shape the data<br><span style="font-weight:400;color:var(--text2)">Processing Rules, VISTA, Classifications, Marketing Channels</span></div>
+            <span class="flow-arrow">&rarr;</span>
+            <div class="flow-step">Analyze the data</div>
+        </div>
+    </div>
+</div>
+
+<h3 class="subsec-title">What a processing rule is</h3>
+<p>A processing rule is an instruction that Adobe runs on your data server-side, as each hit is collected, before that data is written into the report suite. It lives in the report suite settings, not in your page code, and that is the whole point of it: it changes what gets stored without anyone touching the implementation.</p>
+
+<p>The cleanest way to feel why that matters is a small story. Rewind to the era before tag management systems existed. Implementation meant hand-writing the tracking code onto pages, and once it shipped, changing it meant another development cycle. Now picture that collection is already live and one page is sending its page name wrong, capturing XYZ where it should read ABC. Every hour, that page quietly pollutes the Pages report. Waiting for the next code release is slow, and every hit in the meantime is wrong. A processing rule solves it in minutes: add a rule that says when the page name is XYZ, overwrite it with ABC, and from the moment you save, the stored data reads correctly.</p>
+
+<p>That origin story is worth holding onto, because it explains the shape of the feature, but do not mistake processing rules for a relic of the pre-TMS world. They are just as important today. Even with a modern tag manager in place, they remain the standard way to map context data into variables, the primary path for setting variables in mobile app implementations, and the fastest way to patch a data-quality issue without waiting on a deployment.</p>
+
+<h3 class="subsec-title">It does far more than fix a typo</h3>
+<p>Overwriting a wrong value is the easiest use to picture, but it is the smallest thing a processing rule does. At a high level, a single rule can:</p>
+<ul>
+    <li><strong>Set or overwrite a value:</strong> put a fixed or dynamic value into a prop, eVar, or event.</li>
+    <li><strong>Copy one variable into another:</strong> duplicate a value from, say, one eVar into a prop so it serves two reporting needs at once.</li>
+    <li><strong>Concatenate values:</strong> join pieces together, for example a category and a subcategory, into a single dimension.</li>
+    <li><strong>Map context data to variables:</strong> take the key/value pairs sent as context data and route them into the right props, eVars, and events. This is the modern workhorse, and the main reason processing rules stay central.</li>
+    <li><strong>Set an event conditionally:</strong> fire a success event when a condition is met, without adding code to the page.</li>
+</ul>
+<p>Each of these is driven by a condition (when to act) and an action (what to do), and those two ideas are the entire grammar of the feature. Rather than crowd them in here, <a href="/adobe-analytics-learning/shape/processing-rules/conditions-actions/">Conditions and Actions</a> takes them apart properly, and <a href="/adobe-analytics-learning/shape/processing-rules/use-cases-examples/">Use Cases and Examples</a> walks real scenarios end to end.</p>
+
+<h3 class="subsec-title">Where processing rules sit in the pipeline</h3>
+<p>It helps to see where this shaping happens. After a hit reaches Adobe, it passes through a pre-processing stage (bot filtering, internal lookups), and then processing rules run, in the order you list them, from top to bottom. VISTA rules, a separate and more powerful server-side mechanism that Adobe sets up for you, generally run after processing rules, though depending on how an organization is configured they can sit on either side. Marketing channel processing rules, a distinct feature covered in <a href="/adobe-analytics-learning/shape/marketing-channels/">Marketing Channels</a>, run later still, and only then is the hit written into the report suite. The practical takeaway for now is simple: a processing rule acts while the data is being collected, on its way in, not after it has landed.</p>
+
+<h3 class="subsec-title">The guardrails to understand before you touch them</h3>
+<p>Three properties of processing rules matter more than any single action, and getting them wrong is how careful teams end up with bad data. The table below frames the boundary; the paragraphs that follow explain the three that bite hardest.</p>
+
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>A processing rule can</th><th>A processing rule cannot</th></tr></thead>
+        <tbody>
+            <tr><td>Set or overwrite a value in a prop, eVar, or event.</td><td>Correct data that was already collected. Rules apply going forward only.</td></tr>
+            <tr><td>Copy one variable into another, or concatenate several values into one dimension.</td><td>Exclude or delete a hit, or reduce the server-call bill.</td></tr>
+            <tr><td>Map context data into props, eVars, and events.</td><td>Look up values from an external file or database.</td></tr>
+            <tr><td>Set a success event when a condition is met.</td><td>Change the tracking code that runs on your pages.</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<p><strong>They are not retroactive.</strong> A processing rule applies to data from the moment you save it, going forward only. It does nothing to data already collected. Return to the XYZ page: the rule fixes every hit from now on, but yesterday's hits stay wrong in the report. When you genuinely need to correct or relabel history, the tool for that is classifications, which apply both backward and forward and are covered in <a href="/adobe-analytics-learning/shape/classifications/">Classifications</a>. Keep the two straight: processing rules shape data as it arrives, classifications add or correct labels on data already stored.</p>
+
+<p><strong>They cannot drop a hit.</strong> Excluding data is not what processing rules are for. If a hit reaches Adobe, a rule can reshape it but not delete it, and it certainly cannot un-bill it. As covered in Server Calls and Billing, the only ways to stop a hit from being sent and billed are <code>abort</code> in AppMeasurement or <code>onBeforeEventSend</code> returning false in the Web SDK, both of which act at collection time, before the hit ever leaves. VISTA rules can also filter server-side, but that is a heavier, Adobe-managed path.</p>
+
+<p><strong>They act on live production data directly.</strong> A careless rule can cause real data loss. The classic trap: a rule that overwrites eVar1 with eVar2 will blank out eVar1 whenever eVar2 happens to be empty. Always build and test rules in a development report suite first, and add a condition that checks a value exists before you use it to overwrite another. The fuller set of limits and habits lives in <a href="/adobe-analytics-learning/shape/processing-rules/limitations-best-practices/">Limitations and Best Practices</a>; for now, treat these three as the non-negotiables.</p>
+
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ Test in a development report suite first</div>
+    <p>Processing rules affect data collection directly and cannot be undone on data already stored. A rule that looks right can still blank out a variable or overwrite the wrong field the moment it goes live. Prove every rule in a development report suite before you enable it in production, so a mistake costs you test data, not real reporting.</p>
+</div>
+
+<h3 class="subsec-title">Who can create them</h3>
+<p>Access is straightforward today. Product admins can work with processing rules by default, and a non-admin gets access when an admin includes them in a product profile that carries the Processing Rules permission. There is no separate certification exam to pass first, which older guides sometimes still mention; that requirement no longer applies.</p>
+
+<p>With the idea in place, what a processing rule is, why the shaping layer exists, and the boundaries that keep it safe, the next step is the grammar itself. <a href="/adobe-analytics-learning/shape/processing-rules/conditions-actions/">Conditions and Actions</a> breaks down exactly how a rule decides when to act and what to do. From there, <a href="/adobe-analytics-learning/shape/processing-rules/use-cases-examples/">Use Cases and Examples</a> shows the patterns you will reach for in practice, and <a href="/adobe-analytics-learning/shape/processing-rules/limitations-best-practices/">Limitations and Best Practices</a> collects the full set of cautions. Further out, the other shaping tools each have a module of their own: <a href="/adobe-analytics-learning/shape/vista-rules/">VISTA Rules</a>, <a href="/adobe-analytics-learning/shape/classifications/">Classifications</a>, and <a href="/adobe-analytics-learning/shape/marketing-channels/">Marketing Channels</a>. Together with processing rules, they are what turn collected data into data worth reporting on.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Analytics</div>
+    <p>Processing Rules: <span class="path">Admin &rarr; Report Suites &rarr; Edit Settings &rarr; General &rarr; Processing Rules</span></p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title">📚 Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/admin/admin-tools/manage-report-suites/edit-report-suite/report-suite-general/processing-rules/pr-overview" target="_blank">Adobe Docs: Processing Rules Overview</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/technotes/processing-order" target="_blank">Adobe Docs: Processing Order for Data in Adobe Analytics</a></li>
+    </ul>
+</div>

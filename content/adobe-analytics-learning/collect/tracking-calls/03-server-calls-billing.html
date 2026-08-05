@@ -1,0 +1,119 @@
+---
+slug: "server-calls-billing"
+title: "Server Calls and Billing"
+seotitle: "Adobe Analytics Server Calls and Billing"
+lastmod: 2026-07-18
+description: "Every hit is a server call, and every server call is billed. What counts, how calls balloon, and the architectural levers that bring the bill back down."
+type: lesson
+modulenum: 7
+sectionnum: 3
+weight: 3
+---
+<p>By now you have sent two different kinds of calls, the <a href="/adobe-analytics-learning/collect/tracking-calls/page-view-tracking/">page view</a> with <code>s.t()</code> and the <a href="/adobe-analytics-learning/collect/tracking-calls/link-tracking/">link call</a> with <code>s.tl()</code>. Underneath, they are the same event: a hit sent to Adobe's servers. That hit has a name in the world of contracts and invoices, the server call, and it is the single thing you actually pay Adobe for.</p>
+
+<p>This matters more than it first looks. Adobe Analytics is not priced per user, per report, or per dashboard. It is priced per server call. Once you see why, billing stops being a mysterious line item handed down by procurement and becomes something your implementation decisions directly control. That shift, from treating cost as someone else's problem to treating it as an architecture output, is the point of this section.</p>
+
+<h3 class="subsec-title">Why billing works this way</h3>
+<p>Think about where the real cost sits in a system like this. It is not in drawing a chart for you on a Tuesday afternoon. The expense is in receiving every single hit from every visitor, processing it, and storing it more or less forever so that you can query it whenever you want. The heavy, recurring work is collection and retention. So the sensible unit to bill on is the unit of collection: one hit in, one server call counted. Everything about how Adobe prices the product follows from that one design decision.</p>
+
+<h3 class="subsec-title">What a server call actually is</h3>
+<p>In Adobe's own terms, a server call is a hit, also called an image request: a single instance of data being sent to Adobe's servers to process. You have already met the common kinds. The page view from <code>s.t()</code> is a server call. The link call from <code>s.tl()</code> is a server call. Their mobile counterparts, trackState and trackAction, are server calls too. One more source catches people out: each row of data you bring in from an offline source, through Data Sources import, also counts as a server call.</p>
+
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>Event</th><th>Fired by</th><th>Counts as</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Page view</strong></td><td><code>s.t()</code> on web, trackState in an app</td><td>One server call</td></tr>
+            <tr><td><strong>Link call</strong></td><td><code>s.tl()</code> on web, trackAction in an app</td><td>One server call</td></tr>
+            <tr><td><strong>Offline data import</strong></td><td>Data Sources</td><td>One server call per row</td></tr>
+            <tr><td><strong>Report query</strong></td><td>Workspace, Report Builder, the APIs</td><td>Not a server call</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<p>That last row is the one that changes how people budget. Running reports does not cost server calls. Opening Analysis Workspace, scheduling a project, pulling data through Report Builder or the reporting APIs, these are Report Requests, a completely separate category with its own limits. You can analyze the same data a thousand times over and never spend a server call doing it. You pay to collect data, not to ask questions of it. Teams that quietly ration their reporting to save money are guarding a door that was never the cost.</p>
+
+<h3 class="subsec-title">Primary and secondary server calls</h3>
+<p>You will see two categories on any usage screen, primary and secondary server calls, and the names mislead almost everyone at first. They have nothing to do with page views versus link calls. They are about report suites.</p>
+
+<p>When a hit is sent to a single report suite, it is one primary server call. When you send that same hit to several report suites at once, a practice called <a href="/adobe-analytics-learning/foundations/report-suites/multi-suite-tagging/">multi-suite tagging</a>, the first suite receives the primary call and every additional suite receives a secondary call. The rule applies to every hit type equally. A single link call sent to three report suites is one primary and two secondary calls, exactly as a page view would be. Your bill is primary plus secondary calls added together, so a secondary call is not free, it is a full copy of the hit sent to one more place.</p>
+
+<h3 class="subsec-title">How calls balloon, and why architecture is the lever</h3>
+<p>Because collection is the billed unit, your implementation architecture is what sets your invoice. A simple worked example shows how fast the number climbs, and where the multiplier hides.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">How server calls add up in a month</div>
+    <div class="diagram-content">
+        <div class="calc-example">
+            <div class="calc-row">
+                <span class="calc-label">Monthly visits</span>
+                <span class="calc-value">1,000,000</span>
+            </div>
+            <div class="calc-row">
+                <span class="calc-label">Page views per visit</span>
+                <span class="calc-value">&times; 5</span>
+            </div>
+            <div class="calc-row">
+                <span class="calc-label">Link calls per visit</span>
+                <span class="calc-value">&times; 3</span>
+            </div>
+            <div class="calc-row">
+                <span class="calc-label">Hits per month (primary)</span>
+                <span class="calc-value">8,000,000</span>
+            </div>
+            <div class="calc-row">
+                <span class="calc-label">Sent to a 2nd suite by multi-suite tagging</span>
+                <span class="calc-value">+ 8,000,000 secondary</span>
+            </div>
+            <div class="calc-row total">
+                <span class="calc-label">Total billable server calls</span>
+                <span class="calc-value">16,000,000 / month</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<p>Look at what the second report suite did. It did not add any new insight. It doubled the bill, because multi-suite tagging physically sends a second, identical copy of every hit. Now hold that against the alternative: had that second reporting view been built as a <a href="/adobe-analytics-learning/foundations/report-suites/virtual-report-suites/">Virtual Report Suite</a> instead, the total would have stayed at 8,000,000. That is the single most useful cost fact in this section, and it leads straight into the levers.</p>
+
+<h3 class="subsec-title">The levers, and the trade-offs they carry</h3>
+<p>Before the specific levers, one principle sits under all of them: there is no setting that magically shrinks your server call count. A server call is a real piece of visitor activity, so the only honest way to send fewer is to collect less, or to stop duplicating what you already collect. It works like a phone bill. Your bill falls when you make fewer or shorter calls, not when you install some app that promises to shrink it. Every lever below is a way of collecting more deliberately, never a trick for reducing what you have already chosen to collect.</p>
+
+<p><strong>Prefer virtual report suites over multi-suite tagging.</strong> A Virtual Report Suite is a reporting-time filter over one underlying dataset. It shows a slice of already-collected data to a different audience, and it incurs no secondary server calls, because no second hit is ever sent. Multi-suite tagging duplicates the hit at collection. For most reasons people reach for a second suite, giving a business unit its own view, hiding some data from some users, a virtual report suite does the job without doubling the cost. Multi-suite tagging still has legitimate uses, but it should be a deliberate choice, not a default. The mechanics of virtual report suites are covered in <a href="/adobe-analytics-learning/foundations/report-suites/">Report Suites</a>.</p>
+
+<p><strong>Track with intent, not reflex.</strong> Every interaction you instrument is a server call, so the decision of what to track is also a decision about what to spend. Firing a call on every scroll tick, every hover, every minor state change feels thorough, but it mostly converts noise into cost. The trade-off is real: more granular tracking buys richer behavioral data and a larger bill, less granular tracking saves money and loses detail. The discipline is to decide what business question a call answers before you wire it up.</p>
+
+<p>Concretely, that means matching the depth of tracking to how much the page matters. The legal links in a site footer need to exist for legal reasons, but ask honestly whether the business needs to know how often the returns policy was opened. If it does, a plain link click is plenty; it does not need scroll tracking, page-depth, and the full page-level kit layered on top. An ecommerce site should spend its richest instrumentation on the purchase journey and the product detail pages, and stay deliberately light on supporting pages like terms and returns. And instrument any single action once: if a PDF link already fires a download call, do not also fire a separate engagement event for the same click. That is an architecture decision, made before code is written, not a cleanup done afterward.</p>
+
+<div class="info-box">
+    <div class="info-hdr">ℹ️ The expensive misconception: filtering bots does not reduce your bill</div>
+    <p>It is tempting to think that bot filtering cuts server call costs. It does not. Bot rules, exclude-by-IP, and VISTA rules all act after the hit has already reached Adobe's servers. They keep bot traffic out of your reports, which is genuinely valuable for accuracy, but the call was already sent and is still billed. Adobe even identifies a hit as a bot only after receiving it. The only way to stop paying for a hit is to stop it from being sent at all. The <code>abort</code> variable in AppMeasurement, or <code>onBeforeEventSend</code> returning false in the Web SDK, prevents the image request from ever leaving the browser, and a call that never reaches Adobe is never counted. Cleaning your reports and cutting your cost are two different jobs, done in two different places.</p>
+</div>
+
+<p>One related mechanism is worth a forward pointer. VISTA rules, which run on Adobe's side after collection, can copy a hit to another report suite (creating a secondary call) or move it (which deducts the moved call from your primary total). They are a powerful routing tool with their own billing implications, and they have their own treatment in <a href="/adobe-analytics-learning/shape/vista-rules/">VISTA Rules</a>.</p>
+
+<h3 class="subsec-title">Server call discipline is ongoing, not a one-time setup</h3>
+<p>The levers above are not a checklist you run once. A good implementation is an evolving practice inside an organization. When you first set up analytics, roll it out in phases rather than instrumenting everything at once. Each phase teaches you what the data is actually used for, and those lessons shape what is worth collecting in the next one. Over-instrumenting on day one is how organizations end up paying for data nobody ever queries.</p>
+
+<p>As it matures, it helps to have one person or team act as a gatekeeper for new tracking. Not every request from the business needs a new variable, a new server call, or a new rule. The better default is to ask first whether the existing dataset can already answer the question. Adobe gives you room to do exactly that: a <a href="/adobe-analytics-learning/analyze/calculated-metrics/building-calculated-metrics/">calculated metric</a> can derive a number from data you already collect, a <a href="/adobe-analytics-learning/analyze/segments/">segment</a> can be broken down like a dimension, and a <a href="/adobe-analytics-learning/shape/processing-rules/">processing rule</a> can refine incoming data at no extra collection cost. New collection should be the answer when it is genuinely the right one, not the reflex for every request.</p>
+
+<p>And design your tracking to be inherited, not rebuilt. If common interface interactions follow one sitewide strategy, a new page picks up the global implementation instead of needing its own, which keeps both engineering effort and server call volume from growing every time the site does. There is fuller treatment of these habits in <a href="/adobe-analytics-learning/deliver/solution-design-reference/">Solution Design Reference</a>, but the cost lesson belongs right here: the cheapest server call is the one you had the discipline not to add.</p>
+
+<h3 class="subsec-title">Watching your usage</h3>
+<p>You do not have to guess at any of this. The Admin console has a Server Call Usage area that reports your consumption against your commitment, broken into primary, secondary, and their mobile equivalents, updated daily and downloadable for history. Making a habit of checking it is how you catch a runaway multi-suite setup or an over-eager tracking change before it becomes a surprise on the invoice. Server call usage is not a finance concern that lives away from the implementation. It is a direct readout of the implementation itself.</p>
+
+<p>That is the mental shift to carry out of this section. Server calls are the exact point where an implementation decision becomes a line on an invoice. Design for signal rather than noise, choose virtual report suites when you only need another view, and stop unwanted hits at the source rather than in the reports. From here the thread returns to the collection side, to a case where counting a "page view" is not straightforward at all: the single page application, in <a href="/adobe-analytics-learning/collect/tracking-calls/spa-tracking/">SPA Tracking</a>.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Analytics</div>
+    <p>Usage overview: <span class="path">Admin &rarr; Server Call Usage</span></p>
+    <p>Live consumption: <span class="path">Admin &rarr; Server Call Usage &rarr; Current Usage</span></p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title">📚 Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/admin/admin-tools/server-call-usage/overage-overview" target="_blank">Adobe Docs: Server Call Usage Overview</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/implementation/prepare/multi-suite-tagging" target="_blank">Adobe Docs: Multi-Suite Tagging</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/technotes/exclude-data" target="_blank">Adobe Docs: Exclude Data (and what still counts)</a></li>
+    </ul>
+</div>

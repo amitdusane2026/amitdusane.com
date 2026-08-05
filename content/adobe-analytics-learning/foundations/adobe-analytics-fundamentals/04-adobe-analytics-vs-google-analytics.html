@@ -1,0 +1,75 @@
+---
+slug: "adobe-analytics-vs-google-analytics"
+title: "Adobe Analytics vs Google Analytics"
+seotitle: "Adobe Analytics vs Google Analytics Compared"
+lastmod: 2026-07-15
+description: "How Adobe Analytics compares with Google Analytics and the rest of the market, and the data model difference that drives every other difference."
+type: lesson
+modulenum: 1
+sectionnum: 4
+weight: 4
+---
+<p>This is a guide to Adobe Analytics, so the easy move would be to spend this section praising it and waving away every other tool as garbage. That is not the plan here. Pretending a product has no serious rivals is as unhelpful as pretending it has no strengths. The opposite mistake is just as lazy: shrugging and calling Adobe "just another analytics tool we happened to pick." It is not that either. The honest path is also the useful one, look at the market as it actually is, and let the facts decide where Adobe genuinely fits.</p>
+
+<h3 class="subsec-title">The market as it really is</h3>
+<p>Name the competitors and the list is short, because there is really only one. <strong>Google Analytics</strong> has been around for about twenty years, and it dominates. By number of implementations worldwide it is first by a wide margin, holding on the order of 80% of the market. That is not a small lead, it is the whole field. The reason is no mystery: Google Analytics is <strong>free</strong>. There is a popular line that if a product is free then you are the product, and while that overstates things here, free is genuinely Google's biggest advantage. There are two versions, a free tier (GA4) and a paid enterprise tier (GA360), but the free tier is, as the name says, free, whereas Adobe offers nothing for free at all.</p>
+
+<p>Google's second advantage is that it is close to plug and play. Not literally, but the steps to get it live are few, and without much customization it hands you a broad sweep of data, enough to do real baseline analysis of users, sessions, and hits on day one. It is so frictionless that plenty of seasoned Adobe practitioners run Google Analytics on their own smaller sites, simply because it is free and instant. That is worth sitting with honestly before any case gets made for Adobe.</p>
+
+<p>The other names you will hear, <strong>Amplitude</strong> and <strong>Mixpanel</strong>, are real and capable, but they occupy a narrower niche of product and event analytics and hold a small share of the broader market. For most organizations the real decision comes down to Adobe or Google.</p>
+
+<h3 class="subsec-title">So why Adobe at all?</h3>
+<p>If Google Analytics is free and dominant, the fair question is why this course exists, why not close the book and go learn Google instead. The answer is that the two tools are built for different jobs. Adobe Analytics is an <strong>enterprise</strong> tool. The serious ecommerce operation, the B2B business running critical transactions every day, the organization where the data genuinely drives the money, that is who Adobe is for. And here is the honest catch: out of the box, Adobe is the weaker tool, sparser and harder to stand up than Google. Its real power only shows once it is customized. It is a little like Peter Parker and Spider-Man, unremarkable in everyday clothes, formidable once the moment calls for what it can actually do.</p>
+
+<h3 class="subsec-title">The difference that drives all the others: the data model</h3>
+<p>Adobe Analytics was built around a structured palette of typed variables. You decide in advance that eVar5 means "internal search term" and event3 means "PDF download," then you map data into those defined slots. Think of it as a <strong>form with labeled fields</strong>: consistent, governable, and easy to trust, but it asks you to plan the form before anyone fills it in.</p>
+
+<p>GA4 is event-native. Almost everything is an event carrying loose parameters, and you invent the shape as you go. Think of it as a <strong>blank notebook</strong>: fast to start, very flexible, but easier to end up with the same idea recorded three slightly different ways. Neither approach is wrong. They simply optimize for different things, Adobe for governed consistency at enterprise scale, GA4 for flexibility and a low barrier to entry.</p>
+
+<p>That structured, governable model is exactly what lets Adobe be customized so deeply. You can shape the data collection to almost any requirement. Its segmentation is not just another way to filter rows, it lets you define and follow a visitor's journey through the site. It handles very large datasets without flinching. And it does not stand alone: combined with the rest of Adobe Experience Cloud, Target for testing, Audience Manager for audiences, Campaign for orchestration, it becomes far more capable than any single tool. If customized Adobe is Spider-Man, this is Spider-Man joining the Avengers.</p>
+
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>Feature</th><th>Adobe Analytics</th><th>Google Analytics 4</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Market position</strong></td><td>Enterprise heavyweight, small overall share</td><td>Dominant, around 80% of the market</td></tr>
+            <tr><td><strong>Pricing</strong></td><td>Paid only, custom enterprise (roughly $100K+ per year)</td><td>Free tier; paid GA360 (roughly $50K to $150K per year)</td></tr>
+            <tr><td><strong>Setup and time to value</strong></td><td>Deliberate implementation, weeks to months</td><td>Fast, days to a few weeks, strong out of the box</td></tr>
+            <tr><td><strong>Data model</strong></td><td>Typed variables mapped into defined slots</td><td>Event-based, everything is an event with parameters</td></tr>
+            <tr><td><strong>Customization</strong></td><td>Very deep (eVars, props, processing rules)</td><td>Lighter (event parameters, ~50 event-scoped custom dimensions on free)</td></tr>
+            <tr><td><strong>Segmentation</strong></td><td>Deep, including sequential ("did A then B then C")</td><td>Audiences with more limited sequential logic</td></tr>
+            <tr><td><strong>Data sampling</strong></td><td>Processes 100% of data, unsampled in the interface</td><td>Free tier samples large or complex queries; unsampled needs BigQuery or GA360</td></tr>
+            <tr><td><strong>Attribution</strong></td><td>Multiple models you can compare in-product</td><td>Primarily data-driven attribution</td></tr>
+            <tr><td><strong>Raw data</strong></td><td>Data Feeds included (hit-level export)</td><td>BigQuery export (free in GA4)</td></tr>
+            <tr><td><strong>Support</strong></td><td>Dedicated, contract-backed, plus a partner ecosystem</td><td>Community for the free tier; dedicated support with GA360</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<h3 class="subsec-title">Where each one genuinely wins</h3>
+<p><strong>Adobe pulls ahead</strong> when the environment is complex and the stakes are high: intricate sequential segmentation, heavy customization, unsampled data at scale, included raw hit-level feeds, contractual data ownership, and tight integration with the rest of the Adobe marketing stack. Being enterprise and contract-driven, it also comes with dedicated Adobe support and a deep bench of implementation partners. This is not a college project you wire up alone, you can bring in specialists and dictate your requirements. It rewards organizations willing to invest in governance.</p>
+
+<p><strong>GA4 pulls ahead</strong> on cost and reach: a capable free tier, an event model that's quick to stand up, free BigQuery export, and seamless ties to Google Ads and the wider Google ecosystem. For many teams that is more than enough, and it's honest to say so.</p>
+
+<p>One more thing sits behind Adobe, and it is bigger than analytics. Adobe has built out the <strong>Adobe Experience Platform</strong>, a next-generation customer data platform (CDP) that assembles a complete, real-time profile of each customer across every channel they touch, not just the website. Adobe Analytics is, in truth, a small part of that larger ecosystem. It deserves its own course and is not chased here, but it matters to the comparison: choosing Adobe means buying into decades of enterprise experience and an ecosystem built for where customer data is heading next.</p>
+
+<div class="info-box">
+    <div class="info-hdr">ℹ️ The lines are blurring</div>
+    <p>The old "hit-based Adobe vs event-based Google" contrast is softening. <a href="/adobe-analytics-learning/deliver/adobe-analytics-cja/">Customer Journey Analytics</a>, Adobe's newer analysis layer, is itself event-based and queries a flexible data model much closer to GA4's spirit, with BigQuery-style scale behind it. The deeper you go in this course, the more you'll see Adobe moving toward that flexible, event-centric world rather than away from it.</p>
+</div>
+
+<div class="pro-tip">
+    <div class="pro-tip-hdr">💡 How to actually choose</div>
+    <p>Don't pick on feature counts. Pick on fit: the size and governance needs of the organization, the budget, the rest of the technology stack it has to live alongside, and how much consistency the business demands from its data. The right tool is the one that matches those realities, not the one with the longer spec sheet.</p>
+
+</div>
+
+<p>Say the fit is right and the decision is made. Somebody now has to let people in, and decide what each of them is allowed to see and change. <a href="/adobe-analytics-learning/foundations/adobe-analytics-fundamentals/account-structure-access/">Account Structure and Access</a> is where that begins, and it is less administrative than it sounds.</p>
+
+<div class="ref-box">
+    <div class="ref-title">📚 Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/docs/analytics/technotes/ga-to-aa/home.html" target="_blank">Adobe Docs: Migrating from Google Analytics</a></li>
+        <li><a href="https://business.adobe.com/products/analytics/adobe-analytics.html" target="_blank">Adobe Analytics Product Page</a></li>
+    </ul>
+</div>

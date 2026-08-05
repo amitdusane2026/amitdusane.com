@@ -1,0 +1,114 @@
+---
+slug: "list-variables-list-props"
+title: "List Variables and List Props"
+seotitle: "List Variables and List Props in Adobe Analytics"
+lastmod: 2026-07-18
+description: "List variables and list props hold several values in one hit. What each is for, the settings worth knowing, and why you have to guard your three."
+type: lesson
+modulenum: 3
+sectionnum: 6
+weight: 6
+---
+<p>That covers the variables you reach for every day: props, eVars, events, and the built-ins, which is most of what any report needs. This section covers one that is different, not used often, easy to overlook, but pivotal in the narrow situations where nothing else will do. Every variable so far shares one quiet limitation: it holds a single value per hit. But real behavior is often plural, a visitor views three categories, applies four filters, matches five interests, all at once. <strong>List variables</strong> exist for exactly that. They hold many values in one hit, and here is the defining trait: <em>each value gets full credit</em>, not a divided share.</p>
+<p>You have actually met this problem already. Back in <a href="/adobe-analytics-learning/foundations/variables/props-traffic-variables/">the props section</a>, the survey example, four checkboxes a visitor can tick in any combination, showed up as a reason to use a list prop. Look at the reporting side of it now. If a visitor can select any of four options at once, their raw input becomes a tangle of combinations: option 1 and 2, then option 2 and 4, then option 1 and 3 and 4. A naive report drowns in those permutations. What you actually want is dead simple, four lines: how many times was option 1 chosen, option 2, and so on. A list variable delivers exactly that, because it splits the values apart and credits each one independently.</p>
+<p>That independent, full crediting is the whole point, and it is easiest to see against an eVar. Set one eVar to three values and Linear allocation (from <a href="/adobe-analytics-learning/foundations/variables/evars-conversion-variables/">eVars</a>) splits the conversion across them. Put those same three values in a list variable and every one is credited in full:</p>
+<div class="diagram-box">
+    <div class="diagram-title">📊 Three categories on one hit, two ways to credit them</div>
+    <div style="display:flex;align-items:center;gap:12px;margin:10px 0">
+        <span style="flex:none;width:130px;font-size:13px;font-weight:700;color:var(--text1,#0f172a)">eVar + Linear</span>
+        <div style="flex:1;display:flex;height:28px;border-radius:6px;overflow:hidden;font-size:12px">
+            <div style="flex:1;display:flex;align-items:center;justify-content:center;background:#e11d48;color:#fff">A 33%</div>
+            <div style="flex:1;display:flex;align-items:center;justify-content:center;background:#f43f6a;color:#fff">B 33%</div>
+            <div style="flex:1;display:flex;align-items:center;justify-content:center;background:#fb7185;color:#fff">C 33%</div>
+        </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;margin:10px 0">
+        <span style="flex:none;width:130px;font-size:13px;font-weight:700;color:var(--text1,#0f172a)">List variable</span>
+        <div style="flex:1;display:flex;gap:6px;height:28px;font-size:12px">
+            <div style="flex:1;display:flex;align-items:center;justify-content:center;background:#e11d48;color:#fff;border-radius:6px">A 100%</div>
+            <div style="flex:1;display:flex;align-items:center;justify-content:center;background:#e11d48;color:#fff;border-radius:6px">B 100%</div>
+            <div style="flex:1;display:flex;align-items:center;justify-content:center;background:#e11d48;color:#fff;border-radius:6px">C 100%</div>
+        </div>
+    </div>
+</div>
+<div class="info-box">
+    <div class="info-hdr">ℹ️ The flip side: rows won't add up to the total</div>
+    <p>Because every value receives full credit for the <em>same</em> events, the per-row counts overlap, so they deliberately don't sum to the column total. Say a "filter applied" event fires three times and those hits carry filters A, B, and C: each of A, B, and C can show 3, yet the real total is still 3, not 9. Adding the rows overcounts; the total reflects the actual, unique number of events. This is expected behavior, not a bug, but it reliably confuses anyone trying to reconcile the numbers, so explain it before they ask.</p>
+</div>
+<h3 class="subsec-title">Two kinds, and which side they sit on</h3>
+<p>The names are similar, but list variables and list props live on opposite sides of the prop/eVar divide, and the differences are exactly the constraints that decide which one you need:</p>
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th></th><th>List variables (list1 to list3)</th><th>List props</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Side</strong></td><td>Conversion (eVar-like)</td><td>Traffic (prop-like)</td></tr>
+            <tr><td><strong>Persistence</strong></td><td>Persists, with expiration</td><td>Hit-scoped, no persistence</td></tr>
+            <tr><td><strong>Capacity</strong></td><td>255 bytes per value, no total limit</td><td>100 bytes for the entire variable</td></tr>
+            <tr><td><strong>Attribution</strong></td><td>Yes, each value gets credit</td><td>No, just multi-value traffic</td></tr>
+            <tr><td><strong>How many</strong></td><td>Only 3 (scarce, spend wisely)</td><td>Any prop (up to 75)</td></tr>
+        </tbody>
+    </table>
+</div>
+<p>That capacity and persistence row is the crux. A list prop is hit-scoped and capped at 100 bytes for the whole variable; a list variable persists like an eVar and allows 255 bytes <em>per value</em> with no overall cap. So the moment you need the values to survive past the hit, or you outgrow 100 bytes, the prop can no longer do the job.</p>
+<h3 class="subsec-title">List variable settings worth knowing</h3>
+<ul>
+    <li><strong>Delimiter:</strong> the character separating values (commonly a comma), configured per variable. It must match exactly what your code sends, and it cannot be a space or a multi-byte character.</li>
+    <li><strong>Expiration:</strong> like an eVar, controls how long values stay eligible for credit.</li>
+    <li><strong>Allocation:</strong> Full (every value gets full credit, the usual choice) or Linear (credit divided across values).</li>
+    <li><strong>Max values:</strong> caps how many values are kept per visitor, up to 250; beyond that, the oldest drop off.</li>
+</ul>
+<p>One helpful behavior to know: Adobe de-duplicates repeated values on the same hit, so <code>s.list1 = "Brick,Brick"</code> counts a single instance of "Brick," not two.</p>
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">JavaScript</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>// List variable (persists, each value credited per config)
+s.list1 = "running,outdoor,sale";
+
+// List prop (hit-scoped, must be enabled in Admin first)
+s.prop1 = "shoes,apparel,accessories";</pre></div>
+</div>
+<h3 class="subsec-title">The discipline: guard your three</h3>
+<p>Here is the practitioner's rule the scarcity forces. Because only three list variables exist per report suite, and reclaiming one later means losing its history, they are the one variable type you should be slow to spend. A few habits keep you out of trouble:</p>
+<ul>
+    <li><strong>Don't switch them on during your first implementation.</strong> Early on you rarely know which multi-value needs are real and lasting.</li>
+    <li><strong>Reach for a list prop first.</strong> If you only need multi-value capture for traffic analysis, and the values fit in 100 bytes and don't need to persist, a list prop costs you nothing scarce (<a href="/adobe-analytics-learning/foundations/variables/props-traffic-variables/">props</a>).</li>
+    <li><strong>Escalate only when the prop genuinely can't do it:</strong> when the values must persist to credit a later conversion, or exceed 100 bytes. That is the real dividing line.</li>
+    <li><strong>Activate one at a time,</strong> and only after a deliberate discussion with your team about whether the need is durable.</li>
+</ul>
+<p>The failure mode is switching on all three early, then discovering a genuine list-variable need a year later with nothing left to give. At that point you are stuck: you cannot free one without abandoning the data already collected in it. Spend the last slot as if it were the last.</p>
+<div class="diagram-box">
+    <div class="diagram-title">🪜 Spend your three wisely</div>
+    <div class="diagram-content">
+        <div class="flow-vertical">
+            <div class="flow-step">1. Try a list prop first<br><span style="font-size:11px;color:var(--text2,#475569)">hit-scoped, 100 bytes, any prop</span></div>
+            <span class="flow-arrow-down">↓</span>
+            <div class="flow-step highlight">2. Escalate to a list variable only if it must persist or outgrow 100 bytes<br><span style="font-size:11px;color:var(--text2,#475569)">one at a time, with team discussion</span></div>
+            <span class="flow-arrow-down">↓</span>
+            <div class="flow-step">3. Guard the last slot<br><span style="font-size:11px;color:var(--text2,#475569)">only three exist; a future need can deadlock you</span></div>
+        </div>
+    </div>
+</div>
+<div class="info-box">
+    <div class="info-hdr">ℹ️ When to reach for one</div>
+    <p>Use a list variable when several values are true at once and each deserves credit: multiple categories viewed, multiple filters applied, multiple interests selected, multiple authors on an article. Use a list prop when you want that multi-value capture for traffic analysis only, with no attribution.</p>
+</div>
+<p>One last practical note. Raw list values are often codes or messy strings, a banner ID, an error code, which make for an unreadable report. The fix is the same one that helps elsewhere: <a href="/adobe-analytics-learning/shape/classifications/">classifications</a> turn each raw list value into a friendly, reportable label, so a list of cryptic IDs becomes a clean report of names.</p>
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ Two things that trip people up</div>
+    <ul>
+        <li><strong>Delimiter collisions:</strong> if a value itself contains the delimiter (a comma inside a category name, say), it fractures into extra values, the same class of bug as the products string.</li>
+        <li><strong>Only three list variables exist.</strong> They're a scarce resource, so reserve them for genuinely multi-value needs rather than spending one where a normal eVar would do.</li>
+    </ul>
+</div>
+<p>Every variable across this module shares one assumption: your code sets a specific, named slot directly, <code>s.eVar5</code>, <code>s.list1</code>, and so on. <a href="/adobe-analytics-learning/foundations/variables/context-data-variables/">Context Data Variables</a> covers a more flexible way to hand data to Adobe, one that does not commit to a slot at collection time.</p>
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to Find in Adobe Analytics</div>
+    <p>List Variables: <span class="path">Admin → Report Suites → Edit Settings → Conversion → List Variables</span></p>
+    <p>Enable a List Prop: <span class="path">Admin → Report Suites → Edit Settings → Traffic → Traffic Variables → Enable List</span></p>
+</div>
+<div class="ref-box">
+    <div class="ref-title">📚 Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/admin/admin-tools/manage-report-suites/edit-report-suite/conversion-variables/list-var-admin" target="_blank">Adobe Docs: List Variables</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/implementation/vars/page-vars/list" target="_blank">Adobe Docs: List Variable Implementation</a></li>
+    </ul>
+</div>

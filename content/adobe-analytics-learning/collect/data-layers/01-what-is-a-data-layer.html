@@ -1,0 +1,139 @@
+---
+slug: "what-is-a-data-layer"
+title: "What Is a Data Layer"
+seotitle: "What Is a Data Layer (W3C CEDDL)"
+lastmod: 2026-07-18
+description: "The data layer is a contract between your developers and your analytics. Who builds it, why it is the most fragile thing you own, and the rule you never break."
+type: lesson
+modulenum: 5
+sectionnum: 1
+weight: 1
+---
+<p>A data layer is where the website developer and the Adobe Analytics developer meet. It is a contract between two teams, and it is where most real implementations quietly succeed or fail. <a href="/adobe-analytics-learning/collect/data-collection/collection-methods-overview/">Data Collection</a> covered how a hit physically leaves the page. This is the layer underneath all of it: where the data on the page is agreed, named, and made ready to collect in the first place.</p>
+<p>Start by deflating the scariest-sounding term in the field, because it is hiding something simple. Think back to the very first thing you learned in programming. Claim a little space in the computer's memory, give it a name, put something in it that you can change later. That is a variable. A data layer is exactly that and nothing more: a JavaScript variable, an object, sitting on the page, holding the values you want to measure. When people say "the data layer," they are pointing at a variable. That is the whole mystery.</p>
+<p>And here is the other word you will hear constantly: tag. A tag is just a label. When you hand clothes to a laundry, the shopkeeper pins a small slip with your name on them so he knows whose they are. A tag on a website is the same idea, a label attached to something that happened: a page was viewed, a button was clicked, a form was submitted, a filter was used, a search was run. That is all a tag is. And the way you attach that label on a website is, you guessed it, through a data layer.</p>
+
+<h3 class="subsec-title">Who builds it, and why it is the most fragile thing you own</h3>
+<p>Here is the fact that shapes everything. You are the analytics developer. You do not own the website. The web developer does. You cannot reach into the page and place a value wherever you like, you have no rights there. So you do the only thing you can: you go to the web developer and you ask.</p>
+<p>That request, and the agreement it creates, is the data layer's true nature. It is a contract between two teams. The web team agrees to populate these named fields, with these agreed meanings, at these moments. You agree to read only from those fields and never to go scraping values out of the raw page. Neither side has to understand the other's internals. That decoupling is exactly why a data layer is worth having.</p>
+<p>It is also precisely why it is the most vulnerable part of a real implementation. A data layer is not a piece of technology that either works or does not. It is a human treaty between two teams who have different priorities, different backlogs, and different release schedules. It breaks the moment the contract is vague, undocumented, or silently changed, when a front-end developer renames a field in a refactor and never tells you, and three reports go quietly dark. The technology is trivial. The agreement is the hard part, and the part that fails.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">🤝 The data layer is a contract between two teams</div>
+    <div class="diagram-content">
+        <div class="tri-row">
+            <div class="tri-box">
+                <div class="tri-h">Analytics developer</div>
+                <div class="tri-t">Creates the schema</div>
+            </div>
+            <span class="tri-arrow">→</span>
+            <div class="tri-box mid">
+                <div class="tri-h">SDR</div>
+                <div class="tri-t">The contract between two teams</div>
+            </div>
+            <span class="tri-arrow">←</span>
+            <div class="tri-box">
+                <div class="tri-h">Web developer</div>
+                <div class="tri-t">Feeds the data layer values</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h3 class="subsec-title">The instrument of the contract: your SDR</h3>
+<p>So how do you actually ask? Not with a hallway conversation that gets forgotten. You hand over the Solution Design Reference, the <a href="/adobe-analytics-learning/deliver/solution-design-reference/what-is-an-sdr/">SDR</a>, the planning document from <a href="/adobe-analytics-learning/foundations/variables/variable-planning/">Variable Planning</a>. And here is the craft in how you use it.</p>
+<p>The SDR has two faces. One faces you and the business: it starts from a business question and answers it in analytics terms, eVars, props, events, products, the placeholders you plan. The other faces the developer, and this is where you show some mercy. The developer does not care that internal search lives in eVar5, or that you want it to persist. If your document leads with that, his eyes glaze. The instant it says, in plain terms, "when a user runs a search on the site, store the search term in this named field," he smiles, says "got it," and goes and wires it up. The eVar, the persistence, the allocation, all of that is your side of the wall. His side is one thing: a field name, a value, and the moment to populate it.</p>
+<p>You may well know how he populates it. Let him own that anyway. The healthy boundary is simple: <em>what</em> the field is called and <em>when</em> it is set is your specification; <em>how</em> the value gets there is his craft. Respect that line and the relationship, and the data, stays clean.</p>
+<p>Hand that over and three questions fall out of it, which are the rest of this section: what do you name the field, how do you check it is right, and how do you use it to actually tag something?</p>
+
+<h3 class="subsec-title">Naming it: the W3C standard everyone half-follows</h3>
+<p>You are not the first person to need a data layer, so there is a shared vocabulary. In December 2013 the W3C Customer Experience Digital Data Community Group published the Customer Experience Digital Data Layer, CEDDL, built around a root object named <code>digitalData</code>.</p>
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">JavaScript</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>window.digitalData = {
+  pageInstanceID: "product-detail-prod",
+  page: {
+    pageInfo: { pageName: "Blue Widget", pageType: "product" },
+    category: { primaryCategory: "Widgets" }
+  },
+  product: [ { productInfo: { productID: "SKU-123", productName: "Blue Widget" } } ],
+  cart: { cartID: "C-998", price: { cartTotal: 49.0 } },
+  user: [ { profile: [ { profileInfo: { loginStatus: "logged-in" } } ] } ]
+};</pre></div>
+</div>
+<p>Beyond <code>pageInstanceID</code>, the spec defines sub-objects for the common shapes of customer data: <code>page</code>, <code>product</code>, <code>cart</code>, <code>transaction</code>, <code>user</code>, <code>event</code>, <code>component</code>, and a few more, with room to add your own. It is a sensible structure and a good default to start from.</p>
+<p>Now the honest part, the kind of distinction worth keeping straight. Everyone calls CEDDL "the W3C standard," but technically it never was one. It was a Community Group specification that was never ratified onto the W3C standards track, and in the real world adoption is loose. Most production data layers are bespoke, shaped to the business rather than the spec. That is not a failure, it is the norm, and it loops straight back to the contract: precisely because there is no enforced universal shape, your own documented agreement, your SDR, matters more than the standard does. Follow the structure where it fits, and write down every place you deviate.</p>
+
+<h3 class="subsec-title">Checking it: just open the console</h3>
+<p>Once the developer says it is done, you do not take his word for it, you look. Open the browser's developer tools (Ctrl+Shift+I on Windows, Cmd+Option+I on a Mac, or just F12), go to the Console, type the name of the variable, <code>digitalData</code>, and press enter. The browser prints the object back to you, and you can see exactly what is populated and with what value. That answers <em>whether</em> the data is there and whether it is correct.</p>
+<p>The harder question is <em>when</em> it is there, the timing, and that is the thread that leads to the last and most important idea in this section.</p>
+
+<h3 class="subsec-title">Using it: data just sitting there does nothing</h3>
+<p>Here is the move that trips up almost everyone. A populated data layer, on its own, captures nothing. Analytics is not hovering over your page hungrily swallowing values the moment they appear. It is not a conveyor belt in a factory, with data rolling past and being scooped up automatically. The values can be sitting right there in <code>digitalData</code>, perfect and complete, and not one of them will reach Adobe until something explicitly says: "now. an event happened. go read the layer."</p>
+<p>That signal is called a direct call. And the cleanest way to picture it is a torch. Imagine two people standing two kilometers apart. They can see each other but cannot hear a thing, and they have no phones. Person A needs to tell Person B that all is clear. So he raises a torch and flashes it. B sees the light and understands. Armies signaled across distance like this for centuries. A direct call is that torch: the page flashes a signal to analytics that something has happened, without sending any data in the signal itself. The data is already waiting in the layer, the torch just says "read it, now."</p>
+<p>In practice you hand the developer a one-line piece of code to run at the moment the thing happens, so that he is not phoning you every time a user searches and you are not answering a million calls. It looks like this:</p>
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">JavaScript</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>// Fire this at the moment the event happens
+_satellite.track('Internal_Search');
+_satellite.track('Link_Click');</pre></div>
+</div>
+<p><code>_satellite</code> is an object that the Adobe tag manager, Launch, creates for you on the page. For now, treat these calls as the torch and just change the string inside to name the event. <code>_satellite</code>, and the rules that catch these signals, belong with <a href="/adobe-analytics-learning/collect/adobe-launch-tags/">Adobe Launch (Tags)</a>. One honest note for currency: Adobe now treats this particular method as a classic one and points new builds toward the event-driven model of the <a href="/adobe-analytics-learning/collect/data-layers/adobe-client-data-layer/">Adobe Client Data Layer</a>. The torch idea holds either way, data still needs a signal, only the wiring gets more modern. How many direct calls will you have? Roughly one per distinct thing you are tracking, search, form submit, download, link click, purchase, which means the count tracks closely with the number of events and KPIs in your SDR.</p>
+<div class="info-box">
+    <p><strong>A point of clarity, and a point of practice.</strong> Strictly speaking, the data layer is only the data, the <code>digitalData</code> object. A direct call is a separate thing, a trigger that belongs to the tag manager. On the ground, though, nobody draws that line. In industry everyone loosely calls the whole bundle, the variables the developer populates and the direct calls he fires, "the data layer," because it is all the work the web developer does on analytics' behalf and it all moves together. That usage is technically imprecise and practically fine. Just know which part is which, so that when something breaks you know whether you are looking at missing data or a missing signal.</p>
+</div>
+
+<h3 class="subsec-title">The one rule you never break</h3>
+<p>If you remember a single sentence from this section, make it this one: always populate the data layer variables first, and fire the direct call second. Never the other way around.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">💧 The one rule: fill the glass before you turn on the tap</div>
+    <div class="diagram-content">
+        <div class="scene-split">
+            <div class="scene ok left">
+                <div class="scene-lab">✓ Right order</div>
+                <div class="scene-flow">
+                    <span class="scene-lbl in">↓ data incoming</span>
+                    <div class="scene-box filled"><span class="sb-h">Data layer</span></div>
+                    <span class="scene-ar">↓</span>
+                    <div class="scene-box filled"><span class="sb-h">Direct call</span></div>
+                    <span class="scene-lbl out">↓ data outgoing to analytics</span>
+                </div>
+            </div>
+            <div class="scene bad">
+                <div class="scene-lab">✗ Wrong order</div>
+                <div class="scene-flow">
+                    <div class="scene-box"><span class="sb-h">Direct call</span></div>
+                    <span class="scene-lbl out">↓ data outgoing to analytics (empty)</span>
+                    <div class="scene-box"><span class="sb-h">Data layer</span></div>
+                    <span class="scene-lbl late">↓ data incoming, too late</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<p>Picture filling a glass from a tap. You set the empty glass down, then you turn on the water. Do it in the wrong order, water first, glass second, and the water simply runs down the drain while you stand there thirsty, glass still empty. It is the same with tracking. Fire the direct call before the values are in the layer, and analytics reads an empty layer, captures nothing, and moves on. You end up with a data layer that looks perfectly populated a moment later and reports that stubbornly show zero. This is the single most common failure in real implementations, and it has a name everyone uses: a timing issue. Now you know exactly what causes it, and exactly how to avoid it.</p>
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ Populate, then signal</div>
+    <p>Set the variables, then fire <code>_satellite.track()</code>. If the trigger runs before the data is written, the hit goes out empty and the data is gone, there is no second chance for that interaction. When a tag "fires but has no data," this ordering is the first thing to check.</p>
+</div>
+
+<h3 class="subsec-title">Where this model runs out: the door to ACDL</h3>
+<p>There is one more thing to understand about CEDDL, and it is the reason the Adobe Client Data Layer exists. The <code>digitalData</code> object is a computed-state model. Think of it as a photograph of the page, painted once, at page load. On a traditional website that is fine, because every click loads a brand new page, which repaints the photograph fresh each time. The state is always current because the page is always new.</p>
+<p>But a single-page application does not reload. It swaps views in place, product to cart to checkout, without ever fetching a new page. The instant that happens, the photograph is stale. The user has moved to the cart, but <code>digitalData</code> is still describing the product page, because nothing reloaded to repaint it. CEDDL has no native notion of "something just changed, here is an event," it only knows how to describe a moment frozen at load. That gap, between a static photograph and a live, changing application, is exactly what the Adobe Client Data Layer was built to close, and it is where <a href="/adobe-analytics-learning/collect/data-layers/adobe-client-data-layer/">the Adobe Client Data Layer</a> comes in.</p>
+
+<h3 class="subsec-title">Who owns the contract</h3>
+<p>One last thing, because it is the theme this whole section started on. A data layer is only ever as trustworthy as the discipline maintaining it. Left unowned, it rots: fields drift, meanings blur, a well-intentioned front-end refactor renames something, and reports die without a sound. Treat the data layer as a living contract with a named owner. Version it, document it in the <a href="/adobe-analytics-learning/deliver/solution-design-reference/what-is-an-sdr/">SDR</a>, and review it when the site changes. The technology will never be your problem. The agreement always will be, so guard it.</p>
+
+<div class="info-box">
+    <div class="info-hdr">ℹ️ Companion reading on this site</div>
+    <p>This site has a second guide alongside this one, <strong>AppMeasurement to Web SDK Migration</strong>, focused on moving an older implementation to the modern Web SDK. Its <a href="/web-sdk-migration/kb/datalayer/">data layer reference</a> covers the same contract from that angle, including how the computed-state and event-driven shapes differ in practice. Worth a look once you have both this section and the next under your belt.</p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title">📚 Learn More</div>
+    <ul>
+        <li><a href="https://www.w3.org/2013/12/ceddl-201312.pdf" target="_blank">W3C: Customer Experience Digital Data Layer 1.0 (CEDDL specification)</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/experience-platform/collection/tags/track" target="_blank">Adobe Docs: _satellite.track() and direct call rules</a></li>
+    </ul>
+</div>

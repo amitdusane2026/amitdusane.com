@@ -1,0 +1,155 @@
+---
+slug: "adobe-client-data-layer"
+title: "Adobe Client Data Layer (ACDL)"
+seotitle: "Adobe Client Data Layer (ACDL) Explained"
+lastmod: 2026-07-18
+description: "The Adobe Client Data Layer, step by step: declare, push, catch it in Launch. Where its event history earns its keep, and what it honestly costs."
+type: lesson
+modulenum: 5
+sectionnum: 2
+weight: 2
+---
+<p><a href="/adobe-analytics-learning/collect/data-layers/what-is-a-data-layer/">What Is a Data Layer</a> left off at a clean breaking point. The CEDDL <code>digitalData</code> object is a photograph of the page, painted once at load. On a traditional site that is fine, because every click loads a fresh page and repaints it. But a single-page application never reloads, so the moment it swaps from the product view to the cart without a page load, the photograph is stale: the shopper is on the cart, the data layer still describes the product.</p>
+<p>The Adobe Client Data Layer fixes this by changing what the data layer fundamentally is. Instead of one snapshot you keep overwriting, it is an array you only ever add to, a running log of what happens, plus a current state that ACDL keeps merged and up to date for you. The fastest way to understand it is not more theory. It is to follow one real thing all the way through. So walk a shopper adding items to a cart, from the developer's first line of code to what you see in the console to what you set up in Launch.</p>
+
+<h3 class="subsec-title">Step 1: the developer declares it</h3>
+<p>It starts, as before, as just a variable, except this time the variable is an array.</p>
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">JavaScript</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>window.adobeDataLayer = window.adobeDataLayer || [];</pre></div>
+</div>
+<p>That single line means "use the <code>adobeDataLayer</code> array if it already exists, otherwise start an empty one." It matters because your tracking library and your page code load independently and either can arrive first. Written this way, nothing you push ever gets wiped out by load order. From here on, the developer adds to the log with <code>.push()</code>, the ordinary array method.</p>
+
+<h3 class="subsec-title">Step 2: something happens, so the developer pushes</h3>
+<p>First, the steady facts about the page get pushed once. These are state, and they persist:</p>
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">JavaScript</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>adobeDataLayer.push({
+  page: { name: "Product Detail", type: "product" },
+  user: { loginStatus: "logged-in" }
+});</pre></div>
+</div>
+<p>Now the shopper clicks "Add to cart." At that exact moment, the developer fires a push describing the event. Notice where the product sits, this is the single most important detail in the whole section:</p>
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">JavaScript</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>adobeDataLayer.push({
+  event: "cartAdd",
+  eventInfo: {
+    product: { id: "SKU-123", name: "Blue Widget", price: 49.0, qty: 1 }
+  }
+});</pre></div>
+</div>
+<p>There are two places data can go in a push, and they behave differently. Anything at the top level (like <code>page</code> and <code>user</code> above) gets merged into the persistent state and stays there. Anything inside <code>eventInfo</code> rides along with this one event and is <em>not</em> kept in the state afterward. The product goes in <code>eventInfo</code> on purpose, and the next step shows exactly why that choice matters.</p>
+<div class="diagram-box">
+    <div class="diagram-title">🧩 Every push does two things at once</div>
+    <div class="diagram-content">
+        <div class="flow-vertical">
+            <div class="flow-step highlight">adobeDataLayer.push({ ... })</div>
+            <span class="flow-arrow-down">↓</span>
+            <div class="flow-multi">
+                <div class="flow-step">Appended to the Log<br><span style="font-size:11px;color:var(--text2,#475569)">the running history of events</span></div>
+                <div class="flow-step">Top-level data merged into State<br><span style="font-size:11px;color:var(--text2,#475569)">getState() keeps it; eventInfo does not</span></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h3 class="subsec-title">Step 3: see it, in the console</h3>
+<p>This is where it becomes real, because you can watch it. Open the browser console and ask for the current state, the same instinct as typing <code>digitalData</code> there:</p>
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">Console</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>&gt; adobeDataLayer.getState()
+
+&lt; {
+    page: { name: "Product Detail", type: "product" },
+    user: { loginStatus: "logged-in" }
+  }</pre></div>
+</div>
+<p>Look closely: the product is not there. The <code>cartAdd</code> event fired and carried the product with it, but because the product was in <code>eventInfo</code>, it was never written into the state. <code>getState()</code> only ever returns the persistent snapshot, the page and the user.</p>
+<p>Now the shopper adds a second item, a green widget, which fires another <code>cartAdd</code>. Ask the console again:</p>
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">Console</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>&gt; adobeDataLayer.getState()
+
+&lt; {
+    page: { name: "Product Detail", type: "product" },
+    user: { loginStatus: "logged-in" }
+  }</pre></div>
+</div>
+<p>Still just page and user. Two add-to-cart events have happened, and the current state shows neither product. So where did those two events go, and this is the question you were probably asking yourself the entire last section: if the state only holds the present, why keep a history at all?</p>
+
+<h3 class="subsec-title">Where the history actually earns its keep</h3>
+<p>Here is the honest answer, and it is worth being precise about, because it is easy to oversell. The data layer's history is not a database. Adobe Analytics and CJA store your history for the long term downstream, that is their job, not the data layer's. The log in the browser is something narrower and genuinely useful: it is working memory for the current session, and it earns its place in exactly three situations.</p>
+<p><strong>First, a listener that arrives late still catches what it missed.</strong> This is the timing problem from that section, solved by design. You register a handler for the event, and by default it fires for matching events whether they happened in the past or the future:</p>
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">JavaScript</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>adobeDataLayer.push(function(dl) {
+  dl.addEventListener("cartAdd", function(event) {
+    var product = event.eventInfo.product;  // this event's product
+    var context = dl.getState();             // current page and user
+    // build and send the analytics hit for THIS add-to-cart
+  });
+});</pre></div>
+</div>
+<p>Because the default reaches into the past, if both <code>cartAdd</code> events already happened before this listener registered, it fires twice the instant it attaches, once for each, and your analytics catches both. Remember the empty-glass-before-the-tap trap, where firing the signal before the data was ready silently lost the hit? It largely disappears here. The log kept both events, so a listener can never truly be too late. That is the replay described earlier, made concrete.</p>
+<p><strong>Second, debugging.</strong> Mid-session, in a real browser, you can call <code>getState()</code> at any moment to see the current truth, and attach a listener with the past scope to replay everything that already fired, in order. When a tag misbehaves, being able to ask the page "what actually happened, and in what sequence" without a single server round-trip is worth a great deal.</p>
+<p><strong>Third, custom logic that needs earlier context.</strong> Suppose at checkout you want to know something about the journey that led here. Because the session's state is sitting right there in <code>getState()</code>, your code can read it directly instead of re-fetching from a server. The history and the merged state are local, immediate, and free to read.</p>
+<div class="info-box">
+    <p>This is also why the product went into <code>eventInfo</code> rather than the top level. If every <code>cartAdd</code> wrote its product into the persistent state, each one would overwrite the last, and the state would only ever show the most recent item. By keeping each product on its own event, every add-to-cart is preserved as its own entry in the log, distinct and in order, which is exactly what you want for a cart that fills up over a session.</p>
+</div>
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ The mirror-image trap on single-page apps</div>
+    <p>The flip side of <code>eventInfo</code> is a bug teams hit constantly. Because top-level data <em>persists</em> in the state, on a single-page application it carries over between virtual views unless you clear it. If page A pushes <code>page: { name: "Product" }</code> and the shopper navigates to page B without a reload, <code>getState()</code> still reports "Product" until something overwrites it, so page B's hit can be tagged with page A's values. The fix is deliberate: before the next view's data, push a null to wipe the stale branch, <code>adobeDataLayer.push({ page: null })</code>. Persistent state is a feature, but on a single-page app it is also a thing you must actively reset.</p>
+</div>
+
+<h3 class="subsec-title">Step 4: catching it in Launch</h3>
+<p>This is where the data layer gets consumed, and it is the modern replacement for the manual <code>_satellite.track()</code> torch that <a href="/adobe-analytics-learning/collect/data-layers/what-is-a-data-layer/">What Is a Data Layer</a> called a legacy method. In Launch you install the <strong>Adobe Client Data Layer extension</strong>, and then a rule looks like this:</p>
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>In the rule</th><th>What you choose</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Event</strong></td><td>Adobe Client Data Layer, then "listen to specific event," with the event name <code>cartAdd</code> and scope set to <strong>all</strong> (so late listeners still catch past events)</td></tr>
+            <tr><td><strong>Current context</strong></td><td>A data element of type <strong>Computed State</strong>, which is simply <code>getState()</code>, giving you the page and user data</td></tr>
+            <tr><td><strong>This event's data</strong></td><td>Reference <code>%event.message.eventInfo%</code> to reach the product that rode in on this specific <code>cartAdd</code></td></tr>
+            <tr><td><strong>Actions</strong></td><td>Map those values to your eVars, props, and events, then send the beacon, the variable-setting discipline from earlier in this guide</td></tr>
+        </tbody>
+    </table>
+</div>
+<p>So the persistent state and the event's own data come from two different places, on purpose: <code>Computed State</code> for the steady context, <code>%event.message.eventInfo%</code> for what just happened. The deep mechanics of building rules and data elements belong with <a href="/adobe-analytics-learning/collect/adobe-launch-tags/">Adobe Launch (Tags)</a>. The shape is the point here: the page narrates events into the log, and Launch subscribes to the ones it cares about, no torch required.</p>
+
+<h3 class="subsec-title">The honest cost, in one line</h3>
+<p>ACDL is not a pure upgrade. It asks more of everyone: more code, a real discipline about what belongs in persistent state versus <code>eventInfo</code> (get it wrong and a stray top-level push silently overwrites state), and a tighter partnership with developers who must structure every push deliberately. What you buy for that effort is a data layer that survives single-page applications, defuses the timing race by design, and feeds cleanly into the <a href="/adobe-analytics-learning/collect/data-collection/adobe-web-sdk/">Web SDK</a> and the Edge.</p>
+
+<h3 class="subsec-title">The two models, side by side</h3>
+<div class="comparison-grid">
+    <div class="comp-item">
+        <div class="comp-label">CEDDL (digitalData)</div>
+        <div class="comp-desc">A snapshot you overwrite • One object, rewritten each page load • Goes stale on a SPA • Simpler to implement • You police timing by hand</div>
+    </div>
+    <div class="comp-vs">vs</div>
+    <div class="comp-item">
+        <div class="comp-label">ACDL (adobeDataLayer)</div>
+        <div class="comp-desc">A log plus live state • An array you only append to • Always current, reloads irrelevant • More code and care to implement • Past-event replay defuses timing</div>
+    </div>
+</div>
+
+<h3 class="subsec-title">So do you actually need it?</h3>
+<p>Whether that trade is worth it for your site is a genuine decision, not a foregone conclusion, and it deserves far more than a paragraph. That is exactly what <a href="/adobe-analytics-learning/collect/data-layers/do-you-need-acdl/">Do You Really Need ACDL?</a> takes on: not whether ACDL works, which you now understand, but whether you actually need it. Whichever way it lands, hold on to one thing. The data layer is the most human part of the whole pipeline, an agreement between the analytics and engineering teams, and quietly the most decisive thing in the entire implementation.</p>
+
+<div class="info-box">
+    <div class="info-hdr">ℹ️ Companion reading on this site</div>
+    <p>This site's second guide, <strong>AppMeasurement to Web SDK Migration</strong>, covers how an event-driven data layer like this one feeds XDM once you move to the Web SDK and the Edge. Its <a href="/web-sdk-migration/kb/datalayer/">data layer reference</a> is worth reading alongside this section.</p>
+</div>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe</div>
+    <p>The Adobe Client Data Layer extension is installed from the extension catalog inside a tag property, under <span class="path">Data Collection &gt; Tags &gt; [your property] &gt; Extensions &gt; Catalog</span>. Its configuration screen is where you rename the <code>adobeDataLayer</code> object if you need to, and where you choose which data layer events the listener responds to.</p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title">📚 Learn More</div>
+    <ul>
+        <li><a href="https://github.com/adobe/adobe-client-data-layer/wiki" target="_blank">Adobe Client Data Layer: official documentation and API (GitHub)</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/experience-platform/tags/extensions/client/client-data-layer/overview" target="_blank">Adobe Docs: Adobe Client Data Layer extension for Tags</a></li>
+    </ul>
+</div>

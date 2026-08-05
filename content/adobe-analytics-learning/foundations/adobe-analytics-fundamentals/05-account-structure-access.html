@@ -1,0 +1,79 @@
+---
+slug: "account-structure-access"
+title: "Account Structure and Access"
+seotitle: "Adobe Analytics Account Structure and Access"
+lastmod: 2026-07-18
+description: "Organizations, product profiles, and permissions. How access is really controlled in Adobe Analytics, and what a product profile actually governs."
+type: lesson
+modulenum: 1
+sectionnum: 5
+weight: 5
+---
+<p>Every organization that buys Adobe products is, from Adobe's side, an <strong>account</strong>. If your company runs abc.com and contracts with Adobe to implement Analytics, you become an account in Adobe's system under a name like ABC Enterprises, and that account name is what you see when you log in to Adobe Analytics or any other product you own. Under that single umbrella sit your report suites and your products, and remember that Adobe Analytics is itself a bundle of capabilities, Data Warehouse, Activity Map, the APIs, and more.</p>
+
+<p>Which raises the questions this section is really about. Who gets to use what? Who can see which data? Who can customize or develop? Who approves changes, and who publishes them to production? These are sensitive decisions, and here is the thing worth saying plainly: <strong>this is not really a technical topic.</strong> You are not here to learn which button grants a permission. It is a management and governance topic, and it is where an organization's discipline shows. The teams that handle access well tend to do well; the ones that treat it as an afterthought run into trouble later.</p>
+
+<p>You will not feel its weight on day one, when you have a single user and everything is simple. But as your practice matures around Adobe Analytics, the importance climbs, and the things you failed to manage early become genuinely hard to untangle. So the recommendation is simple: bring this discipline into the system from day one, even with one user. It is far easier to grow a clean structure than to repair a messy one.</p>
+
+<p>Underneath the governance question is one mechanical idea, asked over and over: <em>who can do what, and where?</em> Adobe answers it with a small hierarchy, and one piece of it does almost all the real work.</p>
+
+<div class="flow">
+    <div class="flow-step">Organization</div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-step highlight">Product Profile</div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-step">User / Group</div>
+</div>
+
+<h3 class="subsec-title">The piece that does the work: the Product Profile</h3>
+<p>The <strong>Organization</strong> is your company's top-level Adobe account, and the <strong>User</strong> is a person. But permissions don't actually live on either of them. They live on the <strong>Product Profile</strong> sitting in the middle, and that's the idea most people miss at first.</p>
+
+<p>Think of a Product Profile as a <strong>keycard</strong> with a specific set of doors switched on: these report suites, these tools, these dimensions and metrics. You don't program access into each employee individually. You create cards for roles, "Marketing Analyst," "Implementation Developer," "Read-only Executive," and hand each person the right card. Assign a user to a profile and they inherit everything that profile allows. Add a door to the card, and every single person holding it gets that access at once. Remove someone and their access to those things is gone in one move. That inheritance is what makes access manageable at scale instead of a per-person nightmare.</p>
+
+<p>You can hand the card to a person directly, but the way it scales is through <strong>user groups</strong>. Assign a profile to a group, then drop people into the group, and they pick up the group's access automatically. New analyst joins the team? Add them to the "Marketing Analysts" group and they are set up in one step, no profile-by-profile fiddling.</p>
+
+<h3 class="subsec-title">What a profile actually controls</h3>
+<ul>
+    <li><strong>Report Suite Access (the "where"):</strong> which report suites a user can even see. This is the single most common cause of "I can't find that data", the person simply isn't on a profile that includes that suite.</li>
+    <li><strong>Analytics Tools (the "what they can do"):</strong> access to Workspace, Activity Map, the APIs, and so on.</li>
+    <li><strong>Report Suite Tools (the "what they can change"):</strong> the powerful functions, processing rules, marketing channels, classifications, plus Data Warehouse and Data Feeds. Guard these.</li>
+    <li><strong>Metrics and Dimensions:</strong> granular, component-level control for when whole-suite access is too blunt, you can expose or withhold specific dimensions and metrics per profile.</li>
+</ul>
+
+<p>This is also where the tag world's publishing rights live. When you set up tags, separate rights, Develop, Approve, and Publish, govern who can build changes versus who can push them live to production, and they are granted right here, through the Data Collection product profile in the same Admin Console. You will learn how that publishing flow actually works in the publishing workflow section of Adobe Launch; for now, just note that this access model is what enforces it, so the person who builds need not be the person who ships.</p>
+
+<div class="info-box">
+    <div class="info-hdr">ℹ️ Admin lives in a different place</div>
+    <p>A frequent point of confusion: user and permission management is not done inside the Adobe Analytics interface. It happens in the separate <strong>Adobe Admin Console</strong> (adminconsole.adobe.com), which governs all your Adobe products at once. Analytics is where you analyze; the Admin Console is where you decide who's allowed to.</p>
+</div>
+
+<div class="pro-tip">
+    <div class="pro-tip-hdr">💡 Keep your own record of who has what</div>
+    <p>Maintain a simple document of which users hold which access, and when it was granted. The Admin Console keeps logs, but reconstructing the picture from them after the fact is slow and painful. A living record, who your admins are, who can reach which report suite, who can publish, gives you an at-a-glance view when someone leaves, when something breaks, or when an audit lands on your desk.</p>
+</div>
+
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ Two failure modes, not one</div>
+    <p>"Least privilege" is the right principle, but it fails in two directions. Over-provision and everyone becomes an admin: now no one knows who changed a processing rule and broke last week's data. Over-correct and you get profile sprawl: forty overlapping profiles, half of them named "test", that no one can audit. The fix is the same in both cases, design profiles around <em>roles</em>, not individuals, and review them periodically. A handful of clean, role-based cards beats a drawer full of one-offs.</p>
+</div>
+
+<p>This section is the "who and where" of access. The "where", report suites themselves, gets its own full treatment in <a href="/adobe-analytics-learning/foundations/report-suites/">Report Suites</a>, and access design as part of a wider governance practice returns in <a href="/adobe-analytics-learning/deliver/solution-design-reference/">Solution Design Reference</a>.</p>
+
+<p>That closes the module. You know what Adobe Analytics is, what it stands alongside, the words it expects you to already have, where it genuinely wins and where it does not, and who is allowed through the door.</p>
+
+<p>What you do not have yet is anywhere to put anything. Every hit Adobe collects has to land somewhere, and that somewhere is a report suite. It is the first real architectural decision of any implementation, it is made early, and a surprising amount of it cannot be undone. <a href="/adobe-analytics-learning/foundations/report-suites/">Report Suites</a> is where that decision gets made.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to Find in Adobe Analytics</div>
+    <p>User Management: <span class="path">adminconsole.adobe.com → Products → Adobe Analytics</span></p>
+    <p>Product Profiles: <span class="path">Admin Console → Products → Adobe Analytics → Product Profiles</span></p>
+    <p>Permissions: <span class="path">Admin Console → Product Profile → Permissions</span></p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title">📚 Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/docs/analytics/admin/admin-console/home.html" target="_blank">Adobe Docs: Admin Console Guide</a></li>
+        <li><a href="https://experienceleague.adobe.com/docs/analytics/admin/admin-console/permissions/product-profile.html" target="_blank">Adobe Docs: Product Profiles</a></li>
+            </ul>
+</div>

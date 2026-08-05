@@ -1,0 +1,92 @@
+---
+slug: "collection-methods-overview"
+title: "Collection Methods Overview"
+seotitle: "Data Collection Methods in Adobe Analytics"
+lastmod: 2026-07-18
+description: "The four ways to capture data, the two questions that define every implementation, and how teams actually choose between them."
+type: lesson
+modulenum: 4
+sectionnum: 1
+weight: 1
+---
+<p>Everything so far, variables, report suites, the shape of a metric, was about what the data <em>means</em>. That was <a href="/adobe-analytics-learning/foundations/"><strong>Start with the foundations</strong></a>. This module opens the next phase, <a href="/adobe-analytics-learning/collect/"><strong>Collect the data</strong></a>, where that turns into something more physical: how a real human action on a screen actually becomes a row in Adobe Analytics. It is the part of the job where an analytics person stops talking to other analysts and starts talking to developers, and it is where most implementations are quietly won or lost. A perfect measurement plan still produces garbage if the data never leaves the page, or leaves it late, or leaves it twice.</p>
+<p>The good news is that the whole thing reduces to one short journey, and a small number of decisions about how you make that journey happen.</p>
+<div class="diagram-box">
+    <div class="diagram-title">The journey every hit takes</div>
+    <div class="diagram-content">
+        <div class="flow-horizontal">
+            <div class="flow-step">A user does something</div>
+            <span class="flow-arrow">&rarr;</span>
+            <div class="flow-step">A library captures it</div>
+            <span class="flow-arrow">&rarr;</span>
+            <div class="flow-step highlight">The hit is sent to Adobe</div>
+            <span class="flow-arrow">&rarr;</span>
+            <div class="flow-step">It lands in a report suite</div>
+        </div>
+    </div>
+</div>
+<p>Everything in this module is just detail hung on that line. But the line hides a trap that trips up a lot of conversations between analytics and engineering: people argue about "the implementation" as if it were one choice, when it is really <strong>two separate decisions</strong> that have nothing to do with each other.</p>
+
+<h3 class="subsec-title">The two questions that define every implementation</h3>
+<p>Keep these apart in your head and most of the confusion disappears:</p>
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>The question</th><th>What it decides</th><th>The options</th></tr></thead>
+        <tbody>
+            <tr><td><strong>1. Which library captures the data?</strong></td><td>The code that runs when the user acts and builds the hit</td><td>AppMeasurement, Web SDK (alloy.js), a server-side call, or a mobile SDK</td></tr>
+            <tr><td><strong>2. How does that library get onto the page?</strong></td><td>How the code is deployed and managed over time</td><td>Through a tag management system, or hosted directly on the site yourself</td></tr>
+        </tbody>
+    </table>
+</div>
+<p>These cross independently. You can run the old AppMeasurement library through a modern tag manager, or drop it straight onto a page with no tag manager at all. The "which library" choice and the "how deployed" choice get blurred together because in practice most teams make both at once, but treating them as a single decision is exactly how teams end up with the wrong tool for the wrong reason. Question one runs through this section and the next few, and question two has a section of its own in this module.</p>
+
+<h3 class="subsec-title">The four ways to capture data</h3>
+<p>Four methods, and the honest truth is that most enterprises run more than one at the same time, web through one path, mobile through another, the odd offline event through a third.</p>
+<div class="cards">
+    <a class="card" href="/adobe-analytics-learning/collect/data-collection/appmeasurement-library/">
+        <div class="card-icon">📜</div>
+        <h3 class="card-title">AppMeasurement.js</h3>
+        <p class="card-desc">The traditional, browser-side JavaScript library. Mature, deeply documented, and still running the majority of Adobe Analytics implementations in the world today. The default you will inherit when you join almost any existing setup.</p>
+    </a>
+    <a class="card" href="/adobe-analytics-learning/collect/data-collection/adobe-web-sdk/">
+        <div class="card-icon">🌐</div>
+        <h3 class="card-title">Web SDK (alloy.js)</h3>
+        <p class="card-desc">The modern browser-side library, built for the Adobe Experience Platform Edge Network. One library that can feed Analytics, Target, and the wider platform from a single call. Adobe's recommended method for new customers.</p>
+    </a>
+    <a class="card" href="/adobe-analytics-learning/collect/data-collection/server-side-collection/">
+        <div class="card-icon">🖥️</div>
+        <h3 class="card-title">Server-Side</h3>
+        <p class="card-desc">A call made from your own servers rather than the browser, using the Data Insertion API or the Edge Network server API. The way to capture things the browser never sees: a refund processed overnight, a status change in a back-office system.</p>
+    </a>
+    <a class="card" href="/adobe-analytics-learning/collect/data-collection/mobile-sdk/">
+        <div class="card-icon">📱</div>
+        <h3 class="card-title">Mobile SDK</h3>
+        <p class="card-desc">Native iOS and Android collection through the Adobe Experience Platform Mobile SDK, with app lifecycle metrics like installs, launches, and upgrades that a website simply does not have.</p>
+    </a>
+</div>
+<p>AppMeasurement and the Web SDK each earn a full section of their own next, because the choice between them is the single biggest implementation decision a team makes this decade. Server-side and mobile follow after that. For now, treat this card grid as the map, not the territory.</p>
+
+<div class="info-box">
+    <div class="info-hdr">ℹ️ A note on the Web SDK</div>
+    <p>This module covers the Web SDK at the level you need to choose it and understand where it fits. The full migration story, moving a mature AppMeasurement setup over to the Web SDK end to end, including identity, consent, and the Edge Network, is a deep topic with its own dedicated guide on this site. When you reach that decision for real, start with the <a href="/web-sdk-migration/kb/websdk/">Web SDK reference</a> in the Migration Guide.</p>
+</div>
+
+<h3 class="subsec-title">How teams actually choose</h3>
+<p>There is no single right answer, but there is a pattern worth knowing before you walk into the room:</p>
+<ul>
+    <li><strong>Inheriting a working setup:</strong> it is almost certainly AppMeasurement through a tag manager. Do not rip it out to feel modern. It works, and the cost of a migration is real.</li>
+    <li><strong>Building something new:</strong> the Web SDK is the forward-looking default, especially if Target, personalization, or the wider Experience Platform are anywhere on the roadmap.</li>
+    <li><strong>Capturing data the browser cannot see:</strong> reach for server-side, regardless of what your web pages use.</li>
+    <li><strong>Measuring a native app:</strong> the mobile SDK is the path, and it behaves differently enough from web that it is worth treating as its own discipline.</li>
+</ul>
+<p>The deployment question, tag manager or not, sits on top of all of these, and <a href="/adobe-analytics-learning/collect/data-collection/tag-management-systems/">Tag Management Systems</a> is where it gets settled. It is the decision most likely to be made for you by a platform team, and the one you most want to understand before that happens.</p>
+
+<p>Before any of that, though, something has to physically leave the page. <a href="/adobe-analytics-learning/collect/data-collection/appmeasurement-library/">The AppMeasurement Library</a> is where a hit stops being an idea and becomes a request on the wire.</p>
+
+<div class="ref-box">
+    <div class="ref-title">📚 Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/implementation/home" target="_blank">Adobe Docs: Implement Adobe Analytics (overview)</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/implementation/prepare/comparison" target="_blank">Adobe Docs: Compare Implementation Methods</a></li>
+    </ul>
+</div>

@@ -1,0 +1,125 @@
+---
+slug: "data-elements"
+title: "Data Elements"
+seotitle: "Data Elements in Adobe Launch (Tags)"
+lastmod: 2026-07-18
+description: "A data element is not just a variable, it carries capability. How it differs from the data layer, the types available, and why bypassing it costs you."
+type: lesson
+modulenum: 6
+sectionnum: 4
+weight: 4
+---
+<p>One question is worth asking. Launch, Adobe Analytics, any analytics system at all, what does the whole thing actually revolve around? Not the game, not the media app, not a learning site like this one. It revolves around the analysis of data. And analysis is just looking at how data moves from one point to another, quantifying it, slicing it, holding it up against dimensions and filters. Analysis of what, again? Data. Everything in this guide, every variable, every beacon, every report, has been circling that one word.</p>
+
+<p>How data gets captured and stored is settled. How it gets represented in reports comes later. One piece is still missing: how data gets handled inside Launch on its way to Adobe Analytics. The Analytics variables, the eVars, props, and product string, are covered in <a href="/adobe-analytics-learning/foundations/variables/">Variables: Props, eVars, and Events</a>, and the <a href="/adobe-analytics-learning/collect/data-layers/what-is-a-data-layer/">data layer</a>. What sits between the raw data on the page and those Analytics variables, doing the handling, is the data element. Whatever the data is, a plain string, a number, something pulled off the DOM like a URL or domain, an array like the product string, anything that needs processing before it is sent, the data element is where that work happens.</p>
+
+<h3 class="subsec-title">What a data element is, and how it differs from the data layer</h3>
+<p>Inside Launch there is a section called Data Elements, where you create new ones and edit existing ones. A data element is, loosely, Launch's version of a variable, but a far more capable one than any programming language gives you for free. And here is the line people most often blur, so it is worth drawing sharply.</p>
+
+<p>The data layer is a JavaScript object that lives on the page, authored by the web development team, something like <code>digitalData.page.pageInfo.name</code>. A data element is not that. A data element is Launch's own reference to a value, an abstraction that sits on top of the source. Adobe describes its own tool exactly this way: tags sits on top of your site and abstracts your data into its own contracts, so it can manipulate that data safely, in isolation from whatever the website itself is doing. Those abstractions are the data elements. So the data layer is the raw material on the page; the data element is Launch's safe, named handle on it. You can build a data element from the data layer, but also from DOM and page information like the URL, path, or referrer, from cookies, from browser storage, and more.</p>
+
+<h3 class="subsec-title">More than a variable: it carries capability</h3>
+<p>A plain variable in any language only stores a value. You can do arithmetic on it afterwards and put the result somewhere, but the variable itself brings no ability with it; it is just a labelled space in memory. A data element is not just that space. Once a value is in it, the data element carries built-in capability. Through its custom code option you have the entire range of JavaScript available: you can shape the value however you like, make decisions on it, choose between two values, reformat a date from one form to another, or normalise any other format, and hand the finished result to your rules. Rules can manipulate data too, but the standard, recommended practice is to do the data work inside the data element and let the rule concentrate on the logic of assembling the server call. It keeps the structure cleaner and easier to follow.</p>
+
+<h3 class="subsec-title">If you can bypass it, why use it?</h3>
+<p>Here is an honest admission that makes the point. You can skip data elements entirely. Inside a rule's custom code you can reach straight for a JavaScript variable and assign it to an Analytics variable:</p>
+
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">Rule custom code, the shortcut</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>s.prop1 = digitalData.page.pageInfo.name;</pre></div>
+</div>
+
+<p>One line, and the rule and the data layer have shaken hands and waved goodbye to the data element. So why bother creating one? There are several good answers, and together they are decisive.</p>
+
+<p><strong>It survives missing data.</strong> This is the most important reason. Suppose the web developer forgot to populate that data layer node, so <code>digitalData.page.pageInfo</code> does not exist. The shortcut line above does not quietly do nothing. It throws a script error, because you are reading a property of something undefined, and that error can stop the rest of your custom code from running. Worse, depending on how the code is written you can end up sending an unpredictable value: garbage, or the value left over from the previous page. The variable gets populated with something you never intended. To guard against that by hand, you would have to wrap every assignment in an <code>if</code> check. A data element pointed at the same path does this for you. If the path is missing, the data element returns the default value you configured, or simply nothing, instead of throwing. You set a sensible default once, and you never write a defensive check again.</p>
+
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ Never read a deep path in raw custom code unguarded</div>
+    <p>A line like <code>s.prop1 = digitalData.page.pageInfo.name</code> throws a script error the moment any link in that chain is missing, and that error can take the rest of your rule down with it. If you must use custom code, guard every nested path. Better, point a data element at it and let the default value absorb the gap.</p>
+</div>
+
+<p><strong>It handles the link-tracking plumbing.</strong> On a link beacon, the kind Adobe Analytics sends for an action that does not load a new page, Analytics only includes the variables and events named in <code>linkTrackVars</code> and <code>linkTrackEvents</code>. If you set your variables in custom code, you also have to set those two lists by hand, for every variable and every event, and remember to keep them in sync:</p>
+
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">Custom code, the manual burden</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>s.prop1 = digitalData.page.pageInfo.name;
+s.linkTrackVars = "prop1";
+s.linkTrackEvents = "";</pre></div>
+</div>
+
+<p>But when you set variables through the Adobe Analytics extension's Set Variables action, which is fed by data elements, the extension populates <code>linkTrackVars</code> and <code>linkTrackEvents</code> automatically from what you set in the interface. There is nothing for you to write or remember.</p>
+
+<p><strong>It shapes once and reuses everywhere.</strong> A data element holds the shaping logic in one place, so the same cleaned, formatted value can be used across many rules and extensions. If the underlying source ever moves, you update the one data element rather than hunting down every rule that referenced it.</p>
+
+<p><strong>It can persist.</strong> A plain JavaScript variable lives and dies with its natural scope. A data element lets you choose how long its value sticks around through its storage duration setting: <code>None</code> does not store it at all, <code>Pageview</code> holds it until the next page loads, <code>Session</code> keeps it until the browser tab closes, and <code>Visitor</code> stores it in the browser indefinitely. That sounds like a small convenience, but it is more useful than it looks. Capture a campaign code from the landing page URL once, set it to persist for the visit, and it stays available to attach to later hits without ever reading the URL again.</p>
+
+<div class="pro-tip">
+    <div class="pro-tip-hdr">💡 Capture once, let it ride the visit</div>
+    <p>Storage duration turns a data element into memory. Read a campaign code or a landing entry point from the URL on the first page, set the duration to <code>Session</code> or <code>Visitor</code>, and it stays available to attach to every later hit without re-reading the source. It is one of the quietest, most useful things a data element does that a plain variable cannot.</p>
+</div>
+
+<p><strong>It cleans the data.</strong> Two checkboxes, Force lowercase value and Clean text, let you standardise the case and strip out line breaks and leading or trailing spaces before the value is ever stored. Cleaner, normalised values reach Adobe Analytics, which matters a great deal when you later rely on exact matches for reporting and classifications.</p>
+
+<p>Now stack these up. To match by hand what a data element gives you, the safety check, the link-tracking lists, the reuse, the persistence, the trimming, you would be writing a great deal of repetitive custom code, and maintaining it. That is exactly why populating your variables through data elements and the interface is the recommended way to work.</p>
+
+<h3 class="subsec-title">The types of data element</h3>
+<p>When you create a data element, the first thing you choose is its type, and the type decides how it reaches the value. This is the same supplier relationship set up by <a href="/adobe-analytics-learning/collect/adobe-launch-tags/extensions/">Extensions</a>: the Core extension stocks the menu with the general-purpose types below, and other extensions, the Web SDK or the Adobe Client Data Layer for instance, add their own.</p>
+
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>Type</th><th>What it captures</th></tr></thead>
+        <tbody>
+            <tr><td><strong>JavaScript Variable</strong></td><td>A value from a JavaScript variable or data layer object, addressed by dot notation, such as <code>digitalData.page.pageInfo.name</code>.</td></tr>
+            <tr><td><strong>Page Info</strong></td><td>A part of the current page: URL, hostname, path, protocol, referrer, or title.</td></tr>
+            <tr><td><strong>DOM Attribute</strong></td><td>A value or attribute read from an element on the page using a CSS selector.</td></tr>
+            <tr><td><strong>Cookie</strong></td><td>The value of a named cookie.</td></tr>
+            <tr><td><strong>Local Storage / Session Storage</strong></td><td>The value of a named item in the browser's local or session storage.</td></tr>
+            <tr><td><strong>Constant</strong></td><td>A fixed value you type once and reuse, such as an implementation ID.</td></tr>
+            <tr><td><strong>Custom Code</strong></td><td>Any value you compute in JavaScript; the editor must return the value to use.</td></tr>
+            <tr><td><strong>Conditional Value</strong></td><td>Returns one of two values based on a comparison, an if-then-else without needing a separate rule.</td></tr>
+            <tr><td><strong>Random Number</strong></td><td>A random integer between two bounds, often used for cache-busting.</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<p>There are more in the Core set, Merged Objects to deep-merge several objects into one, Visitor Behavior for things like the landing page or days since the last visit, and Runtime Environment for the current environment stage or property name, but the nine above cover the large majority of real work.</p>
+
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">Create a data element</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>Data Collection > Tags > "Club Web" > Data Elements > Create New Data Element
+
+Name:        Page Name              <- name it for what it MEANS
+Extension:   Core
+Data Element Type:  JavaScript Variable
+Path:        digitalData.page.pageInfo.pageName
+
+Then the options underneath, which are the capability the raw data layer never had:
+    [x] Force lowercase value
+    [x] Clean text                  (trims whitespace, collapses line breaks)
+    Storage duration:  None         (None | Pageview | Session | Visitor)
+    Default Value:     (leave empty, or set "n/a" for reporting consistency)
+
+Save
+
+Reference it from anywhere in the property as %Page Name%,
+or from custom code as _satellite.getVar('Page Name').</pre></div>
+</div>
+
+<h3 class="subsec-title">Referencing and checking a data element</h3>
+<p>Once created, a data element is referenced anywhere in the interface by wrapping its name in percent signs, like <code>%Page Name%</code>, and in code or the console through the <code>_satellite</code> object, with <code>_satellite.getVar('Page Name')</code>. That console call is the quickest way to confirm a data element is returning what you expect on a given page before you trust it in a rule.</p>
+
+<p>That is the data element: a safe, reusable, shapeable handle on your data, and the recommended place to do all your data work before any of it reaches Adobe Analytics. Where those data elements actually get used, and in what order things fire, is the subject of <a href="/adobe-analytics-learning/collect/adobe-launch-tags/rules/">Rules</a>.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it</div>
+    <p>Inside a property, open <span class="path">Data Elements</span>, then <span class="path">Add Data Element</span> to create one.</p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title">📚 Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/experience-platform/tags/ui/data-elements" target="_blank">Adobe Docs: Data Elements</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/experience-platform/tags/extensions/client/core/overview" target="_blank">Adobe Docs: Core Extension Data Element Types</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/implementation/vars/config-vars/linktrackvars" target="_blank">Adobe Docs: linkTrackVars</a></li>
+    </ul>
+</div>

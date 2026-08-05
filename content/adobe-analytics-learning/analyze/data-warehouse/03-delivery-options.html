@@ -1,0 +1,59 @@
+---
+slug: "delivery-options"
+title: "Delivery Options"
+lastmod: 2026-07-15
+type: lesson
+modulenum: 16
+sectionnum: 3
+weight: 3
+---
+<p>Data Warehouse supports multiple delivery destinations for flexibility in data workflows.</p>
+                <h3 class="subsec-title">Delivery Methods</h3>
+                <div class="tbl-wrap">
+                    <table>
+                        <thead><tr><th>Method</th><th>Best For</th><th>Configuration</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>Email</strong></td><td>Small files, ad-hoc requests</td><td>Email address, file size limit ~10MB</td></tr>
+                            <tr><td><strong>FTP</strong></td><td>Legacy systems</td><td>Host, port, credentials, path</td></tr>
+                            <tr><td><strong>SFTP</strong></td><td>Secure transfers</td><td>Host, port, credentials, SSH key</td></tr>
+                            <tr><td><strong>Amazon S3</strong></td><td>AWS data pipelines</td><td>Bucket, region, access keys</td></tr>
+                            <tr><td><strong>Google Cloud</strong></td><td>GCP data pipelines</td><td>Bucket, service account</td></tr>
+                            <tr><td><strong>Azure Blob</strong></td><td>Azure data pipelines</td><td>Container, SAS token</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 class="subsec-title">File Formats</h3>
+                <ul>
+                    <li><strong>CSV:</strong> Comma-separated, universal compatibility</li>
+                    <li><strong>TSV:</strong> Tab-separated, handles commas in data</li>
+                </ul>
+
+                <h3 class="subsec-title">Scheduling Options</h3>
+                <div class="code-block">
+                    <div class="code-hdr"><span class="code-lang">Schedule Configurations</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+                    <div class="code-body"><pre>One-time: Run once immediately or at scheduled time
+
+Recurring Options:
+├── Hourly: Every X hours
+├── Daily: Every X days at specific time
+├── Weekly: Specific day(s) of week
+├── Monthly: Specific day of month
+└── Yearly: Specific date annually
+
+Advanced:
+├── Start/End dates for schedule
+├── Delivery window preferences
+└── Failure notification emails</pre></div>
+                </div>
+                <div class="pro-tip">
+                    <div class="pro-tip-hdr">💡 Pro Tip</div>
+                    <p>For daily reports, schedule delivery for early morning (e.g., 6 AM) to ensure previous day's data is fully processed. Adobe Analytics data processing typically completes by 2-4 AM.</p>
+                </div>
+                <div class="ref-box">
+                    <div class="ref-title">📚 Learn More</div>
+                    <ul>
+                        <li><a href="https://experienceleague.adobe.com/docs/analytics/export/data-warehouse/create-request/dw-request-report-destinations.html" target="_blank">Adobe Docs: Data Warehouse Destinations</a></li>
+                    </ul>
+                </div>
+            

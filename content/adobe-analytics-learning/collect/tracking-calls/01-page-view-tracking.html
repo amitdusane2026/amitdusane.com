@@ -1,0 +1,117 @@
+---
+slug: "page-view-tracking"
+title: "Page View Tracking"
+seotitle: "Page View Tracking in Adobe Analytics (s.t())"
+lastmod: 2026-07-18
+description: "The page view call, s.t(). Why there are two kinds of call at all, what a page view actually tells you, and the moment it fires."
+type: lesson
+modulenum: 7
+sectionnum: 1
+weight: 1
+---
+<p>This is a different part of the learning hub. Look back at the ground already covered. You know <a href="/adobe-analytics-learning/foundations/adobe-analytics-fundamentals/">what Adobe Analytics is</a>, how data is organized inside <a href="/adobe-analytics-learning/foundations/report-suites/">report suites</a>, how it is stored across the different <a href="/adobe-analytics-learning/foundations/variables/">variable types</a>, how data travels from a customer's activity to Adobe's servers, and how the whole thing gets installed on a real site through a <a href="/adobe-analytics-learning/collect/adobe-launch-tags/">tag management system</a>. If you have followed the modules so far, you already hold a deep, reasoned picture of how the tool works, not just a surface one.</p>
+
+<p>Somewhere in that journey two ideas kept appearing without being examined head on. First, that raw data lands in Analytics as individual server calls. Second, that there is more than one kind of call: a page load call and a link click call, with the mobile app equivalents being trackState for a screen and trackAction for an interaction. This module puts those calls under the microscope. This section is about the first and most fundamental of them, the page view call, fired in code as <code>s.t()</code>.</p>
+
+<h3 class="subsec-title">Why there are two kinds of calls at all</h3>
+<p>The reason is simpler than it sounds, and it comes from the shape of digital products themselves. Whether it is a website or a mobile app, the thing is made of screens or pages. On those screens sit interactive elements, the calls to action. Picture a railway booking app. The first thing you meet is a home screen: a logo, some general information, and the start of a journey, pick a route, pick a date. Behind it sit more screens where you actually book, and separate screens for checking a booking, ordering a meal, looking up train information. Almost every site and app follows this pattern. A few creative ones break it, but users are so used to the convention now that most products lean into it.</p>
+
+<p>Think of the screens as tabletops in a house. Some are kitchen tables, some are study tables, each with its own things kept on it, and the user moves from one table to another. A page load call is nothing more than counting how many times each table was looked at. A link click call counts the small activities that happen at a table: someone picking up a pen at the study table and writing, someone lifting the water bottle at the kitchen table. Two levels of behavior, so two kinds of calls to capture them.</p>
+
+<h3 class="subsec-title">Why the names are what they are</h3>
+<p>To understand the names, you have to go back to when the tool was built, around twenty years ago, in the era of AOL and Yahoo. The important properties then were websites, made of HTML pages, and those pages carried their interactions mostly as links inside anchor tags. That was simply the standard of the day, and a tool built in that world naturally borrowed its vocabulary. Page load and link click. The nomenclature stuck, and in a lot of cases it still fits.</p>
+
+<p>But widen the lens to today's digital landscape and the names start to strain. You no longer have only pages with links. Apps have arrived, and even on the web a page now carries dropdowns, buttons, checkboxes, radio buttons, and more modern furniture like breadcrumbs and hamburger menus. Calling all of that a "link click" does not do it justice. Pages themselves are changing too: more and more sites are single page applications, built on frameworks like React or Angular, which do not load a fresh page at all, they just change what is on the screen. "Screen change" would describe that more honestly than "page load." The same tension exists on mobile. None of this breaks the tool. It just means the two names are historical labels, and it is worth knowing why they read the way they do. Page load calls are the subject here.</p>
+
+<h3 class="subsec-title">What a page view actually tells you</h3>
+<p>At its simplest, a page load call tells you how many times each page was loaded. That is a more valuable data point than it first appears, because pages are the real skeleton of a site or app. It is why every website ships with a sitemap. A sitemap is literally a map of the site's pages, the thing that helps a search engine crawl and index it, and it is a fair description of how the site is built. Everything is arranged around pages.</p>
+
+<p>So when someone says "I want to track my website," the first insight they usually want is how much traffic it generates. Traffic, at its baseline, is three metrics: page views, visits, and unique visitors, roughly "how many page loads," "how many sessions," and "how many people." Page views is the workhorse of the three, and a surprising number of conclusions about a site's performance get drawn from it.</p>
+
+<p>Technically, the page load call does one thing to that metric: it increments Page Views by one. Every time a page view call reaches Adobe, the count goes up. Page Views, in reporting, is exactly that, the number of page view calls counted for a given time range, segment, and set of dimensions. Nothing more mysterious than a tally of these beacons.</p>
+
+<p>Visits and unique visitors behave differently, and this is worth holding onto. They do not tick up once per page load. They are time bound and are worked out at reporting time, from the pattern of hits, not stamped onto each call as it arrives. For this section, it is enough to know that a page load call feeds all three, but only Page Views moves one for one with it.</p>
+
+<h3 class="subsec-title">The call itself, and the moment it fires</h3>
+<p>Here is the point that catches people implementing manually. Setting your variables does not send anything. You can assign a page name, props, eVars, default variables, and events, and Adobe still hears nothing, because on a website no server call leaves the browser until <code>s.t()</code> is actually called. Populate everything first, then fire. This is the same populate-then-send discipline covered in <a href="/adobe-analytics-learning/collect/data-layers/what-is-a-data-layer/">What Is a Data Layer</a>: the data has to be in place before the trigger pulls it.</p>
+
+<p>When <code>s.t()</code> runs, it gathers every Analytics variable currently defined, formulates a URL from them, and requests a tiny image from Adobe's data collection servers. Some variables shape the address of that image request, others ride along as query string parameters. Adobe receives the request, parses it, and returns a transparent 1x1 pixel that sits invisibly on the page. That pixel is the entire visible footprint of a hit. Older library versions wrapped this in extra lines to paper over old browser quirks; modern <a href="/adobe-analytics-learning/collect/data-collection/appmeasurement-library/">AppMeasurement</a> needs only the bare <code>s.t()</code>.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">The page view call, end to end</div>
+    <div class="diagram-content">
+        <div class="flow-horizontal">
+            <div class="flow-step">Populate variables<br><span style="font-weight:400;color:var(--text2)">pageName, props, eVars, events</span></div>
+            <span class="flow-arrow">&rarr;</span>
+            <div class="flow-step">s.t() fires</div>
+            <span class="flow-arrow">&rarr;</span>
+            <div class="flow-step">Image request built<br><span style="font-weight:400;color:var(--text2)">1x1 pixel</span></div>
+            <span class="flow-arrow">&rarr;</span>
+            <div class="flow-step">Adobe servers</div>
+            <span class="flow-arrow">&rarr;</span>
+            <div class="flow-step highlight">Page Views +1</div>
+        </div>
+    </div>
+</div>
+
+<p>In a tag management setup you do not write <code>s.t()</code> by hand. As covered in the <a href="/adobe-analytics-learning/collect/adobe-launch-tags/rules/">Rules</a> section, you build a rule that fires on a page load trigger and add a Send Beacon action set to the <code>s.t()</code> page view type. That same section is where the choice of trigger lives, since which page load event you fire on depends on when your data layer finishes building. Rather than repeat that here, treat this as the call that the rule ultimately sends.</p>
+
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ Always set pageName, or reports get messy</div>
+    <p>The <code>pageName</code> variable has a limit of 100 bytes, and longer values are truncated. More importantly, when <code>pageName</code> is left blank, Adobe falls back to the page's full URL as the name. Do that across a site and the Pages report fills with long, near duplicate URLs instead of clean, readable names. Set an explicit <code>pageName</code> on every page, following a naming convention agreed before implementation starts.</p>
+</div>
+
+<h3 class="subsec-title">What usually rides on the page load call</h3>
+<p>The page load call is where page level context is normally attached, and on most sites a single standard rule handles this for every page. The variables set here describe the page the visitor is on. Common examples are page name, page type, site section, channel, page title, and a business category or section, plus a URL captured into its own variable. This is a representative set, not a fixed or mandatory one. Every business shapes its own, which is exactly the custom fit that separates Adobe Analytics from a more plug and play tool, the point made back in the <a href="/adobe-analytics-learning/foundations/adobe-analytics-fundamentals/">fundamentals</a>.</p>
+
+<p>Two members of that list behave differently from the rest and are worth separating out. Referrer is not something you populate on the call; Adobe collects it automatically. And "previous page" or "page depth" style dimensions are usually produced by plug-ins rather than set natively, since they need the library to remember the prior value between hits. Group them mentally with the automatic and derived data, not with the fields you assign yourself.</p>
+
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">A page view call, populate then fire</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>// Set page level context first
+s.pageName = "Rail Booking: Home";
+s.channel  = "Booking";
+s.server   = "www.example.com";
+s.prop1    = "logged-in";
+s.eVar1    = "member";
+s.events   = "event1";
+
+// Nothing has been sent yet. This line sends it:
+s.t();
+
+// In a tag management setup, you do not write s.t() by hand.
+// A rule fires on a page load trigger, and a Send Beacon
+// action set to "s.t() - Page View" sends the same call.</pre></div>
+</div>
+
+<h3 class="subsec-title">The same idea on other surfaces</h3>
+<p>The page view is a single concept, but how it gets signaled changes with the surface it runs on. On a classic website it is the <code>s.t()</code> call above. In a mobile app it is not, because <code>s.t()</code> is JavaScript and apps are built on other platforms; there you use the SDK's trackState call instead, which tells Adobe a screen was loaded and carries the same weight as a page view. The full mechanics of that model are covered in the <a href="/adobe-analytics-learning/collect/data-collection/mobile-sdk/">Mobile SDK</a> section, so the table below only contrasts how the page view is fired in each case.</p>
+
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>Surface</th><th>How a page view is signaled</th><th>The call</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Website (classic)</strong></td><td>A tag management rule fires on a page load trigger for the loaded page.</td><td><code>s.t()</code> via Send Beacon. Trigger choice covered in the Rules section.</td></tr>
+            <tr><td><strong>Mobile app</strong></td><td>The app developer calls trackState for each screen the business wants counted.</td><td>trackState (SDK, no <code>s.t()</code>). Context data model, see the Mobile SDK section.</td></tr>
+            <tr><td><strong>SPA / virtual views</strong></td><td>No real page load happens, so the page code fires a direct call to say a view occurred.</td><td>Direct call &rarr; <code>s.t()</code>. Covered in <a href="/adobe-analytics-learning/collect/tracking-calls/spa-tracking/">SPA Tracking</a>.</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<p>That third row deserves a word, because single page applications are where the "page load" idea breaks down most visibly. A SPA does not load new pages; it swaps the interface on the screen. Technically no page loads, and Adobe has no automatic way to notice a new view. But from the business owner's side a screen change is still a page, and they will want to count how often it happens. In a mobile app this is handled cleanly, because the developer already decides when to send each trackState. On the web it takes a deliberate step: the standard page load rule keys off browser events like DOM Ready or Window Loaded, and in a SPA those fire only once, so the page code has to raise a direct call, say <code>Virtual_Page_Load</code>, that the rule listens for instead, while Send Beacon keeps sending <code>s.t()</code>. That way a view still gets counted even though no page technically loaded. This is only the shape of the solution; the detail belongs in its own section and is picked up in <a href="/adobe-analytics-learning/collect/tracking-calls/spa-tracking/">SPA Tracking</a>.</p>
+
+<p>With the page view call understood, the natural next question is how to capture everything that is not a page view: the clicks, the interactions, the small activities at each table. That is the link tracking call, <code>s.tl()</code>, the subject of <a href="/adobe-analytics-learning/collect/tracking-calls/link-tracking/">Link Tracking</a>.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Analytics</div>
+    <p>Page Views metric: <span class="path">Workspace &rarr; Metrics &rarr; Page Views</span></p>
+    <p>Pages report: <span class="path">Workspace &rarr; Dimensions &rarr; Page</span></p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title">📚 Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/implementation/vars/functions/t-method" target="_blank">Adobe Docs: t() Method</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/implementation/vars/page-vars/pagename" target="_blank">Adobe Docs: pageName Variable</a></li>
+    </ul>
+</div>

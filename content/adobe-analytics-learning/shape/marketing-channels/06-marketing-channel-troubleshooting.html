@@ -1,0 +1,189 @@
+---
+slug: "marketing-channel-troubleshooting"
+title: "Marketing Channel Troubleshooting"
+seotitle: "Marketing Channel Troubleshooting in Adobe Analytics"
+lastmod: 2026-07-15
+description: "Marketing channel reports fail quietly and confidently. The seven ways this breaks, the instruments to check, and the order to check them in."
+type: lesson
+modulenum: 10
+sectionnum: 6
+weight: 6
+---
+<p>Everything in this module can be wrong without telling you.</p>
+
+<p>That sentence deserves to sit alone, because it is not true of most of Adobe Analytics. A broken processing rule usually announces itself: a variable comes back empty, a value looks obviously wrong, somebody notices within a day. A misconfigured Marketing Channel setup announces nothing. No error appears. No data is lost. The report renders cleanly, the numbers add up to one hundred percent of your traffic, and every line looks entirely reasonable.</p>
+
+<p>The traffic is simply in the wrong buckets. And the people reading that report are moving budget with it.</p>
+
+<h3 class="subsec-title">The scale that lies confidently</h3>
+<p>Think about a weighing scale that has been knocked out of calibration. It does not flash a warning. It does not refuse to weigh anything. It gives you a number, every single time, with total confidence, and the number is wrong. You could use it for a year without suspecting a thing.</p>
+
+<p>The only way you ever discover it is by weighing something whose weight you already know.</p>
+
+<p>That is the entire discipline of this section. Marketing Channel reports cannot be validated by looking at them, because a broken configuration and a correct one look identical. They can only be validated by <strong>checking them against something you already know to be true</strong>, and by knowing where this particular machine tends to break.</p>
+
+<h3 class="subsec-title">Every failure is the same failure</h3>
+<p>Before the individual symptoms, hold on to the shape underneath all of them. Marketing Channels do exactly one thing: they sort each arriving hit into exactly one bucket. So every possible failure, without exception, is traffic landing in the wrong bucket. There are only a handful of ways that can happen:</p>
+
+<ul>
+    <li>No rule caught the hit at all</li>
+    <li>The wrong rule caught it first, because of ordering</li>
+    <li>The right rule caught it, then a later hit overwrote it</li>
+    <li>The rule caught it but never set a detail</li>
+    <li>A channel persisted when it should have expired, or expired when it should have persisted</li>
+    <li>Nothing is wrong at all, and the reader is misunderstanding the design</li>
+</ul>
+
+<p>That last one matters as much as the others. A meaningful share of marketing channel investigations end with the discovery that the system was behaving exactly as configured, and the person raising the alarm simply did not know how it works. Being able to say so, with confidence and evidence, is part of the job.</p>
+
+<h3 class="subsec-title">The seven ways this breaks</h3>
+
+<p>Find your symptom here first, take the short answer, then read the reasoning underneath it. The detail matters, but not while you are anxious about a report that is due.</p>
+
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>Symptom</th><th>Likely cause</th><th>Fix</th></tr></thead>
+        <tbody>
+            <tr><td><strong>1.</strong> "No Channel Identified" is growing</td><td>Hits are matching no rule at all</td><td>Add an <em>Other</em> catch-all rule at the end of the order</td></tr>
+            <tr><td><strong>2.</strong> A channel has gone silent</td><td>An absorbent channel sits above it and is swallowing its traffic</td><td>Move Referring Domains back to last</td></tr>
+            <tr><td><strong>3.</strong> The channel changes mid-visit</td><td>A rule is loose enough to match every hit, not just the arrival</td><td>Add the <em>Is First Hit of Visit</em> condition</td></tr>
+            <tr><td><strong>4.</strong> Session Refresh is large</td><td>Usually untagged pages or referrer-dropping redirects, not a channel problem</td><td>Audit tag coverage on landing pages, and confirm redirects pass the referrer through</td></tr>
+            <tr><td><strong>5.</strong> Direct never gets last-touch credit</td><td>Nothing. This is correct behavior.</td><td>No fix. Explain the design to the stakeholder.</td></tr>
+            <tr><td><strong>6.</strong> Channel Detail shows None</td><td>The rule identified the channel but never set its value</td><td>Set the channel's value in the rule. Both assignments are required.</td></tr>
+            <tr><td><strong>7.</strong> Rules fixed, but first touch is still wrong</td><td>Old first-touch channels persist until each visitor's engagement expires</td><td>Press <em>Expire All</em></td></tr>
+        </tbody>
+    </table>
+</div>
+
+<p><strong>1. "No Channel Identified" is filling up.</strong> This is the signature symptom, and it means hits are falling all the way through the waterfall without matching a single rule. Usually the cause is a missing catch-all. Adobe's guidance is to place an <em>Other</em> rule at the end of the processing order, setting the channel's value to Referring Domain or Page URL, so that nothing escapes unclassified.</p>
+
+<p>But before you rush to fix it, be honest about how much is legitimate. Some traffic belongs there. A visitor who bookmarks a page and opens it mid-session arrives with no referrer and is not the first hit of a visit, so it matches nothing, correctly. A small, stable No Channel Identified line is healthy. A growing one, or one that suddenly jumps, is a symptom. Watching the trend matters more than watching the number.</p>
+
+<p><strong>Fix:</strong> add an <em>Other</em> catch-all rule at the very end of the processing order, setting the channel's value to Referring Domain or Page URL. Then confirm what remains is the legitimate, stable residue rather than a growing gap.</p>
+
+<p><strong>2. A channel has quietly gone silent.</strong> Social was reporting last month and now shows almost nothing. Affiliate has flatlined. Nobody changed those channels.</p>
+
+<p>Check the rule order first, and check Referring Domains before anything else. It is the biggest sponge in the set, because nearly every visitor who arrived from anywhere at all carries a referring domain, and social platforms and affiliates carry one too. Move it up even a few positions and it silently swallows every channel beneath it. The channels do not error. They just go quiet. If a channel that should have traffic has none, its position relative to the absorbent channels is the very first thing to look at.</p>
+
+<p><strong>Fix:</strong> move Referring Domains back to last position, below every channel you want to see reported. Re-check any other broad rule that may have crept above a specific one.</p>
+
+<p><strong>3. The channel keeps changing during a single visit.</strong> A visitor arrives on Email, and by the fourth page view they are attributed to something else entirely.</p>
+
+<p>This is the trap that catches experienced people, and it comes straight from a fact that is easy to forget: marketing channel rules run on <strong>every hit</strong>, not just the arrival. So any rule with a condition loose enough to match mid-visit hits will keep re-firing and keep reassigning the channel. The classic offender is a rule matching on <code>Page URL exists</code> with nothing else attached, because a page URL always exists, on every hit, forever. The fix is the <strong>Is First Hit of Visit</strong> condition, which is precisely why the Direct and Session Refresh rules carry it.</p>
+
+<p><strong>Fix:</strong> add the <em>Is First Hit of Visit</em> condition to the offending rule, and remove any condition that is true on every hit.</p>
+
+<p><strong>4. Session Refresh is large.</strong> <a href="/adobe-analytics-learning/shape/marketing-channels/engagement-periods/">Engagement Periods</a> covered the four causes. Only one of them is benign. A visitor returning to a tab left open after their engagement period lapsed is genuinely a session refresh and nothing is wrong. The other three are implementation defects in disguise: pages missing the Analytics tag, so the first page Adobe ever sees is internally referred; redirects that drop the original referrer; and cookies cleared mid-visit. A large Session Refresh number is therefore not a marketing channel problem at all. It is a tagging or redirect problem being reported by the marketing channel system, and chasing it inside the Marketing Channel Manager will waste your week.</p>
+
+<p><strong>Fix:</strong> audit tag coverage across your landing pages, and confirm your redirects pass the original referrer through to the destination. The repair happens in your tagging and redirect configuration, not in Marketing Channels.</p>
+
+<p><strong>5. Direct never seems to get last-touch credit.</strong> This one is not a bug, and treating it as one is the most common misdiagnosis in the entire feature.</p>
+
+<p>Adobe's rule is precise: Direct and Session Refresh can receive last-touch credit <em>only</em> if they were also the first touch. With Override Last-Touch unchecked, as <a href="/adobe-analytics-learning/shape/marketing-channels/channel-configuration/">Channel Configuration</a> instructed, these channels cannot take credit from a channel that is still persisting. That is the setting working correctly. When a stakeholder asks why Direct looks so small compared to another tool, the answer is that Adobe is deliberately refusing to hand credit to a channel that did no persuading, and that is a feature you would not want to switch off.</p>
+
+<p><strong>Fix:</strong> none needed. Explain the design. If the business genuinely wants Direct to be able to seize credit, that is a deliberate configuration change to the Override Last-Touch checkbox, and it should be argued for rather than assumed.</p>
+
+<p><strong>6. Channel Detail shows None.</strong> The channel is populating, the report has a healthy Paid Search line, and underneath it there is nothing to break down by. Almost always this means the rule identified the channel and never set the channel's value. Both assignments are required. A rule that sets only the channel gives a marketer a number with no way to ask which campaign, which keyword, or which send produced it, which is to say it gives them almost nothing.</p>
+
+<p><strong>Fix:</strong> set the channel's value in the rule. Use the query string parameter for campaign-driven channels, and Referring Domain for social, affiliate, and referring traffic.</p>
+
+<p><strong>7. You fixed the rules, and first touch is still wrong.</strong> Last touch corrected itself immediately. First touch is still reporting the old, broken channel, days or weeks later, and it keeps collecting into it.</p>
+
+<p>Nothing is broken. Every visitor already carrying a first touch channel keeps it until <em>their own</em> engagement period expires, and because that window rolls forward on every visit, an active visitor may never expire at all. The cure is <strong>Expire All</strong>, and it is why Engagement Periods insisted you press it after any change to channels or rules. If you skipped it, you will spend days convinced a correct fix did not work.</p>
+
+<p><strong>Fix:</strong> press <em>Expire All</em> in Marketing Channel Expiration. Note that this repairs the collection of future data only. Everything already collected under the broken rule stays wrong permanently.</p>
+
+<h3 class="subsec-title">Two words that are not the same word</h3>
+<p>Reports in this area produce two different empty-looking values, and confusing them sends investigations in completely the wrong direction.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">"No Channel Identified" is not "None"</div>
+    <div class="diagram-content">
+        <div class="comparison-grid">
+            <div class="comp-item">
+                <div class="comp-label">No Channel Identified</div>
+                <div class="comp-desc">The hit reached the bottom of the waterfall and matched no rule at all. A gap in your rule set. Fix it with a catch-all.</div>
+            </div>
+            <span class="comp-vs">vs</span>
+            <div class="comp-item">
+                <div class="comp-label">None</div>
+                <div class="comp-desc">The channel exists but had no instance inside the reporting window. It only persisted. Common with participation attribution. Not a rule problem at all.</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<p>The second one deserves care, because it looks alarming and usually is not. Attribution models award credit on channel <strong>instances</strong>, meaning the moments a channel was actually set on a hit. If a channel was set before your reporting window opened and only its persisted value survives inside the window, a participation model hands the credit to None rather than to the channel. The configuration is fine. The reporting window and the engagement period are simply disagreeing, and a non-participation model will show the persisted value normally.</p>
+
+<h3 class="subsec-title">Your instruments</h3>
+<p>Guessing is not troubleshooting. Four instruments will resolve almost anything in this module.</p>
+
+<p><strong>Marketing Channel Instances against Visits.</strong> This is the sharpest diagnostic in the feature and almost nobody uses it. An <em>instance</em> counts only when a channel is genuinely <em>set</em> on a hit. A <em>visit</em> counts whenever the channel is credited, including when it merely persisted from an earlier visit. So the gap between them <em>is</em> your persistence, made visible. Visits far exceeding instances means channels are persisting heavily, which is exactly what you would expect with Direct and Internal not overriding. Instances near zero on a channel that shows visits means that channel is not actually being set by any rule any more, and something upstream has started catching its traffic first.</p>
+
+<p><strong>First touch against last touch.</strong> Put both dimensions side by side. Channels that are large on first touch and small on last touch are your <em>openers</em>. The reverse are your <em>closers</em>. A channel that collapses to nothing on one side is worth a question.</p>
+
+<p><strong>An external source of truth.</strong> This is the calibration weight. Your ad platform knows how many clicks it sent. Your email service provider knows how many people clicked through. Compare their number with your Paid Search or Email channel and a serious discrepancy will surface immediately. The two will never match exactly, and expecting them to is naive, but an order-of-magnitude gap is a finding.</p>
+
+<p><strong>The debugger, on a live hit.</strong> When a rule is not firing, stop theorizing and look. Load the landing URL yourself and inspect what actually arrives: the referrer, the query string parameters, the exact case and spelling. A rule failing to catch traffic is very often matching on a parameter that marketing renamed and did not mention.</p>
+
+<div class="pro-tip">
+    <div class="pro-tip-hdr">💡 Do not compare Marketing Channels to the traffic sources or campaign reports</div>
+    <p>Somebody will eventually ask why the Marketing Channels report does not agree with the campaign or traffic sources reports. It never will, and the difference is not an error. Those reports use different attribution, different persistence, and a different set of competing categories. Marketing Channels gives every hit exactly one owner out of your full channel list; the other reports do not compete across the same categories at all. With ten channels competing in one report and six in another, success cannot possibly divide the same way. They are answering different questions and the numbers were never meant to reconcile.</p>
+</div>
+
+<h3 class="subsec-title">The order to check things in</h3>
+<p>When a marketer says the numbers look wrong, resist the urge to open the rule builder and start editing. Work down this order instead, because it moves from the cheapest checks to the most expensive, and most investigations end in the first three steps.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">Triage, cheapest first</div>
+    <div class="diagram-content">
+        <div class="flow-vertical">
+            <div class="flow-step">1. Is it actually broken?<br><span style="font-weight:400;color:var(--text2)">Direct looking small, or Marketing Channels disagreeing with campaign reports, is usually correct behavior being misread.</span></div>
+            <span class="flow-arrow-down">&darr;</span>
+            <div class="flow-step">2. Check the rule order<br><span style="font-weight:400;color:var(--text2)">Look at the absorbent channels first. Referring Domains too high explains most channels that have gone quiet.</span></div>
+            <span class="flow-arrow-down">&darr;</span>
+            <div class="flow-step">3. Check instances against visits<br><span style="font-weight:400;color:var(--text2)">This separates a persistence effect from a rule that has stopped firing entirely.</span></div>
+            <span class="flow-arrow-down">&darr;</span>
+            <div class="flow-step">4. Inspect a real hit in the debugger<br><span style="font-weight:400;color:var(--text2)">Referrer and query parameters, exactly as they arrive. Parameters get renamed without anyone telling you.</span></div>
+            <span class="flow-arrow-down">&darr;</span>
+            <div class="flow-step highlight">5. Only now change a rule, in a test suite<br><span style="font-weight:400;color:var(--text2)">Then Expire All. Remember the fix is not retroactive, so the damage already done is permanent.</span></div>
+        </div>
+    </div>
+</div>
+
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ Every hour you wait is data you cannot get back</div>
+    <p>This is the reason troubleshooting Marketing Channels carries an urgency that most analytics debugging does not. Fix a Launch rule and you can often reprocess or work around the gap. Fix a marketing channel rule and every hit collected while it was broken stays wrong permanently. There is no reprocessing and no backfill. The bad data is now part of your history, and any year-over-year comparison will carry it forever. Which means the real skill is not fixing these problems quickly. It is <strong>auditing regularly enough to catch them early</strong>, because the cost of a marketing channel bug is measured entirely in how long it ran before somebody noticed.</p>
+</div>
+
+<h3 class="subsec-title">Where this module leaves you</h3>
+<p>Look back at what Marketing Channels actually turned out to be.</p>
+
+<p>It began as a question no other kind of analytics has to ask: why did this person come? A census does not wonder, because the data is compelled. A visitor never says. So the whole apparatus exists to recover the one thing an online visitor will not volunteer, and to turn it into something a marketer can act on.</p>
+
+<p>Getting there meant a business decision the analytics team does not own, a channel list that cannot be deleted, a waterfall of rules where position matters more than logic, an attribution model that is an opinion rather than a measurement, and an engagement period quietly deciding how long any of it survives. Every one of those settings is invisible in the finished report. The numbers look equally confident whichever way they were configured.</p>
+
+<p>Which is the real lesson, and it is why this module is where a practitioner and an architect become easy to tell apart. Anybody can fill in the Marketing Channel Manager. Knowing which of these settings to interrogate when a marketer says the numbers look wrong, and being able to tell a broken configuration from a correct one that is simply being misread, is a different skill entirely, and it does not come from the interface.</p>
+
+<h3 class="subsec-title">One loose thread</h3>
+<p>There is something still unresolved, and it has been sitting in plain sight since the rules were built.</p>
+
+<p>Open the Marketing Channel Detail report and look at what is actually there. Values like <code>eml_july_winback</code> and <code>ps_brand_q3_exact</code>. Correct, precise, and completely unreadable to the marketer who has to make decisions from them. Nobody wants to explain a quarterly result in tracking codes.</p>
+
+<p>Those raw values need a human name, and the feature that provides one has already come up. <a href="/adobe-analytics-learning/shape/classifications/">Classifications</a> was considered and set aside for channel assignment, on the grounds that it is retroactive and can only work on a value that already exists. Both of those were disqualifying for sorting a hit into a bucket.</p>
+
+<p>For this problem, they are exactly the point. The value already exists. And being retroactive, after an entire module in which nothing could ever be undone, stops being a limitation and becomes something close to a relief.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Analytics</div>
+    <p>Rule order and conditions: <span class="path">Admin &gt; Report Suites &gt; Edit Settings &gt; Marketing Channels &gt; Marketing Channel Processing Rules</span>. Persistence and the reset button: <span class="path">Marketing Channels &gt; Marketing Channel Expiration</span>. Instances, visits, first touch and last touch: build the comparison in Analysis Workspace.</p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title">📚 Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/marketing-channels/c-faq" target="_blank">Adobe Docs: Marketing Channels FAQ</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/perspectives/navigating-marketing-channels-best-practices-pitfalls-to-avoid" target="_blank">Adobe Perspectives: Best Practices and Pitfalls to Avoid</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/dimensions/last-touch-channel" target="_blank">Adobe Docs: Last Touch Channel and Visitor Engagement</a></li>
+    </ul>
+</div>

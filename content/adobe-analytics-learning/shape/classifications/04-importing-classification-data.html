@@ -1,0 +1,345 @@
+---
+slug: "importing-classification-data"
+title: "Importing Classification Data"
+seotitle: "Importing Classification Data in Adobe Analytics"
+lastmod: 2026-07-15
+description: "A key column and some value columns. The file formats, the template that prevents most failures, deleting data safely, and automating it from cloud storage."
+type: lesson
+modulenum: 11
+sectionnum: 4
+weight: 4
+---
+<p>The set exists. Four columns are named. Four dimensions are already sitting in Analysis Workspace, waiting.</p>
+
+<p>And every one of them shows a single line reading Unspecified, because nothing has yet told Adobe that member M-10482 is in the sixty and over band. The shelves are labeled. Nothing is on them.</p>
+
+<p>This section is where the data goes in, and it is the most concrete thing in the module. Strip away the interface and the whole feature reduces to one small, unglamorous object: a file, with a key column and some value columns. Everything else, including the rules in Classification Rule Builder, is a way of producing that file or avoiding having to.</p>
+
+<h3 class="subsec-title">What the file actually is</h3>
+<p>Here is a complete, valid classification file for the club. Not a simplified one. A real one.</p>
+
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">club-members.csv</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>Key,Age Band,Gender,Membership Tier,Join Year
+M-10482,60+,Female,Gold,2019
+M-10483,25-39,Male,Silver,2024
+M-10484,18-24,Male,Silver,2026
+M-10485,40-59,Female,Gold,2021</pre></div>
+</div>
+
+<p>That is the entire technology. One header row and some data rows. The first column holds keys that Adobe Analytics already collected. Every other column holds an attribute that Adobe Analytics never collected and never could have.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">📊 Anatomy of a classification file</div>
+    <svg viewBox="0 0 700 240" style="width:100%;height:auto;display:block;margin:4px 0 8px" role="img" aria-label="A classification file has a header row where the first column must be called Key with a capital K and every other header must exactly match a classification name in the set schema. Data rows follow, with the key column holding values Adobe Analytics already collected and the other columns holding attributes you supply.">
+        <rect x="20" y="46" width="140" height="34" rx="4" style="fill:var(--card,#ffffff);stroke:var(--accent,#e11d48);stroke-width:2"/>
+        <text x="90" y="68" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:13px;font-weight:700;font-family:monospace">Key</text>
+
+        <rect x="164" y="46" width="126" height="34" rx="4" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <text x="227" y="68" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-family:monospace">Age Band</text>
+        <rect x="294" y="46" width="126" height="34" rx="4" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <text x="357" y="68" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-family:monospace">Gender</text>
+        <rect x="424" y="46" width="126" height="34" rx="4" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <text x="487" y="68" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-family:monospace">Tier</text>
+        <rect x="554" y="46" width="126" height="34" rx="4" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <text x="617" y="68" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-family:monospace">Join Year</text>
+
+        <text x="20" y="36" style="fill:var(--text3,#94a3b8);font-size:10px;font-weight:700;letter-spacing:1px;font-family:sans-serif">HEADER ROW</text>
+
+        <rect x="20" y="90" width="140" height="28" rx="3" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1"/>
+        <text x="90" y="109" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:monospace">M-10482</text>
+        <rect x="164" y="90" width="126" height="28" rx="3" style="fill:none;stroke:var(--border,#e2e8f0);stroke-width:1"/>
+        <text x="227" y="109" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:monospace">60+</text>
+        <rect x="294" y="90" width="126" height="28" rx="3" style="fill:none;stroke:var(--border,#e2e8f0);stroke-width:1"/>
+        <text x="357" y="109" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:monospace">Female</text>
+        <rect x="424" y="90" width="126" height="28" rx="3" style="fill:none;stroke:var(--border,#e2e8f0);stroke-width:1"/>
+        <text x="487" y="109" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:monospace">Gold</text>
+        <rect x="554" y="90" width="126" height="28" rx="3" style="fill:none;stroke:var(--border,#e2e8f0);stroke-width:1"/>
+        <text x="617" y="109" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:monospace">2019</text>
+
+        <rect x="20" y="122" width="140" height="28" rx="3" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1"/>
+        <text x="90" y="141" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:monospace">M-10483</text>
+        <rect x="164" y="122" width="126" height="28" rx="3" style="fill:none;stroke:var(--border,#e2e8f0);stroke-width:1"/>
+        <text x="227" y="141" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:monospace">25-39</text>
+        <rect x="294" y="122" width="126" height="28" rx="3" style="fill:none;stroke:var(--border,#e2e8f0);stroke-width:1"/>
+        <text x="357" y="141" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:monospace">Male</text>
+        <rect x="424" y="122" width="126" height="28" rx="3" style="fill:none;stroke:var(--border,#e2e8f0);stroke-width:1"/>
+        <text x="487" y="141" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:monospace">Silver</text>
+        <rect x="554" y="122" width="126" height="28" rx="3" style="fill:none;stroke:var(--border,#e2e8f0);stroke-width:1"/>
+        <text x="617" y="141" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:monospace">2024</text>
+
+        <line x1="90" y1="164" x2="90" y2="182" style="stroke:var(--accent,#e11d48);stroke-width:1.5"/>
+        <text x="20" y="200" style="fill:var(--accent,#e11d48);font-size:11px;font-weight:700;font-family:sans-serif">Must be exactly "Key"</text>
+        <text x="20" y="216" style="fill:var(--text2,#475569);font-size:10px;font-family:sans-serif">Capital K. Case sensitive.</text>
+        <text x="20" y="230" style="fill:var(--text2,#475569);font-size:10px;font-family:sans-serif">Values already collected.</text>
+
+        <line x1="420" y1="164" x2="420" y2="182" style="stroke:var(--text2,#475569);stroke-width:1.5"/>
+        <text x="350" y="200" style="fill:var(--text1,#0f172a);font-size:11px;font-weight:700;font-family:sans-serif">Must match your schema names exactly</text>
+        <text x="350" y="216" style="fill:var(--text2,#475569);font-size:10px;font-family:sans-serif">A misspelled header does not fail. It quietly</text>
+        <text x="350" y="230" style="fill:var(--text2,#475569);font-size:10px;font-family:sans-serif">creates a brand new classification column.</text>
+    </svg>
+</div>
+
+<h3 class="subsec-title">Do not build that header row by hand</h3>
+<p>Almost every failed import in this feature traces back to a header row somebody typed themselves. So do not type one.</p>
+
+<p>The Schema tab has a <strong>Template</strong> button, and it generates an empty file directly from your own schema. The Key column is spelled correctly because Adobe spelled it. The classification names match because Adobe copied them from the set you built. A template file cannot have a wrong header, and that single habit removes an entire category of failure.</p>
+
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">Download a template</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>Components > Classification sets > "Club Member Attributes" > Schema tab > Template
+
+Download template for Club Member Attributes
+    File Format:    Comma separated values      (or Excel tab separated values)
+    File encoding:  UTF-8                       (or Latin-1)
+
+Download
+
+    -> lands in your browser's download folder as "Classification Set.csv"
+    -> if a file of that name exists already, Adobe appends (1), (2), and so on</pre></div>
+</div>
+
+<p>Open it, paste your data under the headers, save, and it is ready to upload. If your source is a CRM or a product catalog that can export directly, point the export at the template's column names rather than hand-editing afterward.</p>
+
+<h3 class="subsec-title">The rules of the file</h3>
+<p>These are the constraints the importer enforces. None of them are negotiable, and all of them produce failures that read like riddles if you do not know the rule behind them.</p>
+
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>Rule</th><th>What happens when you break it</th></tr></thead>
+        <tbody>
+            <tr><td>The first header must be exactly <code>Key</code>, capital K</td><td>The import fails. Lowercase <code>key</code> is a different string.</td></tr>
+            <tr><td>At least two headers: <code>Key</code> plus one classification</td><td>The import fails. A key with nothing attached is not classification data.</td></tr>
+            <tr><td>Every other header must match a classification name in your set</td><td>It does <strong>not</strong> fail. See the warning below, because this is the dangerous one.</td></tr>
+            <tr><td>No blank headers</td><td>The import fails.</td></tr>
+            <tr><td>Every data row must have exactly as many fields as the header row</td><td>The import fails on a mismatch.</td></tr>
+            <tr><td>Keys and values cap at 255 bytes</td><td>Longer values are rejected.</td></tr>
+            <tr><td>No value of <code>0</code>, and that includes <code>00</code> and <code>000</code></td><td>An error, for reasons that will never feel satisfying.</td></tr>
+            <tr><td>Fields containing a comma go in double quotes, and a literal quote is doubled (<code>""</code>)</td><td>Malformed rows, or fields silently split in two.</td></tr>
+            <tr><td>Encode as UTF-8 without a BOM</td><td>The BOM attaches itself to the first header, so <code>Key</code> stops being <code>Key</code>.</td></tr>
+            <tr><td>Keep to thirty columns or fewer</td><td>Not a hard limit, but the point past which files get slow and unwieldy.</td></tr>
+            <tr><td>No caret (<code>^</code>) in a classification name</td><td>The caret is reserved. It denotes a subclassification.</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<p>An empty field is not an error. It simply means no value for that classification on that key, which is a perfectly legitimate thing to say. Leading and trailing spaces around a field get trimmed for you, so a stray space at the end of a value is forgiven.</p>
+
+<h3 class="subsec-title">Three formats, and when each earns its place</h3>
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>Format</th><th>Extension</th><th>Reach for it when</th></tr></thead>
+        <tbody>
+            <tr><td><strong>CSV</strong></td><td><code>.csv</code></td><td>A human is going to open this in a spreadsheet. The default, and the right default.</td></tr>
+            <tr><td><strong>TSV or TAB</strong></td><td><code>.tsv</code>, <code>.tab</code></td><td>Your values are full of commas. Product names and addresses are the usual culprits, and tabs sidestep the quoting problem entirely.</td></tr>
+            <tr><td><strong>JSON</strong></td><td><code>.json</code></td><td>A system is generating the file, not a person. Uses JSONL conventions, one record per line.</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<p>JSON has one trap worth naming. In JSON the key field is lowercase <code>key</code>, and it is case sensitive, which is the exact opposite of the capital <code>Key</code> that CSV and TSV demand. Nothing about that is intuitive. Write it down somewhere, because the day you switch formats it will cost you an hour.</p>
+
+<h3 class="subsec-title">Follow along: the browser upload</h3>
+<p>With a file ready, go back to the Schema tab and select <strong>Upload</strong>.</p>
+
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">Upload classification data</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>Components > Classification sets > "Club Member Attributes" > Schema tab > Upload
+
+Add new classifications
+    Drag and drop the file, or Browse to it
+
+    Schema Preview appears, showing the columns Adobe found in your file
+    -> READ THIS. It is the last checkpoint before the data lands.
+    -> An alert here means a column in your file is not in your schema.
+
+    [ ] Overwrite data on conflict?
+
+Apply
+    -> if any column is new, Adobe warns that it will be created on import
+
+Confirm Upload      (or Cancel Upload)</pre></div>
+</div>
+
+<p>Two of those steps decide whether this goes well.</p>
+
+<h3 class="subsec-title">Overwrite on conflict, and what it actually means</h3>
+<p>The checkbox governs what happens when the file has a value for a key that already has a different value. It does nothing at all for keys that are new, and nothing for fields you left empty. It matters only where old and new disagree.</p>
+
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>Overwrite on conflict</th><th>Key</th><th>Current value</th><th>Value in file</th><th>Value after import</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Checked</strong></td><td>1234</td><td>green</td><td>blue</td><td><strong>blue</strong></td></tr>
+            <tr><td><strong>Unchecked</strong></td><td>1234</td><td>green</td><td>blue</td><td><strong>green</strong></td></tr>
+        </tbody>
+    </table>
+</div>
+
+<p>Checked means the file is the authority. Unchecked means existing data is protected and the file may only fill in blanks. Both are correct in different situations. A nightly CRM export should almost certainly overwrite, because the CRM is the source of truth and yesterday's tiers are stale. A one-off file adding a new column to an established set should almost certainly not, because you are adding information, not replacing it.</p>
+
+<p>Deletions need overwrite on; a delete is a conflict by definition.</p>
+
+<h3 class="subsec-title">The alert nobody reads, and the trap underneath it</h3>
+<p>Look again at the third row of the rules table, the one that says a mismatched header does not fail.</p>
+
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ A typo in a header creates a new classification. It does not raise an error.</div>
+    <p>Type <code>Membership Teir</code> instead of <code>Membership Tier</code> and the upload succeeds. Adobe shows an alert in the Schema Preview saying the column is not in the existing schema and will be created on import, you select Confirm Upload the way you have a hundred times, and now your set has five classifications instead of four. Membership Tier stays exactly as stale as it was. Membership Teir is a brand new, permanently identified dimension holding all of your fresh data, and it will appear in the dimension list beside the real one, forever. Read the Schema Preview. It is the only place this gets caught, and the alert is telling you the truth in a tone that sounds like a formality.</p>
+</div>
+
+<p>This is also why the Template habit matters so much. A template cannot misspell your own schema back at you.</p>
+
+<h3 class="subsec-title">Deleting classification data</h3>
+<p>Sooner or later something needs removing, and there is no delete button. You delete by uploading, using two reserved tokens.</p>
+
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">Deleting with ~empty~ and ~deletekey~</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>Key,Age Band,Gender,Membership Tier,Join Year
+M-10483,25-39,Male,~empty~,2024          <- clears ONLY Membership Tier for this key
+M-10484,~deletekey~                       <- removes this key and ALL of its data
+M-10485,40-59,Female,Platinum,2021        <- an ordinary update, in the same file
+
+Rules:
+  ~empty~       clears one field, leaves the others alone
+  ~deletekey~   clears the key entirely, as if it was never classified
+                one per row is enough, in any column
+
+  Both tokens must match EXACTLY. Lowercase. No spaces. No capitals.
+  "~Empty~" and "~ empty ~" are just ordinary text values.
+
+  Overwrite data on conflict must be ON, or the delete does nothing.</pre></div>
+</div>
+
+<p>Two things about deletion that people learn the hard way.</p>
+
+<p>You cannot delete a value in the <strong>Key</strong> column. Those values arrived in a server call and were written into the variable, and nothing in this interface reaches back into collected data. Classifications are a layer on top. They were never the data itself.</p>
+
+<p>And removing a classification value also removes anything hanging beneath it. A classification with subclassifications takes its children with it, because a child cannot exist without its parent.</p>
+
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ A delete is retroactive, and it is not reversible</div>
+    <p>The same property that makes classifications wonderful makes deletion dangerous. Upload a <code>~deletekey~</code> and that key stops being classified across your entire history, immediately. Every report that ever used it changes, going back to the day the key was first collected. Nothing warns you, because nothing failed. Before deleting anything at scale, use Download to export what is currently there, and keep that file. It is the only backup that exists.</p>
+</div>
+
+<h3 class="subsec-title">Checking what actually landed</h3>
+<p>The <strong>Download</strong> button is not just for backups. It is how you verify an import did what you thought it did, and the Data Returned option is the part that earns its keep.</p>
+
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>Data Returned</th><th>What comes back</th><th>Use it to</th></tr></thead>
+        <tbody>
+            <tr><td><strong>All values</strong></td><td>Everything currently classified</td><td>Take a backup before a risky change</td></tr>
+            <tr><td><strong>Any columns empty</strong></td><td>Keys where at least one classification has no value</td><td>Find the gaps. This is the one that answers why a report is full of Unspecified.</td></tr>
+            <tr><td><strong>All columns empty</strong></td><td>Keys with no classification data at all</td><td>Find keys the file never reached, which is usually a key mismatch</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<p>Set the row count, pick a date range, choose a format and encoding, and download. Get into the habit of running "Any columns empty" after every significant import, because it turns a vague suspicion that something is missing into a list of exactly which keys are missing what.</p>
+
+<h3 class="subsec-title">Automating it, because nobody uploads a file every night</h3>
+<p>Manual uploads are fine for a product catalog that changes quarterly. They are hopeless for a member database that changes daily, and a process that depends on a person remembering to do something at 6pm is a process that will fail in December.</p>
+
+<p>So you point the classification set at a cloud storage location, drop files there on a schedule, and Adobe collects them on its own.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">The two ways data gets in</div>
+    <div class="diagram-content">
+        <div class="comparison-grid">
+            <div class="comp-item">
+                <div class="comp-label">Browser upload</div>
+                <div class="comp-desc">A person picks a file and confirms. Good for one-off corrections, backfills, and the first load. Depends on someone remembering.</div>
+            </div>
+            <span class="comp-vs">vs</span>
+            <div class="comp-item">
+                <div class="comp-label">Cloud location</div>
+                <div class="comp-desc">Your system writes a file to a bucket. Adobe finds it within fifteen minutes and imports it. Nobody is involved. This is what production looks like.</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h3 class="subsec-title">Step one: the account and the location</h3>
+<p>Cloud storage is configured outside the classification set, in its own area, and it is a two-part job. An <strong>account</strong> holds the credentials for a cloud provider. A <strong>location</strong> is a specific folder inside that account.</p>
+
+<p>Go to <span class="path">Components &gt; Locations</span>. Create the account on the <strong>Location accounts</strong> tab, then the location on the <strong>Locations</strong> tab.</p>
+
+<p>The account types available for classification import are the modern, role-based ones: <strong>Amazon S3 Role ARN</strong>, <strong>Google Cloud Platform</strong>, and <strong>Azure</strong>. The older credential styles, including plain FTP and key-based S3 or Azure accounts, still exist but are export-only. They serve Data Feeds and Data Warehouse, and they will not appear when you are importing classifications. If you built an FTP account years ago and cannot find it in the dropdown here, that is why.</p>
+
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ Two prerequisites that live outside Adobe Analytics</div>
+    <p><strong>The location must point at a folder, not the root of the bucket.</strong> Give the location a prefix, something as simple as <code>classifications/</code>. Hosting files at the root of a bucket does not work with most cloud providers, and the failure is confusing rather than obvious.</p>
+    <p><strong>Adobe's IP ranges have to be allowed through your network.</strong> This is a conversation with a network administrator, not a checkbox, and it is worth starting before you need it. Which range depends on the Analytics data center you are on.</p>
+</div>
+
+<p style="font-size:12px;color:var(--text3,#94a3b8);margin:10px 0 4px">⚠️ <strong>Verified July 2026.</strong> Recheck these ranges before production use; Adobe can change them without notice.</p>
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>Analytics data center</th><th>Allow this IP range</th></tr></thead>
+        <tbody>
+            <tr><td>Pacific North West</td><td><code>52.254.104.0/22</code></td></tr>
+            <tr><td>London</td><td><code>51.138.0.0/19</code></td></tr>
+            <tr><td>Singapore</td><td><code>20.32.0.0/11</code></td></tr>
+        </tbody>
+    </table>
+</div>
+
+<h3 class="subsec-title">Step two: point the set at the location</h3>
+<p>Back in the classification set, on the Schema tab, select <strong>Automate</strong>.</p>
+
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">Associate an ingest location</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>Components > Classification sets > "Club Member Attributes" > Schema tab > Automate
+
+Associate / Update Ingest Location
+    Location Account:  Club CRM Exports        (or New account)
+    Location:          club-analytics/classifications/
+    List delimiter:    Comma
+                       (also: Semicolon, Colon, Vertical bar, Space, Tab)
+    File encoding:     UTF-8                   (or Latin-1)
+    Notify on ingest:  analytics@club.example
+
+Validate
+    -> "Location validation successful. Connection to cloud storage verified."
+
+Save    (or Update, if the connection already existed)</pre></div>
+</div>
+
+<p>Do not skip <strong>Validate</strong>. It is the only moment where a wrong bucket name, a missing permission, or a blocked IP range tells you so directly. Everything after this point fails quietly.</p>
+
+<p>From here, your CRM writes its nightly export to that folder, Adobe notices the file within about fifteen minutes, and an import job runs. The result lands in the Jobs area, and if you listed an email address you will hear about it either way.</p>
+
+<h3 class="subsec-title">The one that will bite you</h3>
+<div class="pro-tip">
+    <div class="pro-tip-hdr">💡 Adobe does not delete the file after importing it. You have to.</div>
+    <p>An imported file stays exactly where it was. And on the next import job, Adobe finds it sitting there and imports it again. Then again. A folder that nobody cleans up becomes a folder that reprocesses its entire history on every run, and the set grows slower and stranger week by week while the data looks fine. Delete the file after a successful import, or put a lifecycle rule on the bucket that ages files out. Whichever you choose, decide it now, on the day you set this up, because this is not the kind of problem that announces itself.</p>
+</div>
+
+<p>One more thing about locations, worth knowing before somebody tidies up. If a location is deleted, every classification set schema pointing at it fails the next time it runs. Locations are shared infrastructure, and deleting one is not a local decision.</p>
+
+<h3 class="subsec-title">FTP, briefly</h3>
+<p>Older implementations import classifications over standard FTP, using a companion FIN file to signal that an upload had finished. Cloud locations need no FIN file, and the FTP path retires alongside the legacy importer.</p>
+
+<p>Learn to recognize it in an inherited implementation. Do not build on it.</p>
+
+<h3 class="subsec-title">What a file cannot do for you</h3>
+<p>Everything in this section produced the same object. A file with a key column and value columns, whether a person typed it, a CRM exported it, or a bucket delivered it at two in the morning.</p>
+
+<p>Which is fine when the attributes genuinely live somewhere else, like a member's age or a product's supplier. It is absurd when the attributes are already sitting inside the key itself. Nobody should be maintaining a spreadsheet that says <code>eml_2026_07_winback_in</code> means the channel is Email, when the key says so in plain sight.</p>
+
+<p>For those, the file should not exist at all. Adobe should read the key and fill the columns itself, which is exactly what the <a href="/adobe-analytics-learning/shape/classifications/classification-rule-builder/">Classification Rule Builder</a> does.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Analytics</div>
+    <p>Uploads, templates, downloads, and automation all live on the Schema tab of a set: <span class="path">Components &gt; Classification sets &gt; [your set] &gt; Schema</span>. Cloud accounts and folders are configured separately at <span class="path">Components &gt; Locations</span>. Import results appear under <span class="path">Components &gt; Classification sets &gt; Jobs</span>.</p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title">📚 Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/classifications/sets/data-files" target="_blank">Adobe Docs: Classification Set File Formats</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/classifications/sets/set/schema" target="_blank">Adobe Docs: Classification Set Schema (upload, template, download, automate)</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/locations/configure-import-locations" target="_blank">Adobe Docs: Configure Cloud Import Locations</a></li>
+    </ul>
+</div>

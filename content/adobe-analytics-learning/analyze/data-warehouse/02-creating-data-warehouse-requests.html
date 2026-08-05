@@ -1,0 +1,61 @@
+---
+slug: "creating-data-warehouse-requests"
+title: "Creating Data Warehouse Requests"
+lastmod: 2026-07-15
+type: lesson
+modulenum: 16
+sectionnum: 2
+weight: 2
+---
+<p>Data Warehouse requests are built by selecting dimensions, metrics, segments, and date ranges, then choosing a delivery method.</p>
+                <h3 class="subsec-title">Request Components</h3>
+                <div class="tbl-wrap">
+                    <table>
+                        <thead><tr><th>Component</th><th>Description</th><th>Limits</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>Date Range</strong></td><td>Time period for data extraction</td><td>Up to 36 months historical</td></tr>
+                            <tr><td><strong>Dimensions</strong></td><td>Breakdown attributes</td><td>Multiple levels supported</td></tr>
+                            <tr><td><strong>Metrics</strong></td><td>Quantitative measurements</td><td>Most standard + custom events</td></tr>
+                            <tr><td><strong>Segments</strong></td><td>Filter data subset</td><td>Must be DW-compatible</td></tr>
+                            <tr><td><strong>Granularity</strong></td><td>Time breakdown level</td><td>Hour, Day, Week, Month, Year</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 class="subsec-title">Building a Request</h3>
+                <div class="code-block">
+                    <div class="code-hdr"><span class="code-lang">Example Request Structure</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+                    <div class="code-body"><pre>Request Name: Monthly Campaign Performance Export
+
+Date Range: Last Month
+Granularity: Day
+
+Dimensions (Rows):
+├── Marketing Channel
+├── Tracking Code
+└── Device Type
+
+Metrics (Columns):
+├── Visits
+├── Orders
+├── Revenue
+└── Units
+
+Segment: Purchasers Only
+
+Delivery: SFTP to data-warehouse.company.com
+Format: CSV
+Schedule: Monthly on 3rd day</pre></div>
+                </div>
+
+                <div class="warn-box">
+                    <div class="warn-hdr">⚠️ Segment Compatibility</div>
+                    <p>Not all segments work in Data Warehouse. Segments using sequential logic, certain dimensions (like time-based), or hit containers with visit/visitor metrics may be incompatible. Check the compatibility icon in the segment builder.</p>
+                </div>
+                <div class="ref-box">
+                    <div class="ref-title">📚 Learn More</div>
+                    <ul>
+                        <li><a href="https://experienceleague.adobe.com/docs/analytics/export/data-warehouse/create-request/dw-request-build.html" target="_blank">Adobe Docs: Create Data Warehouse Request</a></li>
+                    </ul>
+                </div>
+            

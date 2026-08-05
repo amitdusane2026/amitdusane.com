@@ -1,0 +1,118 @@
+---
+slug: "marketing-channels-overview"
+title: "Marketing Channels Overview"
+seotitle: "Marketing Channels Overview in Adobe Analytics"
+lastmod: 2026-07-18
+description: "Why Adobe built Marketing Channels when campaign tracking codes already existed, and what the report is actually answering."
+type: lesson
+modulenum: 10
+sectionnum: 1
+weight: 1
+---
+<p>You have spent this journey inside the world of data analytics, but it is worth pausing on where exactly you are standing. This is not general data analytics, the kind that counts rows in a warehouse or totals a column of sales. This is digital analytics, and more precisely online analytics: the study of how real people behave on a website or a mobile app. That narrowing changes everything, because it puts one question at the center that most data systems never have to ask. Why did this person come at all? What moved them to open the app, type the address, follow the link? What were they hoping to do?</p>
+
+<p>Most large data systems never wrestle with that question, because the data simply arrives. Think of a government running a census. Every household is required to answer, and the form itself asks where you live, how many people, what work you do. The person hands over the data because the system compels it. A large company keeps an employee database the same way: once someone is hired, they must submit every detail, and a records team collects it. A school keeps files on every student and teacher by the same logic. In all three, nobody has to be persuaded to appear in the data. Being in the system is not a choice, and the data is a byproduct of belonging to it.</p>
+
+<p>Even the softer cases follow the pattern. A survey or an opinion poll is voluntary, so no one is forced to respond. Yet the moment someone does respond, they often tell you plainly what brought them: which link they followed, which source sent them. The person states the source out loud, because the form asks and they answer.</p>
+
+<p>Now come back to the platform you are learning here, and the ground shifts. A visitor lands on your website or app, and no form greets them at the door asking why they came or who sent them. They just arrive, do a few things, and often leave. There is no confession, no volunteered source, no mandatory field. You cannot climb inside their head. What you can do is read the trail they leave on the way in, and that trail is the whole subject of this module: the source of the visit. Identifying where a visitor came from is how online analytics recovers the one piece of context that every other data system is simply handed for free.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">Reading what the visitor never says</div>
+    <div class="diagram-content">
+        <div class="flow-horizontal">
+            <div class="flow-step">Visitor's motive<br><span style="font-weight:400;color:var(--text2)">unknown, never stated</span></div>
+            <span class="flow-arrow">&rarr;</span>
+            <div class="flow-step">Arrival signals<br><span style="font-weight:400;color:var(--text2)">referrer, tracking code, detected search or social</span></div>
+            <span class="flow-arrow">&rarr;</span>
+            <div class="flow-step highlight">Marketing Channel<br><span style="font-weight:400;color:var(--text2)">the readable label</span></div>
+        </div>
+    </div>
+</div>
+
+<h3 class="subsec-title">Why the source is worth so much</h3>
+<p>A fair question is why this matters as much as it does. Traffic is already being counted. You can see how many visitors arrived, how many pages they viewed, how much they bought. That data is real and foundational, and on its own it tells you a great deal. But sit for a moment in a marketer's chair. Suppose you could show them not just that a thousand people bought something last month, but that one slice of those buyers arrived from a search ad, another from an email, another from a partner site. Would they not immediately start shaping next month's campaigns around what actually worked? The raw counts describe what happened. The source of the visit explains what to do next, and that is the difference between data a marketer likes to have and data a marketer cannot run the business without.</p>
+
+<p>For an ordinary informational site, a personal blog or a reference page, knowing the source is a nice thing to have. But the moment there is a business riding on the site, an online store, a lead form, a subscription, the source stops being optional. It becomes one of the most important things the analytics implementation is asked to deliver.</p>
+
+<h3 class="subsec-title">Two words that become one idea</h3>
+<p>Look at the two words that keep surfacing. One is marketer, the person who needs to know what drove the result. The other is source, the origin of the visit, or put another way, the channel through which the visitor was influenced to come. Put those two together, a marketer's view of the channel that brought each visitor, and you have named the exact subject of this module. A <strong>Marketing Channel</strong> is the means by which business users and marketers see how a visitor reached the site, the app, or a specific campaign landing page, and how the actions that matter, a purchase, a form submission, a download, trace back to the route the visitor took to get there.</p>
+
+<h3 class="subsec-title">The car manufacturer's questions</h3>
+<p>It helps to step out of the online world for a moment. Picture a car manufacturer selling a thousand cars a month. The owner does not stop at the total. They want to know where the cars are selling, which city, state, region. They want to know who is buying, urban or rural, which age group. They want to know which models are moving. And then the question that matters most for the future: how was each buyer influenced? Did they see a television ad, read a newspaper spread, watch a review on YouTube, come on the word of an existing customer, buy during an offer, and if so which offer pulled the hardest? Every answer points somewhere the business can act, and the owner will align sales and marketing around it.</p>
+
+<p>Underneath all of it sits a simple truth about markets. There is always a gap. A buyer is out there with a real need but not enough information to find the right seller. A seller is out there with exactly the right product but no way to reach the right buyer. Both lose, not because the match is impossible, but because neither can find the other. Closing that gap is what marketing is. When the closing happens online, through paid search, email, affiliates, organic search, social, and online campaigns, it is digital marketing. And measuring which of those routes actually closed the gap is what Marketing Channels do.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">The gap that marketing exists to close</div>
+    <div class="diagram-content">
+        <div class="comparison-grid">
+            <div class="comp-item">
+                <div class="comp-label">The buyer</div>
+                <div class="comp-desc">Has a real need, but not enough information to find the right seller.</div>
+            </div>
+            <span class="comp-vs">the gap</span>
+            <div class="comp-item">
+                <div class="comp-label">The seller</div>
+                <div class="comp-desc">Has exactly the right product, but no way to reach the right buyer.</div>
+            </div>
+        </div>
+        <p style="text-align:center;margin-top:12px;font-size:13px;color:var(--text3)">Marketing closes the gap. Online, Marketing Channels measure which route did it.</p>
+    </div>
+</div>
+
+<h3 class="subsec-title">Your role in this</h3>
+<p>If the manufacturer's problem makes sense, then the online version is the same problem wearing different clothes. The job is to track how a visitor arrived at the site, the app, or the exact landing point that mattered. Was it a plain Google search? A promotion? An email that went out last week? A partner site that sent them over? Adobe Analytics is built to answer these questions, and answering them well is your work. You set up the configuration, end to end, that reads each arriving visitor and sorts them into the channel that brought them, so that later, when a marketer opens a report, the story of how people found the business is already there waiting.</p>
+
+<h3 class="subsec-title">You are not inventing the channels</h3>
+<p>Here is the reassuring part. You are not going to sit down and invent a brand new set of categories for your business. Over years of practice the industry settled on a handful of standard channels that cover how most visitors actually arrive, and Adobe ships them as a starting template. The common defaults are Paid Search, Natural Search (the organic, unpaid results), Display, Email, Affiliate, Social Networks, Referring Domains, Internal, and Direct. These are not rigid rules; they are well-worn norms. You can rename them, disable the ones you do not use, and add your own, up to twenty-five channels in a single report suite. For now the point is only that a sensible starting map already exists, so you begin by adjusting a proven list rather than facing a blank page.</p>
+
+<div class="info-box">
+    <div class="info-hdr">ℹ️ A channel is a category, not a campaign</div>
+    <p>A common early mistake is to create a separate channel for every campaign: one for the March sale, one for the newsletter, one for each partner. Resist it. A channel is a broad category of how people arrive, Email or Paid Search or Affiliate, and it should stay stable for years. The individual campaign, send, or keyword lives one level down, in the channel's detail. Keeping the channel list short and categorical is exactly what lets your reports stay comparable over time, even as specific campaigns come and go.</p>
+</div>
+
+<h3 class="subsec-title">Where this sits in what you already know</h3>
+<p>One connection is worth drawing, because it ties Marketing Channels to the pipeline you already know. The sorting of visitors into channels is not done by hand. It runs on a dedicated kind of rule called a marketing channel processing rule, and it sits at a specific point in the collection pipeline. It runs late: after the general <a href="/adobe-analytics-learning/shape/processing-rules/">processing rules</a> you met earlier, and after any <a href="/adobe-analytics-learning/shape/vista-rules/">VISTA rules</a>, as almost the last step before the hit is stored. You do not need the mechanics yet. Marketing Channel Processing Rules covers them, leaning on what you already learned about processing rules. The takeaway for now is that Marketing Channels are not a separate machine bolted onto the side. They are the last shaping step in the same pipeline you have been studying all along.</p>
+
+<h3 class="subsec-title">A first look at attribution</h3>
+<p>Before leaving the overview, it is worth naming the idea that makes this module genuinely interesting, because it is unlike almost anything else in data analytics. Picture a real journey. A visitor first finds you through a paid search ad, comes back a week later from an email, and finally returns through an organic search and makes a purchase. Three different channels touched that one sale. So which one gets the credit?</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">One sale, three channels</div>
+    <div class="diagram-content">
+        <div class="flow-horizontal">
+            <div class="flow-step">Visit 1<br><span style="font-weight:400;color:var(--text2)">Paid Search</span></div>
+            <span class="flow-arrow">&rarr;</span>
+            <div class="flow-step">Visit 2<br><span style="font-weight:400;color:var(--text2)">Email</span></div>
+            <span class="flow-arrow">&rarr;</span>
+            <div class="flow-step">Visit 3<br><span style="font-weight:400;color:var(--text2)">Natural Search</span></div>
+            <span class="flow-arrow">&rarr;</span>
+            <div class="flow-step highlight">Purchase</div>
+        </div>
+        <p style="text-align:center;margin-top:12px;font-size:13px;color:var(--text3)">First touch: Paid Search &nbsp;|&nbsp; Last touch: Natural Search</p>
+    </div>
+</div>
+
+<p>There is no single obviously correct answer, and that is the point. Think of two friends who both helped you through a hard problem. One sorted out the logistics, the other sorted out the money. Whom do you thank the most? Honestly, it depends on what you are trying to reward. Handing out credit for a result that several touchpoints share is called attribution, and deciding how to share it fairly is attribution modeling. This idea is close to unique to digital analytics. You will not find it built into a general database or most other technologies, because most systems never have to answer the question at all. Attribution has a section of its own, so this is only a first glimpse. For now, hold on to the two natural bookends the diagram shows: the first channel that ever brought a visitor, called first touch, and the most recent one before they acted, called last touch.</p>
+
+<h3 class="subsec-title">Where the answers show up</h3>
+<p>When all of this is configured, the answers surface through a small family of dimensions, and two of them are the ones a marketer reaches for first. Marketing Channel tells you which channel a visit belongs to. Marketing Channel Detail breaks that channel open one level further, so a single Paid Search channel can be split by the specific campaign or keyword behind it, and Email by the specific send. Two more sit alongside them, First Touch Channel and Last Touch Channel, which each carry a fixed answer to the credit question you just met. Those attribution-flavored dimensions belong to the attribution discussion. The pair to carry out of this overview is Marketing Channel and Marketing Channel Detail.</p>
+
+<h3 class="subsec-title">What this module covers</h3>
+<p>It helps to see the whole path before taking the first step. This section answered the first question: what a Marketing Channel is and why it exists. From here the module moves through the rest in order. <a href="/adobe-analytics-learning/shape/marketing-channels/channel-configuration/">Channel Configuration</a> covers which channels to turn on and how to name them. <a href="/adobe-analytics-learning/shape/marketing-channels/marketing-channel-processing-rules/">Marketing Channel Processing Rules</a> covers how a visitor actually gets sorted into the right channel as their hit arrives, the logic that does the bucketing. <a href="/adobe-analytics-learning/shape/marketing-channels/channel-attribution/">Channel Attribution</a> takes up the most distinctive idea of all, how to hand out credit when several channels touched the same journey. And <a href="/adobe-analytics-learning/shape/marketing-channels/engagement-periods/">Engagement Periods</a> covers how long a channel keeps its credit as a visitor comes back over time. Finally, <a href="/adobe-analytics-learning/shape/marketing-channels/marketing-channel-troubleshooting/">Troubleshooting</a> deals with what happens when all of this goes wrong quietly, which it does more often than anyone would like.</p>
+
+<p>That is what Marketing Channels are: the part of Adobe Analytics that recovers the one thing an online visitor never volunteers, how they got here, and turns it into a language a marketer can act on. <a href="/adobe-analytics-learning/shape/marketing-channels/channel-configuration/">Channel Configuration</a> starts turning the idea into a working setup by choosing and naming the channels your business actually uses.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Analytics</div>
+    <p>Analytics &gt; Admin &gt; Report Suites &gt; Edit Settings &gt; <span class="path">Marketing Channels &gt; Marketing Channel Manager</span> to define channels, and <span class="path">Marketing Channels &gt; Marketing Channel Processing Rules</span> to set how each channel is assigned.</p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title">📚 Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/marketing-channels/c-getting-started-mchannel" target="_blank">Adobe Docs: Get Started with Marketing Channels</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/marketing-channels/analyze-mc" target="_blank">Adobe Docs: Analyze Marketing Channels (dimensions and metrics)</a></li>
+    </ul>
+</div>

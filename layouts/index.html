@@ -1,0 +1,24 @@
+{{ define "main" }}
+<div class="home2">
+  <div class="h2-profile">
+    <div class="h2-name">Amit G. Dusane</div>
+    <div class="h2-role">Adobe Experience Platform architect &middot; Customer Journey Analytics &middot; digital analytics</div>
+    <p class="h2-sum">Nearly 16 years in digital analytics, dedicated almost entirely to Adobe Analytics and the Experience Cloud. I publish field-tested references for the Adobe Experience Platform ecosystem and keep them open.</p>
+    <div class="h2-facts">
+      <span><b>16+</b> years in analytics</span>
+      <span><b>ex-Adobe</b> &middot; 2016&ndash;2022</span>
+      <span><b>CJA &middot; AEP &middot; Adobe Analytics</b></span>
+    </div>
+    <a class="h2-about" href="{{ "/about/" | relURL }}">About the author &rarr;</a>
+  </div>
+  <div class="h2-topics">
+    <div class="h2-topics-h">Topics</div>
+    <p class="h2-topics-note">Choose a topic to explore.</p>
+    <a class="tcard" style="--tcolor:#1f5fae;--tbg:#eaf1fb" href="{{ "/web-sdk-migration/" | relURL }}">
+      <div class="tc-h"><span class="tc-t">Web SDK Migration</span><span class="tc-tag">Live</span></div>
+      <div class="tc-d">A complete, field-tested guide to migrating Adobe Analytics from AppMeasurement to the Experience Platform Web SDK &mdash; schema, datastream, identity, consent, and parity, with the reasoning behind every step.</div>
+      <span class="tc-go">Enter the guide &rarr;</span>
+    </a>
+  </div>
+</div>
+{{ end }}

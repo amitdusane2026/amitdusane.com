@@ -1,0 +1,124 @@
+---
+slug: "properties"
+title: "Properties"
+seotitle: "Properties in Adobe Launch (Tags)"
+lastmod: 2026-07-18
+description: "A property is one script, one scope, one team. What it holds, why property design matters more than it looks, and the _satellite object underneath."
+type: lesson
+modulenum: 6
+sectionnum: 2
+weight: 2
+---
+<p><a href="/adobe-analytics-learning/collect/adobe-launch-tags/launch-architecture/">Launch Architecture</a> named the property and left it at "the container everything lives in," which was enough to draw the map. It rewards a closer look, because the property is the unit you will spend most of your working life thinking in.</p>
+
+<p>Stay with the building from <a href="/adobe-analytics-learning/collect/adobe-launch-tags/launch-architecture/">Launch Architecture</a>. A building has many homes, and each home holds one family: members of different ages, each busy with their own life, but still a single unit. Yet a home is not only the people in it. It is also their television, their console, their sofa, the objects that make the place theirs. The family plus their things, together, make the home, and that home, sitting inside the building, is your property. Launch is the building. A property is the "everything" of Launch's logical world, and almost nothing in Launch happens outside the boundary of one.</p>
+
+<h3 class="subsec-title">Properties do not interfere with each other</h3>
+<p>Each property carries its own rules, its own data elements, its own extensions, and its own publishing flow. The boundary is real: two properties do not collide, and neither reaches into the other's business. It is the same easy truth as two neighbours living side by side in that building, sharing a wall and a postcode and nothing else. What you change in one property has no effect on another, which is exactly why a property is the right unit to reason about a single site or app.</p>
+
+<h3 class="subsec-title">One property, one script</h3>
+<p>A family shares a surname, and the wider society knows them by that single common name. A property works the same way. Inside it sit many moving parts, the <a href="/adobe-analytics-learning/collect/adobe-launch-tags/rules/">rules</a>, the <a href="/adobe-analytics-learning/collect/adobe-launch-tags/data-elements/">data elements</a>, the <a href="/adobe-analytics-learning/collect/adobe-launch-tags/extensions/">extensions</a>, but they are all brought to life by one common script. That script is hosted on your website. When the site loads, the script loads, and when the script loads, it brings the entire property with it: every rule, every data element, every extension, ready to run. It is the moment the invitation goes out and the whole family arrives at once.</p>
+
+<p>In plain technical terms, that script is a small piece of JavaScript that lives in the page's <code>&lt;head&gt;</code>. You do not paste your rules and data elements onto the page one by one; you place this single embed code, and it pulls down the property's runtime library and sets everything running. That runtime is also what creates the <code>_satellite</code> object, described later in this section.</p>
+
+<h3 class="subsec-title">What a property holds</h3>
+<p>Everything that makes up an implementation lives inside the property and travels together as one sealed unit:</p>
+<ul>
+    <li><strong><a href="/adobe-analytics-learning/collect/adobe-launch-tags/rules/">Rules</a></strong>, the logical sequence of execution: when something happens, do this.</li>
+    <li><strong><a href="/adobe-analytics-learning/collect/adobe-launch-tags/data-elements/">Data elements</a></strong>, the variables of Launch that those rules draw on.</li>
+    <li><strong><a href="/adobe-analytics-learning/collect/adobe-launch-tags/extensions/">Extensions</a></strong>, which inject a piece of functionality onto your site without you touching the site's own code.</li>
+    <li><strong><a href="/adobe-analytics-learning/collect/adobe-launch-tags/publishing-workflow/">The publishing flow</a></strong>, the controlled path by which all of it ships to your environments.</li>
+</ul>
+<p>Each of these has a section of its own in this module. What matters here is the boundary itself: this is the full contents of one property, and none of it reaches into the property next door.</p>
+
+<h3 class="subsec-title">Why property design matters</h3>
+<p>Because a property is sealed in this way, with its own extensions, rules, data elements, publishing flow, and its own set of permissions, deciding how to split an implementation into properties is one of the more consequential architectural calls you will make. Draw too many and you end up maintaining the same rules and data elements in parallel across them, where they quietly drift out of sync. Draw too few and unrelated teams share one publishing flow and one permission set, and start colliding over each other's work. The structure that holds up is the one that mirrors how the organisation is actually divided, by site, by brand, by team, or by region, so that the people who own a thing are the people allowed to change it. Adobe's own guidance lands in the same place: structure your properties to match how you actually work, not the other way round.</p>
+
+<div class="info-box">
+    <div class="info-hdr">ℹ️ Watch for the hands-on walkthroughs</div>
+    <p>From here on, this module includes hands-on walkthroughs, each shown as a code block with a real sequence of clicks, in order, with the fields filled in. When you reach one, that is your signal to build alongside: open Adobe Experience Platform Data Collection in another tab, because a property you have made yourself teaches more in twenty minutes than any amount of reading.</p>
+    <p>And if you cannot right now, that is fine. Read it through, then come back when you have access and a spare half hour. The steps are written so that they still work months later, when you have forgotten every word of the prose around them.</p>
+</div>
+
+<h3 class="subsec-title">Creating a property: website or mobile app</h3>
+<p>When you create a property, the first thing Launch asks is its platform: web or mobile. This is foundational rather than cosmetic, because it sets the entire toolset you work with. It decides which extensions you start with and can add: a web property opens with the Core extension and the web catalog, while a mobile property opens with Mobile Core and Profile already installed and draws from the mobile catalog. It decides which events your rules can fire on: browser and DOM events like page load and click on the web, application lifecycle events on mobile. And it changes how the property even reaches what it instruments: a web property gives you the <code>&lt;head&gt;</code> embed script, while a mobile property gives you an Environment File ID that the Adobe Experience Platform Mobile SDK is compiled against inside the app. A single mobile property can even manage several iOS and Android apps at once. Pick the platform that matches what you are instrumenting, because it shapes everything you build afterwards.</p>
+
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ The platform choice is made once</div>
+    <p>You set web or mobile when you create the property, and it shapes the entire toolset around it. It is not a switch you flip later, so picking the wrong one effectively means starting the property over. Decide what you are instrumenting before you create it.</p>
+</div>
+
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">Create a property</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>Data Collection > Tags > New Property
+
+Name:      Club Web
+Platform:  Web                    <- decided here, permanently
+Domains:   club.example           <- the base URL you will deploy to
+
+(Advanced, and both worth understanding before you touch them)
+  [ ] Run rule components in sequence
+      Makes each condition and action wait for the previous one to finish.
+      Leave it off unless you know you need it.
+
+  [ ] Return an empty string for missing data elements
+      Without it, a missing data element returns undefined, which is
+      usually louder and easier to catch.
+
+Save
+
+What Adobe creates for you, automatically, the moment you save:
+  - three environments:  Development, Staging, Production
+  - a default host       (Adobe-managed, on Akamai)
+  - the Core extension   (which is why a brand-new property can already build a rule)</pre></div>
+</div>
+
+<h3 class="subsec-title">Environments and the embed script</h3>
+<p>Once the property exists, open its Environments and you will find three already waiting for you: development, staging, and production. Each one hands you its own embed script, the JavaScript for the page's <code>&lt;head&gt;</code> described above. Alongside each script, in the same place, you will also find its install instructions, which matters because the script is rarely something you deploy yourself. You pass it, with those instructions, to the development team. The arrangement is straightforward: the development script goes on your non-production environments, the staging script on staging, the production script on production.</p>
+
+<p>Those three are the defaults, but they are not symmetrical in how many of each you can have. Development environments have no limit, while staging and production are each limited to one. In day-to-day practice, most teams lean on just two of the scripts, development and production: production for the live site, and the development script for anything that is not production. That keeps the setup simple, and it is the sensible default.</p>
+
+<p>The reason Adobe lets you create as many development environments as you like is a clever one, and it matters more every year. The scope of a modern implementation has grown enormously, and it is no longer only about analytics; Launch can carry anything you have an extension for. Picture several people or teams working on different changes to the same site at the same time. With a single shared development script they would be tripping over each other constantly. Multiple development environments let each team work in parallel, in its own space, without disturbing anyone else's work in progress.</p>
+
+<h3 class="subsec-title">The _satellite object</h3>
+<p>Recall what the embed script in the head actually does: it does not carry your rules and data elements, it pulls down the property's runtime library and starts it running. <code>_satellite</code> is your browser-side handle on that running library. The moment the library loads it creates this object, which is simply the property's runtime made reachable from the page itself. The name is a piece of history from <a href="/adobe-analytics-learning/collect/adobe-launch-tags/launch-architecture/">Launch Architecture</a>: before Adobe owned it, the tool was Search Discovery's product called Satellite, and even after it became DTM and then Launch, that original name lived on in the base object it created. DTM inherited it, and Launch inherited it again.</p>
+
+<p>It is worth being precise about what <code>_satellite</code> is and is not, because there is a second object on many Adobe pages that people confuse it with: <code>s</code>. The <code>s</code> object belongs to AppMeasurement, the JavaScript library that puts Adobe Analytics on the page. The <code>_satellite</code> object belongs to Launch. They are two different things doing two different jobs. Adobe Analytics is the measurement; AppMeasurement is the library that carries it onto the page; Launch is the container the whole implementation is built and managed in; and <code>_satellite</code> is Launch's own object, the thing that does Launch's work in the browser.</p>
+
+<p>One example of it appeared in <a href="/adobe-analytics-learning/collect/data-layers/what-is-a-data-layer/">What Is a Data Layer</a>, where a direct call fires through <code>_satellite.track('Internal_Search')</code>. But <code>track</code> is only one of several functions <code>_satellite</code> exposes, each with its own job. Here is a working reference for the ones worth knowing.</p>
+
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>Function</th><th>What it does</th></tr></thead>
+        <tbody>
+            <tr><td><code>_satellite.track(id [, detail])</code></td><td>Fires every Direct Call rule configured with that identifier. The optional detail object is readable inside the rule through <code>%event.detail%</code>.</td></tr>
+            <tr><td><code>_satellite.getVar(name)</code></td><td>Returns the value of a data element with that name, or of a custom variable previously set with setVar.</td></tr>
+            <tr><td><code>_satellite.setVar(name, value)</code></td><td>Sets a custom variable, a temporary value store separate from your defined data elements, which getVar can read back later.</td></tr>
+            <tr><td><code>_satellite.logger.log / warn / error(msg)</code></td><td>Writes a message to the browser console. It appears only when debugging is switched on.</td></tr>
+            <tr><td><code>_satellite.setDebug(true)</code></td><td>Switches that debug logging on for your browser, making logger messages and Launch's own diagnostics visible.</td></tr>
+            <tr><td><code>_satellite.cookie.set / get / remove(...)</code></td><td>Reads and writes cookies. This is the current cookie helper.</td></tr>
+            <tr><td><code>_satellite.getVisitorId()</code></td><td>Returns the Experience Cloud ID (ECID) instance, when the ECID extension is installed on the property.</td></tr>
+            <tr><td><code>_satellite.buildInfo</code> / <code>_satellite.environment</code></td><td>Read-only information: the runtime library's build details, and which environment (development, staging, or production) is currently running.</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="warn-box">
+    <p>A few older functions still work but are deprecated, and you should not write new code with them. Use <code>_satellite.cookie.set / get / remove</code> in place of <code>setCookie</code>, <code>readCookie</code>, and <code>removeCookie</code>, and use <code>_satellite.logger</code> in place of <code>notify</code>. You will also see <code>_satellite._container</code> used in the console to inspect a property's whole configuration; it is handy for debugging, but it is internal and unsupported, so never rely on it in production code.</p>
+</div>
+
+<p>Two of these tie directly to sections still ahead: <code>track</code> is the entry point to <a href="/adobe-analytics-learning/collect/adobe-launch-tags/rules/">Rules</a>, and <code>getVar</code> and <code>setVar</code> belong with <a href="/adobe-analytics-learning/collect/adobe-launch-tags/data-elements/">Data Elements</a>, so they return in their own context. The deeper debugging side of <code>_satellite</code>, the monitor hooks that watch rules fire as they happen, belongs with <a href="/adobe-analytics-learning/deliver/testing-debugging/">Testing and Debugging</a>.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it</div>
+    <p>Create and manage properties at <span class="path">experience.adobe.com &rarr; Data Collection &rarr; Tags</span>. Open a property and its scripts live under <span class="path">Environments</span>.</p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title">📚 Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/experience-platform/tags/home" target="_blank">Adobe Docs: Tags Overview</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/experience-platform/tags/publish/environments/environments" target="_blank">Adobe Docs: Environments</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/experience-platform/collection/tags/overview" target="_blank">Adobe Docs: Satellite Object Reference</a></li>
+    </ul>
+</div>

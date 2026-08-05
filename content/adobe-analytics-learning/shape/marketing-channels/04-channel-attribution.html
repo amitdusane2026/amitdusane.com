@@ -1,0 +1,208 @@
+---
+slug: "channel-attribution"
+title: "Channel Attribution"
+seotitle: "Marketing Channel Attribution in Adobe Analytics"
+lastmod: 2026-07-15
+description: "First touch, last touch, and everything between. Every attribution model Adobe offers, the same journey scored four ways, and how to choose."
+type: lesson
+modulenum: 10
+sectionnum: 4
+weight: 4
+---
+<p>The <a href="/adobe-analytics-learning/shape/marketing-channels/marketing-channels-overview/">overview</a> promised this section and then deliberately walked away from it. Here it is.</p>
+
+<p>Attribution modeling is the most interesting idea in the Adobe Analytics ecosystem, and it is worth pausing on why. There are hundreds of data analytics tools, dozens of programming languages, database systems, cloud platforms, mobile and web frameworks. Look across all of them and you will not find a parallel to attribution modeling anywhere. It has no equivalent in a data warehouse, no equivalent in a machine learning pipeline, no equivalent in any general-purpose analytics product.</p>
+
+<p>That is not an accident. Every domain grows a signature technique shaped by the thing it studies. Telecom developed call duration and call volume analysis, because that is what a telephone network produces. Medicine developed anatomical imaging, and with it X-ray, CT, and MRI, because that is what a human body demands. Digital analytics developed attribution modeling, because that is what online behavior demands. It exists here and essentially nowhere else, and this section is where you meet it properly.</p>
+
+<h3 class="subsec-title">The journey, before the credit</h3>
+<p>Start with the thing attribution is trying to reason about, because attribution makes no sense without it.</p>
+
+<p>A visitor searches for a laptop and clicks a paid search ad. That is day one. Over the following weeks they read reviews elsewhere, come back through an email your team sent, leave again, watch a video review that carries a link to your site, return, browse comparisons, add a laptop to the cart, and leave without buying. A week later a message arrives with a discount code. They come back and buy.</p>
+
+<p>Inside those visits, hundreds of individual actions. Pages viewed, content read, a form filled, a document downloaded, a video played, an item added to the cart. That entire accumulation is the user journey, and it is not something you can enumerate. Trying to predict it means generating permutations of every page, every event, every source, every ordering, and the combinations explode past any useful number almost immediately.</p>
+
+<p>So the goal was never to predict the individual journey. The goal is to find the pattern underneath many journeys: what people generally do, in what order, and which of those routes actually produced the outcome the business cares about. That is what attribution is for.</p>
+
+<h3 class="subsec-title">First, name the objective</h3>
+<p>Nothing in attribution works until the business objective is defined, because you cannot allocate credit for a success that has not been named. There is no driving on a road that leads nowhere.</p>
+
+<p>So what is the objective? Higher revenue? More qualified leads? Deeper engagement? Media consumption, like video plays or downloads? Subscriptions? Or simply publishing good content and understanding how many people genuinely engaged with it? Every one of those is a legitimate objective, and each one changes which channels look valuable.</p>
+
+<p>Think of snakes and ladders. The whole game is organized around reaching square one hundred. Remove that square and the dice rolls still happen, but they mean nothing. The objective is what makes a move good or bad. In Adobe Analytics that objective takes the concrete form of a <strong>success event</strong>: a purchase, a form submission, a subscription, a download.</p>
+
+<p>Once the objective exists, the entire game of attribution reduces to a single question. <strong>Who helped you reach it?</strong></p>
+
+<div class="info-box">
+    <div class="info-hdr">ℹ️ Two words, taken separately</div>
+    <p><strong>Attribution</strong> is the act of assigning credit for a success to the channels that led to it. A <strong>model</strong> is one particular method of dividing that credit up. Put them together and attribution modeling is simply this: choosing a rule for who gets the credit, and how much.</p>
+</div>
+
+<h3 class="subsec-title">The naive answer, and why it fails</h3>
+<p>Take an ecommerce site, where the objective is a purchase. A visitor may arrive once or ten times and perform ten actions or a thousand. Somewhere along the way a visitor became a customer. Something influenced that. The question is what.</p>
+
+<p>The simplest possible answer is to credit whichever channel was showing when the order was placed. Give everything to the last one.</p>
+
+<p>Now watch what that does. A shopper researches for a month, is pulled in by paid search, nurtured by email, informed by organic search, and finally, having already decided, opens the site directly and buys the laptop sitting in the cart. Under naive last touch, <strong>Direct takes one hundred percent of the credit</strong>. Do this across an entire business and Direct wins nearly everything, because a customer who has already decided almost always arrives directly.</p>
+
+<p>Is that logical? Plainly not. Direct did no persuading. It was simply standing closest to the finish line. The channels that did the actual work show nothing, and a marketer reading that report would cut the very campaigns that built the sale.</p>
+
+<div class="pro-tip">
+    <div class="pro-tip-hdr">💡 You already fixed part of this, in Channel Configuration</div>
+    <p>That failure is exactly why the <strong>Override Last-Touch Channel</strong> checkbox exists, and why <a href="/adobe-analytics-learning/shape/marketing-channels/channel-configuration/">Channel Configuration</a> told you to leave it unchecked for Direct and Internal. With override off, Direct is not permitted to seize last-touch credit from a channel still persisting from an earlier visit. The paid search click keeps the credit, and Direct does not steal it.</p>
+    <p>But notice how blunt that fix is. It only answers a yes-or-no question: <em>may this channel claim last touch at all?</em> It cannot answer the harder question, which is how credit should be <strong>shared</strong> among the four channels that each did real work. Adobe patched the worst symptom at collection time. The disease needs attribution models.</p>
+</div>
+
+<h3 class="subsec-title">So credit the first channel instead?</h3>
+<p>Try the opposite. Give everything to the channel that started the journey.</p>
+
+<p>Now paid search takes one hundred percent of every laptop sale, forever, because it happened to be the front door a month earlier. The email that re-engaged the shopper gets nothing. The video that brought them back gets nothing. The discount code that actually closed the sale gets nothing at all. Run a business on this and paid search and organic search absorb the entire budget, while every closing channel stays invisible.</p>
+
+<p>Equally illogical, in the opposite direction. Two extremes, each producing a confident report, each wrong. At this point an analytics developer is genuinely stuck, and worse, is about to make the business team just as confused.</p>
+
+<p>That is where attribution models come in.</p>
+
+<h3 class="subsec-title">The same journey, scored four different ways</h3>
+<p>Take that laptop purchase and run it through different models. Nothing about the data changes. Only the rule for dividing credit changes, and the winner changes with it.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">One purchase. Four models. Four different answers.</div>
+    <div class="diagram-content">
+        <div class="flow-horizontal">
+            <div class="flow-step">Paid Search<br><span style="font-weight:400;color:var(--text2)">day 1</span></div>
+            <span class="flow-arrow">&rarr;</span>
+            <div class="flow-step">Email<br><span style="font-weight:400;color:var(--text2)">day 9</span></div>
+            <span class="flow-arrow">&rarr;</span>
+            <div class="flow-step">Social<br><span style="font-weight:400;color:var(--text2)">day 20</span></div>
+            <span class="flow-arrow">&rarr;</span>
+            <div class="flow-step highlight">Display<br><span style="font-weight:400;color:var(--text2)">day 30, buys</span></div>
+        </div>
+        <div class="tbl-wrap" style="margin-top:16px">
+            <table>
+                <thead><tr><th>Model</th><th>Paid Search</th><th>Email</th><th>Social</th><th>Display</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>Last Touch</strong></td><td>0%</td><td>0%</td><td>0%</td><td>100%</td></tr>
+                    <tr><td><strong>First Touch</strong></td><td>100%</td><td>0%</td><td>0%</td><td>0%</td></tr>
+                    <tr><td><strong>Linear</strong></td><td>25%</td><td>25%</td><td>25%</td><td>25%</td></tr>
+                    <tr><td><strong>U-Shaped</strong></td><td>40%</td><td>10%</td><td>10%</td><td>40%</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <p style="text-align:center;margin-top:12px;font-size:13px;color:var(--text3)">Same visitor. Same purchase. The report changes entirely.</p>
+    </div>
+</div>
+
+<p>Look at Paid Search across those four rows: zero percent, one hundred percent, twenty-five percent, forty percent. Nothing about the visitor changed. The model is not reading a fact out of the data. <strong>The model is an opinion about what deserves credit</strong>, and choosing one is a business judgment, not a technical default.</p>
+
+<h3 class="subsec-title">Every model Adobe offers</h3>
+<p>Here is the full set, with the exact credit each one distributes.</p>
+
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>Model</th><th>How credit is divided</th><th>Reach for it when</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Last Touch</strong></td><td>100% to the most recent touch point before the conversion. This is the default wherever no model is specified.</td><td>You want to know what closed the sale. Good for email and SMS.</td></tr>
+            <tr><td><strong>First Touch</strong></td><td>100% to the first touch point seen inside the lookback window.</td><td>You are measuring acquisition and brand awareness. Good for paid search.</td></tr>
+            <tr><td><strong>Linear</strong></td><td>Equal credit to every touch point in the journey.</td><td>Consideration cycles are long, or engagement is repeated and steady. Common for subscriptions and app notifications.</td></tr>
+            <tr><td><strong>Participation</strong></td><td>100% credit to <em>every</em> unique touch point. Totals deliberately exceed 100%. Repeats are deduplicated.</td><td>You want to know which channels a customer was exposed to at all, not who won. Excellent for discovery and overlap analysis.</td></tr>
+            <tr><td><strong>Same Touch</strong></td><td>100% only to a touch point occurring on the same hit as the conversion. Nothing else gets credit.</td><td>You want strictly immediate, single-hit conversions with no journey credit at all.</td></tr>
+            <tr><td><strong>U-Shaped</strong></td><td>40% first, 40% last, and the remaining 20% split among everything in between.</td><td>You value the channel that found the customer and the channel that closed them, while still acknowledging the assists.</td></tr>
+            <tr><td><strong>J-Curve</strong></td><td>60% last, 20% first, 20% split among the middle.</td><td>Same balanced spirit as U-Shaped, but you believe closing matters more than finding.</td></tr>
+            <tr><td><strong>Inverse J</strong></td><td>60% first, 20% last, 20% split among the middle.</td><td>Same balance, but you believe the channel that initiated the journey did the hardest work.</td></tr>
+            <tr><td><strong>Time Decay</strong></td><td>Exponential decay by recency, using a half-life you set. Default half-life is 7 days. Credit follows 2^(-t/half-life), then normalizes to 100%.</td><td>Recency genuinely matters, and a touch a month ago should count for less than one yesterday.</td></tr>
+            <tr><td><strong>Custom</strong></td><td>You define the weights for first, middle, and last yourself. Values normalize to 100% even if your numbers do not add up to it.</td><td>None of the above matches how your business actually thinks about credit.</td></tr>
+            <tr><td><strong>Algorithmic</strong></td><td>Credit is derived statistically rather than by a fixed rule, using the Harsanyi Dividend, a generalization of the Shapley value from cooperative game theory.</td><td>You want the data to determine contribution instead of imposing a shape on it.</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<p>Two rules govern all of them. For the J models and Custom, a journey with only <strong>two</strong> touch points collapses to a 75 / 25 split in favor of the emphasized end, since there is no middle to divide. And across every model, if only <strong>one</strong> touch point appears inside the lookback window, it receives 100 percent of the credit no matter which model is selected. A model only has something to do when there is more than one candidate.</p>
+
+<div class="info-box">
+    <div class="info-hdr">ℹ️ Where the Shapley value comes from</div>
+    <p>The Algorithmic model is worth a moment. It is built on the Shapley value, which comes from cooperative game theory and earned Lloyd Shapley a Nobel Prize in economics. The problem it solves is exactly the one you have: several players cooperate to produce a payoff, they contribute unequally, and the surplus has to be divided fairly. Attribution turns out to be a special case of a problem that economists had already spent decades on. That is a good reminder that "who gets the credit" is a genuinely hard question, not a reporting preference.</p>
+</div>
+
+<h3 class="subsec-title">Two settings that change every answer</h3>
+<p>A model never runs alone. It runs inside a scope and a time window, and both change the result.</p>
+
+<p>The <strong>container</strong> sets the scope of the journey. <em>Visit</em> considers only touch points within a single visit, and selecting it locks the lookback window to the reporting window. <em>Visitor</em> considers touch points across visits, which is what most multi-touch attribution actually wants.</p>
+
+<p>The <strong>lookback window</strong> decides how far back a conversion may reach for touch points. It can follow the reporting window, or you can set a custom period, but the ceiling is <strong>90 days</strong>. Ask for 99 and Adobe will give you 90.</p>
+
+<p>This matters more than it looks. Your laptop shopper took thirty days. Set a seven-day lookback and that paid search click, thirty days back, is simply not visible to the model. Not underweighted. Invisible. The model would faithfully report that the journey began with the discount message, and it would be wrong, and nothing in the interface would tell you so. <strong>Match the lookback window to the real length of your buying cycle, not to a default.</strong></p>
+
+<h3 class="subsec-title">Report-time attribution, and the release from permanence</h3>
+<p>Now the payoff, and it is worth appreciating properly, because this module has spent three sections teaching you that nothing here can be undone. Channels cannot be deleted. Rules are not retroactive. A mistake made today is still wrong in your reports two years from now.</p>
+
+<p><strong>Report-time attribution breaks that pattern completely.</strong></p>
+
+<p>Attribution models in Analysis Workspace are applied at <em>report time</em>, not collection time. Nothing is written into the data. Nothing is baked in. You can apply a model you never considered to data collected two years ago, compare five models side by side in a single table, change your mind tomorrow, and the underlying data never moves.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">Collection time versus report time</div>
+    <div class="diagram-content">
+        <div class="comparison-grid">
+            <div class="comp-item">
+                <div class="comp-label">Collection time: permanent</div>
+                <div class="comp-desc">Channel definitions. Marketing channel processing rules. eVar allocation settings. Written into the hit as it arrives. Not retroactive. A mistake is permanent.</div>
+            </div>
+            <span class="comp-vs">vs</span>
+            <div class="comp-item">
+                <div class="comp-label">Report time: reversible</div>
+                <div class="comp-desc">Attribution models. Applied when the report runs. Non-destructive and fully retroactive. Change your mind freely. The data never moves.</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<p>Report-time attribution reaches you in three places:</p>
+
+<ul>
+    <li><strong>In a freeform table.</strong> Click the gear on a metric column, check <em>use non-default attribution model</em>, pick a model, container, and lookback. Copy the column and set a different model on the copy, and you are comparing models side by side in one table.</li>
+    <li><strong>In the Attribution Panel.</strong> Drop in a success metric and a dimension such as Marketing Channel, select several models at once, and Workspace builds the comparison for you: a Venn overlap diagram showing which channels co-occur in the same journeys, a flow visualization of the actual paths people took, and a scatter comparing model performance.</li>
+    <li><strong>In calculated metrics.</strong> This is the sharpest instrument of the three. Build one metric as First Touch orders, another as Last Touch orders, and subtract. Channels with a positive result are <strong>openers</strong>, the ones that find customers. Channels with a negative result are <strong>closers</strong>. Email, for instance, usually shows up as a closer. One subtraction, and you have separated your acquisition channels from your conversion channels.</li>
+</ul>
+
+<div class="pro-tip">
+    <div class="pro-tip-hdr">💡 Why Marketing Channel beats First Touch Channel and Last Touch Channel</div>
+    <p>The overview mentioned that Adobe offers four channel dimensions and recommended the <strong>Marketing Channel</strong> pair. Here is the reason. First Touch Channel and Last Touch Channel have their models <em>frozen</em>: the name is the model, and it cannot be changed. The Marketing Channel dimension carries no baked-in opinion, so any attribution model can be applied to it at runtime. Build your reporting on Marketing Channel and every model stays open to you. Build it on the frozen pair and you have thrown that flexibility away for nothing.</p>
+</div>
+
+<h3 class="subsec-title">Attribution outside Marketing Channels</h3>
+<p>None of this is limited to Marketing Channels, which is worth knowing because attribution appears in two other places in the product.</p>
+
+<p>The older mechanism is <strong>eVar allocation</strong>, set on each eVar in report suite settings. It offers three choices: <em>Most Recent</em>, which is last touch and the default, <em>Original Value</em>, which is first touch, and <em>Linear</em>, which splits credit evenly. Note what it is: a collection-time setting, chosen once, applied as data arrives, and <strong>not retroactive</strong>. Change it and only future data reflects the change. It is attribution with all the permanence of everything else in this module, which is exactly why report-time attribution was such a significant addition.</p>
+
+<p>The second is broader. In Analysis Workspace, an attribution model can be applied to a <strong>success event against almost any dimension</strong>, not just a channel. Internal promotions, campaign codes, page names, products, even the day of week. The dimension does not have to be a marketing channel for the credit question to be interesting.</p>
+
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ Attribution applies to success events, not to traffic metrics</div>
+    <p>Attribution models work on <strong>conversion metrics</strong>: orders, revenue, leads, subscriptions, custom success events. They are not meaningful for baseline traffic metrics such as page views, visits, and visitors. The reason is definitional rather than technical. Attribution divides credit for something that was <em>achieved</em>. A page view is not an achievement anybody competed to cause, so there is no credit to allocate. If a stakeholder asks for first-touch attribution on visits, the honest answer is that the question does not have a meaning.</p>
+</div>
+
+<h3 class="subsec-title">So which model should you choose?</h3>
+<p>There is no correct model, and anyone who tells you there is has stopped thinking. The model is a statement about what your business believes creates value, and the honest practice is to hold it loosely.</p>
+
+<p>Some reasonable starting positions. Paid search is often best judged on <strong>first touch</strong>, since its job is to find people who did not know you. Email and SMS are often best judged on <strong>last touch</strong>, since their job is to close someone who already knew you. Long or considered purchases suit <strong>linear</strong> or <strong>time decay</strong>. And <strong>participation</strong> is unmatched for discovery, because it answers a question none of the others can: which channels were even present in the journeys that converted?</p>
+
+<p>The deepest habit to build is this. Never look at one model alone. Two friends helped you solve a problem, one with logistics and one with money, and asking which of them to thank has no single right answer. It only becomes answerable once you say what you are trying to reward. Put two or three models side by side, watch which channels rise and which collapse, and the disagreement between them will teach you more than any single number ever will.</p>
+
+<h3 class="subsec-title">One thing still unresolved</h3>
+<p>A model needs touch points to work with, and a lookback window decides how far back it may look. But a separate question sits underneath all of it, and it belongs to Marketing Channels specifically: once a channel brings a visitor in, <strong>how long does that channel keep its claim</strong> as the visitor returns over the following days and weeks? At what point does an old paid search click stop counting as the reason someone showed up?</p>
+
+<p>That is the engagement period, and it is where <a href="/adobe-analytics-learning/shape/marketing-channels/engagement-periods/">Engagement Periods</a> goes.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Analytics</div>
+    <p>Attribution models live in Analysis Workspace, not in Admin. In a freeform table, use the column gear icon and check <span class="path">Use non-default attribution model</span>. For side-by-side comparison, drag in the <span class="path">Attribution Panel</span>. Legacy eVar allocation is set separately at <span class="path">Admin &gt; Report Suites &gt; Edit Settings &gt; Conversion &gt; Conversion Variables</span>.</p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title">📚 Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/analyze/analysis-workspace/attribution/models" target="_blank">Adobe Docs: Attribution Models, Containers, and Lookback Windows</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/analyze/analysis-workspace/panels/attribution" target="_blank">Adobe Docs: The Attribution Panel</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics-learn/tutorials/analysis-workspace/attribution-iq/attribution-iq-in-calculated-metrics" target="_blank">Adobe Tutorial: Attribution IQ in Calculated Metrics</a></li>
+    </ul>
+</div>

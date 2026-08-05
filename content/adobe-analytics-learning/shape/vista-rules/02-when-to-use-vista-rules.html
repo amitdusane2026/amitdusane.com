@@ -1,0 +1,93 @@
+---
+slug: "when-to-use-vista-rules"
+title: "When to Use VISTA Rules"
+seotitle: "When to Use VISTA Rules in Adobe Analytics"
+lastmod: 2026-07-18
+description: "Start from no. The cheaper tools to rule out first, the signs it really is a VISTA problem, and how to request and maintain one if it is."
+type: lesson
+modulenum: 9
+sectionnum: 2
+weight: 2
+---
+<p>By the end of <a href="/adobe-analytics-learning/shape/vista-rules/what-are-vista-rules/">What Are VISTA Rules</a> you knew what a VISTA rule can do. That is the easy half. The hard half, the one that separates a careful implementation from an expensive one, is knowing when you should use it. Almost every real VISTA mistake is the same mistake: reaching for it too early. A stakeholder describes a need, someone says the word VISTA, a paid engagement begins, and weeks later it turns out a processing rule or a classification would have done the same job that afternoon, for free, in a screen you control. So think of this section as a filter you run in your own head before you ever contact Adobe. Its job is to talk you out of VISTA wherever something simpler will do, and to leave you confident on the rare occasions when nothing else will.</p>
+
+<h3 class="subsec-title">Start from "no"</h3>
+<p>Every tool comes with a question you ask of it. For most tools the question is "can this do the job?" For VISTA, that question leads you astray, because VISTA can do almost anything, so the answer is almost always yes. The useful question is the opposite one: "can anything else do this job?" VISTA is the most expensive, the slowest, and the least visible tool in the whole shaping layer. That is not a reason to be afraid of it, but it is a reason to put the burden of proof on it. Treat "not VISTA" as your default, and make a requirement earn its way to VISTA by failing everywhere else first. VISTA is a genuine last resort, not a first reach. This entire section is really just that one principle, worked out in practice.</p>
+
+<h3 class="subsec-title">Check these tools first</h3>
+<p>Before a need turns into a VISTA request, walk it past the tools you already own. Most would-be VISTA rules are stopped right here, because Adobe has spent years moving the common jobs out of VISTA and into self-service features. Each row below is a job people once used VISTA for and now rarely should.</p>
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>If the requirement is</th><th>Reach for</th><th>Instead of VISTA, because</th></tr></thead>
+        <tbody>
+            <tr><td>Reshape, map, or overwrite a value inside a single report suite, going forward</td><td><a href="/adobe-analytics-learning/shape/processing-rules/">Processing Rules</a></td><td>Self-service, free, and live the moment you save.</td></tr>
+            <tr><td>Add or relabel metadata on top of values you already collected, including old data</td><td><a href="/adobe-analytics-learning/shape/classifications/">Classifications</a></td><td>Non-destructive and retroactive, driven by a lookup file you upload.</td></tr>
+            <tr><td>Sort incoming traffic into marketing channels</td><td><a href="/adobe-analytics-learning/shape/marketing-channels/">Marketing Channels</a></td><td>A feature built for exactly this, with its own rules.</td></tr>
+            <tr><td>View one suite's data as a filtered subset, without collecting it again</td><td><a href="/adobe-analytics-learning/foundations/report-suites/virtual-report-suites/">Virtual report suites</a></td><td>Defined by a segment on top of an existing suite, no engineering needed.</td></tr>
+            <tr><td>Remove bots or traffic from a handful of known IP addresses</td><td><a href="/adobe-analytics-learning/foundations/report-suites/bot-filtering/">Bot rules</a> or Exclude by IP</td><td>Standard self-service exclusion. Exclude by IP handles up to 50 addresses.</td></tr>
+            <tr><td>A value is simply arriving wrong</td><td>Fix it at the source, in the implementation or <a href="/adobe-analytics-learning/collect/adobe-launch-tags/">Launch</a></td><td>A source fix is visible, versioned, and testable in a way VISTA never is.</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<h3 class="subsec-title">The signs it really is VISTA</h3>
+<p>When a requirement clears that whole table without a match, you are probably in real VISTA territory. A few signatures make it almost certain, because each one is something no self-service tool can reach:</p>
+<ul>
+    <li><strong>It has to cross report suites.</strong> Copying a hit into a second suite, with or without changes on the way, is the classic VISTA-only job. Processing rules live inside a single suite and cannot leave it.</li>
+    <li><strong>It has to write a variable the console will not let you touch,</strong> most often the <code>products</code> string or product-specific events.</li>
+    <li><strong>It needs to look something up in a file you provide,</strong> matching each hit against an outside list. This is the DB VISTA form.</li>
+    <li><strong>It needs exclusion or transformation logic beyond what the standard tools express,</strong> for example an IP exclusion longer than the 50-address limit of Exclude by IP, or one that has to route the matched traffic to its own suite.</li>
+</ul>
+<p>If your requirement shows one of these signs and cannot be met at the source or by a self-service tool, VISTA has earned it. The gauntlet below is the same logic in one picture: a requirement only reaches VISTA if it survives every gate before it.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">The VISTA gauntlet</div>
+    <div class="diagram-content">
+        <div class="flow-horizontal">
+            <div class="flow-step">A new requirement</div>
+            <span class="flow-arrow">&rarr;</span>
+            <div class="flow-step">Fixable at the source?<br><span style="font-weight:400;color:var(--text2)">yes, stop here</span></div>
+            <span class="flow-arrow">&rarr;</span>
+            <div class="flow-step">A self-service tool fits?<br><span style="font-weight:400;color:var(--text2)">yes, stop here</span></div>
+            <span class="flow-arrow">&rarr;</span>
+            <div class="flow-step highlight">VISTA rule<br><span style="font-weight:400;color:var(--text2)">only if both were no</span></div>
+        </div>
+    </div>
+</div>
+
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ The most expensive VISTA rule is the one you never needed</div>
+    <p>Because VISTA can do almost anything, it is easy to reach for it first and discover the cheaper tool later, after the paid engagement has already started. The cost of that mistake is not only money; it is a permanent, invisible rule doing a job a free and visible tool could have done. Run the whole checklist before the word VISTA leaves the room. The time you spend ruling it out is far cheaper than the rule you should not have requested.</p>
+</div>
+
+<h3 class="subsec-title">Even when it is the only tool, ask if it is worth it</h3>
+<p>Passing the tests means VISTA is the only thing that can do the job. It does not automatically mean you should. This is the judgment What Are VISTA Rules hinted at, now made explicit. A VISTA rule is a paid engagement to build, another paid engagement to change, invisible in the interface, and liable to break quietly when your data shifts. Weigh that standing cost against what the requirement is actually worth. A reporting nicety that only VISTA can deliver may still not be worth a permanent line item and an ongoing maintenance risk. Sometimes the wiser answer is to approximate the need more cheaply, or to decide it is not worth doing at all. Choosing not to build a VISTA rule you could have justified is often the most experienced call in the room.</p>
+
+<h3 class="subsec-title">How to request and maintain one</h3>
+<p>Once a requirement has passed both filters, that it can only be VISTA, and that it is worth it, here is how getting one built actually works, because there is no button to press.</p>
+<ul>
+    <li><strong>It goes through your Adobe Account Team.</strong> VISTA rules are a paid engagement with Adobe Professional Services, not a support ticket you file yourself and not a setting you switch on. Your Account Team is the front door.</li>
+    <li><strong>Bring a precise specification.</strong> The clearer you are, the faster and safer the result. Name the report suite, the exact variables and events involved, the precise condition that should trigger the rule, and the exact before and after values you expect. A vague request produces a vague rule, and you cannot open the code to check it.</li>
+    <li><strong>Validate before you trust it.</strong> Because a VISTA rule acts on live data and cannot be undone, confirm its effect carefully once it is in place, ideally against test data or a test suite, before you rely on the numbers.</li>
+    <li><strong>Plan for maintenance.</strong> The initial build is one engagement; every later change is another. And because a rule depends on the exact shape of your incoming data, an implementation change on your side can silently break it. Review your VISTA rules on a schedule, and keep your own written inventory, since Adobe offers no screen to list them. When you need that list, your Account Team or Customer Care can retrieve the rules running on a given suite.</li>
+</ul>
+
+<div class="pro-tip">
+    <div class="pro-tip-hdr">💡 Write the rule before Adobe does</div>
+    <p>The best VISTA outcomes start with a specification so precise that the engineer has almost no room to guess. State it as a plain sentence anyone could check: in this report suite, when this condition is true, set this variable to this value, and otherwise leave it alone. If you can write that sentence without ambiguity, the engagement is short and the result matches your intent. If you cannot yet, you are not ready to request the rule.</p>
+</div>
+
+<p>That is the whole discipline of when. Make VISTA prove it is the only tool that can do the job, then prove the job is worth its lasting cost, then hand Adobe a specification tight enough to build from. Get those three right and VISTA stops being a risky black box and becomes what it is meant to be: the dependable last resort for the problems nothing else can solve. With the decision settled, what remains is to make it concrete. <a href="/adobe-analytics-learning/shape/vista-rules/common-vista-rules/">Common VISTA Rules</a> walks the handful of patterns teams request most often, so you can recognize your own requirement in them and see how each one is framed.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>How to request one</div>
+    <p>There is no VISTA screen in Adobe Analytics. To request a new rule, or to retrieve the rules already running on a report suite, start with your <span class="path">Adobe Account Team &rarr; Adobe Professional Services</span>.</p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title">📚 Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/technotes/vista" target="_blank">Adobe Docs: VISTA Rules in Adobe Analytics</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/technotes/exclude-data" target="_blank">Adobe Docs: Exclude Data in Adobe Analytics</a></li>
+    </ul>
+</div>

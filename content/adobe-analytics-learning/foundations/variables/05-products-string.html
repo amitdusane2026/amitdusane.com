@@ -1,0 +1,158 @@
+---
+slug: "products-string"
+title: "The Products String"
+seotitle: "The Adobe Analytics Products String"
+lastmod: 2026-07-18
+description: "The products variable runs your whole ecommerce funnel through one string. Its six positions, its three delimiters, and the traps that corrupt commerce data."
+type: lesson
+modulenum: 3
+sectionnum: 5
+weight: 5
+---
+<p><a href="/adobe-analytics-learning/foundations/variables/default-reserved-variables/">Default and reserved variables</a> flagged this one as the exception. Most reserved variables do one small job, but the <strong>products</strong> variable runs your entire ecommerce funnel through a single string: what was viewed, added, checked out, and bought, how many, for how much, and even why. It is also where several earlier threads meet: the hit-scoping of props, the attribution behavior of eVars, and the reserved commerce events all converge inside it. Get it right and the whole commerce side of Adobe Analytics works. Get a single delimiter wrong and revenue quietly breaks with no error message. It is the most powerful and the most punishing variable in the product, which is exactly why it earns its own section.</p>
+<h3 class="subsec-title">One string, one order, many products</h3>
+<p>The plural name fools people. You set <em>one</em> <code>s.products</code> string per hit. On a purchase, that single string represents the whole order, and it can carry many products inside it, separated by commas. So "products" means the basket, not one item.</p>
+<h3 class="subsec-title">Anatomy, and the three delimiters that decide everything</h3>
+<p>The string is <strong>positional</strong>: meaning comes from which slot a value sits in, not from any label. Six fields per product, in this fixed order:</p>
+<div class="diagram-box">
+    <div class="diagram-title">📊 Anatomy of s.products (one product)</div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:stretch;margin:6px 0;font-family:Consolas,monospace">
+        <div style="flex:1;min-width:90px;background:var(--bg3);border-radius:6px;padding:8px 10px;text-align:center"><div style="font-size:11px;color:var(--accent);font-weight:700;font-family:sans-serif">CATEGORY</div><div style="font-size:13px;color:var(--text1);margin-top:4px">Apparel</div><div style="font-size:10px;color:var(--text3);font-family:sans-serif">optional</div></div>
+        <div style="display:flex;align-items:center;color:var(--text3);font-weight:700">;</div>
+        <div style="flex:1;min-width:90px;background:var(--bg3);border-radius:6px;padding:8px 10px;text-align:center"><div style="font-size:11px;color:var(--accent);font-weight:700;font-family:sans-serif">PRODUCT</div><div style="font-size:13px;color:var(--text1);margin-top:4px">Blue Shirt</div><div style="font-size:10px;color:var(--text3);font-family:sans-serif">required</div></div>
+        <div style="display:flex;align-items:center;color:var(--text3);font-weight:700">;</div>
+        <div style="flex:1;min-width:70px;background:var(--bg3);border-radius:6px;padding:8px 10px;text-align:center"><div style="font-size:11px;color:var(--accent);font-weight:700;font-family:sans-serif">QTY</div><div style="font-size:13px;color:var(--text1);margin-top:4px">2</div><div style="font-size:10px;color:var(--text3);font-family:sans-serif">units</div></div>
+        <div style="display:flex;align-items:center;color:var(--text3);font-weight:700">;</div>
+        <div style="flex:1;min-width:90px;background:var(--bg3);border-radius:6px;padding:8px 10px;text-align:center"><div style="font-size:11px;color:var(--accent);font-weight:700;font-family:sans-serif">PRICE (total)</div><div style="font-size:13px;color:var(--text1);margin-top:4px">59.98</div><div style="font-size:10px;color:var(--text3);font-family:sans-serif">qty × unit</div></div>
+        <div style="display:flex;align-items:center;color:var(--text3);font-weight:700">;</div>
+        <div style="flex:1;min-width:90px;background:var(--bg3);border-radius:6px;padding:8px 10px;text-align:center"><div style="font-size:11px;color:var(--accent);font-weight:700;font-family:sans-serif">EVENTS</div><div style="font-size:13px;color:var(--text1);margin-top:4px">event1=1|event2=5</div><div style="font-size:10px;color:var(--text3);font-family:sans-serif">pipe-delimited</div></div>
+        <div style="display:flex;align-items:center;color:var(--text3);font-weight:700">;</div>
+        <div style="flex:1;min-width:90px;background:var(--bg3);border-radius:6px;padding:8px 10px;text-align:center"><div style="font-size:11px;color:var(--accent);font-weight:700;font-family:sans-serif">MERCH eVARS</div><div style="font-size:13px;color:var(--text1);margin-top:4px">eVar1=blue|eVar2=cotton</div><div style="font-size:10px;color:var(--text3);font-family:sans-serif">pipe-delimited</div></div>
+    </div>
+</div>
+<p>Three delimiters do all the structural work, and confusing them is the number-one cause of broken commerce data:</p>
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>Delimiter</th><th>Separates</th><th>Example</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Semicolon <code>;</code></strong></td><td>the six fields <em>within</em> one product</td><td><code>Apparel;Blue Shirt;2</code></td></tr>
+            <tr><td><strong>Comma <code>,</code></strong></td><td>one product from the <em>next</em></td><td><code>Shirt;1;29.99,Socks;3;26.91</code></td></tr>
+            <tr><td><strong>Pipe <code>|</code></strong></td><td>multiple events, or multiple merchandising eVars, <em>inside</em> a field</td><td><code>event1=1|event2=5</code></td></tr>
+        </tbody>
+    </table>
+</div>
+<h3 class="subsec-title">What becomes which KPI</h3>
+<p>Three pieces of the string turn directly into the metrics your business lives by:</p>
+<div class="diagram-box">
+    <div class="diagram-title">📊 From string to top-line KPI</div>
+    <div style="display:flex;flex-direction:column;gap:10px;margin:4px 0">
+        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap"><span style="font-family:Consolas,monospace;font-size:13px;background:var(--bg3);color:var(--text1);padding:6px 12px;border-radius:6px">purchase event</span><span style="color:var(--accent);font-weight:700;font-size:18px">→</span><span style="background:var(--accent-light);color:var(--accent);font-weight:700;padding:6px 14px;border-radius:6px;font-size:14px">Orders</span></div>
+        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap"><span style="font-family:Consolas,monospace;font-size:13px;background:var(--bg3);color:var(--text1);padding:6px 12px;border-radius:6px">price field</span><span style="color:var(--accent);font-weight:700;font-size:18px">→</span><span style="background:var(--accent-light);color:var(--accent);font-weight:700;padding:6px 14px;border-radius:6px;font-size:14px">Revenue</span></div>
+        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap"><span style="font-family:Consolas,monospace;font-size:13px;background:var(--bg3);color:var(--text1);padding:6px 12px;border-radius:6px">quantity field</span><span style="color:var(--accent);font-weight:700;font-size:18px">→</span><span style="background:var(--accent-light);color:var(--accent);font-weight:700;padding:6px 14px;border-radius:6px;font-size:14px">Units</span></div>
+    </div>
+</div>
+<p><strong>The catch most people hit at least once:</strong> the purchase event must be explicitly fired in <code>s.events</code> for Orders to register, and quantity and price are only counted on the hit where purchase fires. A products string without the purchase event on the order page means revenue silently goes nowhere.</p>
+<h3 class="subsec-title">It has no memory: set it on every funnel hit</h3>
+<p>Here's the trait that surprises people: the products variable does <strong>not persist</strong>. It's hit-scoped, like a prop (the pencil behavior from <a href="/adobe-analytics-learning/foundations/variables/props-traffic-variables/">props</a>), the value vanishes after the hit it rode in on, even though it carries events and merchandising eVars that behave with attribution like <a href="/adobe-analytics-learning/foundations/variables/evars-conversion-variables/">eVars</a>. So it straddles both worlds: a non-persistent carrier of persistent data. Practically, that means you must re-send <code>s.products</code> on <em>every</em> funnel hit where product context matters, alongside the reserved commerce events from <a href="/adobe-analytics-learning/foundations/variables/default-reserved-variables/">default and reserved variables</a> (<code>prodView</code>, <code>scAdd</code>, <code>scCheckout</code>, <code>purchase</code>).</p>
+<div class="diagram-box">
+    <div class="diagram-title">📊 No carry-over: re-send s.products at each stage</div>
+    <div class="diagram-content">
+        <div class="flow-horizontal">
+            <div class="flow-step">Product View<br><span style="font-size:11px;color:var(--text2);font-family:Consolas,monospace">prodView</span></div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-step">Cart Add<br><span style="font-size:11px;color:var(--text2);font-family:Consolas,monospace">scAdd</span></div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-step">Checkout<br><span style="font-size:11px;color:var(--text2);font-family:Consolas,monospace">scCheckout</span></div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-step highlight">Purchase<br><span style="font-size:11px;color:var(--accent);font-family:Consolas,monospace">purchase</span></div>
+        </div>
+    </div>
+</div>
+<h3 class="subsec-title">Product-level events (and the caveat that bites)</h3>
+<p>Slot 5 lets you attribute a metric to a single product, give one product an event another doesn't get. Three rules govern it:</p>
+<ul>
+    <li><strong>It must also appear in <code>s.events</code>.</strong> Otherwise Adobe ignores it entirely. The events variable is the gatekeeper; the products string only assigns the event to a product.</li>
+    <li><strong>Don't set the same numeric event in both places.</strong> If a numeric value is set in both <code>s.events</code> and the products string, the events value wins.</li>
+    <li><strong>Usually numeric or currency, occasionally counter.</strong> They typically carry a per-product number (product revenue, shipping), but a counter is allowed, the same event types from <a href="/adobe-analytics-learning/foundations/variables/events-success-events/">events</a>.</li>
+</ul>
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">JavaScript</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>// event1 must be in BOTH places, or it won't count
+s.events = "purchase,event1";
+s.products = "Apparel;Blue Shirt;2;59.98;event1=5;eVar1=blue";
+
+// Two products, an event credited only to the second
+s.events = "event1";
+s.products = "Apparel;Shirt;1;29.99,Footwear;Socks;3;26.91;event1=3";</pre></div>
+</div>
+<h3 class="subsec-title">Merchandising eVars: bound to a product, not the visitor</h3>
+<p>A normal eVar attaches its value to the visitor. A <strong>merchandising eVar</strong>, first mentioned back in <a href="/adobe-analytics-learning/foundations/variables/evars-conversion-variables/">the eVar section</a>, binds it to a specific product instead, so you can answer "revenue by the on-site search term that surfaced <em>this</em> product." Two syntaxes:</p>
+<ul>
+    <li><strong>Product syntax</strong> (recommended): set the eVar right in slot 6 of the products string. Use this when you know the value at the moment the product is set.</li>
+    <li><strong>Conversion variable syntax</strong>: set the eVar separately and bind it via a binding event, for when the value isn't known at product time.</li>
+</ul>
+<p><strong>The conversion-syntax trap:</strong> the eVar value, the products variable, and the binding event must all line up on the right hit, or the instance lands in "None / Unspecified."</p>
+<p>The mindset shift: don't treat a merchandising eVar like a normal one. It doesn't simply persist to the visitor, its association is product-scoped and deliberate, so you repopulate or rebind it as products change.</p>
+<h3 class="subsec-title">Order-level vs product-level: put data where it belongs</h3>
+<p>A clean design separates the two. Mixing them up is one of the most common implementation design mistakes, and it's painful to unwind later.</p>
+<div class="cards">
+    <div class="card">
+        <div class="card-icon" style="background:rgba(167,139,250,0.2);">📦</div>
+        <div class="card-title">Outside the string (order-level)</div>
+        <div class="card-desc">Facts about the whole order: order ID, user ID, order date, payment method. These belong in their own eVars and events, not in products.</div>
+    </div>
+    <div class="card">
+        <div class="card-icon" style="background:rgba(16,185,129,0.2);">🏷️</div>
+        <div class="card-title">Inside the string (product-level)</div>
+        <div class="card-desc">Facts about a single product: color, size, seller, finding method. These belong inside the products string as merchandising eVars.</div>
+    </div>
+</div>
+<div class="info-box">
+    <div class="info-hdr">ℹ️ Why the products string never truncates</div>
+    <p>Props cap at 100 bytes and eVars at 255, but the products string can hold up to 64k bytes, effectively unlimited for any real basket. When a hit's request grows long (beyond about 2047 bytes), AppMeasurement automatically switches the beacon from a GET to a POST request, and POST data is not truncated regardless of length. So large multi-product orders are handled fine, you just won't see the whole string in the request URL when you're debugging a GET.</p>
+</div>
+<h3 class="subsec-title">Build it once, the right way</h3>
+<p>Don't hand-concatenate the products string inside each Launch rule, that's how delimiter bugs breed. The durable pattern: have developers expose product data as parallel <strong>arrays</strong> in the data layer with one entry per product, even when there's only one, then write a single formatting function, placed just below <code>doPlugins</code> so it's globally available, that assembles the string correctly. Call that one function from every relevant Tags rule, cart add, checkout, purchase. One function, one source of truth, no per-rule string-building.</p>
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">JavaScript</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>// Data layer exposes parallel arrays (works for 1 or many products)
+// digitalData.products.name[], .category[], .qty[], .price[]
+
+// One global formatter, defined just below doPlugins
+function buildProducts(p) {
+  return p.name.map(function (n, i) {
+    return [p.category[i], n, p.qty[i], p.price[i]].join(";");
+  }).join(",");   // products joined by comma
+}
+// Reuse from any rule:
+s.products = buildProducts(digitalData.products);</pre></div>
+</div>
+<div class="pro-tip">
+    <div class="pro-tip-hdr">💡 Inspect it, don't trust it blind</div>
+    <p>Use a debugger to <em>see</em> the products string broken into its products and fields. Adobe's own <a href="https://experienceleague.adobe.com/en/docs/experience-platform/debugger/home" target="_blank">Experience Platform Debugger</a> is the official option; many practitioners also use a community Chrome extension that lays out each product and parameter clearly (<a href="https://chromewebstore.google.com/detail/bdingoflfadhnjohjaplginnpjeclmof" target="_blank">Adobe Analytics debugger extension</a>, third-party, not an Adobe product). Either way these are read-only inspectors, perfect for verifying the string, not for fixing it.</p>
+</div>
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ The traps that silently corrupt commerce data</div>
+    <p>This variable punishes small mistakes without a single error message. The recurring ones:</p>
+    <ul>
+        <li><strong>A missing semicolon</strong> shifts every later value into the wrong slot, with no error.</li>
+        <li><strong>Price is the line total</strong> (qty × unit), but the Tags "Product String" extension takes the unit price and multiplies, so know which your tool expects.</li>
+        <li><strong>A duplicate purchaseID discards the entire hit</strong>, every product, eVar, and event on it, which makes refreshable confirmation pages dangerous.</li>
+        <li><strong>Reserved characters break the string:</strong> never put a comma, semicolon, or pipe inside a product name or value.</li>
+        <li><strong>An event missing from <code>s.events</code></strong> is silently ignored, even if it's in the products string.</li>
+        <li><strong>A conversion-syntax merchandising eVar without its binding event</strong> lands in "None."</li>
+    </ul>
+</div>
+<p>One last thread to pull. Underneath all its commerce machinery, the products string is really a way to pack many values into a single hit: several products, each with its own events and eVars. That idea, many values carried in one hit, is common enough to have a dedicated variable type of its own, <a href="/adobe-analytics-learning/foundations/variables/list-variables-list-props/">List Variables and List Props</a>, and that is exactly what list variables covers.</p>
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to Find in Adobe Analytics</div>
+    <p>Set via implementation/Tags, not report suite settings. Commerce reports appear under <span class="path">Components → Dimensions → Products</span> and the Commerce metrics (Orders, Revenue, Units).</p>
+</div>
+<div class="ref-box">
+    <div class="ref-title">📚 Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/implementation/vars/page-vars/products" target="_blank">Adobe Docs: Products Variable</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/implementation/vars/page-vars/evar-merchandising" target="_blank">Adobe Docs: Merchandising eVars</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/implementation/vars/page-vars/events/event-serialization" target="_blank">Adobe Docs: Event Serialization &amp; purchaseID</a></li>
+    </ul>
+</div>

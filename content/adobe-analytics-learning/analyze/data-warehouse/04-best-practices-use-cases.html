@@ -1,0 +1,73 @@
+---
+slug: "best-practices-use-cases"
+title: "Best Practices and Use Cases"
+lastmod: 2026-07-15
+type: lesson
+modulenum: 16
+sectionnum: 4
+weight: 4
+---
+<p>Use Data Warehouse effectively by understanding its strengths and optimal use cases.</p>
+                <h3 class="subsec-title">When to Use Data Warehouse</h3>
+                <div class="tbl-wrap">
+                    <table>
+                        <thead><tr><th>Use Case</th><th>Why Data Warehouse</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>Data lake ingestion</strong></td><td>Bulk export to Snowflake, BigQuery, Redshift</td></tr>
+                            <tr><td><strong>Finance reconciliation</strong></td><td>Unsampled revenue data for accounting</td></tr>
+                            <tr><td><strong>Custom attribution</strong></td><td>Raw data for external attribution models</td></tr>
+                            <tr><td><strong>ML/AI training</strong></td><td>Historical data for model development</td></tr>
+                            <tr><td><strong>Compliance audits</strong></td><td>Complete data records for regulatory needs</td></tr>
+                            <tr><td><strong>High-cardinality reports</strong></td><td>Product-level data without sampling</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 class="subsec-title">When NOT to Use Data Warehouse</h3>
+                <ul>
+                    <li><strong>Real-time analysis:</strong> Data Warehouse is queued, not instant</li>
+                    <li><strong>Interactive exploration:</strong> Use Workspace for ad-hoc analysis</li>
+                    <li><strong>Small datasets:</strong> Overkill for simple reports</li>
+                    <li><strong>Visualizations:</strong> DW exports raw data, not charts</li>
+                </ul>
+
+                <h3 class="subsec-title">Performance Tips</h3>
+                <div class="code-block">
+                    <div class="code-hdr"><span class="code-lang">Optimization Guidelines</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+                    <div class="code-body"><pre>1. LIMIT DATE RANGES
+   ✓ Request 1 month at a time vs. 12 months
+   ✓ Use scheduling for recurring needs
+
+2. MINIMIZE DIMENSIONS
+   ✓ Only include dimensions you'll actually use
+   ✓ Avoid high-cardinality dimensions when possible
+
+3. USE SEGMENTS WISELY
+   ✓ Filter at request level, not post-export
+   ✓ Simpler segments process faster
+
+4. SCHEDULE OFF-PEAK
+   ✓ Avoid month-end when others request
+   ✓ Early morning slots process faster
+
+5. MONITOR QUEUE
+   ✓ Check request status regularly
+   ✓ Cancel stuck or unnecessary requests</pre></div>
+                </div>
+
+                <div class="warn-box">
+                    <div class="warn-hdr">⚠️ Request Limits</div>
+                    <ul>
+                        <li>Processing time varies: minutes to hours depending on complexity</li>
+                        <li>Large requests may be queued behind others</li>
+                        <li>Extremely large requests (billions of rows) may timeout</li>
+                        <li>Scheduled reports count against your organization's queue</li>
+                    </ul>
+                </div>
+                <div class="ref-box">
+                    <div class="ref-title">📚 Learn More</div>
+                    <ul>
+                        <li><a href="https://experienceleague.adobe.com/docs/analytics/export/data-warehouse/data-warehouse-requests-manage.html" target="_blank">Adobe Docs: Manage Data Warehouse Requests</a></li>
+                    </ul>
+                </div>
+            

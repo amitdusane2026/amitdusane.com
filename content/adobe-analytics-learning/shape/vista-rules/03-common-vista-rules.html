@@ -1,0 +1,79 @@
+---
+slug: "common-vista-rules"
+title: "Common VISTA Rules"
+seotitle: "Common VISTA Rules in Adobe Analytics"
+lastmod: 2026-07-15
+description: "The VISTA rules people actually use: copying hits to a second report suite, routing traffic, fixing what the console cannot reach, and DB VISTA lookups."
+type: lesson
+modulenum: 9
+sectionnum: 3
+weight: 3
+---
+<p>You now know what a VISTA rule is and how to decide whether you need one. This section makes it concrete. VISTA can technically do almost anything, but in real projects it shows up in a small number of recognizable shapes. Learn these shapes and two things happen: you can spot genuine VISTA territory the moment a requirement lands, and you can tell it apart from the far larger set of needs a self-service tool should handle. Everything below still lives under the discipline from <a href="/adobe-analytics-learning/shape/vista-rules/when-to-use-vista-rules/">When to Use VISTA Rules</a>. Each pattern is a real reason teams call Adobe, and each is still a paid, invisible rule you reach for only when nothing cheaper will do.</p>
+
+<h3 class="subsec-title">Copy a hit into a second report suite</h3>
+<p>This is the pattern VISTA is most known for, because almost nothing else can do it. Your implementation sends data into one <a href="/adobe-analytics-learning/foundations/report-suites/">report suite</a>. A VISTA rule can take those same hits and copy them into a second suite, reshaping the data on the way if you want. A common example: your main suite collects everything, and leadership wants a separate, cleaner suite that receives only purchases, with customer identifiers stripped out. Another: several regional suites need to feed one combined suite for a global view.</p>
+<p>A processing rule cannot help here, for a familiar reason. It lives inside a single report suite and cannot reach across to another. Copying a hit somewhere else, and shaping it differently for that destination, is exactly the kind of cross-suite work that only a rule sitting in Adobe's own pipeline can do.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">One hit, two suites</div>
+    <div class="diagram-content">
+        <div class="flow-horizontal">
+            <div class="flow-step">Incoming hits</div>
+            <span class="flow-arrow">&rarr;</span>
+            <div class="flow-step">VISTA rule</div>
+            <span class="flow-arrow">&rarr;</span>
+            <div class="flow-step highlight">Two report suites<br><span style="font-weight:400;color:var(--text2)">primary as collected, secondary a reshaped copy</span></div>
+        </div>
+    </div>
+</div>
+
+<p>The trap: the two suites now differ on purpose, and the logic that makes them differ is invisible in the interface. Months later, someone compares the suites, finds they do not match, and has no way to see why. Write down what the copy does and how the second suite differs, because the rule itself will not tell you.</p>
+
+<h3 class="subsec-title">Exclude or route traffic by custom logic</h3>
+<p>Adobe's built-in tools handle ordinary exclusion well. Bot rules remove known bots, and Exclude by IP removes traffic from a short list of addresses, up to 50 of them. VISTA takes over when the need outgrows those limits. Picture a partner IP list that runs to several hundred addresses and changes every week, or an exclusion that depends on more than an address, some combination of conditions the standard tool cannot express. A VISTA rule can match on any dimension and route the traffic accordingly, often into a separate report suite set aside for excluded data so it can still be inspected if needed.</p>
+<p>Why not the standard tool? Because it caps out. Exclude by IP stops at 50 addresses and cannot express complex conditions, so a large or conditional exclusion has nowhere else to go.</p>
+<p>The trap: an exclusion rule quietly shapes what your reports even contain. If it is too broad, you lose real data and never see it go missing. With no undo and no interface, an over-eager exclusion can distort a report for a long time before anyone traces it back.</p>
+
+<h3 class="subsec-title">Set or fix a variable the console cannot reach</h3>
+<p>A processing rule can overwrite most variables, but not all. The clearest gap is the <code>products</code> string and product-specific events, which a processing rule is not allowed to write. When a purchase is arriving with a malformed <code>products</code> value, or a product-level detail needs setting after collection, a VISTA rule can reach the field the console will not. More broadly, VISTA can modify any variable, conditionally or across the board, which also covers the occasional case where a value needs logic more involved than overwrite, delete, or set event can express.</p>
+<p>Why not a processing rule? For <code>products</code>, because it is simply off-limits to the console. For the rest, because the change is more than the three actions can describe.</p>
+<p>The trap: <code>products</code> feeds revenue and merchandising reporting, the numbers people trust most. A rule that reshapes it acts permanently on live commerce data, so a mistake here is not a cosmetic dimension error, it is wrong money in a report. Prove the logic against test data before it touches production.</p>
+
+<h3 class="subsec-title">Enrich or filter against a file you upload (DB VISTA)</h3>
+<p>Sometimes the value you need is not in the hit at all. It lives in a table only your business keeps. A store code arrives, and you want the region, manager, or format that goes with it. The lookup form of VISTA, often called DB VISTA, handles this. You upload a file to an Adobe location, and the rule matches each incoming hit against that file, either to enrich it with a value from the table or to decide whether to keep it. When the table changes, you provide an updated file.</p>
+<p>Why not a processing rule or a classification? A processing rule cannot look anything up outside the hit. A <a href="/adobe-analytics-learning/shape/classifications/">classification</a> can join against an uploaded file, but it does something different: it adds a label on top of stored data, after the fact, without changing the original value, and it applies to history as well as new data. DB VISTA changes the data at collection, going forward only. If you want the enriched value baked into the data as it lands, that is VISTA. If you want a non-destructive label you can also apply to old data, that is a classification.</p>
+<p>The trap: the rule is only as fresh as the file behind it. Let the uploaded table drift out of date and the rule keeps matching against stale values, silently. This is that fragility in its most literal form.</p>
+
+<h3 class="subsec-title">The catalog at a glance</h3>
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>Pattern</th><th>What the VISTA rule does</th><th>Why a self-service tool cannot</th></tr></thead>
+        <tbody>
+            <tr><td>Copy a hit to a second suite</td><td>Sends the same hits into another report suite, reshaped for that destination</td><td>Processing rules live in one suite and cannot cross to another.</td></tr>
+            <tr><td>Exclude or route by custom logic</td><td>Matches on any dimension and removes or redirects the traffic</td><td>Exclude by IP caps at 50 addresses and cannot express complex conditions.</td></tr>
+            <tr><td>Reach a blocked variable</td><td>Writes fields the console will not, chiefly <code>products</code> and product events</td><td>Processing rules are barred from <code>products</code> and merchandising events.</td></tr>
+            <tr><td>Enrich or filter via a file (DB VISTA)</td><td>Matches each hit against an uploaded table to add a value or filter</td><td>Processing rules cannot look outside the hit; classifications change labels, not the collected data.</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="pro-tip">
+    <div class="pro-tip-hdr">💡 The pattern is a clue, not a permission slip</div>
+    <p>Recognizing your requirement in this list does not mean VISTA is the answer. It means VISTA is capable, which is not the same thing. Even the classic cross-suite copy sometimes has a lighter alternative in a virtual report suite. So run the requirement through the gauntlet first, and let the pattern here only confirm the shape once you have already ruled everything else out.</p>
+</div>
+
+<p>That is the working vocabulary of VISTA: copy a hit to another suite, exclude or route by custom logic, reach a variable the console cannot, and enrich or filter against a file you maintain. Nearly every real VISTA rule is a version of one of these. Seen together, they show the true shape of the tool. VISTA is narrow, not general. It is the specialist you call for the few jobs genuinely out of everyone else's reach, and the price of that reach is cost, waiting, and a rule you cannot see. Used with the discipline of knowing when, it is a powerful last line in your data shaping. That closes VISTA rules. The shaping layer continues with the tools that pick up where this one stops: <a href="/adobe-analytics-learning/shape/marketing-channels/">Marketing Channels</a> for sorting traffic sources, and <a href="/adobe-analytics-learning/shape/classifications/">Classifications</a> for labeling and correcting data after it lands.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>How to request one</div>
+    <p>There is no VISTA screen in Adobe Analytics. To request any of these rules, or to retrieve the rules already running on a report suite, start with your <span class="path">Adobe Account Team &rarr; Adobe Professional Services</span>.</p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title">📚 Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/technotes/vista" target="_blank">Adobe Docs: VISTA Rules in Adobe Analytics</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/technotes/exclude-data" target="_blank">Adobe Docs: Exclude Data in Adobe Analytics</a></li>
+    </ul>
+</div>

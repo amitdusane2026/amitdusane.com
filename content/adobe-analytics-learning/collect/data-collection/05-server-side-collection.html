@@ -1,0 +1,86 @@
+---
+slug: "server-side-collection"
+title: "Server-Side Collection"
+seotitle: "Server-Side Collection in Adobe Analytics"
+lastmod: 2026-07-15
+description: "Sending data to Adobe Analytics without a browser. The three server-side paths, the identity problem every server hit creates, and the timestamp trap."
+type: lesson
+modulenum: 4
+sectionnum: 5
+weight: 5
+---
+<p>Everything so far has happened inside a browser. A person loads a page, a library fires, a pixel goes out. But step back and look at where your most important events actually occur, and a lot of them happen nowhere near a browser. The refund processed at 2am by a back-office system. The order taken over the phone by a call-center agent. The subscription that quietly lapses when a renewal fails. The purchase rung up at a physical till. None of these involve a page load, so none of them can be caught by AppMeasurement or the Web SDK. And yet they are often the events the business cares about most.</p>
+<p>Server-side collection is how you get those into Adobe Analytics. Instead of the browser sending the hit, one of your own servers does, talking straight to Adobe's collection servers, with no page, no JavaScript, and no tag manager anywhere in the picture.</p>
+
+<h3 class="subsec-title">What changes when the browser is gone</h3>
+<p>The mechanics are not the interesting part, but you should know the shape. You construct the data for a hit and your server sends it to Adobe directly. The thing to internalize is what you lose by leaving the browser behind: all the context that used to arrive for free is now gone. There is no cookie, so the hit does not know who the visitor is. There is no automatic user agent, no referrer, no screen size, none of the ambient detail the browser quietly attached to every beacon. A server-side hit contains exactly what you put in it and nothing else. That sounds obvious, but it is the source of both problems that make this section worth its weight.</p>
+<p>One consequence of that missing context bites harder than the rest, and it is worth calling out early. With no user agent on the hit, Adobe falls back to the user agent of the machine that actually sent it, your server, which typically looks like <code>Apache-HttpClient</code> or a similar library string. Adobe's <a href="/adobe-analytics-learning/foundations/report-suites/bot-filtering/">bot rules</a> can read that as non-human traffic and quietly exclude the hit. So a server-side hit should carry a real, deliberate user agent, or mapped client hints, or a chunk of your most important data can vanish into the bot reports with no error to warn you.</p>
+
+<h3 class="subsec-title">The three ways to send it</h3>
+<p>There are three mechanisms, and they map neatly onto the two worlds already drawn.</p>
+<ul>
+    <li><strong>Data Insertion API:</strong> the classic, AppMeasurement-era method. One hit at a time, sent as XML or a query string. It is the original server-side path and it still works. Adobe has not put it on a retirement schedule, but it now recommends the Bulk Data Insertion API for new work, so it is not where a fresh implementation should start.</li>
+    <li><strong>Bulk Data Insertion API:</strong> the one Adobe recommends for new server-side work in the Analytics world. You send batch files of events (CSV, one event per row) rather than one call at a time, which is what you want for volume and for loading offline or historical data. One caution: bulk-inserted data is permanent, so validate a batch before you ingest it, because there is no clean undo.</li>
+    <li><strong>Edge Network Server API:</strong> the modern path that belongs to the Web SDK and Experience Platform world from the last two sections. Your server sends to the same Edge Network that alloy.js feeds, and the datastream fans it out from there.</li>
+</ul>
+<p>You do not need the payload details to make the decision. Which one you reach for follows directly from which world you are already living in: classic Analytics, or the Edge.</p>
+
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ Do not confuse this with the Analytics 1.4 API sunset</div>
+    <p>The Adobe Analytics <strong>1.4 reporting and admin APIs</strong>, along with WSSE authentication, reach end of life on <strong>August 12, 2026</strong>. The <strong>Data Insertion API is explicitly excluded</strong> from that retirement and remains supported. The two get conflated because both carry the "1.4" label, but only the reporting and admin side is sunsetting. Dates move, so confirm against Experience League before planning around either.</p>
+</div>
+
+<h3 class="subsec-title">The real problem: who does this hit belong to?</h3>
+<p>This is the heart of server-side collection, and it is worth slowing down for. A browser hit gets its identity for free. The cookie is right there, so Adobe knows this hit belongs to the same visitor as the last one. A server-side hit has none of that. It arrives with no idea whose action it represents, unless you tell it.</p>
+<p>So you have to supply the visitor identity yourself, the ECID (the Marketing Cloud ID) or a custom visitor ID, captured earlier when the person was in a browser and then carried through your systems so it can be attached to the offline event later. Get this right and the refund processed overnight attaches to the very same person who browsed your pricing page last week. The online and offline halves of one human being finally join up.</p>
+<div class="diagram-box">
+    <div class="diagram-title">🔗 The identity handoff: one ID, carried across the gap</div>
+    <div class="diagram-content">
+        <div class="flow-horizontal">
+            <div class="flow-step">Browser<br><span style="font-size:11px;color:var(--text2,#475569)">ECID captured</span></div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-step">Your systems<br><span style="font-size:11px;color:var(--text2,#475569)">ID stored with the order</span></div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-step highlight">Offline event<br><span style="font-size:11px;color:var(--text2,#475569)">same ID reattached</span></div>
+        </div>
+    </div>
+</div>
+<p>Get it wrong and the data is quietly useless in one of two ways. Send no usable identity, and every server hit becomes a brand-new stranger, inflating your visitor counts and attaching to no real journey. Reuse a single ID for everyone, and the opposite happens: every visitor collapses into one, and your eVar and event allocation goes haywire. Remember from <a href="/adobe-analytics-learning/collect/data-collection/appmeasurement-library/">the AppMeasurement section</a> that Visitors is not a stored number, it is counted from the identity on each hit at report time. Server-side is where that truth gets sharp, because here the identity is entirely in your hands.</p>
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ The make-or-break decision</div>
+    <p>Before you send a single server-side hit, decide how you will identify the visitor and how that ID travels from the browser, where it was created, to the back-office system that fires the offline event. This is not a detail to sort out later. It is the thing that determines whether server-side data is worth collecting at all.</p>
+</div>
+
+<h3 class="subsec-title">The timestamp trap</h3>
+<p>The second gotcha comes from timing. Offline events are usually late, the hit reaches Adobe minutes, hours, or days after the thing actually happened. So you attach a timestamp telling Adobe when it really occurred, not when it arrived. Simple enough, except that report suites are particular about timestamps, and getting this wrong silently drops your data.</p>
+<p>Every report suite carries one of three timestamp settings:</p>
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>Setting</th><th>What it accepts</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Timestamp not allowed</strong></td><td>Only hits without a timestamp, the classic JavaScript-beacon setting. Timestamped hits are filtered out.</td></tr>
+            <tr><td><strong>Timestamp required</strong></td><td>Only hits that carry a timestamp. Built for server-side and offline data. Untimestamped hits are discarded.</td></tr>
+            <tr><td><strong>Timestamp optional</strong></td><td>Accepts both, and now the default for newly created suites. Made for hybrid cases, but genuinely tricky to run cleanly.</td></tr>
+        </tbody>
+    </table>
+</div>
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ Timestamped and non-timestamped data cannot share a report suite</div>
+    <p>A report suite set to require timestamps <strong>will reject ordinary JavaScript beacons</strong>, because those arrive without one. Required and Not Allowed are two separate worlds. "Optional" exists for hybrids, and it carries its own awkward rules that are easy to get subtly wrong. Decide this before a single hit lands, because a report suite that has been collecting one kind of data for six months is not something you casually reconfigure.</p>
+</div>
+
+<p>The trap hidden in that table is the one people hit hardest: a report suite collecting timestamped data cannot also collect ordinary JavaScript beacons, because those arrive without timestamps. Required and not-allowed are two separate worlds, and you cannot casually mix them in one suite. "Optional" exists for hybrids but comes with its own awkward rules and is easy to get subtly wrong. There is also an ordering requirement for batch and historical loads: a given visitor's events must be sent in chronological order, or attribution falls apart. The practical upshot is simple: server-side data usually wants its own timestamp-enabled report suite, and that is a decision to make up front, not after the data starts flowing.</p>
+
+<h3 class="subsec-title">When to reach for it</h3>
+<p>Server-side is not a replacement for client-side collection, it is the complement that catches what the browser cannot see: offline and back-office transactions, events from devices that have no browser at all (kiosks, set-top boxes, connected hardware), and bulk loads of historical data. It is also how you genuinely unite a customer's online and offline behavior into one view, provided you have solved identity.</p>
+<p>So the two questions to settle before anything else are the two this section has been about: how the visitor is identified across the browser-to-backend gap, and how timestamps and report suites are arranged. Solve those two, and the rest is just plumbing.</p>
+
+<p>Identity and timestamps have been framed here as server-side problems, the price of leaving the browser behind. There is one more collection method where they are not edge cases at all but the ordinary daily condition, because the device drops off the network constantly and the hit routinely arrives long after the action. <a href="/adobe-analytics-learning/collect/data-collection/mobile-sdk/">Mobile SDK</a> is where collection leaves the web entirely.</p>
+
+<div class="ref-box">
+    <div class="ref-title">📚 Learn More</div>
+    <ul>
+        <li><a href="https://developer.adobe.com/analytics-apis/docs/2.0/guides/endpoints/bulk-data-insertion/" target="_blank">Adobe Docs: Bulk Data Insertion API</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/admin/admin-tools/manage-report-suites/edit-report-suite/report-suite-general/timestamp-configuration" target="_blank">Adobe Docs: Timestamp configuration for report suites</a></li>
+    </ul>
+</div>

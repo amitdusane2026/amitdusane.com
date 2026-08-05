@@ -1,0 +1,61 @@
+---
+slug: "common-issues-solutions"
+title: "Common Issues and Solutions"
+seotitle: "Common Adobe Analytics Issues and Fixes"
+lastmod: 2026-07-15
+type: lesson
+modulenum: 20
+sectionnum: 5
+weight: 5
+---
+<p>Learn to quickly diagnose and resolve the most frequent implementation problems.</p>
+                <h3 class="subsec-title">Troubleshooting Guide</h3>
+                <div class="tbl-wrap">
+                    <table>
+                        <thead><tr><th>Symptom</th><th>Possible Causes</th><th>Solution</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>No data at all</strong></td><td>Library not loading, wrong RSID, blocked requests</td><td>Check Network tab for beacon, verify RSID</td></tr>
+                            <tr><td><strong>Missing page views</strong></td><td>s.t() not called, SPA issues</td><td>Verify tracking call fires on each view</td></tr>
+                            <tr><td><strong>Wrong report suite</strong></td><td>Hardcoded RSID, environment mismatch</td><td>Check s.account or Launch rules</td></tr>
+                            <tr><td><strong>Duplicate data</strong></td><td>Multiple libraries, double firing rules</td><td>Audit tags, check for multiple s.t() calls</td></tr>
+                            <tr><td><strong>Variables not set</strong></td><td>Timing issues, scope problems</td><td>Verify data layer populates before tag fires</td></tr>
+                            <tr><td><strong>Events not firing</strong></td><td>Missing from events string, serialization issues</td><td>Check s.events value in debugger</td></tr>
+                            <tr><td><strong>Revenue discrepancy</strong></td><td>Currency issues, products string format</td><td>Validate products string format exactly</td></tr>
+                            <tr><td><strong>High bounce rate</strong></td><td>Beacon on non-content pages, bot traffic</td><td>Review what pages fire tracking</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 class="subsec-title">Products String Validation</h3>
+                <div class="code-block">
+                    <div class="code-hdr"><span class="code-lang">Common Products String Errors</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+                    <div class="code-body"><pre>Correct Format:
+Category;Product;Quantity;Price;Events;Merchandising
+
+Example:
+"Shoes;SKU123;1;99.99;event1=1;eVar10=red"
+
+Common Errors:
+✗ Missing semicolons: "ShoesSKU12319999"
+✗ Wrong order: "SKU123;Shoes;99.99;1"
+✗ Spaces in values: "Shoes; SKU123; 1; 99.99"
+✗ Currency symbols: "Shoes;SKU123;1;$99.99"
+✗ Comma decimals: "Shoes;SKU123;1;99,99"
+
+Validation Tips:
+- Always 6 fields (use empty semicolons if needed)
+- Numeric fields: no currency symbols or commas
+- Multiple products: separate with comma
+- Test with simple values first</pre></div>
+                </div>
+                <div class="pro-tip">
+                    <div class="pro-tip-hdr">💡 Pro Tip</div>
+                    <p>Create a QA spreadsheet that lists every variable, its expected value, and where it should appear. Work through this systematically when validating implementations to ensure nothing is missed.</p>
+                </div>
+                <div class="ref-box">
+                    <div class="ref-title">📚 Learn More</div>
+                    <ul>
+                        <li><a href="https://experienceleague.adobe.com/docs/analytics/implementation/validate/debugger.html" target="_blank">Adobe Docs: Validate Implementation</a></li>
+                    </ul>
+                </div>
+            

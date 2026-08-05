@@ -1,0 +1,228 @@
+---
+slug: "classifications-overview"
+title: "Classifications Overview"
+seotitle: "Classifications in Adobe Analytics"
+lastmod: 2026-07-15
+description: "Adobe Analytics can only report what a server call carried. Classifications get around that, retroactively, without a single line of code."
+type: lesson
+modulenum: 11
+sectionnum: 1
+weight: 1
+---
+<p>Everything you have built so far has done its work on the way in. <a href="/adobe-analytics-learning/shape/processing-rules/">Processing Rules</a> reach into a hit and rewrite a value before it is stored. <a href="/adobe-analytics-learning/shape/vista-rules/">VISTA Rules</a> do the same thing further upstream and with fewer restraints. <a href="/adobe-analytics-learning/shape/marketing-channels/">Marketing Channels</a> read the arrival signals on a hit and stamp a channel onto it as almost the last act before storage. Different tools, different points in the pipeline, but one shared habit: each of them shapes the data while it is still moving, and then steps aside.</p>
+
+<p>Classifications break that habit completely. They never touch the hit. Nothing about collection changes, no new code ships, no developer is involved, and the stored data is exactly what it was before. And yet the reports come out different. Understanding how that is possible is the whole of this section, and it starts with a limitation you have been living with since the foundations of this curriculum, without necessarily noticing it.</p>
+
+<h3 class="subsec-title">The one-way street</h3>
+<p>Adobe Analytics can report on one thing and one thing only: what arrived in a server call. Whichever collection method you chose, AppMeasurement, the Web SDK, a mobile SDK, or a server-side call, every value that ends up in a report had to ride in on a hit. There is no other door.</p>
+
+<p>Sit with the consequence for a second. Can you connect an outside database to Adobe Analytics and have it show up in your reports? Can you open a report suite and type a value in by hand? Not really. And that is not a defect. The tool was built for a specific job, which is to observe how people behave on your site or app and then hand that behavior back to you in a form you can act on. It watches, it records, it reports. It was never designed to be a general-purpose data store.</p>
+
+<p>Which is fine, right up until the day it is not.</p>
+
+<h3 class="subsec-title">The club</h3>
+<p>Picture a community club with a proper online presence, a website and an app. Members can book the community hall, reserve a badminton or gym slot, arrange a party, send out invitations, and receive notifications. It is not a public site. It exists for members, so every member logs in with their credentials before doing any of it.</p>
+
+<p>Somewhere else entirely, the club runs a CRM. That system knows a great deal about each member: name, address, age, gender, occupation, membership tier, when the subscription started, when it expires, and the entire history of fee payments.</p>
+
+<p>Now watch what Adobe Analytics captures when a member logs in. A User ID. That is all. The eVar carrying it holds something like <strong>M-10482</strong>, and nothing about the human behind that string comes with it.</p>
+
+<p>A month passes. You open the report. One hundred members visited, they booked halls and slots, they opened notifications. The report is honest and it is useful. It is also strangely flat, because every question worth asking dies on the first breath. How many men booked gym slots this month? How many members under twenty-five took up badminton? How many senior members reserved the community hall, and on which days? Nobody can answer, and the frustrating part is that nothing is actually missing. The behavior is in Adobe Analytics. The attributes are in the CRM. Both datasets are complete, both are correct, and neither can say anything interesting on its own.</p>
+
+<p>The data is not lost. It is in the wrong building.</p>
+
+<h3 class="subsec-title">What a classification actually is</h3>
+<p>A classification is a lookup table. That is the entire idea, and every other property of the feature falls out of it.</p>
+
+<p>You give Adobe a file. The first column holds a value that Adobe Analytics <em>already collected</em>, and that column is called the <strong>key</strong>. Every column after it holds an attribute that Adobe Analytics never collected and never could have: Age Band, Gender, Membership Tier, Join Year. Adobe stores that table off to one side, and from then on, whenever you ask for a report, it matches the raw value against the key and hands back the attributes you supplied.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">📊 One key, as many columns as you need</div>
+    <svg viewBox="0 0 700 210" style="width:100%;height:auto;display:block;margin:4px 0 8px" role="img" aria-label="A key value M-10482 on the left resolves into four classification columns on the right: Age Band 60 plus, Gender Male, Membership Tier Gold, and Join Year 2019">
+        <text x="20" y="24" style="fill:var(--text3,#94a3b8);font-size:10px;font-weight:700;letter-spacing:1px;font-family:sans-serif">THE KEY</text>
+        <text x="400" y="24" style="fill:var(--text3,#94a3b8);font-size:10px;font-weight:700;letter-spacing:1px;font-family:sans-serif">THE CLASSIFICATION COLUMNS</text>
+
+        <rect x="20" y="70" width="180" height="56" rx="6" style="fill:var(--card,#ffffff);stroke:var(--accent,#e11d48);stroke-width:2"/>
+        <text x="110" y="94" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:16px;font-weight:700;font-family:monospace">M-10482</text>
+        <text x="110" y="113" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">User ID, already collected</text>
+
+        <line x1="205" y1="98" x2="380" y2="98" style="stroke:var(--border,#e2e8f0);stroke-width:2"/>
+        <polygon points="380,98 370,93 370,103" style="fill:var(--border,#e2e8f0)"/>
+        <text x="292" y="90" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:10px;font-family:sans-serif">looked up</text>
+
+        <rect x="400" y="42" width="280" height="30" rx="4" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1"/>
+        <text x="414" y="62" style="fill:var(--text2,#475569);font-size:12px;font-family:sans-serif">Age Band</text>
+        <text x="666" y="62" text-anchor="end" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">60+</text>
+
+        <rect x="400" y="78" width="280" height="30" rx="4" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1"/>
+        <text x="414" y="98" style="fill:var(--text2,#475569);font-size:12px;font-family:sans-serif">Gender</text>
+        <text x="666" y="98" text-anchor="end" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">Male</text>
+
+        <rect x="400" y="114" width="280" height="30" rx="4" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1"/>
+        <text x="414" y="134" style="fill:var(--text2,#475569);font-size:12px;font-family:sans-serif">Membership Tier</text>
+        <text x="666" y="134" text-anchor="end" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">Gold</text>
+
+        <rect x="400" y="150" width="280" height="30" rx="4" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1"/>
+        <text x="414" y="170" style="fill:var(--text2,#475569);font-size:12px;font-family:sans-serif">Join Year</text>
+        <text x="666" y="170" text-anchor="end" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">2019</text>
+
+        <text x="20" y="160" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">Collected by</text>
+        <text x="20" y="176" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">Adobe Analytics.</text>
+        <text x="20" y="196" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">Supplied by you.</text>
+    </svg>
+</div>
+
+<p>Notice what the club never had to do. No developer wrote a line of code. No new server call fires. No eVar was spent. The member's age was never pushed into the browser, which is fortunate, because pushing a member's age and gender into a public web page would be a poor idea for reasons that have nothing to do with analytics. The CRM stayed exactly where it was. All that changed is that Adobe now holds a small table saying, in effect, when you see M-10482, this is who that is.</p>
+
+<p>Classifications work this way on most custom dimensions. Props, eVars, tracking code, product ID. A single dimension can carry many classification columns at once, and a Product ID can be classified by name, color, size, category, and margin all at the same time, each one becoming its own reportable dimension.</p>
+
+<h3 class="subsec-title">Two things follow immediately, and one of them is a warning</h3>
+<p>The first is the property that makes practitioners fall in love with this feature. Because the lookup happens when you run the report, and not when the data was collected, <strong>classifications are retroactive</strong>. Upload the club's member file this afternoon, and every hit from every month in your history that carried a User ID becomes readable through Age Band and Membership Tier immediately. Not the hits from tomorrow onward. All of them, going back. The report will look as though you had been collecting age and gender all along, and in a sense you had been, because you had the key.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">📊 The collection pipeline is never touched</div>
+    <svg viewBox="0 0 700 250" style="width:100%;height:auto;display:block;margin:4px 0 8px" role="img" aria-label="A collection pipeline runs left to right from browser to server call to report suite to report. A classification data file joins only at the report stage, entering from below with a dashed arrow, and never touches the collection pipeline.">
+        <text x="30" y="30" style="fill:var(--text3,#94a3b8);font-size:10px;font-weight:700;letter-spacing:1px;font-family:sans-serif">COLLECTION TIME</text>
+
+        <rect x="30" y="46" width="130" height="46" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <text x="95" y="74" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">Browser or app</text>
+
+        <line x1="162" y1="69" x2="196" y2="69" style="stroke:var(--text2,#475569);stroke-width:1.5"/>
+        <polygon points="200,69 190,64 190,74" style="fill:var(--text2,#475569)"/>
+
+        <rect x="200" y="46" width="130" height="46" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <text x="265" y="74" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">Server call</text>
+
+        <line x1="332" y1="69" x2="366" y2="69" style="stroke:var(--text2,#475569);stroke-width:1.5"/>
+        <polygon points="370,69 360,64 360,74" style="fill:var(--text2,#475569)"/>
+
+        <rect x="370" y="46" width="130" height="46" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <text x="435" y="74" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">Report suite</text>
+
+        <line x1="502" y1="69" x2="536" y2="69" style="stroke:var(--text2,#475569);stroke-width:1.5"/>
+        <polygon points="540,69 530,64 530,74" style="fill:var(--text2,#475569)"/>
+
+        <rect x="540" y="46" width="130" height="46" rx="6" style="fill:var(--card,#ffffff);stroke:var(--accent,#e11d48);stroke-width:2"/>
+        <text x="605" y="74" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:12px;font-weight:700;font-family:sans-serif">Report</text>
+
+        <text x="30" y="118" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">The hit is stored exactly as it arrived. No classification has any say here.</text>
+
+        <line x1="30" y1="140" x2="670" y2="140" style="stroke:var(--border,#e2e8f0);stroke-width:1;stroke-dasharray:2 4"/>
+
+        <text x="30" y="170" style="fill:var(--text3,#94a3b8);font-size:10px;font-weight:700;letter-spacing:1px;font-family:sans-serif">REPORT TIME</text>
+
+        <rect x="515" y="188" width="180" height="48" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--success,#10b981);stroke-width:1.5"/>
+        <text x="605" y="208" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-weight:700;font-family:sans-serif">Classification data</text>
+        <text x="605" y="224" text-anchor="middle" style="fill:var(--text2,#475569);font-size:10px;font-family:sans-serif">a file you upload, or a rule</text>
+
+        <line x1="605" y1="186" x2="605" y2="102" style="stroke:var(--success,#10b981);stroke-width:1.5;stroke-dasharray:4 3"/>
+        <polygon points="605,94 600,105 610,105" style="fill:var(--success,#10b981)"/>
+
+        <text x="30" y="205" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">The key is resolved when you</text>
+        <text x="30" y="221" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">run the report, which is why</text>
+        <text x="30" y="237" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">history changes too.</text>
+    </svg>
+</div>
+
+<p>The second thing that follows is the sentence that saves people from months of disappointment, and it is worth reading twice.</p>
+
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ A classification can never invent a value that was never collected</div>
+    <p>The lookup starts with the key. If a hit did not carry a User ID, there is nothing to look up, and no file on earth can attach a Membership Tier to it. Classifications enrich values you already have. They do not create values you never had. If the club's login page had failed to set the User ID eVar for three months, no classification uploaded afterward can recover those three months. The data would be gone, and it would stay gone.</p>
+</div>
+
+<h3 class="subsec-title">Reflections, not values</h3>
+<p>It is worth being precise about where classification data actually lives, because the common mental picture is wrong in a way that causes real confusion later.</p>
+
+<p>The attributes do not go into the eVar. The eVar still holds M-10482, unchanged, exactly as it was collected. What Adobe creates instead is a set of <strong>classification dimensions</strong> that hang off the parent variable. In Analysis Workspace they look and behave like ordinary dimensions, and you can drag Membership Tier into a table beside Bookings and it will simply work. But they hold no values of their own. They resolve the parent's value at the moment you ask.</p>
+
+<p>Which means classification dimensions behave exactly as their parent behaves, and they do so without inheriting anything, because there is nothing to inherit. They <em>are</em> the parent, wearing a different name. If the User ID lives in an eVar set to expire after thirty days, that key persists across thirty days of hits, so its classifications appear on those same hits. If the User ID lives in a prop, which does not persist at all, the classifications appear only on the hits where the prop was actually set, and the member's post-login browsing carries them while the pre-login browsing does not. You never configure this. It is not a setting. It is simply what happens when a shadow follows the thing casting it.</p>
+
+<p>Which is really the honest way to think about the whole feature. You look up at a bright night and call it moonlight, and you are not wrong in any way that matters. But the moon has no light. It never did. What you are seeing is the sun, reflected, and everyone knows this and nobody says it, because nobody stands in a garden at night announcing that the sunlight is unusually well reflected this evening. They say the moonlight is beautiful and they go inside. Classification dimensions are moonlight. Full, useful, worth building reports on, and entirely borrowed.</p>
+
+<p>One practical consequence follows from all this, and it catches teams by surprise. <strong>Classification values do not appear in data feeds.</strong> The feed carries the hit, and the hit carries the key, but the classification lives in a lookup table that the feed does not export. If a downstream data lake needs Membership Tier, it has to be joined there from the same source file you gave Adobe. Data Warehouse is a different story and does carry classified values, but the raw hit-level feed does not.</p>
+
+<h3 class="subsec-title">The contradiction, and how it resolves</h3>
+<p>By now a definition has been quietly forming: a classification is an Adobe Analytics feature that lets you upload offline data against a key such as a User ID or a tracking code, so that reporting can show richer attributes than the raw value ever carried. That definition is good. It is also incomplete, and if you have been reading carefully something in it should feel loose.</p>
+
+<p>Because there is a second way to fill those same classification columns, and it involves no offline data at all.</p>
+
+<p>It is called the <strong>Classification Rule Builder</strong>, and it works on data you already have. It reads the keys sitting in your report suite, matches them against a pattern, and populates the classification columns automatically. Suppose your campaign tracking codes are built to a structure, something like <strong>eml_2026_07_winback_in</strong>. A human can read that. A rule can too. Set up the patterns once, and the raw code splits itself into Channel of Email, Year of 2026, Month of July, Campaign of Winback, and Country of India, each one a real reportable dimension, and none of it uploaded from anywhere. It has always been in the data. It just needed to be read.</p>
+
+<p>So which is it? Offline data import, or pattern reader? Both, and the apparent contradiction dissolves the moment you look at what the two paths have in common. <strong>They fill the same classification columns.</strong> One fills them from a file you supply, because the information exists only outside Adobe. The other fills them from a pattern, because the information was already inside the key and merely needed unpacking. The columns do not know or care which one wrote to them, and the report cannot tell the difference.</p>
+
+<div class="info-box">
+    <div class="info-hdr">ℹ️ A quiet second benefit</div>
+    <p>Read that tracking code example again and count the dimensions. One eVar went in. Five reportable dimensions came out. A report suite has a finite budget of props and eVars, and that budget runs out faster than anyone expects on a large implementation. Deliberately packing structured information into a single variable and then unpacking it with classification rules is a recognized way of stretching that budget. It is not a trick. It is design, and it starts with how the value is built in the first place, which is exactly what Designing the Key is about.</p>
+</div>
+
+<h3 class="subsec-title">What the attributes attach to</h3>
+<p>An architect earns the title by knowing where a tool ends, and one boundary is worth saying plainly while the club example is still fresh, because it is the one that trips up experienced people.</p>
+
+<p>Attaching CRM attributes to a User ID eVar is a legitimate thing to do, and it is exactly what the club is doing. But Adobe also ships a feature built specifically for person-level enterprise data, called Customer Attributes, and it does not behave the same way. A classification attaches attributes to the <em>key value</em>, so those attributes exist only where the key was actually set, which means everything a member did before logging in falls under Unspecified. Customer Attributes ties the data to the visitor profile instead, through the Experience Cloud ID, so it reaches backward and covers behavior from before the person ever identified themselves.</p>
+
+<p>Same CSV file. Same gender column. Materially different numbers in the report. Neither one is broken, and neither one is lying. They are answering slightly different questions, and knowing which question you are actually asking is your job, not the tool's.</p>
+
+<p>A workable rule of thumb: classifications describe <strong>things</strong>, such as a campaign, a product, a page, an article, a promotion. Attributes that belong to a <strong>person</strong>, and that should follow that person across everything they ever did, belong to Customer Attributes. The club sits comfortably on the classification side of that line, and most implementations will too.</p>
+
+<h3 class="subsec-title">SAINT, Classifications, and Classification Sets</h3>
+<p>This feature is old, and its history explains a lot about why the interface looks the way it does.</p>
+
+<p>In the Omniture SiteCatalyst era it was called <strong>SAINT</strong>, short for SiteCatalyst Attribute Importing and Naming Tool. The acronym is a stretch, and it was surely meant to be, though it earns a certain forgiveness given how many everyday business problems the thing quietly solves. You will still hear practitioners say SAINT today, decades on, and you will still see the word in old documentation and older colleagues.</p>
+
+<p>Adobe eventually renamed it to plain Classifications. Nothing about the mechanics changed. The key, the columns, the lookup, the retroactivity, all identical. Only the name went.</p>
+
+<p>Then Adobe rebuilt the experience properly as <strong>Classification Sets</strong>. Where the older system spread the work across three separate interfaces, a set brings all of it into one place: the dimensions being classified, the schema of columns, the imports, the jobs, and the rules. Processing time came down from seventy-two hours to twenty-four. A single set can subscribe multiple report suites and multiple dimensions at once, so a product classification built once can serve every report suite that has a product SKU, instead of being replicated by hand into each one.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">📊 Three names, one direction of travel</div>
+    <svg viewBox="0 0 700 130" style="width:100%;height:auto;display:block;margin:4px 0 8px" role="img" aria-label="An evolution timeline showing SAINT in the SiteCatalyst era, renamed to Classifications with no change to the mechanics, then rebuilt as Classification Sets, which is the destination Adobe is consolidating on.">
+        <line x1="40" y1="88" x2="630" y2="88" style="stroke:var(--border,#e2e8f0);stroke-width:2"/>
+        <polygon points="646,88 628,80 628,96" style="fill:var(--border,#e2e8f0)"/>
+
+        <circle cx="110" cy="88" r="7" style="fill:var(--text2,#475569)"/>
+        <text x="110" y="60" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:13px;font-weight:700;font-family:sans-serif">SAINT</text>
+        <text x="110" y="42" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">SiteCatalyst era</text>
+        <text x="110" y="112" text-anchor="middle" style="fill:var(--text2,#475569);font-size:10px;font-family:sans-serif">where the name came from</text>
+
+        <circle cx="330" cy="88" r="7" style="fill:var(--text2,#475569)"/>
+        <text x="330" y="60" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:13px;font-weight:700;font-family:sans-serif">Classifications</text>
+        <text x="330" y="42" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">renamed</text>
+        <text x="330" y="112" text-anchor="middle" style="fill:var(--text2,#475569);font-size:10px;font-family:sans-serif">mechanics unchanged</text>
+
+        <circle cx="560" cy="88" r="9" style="fill:var(--accent,#e11d48)"/>
+        <text x="560" y="60" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:13px;font-weight:700;font-family:sans-serif">Classification Sets</text>
+        <text x="560" y="42" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">rebuilt</text>
+        <text x="560" y="112" text-anchor="middle" style="fill:var(--text2,#475569);font-size:10px;font-family:sans-serif">one interface, the destination</text>
+    </svg>
+</div>
+
+<p>The direction of travel is the part that matters, and it is not ambiguous. Adobe is consolidating on Classification Sets, and the legacy interfaces are being retired on a published schedule. The two legacy paths do not retire together, which is worth knowing before you plan any migration, because the file importer and the rule builder have separate deadlines several months apart. A team that hears "classifications are being retired" and treats it as one event will move the wrong things first and prepare for the wrong date.</p>
+
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ Current status, verified July 2026</div>
+    <p>The legacy <strong>Classification importer</strong> is deprecated after <strong>August 31, 2026</strong>, and importing classifications over standard FTP retires with it. The legacy <strong>Classification Rule Builder</strong> runs on a later clock and is deprecated on <strong>February 28, 2027</strong>. Deprecation schedules move, so confirm both against Experience League before you commit to a migration plan.</p>
+</div>
+
+<p>The instruction that outlives any particular date is simple, and it does not change regardless of which system your organization is currently sitting on. Build new work in Classification Sets. Migrate the old work deliberately rather than in the final week. And when you read older blog posts, forum threads, or internal documentation, check the date before you trust the interface it describes, because this particular corner of Adobe Analytics has been moving.</p>
+
+<h3 class="subsec-title">Everything hinges on one thing</h3>
+<p>Step back and look at what has actually been claimed here. A classification is a lookup table. It is retroactive because it resolves at report time. It cannot invent what was never collected. It fills the same columns whether a file writes them or a rule does. And the dimensions it produces are reflections of a parent variable, carrying no values of their own.</p>
+
+<p>Every single one of those properties depends on the same thing, and it is the thing almost nobody plans for. The key. The raw value the classification is built on top of. Get the key right and this entire feature is a quiet, powerful, almost free extension of your implementation. Get the key wrong and no amount of clever rule-building or careful uploading will save the report, because there will be nothing solid underneath to look anything up against.</p>
+
+<p>Which is why <a href="/adobe-analytics-learning/shape/classifications/designing-the-key/">Designing the Key</a> comes before any discussion of sets, files, or rules. The key is not a detail you tidy up later. It is the decision the rest of this module rests on.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Analytics</div>
+    <p>Analytics &gt; <span class="path">Components &gt; Classification Sets</span> for the current experience, which requires a product admin account or a product profile carrying the <span class="path">Report Suite Tools &gt; Classifications</span> permission. The legacy management interfaces live under <span class="path">Admin</span>.</p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title">📚 Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/classifications/classifications-overview" target="_blank">Adobe Docs: Classifications Overview</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/classifications/sets/overview" target="_blank">Adobe Docs: Classification Sets Overview</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/core-services/interface/services/customer-attributes/attributes" target="_blank">Adobe Docs: About Customer Attributes</a></li>
+    </ul>
+</div>

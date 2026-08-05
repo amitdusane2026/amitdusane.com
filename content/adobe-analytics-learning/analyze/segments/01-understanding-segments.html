@@ -1,0 +1,118 @@
+---
+slug: "understanding-segments"
+title: "Understanding Segments"
+seotitle: "Understanding Segments in Adobe Analytics"
+description: "Filter is the wrong word for it. A segment is a named, reusable, scoped slice of your journey data, and it is where real analysis in Adobe begins."
+lastmod: 2026-07-15
+type: lesson
+modulenum: 13
+sectionnum: 1
+weight: 1
+---
+<p>Open a Downloads report and it shows every download, everywhere, from everyone. But the person who asked for it did not want every download. They wanted downloads in North America, and the report just handed them Europe and Asia too. An hour later a different question arrives: a browser engineer needs to know whether Safari renders the checkout correctly and holds its cookies, so the only data that matters is Safari data, and the report is showing all of it. By the afternoon the mobile app team wants their app's numbers alone, cleanly separated from the website.</p>
+
+<p>Three people, three slices, one pile of data. Not one of them needed all of it. Almost nobody ever does.</p>
+
+<h3 class="subsec-title">You already know how to do this</h3>
+<p>Faced with too much of anything, a person narrows. Reach for an encyclopedia to research the geography of North Africa and you do not read it cover to cover. You open the geography volume, turn to Africa, then to the northern region, and start there. You never touch the entries on art or politics, because they cannot answer the question in front of you. The narrowing is so automatic it barely registers as a decision.</p>
+
+<p>Analytics is that same move, at scale. A single day of traffic is far too much to read. So you narrow, on purpose, until what is left can actually answer something. Adobe Analytics has a name for the instrument that does the narrowing. It calls it a segment. It is the second instrument this phase puts in your hands: the calculated metric defined a number of your own, and the segment defines the slice of people it describes.</p>
+
+<h3 class="subsec-title">Why not just call it a filter</h3>
+<p>Because a filter, in the everyday sense, is a much smaller thing than a segment actually is, and the distance between the two is the whole point of this module.</p>
+
+<p>Picture a spreadsheet, forty columns wide and tens of thousands of rows deep. To make sense of it you apply a filter, and every row that does not match is hidden from view. It works. But look closely at what you are holding. That filter lives in that one sheet. It hides rows; it never creates anything. Close the file and it is gone. You cannot hand it to a colleague, cannot drop it onto a different report, cannot reuse it next month without building it from scratch again. A filter is an action you perform on data, and when it is finished it leaves nothing behind.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">📊 A filter hides rows. A segment is a thing you keep.</div>
+    <svg viewBox="0 0 700 262" style="width:100%;height:auto;display:block;margin:4px 0 8px" role="img" aria-label="A spreadsheet filter hides rows inside one sheet, cannot be moved or reused, and disappears when the file closes. An Adobe segment is a named saved object that applies to any report, can be shared and reused, and carries a scope that can return more data than the matching hits.">
+        <rect x="14" y="46" width="312" height="200" rx="8" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <rect x="374" y="46" width="312" height="200" rx="8" style="fill:var(--card,#ffffff);stroke:var(--accent,#e11d48);stroke-width:2"/>
+
+        <text x="34" y="78" style="fill:var(--text2,#475569);font-size:14px;font-weight:700;font-family:sans-serif">Spreadsheet filter</text>
+        <text x="34" y="96" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">something you do</text>
+
+        <text x="394" y="78" style="fill:var(--accent,#e11d48);font-size:14px;font-weight:700;font-family:sans-serif">Adobe segment</text>
+        <text x="394" y="96" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">something that exists</text>
+
+        <text x="34" y="132" style="fill:var(--text2,#475569);font-size:12px;font-family:sans-serif">•  Hides rows in one sheet</text>
+        <text x="34" y="160" style="fill:var(--text2,#475569);font-size:12px;font-family:sans-serif">•  Cannot leave that sheet</text>
+        <text x="34" y="188" style="fill:var(--text2,#475569);font-size:12px;font-family:sans-serif">•  Gone when you close it</text>
+        <text x="34" y="216" style="fill:var(--text2,#475569);font-size:12px;font-family:sans-serif">•  Only ever shows you less</text>
+
+        <text x="394" y="132" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">•  A named, saved object</text>
+        <text x="394" y="160" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">•  Applies to any report you own</text>
+        <text x="394" y="188" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">•  Reusable, stackable, shareable</text>
+        <text x="394" y="216" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">•  Carries a scope, can pull in more</text>
+
+        <circle cx="350" cy="146" r="21" style="fill:var(--card,#ffffff);stroke:var(--accent,#e11d48);stroke-width:2"/>
+        <text x="350" y="151" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:13px;font-weight:700;font-family:sans-serif">vs</text>
+    </svg>
+</div>
+
+<h3 class="subsec-title">A segment is a filter that became a thing</h3>
+<p>English already knows the difference. A film uses a segment of a song, never a filter of a song. A market has segments, distinct parts with an identity of their own. The word segment names a real piece that exists on its own; the word filter names something you do to something else. Adobe chose the right word on purpose.</p>
+
+<p>An Adobe segment is a saved object. It has a name. It carries its own definition. You build it once and then apply it to any report you own, hand it to a colleague, stack it on top of another segment, and come back to it in six months without rebuilding a thing. Where a spreadsheet filter hides rows and then evaporates, a segment defines a slice and stays. That shift, from an action into an object, is what turns segmentation into an engineering tool rather than a convenience, and it is why the people who live in reporting spend a real part of every week building, sharing, and refining them.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">📊 Build it once, apply it everywhere</div>
+    <svg viewBox="0 0 700 250" style="width:100%;height:auto;display:block;margin:4px 0 8px" role="img" aria-label="A single segment named North America visitors feeds a downloads report, a revenue panel, and a fallout visualization, and can be shared with a colleague. One definition applies everywhere.">
+        <rect x="24" y="90" width="176" height="66" rx="10" style="fill:var(--card,#ffffff);stroke:var(--accent,#e11d48);stroke-width:2.5"/>
+        <text x="112" y="116" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:10px;font-weight:700;font-family:sans-serif;letter-spacing:1px">ONE SEGMENT</text>
+        <text x="112" y="138" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:13px;font-weight:700;font-family:sans-serif">North America visitors</text>
+
+        <line x1="200" y1="123" x2="424" y2="45" style="stroke:var(--accent,#e11d48);stroke-width:1.5"/>
+        <line x1="200" y1="123" x2="424" y2="97" style="stroke:var(--accent,#e11d48);stroke-width:1.5"/>
+        <line x1="200" y1="123" x2="424" y2="149" style="stroke:var(--accent,#e11d48);stroke-width:1.5"/>
+        <line x1="200" y1="123" x2="424" y2="201" style="stroke:var(--accent,#e11d48);stroke-width:1.5"/>
+        <polygon points="430,45 419,40 419,50" style="fill:var(--accent,#e11d48)"/>
+        <polygon points="430,97 419,92 419,102" style="fill:var(--accent,#e11d48)"/>
+        <polygon points="430,149 419,144 419,154" style="fill:var(--accent,#e11d48)"/>
+        <polygon points="430,201 419,196 419,206" style="fill:var(--accent,#e11d48)"/>
+
+        <rect x="432" y="26" width="252" height="40" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <text x="448" y="51" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">A Downloads report</text>
+
+        <rect x="432" y="78" width="252" height="40" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <text x="448" y="103" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">A revenue-by-channel panel</text>
+
+        <rect x="432" y="130" width="252" height="40" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <text x="448" y="155" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">A Fallout visualization</text>
+
+        <rect x="432" y="182" width="252" height="40" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <text x="448" y="207" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">A colleague you shared it with</text>
+
+        <text x="24" y="242" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">One definition. Every surface it touches asks the exact same question.</text>
+    </svg>
+</div>
+
+<h3 class="subsec-title">And it carries a scope, because this is journey data</h3>
+<p>Here is where a segment stops resembling a spreadsheet filter at all. A spreadsheet is a flat grid of rows. Adobe Analytics data is not flat. It is a journey: individual actions grouped into sessions, and sessions grouped under the person who made them. A hit sits inside a visit, and a visit sits inside a visitor. If those distinctions are new, a visit is a session, a run of hits that ends after thirty minutes of inactivity, and a visitor is a unique cookie or device rather than a guaranteed person; both are defined in <a href="/adobe-analytics-learning/foundations/adobe-analytics-fundamentals/key-terminology/">Key Terminology</a>.</p>
+
+<p>Because the data is layered this way, a segment cannot simply say "downloads whose file name contains pdf" and stop. It has to declare how wide a net to cast. Should it return only the exact hits where a download happened? The whole visit that contained one? Everything that visitor ever did, across every session they have, because they downloaded a single time? Each choice hands back a different and larger set of data, and each answers a genuinely different question. Adobe calls this choice the container, and it comes in three sizes that match the three layers of the journey: Hit, Visit, and Visitor.</p>
+
+<p>That one choice governs what a segment gives back, and getting it wrong is the most common way a segment returns a confident, well-formatted, wrong answer. It carries enough weight to have earned its own section, Segment Containers.</p>
+
+<h3 class="subsec-title">Not a new idea, and not a side feature</h3>
+<p>Segmentation is not a recent addition bolted onto reporting. It predates the interface most analysts use today. Before Analysis Workspace existed, serious analysis in Adobe happened inside a standalone desktop application called Discover, later renamed Ad Hoc Analysis, and segmentation sat at the center of it. When Adobe consolidated its analysis tools, Ad Hoc Analysis reached end of life on March 1, 2021, and its segmentation moved into Analysis Workspace, where it lives now. The tool around segments changed completely. The importance of segments did not move an inch.</p>
+
+<p>That is worth holding onto, because it explains why so much of what follows exists. Segments are not a reporting garnish. They are how a practitioner turns a wall of collected data into the specific question a stakeholder actually asked, and doing that well is a daily craft, not a one-time setup.</p>
+
+<h3 class="subsec-title">The one choice that shapes every segment</h3>
+<p>So the mental model to carry forward is small and sharp. A segment is not a filter that hides rows. It is a named, saved, reusable object that defines a slice of journey data and travels wherever you send it. And before it can define anything, it has to answer one question first: how wide does it reach? A single hit, a whole visit, or an entire visitor?</p>
+
+<p>That question is the container, and it is where segmentation stops being an idea and starts being a thing you build.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Analytics</div>
+    <p>Analytics &gt; <span class="path">Components &gt; Segments</span> opens the Segment manager, the home for every saved segment. Selecting <span class="path">Add</span> there opens the Segment builder, where a segment is actually defined. A segment can also be created inside a Workspace project, from the <span class="path">Components</span> panel, without leaving the report you are working in.</p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title">📚 Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/segmentation/seg-overview" target="_blank">Adobe Docs: About Segments</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/segmentation/seg-home" target="_blank">Adobe Docs: Segmentation Overview</a></li>
+    </ul>
+</div>

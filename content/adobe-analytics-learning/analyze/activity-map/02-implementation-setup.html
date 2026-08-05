@@ -1,0 +1,57 @@
+---
+slug: "implementation-setup"
+title: "Implementation and Setup"
+lastmod: 2026-07-15
+type: lesson
+modulenum: 18
+sectionnum: 2
+weight: 2
+---
+<p>Activity Map requires enabling the module in your implementation and installing the browser extension.</p>
+                <h3 class="subsec-title">Implementation Requirements</h3>
+                <div class="tbl-wrap">
+                    <table>
+                        <thead><tr><th>Method</th><th>Requirement</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>AppMeasurement</strong></td><td>Activity Map module enabled (included by default in recent versions)</td></tr>
+                            <tr><td><strong>Web SDK</strong></td><td>clickCollectionEnabled: true in configuration</td></tr>
+                            <tr><td><strong>Adobe Launch</strong></td><td>Enable "Link Tracking" in Adobe Analytics extension</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 class="subsec-title">Browser Extension</h3>
+                <ul>
+                    <li><strong>Chrome:</strong> Install from Chrome Web Store</li>
+                    <li><strong>Firefox:</strong> Install from Firefox Add-ons</li>
+                    <li><strong>Edge:</strong> Install from Microsoft Edge Add-ons</li>
+                </ul>
+
+                <h3 class="subsec-title">AppMeasurement Configuration</h3>
+                <div class="code-block">
+                    <div class="code-hdr"><span class="code-lang">JavaScript</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+                    <div class="code-body"><pre>// Activity Map is enabled by default in AppMeasurement 2.x
+// To explicitly enable or configure:
+
+s.ActivityMap = {
+    // Link tracking settings
+    linkExclusions: '',      // CSS selectors to exclude
+    regionExclusions: '',    // Regions to exclude
+    linkMethod: 's_objectID' // Method to identify links
+};
+
+// For custom link identification, use s_objectID
+&lt;a href="page.html" id="nav-link" 
+   onclick="s_objectID='custom_link_name';"&gt;Click Here&lt;/a&gt;</pre></div>
+                </div>
+                <div class="info-box">
+                    <div class="info-hdr">ℹ️ Permissions Required</div>
+                    <p>Users need the "Activity Map" permission in Adobe Analytics to use the tool. Admins can grant this via Admin Console → User Management → Permission Groups.</p>
+                </div>
+                <div class="ref-box">
+                    <div class="ref-title">📚 Learn More</div>
+                    <ul>
+                        <li><a href="https://experienceleague.adobe.com/docs/analytics/analyze/activity-map/activitymap-getting-started/activitymap-getting-started-admins/activitymap-enable.html" target="_blank">Adobe Docs: Getting Started with Activity Map</a></li>
+                    </ul>
+                </div>
+            

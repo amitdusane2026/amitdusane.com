@@ -1,0 +1,97 @@
+---
+slug: "limitations-best-practices"
+title: "Limitations and Best Practices"
+seotitle: "Processing Rule Limitations and Best Practices"
+lastmod: 2026-07-18
+description: "Processing rules are permanent, immediate, and not retroactive. The limits are the shape of the tool, the mistakes they invite, and when Launch is better."
+type: lesson
+modulenum: 8
+sectionnum: 4
+weight: 4
+---
+<p><a href="/adobe-analytics-learning/shape/processing-rules/use-cases-examples/">Use Cases and Examples</a> got you onto the pitch, building real rules against real data. Playing a match once is not the same as playing well across a season, and the difference is rarely a flashier move. It is discipline: knowing the fouls, knowing which plays not to attempt, and not giving away penalties through avoidable mistakes. A processing rule is powerful for one reason, it acts directly on your data as it is collected, and that same directness is exactly why a careless one does real harm. This closing section is about playing well: the limits the tool genuinely has, the habits that keep those limits from becoming damage, and the single most important judgment call, whether a rule is even the right instrument for the job.</p>
+
+<h3 class="subsec-title">The limits are the shape of the tool</h3>
+<p>Every limitation of processing rules traces back to where they sit. A rule runs on every hit, server-side, as data streams in at collection scale, and it has to do that quickly and predictably. That one constraint rules out anything slow or open-ended: no reaching out to an external file in the middle of a hit, no arbitrary computation, nothing that has to remember earlier hits. The limits below are not an unfinished feature set. They are the price of running safely at that volume and speed, and knowing them is what stops you from asking a rule to do something it was never built to do.</p>
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>Limitation</th><th>What it means in practice</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Not retroactive</strong></td><td>A rule changes data only from the moment you save it. Everything collected before that stays as it was. For fixing history, the tool is <a href="/adobe-analytics-learning/shape/classifications/">Classifications</a>.</td></tr>
+            <tr><td><strong>Permanent, no undo</strong></td><td>Once a hit is processed and stored, the change cannot be reversed. You can see who changed a rule, but you cannot un-change the data it already wrote.</td></tr>
+            <tr><td><strong>Cannot drop a hit</strong></td><td>A rule can reshape a hit but not exclude it or reduce the bill. Stopping a hit happens earlier, through <a href="/adobe-analytics-learning/collect/tracking-calls/server-calls-billing/">abort or onBeforeEventSend</a>, or through a VISTA rule.</td></tr>
+            <tr><td><strong>Only three actions</strong></td><td>Overwrite, delete, and set event. No math, no substring extraction, no pattern-based transformation of a value.</td></tr>
+            <tr><td><strong>No external lookups</strong></td><td>A rule cannot join against a file or database to enrich a value. That is again Classifications.</td></tr>
+            <tr><td><strong>Cannot set products or merchandising events</strong></td><td>Purchase-level product data and product-specific events stay in the implementation.</td></tr>
+            <tr><td><strong>Scoped to one report suite</strong></td><td>Rules live in a single suite and must be copied to others, where they can quietly drift out of sync.</td></tr>
+            <tr><td><strong>Volume ceilings</strong></td><td>Up to 150 rules per report suite and up to 30 conditions per rule. Actions per rule are effectively unlimited.</td></tr>
+            <tr><td><strong>Case-insensitive matching</strong></td><td>Convenient, but a condition cannot tell apart two values that differ only in capitalization.</td></tr>
+        </tbody>
+    </table>
+</div>
+<p>Two limits are worth naming precisely because they are widely believed and simply untrue. A rule is not restricted to a single action; it can carry many. And a rule is not stuck at "if this, then that"; the Otherwise branch from the <a href="/adobe-analytics-learning/shape/processing-rules/conditions-actions/">Conditions and Actions</a> section is a genuine else. Older guides still repeat both myths, so do not let them talk you out of a rule that would have worked perfectly.</p>
+
+<h3 class="subsec-title">The mistakes those limits invite</h3>
+<p>Most processing-rule disasters are not exotic. They are a handful of predictable mistakes, and each best practice below is simply the antidote to one of them.</p>
+<p>Because there is no undo, never learn a rule on production. Build and prove it in a non-production report suite first, watch the data it produces, and only then copy the proven rule across. Because an overwrite does not check whether its source has a value, guard it: add an "is set" condition so the rule can never blank out good data with an empty one. Because rules run top to bottom with no early exit, sequence them on purpose, any rule that reads a value must sit above the rule that overwrites it, or it will read the wrong thing. And because rules are permanent and tend to outlive the person who wrote them, write the Reason on every rule, give it a name a stranger could understand, and audit the set now and then to retire the ones no longer earning their place.</p>
+
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ Permanent and immediate, by design</div>
+    <p>A processing rule takes effect the moment you save it and changes your data before it is ever stored. There is no reprocessing and no undo for the data it writes. This is not a warning to memorize and move past; it is the reason the non-production report suite exists. Prove every rule where a mistake costs you nothing, then promote it.</p>
+</div>
+
+<div class="pro-tip">
+    <div class="pro-tip-hdr">💡 Use View History as your black box</div>
+    <p>The Processing Rules page has a View History tab that records what changed and who changed it. It will not reverse a bad rule, but when a report shifts unexpectedly and nobody remembers touching anything, it is the first place to look. Pair it with a well-written Reason field and most "why did this break" investigations end in minutes instead of days.</p>
+</div>
+
+<h3 class="subsec-title">Processing rules or Launch? The call that matters most</h3>
+<p>Look honestly at what these rules do, copy a value, correct a value, pull something from the URL, and a fair question follows: should this have been a processing rule at all? Very often the better home is your tag manager. A <a href="/adobe-analytics-learning/collect/adobe-launch-tags/">Launch</a> data element can run custom JavaScript, use regular expressions, read almost anything available on the page, and chain logic together. Next to overwrite, delete, and set event, that is close to unlimited. So the honest default is this: if you can shape the data correctly at the source, in the implementation or in Launch, do it there. Work done at the source is visible, versioned, testable, and changeable in a way a processing rule never is.</p>
+<p>That default is not the whole story, though, because Launch is not always available or sufficient. Three situations put a processing rule firmly in the right:</p>
+<ul>
+    <li><strong>There is no tag manager to run.</strong> A mobile app has no Launch executing inside it, and server-side or API-collected data has no page for a tag to run on. A processing rule acts after collection, so it works no matter where the data came from.</li>
+    <li><strong>You cannot wait.</strong> A code or tag change rides the next release, and for a mobile app that release can be weeks out and outside your control. A processing rule is live the moment you save.</li>
+    <li><strong>The value only exists after collection.</strong> Context data is meaningless until a rule maps it, and in a <a href="/adobe-analytics-learning/foundations/variables/context-data-variables/">context data</a> or Web SDK setup, processing rules are how those incoming fields become props and eVars.</li>
+</ul>
+<p>The deeper point is that these two are not rivals fighting over the same ground. They sit in different layers. Launch shapes data on the way out, in the browser or app, before the hit is ever sent. A processing rule acts inside collection, on the raw hit, on Adobe's servers, before storage. Neither is superior; they are different moments in the same journey, and the skilled choice weighs your platform, your urgency, and whether the fix belongs at the source or after it.</p>
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>Aspect</th><th>Launch (tag layer)</th><th>Processing rule (collection layer)</th></tr></thead>
+        <tbody>
+            <tr><td>Where it runs</td><td>In the browser or app, before the hit is sent</td><td>On Adobe's servers, as the hit is collected</td></tr>
+            <tr><td>Capability</td><td>Near-unlimited: custom code, regex, lookups, chaining</td><td>Three actions: overwrite, delete, set event</td></tr>
+            <tr><td>Needs a deployment</td><td>Yes, a publish or release</td><td>No, effective on save</td></tr>
+            <tr><td>Works without a tag manager</td><td>No</td><td>Yes, on any collected source</td></tr>
+            <tr><td>Reversible</td><td>Yes, adjust the config and republish</td><td>No, the data it writes is permanent</td></tr>
+            <tr><td>Best for</td><td>The durable home for data shaping when you control the platform and can deploy</td><td>Urgent fixes, context-data mapping, mobile apps, anything you cannot fix at the source</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<h3 class="subsec-title">A checklist to carry into production</h3>
+<p>Before you enable any rule in a live report suite, walk this list. It is the whole module compressed into seven questions.</p>
+<ul>
+    <li>Could this be fixed at the source, in the implementation or Launch, instead? If yes, prefer that.</li>
+    <li>Are you building and testing in a non-production report suite first?</li>
+    <li>Does every overwrite have an "is set" guard on its source, so it cannot blank good data?</li>
+    <li>Is the rule order correct, with reads placed above the overwrites they depend on?</li>
+    <li>Have you written a clear Reason (who asked, and why) and given the rule an understandable name?</li>
+    <li>Once proven, have you copied it to the right suites and kept them in sync?</li>
+    <li>Is this genuinely a processing-rules job, or does it belong to Classifications, Marketing Channels, or VISTA?</li>
+</ul>
+
+<p>That closes the first tool in the shaping layer. Processing rules are immediate, server-side, and deliberately narrow, and used with discipline they turn raw collection into data you can trust, while used carelessly they quietly corrupt it. The heavier instrument begins exactly where this one ends. When a requirement outgrows conditions and actions, when you need visitor-level logic or a transformation these three actions cannot express, that is the territory of <a href="/adobe-analytics-learning/shape/vista-rules/">VISTA Rules</a>, the Adobe-managed layer that sits just past processing rules.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Analytics</div>
+    <p>Processing Rules: <span class="path">Admin &rarr; Report Suites &rarr; Edit Settings &rarr; General &rarr; Processing Rules</span></p>
+    <p>Change history: the <span class="path">View History</span> tab on that same Processing Rules page.</p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title">📚 Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/admin/admin-tools/manage-report-suites/edit-report-suite/report-suite-general/processing-rules/pr-overview" target="_blank">Adobe Docs: Processing Rules Overview and Things to Consider</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/admin/admin-tools/manage-report-suites/edit-report-suite/report-suite-general/processing-rules/pr-view-history" target="_blank">Adobe Docs: View Processing Rule History</a></li>
+    </ul>
+</div>

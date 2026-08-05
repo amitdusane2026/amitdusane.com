@@ -1,0 +1,75 @@
+---
+slug: "browser-developer-tools"
+title: "Browser Developer Tools"
+lastmod: 2026-07-15
+type: lesson
+modulenum: 20
+sectionnum: 3
+weight: 3
+---
+<p>Browser DevTools provide raw access to network requests, allowing deep inspection of Analytics beacons.</p>
+                <h3 class="subsec-title">Network Tab Inspection</h3>
+                <div class="code-block">
+                    <div class="code-hdr"><span class="code-lang">Finding Analytics Requests</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+                    <div class="code-body"><pre>1. Open DevTools (F12 or Cmd+Option+I)
+2. Go to Network tab
+3. Filter by: "b/ss" or "collect"
+
+AppMeasurement requests:
+https://metrics.example.com/b/ss/rsid/0/...
+
+Web SDK requests:
+https://edge.adobedc.net/ee/v1/collect...
+
+Key Query Parameters to Check:
+├── g = Page URL
+├── r = Referrer
+├── c1-c75 = Props
+├── v1-v250 = eVars
+├── events = Events list
+├── products = Products string
+├── pageName / gn = Page name
+├── ch = Channel
+├── mid = Marketing Cloud ID
+└── aid = Analytics ID</pre></div>
+                </div>
+
+                <h3 class="subsec-title">Console Debugging</h3>
+                <div class="code-block">
+                    <div class="code-hdr"><span class="code-lang">JavaScript Console Commands</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+                    <div class="code-body"><pre>// Check if s object exists (AppMeasurement)
+console.log(s);
+
+// View current variable values
+console.log(s.pageName);
+console.log(s.eVar1);
+console.log(s.events);
+
+// Check tracking server
+console.log(s.trackingServer);
+
+// View entire configuration
+console.table(s);
+
+// For Web SDK - check alloy object
+console.log(alloy);
+
+// Check data layer
+console.log(window.dataLayer);
+console.log(window.digitalData);
+
+// Force a tracking call (testing only!)
+s.t(); // Page view
+s.tl(true, 'o', 'Test Link'); // Link tracking</pre></div>
+                </div>
+                <div class="warn-box">
+                    <div class="warn-hdr">⚠️ Testing in Production</div>
+                    <p>Never use s.t() or s.tl() in production console as it will send real data. Use a development report suite or Adobe's debug mode which doesn't send data.</p>
+                </div>
+                <div class="ref-box">
+                    <div class="ref-title">📚 Learn More</div>
+                    <ul>
+                        <li><a href="https://experienceleague.adobe.com/docs/analytics/implementation/validate/debugger.html" target="_blank">Adobe Docs: Debugging Implementation</a></li>
+                    </ul>
+                </div>
+            

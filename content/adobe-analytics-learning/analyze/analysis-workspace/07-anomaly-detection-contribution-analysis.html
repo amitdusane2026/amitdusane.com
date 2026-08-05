@@ -1,0 +1,76 @@
+---
+slug: "anomaly-detection-contribution-analysis"
+title: "Anomaly Detection and Contribution Analysis"
+seotitle: "Anomaly Detection in Adobe Analytics"
+lastmod: 2026-07-15
+type: lesson
+modulenum: 14
+sectionnum: 7
+weight: 7
+---
+<p>Adobe Analytics uses machine learning to automatically detect unusual patterns in your data and identify factors contributing to anomalies.</p>
+                <h3 class="subsec-title">Anomaly Detection</h3>
+                <ul>
+                    <li><strong>Automatic:</strong> Runs on any trended metric in Workspace</li>
+                    <li><strong>Statistical model:</strong> Uses historical data to predict expected values</li>
+                    <li><strong>Confidence bounds:</strong> Shows upper and lower expected ranges</li>
+                    <li><strong>Visual indicators:</strong> Dots highlight statistically significant deviations</li>
+                </ul>
+
+                <h3 class="subsec-title">How to Use Anomaly Detection</h3>
+                <div class="code-block">
+                    <div class="code-hdr"><span class="code-lang">Enabling Anomaly Detection</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+                    <div class="code-body"><pre>In Analysis Workspace:
+1. Create a line visualization with time dimension
+2. Right-click the metric column header
+3. Select "Run Anomaly Detection"
+
+Or in Column Settings:
+1. Click gear icon on metric column
+2. Enable "Show Anomalies"
+
+Configuration Options:
+├── Training Period: How much history to analyze (default: 35 days)
+├── Confidence: Statistical confidence level (90%, 95%, 99%)
+└── Granularity: Day, Week, Month
+
+Interpreting Results:
+- Gray band = Expected range
+- Point above band = Positive anomaly (spike)
+- Point below band = Negative anomaly (drop)
+- Larger deviation = More significant anomaly</pre></div>
+                </div>
+
+                <h3 class="subsec-title">Contribution Analysis</h3>
+                <p>When an anomaly is detected, Contribution Analysis identifies which dimension values most contributed to the unusual change.</p>
+                <div class="code-block">
+                    <div class="code-hdr"><span class="code-lang">Running Contribution Analysis</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+                    <div class="code-body"><pre>1. Right-click on anomaly point in visualization
+2. Select "Analyze" → "Run Contribution Analysis"
+3. Select dimensions to analyze
+
+Analysis Returns:
+├── Top contributing dimension values
+├── Change in metric for each value
+├── Percentage contribution to anomaly
+└── Statistical significance score
+
+Example Output:
+Metric: Orders (dropped 40% on Tuesday)
+
+Top Contributors:
+1. Mobile Device Type: iPhone (-35% of drop)
+   → iOS app crash causing checkout failures
+2. Marketing Channel: Paid Search (-25% of drop)
+   → Campaign paused by mistake
+3. Geography: California (-20% of drop)
+   → Regional site outage</pre></div>
+                </div>
+                <div class="ref-box">
+                    <div class="ref-title">📚 Learn More</div>
+                    <ul>
+                        <li><a href="https://experienceleague.adobe.com/docs/analytics/analyze/analysis-workspace/virtual-analyst/anomaly-detection/anomaly-detection.html" target="_blank">Adobe Docs: Anomaly Detection</a></li>
+                        <li><a href="https://experienceleague.adobe.com/docs/analytics/analyze/analysis-workspace/virtual-analyst/contribution-analysis/run-contribution-analysis.html" target="_blank">Adobe Docs: Contribution Analysis</a></li>
+                    </ul>
+                </div>
+            

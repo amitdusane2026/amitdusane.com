@@ -1,0 +1,201 @@
+---
+slug: "rules"
+title: "Rules"
+seotitle: "Rules in Adobe Launch (Tags)"
+lastmod: 2026-07-18
+description: "Every Launch rule has three parts: events, conditions, and actions. What each one decides, and how rule sequence makes several rules work together."
+type: lesson
+modulenum: 6
+sectionnum: 5
+weight: 5
+---
+<p>Everything in this module has been quietly building toward this section. The <a href="/adobe-analytics-learning/collect/adobe-launch-tags/properties/">property</a> gave you a container. <a href="/adobe-analytics-learning/collect/adobe-launch-tags/extensions/">Extensions</a> stocked it with building blocks. <a href="/adobe-analytics-learning/collect/adobe-launch-tags/data-elements/">Data elements</a> gave you safe, shapeable handles on the data. The <code>_satellite</code> object gave the running library a presence on the page. None of those do anything on their own. They come together, and start to matter, inside <strong>rules</strong>. Ask someone what they actually do when they work in Launch, and the honest answer is that they work in rules. It is where 60 to 70 percent of the time goes, because it is where the implementation actually happens.</p>
+
+<p>A rule is a single logical construct that chains all of those pieces into one outcome, and most of the time that outcome is a server call to Adobe Analytics. That is the cleanest way to hold it in your head: <strong>rules are the building blocks of the server call.</strong> A single rule can reach across several extensions in one breath, set a Target activity, fire a Meta pixel, then send an Analytics beacon whose product string was shaped by a data element from the product-string extension. The rule is the thing that makes those separate parts act as one.</p>
+
+<h3 class="subsec-title">A rule has three parts</h3>
+<p>There are two layers to keep straight. A rule builds a server call; and three parts build the rule. Those three parts, in the order you configure them, are <strong>events</strong>, <strong>conditions</strong>, and <strong>actions</strong>, and each answers a different question.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">The three parts of every rule</div>
+    <div class="diagram-content">
+        <div class="flow-horizontal">
+            <div class="flow-step">Event<br><span style="font-weight:400;color:var(--text2)">when?</span></div>
+            <span class="flow-arrow">&rarr;</span>
+            <div class="flow-step">Condition<br><span style="font-weight:400;color:var(--text2)">whether?</span></div>
+            <span class="flow-arrow">&rarr;</span>
+            <div class="flow-step highlight">Action<br><span style="font-weight:400;color:var(--text2)">what?</span></div>
+        </div>
+    </div>
+</div>
+
+<p>The event decides <strong>when</strong> the rule wakes up. The condition decides <strong>whether</strong> it is allowed to proceed. The action decides <strong>what</strong> it actually does. Those are the same event, condition, and action delegates that <a href="/adobe-analytics-learning/collect/adobe-launch-tags/extensions/">Extensions</a> supplied; the rule is where you assemble them. Take the three in order.</p>
+
+<h3 class="subsec-title">Events: when the rule fires</h3>
+<p>The event is the first thing you configure, and it is the trigger. The Core extension alone supplies a long menu of them, but they fall into a few groups you will use constantly. The most foundational group is the page-load events, because they carry your baseline traffic.</p>
+
+<p>There are four page-load events, and they always fire in a fixed order regardless of how fast the library loads:</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">Page-load events, in their fixed firing order</div>
+    <div class="diagram-content">
+        <div class="flow-horizontal">
+            <div class="flow-step">Library Loaded<br><span style="font-weight:400;color:var(--text2)">Page Top</span></div>
+            <span class="flow-arrow">&rarr;</span>
+            <div class="flow-step">Page Bottom</div>
+            <span class="flow-arrow">&rarr;</span>
+            <div class="flow-step">DOM Ready</div>
+            <span class="flow-arrow">&rarr;</span>
+            <div class="flow-step">Window Loaded</div>
+        </div>
+    </div>
+</div>
+
+<p>For most implementations you only need one page-load call, and it fires on every page. That single call is what gathers the dimensions every analyst leans on: page name, channel, page type, URL, referrer, previous page, tracking code, domain, server, and more. It is also the call that your baseline metrics depend on, page views (hits), visits (sessions), and unique visitors (users), and even metrics that never appear in a rule, like bounce rate, exit rate, and average time spent, are shaped largely by it.</p>
+
+<p>The usual choice for that page-load beacon is <strong>DOM Ready</strong> or <strong>Window Loaded</strong>, and which one depends on a single question: when is your data layer fully built? DOM Ready fires once the page structure is parsed; Window Loaded waits until every asset has finished. If your data layer is ready early, DOM Ready is snappier; if it populates late, Window Loaded keeps you from sending a half-empty beacon.</p>
+
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ Page Bottom is a legacy trigger</div>
+    <p>Page Bottom only fires once a <code>_satellite.pageBottom()</code> call placed in your page source runs, and it works for synchronous implementations only. Modern embed codes load asynchronously by default, where Page Bottom simply will not fire. Treat it as a leftover from the older synchronous world, not as a default. It survives mainly because so much older guidance still names it.</p>
+</div>
+
+<p>Page-load events handle the page itself. But you also want to capture the things a visitor <em>does</em> on a page that never reloads, and that is where <strong>Direct Call</strong> earns its long reputation.</p>
+
+<h4 class="subsec-title">Direct Call, the workhorse for actions</h4>
+<p>A direct call is how you tell Launch, in plain terms, that a specific thing just happened. It is fired from the page through the <code>_satellite</code> object:</p>
+
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">Firing a direct call from the page</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>_satellite.track('Internal_Search');</pre></div>
+</div>
+
+<p>That single call fires every rule whose event is a Direct Call listening for the identifier <code>Internal_Search</code>. Direct calls are the popular way to send custom link beacons for the many actions a visitor takes that do not load a new page: add to cart, file download, on-site search, a CTA click, a checkbox selection, and dozens more. The business tells you which actions matter, and for each one you place a uniquely named direct call.</p>
+
+<p>The everyday workflow looks like this. Tomorrow a new search-filter feature ships. You, the analytics developer, define a direct call identifier for it, say <code>Search_Filter</code>, and you instruct the web developer where and how to fire it in the new feature's code. Once it is firing, you come back to Launch, create a rule, and under <strong>Events</strong>, the very first section, you choose Direct Call and enter that identifier. The page announces the action; your rule is listening for it.</p>
+
+<h3 class="subsec-title">Conditions: whether the rule runs</h3>
+<p>An event wakes a rule up. A <strong>condition</strong> decides whether it is allowed to go any further. Conditions are the gatekeeper, and their real value shows up when you think about scale.</p>
+
+<p>Take a common request: the business wants to track clicks on the Submit button, but only on the Home page for now, and they have already warned you the scope will grow, to the Product page tomorrow, maybe the whole ecommerce funnel later. The clumsy approach is to ask the web developer to fire the direct call only on the Home page, and then go back to them every time the scope expands. That does not scale, and it makes you dependent on someone else's release cycle for every small change.</p>
+
+<p>The smart approach is to ask the developer once, finally, to fire the Submit direct call on every page across the site. Then you handle the <em>where</em> entirely inside Launch, in the rule's <strong>Conditions</strong> section. You either use the UI to compare the page, or write a small piece of custom code: if the page is the Home page, proceed, otherwise discard. When the scope grows to the Product page, you change one condition in Launch and never touch the developer again.</p>
+
+<p>That gatekeeper role is also what makes conditions essential for <strong><a href="/adobe-analytics-learning/collect/adobe-launch-tags/consent-and-tag-management/">user consent</a></strong>. When a visitor grants consent to be tracked, that choice is typically stored in a cookie. A condition can read that cookie and let the rule run only when consent is present, and discard the whole operation when it is not. The rule becomes self-policing.</p>
+
+<div class="info-box">
+    <div class="info-hdr">ℹ️ Regular and exception conditions</div>
+    <p>A condition can be set as a regular condition (the rule proceeds only if it is true) or as an exception (the rule proceeds only if it is false). The exception form saves you from writing awkward inverse logic, and reads more clearly when your intent is "everywhere except here."</p>
+</div>
+
+<h3 class="subsec-title">Actions: what the rule does</h3>
+<p>Events and conditions decide when and whether. They do not decide what the rule actually <em>does</em>. That is the job of the <strong>actions</strong>, and what is available depends on the extensions you have installed and why. Staying with Adobe Analytics, the extension gives you three actions worth knowing well: <strong>Set Variables</strong>, <strong>Send Beacon</strong>, and <strong>Clear Variables</strong>.</p>
+
+<p>Two of them need almost no configuration. <strong>Send Beacon</strong> is the explicit instruction to send the server call, and you choose its type: <code>s.t()</code> for a page view, or <code>s.tl()</code> for a link, where you also give the custom link a name. <strong>Clear Variables</strong> calls <code>s.clearVars()</code>, which wipes every variable currently set on the tracker and hands you a clean slate.</p>
+
+<div class="info-box">
+    <div class="info-hdr">ℹ️ Launch made the beacon a choice</div>
+    <p>In the DTM era, creating a rule sent a beacon by default, you had little say in it. Launch separated the two: setting variables and sending the call are now distinct actions. A <strong>Set Variables</strong> action never sends anything on its own. That decoupling is what gives you the control the rest of this section is built on.</p>
+</div>
+
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">Build a rule, end to end</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>Data Collection > Tags > "Club Web" > Rules > Create New Rule
+
+Name:  All Pages - Library Loaded - Set and Send Analytics
+       ^ where       ^ when              ^ what
+       Name for where and when it fires. Your future self is the audience.
+
+EVENTS (If)          Add
+    Extension:  Core
+    Event Type: Library Loaded (Page Top)
+    Keep Changes
+
+CONDITIONS (optional, and often empty)
+    Leave blank to fire on every page.
+
+ACTIONS (Then)       Add        <- ORDER MATTERS. These run top to bottom.
+    1. Extension: Adobe Analytics
+       Action Type: Set Variables
+           eVar1  =  %Page Name%       <- the data element, not custom code
+           prop1  =  %Page Name%
+
+    2. Extension: Adobe Analytics
+       Action Type: Send Beacon
+           s.t()   (page view)          <- s.tl() would be a link
+
+Save Rule
+
+Set Variables, THEN Send Beacon. Reverse them and you send an empty hit
+and then set the variables into the void.</pre></div>
+</div>
+
+<div class="pro-tip">
+    <div class="pro-tip-hdr">💡 Always name your custom links</div>
+    <p>On an <code>s.tl()</code> beacon, give the custom link a real, descriptive name. Many people leave it blank, and then regret it. A good name is what makes the call findable later in the debugger and meaningful in your reports. A blank one is a hole in your data you cannot fill after the fact.</p>
+</div>
+
+<p>The third action, <strong>Set Variables</strong>, is where the real work lives. If rules are 60 to 70 percent of your time in Launch, Set Variables is 80 to 90 percent of your time inside rules. You select Adobe Analytics as the extension, and you get a clean interface to map your data elements onto Analytics variables, eVars, props, events, and the standard dimensions like page name, channel, URL, and tracking code. When the UI is not enough, the same action gives you a custom code editor with the full power of JavaScript, exactly as a data element does. There is very little you cannot do here.</p>
+
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ Custom code on a link rule needs the tracking lists</div>
+    <p>If you set variables in custom code on a link beacon (an <code>s.tl()</code> rule, or any non-page-load call), you must also set <code>s.linkTrackVars</code> and <code>s.linkTrackEvents</code> by hand, naming every variable and event you want included, or they will not be sent. Page-load calls do not need them. When you set your variables through the Set Variables UI instead, the extension manages both lists for you, which is one more reason to stay in the interface when you can.</p>
+</div>
+
+<h3 class="subsec-title">Sequence and order: making rules work together</h3>
+<p>Once a rule has actions, their order inside the rule matters, and so does the order of rules that fire on the same trigger. Get this right and several rules cooperate into one clean beacon. Get it wrong and you send garbage, or duplicate page views.</p>
+
+<p>Inside a single rule, the canonical sequence is <strong>set, send, clear</strong>: set your variables, send the beacon, then clear. Clearing comes last for a reason that becomes obvious in a moment: clear too early and you erase the very work you were about to send.</p>
+
+<p>Across rules, the lever is the <strong>rule order</strong>, an integer you assign. The lower the number, the earlier the rule runs; the rule with the highest number runs last. A practical convention is to leave gaps, ordering rules 1, 50, 100 rather than 1, 2, 3, so you can slot new rules between existing ones later.</p>
+
+<div class="info-box">
+    <div class="info-hdr">ℹ️ Order only matters on a shared trigger</div>
+    <p>Rule order has no effect across rules that fire on different events. It only sequences rules that share the same trigger. Two rules both listening for DOM Ready will respect their order relative to each other; a DOM Ready rule and a click rule have no ordering relationship at all.</p>
+</div>
+
+<h4 class="subsec-title">The Rule Sandwich</h4>
+<p>Here is where it all pays off, and it answers a real problem. Suppose you need page-specific data on certain pages on top of your global page-load tracking. If you simply write a second page-load rule that also sends a beacon, you now send two page views on that page, inflating your traffic and distorting every report that touches it. You do not want that.</p>
+
+<p>The clean solution rests on one fact, which can now be stated plainly: there is a single Analytics tracker, the <code>s</code> object, that persists across all the rules firing on a given page. Variables set by one rule stay on it and accumulate, until something clears them or the page unloads. So you do not need two beacons. You let several rules set variables onto that one shared object, and let only the last rule actually send it. Practitioners call this stacking the <strong>Rule Sandwich</strong>.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">A Rule Sandwich: many rules, one beacon</div>
+    <div class="diagram-content">
+        <div class="flow-vertical">
+            <div class="flow-step">Order 1 &middot; Set global variables<br><span style="font-weight:400;color:var(--text2)">no beacon</span></div>
+            <span class="flow-arrow-down">&darr;</span>
+            <div class="flow-step">Order 50 &middot; Set page-specific variables<br><span style="font-weight:400;color:var(--text2)">no beacon</span></div>
+            <span class="flow-arrow-down">&darr;</span>
+            <div class="flow-step highlight">Order 100 &middot; Send beacon, then clear<br><span style="font-weight:400;color:var(--text2)">one page view, carrying everything above</span></div>
+        </div>
+    </div>
+</div>
+
+<p>The low-order rule sets variables and stops, no beacon. The next rule adds its own variables and stops. The final, highest-order rule sends the beacon, which carries everything accumulated on the shared tracker, then clears. The result is exactly one page view that contains variables contributed by several rules, each scoped to its own concern. This is how a scalable implementation avoids repeating itself, set a variable in one place, let it ride into the right beacon.</p>
+
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ Do not clear before you send</div>
+    <p>The sandwich has one classic failure. If the final rule clears variables <em>before</em> it sends, or starts with a clear, it wipes everything the earlier rules set, and the beacon goes out nearly empty. Clear only after the beacon has been sent. Watch repeated variables too: if two rules set the same variable, the later rule wins, so the last value on the shared object is the one that ships.</p>
+</div>
+
+<div class="pro-tip">
+    <div class="pro-tip-hdr">💡 Set global variables in a rule, not the extension config</div>
+    <p>The Adobe Analytics extension has a built-in global variables section, and it is tempting to set page name and site section there. The catch is that it evaluates only once, when the tracker is first created on page load, and the values do not survive a clearVars. Many experienced implementers skip it and instead use a dedicated order-1 "set global variables" rule that fires on every relevant trigger. You keep one place for your universal variables, and they behave predictably with the rest of the sandwich.</p>
+</div>
+
+<p>That is the rule, from its three parts to the way several of them cooperate into a single, clean server call. Everything earlier in this module was preparation for this assembly. What remains is getting your work safely off your screen and onto the live site, which is the <a href="/adobe-analytics-learning/collect/adobe-launch-tags/publishing-workflow/">Publishing Workflow</a>.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it</div>
+    <p>Inside a property, open <span class="path">Rules</span>, then <span class="path">Add Rule</span>. Each rule is built in the order <span class="path">Events &rarr; Conditions &rarr; Actions</span>.</p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title">📚 Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/experience-platform/tags/ui/rules" target="_blank">Adobe Docs: Rules</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/experience-platform/tags/extensions/client/analytics/overview" target="_blank">Adobe Docs: Adobe Analytics Extension Overview</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/implementation/vars/functions/clearvars" target="_blank">Adobe Docs: clearVars</a></li>
+    </ul>
+</div>

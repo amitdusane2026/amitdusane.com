@@ -1,0 +1,116 @@
+---
+slug: "link-tracking"
+title: "Link Tracking"
+seotitle: "Link Tracking in Adobe Analytics (s.tl())"
+lastmod: 2026-07-18
+description: "The custom link call, s.tl(). Why these calls carry the real weight of an implementation, the three link types, and how they differ from a page call."
+type: lesson
+modulenum: 7
+sectionnum: 2
+weight: 2
+---
+<p><a href="/adobe-analytics-learning/collect/tracking-calls/page-view-tracking/">Page View Calls</a> split tracking into two kinds and went deep on the first, the page view. This section takes the second, the link tracking call, fired in code as <code>s.tl()</code>. You already know why it carries the name it does, a leftover from the era when a page's interactions were mostly links inside anchor tags.</p>
+
+<p>If the naming were being decided today, a more honest label would be something like activity call, or user action call. That is closer to what it captures. A link tracking call is, in practice, everything that is not a page load. A scroll, a click on any interface element, a mouse hover, a video played or paused, a document downloaded, a popup closed, a form opened, a form submitted, and dozens more. None of these is really a link in the old sense, and few are exits to a third party site. They are the actions that define digital performance now.</p>
+
+<h3 class="subsec-title">Why these calls carry the real weight</h3>
+<p>Think about the questions a business actually asks. How many times was this form submitted? How many times was this important document downloaded? How many times was this video played? That is the insight that pays for the tool. Traffic metrics, the page views and visits, are the primary goal and they matter, but conversion does not happen at that level. Conversion happens here, where a visitor purchases, submits a lead, downloads something, or engages with content. That is conversion in the true sense, and link tracking calls are how you capture it.</p>
+
+<h3 class="subsec-title">How a link call gets made, on the web</h3>
+<p>As with page views, there are two worlds, the website and the mobile app. On a website, the pattern was set out in the <a href="/adobe-analytics-learning/collect/adobe-launch-tags/rules/">Rules</a> section: for every action that matters, you build a rule. Take a document download. You define a direct call, hand its identifier and the data layer details to the developer, and they populate and trigger it at the right moment. Your rule does the rest, setting the Analytics variables and sending the server call, where the Send Beacon action fires <code>s.tl()</code>. That end of the work, the rule mechanics and how the extension manages your variables, lives in the Rules section. Here the subject is the call itself.</p>
+
+<p>If you are implementing by hand instead, you populate your variables and then call the function. Unlike <code>s.t()</code>, the link call needs a few arguments to describe itself.</p>
+
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">s.tl() anatomy, manual implementation</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>// s.tl(linkObject, linkType, linkName, variableOverrides, doneAction)
+//   linkObject : "this" for a real navigating link (resolves its URL,
+//                and holds a brief moment so the beacon fires before
+//                the browser leaves). Use "true" for a non-navigating
+//                interaction such as a popup or a custom action.
+//   linkType   : "o" other/custom, "d" download, "e" exit
+//   linkName   : your label, up to 100 characters, shown in the report
+//   the last two arguments are optional
+
+// A custom action that does not navigate away (a popup opened):
+s.linkTrackVars = "eVar10,prop10,events";  // required in custom code
+s.linkTrackEvents = "event5";              // so these get sent
+s.events = "event5";
+s.eVar10 = "newsletter-modal";
+s.prop10 = "product-page";
+s.tl(true, "o", "Newsletter Modal Opened");
+
+// A real download link, passing the clicked element:
+s.tl(this, "d", "User Guide PDF");</pre></div>
+</div>
+
+<p>The <code>linkName</code> is worth care. It is what makes the call findable later in a debugger and meaningful in reports, which is why naming custom links well is treated as a discipline in the Rules section. One technical note that catches people implementing manually: when you set variables in custom code on a link call, you must also list them in <code>s.linkTrackVars</code> and any events in <code>s.linkTrackEvents</code>, or they will not be sent. Page view calls do not need this. When you set variables through the extension's interface instead, it manages both lists for you. The full reasoning is in <a href="/adobe-analytics-learning/collect/adobe-launch-tags/rules/">the Rules section</a>; the point to carry here is that a link call is selective about what it sends by default.</p>
+
+<h3 class="subsec-title">The three link types, and why they exist</h3>
+<p>The second argument, the link type, takes one of three values, and the reason there are exactly three goes back to the tool's history. In the early days the product paid special attention to two behaviors: file downloads, and exit links that carried a visitor off the site. Each got its own type and its own report. Everything else was lumped into a third, generic type.</p>
+
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>Type</th><th>Code</th><th>Feeds the report</th><th>How it is usually fired</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Custom (other)</strong></td><td><code>"o"</code></td><td>Custom Links</td><td>Manually, or by a Launch rule. The workhorse: most interactions use this.</td></tr>
+            <tr><td><strong>Download</strong></td><td><code>"d"</code></td><td>File Downloads</td><td>Automatically via <code>trackDownloadLinks</code> and <code>linkDownloadFileTypes</code>, or manually.</td></tr>
+            <tr><td><strong>Exit</strong></td><td><code>"e"</code></td><td>Exit Links</td><td>Automatically via <code>trackExternalLinks</code> and <code>linkInternalFilters</code>, or manually.</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<p>In modern practice the download and exit types are less central than they once were. Downloads are often captured as an ordinary custom link paired with a success event, which fits them into the same conversion reporting as everything else. And both downloads and exits can be tracked automatically without you writing an <code>s.tl()</code> at all. Turning on <code>trackDownloadLinks</code> lets AppMeasurement fire a download call whenever a clicked link ends in one of the file extensions you list in <code>linkDownloadFileTypes</code>, such as <code>pdf,zip,doc</code>. Turning on <code>trackExternalLinks</code> does the same for exits, firing a call the moment a visitor clicks a link that leaves your domain. The special types are not obsolete; they simply sit alongside the more common pattern of custom links carrying success events.</p>
+
+<div class="info-box">
+    <div class="info-hdr">ℹ️ Two "internal" settings that are often confused</div>
+    <p>What counts as an exit link is decided by <code>linkInternalFilters</code>, a comma-separated list of domains you consider part of your own site. When automatic exit tracking is on, any clicked link that does not match this list is treated as an exit. This is a separate feature from the report suite's <strong>Internal URL Filters</strong> setting in the Admin console. Those Internal URL Filters exist to support traffic-source dimensions like Referring Domain, deciding which referrers count as internal and are ignored. They do not define exit links. Same word, different jobs: one shapes exit link tracking in the implementation, the other shapes referrer reporting in the report suite.</p>
+</div>
+
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ Automatic and manual tracking can double-count</div>
+    <p>If automatic download or exit tracking is on and you also fire a manual <code>s.tl()</code> for the same click, Adobe receives two calls for one action. That inflates the numbers and quietly makes the report wrong. Decide per behavior whether it is tracked automatically or by hand, and do not do both for the same link.</p>
+</div>
+
+<h3 class="subsec-title">How a link call differs from a page call</h3>
+<p>The two calls are siblings, but they are not interchangeable, and it helps to see them side by side.</p>
+
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th></th><th><code>s.t()</code> page view</th><th><code>s.tl()</code> link call</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Increments Page Views</strong></td><td>Yes, by one</td><td>No, it is a non-page-view hit</td></tr>
+            <tr><td><strong>Reports it feeds</strong></td><td>Pages, and page-level dimensions</td><td>Custom Links, File Downloads, or Exit Links</td></tr>
+            <tr><td><strong>Typical payload</strong></td><td>Page context: page name, section, channel</td><td>The interaction, usually with success events and eVars</td></tr>
+            <tr><td><strong>Sends all variables by default</strong></td><td>Yes</td><td>No, only what <code>linkTrackVars</code> lists in custom code</td></tr>
+            <tr><td><strong>Mobile equivalent</strong></td><td>trackState</td><td>trackAction</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<h3 class="subsec-title">What usually rides on a link call</h3>
+<p>There is no rule in the code that forces it, but there is a strong, unwritten pattern: link calls are where your important success events fire. The behaviors above, a form submitted, a document downloaded, a video played, are conversions, and conversions have always been captured with <a href="/adobe-analytics-learning/foundations/variables/events-success-events/">success events</a> and <a href="/adobe-analytics-learning/foundations/variables/evars-conversion-variables/">eVars</a>. That is why, as a general practitioner, you will see success events and eVars showing up on <code>s.tl()</code> calls far more than on page views.</p>
+
+<p>One honest caveat, the same one raised in the variables module: the arrival of Workspace blurred the old strict lines between props, eVars, default variables, and events. You can build reports across most of them now. So treat "link calls carry success events and eVars" as the common convention it is, not as a hard boundary. It describes how implementations are usually laid out, not a limit the tool imposes.</p>
+
+<h3 class="subsec-title">The same behavior in a mobile app</h3>
+<p>As with the page view, the mobile world does not have an <code>s.tl()</code> function, because it does not run JavaScript. Everything that is not a screen load, which is captured with trackState, is captured instead with trackAction. Every interaction a user takes, short of moving to a new screen, is a trackAction call: a button tap, a filter applied, a video started. The syntax differs by platform, but the outcome is the same, data sent to Adobe's servers describing an action. The mechanics of the mobile SDK, including how these map to variables through processing rules, are covered in the <a href="/adobe-analytics-learning/collect/data-collection/mobile-sdk/">Mobile SDK</a> section.</p>
+
+<p>Both calls in this module, the page view and the link call, share one thing underneath: each is a server call sent to Adobe. And server calls are not just the unit of data collection, they are the unit you are billed on. That is the subject of <a href="/adobe-analytics-learning/collect/tracking-calls/server-calls-billing/">Server Calls and Billing</a>.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Analytics</div>
+    <p>Custom Links: <span class="path">Workspace &rarr; Dimensions &rarr; Custom Link</span></p>
+    <p>File Downloads: <span class="path">Workspace &rarr; Dimensions &rarr; Download Link</span></p>
+    <p>Exit Links: <span class="path">Workspace &rarr; Dimensions &rarr; Exit Link</span></p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title">📚 Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/implementation/vars/functions/tl-method" target="_blank">Adobe Docs: tl() Method</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/implementation/vars/config-vars/linktrackvars" target="_blank">Adobe Docs: linkTrackVars</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/implementation/vars/config-vars/linkinternalfilters" target="_blank">Adobe Docs: linkInternalFilters</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/implementation/vars/config-vars/trackexternallinks" target="_blank">Adobe Docs: trackExternalLinks</a></li>
+    </ul>
+</div>

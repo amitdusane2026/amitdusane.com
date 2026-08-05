@@ -1,0 +1,151 @@
+---
+slug: "segment-logic-operators"
+title: "Segment Logic and Operators"
+seotitle: "Segment Logic and Operators in Adobe Analytics"
+description: "Operators are what lift a segment past a spreadsheet dropdown: how one condition matches a value, and how conditions combine with And, Or, and nesting."
+lastmod: 2026-07-15
+type: lesson
+modulenum: 13
+sectionnum: 3
+weight: 3
+---
+<p>A segment that could only ask whether a value equals something would be barely more useful than the Excel dropdown from <a href="/adobe-analytics-learning/analyze/segments/understanding-segments/">Understanding Segments</a>. Pick a value, see the rows that match it, done. Real questions are rarely that blunt. They sound more like: pages whose address starts with /checkout, visitors who saw the pricing page but not the demo, sessions that included a video play and an add to cart. Answering those needs two things a dropdown does not have: a range of ways to match a single value, and a way to combine conditions. Those are the operators, and they are where a segment earns its name.</p>
+
+<h3 class="subsec-title">Two kinds of operators</h3>
+<p>It helps to separate them from the start, because they do different jobs. Comparison operators decide how a single condition matches a value: equals, contains, starts with, and the rest. Logical operators decide how conditions combine into one segment: <code>And</code>, <code>Or</code>, and <code>Then</code>. Get the comparison right and each condition is precise. Get the logic right and the conditions add up to the question that was actually meant.</p>
+
+<h3 class="subsec-title">Comparison operators: matching a single value</h3>
+<p>The comparison operators read almost like plain English, and that is deliberate. The people who ultimately consume these reports are business users, and a condition that says Page URL starts with /checkout needs no manual. The table below shows the common ones against a single value, a Page URL of <span class="highlight">/products/winter-boots</span>, so the difference between them is concrete.</p>
+
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>Operator</th><th>What it matches</th><th>On /products/winter-boots</th></tr></thead>
+        <tbody>
+            <tr><td><strong>equals</strong> /products/winter-boots</td><td>the exact value, nothing else</td><td>matches</td></tr>
+            <tr><td><strong>does not equal</strong> /products/winter-boots</td><td>anything except that exact value</td><td>no match</td></tr>
+            <tr><td><strong>contains</strong> boots</td><td>the text appears anywhere inside the value</td><td>matches</td></tr>
+            <tr><td><strong>does not contain</strong> kids</td><td>the text is absent from the value</td><td>matches</td></tr>
+            <tr><td><strong>starts with</strong> /products</td><td>the value begins with the text</td><td>matches</td></tr>
+            <tr><td><strong>ends with</strong> .html</td><td>the value ends with the text</td><td>no match</td></tr>
+            <tr><td><strong>matches</strong> /products/*</td><td>exact match allowing the * wildcard, not full regex</td><td>matches</td></tr>
+            <tr><td><strong>exists</strong></td><td>any value is present at all</td><td>matches</td></tr>
+            <tr><td><strong>does not exist</strong></td><td>no value was ever set</td><td>no match</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<p>Metrics, being numbers, take numeric operators instead: is greater than, is less than, is greater than or equal to, and so on. Revenue is greater than 100 is a metric condition, not a string one. And three operators handle whole lists at once: equals any of matches a value that exactly equals any item in a list, contains any of matches when the value contains any listed item, and contains all of requires every listed token to be present. They save building long chains of <code>Or</code> conditions by hand.</p>
+
+<div class="pro-tip">
+    <div class="pro-tip-hdr">💡 "contains any of" and "equals any of" are not interchangeable</div>
+    <p>These two look alike and behave differently, and the difference bites. contains any of is space-delimited and matches partial strings, so a list containing 42 will also match 425 and 1042. equals any of is comma-delimited, matches values exactly, accepts up to 500 items, and runs faster. When the goal is an exact list of IDs or page names, reach for equals any of. Using contains any of on identifiers is a quiet way to pull in values that were never intended, and the contains family is also the most processing-heavy set of operators, since it scans the full content of every value.</p>
+</div>
+
+<h3 class="subsec-title">Negation has two forms, and they are not the same</h3>
+<p><a href="/adobe-analytics-learning/analyze/segments/segment-containers/">Segment Containers</a> introduced the Exclude container, which removes everything matching its rule at the container's scope, and left one question open: how is that different from just using a "does not" operator on a condition? The two read alike in English and diverge sharply in practice.</p>
+
+<p>Consider trying to find visits with no order in them. The tempting build is a Visit-scoped condition of Orders does not exist. It returns almost every visit on the site. The reason is scope: a visit qualifies if it contains any hit where an order does not exist, and nearly every visit has such a hit, the page views before and after a purchase. The condition is true somewhere in almost every visit, so almost every visit comes back.</p>
+
+<p>The correct build is an Exclude container at Visit scope holding Orders exists: include all visits, then throw out the whole visits in which an order happened, and what remains is the visits that never contained one. Condition-level negation asks whether a single hit fails to match. Container-level exclusion removes an entire qualifying visit or visitor. At Hit scope the two can look identical. At Visit and Visitor scope they answer different questions, and reaching for the wrong one is a common way to ship a number that looks plausible and is wrong.</p>
+
+<h3 class="subsec-title">Logical operators: combining conditions</h3>
+<p>Two conditions can relate in two basic ways. <code>And</code> requires both to be true, which narrows the result to where they overlap. <code>Or</code> requires only one, which widens the result to everything in either. The names say exactly what they do, and that simplicity becomes a trap only when a segment grows and the basics slip out of mind.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">📊 And narrows to the overlap, Or widens to either</div>
+    <svg viewBox="0 0 700 250" style="width:100%;height:auto;display:block;margin:4px 0 8px" role="img" aria-label="Two set diagrams. On the left, And highlights only the overlap where both conditions are true, a smaller group. On the right, Or highlights both full circles, everything in either condition, a larger group.">
+        <defs><clipPath id="andLens"><circle cx="150" cy="120" r="58"/></clipPath></defs>
+        <text x="180" y="34" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:15px;font-weight:700;font-family:sans-serif">AND</text>
+        <circle cx="150" cy="120" r="58" style="fill:none;stroke:var(--text2,#475569);stroke-width:1.5"/>
+        <circle cx="222" cy="120" r="58" style="fill:none;stroke:var(--text2,#475569);stroke-width:1.5"/>
+        <circle cx="222" cy="120" r="58" style="fill:var(--accent,#e11d48);opacity:.34" clip-path="url(#andLens)"/>
+        <text x="118" y="124" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">Mobile</text>
+        <text x="254" y="124" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">Bought</text>
+        <text x="180" y="208" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:600;font-family:sans-serif">Both true: the overlap only</text>
+        <text x="180" y="226" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">a smaller group than either alone</text>
+
+        <line x1="350" y1="40" x2="350" y2="200" style="stroke:var(--border,#e2e8f0);stroke-width:1"/>
+
+        <text x="520" y="34" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:15px;font-weight:700;font-family:sans-serif">OR</text>
+        <circle cx="490" cy="120" r="58" style="fill:var(--accent,#e11d48);opacity:.20"/>
+        <circle cx="562" cy="120" r="58" style="fill:var(--accent,#e11d48);opacity:.20"/>
+        <circle cx="490" cy="120" r="58" style="fill:none;stroke:var(--text2,#475569);stroke-width:1.5"/>
+        <circle cx="562" cy="120" r="58" style="fill:none;stroke:var(--text2,#475569);stroke-width:1.5"/>
+        <text x="458" y="124" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">iOS</text>
+        <text x="594" y="124" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">Android</text>
+        <text x="520" y="208" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:600;font-family:sans-serif">Either true: everything in both</text>
+        <text x="520" y="226" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">a larger group than either alone</text>
+    </svg>
+</div>
+
+<p>A segment of Mobile and Purchased returns only the people who are both on a mobile device and bought something, a smaller group than either condition on its own. iOS or Android returns everyone on either platform, a larger group than either alone. Narrowing and widening: that is the whole of it, until both are needed at once.</p>
+
+<h3 class="subsec-title">One container, one logic, and how to combine both</h3>
+<p>Here is the rule that catches people out. Within a single container, all the conditions share one logical relationship. Join three conditions with <code>And</code> and every one must be true. Switch the join to <code>Or</code> and any one will do. A single container cannot hold some conditions joined by <code>And</code> and others by <code>Or</code> at the same level.</p>
+
+<p>But real questions mix them constantly. Take this one: a visit in which the customer saw page ABC and played a video, or, separately, simply saw page XYZ. That is an <code>And</code> pair sitting inside an <code>Or</code>. The way to express it is the nesting from <a href="/adobe-analytics-learning/analyze/segments/segment-containers/">Segment Containers</a>, where a container holds another container: group the <code>And</code> pair inside its own nested container, then join that container to the remaining condition with <code>Or</code>.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">📊 (Page ABC AND a video) OR Page XYZ</div>
+    <svg viewBox="0 0 700 232" style="width:100%;height:auto;display:block;margin:4px 0 8px" role="img" aria-label="The mixed condition drawn as structure. A nested container at Visit scope holds Page equals ABC joined by AND to Video Play exists. That whole container is joined by OR to a separate condition, Page equals XYZ.">
+        <rect x="18" y="40" width="306" height="150" rx="8" style="fill:var(--accent,#e11d48);opacity:.06"/>
+        <rect x="18" y="40" width="306" height="150" rx="8" style="fill:none;stroke:var(--accent,#e11d48);stroke-width:2.5"/>
+        <text x="34" y="64" style="fill:var(--accent,#e11d48);font-size:10px;font-weight:700;font-family:sans-serif;letter-spacing:.5px">NESTED CONTAINER, VISIT SCOPE</text>
+        <rect x="34" y="78" width="274" height="30" rx="4" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1"/>
+        <text x="48" y="98" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">Page&nbsp;&nbsp;equals&nbsp;&nbsp;ABC</text>
+        <rect x="150" y="114" width="42" height="20" rx="10" style="fill:var(--accent,#e11d48);opacity:.14"/>
+        <text x="171" y="128" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:11px;font-weight:700;font-family:sans-serif">AND</text>
+        <rect x="34" y="140" width="274" height="30" rx="4" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1"/>
+        <text x="48" y="160" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">Video Play&nbsp;&nbsp;exists</text>
+
+        <circle cx="352" cy="115" r="24" style="fill:var(--card,#ffffff);stroke:var(--accent,#e11d48);stroke-width:2.5"/>
+        <text x="352" y="120" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:13px;font-weight:700;font-family:sans-serif">OR</text>
+
+        <rect x="382" y="88" width="300" height="54" rx="8" style="fill:var(--card,#ffffff);stroke:var(--text2,#475569);stroke-width:1.5"/>
+        <text x="402" y="120" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">Page&nbsp;&nbsp;equals&nbsp;&nbsp;XYZ</text>
+
+        <text x="18" y="214" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">Group the AND pair in its own container, then join it to the rest with OR.</text>
+    </svg>
+</div>
+
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">Combine AND and OR with a nested container</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>Components > Segments > Add
+
+Title:  Saw ABC with a video, or saw XYZ
+
+Definition
+    Top container scope:  Visits
+
+    Rule 1:  Page        equals   ABC
+    Rule 2:  Video Play  exists
+        Select Rule 1 and Rule 2 > Options > Add container from selection
+        Set the join inside the new container to  AND
+        (this nested container now means: in one visit, saw ABC and played a video)
+
+    Rule 3:  Page        equals   XYZ      (added outside the nested container)
+
+    Set the join between the nested container and Rule 3 to  OR
+
+Reads as: visits where (Page ABC AND a video played) OR Page XYZ
+
+Save</pre></div>
+</div>
+
+<p>Without the nested container, three conditions at one level would all share a single <code>And</code> or a single <code>Or</code>, and neither expresses the question. The nesting is what lets the <code>And</code> bind tightly around its pair while the <code>Or</code> governs the whole. That is the general move: group the conditions that belong together, then relate the groups.</p>
+
+<h3 class="subsec-title">From whether to when</h3>
+<p><code>And</code> and <code>Or</code> answer one kind of question: whether conditions are all true, or any true. They say nothing about order. A segment of viewed pricing and started a trial fires whether the trial came first or the pricing did, or whether the two happened weeks apart. Often that is fine. Sometimes order is the entire point: viewed pricing and then started a trial, in that sequence, describes a different and more meaningful group. Expressing order needs the third join operator, <code>Then</code>, and the sequential segments it builds. That is Sequential Segments.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Analytics</div>
+    <p>Inside the Segment builder (Analytics &gt; <span class="path">Components &gt; Segments &gt; Add</span>), the comparison operator sits on each condition, in the drop-down beside its value. The logical operators appear as small <span class="path">And / Or / Then</span> toggles between conditions and containers. To group conditions together, select them and choose <span class="path">Options &gt; Add container from selection</span>.</p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title">📚 Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/segmentation/segment-reference/seg-operators" target="_blank">Adobe Docs: Comparison Operators for Segments</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/segmentation/segmentation-workflow/seg-build" target="_blank">Adobe Docs: Build Segments</a></li>
+    </ul>
+</div>

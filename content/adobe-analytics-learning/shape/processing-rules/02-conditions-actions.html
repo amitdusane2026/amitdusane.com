@@ -1,0 +1,98 @@
+---
+slug: "conditions-actions"
+title: "Conditions and Actions"
+seotitle: "Processing Rule Conditions and Actions"
+lastmod: 2026-07-18
+description: "The anatomy of a processing rule. Conditions decide when it acts, actions decide what happens, and order is logic rather than layout."
+type: lesson
+modulenum: 8
+sectionnum: 2
+weight: 2
+---
+<p>The <a href="/adobe-analytics-learning/shape/processing-rules/what-are-processing-rules/">What Are Processing Rules</a> section left the mechanism deliberately closed. It described a processing rule as a condition, which decides when to act, and an action, which decides what to do, and promised to take the two apart here. Open the box now, because everything you will ever build with processing rules, in this module and in a real project, is assembled from just those two ideas.</p>
+
+<p>Start with a concrete problem. Your developers send the page type on every hit as a context data variable, <code>c.pagetype</code>. It reaches Adobe, but context data is not something a report can chart directly; it has to be routed into an eVar or a prop first. You want to route it, but only when it actually arrived, because writing an empty value would wipe out whatever <code>eVar1</code> already held, and you want every other hit left untouched. Read that requirement back slowly and you will hear its two halves: a <em>when</em> (only if <code>c.pagetype</code> is present) and a <em>what</em> (put its value into <code>eVar1</code>). That is a condition and an action. The whole feature is nothing more than a disciplined way to write sentences of that shape.</p>
+
+<h3 class="subsec-title">The anatomy of a rule</h3>
+<p>A processing rule is usually drawn as a simple "if this, then that." That picture is not wrong, it is just missing half the parts. In the actual interface, each rule has five sections, and the two that people forget are the two that separate a careful implementer from a careless one.</p>
+<ul>
+    <li><strong>Rule title:</strong> a plain label. It changes nothing about how the rule runs, but it is the first thing the next person sees, so a vague title is a small act of sabotage.</li>
+    <li><strong>Condition:</strong> the header reads "if any or all of the following are true." Leave it empty and the rule runs on every single hit, with no exceptions.</li>
+    <li><strong>Then do the following:</strong> the actions that fire when the condition is true.</li>
+    <li><strong>Otherwise do the following:</strong> the actions that fire when the condition is false. This is the part most people never notice, and it matters, because it turns one rule into a complete either/or. You do not need a second, mirror-image rule for the "did not match" case.</li>
+    <li><strong>Reason:</strong> a free-text note recording who requested the rule and what it depends on. It has no effect on logic, and it is the most undervalued field in the whole feature, because processing rules have no undo. When a rule quietly does the wrong thing months later, the reason field is the only thing standing between you and a guess.</li>
+</ul>
+
+<div class="diagram-box">
+    <div class="diagram-title">Anatomy of a processing rule, using the page-type example</div>
+    <div class="diagram-content">
+        <div style="font-size:12px;color:var(--text2);margin-bottom:12px"><strong style="color:var(--text1)">Title:</strong> Map page type into reporting</div>
+        <div class="rule-structure">
+            <div class="rule-part conditions">
+                <div class="rule-part-title">Condition (when)</div>
+                <div class="rule-part-desc">If ALL are true:<br><code>c.pagetype</code> is set</div>
+            </div>
+            <div class="rule-connector">&rarr;</div>
+            <div class="rule-part actions">
+                <div class="rule-part-title">Then do the following</div>
+                <div class="rule-part-desc">Overwrite <code>eVar1</code> with <code>c.pagetype</code><br>Overwrite <code>prop1</code> with <code>c.pagetype</code></div>
+            </div>
+            <div class="rule-connector">&rarr;</div>
+            <div class="rule-part">
+                <div class="rule-part-title">Otherwise</div>
+                <div class="rule-part-desc">Condition false:<br>do nothing, leave the hit as it is</div>
+            </div>
+        </div>
+        <div style="font-size:12px;color:var(--text2);margin-top:12px"><strong style="color:var(--text1)">Reason:</strong> Requested by the analytics team to route page type into reporting until the tag update ships. No undo, so the note earns its place.</div>
+    </div>
+</div>
+
+<h3 class="subsec-title">Conditions: deciding when a rule acts</h3>
+<p>A condition inspects a value that arrived in the hit and asks one of two kinds of question. The first is whether a value matches a pattern: does it <strong>equal</strong> a string exactly, <strong>contain</strong> it, <strong>start with</strong> it, or <strong>end with</strong> it. The second is simpler: is the value there at all, tested as <strong>is set</strong> or <strong>is not set</strong>. String comparisons here are not case-sensitive, so "Product" and "product" are treated as the same value, which saves you from chasing capitalization bugs but can also mask them if you were relying on case to tell two values apart.</p>
+<p>Two behaviors of the condition block are where most logic errors are born. The first is the little toggle in the header, "if <strong>any</strong>" versus "if <strong>all</strong>." Choose "all" and every condition must be true together, the logical AND: <code>c.pagetype</code> is set AND <code>c.pagetype</code> equals "product" matches only product pages that actually carried the value. Choose "any" and a single true condition is enough, the logical OR: page name contains "cart" OR page name contains "checkout" catches either. Picking the wrong one is how a rule ends up firing on far more, or far less, than you intended.</p>
+<p>The second is that conditions live at two levels. There is the rule-level condition that gates the whole rule, and there is a smaller condition you can attach to an individual action. That second level is quietly powerful: a single rule can map <code>c.pagetype</code> into <code>eVar1</code> for every hit that carries it, and inside that same rule, one action can set an event only when <code>c.pagetype</code> equals "product." Without action-level conditions you would be writing a separate rule for every small variation.</p>
+<p>One boundary is worth stating plainly. You can only build a condition on a variable you have Read access to. Access is not just about who can see reports; it decides which variables you can even reference here, a point that ties back to how permissions were framed in the <a href="/adobe-analytics-learning/foundations/variables/">variables</a> work.</p>
+
+<h3 class="subsec-title">Actions: deciding what happens</h3>
+<p>Here is the correction that reshapes how most people think about this feature. There are exactly three actions, not the longer menu you might expect, and the first one carries more weight than its single name suggests.</p>
+
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>Action</th><th>What it does</th><th>Worth knowing</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Overwrite value of</strong></td><td>Writes a value into a prop, eVar, or event, replacing whatever was there.</td><td>The workhorse. Its source can be a static value (this is "set"), another variable (this is "copy"), or several pieces joined together such as <code>category:subcategory</code> (this is "concatenate"). Set, copy, and concatenate are not separate actions, they are three uses of this one. It is named "overwrite" as a built-in warning: the previous value is gone.</td></tr>
+            <tr><td><strong>Delete value of</strong></td><td>Removes a variable's value for that hit.</td><td>Useful to undo a value an earlier rule set, once a later condition decides it should not apply.</td></tr>
+            <tr><td><strong>Set event</strong></td><td>Fires a success event, the same as writing <code>event1=1</code> in the events string.</td><td>Usually set to 1. Set it to 0 and the event does not count, which is the clean way to discard an event from a hit without a code change. It can also carry another number or a value from context data.</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<p>Because "overwrite" is a single action with three faces, the skill is not memorizing action names, it is choosing the source. Feeding it a fixed string sets a value, feeding it another variable copies one field into another, and feeding it a combination builds a compound dimension. The mirror image of Read access applies to all three actions: you can only act on a variable you have Write access to, so an action can touch only the variables your permissions let you change.</p>
+
+<h3 class="subsec-title">Order is logic, not layout</h3>
+<p>Rules run from the top, starting at rule 1, and every hit passes through every rule. There is no early exit: a rule cannot say "if this one matched, skip the rest." That single fact has two consequences that catch people out. Because every hit reaches every rule, each rule's condition has to be specific enough that it ignores the hits it was never meant to touch. And because the rules run in sequence, an earlier rule can change the ground a later rule stands on. If rule 1 overwrites <code>eVar3</code>, the original value of <code>eVar3</code> is gone by the time rule 2 looks at it. A rule that needs the original value must sit above the rule that overwrites it. Order here is not cosmetic ordering in a list, it is the execution order of your logic.</p>
+
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ Guard an overwrite with a condition</div>
+    <p>Actions do not check whether their source has a value first. A rule that overwrites <code>eVar1</code> with <code>eVar2</code> will blank out <code>eVar1</code> on every hit where <code>eVar2</code> happens to be empty, quietly destroying good data. Before you use one variable to overwrite another, add a condition that the source is set. The full catalog of traps like this lives in <a href="/adobe-analytics-learning/shape/processing-rules/limitations-best-practices/">Limitations and Best Practices</a>; this one is common enough to fix on sight.</p>
+</div>
+
+<h3 class="subsec-title">A rule from start to finish</h3>
+<p>Return to the page-type problem and read the rule in the diagram above as a single decision. The condition is "if <code>c.pagetype</code> is set," which is the guard: it stops the rule from writing an empty value over a good one on hits that never carried a page type. The then-branch overwrites both <code>eVar1</code> and <code>prop1</code> with the incoming value, sending the same data to a persistent conversion variable and a traffic variable at once, because reporting often needs it in both places. The otherwise-branch is deliberately empty, since on a hit with no page type there is simply nothing to do. And the reason line records why the rule exists, so the person who inherits it is not left guessing.</p>
+<p>Two practical notes make this smoother in the interface. The list of context variables you can choose from shows the ones Adobe has actually seen in this report suite over roughly the last month; if you know a variable's name but have not sent it yet, you can type the full name to add it. And the limits are generous enough that you rarely meet them: a report suite holds up to 150 rules, each rule up to 30 conditions, and there is no practical ceiling on actions. If you find yourself fighting those numbers, the honest signal is usually that the logic belongs in your implementation or in a heavier tool, not in an ever-growing stack of rules.</p>
+
+<p>You can now read any processing rule as a sentence and, more importantly, write one that does exactly what you intend. <a href="/adobe-analytics-learning/shape/processing-rules/use-cases-examples/">Use Cases and Examples</a> puts this grammar to work on the patterns you will actually reach for, and <a href="/adobe-analytics-learning/shape/processing-rules/limitations-best-practices/">Limitations and Best Practices</a> gathers the cautions in one place. When a requirement outgrows this grammar, when you need visitor-level logic or an external lookup that conditions and actions cannot express, that is the boundary where <a href="/adobe-analytics-learning/shape/vista-rules/">VISTA Rules</a> take over, a heavier and Adobe-managed path covered in its own module.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Analytics</div>
+    <p>Processing Rules: <span class="path">Admin &rarr; Report Suites &rarr; Edit Settings &rarr; General &rarr; Processing Rules</span></p>
+    <p>Add Condition and Add Action controls sit inside each rule set once you create or edit a rule.</p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title">📚 Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/admin/admin-tools/manage-report-suites/edit-report-suite/report-suite-general/processing-rules/pr-interface" target="_blank">Adobe Docs: Processing Rules Interface</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/admin/admin-tools/manage-report-suites/edit-report-suite/report-suite-general/processing-rules/pr-variables" target="_blank">Adobe Docs: Dimensions and Metrics Available to Processing Rules</a></li>
+    </ul>
+</div>

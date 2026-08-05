@@ -1,0 +1,105 @@
+---
+slug: "what-are-vista-rules"
+title: "What Are VISTA Rules"
+seotitle: "What Are VISTA Rules in Adobe Analytics"
+lastmod: 2026-07-15
+description: "What a VISTA rule is, where it sits in the pipeline, what it can do that a processing rule cannot, and why Adobe calls it a last resort."
+type: lesson
+modulenum: 9
+sectionnum: 1
+weight: 1
+---
+<p>Go back to the earliest days of Adobe Analytics, long before tag managers, before Launch, before processing rules, before any of the self-service tools you have met so far. Data was being collected and stored, but there was almost nothing you could do to it on the way in. If a value arrived wrong, or needed reshaping, or had to be sent somewhere else, you could not just open a settings screen and fix it. No such screen existed.</p>
+
+<p>There was one way through, and it was not self-service. You told Adobe what you needed, and Adobe's own engineers wrote custom code and placed it directly into the data collection pipeline for you. That custom code is a VISTA rule. For a long time it was the only tool of its kind: the single way to change data server-side, as it was being collected. If the platform could not do something for you out of the box, a VISTA rule was how it got done.</p>
+
+<p>Over the years, the toolbox filled in around it. Tag managers and Launch arrived, letting you shape data in the browser before it is ever sent. Processing rules arrived too, taking the most common server-side jobs and putting them in a console you can operate yourself, with no Adobe engineer and no waiting. Classifications, bot rules, and virtual report suites each took another slice of the work. One by one, the everyday reasons to call Adobe went away.</p>
+
+<p>So why does VISTA still exist? Because those newer tools were built to handle the common, safe, predictable cases, and they stop exactly where the work turns open-ended. Copying a hit into a second report suite, rewriting a variable the console is not allowed to touch, matching your data against a list you upload: jobs like these never fit inside a tidy menu of buttons, and handing that much power to everyone would be risky. So they were left out on purpose. VISTA is what still holds that ground. It is the original tool, now narrowed down to the jobs nothing else can reach.</p>
+
+<h3 class="subsec-title">What a VISTA rule is</h3>
+<p>Put plainly: a VISTA rule is a piece of custom logic that Adobe writes and runs for you, on Adobe's own servers, in the moment between when your data is collected and when it is processed into reports. Like a processing rule, it works on each hit as it arrives, and only going forward. It cannot reach back and change data you have already collected. The real difference is who owns it and where it lives. A processing rule lives in a settings screen you can open and edit. A VISTA rule lives in code inside Adobe's pipeline, and you never touch that code. To create one, change one, or even find out which ones you already have, you go to Adobe.</p>
+
+<p>The name hints at that history. VISTA is usually spelled out as <strong>Visitor Identification, Segmentation, and Transformation Architecture</strong>. You do not need to memorize that. The useful part is what it reminds you of: these rules are old, older than the friendlier tools, and processing rules were essentially the popular, safe pieces of VISTA pulled out and given a console of their own.</p>
+
+<div class="info-box">
+    <div class="info-hdr">ℹ️ There is no "Create VISTA rule" button</div>
+    <p>This one trips people up, so it is worth being blunt about. You will not find VISTA rules anywhere in the Adobe Analytics settings. There is no screen, no menu, no toggle. A VISTA rule is not something you switch on; it is a paid agreement between your organization and Adobe. You describe what you need, Adobe's team builds and maintains it, and every request goes through your Adobe Account Team. So if someone tells you to "go set up a VISTA rule in the admin console," they are describing something that does not exist.</p>
+</div>
+
+<p>It helps to see this in context. Adobe Analytics is an enterprise platform, not a plug-and-play app you download and manage entirely on your own. Part of what you pay for is Adobe itself: a full ecosystem and a team standing behind the product. VISTA is where that quietly pays off. Think back to copying only certain variables and events into a second report suite. No screen in the tool will do that for you, and left to your own devices you would be stuck. So you go to Adobe, and Adobe has an answer: their engineers build it for you and keep it running. It is not free and it is not instant, but you are never alone with the problem. For the hardest data challenges, that backup is one of the real benefits of being on an enterprise platform rather than a free utility.</p>
+
+<h3 class="subsec-title">A way to picture it</h3>
+<p>Here is a mental image that holds the whole idea. Think of your implementation as a car bought from one of the best manufacturers, the kind known for standing behind what it sells. Day to day, you drive it and adjust it yourself, and the dials and controls on the dashboard are your processing rules: in plain view, easy to change, yours. Now suppose you need a part that no dashboard control can provide and that your local garage does not stock. You go back to the manufacturer, and because it is a manufacturer that truly supports its cars, it can make that part for you and fit it. That fitted part is a VISTA rule. It does exactly what you needed, often something no off-the-shelf option could. It takes time and it takes effort, and once it is inside the car you cannot casually adjust it yourself; any change means going back to the manufacturer. And if you later modify the car around it, the custom part may stop fitting and need attention. Both sides of VISTA live in that one image: the reach to solve almost anything, and the cost, the waiting, and the care it asks of you afterward.</p>
+
+<h3 class="subsec-title">Where VISTA rules sit in the pipeline</h3>
+<p>Where a VISTA rule runs matters, because it decides what the rule can see and what happens to the data afterward. When a hit reaches Adobe, it first passes through some early steps: filtering out bots, applying IP exclusions, and adding geographic and other lookup data. Then <a href="/adobe-analytics-learning/shape/processing-rules/">processing rules</a> run, and VISTA rules run around that same point. Marketing channel processing rules come after that, and only then is the hit finally stored in the report suite.</p>
+
+<p>One detail is worth getting right, because a lot of people get it wrong. Most VISTA rules run after processing rules, but not all of them do. Adobe can set a VISTA rule to run before or after processing rules depending on how your account is configured, so you cannot assume a fixed order. If a VISTA rule and a processing rule both change the same variable, the only safe way to know which one wins is to check the order Adobe set for your account, rather than reading it off a diagram.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">Where a VISTA rule runs</div>
+    <div class="diagram-content">
+        <div class="flow-horizontal">
+            <div class="flow-step">Data collection</div>
+            <span class="flow-arrow">&rarr;</span>
+            <div class="flow-step">Processing rules</div>
+            <span class="flow-arrow">&rarr;</span>
+            <div class="flow-step highlight">VISTA rules<br><span style="font-weight:400;color:var(--text2)">generally here, placement can vary</span></div>
+            <span class="flow-arrow">&rarr;</span>
+            <div class="flow-step">Marketing channels</div>
+            <span class="flow-arrow">&rarr;</span>
+            <div class="flow-step">Data stored</div>
+        </div>
+    </div>
+</div>
+
+<h3 class="subsec-title">What it can do that a processing rule cannot</h3>
+<p>What can a VISTA rule do that a processing rule cannot? Because it is custom code rather than a fixed set of actions, the honest answer is "quite a lot," but a handful of needs come up again and again. A team wants every purchase copied into a separate, executive-only report suite, with personal details removed on the way. Finance needs the <code>products</code> field corrected, the one field a processing rule is not allowed to write to. Security needs to block a long, constantly changing list of partner IP addresses that the standard exclusion tool cannot handle. Adobe groups needs like these into a short list of common capabilities, and each one is something the three processing-rule actions cannot reach:</p>
+<ul>
+    <li><strong>Copy a hit into another report suite,</strong> reshaping the data on the way if needed. A processing rule only ever acts inside its own suite, so this cross-suite copy is the classic reason teams reach for VISTA.</li>
+    <li><strong>Change any variable,</strong> including the <code>products</code> string and other fields a processing rule is not allowed to write to.</li>
+    <li><strong>Look up values from a file you upload</strong> to an Adobe location, so a hit can be enriched or filtered against an outside list. This lookup-driven form is often called DB VISTA.</li>
+    <li><strong>Apply custom exclusion logic,</strong> for example an IP exclusion that is larger or more complicated than the standard Exclude by IP tool allows.</li>
+</ul>
+
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>Aspect</th><th>Processing rule</th><th>VISTA rule</th></tr></thead>
+        <tbody>
+            <tr><td>Who builds it</td><td>You, in the Admin console</td><td>Adobe Professional Services, on request</td></tr>
+            <tr><td>Logic</td><td>Three fixed actions, driven by conditions</td><td>Custom code: near-unlimited logic and file lookups</td></tr>
+            <tr><td>Reach across suites</td><td>One report suite only</td><td>Can copy and route a hit across suites</td></tr>
+            <tr><td>Can write to products</td><td>No</td><td>Yes, any variable</td></tr>
+            <tr><td>Visibility</td><td>Visible and editable in the UI</td><td>No UI; only Adobe can view or change it</td></tr>
+            <tr><td>Cost</td><td>Included</td><td>Paid agreement, and each change is another</td></tr>
+            <tr><td>Lead time</td><td>Live on save</td><td>Not immediate; routed through your Account Team</td></tr>
+            <tr><td>Processing order</td><td>Runs before VISTA in most setups</td><td>Generally after processing rules, can vary</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<h3 class="subsec-title">Why Adobe calls it a last resort</h3>
+<p>All of that power comes with real cost, and Adobe is unusually direct about it: it recommends VISTA rules only as a last resort. The reasons line up with the picture above. Each rule is a paid engagement with Adobe's team, and because Adobe owns the code, every later change is another paid engagement, not a quick edit. There is no console, so a VISTA rule is invisible to the people living with its effects. A common and painful pattern follows from that: a report behaves strangely for months while nobody remembers, or can even name, the rule quietly reshaping the data. And because the logic depends on the exact shape of your incoming data, a change you make upstream, a renamed variable, a longer string, a new implementation, can silently break a rule that worked yesterday.</p>
+
+<p>So before a requirement turns into a VISTA request, plain good practice is to ask whether a tool you already control can do the job. Very often it can. Processing rules, bot rules, virtual report suites, or a change to the implementation itself cover a large share of what teams first assume needs VISTA. Knowing when a requirement genuinely does need it, and how to make that call cleanly, is a discipline in itself.</p>
+
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ A VISTA rule is a black box you rent</div>
+    <p>Because there is no interface to view or edit VISTA rules, and because Adobe maintains them for a fee, an undocumented VISTA rule can shape your data for years without anyone on your side knowing it is there. Keep your own written record of every VISTA rule you request: what it does, which report suite and variables it touches, and why it was needed. When a report drifts and no processing rule explains it, that record, plus a note to your Account Team, is where the search starts.</p>
+</div>
+
+<p>That is what a VISTA rule is: the shaping layer's heaviest tool, custom-built by Adobe, running on Adobe's servers between collection and processing, able to do things no self-service rule can, and priced and maintained to match. It is powerful exactly where processing rules run out, and it asks for discipline exactly because you cannot see it or undo it yourself. With that picture in place, the work turns to judgment and practice. <a href="/adobe-analytics-learning/shape/vista-rules/when-to-use-vista-rules/">When to Use VISTA Rules</a> lays out how to decide whether a requirement truly needs one or belongs to a tool you already own. From there, <a href="/adobe-analytics-learning/shape/vista-rules/common-vista-rules/">Common VISTA Rules</a> walks the patterns teams request most often, so the idea becomes concrete.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Analytics</div>
+    <p>There is no screen for VISTA rules in the Adobe Analytics interface. To request a new rule, or to get the list of rules already running on a report suite, contact your Adobe Account Team or Customer Care.</p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title">📚 Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/technotes/vista" target="_blank">Adobe Docs: VISTA Rules in Adobe Analytics</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/technotes/processing-order" target="_blank">Adobe Docs: Processing Order for Data in Adobe Analytics</a></li>
+    </ul>
+</div>

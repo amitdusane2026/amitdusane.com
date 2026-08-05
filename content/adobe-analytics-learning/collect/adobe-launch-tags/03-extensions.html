@@ -1,0 +1,162 @@
+---
+slug: "extensions"
+title: "Extensions"
+seotitle: "Extensions in Adobe Launch (Tags)"
+lastmod: 2026-07-18
+description: "Extensions are how Launch becomes a platform rather than a script loader. What an extension really is, its anatomy, and why Adobe put its own products in it."
+type: lesson
+modulenum: 6
+sectionnum: 3
+weight: 3
+---
+<p>When Adobe retired DTM and moved everyone to Launch, a fair number of people asked the obvious question: why was this even necessary? Was it a nicer interface? Yes, it was. Was Launch faster? Also yes. But those were the visible reasons, not the deep one.</p>
+
+<p>DTM was built around Adobe Analytics. Analytics was the vehicle, and the other products, Target, Audience Manager, sat on top of it more like accessories than equals. Launch threw that assumption out. It was rebuilt so that no single product was the center of gravity, every product was a guest with the same standing. And the mechanism that made that possible is the thing this whole section is about: the extension framework. For the first time, any vendor could build their own piece and publish it into Launch. That single design decision is what changed tag management, and it is the most important thing Launch ever did, more than the speed, more than the interface.</p>
+
+<h3 class="subsec-title">Why extensions exist at all</h3>
+<p>Start with what a website has become. It is no longer a place that publishes content for people to read, and it stopped being a simple chat or commerce destination a long time ago. Today a single site might carry brand awareness, news, articles, transactions, personal banking, education, and the day-to-day running of the business, all at once. In this era of digitisation a website does, more or less, everything.</p>
+
+<p>So ask the honest question: is your own HTML and JavaScript enough to deliver all of that? It is not. A real site leans on a long list of third-party utilities, a Google pixel, a Meta pixel, form-hosting capabilities, video and media-streaming tools, and a dozen more. And the moment you depend on other people's code at that scale, three problems show up.</p>
+
+<p>The first is dependency. Every third-party utility you want has to be wired in by a developer, and developers work on release cycles. If the next release window is a quarter away, your new utility waits a quarter. Marketing's timeline and engineering's timeline rarely agree.</p>
+
+<p>The second is the state of the code itself. Picture your site's source with twenty different pixels, SDKs, and snippets pasted into it. It becomes hard to tell what is core to the site and what is bolted on. Any seasoned developer will tell you how much documentation and proper context matter, because code is never a one-day job, it passes from hand to hand over years. It has to be readable without the person who wrote it standing next to you. Twenty hand-placed third-party tags work directly against that.</p>
+
+<p>The third is weight and waste. When the page loads, it pulls all of that in, every utility, whether or not it will ever fire on this particular page. The browser does not know which of those tags matter here, so it loads them all. The page gets heavier, the visitor waits, and a slow site is exactly the kind of thing that sends a visitor to a competitor. So the question becomes: how do you get all this capability without the dependency, the clutter, and the weight?</p>
+
+<h3 class="subsec-title">Launch is the platform that launches them</h3>
+<p>The answer is Launch, Adobe Experience Platform Data Collection Tags. The name is literal: it is the platform you use to launch these third-party utilities onto your site. Instead of a developer hand-wiring each one into the source, the utility is managed inside Launch, deployed through the single embed script from <a href="/adobe-analytics-learning/collect/adobe-launch-tags/properties/">Properties</a>, and fired only under the conditions you decide.</p>
+
+<p>And here is the real power, the thing that matters more than the UI or the speed: Launch has its own app store. The extension catalog. Any vendor who wants their technology to run on Launch-enabled sites can build an extension for it and publish it to that catalog, and you install it the way you would pick an app off a shelf. <a href="/adobe-analytics-learning/collect/adobe-launch-tags/properties/">Properties</a> touched on this idea, with Meta publishing its own Meta Pixel extension. The catalog is what turns Launch from a tag manager into an ecosystem.</p>
+
+<h3 class="subsec-title">What an extension actually is</h3>
+<p>It is tempting to leave the analogy at "extensions are apps," but that is where it breaks, and the difference is worth getting right. A phone app is plug and play. You install it, it has its own self-contained purpose, and you need no technical knowledge to make it work. An extension is not like that. Each one is built for a specific job, to collect a particular kind of data, to host some content, to fire a pixel for a vendor like Google, Meta, or LinkedIn, and installing it is only the first step. Almost every extension carries its own configuration, and depending on what it does, configuring it correctly takes some technical understanding. Extensions are installed, but they are not plug and play.</p>
+
+<div class="pro-tip">
+    <div class="pro-tip-hdr">💡 The extension's documentation is the install guide</div>
+    <p>Because an extension is not plug and play, treat its vendor documentation as part of the installation, not optional reading. It tells you which configuration fields matter, what the vendor expects to find on the page, and how to test it. Budget time for that step rather than assuming an install is a single click.</p>
+</div>
+
+<p>That said, they still make the work dramatically easier than the alternative. Think about how a developer used to add a third-party utility: take the vendor's API or library, wire it in by hand, check the calls, set the options, test it thoroughly across cases, and only then push to production, often across several development and testing cycles. An extension collapses most of that. You get a proper configuration screen, you get the vendor's documentation alongside it, and if you are stuck on a detail you can go back to the vendor, who can help you find the right settings, test the configuration, and debug their own extension when something fails. The hard, repetitive integration work has been done once, by the people who know the technology best.</p>
+
+<h3 class="subsec-title">Adobe put its own products in the catalog too</h3>
+<p>The part that says a lot about the design: when Adobe built this framework, it did not hold its own products above everyone else's. Adobe Analytics, Target, Audience Manager, even the Web SDK, are all delivered as extensions, sitting in the same catalog, installed the same way, as everyone else's. Adobe democratised its own platform. The honest footnote is that Adobe's products do gel unusually well with Launch, the binding is tighter, but architecturally they play by the same rules.</p>
+
+<p>The Adobe-published extensions you will reach for most often:</p>
+<ul>
+    <li><strong>Core</strong>, the default extension that is always present, supplying the generic web building blocks like page-load and click events and custom code.</li>
+    <li><strong>Adobe Analytics</strong>, <strong>Adobe Target</strong>, and <strong>Adobe Audience Manager</strong>, the classic Experience Cloud products.</li>
+    <li><strong>Adobe Experience Platform Web SDK</strong>, the single Edge-based library that increasingly replaces the individual product libraries.</li>
+    <li><strong><a href="/adobe-analytics-learning/collect/tracking-calls/experience-cloud-id-ecid/">Adobe Experience Cloud ID Service</a></strong> (ECID), which establishes the shared visitor identity.</li>
+    <li><strong>Adobe Client Data Layer</strong> and <strong>Adobe Media Analytics for Audio and Video</strong>, for event-driven data layers and streaming measurement.</li>
+</ul>
+<p>The catalog carries far more than this, ContextHub, Experience Manager Forms, Adobe Fonts, Adobe Privacy, and others, but the set above covers most real implementations.</p>
+
+<p>Adobe also builds supporting extensions through its Consulting team, utilities that make the products easier to use rather than products in their own right. It is the same instinct as a carmaker that also manufactures genuine accessories for its own vehicles. The two you will meet most:</p>
+<ul>
+    <li><strong>Common Analytics Plugins</strong>, which augments the Adobe Analytics extension and packages the classic Analytics plug-ins so you do not have to paste them in by hand. It requires the Adobe Analytics extension to be installed.</li>
+    <li><strong>Adobe Analytics Product String</strong>, which builds the <code>s.products</code> string for you from your data layer, no custom JavaScript required.</li>
+</ul>
+<p>Worth knowing that partners such as Search Discovery, Blast, and Further publish their own extensions too, including their own product-string builders, which is exactly the open-ecosystem effect the framework was designed to create.</p>
+
+<h3 class="subsec-title">The anatomy of an extension</h3>
+<p>To use extensions well, you need to know what one actually contributes when you install it. Adobe's own engineers have a word for the pieces an extension supplies: <em>delegates</em>. An extension hands Launch a set of these delegates, and they become the building blocks you select from later when you assemble rules and data elements. Install a new extension and the menus you build with grow new options. That is the mechanism underneath everything.</p>
+
+<p>An extension contributes up to five kinds of thing:</p>
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>Component</th><th>What it is</th><th>Example</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Configuration</strong></td><td>The extension's own global settings, set once and used wherever the extension runs.</td><td>The Adobe Analytics extension holds your report suite IDs per environment, the tracking server, and whether the tracker is made globally accessible.</td></tr>
+            <tr><td><strong>Event types</strong></td><td>Triggers that can start a rule: the "when" of an implementation.</td><td>Core supplies page load, click, and direct call; the Web SDK supplies a "send event complete" event.</td></tr>
+            <tr><td><strong>Condition types</strong></td><td>Criteria that decide whether a triggered rule is actually allowed to run.</td><td>Core supplies value comparison, cookie, and custom code conditions, each usable as a regular or an exception.</td></tr>
+            <tr><td><strong>Action types</strong></td><td>What a rule does once it fires: the "then" of an implementation.</td><td>The Adobe Analytics extension supplies "Set Variables" and "Send Beacon"; the Web SDK supplies "Send event".</td></tr>
+            <tr><td><strong>Data element types</strong></td><td>Ways to capture and shape a value from the page, for reuse anywhere.</td><td>Core supplies cookie, JavaScript variable, constant, and custom code; other extensions add their own.</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<p>The Core extension is the reason a brand-new property can already build a basic rule: it supplies the generic, product-neutral building blocks. The product extensions add their own specialised delegates on top. This is why the components genuinely overlap, and why it is pointless to pretend a clean wall exists between extensions, rules, and data elements. They are one connected system. An extension is the supplier; rules and data elements are where its delegates get used.</p>
+
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">Install and configure an extension</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>Data Collection > Tags > "Club Web" > Extensions > Catalog
+
+Search:  Adobe Analytics
+Install
+
+Configure  (this screen is the extension's contract with the product)
+    Library Management
+        Manage the library for me           <- Adobe hosts AppMeasurement, and updates it
+        Report suites
+            Development:  club-dev
+            Staging:      club-stage
+            Production:   club-prod         <- one suite per environment. Do this now.
+
+    Save
+
+The extension now appears under Extensions > Installed, and its delegates
+show up wherever they are relevant: as data element types, as rule events,
+and as rule actions. You did not write a line of code.</pre></div>
+</div>
+
+<p>A concrete pass makes it click. Say you want to record a product view on a product detail page. You install the Adobe Analytics extension and fill in its configuration, the report suite and tracking server. Then you build a rule. For the trigger you reach for a Core event, DOM Ready. To make sure it only runs where it should, you add a Core condition that checks the page is a product detail page. For the outcome you add two Adobe Analytics actions, Set Variables to populate what you want to send, then Send Beacon to send it. The values those variables draw on come from data elements, which themselves were created from data element types. In one small rule you have used delegates from the Core extension and the Adobe Analytics extension together, with data elements feeding them. That is the whole machine working as one.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">One rule, assembled from two extensions</div>
+    <div class="diagram-content">
+        <svg width="100%" viewBox="0 0 680 300" role="img" style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif">
+            <title>How delegates from two extensions and data elements assemble into one Launch rule</title>
+            <desc>A single rule named record a product view holds three slots: a DOM Ready event and a product detail page condition, both from the Core extension, and a Set Variables then Send Beacon action from the Adobe Analytics extension. Data elements feed the action from the left, and a beacon is sent to Adobe Analytics on the right.</desc>
+            <defs>
+                <marker id="ruleArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker>
+            </defs>
+
+            <rect x="200" y="50" width="280" height="200" rx="14" style="fill:var(--card, #ffffff);stroke:var(--border, #e2e8f0);stroke-width:1"/>
+            <text x="216" y="74" font-size="14" font-weight="700" style="fill:var(--text1, #0f172a)">Rule</text>
+            <text x="216" y="90" font-size="12" style="fill:var(--text2, #475569)">record a product view</text>
+
+            <rect x="216" y="100" width="248" height="42" rx="8" style="fill:var(--bg3, #f1f5f9);stroke:var(--info, #3b82f6);stroke-width:1.5"/>
+            <text x="340" y="117" font-size="14" font-weight="600" text-anchor="middle" style="fill:var(--text1, #0f172a)">DOM Ready</text>
+            <text x="340" y="133" font-size="12" text-anchor="middle" style="fill:var(--text2, #475569)">When (event)</text>
+
+            <rect x="216" y="148" width="248" height="42" rx="8" style="fill:var(--bg3, #f1f5f9);stroke:var(--info, #3b82f6);stroke-width:1.5"/>
+            <text x="340" y="165" font-size="14" font-weight="600" text-anchor="middle" style="fill:var(--text1, #0f172a)">Product detail page</text>
+            <text x="340" y="181" font-size="12" text-anchor="middle" style="fill:var(--text2, #475569)">Only if (condition)</text>
+
+            <rect x="216" y="196" width="248" height="42" rx="8" style="fill:var(--bg3, #f1f5f9);stroke:var(--accent, #e11d48);stroke-width:1.5"/>
+            <text x="340" y="213" font-size="14" font-weight="600" text-anchor="middle" style="fill:var(--text1, #0f172a)">Set Variables, Send Beacon</text>
+            <text x="340" y="229" font-size="12" text-anchor="middle" style="fill:var(--text2, #475569)">Then (actions)</text>
+
+            <rect x="40" y="195" width="120" height="48" rx="8" style="fill:var(--bg3, #f1f5f9);stroke:var(--border, #e2e8f0);stroke-width:1"/>
+            <text x="100" y="216" font-size="14" font-weight="600" text-anchor="middle" style="fill:var(--text1, #0f172a)">Data elements</text>
+            <text x="100" y="232" font-size="12" text-anchor="middle" style="fill:var(--text2, #475569)">feed the values</text>
+            <line x1="163" y1="219" x2="193" y2="219" fill="none" marker-end="url(#ruleArrow)" style="stroke:var(--text2, #475569);stroke-width:1.5"/>
+
+            <rect x="500" y="195" width="140" height="48" rx="8" style="fill:var(--accent-light, rgba(225,29,72,.10));stroke:var(--accent, #e11d48);stroke-width:1"/>
+            <text x="570" y="216" font-size="14" font-weight="600" text-anchor="middle" style="fill:var(--text1, #0f172a)">Adobe Analytics</text>
+            <text x="570" y="232" font-size="12" text-anchor="middle" style="fill:var(--text2, #475569)">beacon sent</text>
+            <line x1="487" y1="219" x2="498" y2="219" fill="none" marker-end="url(#ruleArrow)" style="stroke:var(--text2, #475569);stroke-width:1.5"/>
+
+            <rect x="200" y="264" width="14" height="14" rx="3" style="fill:var(--info, #3b82f6)"/>
+            <text x="220" y="275" font-size="12" style="fill:var(--text2, #475569)">From Core extension</text>
+            <rect x="380" y="264" width="14" height="14" rx="3" style="fill:var(--accent, #e11d48)"/>
+            <text x="400" y="275" font-size="12" style="fill:var(--text2, #475569)">From Adobe Analytics extension</text>
+        </svg>
+    </div>
+</div>
+
+<p>The deeper mechanics of building rules, the ordering, the sequencing of actions, and the full range of what data elements can do, have their own sections. Here the thing to hold onto is the supplier relationship: <a href="/adobe-analytics-learning/collect/adobe-launch-tags/extensions/">extensions</a> are what stock the shelves that <a href="/adobe-analytics-learning/collect/adobe-launch-tags/rules/">rules</a> and <a href="/adobe-analytics-learning/collect/adobe-launch-tags/data-elements/">data elements</a> then shop from.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it</div>
+    <p>Inside a property, open <span class="path">Extensions</span>. The <span class="path">Catalog</span> tab lists everything available to install; <span class="path">Installed</span> shows what this property already has.</p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title">📚 Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/experience-platform/tags/extensions/client/core/overview" target="_blank">Adobe Docs: Core Extension Overview</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/experience-platform/tags/extensions/client/plugins/overview" target="_blank">Adobe Docs: Common Analytics Plugins Extension</a></li>
+    </ul>
+</div>

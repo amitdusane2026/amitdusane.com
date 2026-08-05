@@ -1,0 +1,106 @@
+---
+slug: "first-party-cookies"
+title: "First-Party Cookies"
+seotitle: "First-Party Cookies in Adobe Analytics"
+lastmod: 2026-07-18
+description: "First-party cookies are not the same as durable identity. Why identity keeps disappearing, the older fix that no longer holds, and the durable answer today."
+type: lesson
+modulenum: 7
+sectionnum: 7
+weight: 7
+---
+<p>The <a href="/adobe-analytics-learning/collect/tracking-calls/cross-domain-tracking/">Cross-Domain Tracking</a> ended on the third-party cookie fading away. This section is about the consequence you actually see in your reports: returning visitors who keep looking like brand new ones. A Safari user comes back a week later and is counted fresh. Unique visitors inflate, visit counts climb, and multi-session journeys quietly fall apart, so a conversion that took three visits over two weeks gets attributed to nobody. This is not a tagging bug you can debug in Launch. It is the browser deleting the cookie that held the visitor's identity.</p>
+
+<p>Fixing it means understanding what actually makes a cookie survive, and the popular answer, "use first-party cookies," turns out to be only half true.</p>
+
+<h3 class="subsec-title">Why identity keeps disappearing</h3>
+<p>A visitor's identity in Adobe is a value stored in a cookie. The <a href="/adobe-analytics-learning/collect/tracking-calls/experience-cloud-id-ecid/">ECID</a>, the organization-level ID that says "this is the same person," lives in a browser cookie, and every returning-visitor number you report depends on that cookie still being there next time. For years browsers have been steadily restricting cookies to stop companies from tracking people across the web, and Apple's Intelligent Tracking Prevention, ITP, has led the charge. That effort is aimed at cross-site tracking, but analytics identity got caught in the same net.</p>
+
+<p>The first casualty was the third-party cookie, the kind set by a domain other than the one in the address bar. Safari and Firefox now block those by default, and Chrome has spent years threatening the same. So the industry moved to first-party cookies, set by your own domain. And this is exactly where the misconception takes hold.</p>
+
+<h3 class="subsec-title">First-party is not the same as durable</h3>
+<p>Here is the fact almost everyone misses. Safari does not only restrict third-party cookies. It also caps first-party cookies that are set by JavaScript, the ordinary <code>document.cookie</code> that nearly every analytics library uses, at a maximum of seven days. If it decides your script looks like a tracker, that drops to twenty-four hours. Being first-party does not exempt you. What actually decides a cookie's lifespan is not first-party versus third-party, it is how the cookie was written: by JavaScript in the browser, or by a server in an HTTP response.</p>
+
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>Cookie type</th><th>Set by</th><th>Browser treatment</th><th>Durability</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Third-party</strong></td><td>A domain other than the site (Adobe's domain)</td><td>Blocked by default in Safari and Firefox</td><td>Effectively none</td></tr>
+            <tr><td><strong>First-party, JavaScript-set</strong></td><td>Your page's own script, via <code>document.cookie</code></td><td>Allowed, but capped at 7 days by Safari ITP (24 hours if judged a tracker)</td><td>Short</td></tr>
+            <tr><td><strong>First-party, server-set</strong></td><td>Your own server, via the HTTP response</td><td>Exempt from the JavaScript cap</td><td>Durable, up to its full lifetime</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<p>Read that middle row carefully, because it is where Adobe's default cookies sit. The <code>AMCV_</code> cookie that holds the ECID is written by JavaScript. The Web SDK's default identity cookie, <code>kndctr_&lt;org&gt;_identity</code>, is also written by JavaScript. Both are first-party, and both are still capped at seven days on Safari. A visitor who returns on the eighth day is a stranger again. That is the real problem this section exists to solve, and "we are first-party" does not solve it.</p>
+
+<h3 class="subsec-title">The older fix, and why it is no longer enough on its own</h3>
+<p>The traditional answer was first-party data collection through a CNAME. You point a subdomain such as metrics.yourbrand.com at Adobe's collection servers with a CNAME DNS record, set that as your tracking server, and use the Adobe-Managed Certificate Program to handle the SSL certificate. Because the cookie is then written by a server on your own domain rather than by JavaScript, it used to escape the seven-day cap.</p>
+
+<p>That loophole has narrowed. Since Safari 16.4 in 2023, even a server-set cookie is capped at seven days if Safari decides the CNAME is "cloaking," meaning the subdomain resolves to what looks like a tracker, or the collection server's IP address does not match your site's. A CNAME by itself is no longer a guaranteed durable identity. It is still worth doing, but it is not the finish line it once was.</p>
+
+<h3 class="subsec-title">The durable answer today: first-party device IDs</h3>
+<p>The current, most durable approach flips who is in charge of identity. Instead of letting a browser script or a CNAME endpoint write the cookie, you generate the identifier on your own server and set it there. This is Adobe's first-party device ID, or FPID, and it is built for the <a href="/adobe-analytics-learning/collect/data-collection/adobe-web-sdk/">Web SDK</a>.</p>
+
+<p>The shape of it is straightforward. Your own server generates a random UUID, sets it as a genuinely server-written first-party cookie with a long lifetime, and your Web SDK implementation hands that value to the Edge Network. The Edge Network then uses the FPID as a seed to generate the ECID, deterministically, so the same FPID always produces the same ECID. Because the cookie was written by your server rather than by JavaScript, it is exempt from the seven-day cap and can live for its full lifetime. You have moved identity off the browser's fragile ground and onto infrastructure you control.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">How a first-party device ID keeps identity durable</div>
+    <div class="diagram-content">
+        <div class="flow-horizontal">
+            <div class="flow-step">Your server<br><span style="font-weight:400;color:var(--text2)">generates a UUID</span></div>
+            <span class="flow-arrow">&rarr;</span>
+            <div class="flow-step">Set as a server-side<br>first-party cookie<br><span style="font-weight:400;color:var(--text2)">full lifetime, no 7-day cap</span></div>
+            <span class="flow-arrow">&rarr;</span>
+            <div class="flow-step">Sent to the<br>Edge Network</div>
+            <span class="flow-arrow">&rarr;</span>
+            <div class="flow-step">Edge seeds the ECID<br><span style="font-weight:400;color:var(--text2)">same FPID, same ECID</span></div>
+            <span class="flow-arrow">&rarr;</span>
+            <div class="flow-step highlight">Durable returning<br>visitor identity</div>
+        </div>
+    </div>
+</div>
+
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">The idea, in server response terms</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre># On your own server, before the page returns, if no FPID cookie
+# exists yet: generate a UUID and set it via the HTTP response.
+# Because the server writes it (not document.cookie), it is
+# exempt from Safari's 7-day JavaScript cap.
+
+Set-Cookie: FPID=123e4567-e89b-42d3-9456-426614174000;
+            Domain=yourbrand.com; Max-Age=33696000;
+            Secure; SameSite=Lax
+
+# Then enable the "First-Party ID Cookie" option in your datastream
+# so the Edge Network reads this cookie and seeds the ECID from it.</pre></div>
+</div>
+
+<h3 class="subsec-title">The trade-offs, and the mistake</h3>
+<p>Durability is not free. An FPID means your engineering team owns server-side cookie logic, has to coordinate it with your consent flow so the identifier is only set when it should be, and has to validate that returning visitors really do keep a stable identity. That is more responsibility than letting the library set a cookie for you. The judgment is worth making deliberately: the more your business depends on recognizing returning visitors, long consideration cycles, subscriptions, high-value purchases, the more that server-side effort pays for itself, and the less it matters for a site where almost everyone converts in a single session.</p>
+
+<p>The mistake to avoid is treating this as a checkbox. "We set up a CNAME" or "our cookies are first-party" sounds like the problem is solved, and on Safari it often is not. Durable identity now lives or dies on whether the cookie is written server-side on infrastructure the browser trusts as genuinely yours.</p>
+
+<div class="pro-tip">
+    <div class="pro-tip-hdr">💡 Measure the problem before you spend on it</div>
+    <p>Before investing in FPIDs, size the exposure with data you already have. In Analysis Workspace, build a segment for visitors on ITP-governed browsers (Safari, and every browser on iOS and iPadOS, since they all use the same engine) and see what share of your traffic and conversions it represents. If Safari is a small slice of a single-session audience, the durability gap may not be worth the build. If it is a large slice of a multi-visit journey, it almost certainly is. Let your own numbers, not a general worry about cookies, decide.</p>
+</div>
+
+<p>Step back and the shift is clear. For years, visitor identity was something the tag library quietly handled and you never thought about. Browser privacy changes have turned it into something you architect on purpose, on your own servers, because that is the only place a durable cookie can now be written. First-party is the floor, not the ceiling. What lasts is server-set, on infrastructure the browser recognizes as truly yours.</p>
+
+<p>That closes Tracking Calls, and with it the whole of the <strong><a href="/adobe-analytics-learning/collect/">Collect the data</a></strong> phase. Across this phase you have followed a hit from the moment it is defined to the moment it is sent: what a <a href="/adobe-analytics-learning/collect/tracking-calls/page-view-tracking/">page view</a> and a link call are, what every call costs, and how identity holds together across single page applications, separate domains, and browsers that keep deleting the cookie. Collection is where raw behavior becomes data you own. The work turns next to making that data usable, which is the job of the <strong><a href="/adobe-analytics-learning/shape/">Shape the data</a></strong> phase, beginning with <a href="/adobe-analytics-learning/shape/processing-rules/">Processing Rules</a>, the first of the server-side tools that clean, enrich, and reshape hits after they arrive.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Analytics</div>
+    <p>Cookie lifetime, live: <span class="path">Browser DevTools &rarr; Application &rarr; Cookies</span> (check the Expires column)</p>
+    <p>Size your ITP exposure: <span class="path">Workspace &rarr; segment on Safari / iOS browsers</span></p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title">📚 Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/technotes/cookies/cookies" target="_blank">Adobe Docs: Adobe Analytics and Browser Cookies</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/experience-platform/collection/identity/fpid" target="_blank">Adobe Docs: First-Party Device IDs</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/experience-platform/collection/identity/overview" target="_blank">Adobe Docs: Identity in Data Collection</a></li>
+    </ul>
+</div>

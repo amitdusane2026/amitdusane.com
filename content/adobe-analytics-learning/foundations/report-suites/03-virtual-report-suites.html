@@ -1,0 +1,89 @@
+---
+slug: "virtual-report-suites"
+title: "Virtual Report Suites"
+seotitle: "Virtual Report Suites (VRS) in Adobe Analytics"
+lastmod: 2026-07-15
+description: "Virtual report suites are database views for your analytics data. One suite, one differentiator, many views, and what a VRS lets you do."
+type: lesson
+modulenum: 2
+sectionnum: 3
+weight: 3
+---
+<p>The last two sections left one promise hanging: go global so your data stays together, but still give each team its own focused view. The <strong>Virtual Report Suite (VRS)</strong> is how you keep that promise. A VRS is a saved lens over a real ("parent") report suite. It stores no data of its own and collects nothing new; it simply shows a filtered, curated slice of the parent's data at query time.</p>
+<h3 class="subsec-title">If you know database views, you already know this</h3>
+<p>When a database table grows to hundreds of columns and millions of rows, administrators rarely hand people the raw table. They create a <strong>view</strong>: a defined window onto the table that might expose a hundred columns instead of a thousand, or only the rows a particular role is allowed to see. The view looks and behaves like its own table, but it stores nothing. There is no second copy in memory. Every query against the view actually runs against the original table; the view is just a saved set of constraints layered on top.</p>
+<p>Why bother? Almost always for scoping and safety. You do not want the development team browsing the marketing budget, you do not want a customer seeing your true product cost, and you do not want a vendor paging through your full customer list. A view lets each audience see exactly the slice that is theirs, and nothing more, without ever duplicating the data or putting the original at risk.</p>
+<p>A virtual report suite is that same idea applied to Adobe Analytics. One global report suite holds all the data once. On top of it you define a VRS for each property or team, and each one shows only its slice. Nothing is copied, nothing new is collected, and because there is no second store, there are no extra server calls.</p>
+<h3 class="subsec-title">One suite, one differentiator, many views</h3>
+<p>The practical move is the opposite of what instinct suggests. Instead of spinning up a separate report suite per website, you run one global suite across all of them, plus anything you add later, and you capture one <strong>differentiator variable</strong> on every hit: a "site" or "brand" dimension carrying values like commercial-vehicles, consumer-vehicles, heavy-vehicles. That single dimension is the seam. Each VRS is just the global suite segmented to one value of it. Notice the wording: you are creating <em>views</em> of the data, not new report suites. That distinction is the whole point.</p>
+<div class="diagram-box">
+    <div class="diagram-title">📊 One global suite, one differentiator, many focused views</div>
+    <div class="diagram-content">
+        <div class="flow-vertical">
+            <div class="flow-step highlight">Global report suite: one set of data, one schema</div>
+            <span class="flow-arrow-down">↓</span>
+            <div class="flow-step">Differentiator variable captured on every hit (site / brand)</div>
+            <span class="flow-arrow-down">↓</span>
+            <div class="flow-multi">
+                <div class="flow-step">VRS: Commercial vehicles</div>
+                <div class="flow-step">VRS: Consumer vehicles</div>
+                <div class="flow-step">VRS: Heavy vehicles</div>
+            </div>
+        </div>
+    </div>
+</div>
+<h3 class="subsec-title">What a VRS lets you do</h3>
+<ul>
+    <li><strong>Filter to a slice (segment-based):</strong> a VRS is really "the parent suite plus one or more segments." A commercial-vehicles view is the parent filtered to that brand value; a mobile view, filtered to app traffic. (<a href="/adobe-analytics-learning/analyze/segments/">Segments</a> have their own module.)</li>
+    <li><strong>Curate the components:</strong> hide or rename the dimensions, metrics, and segments a given team does not need. This is quietly one of its best uses, a sprawling global suite can feel overwhelming, and a curated VRS hands a regional analyst only the dozen things they actually work with.</li>
+    <li><strong>Override the time zone:</strong> a VRS can carry its own time zone, so a team in Singapore sees their local day boundaries even though the parent is set elsewhere. If you do not set one, it simply inherits the parent's.</li>
+    <li><strong>Redefine the session (advanced):</strong> using report-time processing, a VRS can change what starts a new visit, useful for app contexts where the default session rules do not fit.</li>
+    <li><strong>Inherit history instantly:</strong> the moment you create a VRS it already contains all of the parent's past data. A brand-new individual report suite collects only forward from its creation date; a VRS starts complete.</li>
+</ul>
+<p>In practice that covers most "give this group their own view" needs: regional views, per-brand views, website-versus-app views, or simply a stripped-down view for executives who want five numbers, not five hundred. Some of what a VRS shows is inherited wholesale from the parent and can only be changed there; a smaller set of settings the VRS is free to override on its own.</p>
+<div class="diagram-box">
+    <div class="diagram-title">🧬 What a VRS inherits, and what it can change</div>
+    <div class="diagram-content">
+        <div class="strategy-diagram">
+            <div class="strategy-col">
+                <div class="strategy-header global-hdr">Inherited from parent</div>
+                <div class="strategy-item">eVars &amp; props</div>
+                <div class="strategy-item">Processing rules</div>
+                <div class="strategy-item">Classifications</div>
+                <div class="strategy-item">Currency</div>
+            </div>
+            <div class="strategy-col">
+                <div class="strategy-header individual-hdr">VRS can override</div>
+                <div class="strategy-item">Time zone</div>
+                <div class="strategy-item">Visit definition</div>
+                <div class="strategy-item">Component curation</div>
+                <div class="strategy-item">Display names</div>
+            </div>
+        </div>
+    </div>
+</div>
+<p>This is why the VRS changed how analytics architects design. For the price of a single global implementation you get the per-team separation that used to require multiple suites and the server calls that came with them. It is the rare upgrade with no surcharge, business-class seating at the economy fare. Adobe has offered it for roughly a decade, and it quietly rewrote the default: collect once, view many ways.</p>
+<div class="pro-tip">
+    <div class="pro-tip-hdr">💡 It is one suite underneath, so keep the discipline</div>
+    <p>Because every VRS resolves against the same parent, they all share one schema. Define an eVar once and it exists for every view; there is no separate variable list per property. Curation can hide or rename a dimension for one team, but it never adds a new one, and consolidating sites into a global suite does not grant you extra variables or events. Two things follow. First, you must hold one consistent schema and taxonomy across every property, which is a matter of discipline, not a technical limit. Second, the parent's unique-value limits are shared too, so a very high-cardinality estate can hit "Low Traffic" truncation inside a VRS that genuinely separate suites would have avoided. That shared-limit case is the main reason multi-suite tagging still occasionally wins.</p>
+</div>
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ A VRS is a view, not a source</div>
+    <p>The one real limit, and it catches people: a VRS exists only at query time, so it cannot feed the raw-export machinery. You cannot point Data Feeds, scheduled Data Warehouse extracts, or data source uploads at a virtual report suite; those all run off the parent. If a regional team needs a raw hit-level export, the workaround is to take the feed from the <em>global</em> suite and split it downstream yourself, not to read off the VRS. Raw exports get their own treatment in Data Feeds. Use a VRS for focused analysis and access control, not as a data pipeline.</p>
+</div>
+<p>Classifications follow the same logic: you build them once on the parent suite and every dependent VRS inherits them automatically, but you cannot define a classification on a VRS itself. <a href="/adobe-analytics-learning/shape/classifications/">Classifications</a> covers them in full. This is also why defaulting to global in the last section was safe: you can carve out as many focused VRS views as teams need, after the fact, without ever having split the underlying data. A VRS is a small, low-cost piece of the machine, easy to overlook, and doing a great deal to keep the whole thing running.</p>
+
+<p>Three sections in, and every decision so far has been about boundaries: how many suites, and who sees which slice. What none of them has touched is the panel where a report suite is actually configured, and where a handful of settings quietly decide whether your data is clean or quietly wrong. That is <a href="/adobe-analytics-learning/foundations/report-suites/report-suite-settings/">Report Suite Settings</a>.</p>
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to Find in Adobe Analytics</div>
+    <p>Virtual Report Suites: <span class="path">Components → Virtual Report Suites</span></p>
+    <p>Create New VRS: <span class="path">Components → Virtual Report Suites → Add +</span></p>
+</div>
+<div class="ref-box">
+    <div class="ref-title">📚 Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/docs/analytics/components/virtual-report-suites/vrs-about.html" target="_blank">Adobe Docs: Virtual Report Suites Overview</a></li>
+        <li><a href="https://experienceleague.adobe.com/docs/analytics/components/virtual-report-suites/vrs-workflow/vrs-create.html" target="_blank">Adobe Docs: Create a VRS</a></li>
+        <li><a href="https://experienceleague.adobe.com/docs/analytics/components/virtual-report-suites/vrs-considerations.html" target="_blank">Adobe Docs: VRS and Multi-Suite Tagging Considerations</a></li>
+    </ul>
+</div>
