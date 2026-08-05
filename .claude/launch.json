@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "site",
+      "runtimeExecutable": "hugo",
+      "runtimeArgs": [
+        "server",
+        "--source",
+        "amitdusane-site-complete",
+        "--port",
+        "1313"
+      ],
+      "port": 1313
+    }
+  ]
+}
