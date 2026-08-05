@@ -531,6 +531,7 @@ description: "..."
 <tr><td class="k">Build command</td><td><code>hugo --gc</code> &nbsp;&nbsp;<strong>Never</strong> <code>hugo --minify</code>. The minifier destroys inline SVG text elements.</td></tr>
 <tr><td class="k">No nesting</td><td>A <code>code-block</code> inside a <code>warn-box</code>, <code>pro-tip</code>, or <code>info-box</code> is untested and unrendered. State the rule in the box; put the code block after it, at normal level.</td></tr>
 <tr><td class="k">Inline overrides</td><td>Permitted, sparingly, on an existing class. <strong>Always carry the hex fallback:</strong><br><code>&lt;div class="strategy-header" style="background:var(--accent, #e11d48);color:#fff"&gt;</code></td></tr>
+<tr><td class="k">Content files are <code>.html</code></td><td><strong>Never write component markup into a <code>.md</code> file.</strong> <code>hugo.toml</code> has no <code>[markup.goldmark.renderer]</code> block, so <code>unsafe</code> defaults to <code>false</code> and Goldmark <strong>silently deletes every raw HTML element</strong>, leaving <code>&lt;!-- raw HTML omitted --&gt;</code> in the output. No error, no warning. This shipped live on all five category landing pages, which lost both intro paragraphs each. Fixed August 2026 by renaming them to <code>_index.html</code>. Module index files may stay <code>.md</code> only while their bodies contain no markup.</td></tr>
 </tbody></table>
 </section>
 
@@ -554,22 +555,28 @@ description: "..."
 <pre class="src"><code>---
 slug: "designing-the-key"
 title: "Designing the Key"
+seotitle: "Designing a Classification Key in Adobe Analytics"
+lastmod: 2026-07-15
 description: "The key is not a setting. It is the raw value you already collect. Five rules
               that decide whether classifications work for you or against you."
 type: lesson
-modulenum: 10
+modulenum: 11
 sectionnum: 2
 weight: 2
 ---</code></pre>
+<div class="note"><strong><code>seotitle</code> is required, not optional.</strong> <code>title</code> is what shows on the page and in the navigation, and it is deliberately short. <code>seotitle</code> is what goes in the browser title and in a search result. A section called "Rules" offers Google nothing without it. Every section title and seotitle pair is prescribed in the structure map; take the value from there rather than coining a new one.</div>
 <div class="lbl">Module index (_index.md)</div>
 <pre class="src"><code>---
 title: "Classifications"
+seotitle: "Classifications in Adobe Analytics"
+tagline: "Meaning, added later"
 description: "Give collected data meaning it never carried, retroactively, without touching
               a line of code. Keys, sets, imports, rules, and silent failure."
 type: module
-modulenum: 10
-weight: 10
+modulenum: 11
+weight: 11
 ---</code></pre>
+<div class="note"><strong><code>tagline</code> is required on a module index.</strong> It is the short phrase shown under the module name in the home map and the pocket map. Omit it and both maps render the module with a blank second line. Keep <code>weight</code> equal to <code>modulenum</code>.</div>
 <div class="note"><strong>The <code>description</code> field is not optional.</strong> It is the <strong>Google search snippet</strong> and the <strong>LinkedIn share preview</strong> for that page. Omit it and the layout falls back to the first 150 characters of prose, truncated mid-word, which reads as a broken page in a search result.</div>
 <table class="spec" style="margin-top:14px"><tbody>
 <tr><td class="k">Length</td><td>110 to 160 characters. Over 160 truncates in Google.</td></tr>
@@ -602,6 +609,7 @@ aliases:
 
 <h2>Revision history</h2>
 <table class="tok"><thead><tr><th style="width:130px">Date</th><th>Change</th></tr></thead><tbody>
+<tr><td><b>6 August 2026</b></td><td>Corrected the front matter examples: <code>seotitle</code> added and marked required, <code>tagline</code> added to the module index and marked required, Classifications renumbered from 10 to 11 to match the shipped structure. Added the fourth hard constraint: <b>content files must be <code>.html</code></b>, after Goldmark silently stripped the intro copy from all five category landing pages.</td></tr>
 <tr><td><b>15 July 2026</b></td><td>Added the <code>lastmod</code> field and the <code>.lupdated</code> component. Added the two hard constraints that came out of a live outage: the <b>lastmod / publishDate trap</b>, and the <b>build-and-crawl delivery gate</b>. Amended Rule 1 to distinguish content classes (never) from site-level components (deliberately, once, recorded here).</td></tr>
 <tr><td><b>14 July 2026</b></td><td>Density cap removed. It was wrong: the best-scoring section in the guide carries four warning boxes and is right to. Replaced with guidance.</td></tr>
 <tr><td><b>13 July 2026</b></td><td>First edition.</td></tr>
