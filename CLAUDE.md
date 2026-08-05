@@ -9,7 +9,7 @@ Adobe Analytics/                     <- working directory, supporting docs live 
 ├── structure-map.html               <- naming authority
 ├── content-component-rulebook.html  <- formatting and voice authority
 ├── QA_Rulebook.html                 <- delivery gate
-├── completion-tracker.xlsx          <- per-page status
+├── completion-tracker.tsv          <- per-page status
 └── amitdusane-site-complete/        <- the Hugo site, website files ONLY
 ```
 
@@ -26,7 +26,7 @@ Four documents govern this project. **Read the relevant one; do not work from me
 | `structure-map.html` | Titles, seotitles, slugs, module and section numbering, the curriculum arc | Creating any page, or naming anything |
 | `content-component-rulebook.html` | Every component, its tier, when it is earned, prose rules, the 20-item checklist | Writing any section body |
 | `QA_Rulebook.html` | The 13-point delivery gate, binary PASS/FAILED | Declaring anything done |
-| `completion-tracker.xlsx` | Which pages are written, QA'd, SEO-complete | Deciding what to work on |
+| `completion-tracker.tsv` | Which pages are written, QA'd, SEO-complete | Deciding what to work on |
 
 **Precedence when documents disagree with the code: the code wins, and flag the document.** The rulebook states this principle itself about the stylesheet. Two known stale spots: the rulebook's front matter examples omit `seotitle` and `tagline` (both required) and number Classifications as module 10 (it is 11); the structure map says "nothing has been built" (the restructure shipped) and its M03 §8 note says SDR is M20 (it is M19).
 
@@ -203,7 +203,9 @@ Before declaring any section done: the rulebook's 20-item checklist, then the QA
 
 Run this whenever Amit says to close out, wrap up, or end the session. It is what makes the next session start from truth instead of from a stale snapshot.
 
-1. **Update `completion-tracker.xlsx`.** Mark every section touched this session: `Content created?`, `Content QA'd?`, and the SEO columns. The tracker is the single record of where the project stands; a future session reads it to decide what to do next.
+1. **Update `completion-tracker.tsv`.** Mark every section touched this session: `Content created?`, `Content QA'd?`, and the SEO columns. The tracker is the single record of where the project stands; a future session reads it to decide what to do next.
+
+   Tab-delimited, 1 header row plus 144 data rows, 15 columns: Phase, Module, Section #, Page name, Page type, URL, SEO title, SEO title done?, SEO description, SEO desc done?, Title chars, Desc chars, Content created?, Content QA'd?, Final result. Tabs are the delimiter because descriptions are full of commas. Never introduce a tab inside a field. `Final result` is Yes only when SEO title, SEO desc, Content created and Content QA'd are all Yes.
 2. **Update `development-plan.md`** if a phase completed, an estimate moved, or the order changed.
 3. **Correct any source document** proven wrong during the session, per the precedence rule above, and add a revision-history entry.
 4. **Build once more**: `hugo --gc`, assert the page count, confirm it is clean.

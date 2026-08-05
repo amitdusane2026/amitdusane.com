@@ -11,7 +11,7 @@ The work is content production at scale, governed by four supporting documents t
 | `structure-map.html` (v6, 19 Jul) | **Naming and taxonomy authority.** Every module/section title, seotitle, slug, URL change, and the curriculum arc. |
 | `content-component-rulebook.html` (15 Jul) | **Formatting and voice authority.** Components, tiers, the five governing rules, hard technical constraints, the 20-item section checklist. |
 | `QA_Rulebook.html` (v1.0) | **Delivery gate.** 13-point checklist, binary PASS/FAILED. |
-| `completion-tracker.xlsx` (27 Jul) | **Per-page status.** 144 rows, SEO/content/QA columns. |
+| `completion-tracker.tsv` (27 Jul) | **Per-page status.** 144 rows, SEO/content/QA columns. |
 
 Site folder holds website files only; supporting documents live in the parent folder.
 
