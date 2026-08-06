@@ -51,6 +51,10 @@ Run against the rulebook's own hard rules. The discipline is high:
 
 The three outliers: `collect/_index.html` (180), `deliver/_index.html` (187), `collect/data-layers/_index.md` (94).
 
+**That audit was mechanical, and mechanical is not the same as correct.** Every check above is a pattern match: dashes, class names, glyphs, character counts. None of them reads a sentence and asks whether it is true. Writing M02 §7 surfaced the first counterexample: M02 §4 stated that IP obfuscation "runs early, before bot rules and geo-lookup," when Adobe documents the exact opposite, that IP filtering, bot rules and geo-segmentation all complete *before* the address is obfuscated. The page passed all nine mechanical checks while telling the reader something backwards, and it had been signed off. Corrected 7 Aug 2026 in both places it appeared (the bullet at `04:60` and the warn-box at `04:70`).
+
+The lesson generalises: a passed rulebook audit says the section is well-formed, not that it is right. Sections written before this project began have not had their technical claims checked against Adobe's documentation, and at least one was wrong. Where a new section builds on a claim made in an older one, verify the older claim rather than inheriting it.
+
 ### Conflicts to resolve
 
 1. **The rulebook's front-matter examples are stale.** They omit `seotitle` and `tagline`, which the shipped code and the structure map both require. The example also numbers Classifications as module 10; it is 11. The rulebook's own footer says the stylesheet wins when documents disagree; the same principle applies here.
@@ -86,10 +90,12 @@ Five single gaps sitting inside modules that are otherwise finished, so each is 
 | Section | File | Status |
 |---|---|---|
 | M02 §6 Bot Filtering | `foundations/report-suites/06-bot-filtering.html` | **Signed off 6 Aug 2026** |
-| M02 §7 Privacy and Data Retention | `foundations/report-suites/07-privacy-data-retention.html` |
-| M05 §4 Data Layer Design | `collect/data-layers/04-data-layer-design.html` |
-| M06 §8 Consent and Tag Management | `collect/adobe-launch-tags/08-consent-and-tag-management.html` |
-| M07 §5 Experience Cloud ID (ECID) | `collect/tracking-calls/05-experience-cloud-id-ecid.html` |
+| M02 §7 Privacy and Data Retention | `foundations/report-suites/07-privacy-data-retention.html` | **Written 7 Aug 2026, awaiting accuracy review** |
+| M05 §4 Data Layer Design | `collect/data-layers/04-data-layer-design.html` | |
+| M06 §8 Consent and Tag Management | `collect/adobe-launch-tags/08-consent-and-tag-management.html` | |
+| M07 §5 Experience Cloud ID (ECID) | `collect/tracking-calls/05-experience-cloud-id-ecid.html` | |
+
+Writing M02 §7 completes Module 2 apart from sign-off, and it was written without a notes dump: every claim is derived from Adobe's own documentation, with failure modes stated in the site's structural voice rather than as anecdotes. **That makes the accuracy review more load-bearing than usual**, particularly the retention and labeling sections, where lived experience would normally supply the detail.
 
 Titles and seotitles for all five are already prescribed by the structure map. M02 §6 and §7 already have their `description:` written, so their intent is captured; only the body is missing.
 
