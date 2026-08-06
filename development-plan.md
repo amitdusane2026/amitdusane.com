@@ -69,27 +69,23 @@ The three outliers: `collect/_index.html` (180), `deliver/_index.html` (187), `c
 
 **Phase 0.2 — documents ingested.** Reconciliation above.
 
----
+**Phase 0.3 — `CLAUDE.md` written.** Startup core, loaded every session. Points at the governing documents rather than restating them, and holds what they leave implicit: document precedence, the build gate, the three silent-failure traps, voice measured from the corpus, Amit's voice statement as the governing intent, the publishing model, and the session start and close routines. Capped at roughly 250 lines, with `site-architecture.md` split out to be read on demand.
 
-## Phase 0.3 — Write `CLAUDE.md` (next)
+**Repository connected.** One repo at the parent folder covering the site and the supporting documents, pushed to `amitdusane2026/amitdusane.com` on a `develop` branch. `main` untouched and still building the June site. The deploy workflow was recovered from GitHub, moved to the repo root, and corrected to build from `amitdusane-site-complete/`; without that, a merge to `main` would have failed the build with "Unable to locate config file" and stopped the site updating.
 
-A single project-root file that loads automatically every session, so the rules never have to be re-derived. It **points to** the four documents rather than restating them, and captures only what they leave implicit:
+**Tracker converted to TSV**, tab-delimited because the description column is full of commas. Rebuilt once after the first conversion silently dropped every numeric column.
 
-- **Document precedence:** structure map for naming, rulebook for form, QA rulebook for the gate, tracker for status. Where a document and the shipped code disagree, the code wins and the document gets flagged.
-- **The build command:** `hugo --gc`. **Never `--minify`** — it destroys inline SVG text elements. Assert the page count after every build; a silent build failure once dropped 103 pages while reporting success.
-- **The three silent-failure traps** found in the code and not written down anywhere: `description:` doubles as the maps' publish flag (`wherefits.html:77`, `homemap.html:56`); a new module must be added to `[params.phases]` in `hugo.toml` or it vanishes from both maps with no error; `lesson/single.html:9` regex-matches the literal string `<div class="ref-box">` to inject the doc-note, so any variation silently breaks it.
-- **Voice specifics measured from the corpus**, which the rulebook states as principle but not as pattern: the war-story construction (generic actor, future-tense failure, organisational consequence, never first person); the contraction split by era (the July 2026 modules are near contraction-free); the flat `h3.subsec-title` structure with no H1/H2 in body; the closing-section convention (synthesis plus named handoff).
-- **New content is `.html`, never `.md`.**
+**Phase 2 started. Bot Filtering (M02 §6) written, reviewed and signed off.**
 
 ---
 
 ## Phase 2 — The orphan sections
 
-The structure map's own "New sections to write" table opens with exactly the five sections that sit inside modules 1–11, the half of the curriculum considered complete. They are live right now showing "This section is not yet written."
+Five single gaps sitting inside modules that are otherwise finished, so each is a short piece of work against established neighbours. **One done, four remaining.**
 
-| Section | File |
-|---|---|
-| M02 §6 Bot Filtering | `foundations/report-suites/06-bot-filtering.html` |
+| Section | File | Status |
+|---|---|---|
+| M02 §6 Bot Filtering | `foundations/report-suites/06-bot-filtering.html` | **Signed off 6 Aug 2026** |
 | M02 §7 Privacy and Data Retention | `foundations/report-suites/07-privacy-data-retention.html` |
 | M05 §4 Data Layer Design | `collect/data-layers/04-data-layer-design.html` |
 | M06 §8 Consent and Tag Management | `collect/adobe-launch-tags/08-consent-and-tag-management.html` |
