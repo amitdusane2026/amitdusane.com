@@ -233,7 +233,9 @@ Changing a slug on a live page requires an `aliases` entry. Never let an old URL
 
 ## Working agreement
 
-**Content is written from Amit's notes.** For each section he supplies the gotchas, the scars, and what the documentation gets wrong; that raw material is what only he has. The drafting, structuring, and component work is mine. Do not invent war stories or attribute experience that was not supplied.
+**Content is written from Amit's notes, when he supplies them.** For each section he supplies the gotchas, the scars, and what the documentation gets wrong; that raw material is what only he has. The drafting, structuring, and component work is mine.
+
+**When he hands a section over without notes, constructed scenarios are authorised** (granted 7 Aug 2026, during M02 §7). Carry one plausible situation through the whole section, and build it so its incidental details are the technical points rather than decoration. Two limits hold absolutely: never attribute experience to a real engagement, client, or person, and every technical claim must trace to documentation verified while drafting. A scenario is a teaching device, not a war story. `development-plan.md` records the worked example and the review that produced this rule.
 
 **The tracker decides what needs writing, and nothing else does.** If `completion-tracker.tsv` says `Content created? = No`, that section gets written fresh. Whatever the file currently holds is irrelevant: a placeholder line, thin legacy prose from the pre-rewrite era, or anything else. It was written early to fill a gap, it was not thought through, and Amit has said explicitly that he does not want energy spent reading it, mining it for value, or adapting it.
 

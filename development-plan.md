@@ -90,12 +90,25 @@ Five single gaps sitting inside modules that are otherwise finished, so each is 
 | Section | File | Status |
 |---|---|---|
 | M02 §6 Bot Filtering | `foundations/report-suites/06-bot-filtering.html` | **Signed off 6 Aug 2026** |
-| M02 §7 Privacy and Data Retention | `foundations/report-suites/07-privacy-data-retention.html` | **Written 7 Aug 2026, awaiting accuracy review** |
+| M02 §7 Privacy and Data Retention | `foundations/report-suites/07-privacy-data-retention.html` | **Signed off 7 Aug 2026** |
 | M05 §4 Data Layer Design | `collect/data-layers/04-data-layer-design.html` | |
 | M06 §8 Consent and Tag Management | `collect/adobe-launch-tags/08-consent-and-tag-management.html` | |
 | M07 §5 Experience Cloud ID (ECID) | `collect/tracking-calls/05-experience-cloud-id-ecid.html` | |
 
-Writing M02 §7 completes Module 2 apart from sign-off, and it was written without a notes dump: every claim is derived from Adobe's own documentation, with failure modes stated in the site's structural voice rather than as anecdotes. **That makes the accuracy review more load-bearing than usual**, particularly the retention and labeling sections, where lived experience would normally supply the detail.
+**Module 2 is now complete: all eight sections created, QA'd and signed off.** It is the first module in the learning world finished end to end under this process.
+
+### What M02 §7 taught about writing the technically dense sections
+
+§7 was written without a notes dump, entirely from Adobe documentation verified during drafting. The first draft passed every mechanical check, used the components correctly, and was still rejected on review: the three-gate theme survived only in the infographic, because the prose was explaining mechanisms instead of carrying the story. It took two reads to extract a structure the diagram had already stated.
+
+The fix generalises, and it matters because the roadmap is full of sections with this same problem shape (SDR, Data Feeds, Data Warehouse, Attribution):
+
+- **When tables and diagrams carry the exact detail, prose must carry the theme.** Restating technical content in sentences beside a table that already holds it is what makes a section feel dense. Cut the elaboration rather than rewording it.
+- **One concrete scenario, carried the whole way through, is the device that prevents drift.** Each section opens on where the scenario stands and closes by returning to it.
+- **Build the scenario so its incidental details are the technical points.** In §7 a purchase "two years ago" is 24 months against a 25-month default policy; "they signed in" is why a person-level ID exists; "a phone then, a laptop since" is why browser-side ID retrieval silently misses half a request. Nothing is decoration.
+- **Test the heading list on its own.** If the arc is not legible from headings alone, the section will need a second read.
+
+Amit has granted standing authority to construct scenarios of this kind. The rule that still holds: no experience attributed to a real engagement, and every technical claim traceable to documentation.
 
 Titles and seotitles for all five are already prescribed by the structure map. M02 §6 and §7 already have their `description:` written, so their intent is captured; only the body is missing.
 
