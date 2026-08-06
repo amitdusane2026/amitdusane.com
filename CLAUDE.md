@@ -257,4 +257,16 @@ Run this whenever Amit says to close out, wrap up, or end the session. It is wha
 6. **Write a memory** only if something durable was learned that is not already captured in a file.
 7. **Report** in two lines: what shipped, and what the next session should pick up first.
 
-At session start, read `development-plan.md` and the tracker before proposing work.
+---
+
+## Session start routine
+
+1. **Pull first, always.** `git fetch origin && git status` to see whether `origin/develop` is ahead. Amit works from more than one device: this laptop and web or mobile sessions on claude.ai/code, both against the `develop` branch. A local copy that has not pulled is stale, and advice given from it will be wrong.
+
+   If the remote is ahead, `git pull` and read the incoming commit messages before proposing anything. They carry the reasoning for whatever changed.
+
+   If both sides have changed the same file, reconcile deliberately and tell Amit what conflicted rather than resolving it silently.
+
+2. **Read `development-plan.md` and `completion-tracker.tsv`** before proposing work. The plan says what phase we are in; the tracker says exactly which sections are written and QA'd.
+
+3. **Confirm the working tree is clean** and report where things stand in a line or two.
