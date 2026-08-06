@@ -32,12 +32,16 @@ jobs:
         uses: actions/checkout@v4
       - name: Setup Pages
         uses: actions/configure-pages@v5
+      # The Hugo site lives in amitdusane-site-complete/, not at the repo root.
+      # The repo root holds the supporting documents that govern the site:
+      # CLAUDE.md, the development plan, structure map, rulebooks and tracker.
+      # Without --source, Hugo cannot find hugo.toml and the build fails.
       - name: Build (no minify — keeps inline SVG text whitespace intact)
-        run: hugo --gc
+        run: hugo --gc --source amitdusane-site-complete
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./public
+          path: ./amitdusane-site-complete/public
 
   deploy:
     needs: build
