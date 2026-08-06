@@ -23,12 +23,9 @@ Everything below was verified against the actual files and the built output, not
 
 **The tracker matches the code exactly.** The tracker's "Content created" column and the site's `description:` front-matter flag agree on all 144 pages: 66 sections created, 50 pending. No drift.
 
-**The 50 pending split into two different kinds of work**, and the split is exact:
+**All 50 pending sections are written fresh.** An earlier revision of this plan split them into 24 empty stubs and 26 carrying thin legacy prose, and treated those as different sizes of job. Amit has ruled that distinction out: the stubs and the legacy bodies were both written early to fill gaps, without much thought, and he does not want energy spent reading them, mining them for value, or adapting them.
 
-- **24 sections that do not exist in any form** — these are the 24 stub files whose body is literally "This section is not yet written." They match the structure map's "New sections to write" table row for row.
-- **26 sections carrying legacy v1 content** — thin bullet-list prose in the pre-rewrite voice, with no `description:`. These need rewriting, not writing.
-
-That distinction matters for estimating: a rewrite has raw material and an established shape; a new section does not.
+So the existing body of a pending section is never opened. The tracker's `Content created?` column is the only authority on what needs writing, and every one of the 50 is the same job: read the neighbouring completed sections for continuity, take naming from the structure map, and write with a fresh mind.
 
 **A work item neither of us had listed: 12 written sections are not QA'd.** The tracker shows Modules 11 (Classifications) and 13 (Segments), all 12 sections, as created but not QA-approved. They are the two most recent modules. Under the QA Rulebook they cannot be called done.
 
@@ -86,7 +83,7 @@ A single project-root file that loads automatically every session, so the rules 
 
 ---
 
-## Phase 2 — Close the 24 unwritten sections, starting with the 5 orphans
+## Phase 2 — The orphan sections
 
 The structure map's own "New sections to write" table opens with exactly the five sections that sit inside modules 1–11, the half of the curriculum considered complete. They are live right now showing "This section is not yet written."
 
@@ -116,10 +113,11 @@ Per section, repeatable:
 4. **Verify** — `hugo --gc`, assert page count, then the QA Rulebook's 13 points and the rulebook's 20-item section checklist.
 5. **You edit for accuracy**, I apply corrections.
 
-**Order after the 5 orphans**, following the structure map's arc and grouping the two work types:
+**Order after the 4 remaining orphans**, following the structure map's arc, one module at a time and complete before moving on:
 
-- Remaining 19 new sections: M12 (2) → M14 (4) → M15 (4) → M21 (3) → M19 (6)
-- Then the 26 legacy rewrites: M14 (6) → M12 (1) → M20 (5) → M16 (4) → M17 (4) → M18 (4) → M21 (2)
+M12 (3) → M14 (10) → M15 (4) → M16 (4) → M17 (4) → M18 (4) → M19 (6) → M20 (5) → M21 (5)
+
+Finishing M12 makes modules 1 to 13 a contiguous run with no gaps, which is the first point at which half the curriculum reads end to end.
 
 M19 (SDR, 6 sections, all new) is the largest single piece and doubles as the prototype for your later "how to create a delivery document" section.
 

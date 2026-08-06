@@ -235,6 +235,10 @@ Changing a slug on a live page requires an `aliases` entry. Never let an old URL
 
 **Content is written from Amit's notes.** For each section he supplies the gotchas, the scars, and what the documentation gets wrong; that raw material is what only he has. The drafting, structuring, and component work is mine. Do not invent war stories or attribute experience that was not supplied.
 
+**The tracker decides what needs writing, and nothing else does.** If `completion-tracker.tsv` says `Content created? = No`, that section gets written fresh. Whatever the file currently holds is irrelevant: a placeholder line, thin legacy prose from the pre-rewrite era, or anything else. It was written early to fill a gap, it was not thought through, and Amit has said explicitly that he does not want energy spent reading it, mining it for value, or adapting it.
+
+So do not open the existing body to see what can be salvaged, do not summarise it back to him, and do not treat "rewrite" and "write" as different jobs. They are one job. Read the neighbouring completed sections for continuity and the structure map for naming, then write with a fresh mind.
+
 Per-section loop: notes, then a proposed h3 skeleton with component placement for approval, then the full `.html`, then verification, then his accuracy edits.
 
 Before declaring any section done: the rulebook's 20-item checklist, then the QA Rulebook's 13 points, then a real build with the page count asserted.
