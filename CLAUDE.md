@@ -147,7 +147,20 @@ Invariant structure:
 
 1. **Untitled opener.** One to three paragraphs before the first h3, doing continuity recap or scenario setup, with inline links back to earlier sections.
 2. **Body.** The h3 stack, each 2 to 6 paragraphs, interleaved with earned components.
-3. **Final h3 is synthesis plus handoff**, named by function not topic: "What you have now", "Everything hinges on one thing", "Where this module leaves you". Its last paragraph names and links the next section.
+3. **Final h3 is synthesis plus onward link**, named by function not topic: "What you have now", "Everything hinges on one thing", "Where this module leaves you". Its last paragraph names a related section, says what that section covers, and links it.
+
+**The completed-site rule governs every reference, in both directions.** Write as though the whole site is already finished and the reader arrived from a search engine, because most of them do. They have read nothing else and are not working through the curriculum in order.
+
+Never write "the previous section", "the section before", "is next", "comes next", "earlier we saw", "by now you have", or "this module has been building toward". All of them assert a journey the reader may not have taken, and all of them are simply false to a search lander.
+
+Instead: **name the concept, link it, and recap it in a few words**, so the sentence is true for both kinds of reader.
+
+- Wrong: "The previous section closed on an assumption..."
+- Wrong: "Privacy and Data Retention is next."
+- Right: "...carry obligations that sit outside analytics entirely, and they are covered in [Privacy and Data Retention]."
+- Right: "Tag management has surfaced before, most directly in [Deployment: TMS vs Direct], where the choice was framed as a trade."
+
+This is QA Rulebook check 4 and rule 5 of the component rulebook. It is the easiest rule on the site to break while writing a good sentence.
 4. **`path-box`**, second to last, if and only if the subject has a screen.
 5. **`ref-box`**, last, always, exactly one. Nothing follows it.
 
