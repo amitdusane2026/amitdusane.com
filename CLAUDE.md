@@ -38,30 +38,11 @@ The other repo on that account, `amitdusane2026/adobe-analytics-learning`, is an
 
 ---
 
-## Where this is going
-
-Section order for the site as a whole. Only the first two exist.
-
-1. **Web SDK Migration** — live since June 2026
-2. **Adobe Analytics Learning** — in progress, the current work
-3. CJA (Customer Journey Analytics)
-4. RTCDP
-5. AJO
-6. AEP fundamentals
-7. Web SDK mobile app implementation
-8. Certification preparation for each technology above
-9. How to create a delivery document, and how to manage a long-term project
-10. A RAG chatbot over the whole site
-
-Each of sections 3 to 9 is a new "world" and inherits the component vocabulary unchanged. See the porting rule in `content-component-rulebook.html`: copy `world-learning.css`, change `--accent` only, leave the semantic colours alone.
-
-Before the third world exists, `params.phases` must become per-world. `wherefits.html:12` and `homemap.html:10` read `.Site.Params.phases` globally, so a second world using those partials would inherit Adobe Analytics' phase structure.
-
----
-
 ## Read these before writing content
 
-Four documents govern this project. **Read the relevant one; do not work from memory or from this summary.**
+This file is the startup core: it holds only what applies to every task, and it is loaded every session. Everything else is read when the work calls for it.
+
+**Keep this file under roughly 250 lines.** When something matters only for one kind of work, it belongs in a document this table points at, not here. A startup core that grows without limit costs tokens in every session, including the ones that never need the part that grew.
 
 | Document | Authority over | Read it before |
 |---|---|---|
@@ -69,6 +50,10 @@ Four documents govern this project. **Read the relevant one; do not work from me
 | `content-component-rulebook.html` | Every component, its tier, when it is earned, prose rules, the 20-item checklist | Writing any section body |
 | `QA_Rulebook.html` | The 13-point delivery gate, binary PASS/FAILED | Declaring anything done |
 | `completion-tracker.tsv` | Which pages are written, QA'd, SEO-complete | Deciding what to work on |
+| `site-architecture.md` | The four section shapes, what carries between them, world mechanics, the roadmap, hosting at scale | Starting a new section, designing a new world, or deciding what a section inherits |
+| `development-plan.md` | Phases, status, what is next | Deciding what to work on |
+
+**Read the relevant one; do not work from memory or from this summary.**
 
 These documents were produced during earlier plain chat sessions. They are close to accurate but not infallible, and they predate parts of what shipped. Never follow a specific literally without checking it.
 
