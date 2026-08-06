@@ -79,6 +79,14 @@ Save</pre></div>
     </svg>
 </div>
 
+<h3 class="subsec-title">Why it is a checkbox at all</h3>
+<p>A fair question sits underneath that setting. If removing automated traffic is obviously the right thing to do, and Adobe already maintains the list, why is this a decision anyone has to make? Why is the box not simply ticked the day a report suite is created?</p>
+<p>Adobe had three ways to handle it, and the one it chose is worth reading properly.</p>
+<p>It could have shipped nothing, which would say the product cannot recognise automated traffic at all. It could have switched filtering on by default, which would mean Adobe deciding on your behalf which of your visitors count, and removing them from your reports before you knew a decision had been taken. Or it could build the mechanism, hand you the switch, and step back.</p>
+<p>That third option is what a checkbox is. It is not a missing default, and it is not laziness in the interface. It is a transfer of ownership, made deliberately.</p>
+<p>Because the underlying question is not technical. Deciding that a class of traffic does not count is a judgment about what your organisation considers a visitor, and that judgment belongs to whoever has to defend the numbers when someone asks why the figures moved. Adobe supplies the capability and stays out of the decision. You tick the box, so the cleaner conversion rate is yours to explain, and so is the traffic that vanished from the year-on-year comparison.</p>
+<p>It is a small piece of interface carrying a large message, and it is worth recognising, because it tells you what the product expects of you. The tool is built to be directed. Somebody has to sit in the driver's seat and say what counts, and the checkbox is Adobe making it unambiguous that the somebody is you.</p>
+
 <h3 class="subsec-title">What the list catches, and what walks straight past it</h3>
 <p>Now the part that matters, and the reason this section is longer than the configuration deserves.</p>
 <p>The IAB list is a list of <strong>known</strong> bots, and known is doing a great deal of work in that sentence. A bot appears on it because it identifies itself: it sends a user agent that names what it is, it publishes its address ranges, and it behaves like a good citizen of the web. Search engine crawlers do this. Large, reputable monitoring services do this. They want to be recognised, because being recognised is how they avoid being blocked.</p>
@@ -157,14 +165,15 @@ Save</pre></div>
 
 <div class="path-box">
     <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Analytics</div>
-    <p>Analytics &gt; Admin &gt; Report Suites &gt; select suite &gt; Edit Settings &gt; <span class="path">General &gt; Bot Rules</span> for the IAB list and your own rules. IP exclusions live beside them under <span class="path">General &gt; Exclude by IP Address</span>. Both are set per report suite, and neither applies to any other suite.</p>
+    <p>Analytics &gt; Admin &gt; Report Suites &gt; select suite &gt; Edit Settings &gt; <span class="path">General &gt; Bot Rules</span> for the IAB list and your own rules. IP exclusions live beside them under <span class="path">General &gt; Exclude by IP Address</span>. Both are set per report suite, and neither applies to any other suite. Access to Bot Rules is restricted to product administrators, so if the screen is not there, that is the reason.</p>
 </div>
 
 <div class="ref-box">
     <div class="ref-title">📚 Learn More</div>
     <ul>
-        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/admin/admin-tools/bot-removal/bot-rules" target="_blank">Adobe Docs: Bot Rules</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/admin/admin-tools/manage-report-suites/edit-report-suite/report-suite-general/bot-removal/bot-rules" target="_blank">Adobe Docs: Understand and Configure Bot Rules</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/admin/admin-tools/manage-report-suites/edit-report-suite/report-suite-general/bot-removal/bot-exclusion-methods" target="_blank">Adobe Docs: Comparison of Different Bot Exclusion Methods</a></li>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/admin/admin-tools/exclude-ip" target="_blank">Adobe Docs: Exclude by IP Address</a></li>
-        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/metrics/bot-occurrences" target="_blank">Adobe Docs: Bot Occurrences and Bot Reporting</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/metrics/bot-occurrences" target="_blank">Adobe Docs: Bot Occurrences</a></li>
     </ul>
 </div>
