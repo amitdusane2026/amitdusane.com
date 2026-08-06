@@ -17,6 +17,48 @@ Never put supporting documents inside `amitdusane-site-complete/`. It is git-tra
 
 ---
 
+## Repository and publishing
+
+GitHub: `amitdusane2026/amitdusane.com`. Two branches, and the difference is load-bearing.
+
+| Branch | Role |
+|---|---|
+| `develop` | **All work happens here.** Everything: the site, the learning section, the supporting documents. Pushing here publishes nothing. |
+| `main` | **Production.** Every push to `main` triggers `.github/workflows/deploy.yml`, which builds with `hugo --gc --source amitdusane-site-complete` and publishes to amitdusane.com within a couple of minutes. |
+
+**Never push or merge to `main` without Amit saying so explicitly, in that session.** There is no staging environment: `main` is the live site.
+
+The reason this matters right now: 24 learning sections still read "This section is not yet written." They are on `develop`, invisible to the world. Merged to `main` they become publicly indexable.
+
+The Adobe Analytics Learning section has never been published. `amitdusane.com/adobe-analytics-learning/` currently returns 404, by design, until the section is finished.
+
+Also unpublished: the home page (`layouts/index.html`) has only one topic card, Web SDK Migration. A second card for the learning section is needed at launch, using the existing `.tcard` component with the crimson accent.
+
+The other repo on that account, `amitdusane2026/adobe-analytics-learning`, is an old single-page guide from January 2026. It is unrelated to this project despite the name.
+
+---
+
+## Where this is going
+
+Section order for the site as a whole. Only the first two exist.
+
+1. **Web SDK Migration** — live since June 2026
+2. **Adobe Analytics Learning** — in progress, the current work
+3. CJA (Customer Journey Analytics)
+4. RTCDP
+5. AJO
+6. AEP fundamentals
+7. Web SDK mobile app implementation
+8. Certification preparation for each technology above
+9. How to create a delivery document, and how to manage a long-term project
+10. A RAG chatbot over the whole site
+
+Each of sections 3 to 9 is a new "world" and inherits the component vocabulary unchanged. See the porting rule in `content-component-rulebook.html`: copy `world-learning.css`, change `--accent` only, leave the semantic colours alone.
+
+Before the third world exists, `params.phases` must become per-world. `wherefits.html:12` and `homemap.html:10` read `.Site.Params.phases` globally, so a second world using those partials would inherit Adobe Analytics' phase structure.
+
+---
+
 ## Read these before writing content
 
 Four documents govern this project. **Read the relevant one; do not work from memory or from this summary.**
@@ -28,7 +70,9 @@ Four documents govern this project. **Read the relevant one; do not work from me
 | `QA_Rulebook.html` | The 13-point delivery gate, binary PASS/FAILED | Declaring anything done |
 | `completion-tracker.tsv` | Which pages are written, QA'd, SEO-complete | Deciding what to work on |
 
-**Precedence when documents disagree with the code: the code wins, and flag the document.** The rulebook states this principle itself about the stylesheet. Two known stale spots: the rulebook's front matter examples omit `seotitle` and `tagline` (both required) and number Classifications as module 10 (it is 11); the structure map says "nothing has been built" (the restructure shipped) and its M03 §8 note says SDR is M20 (it is M19).
+These documents were produced during earlier plain chat sessions. They are close to accurate but not infallible, and they predate parts of what shipped. Never follow a specific literally without checking it.
+
+**Precedence when documents disagree with the code: the code wins. Say so out loud, then correct the source document and add a revision-history entry**, so it becomes fact rather than a legacy record of intent. Amit has asked explicitly for this; the documents are meant to get stronger as the site grows, not to rot. The rulebook states this principle itself about the stylesheet. Two known stale spots: the rulebook's front matter examples omit `seotitle` and `tagline` (both required) and number Classifications as module 10 (it is 11); the structure map says "nothing has been built" (the restructure shipped) and its M03 §8 note says SDR is M20 (it is M19).
 
 ---
 
