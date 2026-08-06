@@ -3,19 +3,18 @@ slug: "privacy-data-retention"
 title: "Privacy and Data Retention"
 description: "How Adobe Analytics governs personal data: data retention periods, IP obfuscation, and the labeling that supports GDPR and CCPA compliance."
 seotitle: "Privacy and Data Retention in Adobe Analytics"
-lastmod: 2026-08-06
+lastmod: 2026-08-07
 type: lesson
 modulenum: 2
 sectionnum: 7
 weight: 7
 ---
-<p>An email arrives from somebody in legal. A person has exercised a right they hold under law: tell me what you have collected about me, and then delete it. There is a deadline attached, it is counted in days rather than months, and the answer has to be accurate rather than reassuring.</p>
-<p>Nothing in that request is an analytics question. Answering it, however, depends entirely on decisions taken inside a report suite, most of them years earlier, by somebody who was thinking about conversion rates at the time. Whether the data still exists. Whether Adobe has any idea which of your two hundred variables happens to hold an email address. Whether a person who arrived as an email address can be found in data that recognises visitors by a cookie.</p>
-<p>Those three questions are the whole of this section, and the order they are asked in matters, because each one decides whether the next gets asked at all.</p>
+<p>An email arrives on a Monday morning. A customer who bought from you once, roughly two years ago, wants everything you hold about them erased. They are entitled to ask, the law gives you thirty days to answer, and the answer has to be true rather than comfortable.</p>
+<p>Three small details in that request decide everything that follows, and none of them look important yet. It happened two years ago. They signed in to buy. They used a phone at the time, and have used a laptop ever since.</p>
+<p>Each detail runs into a different setting in your report suite, and each of those settings was configured long ago by somebody who was thinking about conversion rates, not about this Monday. What follows is that single request, walked through to its answer.</p>
 
-<h3 class="subsec-title">Retention and privacy are not two subjects, they are a sequence</h3>
-<p>They sit next to each other in the admin tools and they are usually treated as two unrelated pieces of housekeeping: one about storage, one about compliance. That reading survives right up until the first request arrives, because Adobe connects them explicitly. A data retention policy has to be in place before Adobe will process a data privacy request at all.</p>
-<p>The dependency makes sense once you look at what a deletion promise actually requires. To state that a person has been erased, there has to be an agreed edge to the data being searched. An unbounded archive has no edge, so there is nothing to make a promise about. Retention supplies the boundary, and only then does the machinery that finds and anonymises a person inside that boundary have somewhere to operate.</p>
+<h3 class="subsec-title">Three gates, and the request has to pass all of them</h3>
+<p>Between the email and a truthful reply sit three questions. Does the data still exist. Can Adobe find the personal parts of it. Can the person in the email be matched to a visitor in the data.</p>
 <div class="diagram-box">
     <div class="diagram-title">Three gates, and a request has to pass all of them</div>
     <svg viewBox="0 0 700 210" style="width:100%;height:auto;display:block" role="img" aria-label="A diagram showing a privacy request passing through three sequential gates: whether the data still exists under the retention policy, whether privacy labels tell Adobe where personal data sits, and whether the person can be identified. Failing any gate ends the request silently.">
@@ -40,20 +39,22 @@ weight: 7
         <text x="350" y="180" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">and none of the three gates tells you it was the one that closed</text>
     </svg>
 </div>
-<p>Read from left to right, the diagram is a compliance workflow. Read from right to left, it is a list of things that have to be decided at implementation time, by people who will not be in the room when the email from legal arrives.</p>
+<p>The gates run in that order because Adobe enforces the first one. A data retention policy has to be in place before Adobe will process a privacy request at all, which makes sense once you see why: to promise that a person has been erased, there has to be an agreed edge to the data being searched. An archive with no edge cannot be promised about.</p>
+<p>Take the request through one gate at a time.</p>
 
-<h3 class="subsec-title">The one setting in this module you are not permitted to change</h3>
-<p>Adobe applies a default data retention policy of 25 months. Your contract may say something different, and whatever it says is what governs, but 25 months is where an organisation that has never discussed the question finds itself.</p>
-<p>The interesting part is what you can do about it, which is almost nothing on your own. You can open the data governance dialog in the admin tools and read the policy currently in force. Changing it is a conversation with your Adobe account team. Reducing the period costs nothing. Extending it beyond the default is a purchase, made in yearly increments, with eight extensions available at most, which puts the ceiling at ten years and one month.</p>
+<h3 class="subsec-title">Gate one: two years ago is closer to the edge than it sounds</h3>
+<p>Their purchase was twenty four months ago. Adobe's default retention policy is twenty five months.</p>
+<p>They made it through by a single month. Had the email arrived next February instead, the honest answer would have been that nothing remains, and the whole exercise would have ended at the first gate.</p>
+<p>Nobody at your organisation chose that margin. Twenty five months is simply where a company that has never discussed retention finds itself, and it is the number governing this request unless your contract says otherwise.</p>
 <div class="info-box">
-    <div class="info-hdr">ℹ️ What you can see, and what you have to ask for</div>
-    <p>The policy is visible to you and editable by Adobe. That split is easy to misread as a gap in the product, and administrators go looking for the dropdown that would let them fix it. There is no dropdown. If the retention period is wrong for your organisation, the route is commercial rather than technical, and it runs through whoever owns the Adobe relationship.</p>
+    <div class="info-hdr">ℹ️ You can read the policy, but you cannot change it</div>
+    <p>The data governance dialog in the admin tools shows the period currently in force. Changing it is a conversation with your Adobe account team, not a setting. Reducing the period costs nothing. Extending it is a purchase made in yearly increments, eight at most, which puts the ceiling at ten years and one month. Administrators go looking for the dropdown. There is no dropdown.</p>
 </div>
-<p>It is worth sitting with the design decision for a moment, because it runs directly against the grain of everything else in this panel. <a href="/adobe-analytics-learning/foundations/report-suites/bot-filtering/">Bot Filtering</a> hands you a checkbox and steps back, on the reasoning that deciding which traffic counts is your judgment to make and defend. Retention is the same product, in the same screen, taking the opposite position.</p>
-<p>The difference is what happens when the decision is wrong. An unticked bot rule leaves noise in a report, and the report is still there to be corrected later. A retention period set too short begins destroying data on a schedule, permanently, and no support ticket brings it back. A control whose worst outcome is total and irreversible does not belong behind a dropdown that a newly promoted administrator can reach on a Tuesday afternoon. The friction is not an oversight. The friction is the safety mechanism.</p>
+<p>That is worth a moment, because it contradicts everything else in this panel. <a href="/adobe-analytics-learning/foundations/report-suites/bot-filtering/">Bot Filtering</a> hands you a checkbox and steps back, on the reasoning that deciding which traffic counts is your judgment to defend. Retention takes the opposite position in the same screen.</p>
+<p>The difference is what a mistake costs. An unticked bot rule leaves noise in a report, and the report survives to be corrected. A retention period set too short starts destroying data on a schedule, and no support ticket brings it back. A control whose worst outcome is total and irreversible does not belong behind a dropdown an administrator can reach on a Tuesday afternoon. The friction is the safety mechanism.</p>
 
-<h3 class="subsec-title">What deleted means here, and when you find out</h3>
-<p>Deletion runs as a rolling window rather than as an event. The window starts at today minus your retention period and ends at today, and everything inside it is available. Everything outside it is not, and the boundary steps forward on a monthly cycle, quietly, in the background, taking another month with it each time.</p>
+<h3 class="subsec-title">What the window does while nobody is watching</h3>
+<p>Retention is not a rule that fires once. It is a window that slides. The start is today minus your policy, the end is today, and every month the leading edge steps forward and takes another month of history with it.</p>
 <div class="diagram-box">
     <div class="diagram-title">The window does not sit still</div>
     <svg viewBox="0 0 700 200" style="width:100%;height:auto;display:block" role="img" aria-label="A timeline showing a rolling retention window. Data older than the retention period is permanently deleted, data inside the window is available, and the boundary between them moves forward every month.">
@@ -75,17 +76,16 @@ weight: 7
         <text x="336" y="164" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">this edge moves forward every month, and takes history with it</text>
     </svg>
 </div>
-<p>What leaves is not archived to somewhere cheaper. Adobe reserves the right to delete data that has passed the policy, with no option for recovery, and that applies uniformly to everything downstream: Analysis Workspace, Data Warehouse, and the data feeds that carry raw hits into your own systems. If the window has passed, the question cannot be answered by any surface Adobe offers.</p>
-<p>One escape hatch exists, and it has to be used before the fact rather than after. A historical data dump can be requested ahead of a deletion, which turns data you are about to lose into a file you own. It is only available while the data is still there.</p>
+<p>What leaves is not moved to cheaper storage. Adobe reserves the right to delete it with no option for recovery, and that covers every surface at once: Analysis Workspace, Data Warehouse, and the feeds carrying raw hits into your own systems. One escape hatch exists, and only before the fact. A historical data dump can be requested ahead of a deletion, which turns data you are about to lose into a file you own.</p>
 <div class="warn-box">
     <div class="warn-hdr">⚠️ Nothing announces the day your history stops</div>
-    <p>There is no notification, no banner, and no entry in any log a practitioner would normally read. The first visible symptom is a year over year comparison that returns nothing for the earlier period, and in a Workspace panel an absent period and a catastrophic one render identically: both are zero. The person who discovers the retention boundary is usually the person presenting the trend, and they will discover it in front of an audience who assume the number means what it appears to mean.</p>
+    <p>No notification, no banner, no entry in any log a practitioner reads. The first symptom is a year over year comparison returning nothing for the earlier period, and in a Workspace panel an absent year and a catastrophic one render identically. Both are zero. The person who discovers the retention boundary is usually the one presenting the trend, to an audience who assume the number means what it appears to mean.</p>
 </div>
+<p>The purchase in this request cleared that edge by four weeks. Nobody checked, and nobody would have been told.</p>
 
-<h3 class="subsec-title">Choosing a period, and why it is not an analytics decision</h3>
-<p>Left to analysts, retention would always be set to the maximum, on the entirely reasonable grounds that data you no longer hold is data you can never analyse. That instinct is worth naming, because two other departments have standing to overrule it and both of them are usually right.</p>
-<p>Legal sets a floor and a ceiling at the same time. Certain obligations require records to be kept for a defined period. Purpose limitation, the principle underneath GDPR that says personal data is held for a stated reason and no longer than that reason survives, pushes hard in the other direction. Under that principle, an unnecessarily long retention period is not a prudent hedge. It is exposure, deliberately created and documented.</p>
-<p>Finance sets the price. Reductions are free, extensions are bought, and the argument for a fourth year of history has to survive a renewal conversation.</p>
+<h3 class="subsec-title">Choosing the period, which is not an analytics decision</h3>
+<p>Left alone, an analyst sets retention to the maximum, on the reasonable grounds that data you no longer hold is data you can never study. Two other departments have standing to overrule that, and both are usually right.</p>
+<p>Legal sets a floor and a ceiling at once. Some obligations require records to be kept. Purpose limitation, the principle under GDPR that personal data is held for a stated reason and no longer than that reason lasts, pushes the other way, and it reframes a long window entirely: an unnecessarily long retention period is not a prudent hedge, it is exposure you created and documented. Finance sets the price, because extensions are bought and a fourth year of history has to survive a renewal conversation.</p>
 <div class="tbl-wrap">
     <table>
         <thead><tr><th>Retention window</th><th>What it actually supports</th><th>What usually drives it</th></tr></thead>
@@ -97,25 +97,28 @@ weight: 7
         </tbody>
     </table>
 </div>
-<p>The table is worth reading as a one-way door. Every other setting in this module can be changed later at the cost of a seam in the data. Shortening retention changes what exists, and lengthening it afterwards does not bring back what the shorter window already discarded. The decision runs in one direction only.</p>
+<p>Read that table as a one-way door. Every other setting in this module can be changed later at the cost of a seam in the data. Shortening retention changes what exists, and lengthening it afterwards does not bring back what the shorter window already discarded.</p>
 <div class="pro-tip">
     <div class="pro-tip-hdr">💡 Record the comparison that justifies the window, next to the window</div>
-    <p>A retention period defended as "two years feels right" loses to the first cost review that asks the question directly, because a feeling does not survive a spreadsheet. A period defended as "the board pack compares each quarter against the same quarter last year, which needs 25 months" survives, because it names something the business would visibly lose. Write down the specific comparison the window exists to support, and keep it wherever the rest of the suite's decisions live.</p>
+    <p>A period defended as "two years feels about right" loses to the first cost review, because a feeling does not survive a spreadsheet. A period defended as "the board pack compares each quarter against the same quarter last year, which needs twenty five months" survives, because it names something the business would visibly lose. Write down the comparison the window exists to protect, and keep it wherever the rest of the suite's decisions live.</p>
 </div>
 
-<h3 class="subsec-title">IP obfuscation costs far less than almost everyone assumes</h3>
-<p>The visitor IP address is the most obviously personal thing an analytics implementation touches, and the control governing it sits in general account settings with three positions. Disabled leaves the address in place. Obfuscate replaces it with two colons followed by a hashed value. Remove replaces it with a placeholder, and remove is the option selected by default on every newly created report suite.</p>
-<p>The widespread belief about this setting is that switching it on is a trade: privacy purchased at the cost of your geographic reporting, your bot rules, and your ability to exclude traffic by address. The belief is reasonable, it is the intuition almost everyone arrives at, and the documented behaviour contradicts it.</p>
-<p>Obfuscation happens last. IP filtering and exclusion, bot rule evaluation, and geo-segmentation lookups are all completed before the address is touched. Country, region and city resolve normally. The exclude-by-IP tool described in <a href="/adobe-analytics-learning/foundations/report-suites/bot-filtering/">Bot Filtering</a>, which is the practical answer to automated traffic the IAB list never catches, keeps working exactly as it did. Nothing in your reporting goes dark.</p>
-<p>What you give up is narrower, and it is worth stating precisely: the raw address is not retained, so anything needing the address after processing has finished does not have it. That is not a reporting limitation. It is an investigative one.</p>
+<h3 class="subsec-title">One field never reaches gate one at all</h3>
+<p>The request asks for everything, which includes the IP address the purchase arrived from. For most report suites the honest answer is that there is not one, and there never was.</p>
+<p>IP obfuscation sits in general account settings with three positions: leave the address alone, replace it with a hashed value, or remove it. Remove is selected by default on every newly created report suite, so unless somebody deliberately turned it off, this is already how your data behaves.</p>
+<p>The usual belief about that setting is that it costs you something: privacy bought at the price of geographic reporting, bot rules, and the ability to exclude traffic by address. It is the intuition almost everyone arrives at, and the documented behaviour contradicts it.</p>
+<p>Obfuscation happens last. IP filtering and exclusion, bot rule evaluation, and geo-segmentation lookups all finish before the address is touched. Country, region and city resolve normally. The exclude-by-IP tool described in <a href="/adobe-analytics-learning/foundations/report-suites/bot-filtering/">Bot Filtering</a>, the practical answer to automated traffic the IAB list never catches, keeps working exactly as before. Nothing in your reporting goes dark.</p>
+<p>What you give up is narrower, and it is investigative rather than analytical.</p>
 <div class="warn-box">
     <div class="warn-hdr">⚠️ You cannot exclude an address you can no longer see</div>
-    <p>The usual sequence for finding unwanted automated traffic is to notice a pattern in last quarter's data, identify the address behind it, and add an exclusion. With the address removed at collection, the middle step is gone: the pattern is visible and its origin is not. The exclusion can only be built from traffic arriving now. Like every other setting in this panel the change is forward-only, so a suite switched to remove keeps whatever addresses it already stored and never records another.</p>
+    <p>Finding unwanted automated traffic usually means spotting a pattern in last quarter's data, identifying the address behind it, and excluding it. With the address removed at collection the middle step is gone: the pattern is visible and its origin is not. Exclusions can only be built from traffic arriving now. Like everything else in this panel the change is forward-only, so a suite switched to remove keeps whatever it already stored and never records another.</p>
 </div>
 
-<h3 class="subsec-title">Adobe has no idea what you put in eVar 12</h3>
-<p>Here is the assumption that quietly defeats first-time compliance work. Adobe Analytics knows the shape of your data completely and its meaning not at all. It knows eVar 12 exists, that it holds strings, and how many unique values arrived last month. Whether those strings are product categories or customer email addresses is knowledge held inside your organisation, sometimes inside one person, and never inside the platform.</p>
-<p>Privacy labeling is the act of writing that knowledge down in a form the Privacy Service can execute against. It is the translation layer between your schema and a legal category, and until it exists, a request has nothing to act on.</p>
+<h3 class="subsec-title">Gate two: Adobe has the data and still cannot find the person</h3>
+<p>The request clears the first gate. The purchase is inside the window, the hits are there, and the data has survived to be searched.</p>
+<p>It is now going to fail anyway, for a reason that catches almost every organisation the first time.</p>
+<p>Adobe Analytics knows the shape of your data completely and its meaning not at all. It knows eVar 12 exists, that it holds strings, and how many unique values arrived last month. Whether those strings are product categories or customer email addresses is knowledge held inside your company, sometimes inside one person, and never inside the platform.</p>
+<p>Privacy labeling is how that knowledge gets written down in a form the Privacy Service can act on. It is the translation layer between your schema and a legal category, and until it exists a request has nothing to work with.</p>
 <div class="tbl-wrap">
     <table>
         <thead><tr><th>Label</th><th>What it declares about the field</th><th>Dependency</th></tr></thead>
@@ -130,7 +133,7 @@ weight: 7
         </tbody>
     </table>
 </div>
-<p>The dependency column is the part to internalise. Identity labels are load-bearing: without I1 or I2 on a field, the delete label cannot be attached to it at all. Somebody who labels the obvious personal fields as sensitive and stops there has built a taxonomy that describes the data accurately and instructs the platform to do nothing.</p>
+<p>The dependency column is the part that bites. Identity labels are load-bearing: without I1 or I2 on a field, the delete label cannot be attached to it at all. Label the obvious personal fields as sensitive and stop there, and you have built a taxonomy that describes your data accurately while instructing the platform to do nothing.</p>
 <div class="code-block">
     <div class="code-hdr"><span class="code-lang">Labeling a variable for data governance</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
     <div class="code-body"><pre>Analytics > Admin > All admin
@@ -146,31 +149,34 @@ weight: 7
     Edit Privacy Labels
     apply the labels, then Apply</pre></div>
 </div>
-<p>One variable group at a time, one report suite at a time. Labels belong to the suite they were applied in, exactly like bot rules, IP exclusions, and everything else in this module, which means a suite created next year for a new market starts with none of them.</p>
+<p>One variable group at a time, one report suite at a time. Labels belong to the suite they were applied in, exactly like bot rules and IP exclusions, which means the suite created next year for a new market starts with none of them.</p>
 
-<h3 class="subsec-title">A request that finds nothing looks exactly like a request that worked</h3>
-<p>Consider what the Privacy Service does when it reaches a variable carrying an email address and no labels. It does not fail. It does not warn. It has been told nothing about that field, so it looks at nothing, finds nothing, and reports that the work is complete.</p>
-<p>The access request returns a small, clean file. The delete request finishes and is recorded as fulfilled. Both responses are entirely honest about what they did, and completely silent about the field they were never told to look at. To everyone in the chain, from the analyst who ran it to the legal team who filed the response, the transaction looks like a success.</p>
+<h3 class="subsec-title">The response that looks perfect and is wrong</h3>
+<p>Suppose the email address in this request sits in an eVar nobody labeled. Watch what the Privacy Service does.</p>
+<p>It does not fail. It does not warn. It was told nothing about that field, so it looks at nothing, finds nothing, and reports that the work is complete. A small clean file goes back. The deletion is recorded as fulfilled. Legal replies inside the thirty days and the ticket closes.</p>
+<p>Everyone in that chain believes the request was honoured. The customer's email address is still sitting in eVar 12.</p>
 <div class="warn-box">
     <div class="warn-hdr">⚠️ The gap surfaces years later, and never at a convenient moment</div>
-    <p>An unlabeled variable produces no error at the time and no artefact afterwards, which means the failure has no discovery mechanism of its own. It waits. What eventually surfaces it is an audit, a regulator's follow-up question, or a second request from a person who has noticed their data is still being used, and by then the original response has been sent, logged, and relied upon. Labeling is checked by opening the screen and reading it, because nothing else in the system will ever raise a hand.</p>
+    <p>An unlabeled variable produces no error at the time and no artefact afterwards, so the failure has no discovery mechanism of its own. It waits. What eventually surfaces it is an audit, a regulator's follow-up, or a second request from someone who has noticed their data is still in use, and by then the original response has been sent, logged and relied upon. Labeling is verified by opening the screen and reading it, because nothing in the system will ever raise a hand.</p>
 </div>
 
-<h3 class="subsec-title">You cannot erase a person you cannot name</h3>
-<p>The last gate is the one that catches implementations which have done everything else correctly. A request arrives carrying an email address, because that is how the person knows themselves. Adobe Analytics does not recognise anybody by email address. It recognises the Experience Cloud ID, the legacy Analytics cookie that preceded it, and a custom visitor ID if the implementation was built to set one.</p>
-<p>So the request has to be translated before it can be submitted, and there are two routes. The first is to hold a person-level identifier in the data already, a CRM identifier in a custom visitor ID or a labeled eVar, which lets the email be resolved to something Adobe understands using systems you control. The second is to collect the device identifiers straight from the browser at the moment the person asks, which is what Adobe's unified privacy JavaScript exists to do.</p>
-<p>The two routes are not equivalent, and the difference decides how much you can actually honour. Retrieving identifiers from the browser only reaches the browser in front of you. It cannot reach the phone the same person used last year, or the laptop they have since replaced. A person-level identifier collected at authentication reaches all of them, because it was the same value every time they signed in.</p>
+<h3 class="subsec-title">Gate three: they signed in, which is the only reason this works</h3>
+<p>The last detail in Monday's email is the one that saves it.</p>
+<p>The request arrives as an email address, because that is how a person knows themselves. Adobe Analytics has never heard of them. It recognises the Experience Cloud ID, the legacy Analytics cookie that preceded it, and a custom visitor ID if your implementation was built to set one. An email address matches none of those.</p>
+<p>So the request has to be translated first, and there are two routes. You can hold a person-level identifier in the data already, a CRM identifier in a custom visitor ID or a labeled eVar, and resolve the email to it using systems you control. Or you can collect the device identifiers straight from the browser while the person is asking, which is what Adobe's unified privacy JavaScript exists to do.</p>
+<p>Now recall the phone and the laptop. The second route only reaches the browser in front of you, so it would find the laptop they use today and never touch the phone they bought on two years ago. Half the request would go unanswered, and the response would still come back clean.</p>
+<p>Because they signed in, a person-level identifier was written on every one of those visits, from both devices. That single implementation decision, taken years earlier for reasons that had nothing to do with privacy, is what makes an honest answer possible.</p>
 <div class="pro-tip">
     <div class="pro-tip-hdr">💡 Settle the identity route while nobody is waiting for an answer</div>
-    <p>This is the one part of privacy readiness that cannot be assembled after a request arrives, because the answer depends on data collected months or years earlier. Establish which identifier a request will be matched against, confirm it is being captured, and confirm it is labeled, as a piece of implementation work with no deadline attached. A statutory clock is a poor environment for discovering that the identifier was never collected.</p>
+    <p>This is the one part of privacy readiness that cannot be assembled after a request arrives, because the answer depends on data collected months or years earlier. Establish which identifier requests will be matched against, confirm it is being captured, and confirm it is labeled, as implementation work with no deadline attached. A statutory clock is a poor time to discover the identifier was never collected.</p>
 </div>
-<p>What deletion then performs is worth understanding, because the word oversells it. Values are anonymised rather than removed. Traffic and commerce variables are overwritten with a random hexadecimal string prefixed with "Data Privacy-", the visitor ID is replaced with a random value, custom visitor IDs and IP addresses are cleared, and precise coordinates are degraded to roughly a kilometre.</p>
-<p>The hit itself survives all of this. Visits, page views and revenue do not move when a deletion is fulfilled, and reports run the next morning look exactly as they did the night before. That is deliberate, and it resolves a tension that would otherwise be unmanageable: the individual becomes unfindable while the aggregate remains true. Honouring a person's rights does not require falsifying your own history.</p>
+<p>What the deletion then performs is worth knowing, because the word oversells it. Values are anonymised rather than removed. Traffic and commerce variables are overwritten with a random hexadecimal string prefixed "Data Privacy-", the visitor ID becomes a random value, custom visitor IDs and IP addresses are cleared, and precise coordinates are degraded to roughly a kilometre.</p>
+<p>The hit itself survives all of it. Visits, page views and revenue do not move, and Tuesday's reports look exactly like Monday's. That is deliberate, and it resolves a tension that would otherwise be impossible: the individual becomes unfindable while the aggregate stays true. Honouring a person's rights does not require falsifying your own history.</p>
 
 <h3 class="subsec-title">What you have now</h3>
-<p>Three gates, arranged in an order you do not control. Retention decides whether the data is still there, and it is set by contract rather than by an administrator, because the consequence of getting it wrong is permanent. Labeling decides whether Adobe can locate personal data inside your schema, and it is applied by hand, per report suite, by somebody who knows what the variables were actually used for. Identity decides whether the person in the request can be matched to the person in the data, and that depends on a collection decision taken long before anyone asked.</p>
-<p>Every one of the three fails quietly. History that passes the retention window leaves no notice. A missing label produces a successful-looking response. An unmatched identity returns an empty result rather than an error. This is the same property that runs under every setting in this module, but with the consequences moved outside analytics entirely, into a domain where the questions are asked by regulators and the answers are already on record.</p>
-<p>All of this governs data that has already been collected. The question of whether it should have been collected at all belongs to the visitor, is expressed through a consent choice, and has to be honoured before a single tag fires. <a href="/adobe-analytics-learning/collect/adobe-launch-tags/consent-and-tag-management/">Consent and Tag Management</a> covers how a tag management system reads that choice and refuses to act without it.</p>
+<p>One request, three gates, and every one of them decided years before the email arrived. Whether the purchase still existed came down to a contract nobody in analytics can edit. Whether Adobe could find the personal data came down to whether somebody once sat down and labeled eVar 12. Whether the person could be matched at all came down to a sign-in flow built for entirely different reasons.</p>
+<p>The through-line is that all three fail quietly. History that ages out leaves no notice. A missing label returns a successful-looking response. An unmatched identity returns an empty result rather than an error. That is the same property running under every setting in this module, moved outside analytics into a domain where the questions come from regulators and your answer is already on the record.</p>
+<p>All of this governs data you have already collected. Whether it should have been collected at all is the visitor's decision, expressed as a consent choice, and it has to be honoured before a single tag fires. <a href="/adobe-analytics-learning/collect/adobe-launch-tags/consent-and-tag-management/">Consent and Tag Management</a> covers how a tag management system reads that choice and refuses to act without it.</p>
 
 <div class="path-box">
     <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Analytics</div>
