@@ -160,6 +160,21 @@ Modules 11 (Classifications) and 13 (Segments) were never unQA'd. The QA had bee
 
 ---
 
+## The tracker now covers features, not just pages (7 Aug 2026)
+
+Amit asked for the whole website in one record rather than pages alone. 39 `Feature` rows were added, inventoried from the code rather than from these documents, grouped into navigation, presentation, seo, chrome, infrastructure and tech-debt.
+
+**28 of 39 built (72%), 11 outstanding.** Every one is `Content QA'd? = No` and `Final result = No` by instruction: Amit re-QAs the platform himself at the end, so nothing is marked passed on my judgment.
+
+The agreed order of work is **content first, then features, then landing pages.** Do not start platform work while sections remain unwritten.
+
+Two live defects were found during the inventory and are recorded as rows rather than fixed:
+
+- **The learning-world search button is a dead control.** `#lSearchBtn` renders and is visible, has no click handler, the overlay markup is absent from the DOM, and `window.SEARCH_INDEX` is undefined. The overlay, `search.js` and the index all sit inside the migration-world branch of `baseof.html`. A visible affordance that does nothing is worse than no search at all, so at launch this is either wired or the button is hidden.
+- **Google Analytics emits nothing.** The ID is correctly nested at `[services.googleAnalytics]` and `_internal/google_analytics.html` is invoked at `head.html:13`, yet a production `hugo --gc` build produces zero `gtag` output on any page. Cause not yet diagnosed. The site has therefore been collecting no analytics of its own, which is worth knowing before launch.
+
+**Landing pages need content, and it is not the same job as a section.** All 21 module landings and 5 category landings sit at `Content created? = No`. Each needs a short description of what the phase or module covers, not a full section. That work belongs with the features pass, after the sections are done.
+
 ## Phase 5 — Small corrections
 
 - Three `description` outliers: `collect/_index.html` (180 chars), `deliver/_index.html` (187), `collect/data-layers/_index.md` (94).

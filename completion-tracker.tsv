@@ -143,3 +143,42 @@ Deliver	testing-debugging	2	Adobe Experience Platform Debugger	Section	/adobe-an
 Deliver	testing-debugging	3	Browser Developer Tools	Section	/adobe-analytics-learning/deliver/testing-debugging/browser-developer-tools/		No	Browser DevTools provide raw access to network requests, allowing deep inspection of Analytics beacons.	Yes	0	103	No	No	No
 Deliver	testing-debugging	4	Real-Time Validation	Section	/adobe-analytics-learning/deliver/testing-debugging/real-time-validation/		No	Real-Time reports in Adobe Analytics show data within seconds of collection, making them ideal for implementation validation.	Yes	0	125	No	No	No
 Deliver	testing-debugging	5	Common Issues and Solutions	Section	/adobe-analytics-learning/deliver/testing-debugging/common-issues-solutions/	Common Adobe Analytics Issues and Fixes	Yes	Learn to quickly diagnose and resolve the most frequent implementation problems.	Yes	39	80	No	No	No
+Platform	navigation	1	Left sidebar module navigation	Feature	layouts/_default/baseof.html		NA		NA	0	0	Yes	No	No
+Platform	navigation	2	Pocket map (where this fits)	Feature	layouts/partials/wherefits.html		NA		NA	0	0	Yes	No	No
+Platform	navigation	3	Home map	Feature	layouts/partials/homemap.html		NA		NA	0	0	Yes	No	No
+Platform	navigation	4	Previous and next section links	Feature	layouts/_default/baseof.html		NA		NA	0	0	Yes	No	No
+Platform	navigation	5	Learning-world search	Feature	static/world-learning.js		NA		NA	0	0	No	No	No
+Platform	navigation	6	Migration-world search	Feature	static/search.js		NA		NA	0	0	Yes	No	No
+Platform	navigation	7	Search index generation	Feature	layouts/index.json		NA		NA	0	0	Yes	No	No
+Platform	presentation	8	Dual-world stylesheet switching	Feature	layouts/partials/head.html		NA		NA	0	0	Yes	No	No
+Platform	presentation	9	Dark and light theme toggle	Feature	static/world-learning.js		NA		NA	0	0	Yes	No	No
+Platform	presentation	10	Print document, learning world	Feature	static/world-learning.js		NA		NA	0	0	Yes	No	No
+Platform	presentation	11	Print document, migration world	Feature	static/world-migration.js		NA		NA	0	0	Yes	No	No
+Platform	presentation	12	Responsive layout	Feature	static/world-learning.css		NA		NA	0	0	Yes	No	No
+Platform	presentation	13	Code block copy buttons	Feature	static/world-learning.js		NA		NA	0	0	Yes	No	No
+Platform	presentation	14	Doc-note injection above ref-box	Feature	layouts/lesson/single.html		NA		NA	0	0	Yes	No	No
+Platform	presentation	15	Component class vocabulary	Feature	static/world-learning.css		NA		NA	0	0	Yes	No	No
+Platform	seo	16	Canonical URLs	Feature	layouts/partials/head.html		NA		NA	0	0	Yes	No	No
+Platform	seo	17	Open Graph tags	Feature	layouts/partials/head.html		NA		NA	0	0	Yes	No	No
+Platform	seo	18	Twitter card tags	Feature	layouts/partials/head.html		NA		NA	0	0	Yes	No	No
+Platform	seo	19	sitemap.xml	Feature	hugo built-in		NA		NA	0	0	Yes	No	No
+Platform	seo	20	robots.txt	Feature	layouts/robots.txt		NA		NA	0	0	Yes	No	No
+Platform	seo	21	JSON-LD WebSite and Person	Feature	layouts/partials/schema.html		NA		NA	0	0	Yes	No	No
+Platform	seo	22	JSON-LD BreadcrumbList	Feature	layouts/partials/schema.html		NA		NA	0	0	Yes	No	No
+Platform	seo	23	JSON-LD Article for learning world	Feature	layouts/partials/schema.html		NA		NA	0	0	No	No	No
+Platform	seo	24	datePublished and dateModified in schema	Feature	layouts/partials/schema.html		NA		NA	0	0	No	No	No
+Platform	seo	25	Originally published date on page	Feature	layouts/lesson/single.html		NA		NA	0	0	No	No	No
+Platform	seo	26	RSS feed	Feature	hugo.toml		NA		NA	0	0	No	No	No
+Platform	chrome	27	Home page topic cards	Feature	layouts/index.html		NA		NA	0	0	No	No	No
+Platform	chrome	28	404 page	Feature	layouts/404.html		NA		NA	0	0	Yes	No	No
+Platform	chrome	29	Favicon set	Feature	static/favicon.svg		NA		NA	0	0	Yes	No	No
+Platform	chrome	30	Open Graph default image	Feature	static/og-default.jpg		NA		NA	0	0	Yes	No	No
+Platform	chrome	31	Site footer	Feature	layouts/_default/baseof.html		NA		NA	0	0	Yes	No	No
+Platform	chrome	32	Glossary	Feature	layouts/glossary/single.html		NA		NA	0	0	Yes	No	No
+Platform	infrastructure	33	GitHub Actions deploy workflow	Feature	.github/workflows/deploy.yml		NA		NA	0	0	Yes	No	No
+Platform	infrastructure	34	Custom domain CNAME	Feature	static/CNAME		NA		NA	0	0	Yes	No	No
+Platform	infrastructure	35	Google Analytics	Feature	hugo.toml		NA		NA	0	0	No	No	No
+Platform	tech-debt	36	Per-world params.phases scoping	Feature	layouts/partials/wherefits.html		NA		NA	0	0	No	No	No
+Platform	tech-debt	37	Dead code removal	Feature	static/guide.css		NA		NA	0	0	No	No	No
+Platform	tech-debt	38	Hardcoded migration stats	Feature	layouts/web-sdk-migration/list.html		NA		NA	0	0	No	No	No
+Platform	tech-debt	39	Logo partial extraction	Feature	layouts/partials/		NA		NA	0	0	No	No	No

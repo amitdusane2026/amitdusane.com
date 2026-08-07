@@ -253,7 +253,11 @@ Run this whenever Amit says to close out, wrap up, or end the session. It is wha
 
 1. **Update `completion-tracker.tsv`.** Mark every section touched this session: `Content created?`, `Content QA'd?`, and the SEO columns. The tracker is the single record of where the project stands; a future session reads it to decide what to do next.
 
-   Tab-delimited, 1 header row plus 144 data rows, 15 columns: Phase, Module, Section #, Page name, Page type, URL, SEO title, SEO title done?, SEO description, SEO desc done?, Title chars, Desc chars, Content created?, Content QA'd?, Final result. Tabs are the delimiter because descriptions are full of commas. Never introduce a tab inside a field. `Final result` is Yes only when SEO title, SEO desc, Content created and Content QA'd are all Yes.
+   Tab-delimited, 1 header row plus 183 data rows, 15 columns: Phase, Module, Section #, Page name, Page type, URL, SEO title, SEO title done?, SEO description, SEO desc done?, Title chars, Desc chars, Content created?, Content QA'd?, Final result. Tabs are the delimiter because descriptions are full of commas. Never introduce a tab inside a field. `Final result` is Yes only when SEO title, SEO desc, Content created and Content QA'd are all Yes.
+
+   **`Page type` splits the file into two kinds of row, and every statistic must filter on it.** Content is `Section` (116), `Module landing` (21), `Category landing` (5), `Home` and `Glossary`. Platform work is `Feature` (39), added 7 Aug 2026, carrying `Phase = Platform` and grouped by `Module` into navigation, presentation, seo, chrome, infrastructure and tech-debt. For a Feature row the SEO columns do not apply and are set to `NA`, `URL` holds the implementing file path rather than a URL, and `Content created?` means built. **Quoting a total without filtering by `Page type` will mix sections and features and be wrong.**
+
+   Every Feature row is deliberately `Content QA'd? = No` and `Final result = No`. Amit will re-QA the platform himself once the content front is finished, so nothing there should be marked QA'd on my judgment.
 2. **Update `development-plan.md`** if a phase completed, an estimate moved, or the order changed.
 3. **Correct any source document** proven wrong during the session, per the precedence rule above, and add a revision-history entry.
 4. **Build once more**: `hugo --gc`, assert the page count, confirm it is clean.
