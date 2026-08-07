@@ -2,10 +2,237 @@
 slug: "data-layer-design"
 title: "Data Layer Design"
 seotitle: "Designing a Data Layer for Adobe Analytics"
-lastmod: 2026-07-18
+description: "Good design is not clever design. The family-tree rule, naming that survives a rewrite, and how to design a node one question at a time."
+lastmod: 2026-08-07
 type: lesson
 modulenum: 5
 sectionnum: 4
 weight: 4
 ---
-<p>This section is not yet written.</p>
+<p>Open a blank file and start designing a data layer, and the first thing you notice is that nothing pushes back. Call the root <code>abc</code>. Nest six levels deep. Put the product identifier inside the page object. Every one of those choices parses, loads, and collects data exactly as well as the alternative. The browser does not care. Adobe does not care.</p>
+<p>That is the whole difficulty of this task. A design mistake here produces no error, no warning, and no failing report. It produces a data layer that works perfectly on the day it ships and costs a fortune eighteen months later, when somebody who was not in the room has to add a field to it.</p>
+<p>So the question is never whether a design works. Almost all of them work. The question is which one is still being extended in three years, rather than quietly replaced.</p>
+
+<h3 class="subsec-title">The test a design has to pass, and it is not a technical one</h3>
+<p>There is a pull toward sophistication in this work, and it is worth naming before it does any damage. You have seen elegant schemas. You can nest deeply, abstract neatly, and name things with real precision. Doing so makes a design look considered, and it makes the person who produced it look like an expert.</p>
+<p>Resist it. The expertise runs in the opposite direction.</p>
+<p>A data layer design has to pass one test: a business user can read the structure and understand what it holds, while it still satisfies every requirement placed on it. Both halves are load-bearing. Simple but incomplete is not a design, it is a gap. Complete but unreadable is not a design either, it is a liability with good intentions.</p>
+<p>Remember who actually reads this thing. The web developer populating the values. The QA analyst opening a console to check them. The business stakeholder validating that the tracking matches what was asked for. And eventually the person who inherits all of it with no context and no access to you.</p>
+<p>A design that impresses in a review and cannot be explained to the developer who has to build it has failed at the only job it had.</p>
+
+<h3 class="subsec-title">Which model you are designing for</h3>
+<p>Two models are in play, and choosing between them happens before design starts. <a href="/adobe-analytics-learning/collect/data-layers/do-you-need-acdl/">Do You Really Need ACDL?</a> works through that decision in full, and lands on a position worth restating in one line: prefer the least complex model that reliably solves the real problem, which for a great many organisations is a well-designed traditional layer rather than the event-driven one.</p>
+<p>This section works primarily in the traditional CEDDL shape, because that is what is running in most implementations and because the design thinking is easier to see when the syntax is out of the way. Where the Adobe Client Data Layer expresses the same idea differently, the mirror is shown alongside.</p>
+<p>None of that is advocacy. The useful discovery is that the principles do not change between the two. Only the delivery does.</p>
+
+<h3 class="subsec-title">The nodes are a family tree, not a set of categories</h3>
+<p>The most common misreading of a data layer is to treat its levels as types. Four levels, so four kinds of thing, the way a site has five sections or a catalogue has ten product categories.</p>
+<p>They are not a classification. They are a lineage.</p>
+<p>One parent has many children. A child belongs to one parent. That relationship, and not the depth, is what makes a path readable, because it means the ancestry of a value tells you what the value is.</p>
+<p>Now the part that matters, because nothing prevents it. You can absolutely write <code>digitalData.page.category.name</code> and <code>digitalData.event.category.name</code> in the same implementation. Both parse. Both collect. A page category and an event category are genuinely different things, so the structure is not even dishonest.</p>
+<p>Do not do it anyway.</p>
+<div class="diagram-box">
+    <div class="diagram-title">The same word in two families, and what it costs</div>
+    <svg viewBox="0 0 700 235" style="width:100%;height:auto;display:block" role="img" aria-label="A comparison of two data layer structures. On the left, one root with distinct child names down each branch, so every path names one thing. On the right, the same child name category appears under both page and event, so the word means two different things depending on its parent.">
+        <text x="175" y="26" text-anchor="middle" style="fill:var(--success,#10b981);font-size:11px;font-weight:700;font-family:sans-serif;letter-spacing:1px">READS CLEANLY</text>
+        <rect x="125" y="44" width="100" height="30" rx="6" style="fill:var(--card,#ffffff);stroke:var(--success,#10b981);stroke-width:2"/>
+        <text x="175" y="64" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">digitalData</text>
+        <path d="M175 74 L175 88 L85 88 L85 102" style="fill:none;stroke:var(--border,#e2e8f0);stroke-width:2"/>
+        <path d="M175 88 L265 88 L265 102" style="fill:none;stroke:var(--border,#e2e8f0);stroke-width:2"/>
+        <rect x="40" y="102" width="90" height="28" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1"/>
+        <text x="85" y="121" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">page</text>
+        <rect x="210" y="102" width="110" height="28" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1"/>
+        <text x="265" y="121" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">interaction</text>
+        <line x1="85" y1="130" x2="85" y2="150" style="stroke:var(--border,#e2e8f0);stroke-width:2"/>
+        <line x1="265" y1="130" x2="265" y2="150" style="stroke:var(--border,#e2e8f0);stroke-width:2"/>
+        <rect x="40" y="150" width="90" height="28" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1"/>
+        <text x="85" y="169" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">pageInfo</text>
+        <rect x="210" y="150" width="110" height="28" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1"/>
+        <text x="265" y="169" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">dropDown</text>
+        <text x="175" y="205" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">every path names exactly one thing</text>
+        <line x1="350" y1="20" x2="350" y2="215" style="stroke:var(--border,#e2e8f0);stroke-width:1;stroke-dasharray:4 4"/>
+        <text x="525" y="26" text-anchor="middle" style="fill:var(--warning,#f59e0b);font-size:11px;font-weight:700;font-family:sans-serif;letter-spacing:1px">AMBIGUOUS</text>
+        <rect x="390" y="44" width="90" height="30" rx="6" style="fill:var(--card,#ffffff);stroke:var(--warning,#f59e0b);stroke-width:2"/>
+        <text x="435" y="64" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">page</text>
+        <rect x="560" y="44" width="90" height="30" rx="6" style="fill:var(--card,#ffffff);stroke:var(--warning,#f59e0b);stroke-width:2"/>
+        <text x="605" y="64" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">event</text>
+        <line x1="435" y1="74" x2="435" y2="102" style="stroke:var(--border,#e2e8f0);stroke-width:2"/>
+        <line x1="605" y1="74" x2="605" y2="102" style="stroke:var(--border,#e2e8f0);stroke-width:2"/>
+        <rect x="390" y="102" width="90" height="28" rx="6" style="fill:var(--warning,#f59e0b);opacity:0.18"/>
+        <rect x="390" y="102" width="90" height="28" rx="6" style="fill:none;stroke:var(--warning,#f59e0b);stroke-width:2"/>
+        <text x="435" y="121" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">category</text>
+        <rect x="560" y="102" width="90" height="28" rx="6" style="fill:var(--warning,#f59e0b);opacity:0.18"/>
+        <rect x="560" y="102" width="90" height="28" rx="6" style="fill:none;stroke:var(--warning,#f59e0b);stroke-width:2"/>
+        <text x="605" y="121" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">category</text>
+        <line x1="435" y1="130" x2="435" y2="150" style="stroke:var(--border,#e2e8f0);stroke-width:2"/>
+        <line x1="605" y1="130" x2="605" y2="150" style="stroke:var(--border,#e2e8f0);stroke-width:2"/>
+        <rect x="390" y="150" width="90" height="28" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1"/>
+        <text x="435" y="169" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">name</text>
+        <rect x="560" y="150" width="90" height="28" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1"/>
+        <text x="605" y="169" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">name</text>
+        <text x="525" y="205" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">the reader must know the parent to read the child</text>
+    </svg>
+</div>
+<p>The cost is not technical, which is exactly why it gets waved through. The cost is that a path stops being self-describing. Somebody reading <code>category.name</code> in a rule, a report, or a support ticket now has to trace back up the tree before they know what they are looking at, and they will do that every single time.</p>
+<p>Give the two things different names. <code>pageCategory</code> and <code>interactionType</code> cost nothing and never need explaining.</p>
+<div class="info-box">
+    <div class="info-hdr">ℹ️ Four levels is a house rule, not a standard</div>
+    <p>It is often said that a CEDDL data layer has four levels. The specification does not say that. Several objects sit directly beneath the root, including <code>digitalData.pageInstanceID</code> and <code>digitalData.version</code>, which are two levels deep, and the spec explicitly allows extension at varying depths. Committing your own implementation to a consistent shape is still worth doing, because a uniform structure is predictable to read and cheap to extend. Just adopt it as your convention rather than believing the standard requires it, because the difference matters the moment somebody quotes the spec back at you.</p>
+</div>
+
+<h3 class="subsec-title">Why the root is called digitalData, and why renaming costs more than it looks</h3>
+<p>The CEDDL root object is <code>digitalData</code>. There is no programming reason for that name. Call it <code>abc</code> and nothing breaks: no error appears, no console warning fires, and Adobe Analytics reports exactly the same numbers.</p>
+<p>Keep it anyway, for three reasons that have nothing to do with the code running.</p>
+<p>It explains itself. Digital data, collected on digital platforms, for digital analytics. Somebody encountering the term cold can work out roughly what they are looking at, which is more than most variable names manage.</p>
+<p>It is discoverable. Open almost any site with Adobe Analytics, type <code>digitalData</code> into the browser console, and the structure appears. That only works because enough people agreed to the same word, and it stops working the moment you decide to be original.</p>
+<p>And that is the real argument. A standard you are free to ignore is still worth keeping, because its value was never to you. It goes to whoever arrives next, and it is paid in the time they do not spend asking questions.</p>
+<p>The Adobe Client Data Layer works the same way with a different word. Adobe did not invent the array-based model, it standardised an approach that already existed, and its default global object is <code>adobeDataLayer</code>. The name is configurable, which sounds harmless.</p>
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ Renaming the ACDL object leaves you with two objects, not one</div>
+    <p>Set a custom name in the Adobe Client Data Layer extension and the original <code>adobeDataLayer</code> is still instantiated, then duplicated into the name you chose. Both exist on the page, both carry the same data, and anybody debugging has to know which one the site code actually writes to. Renaming does not replace the default. It adds a second copy alongside it, and that copy has to be explained to every person who opens the console from then on.</p>
+</div>
+
+<h3 class="subsec-title">There is no single correct design, which is not the same as anything goes</h3>
+<p>An automobile company builds the car and publishes guidance on how to drive it. Then people drive. Some quickly, some cautiously, some for adventure, some for the scenery, some using every feature and some who never leave third gear.</p>
+<p>Who is driving correctly? Nobody, and all of them. The guidance was never going to settle it, because the guidance was about the vehicle and the driving is about the destination.</p>
+<p>Data layer design sits in the same place. The standard defines the vehicle. What you build with it depends on your product, your platform, and the problem in front of you, and a design that is perfect for a retail catalogue may be entirely wrong for a booking engine. There is no arrangement that is correct in the abstract.</p>
+<p>Which is not permission to improvise. The conventions below are the ones that survive contact with real projects, and it is worth knowing them properly before deciding which to set aside.</p>
+
+<h3 class="subsec-title">Designing a node, one question at a time</h3>
+<p>Take a concrete requirement. A visitor selects an option from a dropdown, and that selection needs to be captured. Where does it go?</p>
+<p>The temptation is to answer in one move and write something plausible. Answer it as four questions instead, because the questions are where the design actually happens.</p>
+<div class="diagram-box">
+    <div class="diagram-title">Four questions, and the path assembles itself</div>
+    <svg viewBox="0 0 700 230" style="width:100%;height:auto;display:block" role="img" aria-label="Four sequential questions that build a data layer path: the root is already decided, then what kind of data this is, then which element it came from, then what is worth knowing about that element. The assembled path appears beneath.">
+        <rect x="10" y="52" width="160" height="92" rx="8" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1"/>
+        <text x="90" y="44" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:10px;font-weight:700;font-family:sans-serif;letter-spacing:1px">QUESTION 1</text>
+        <text x="90" y="78" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">already decided</text>
+        <text x="90" y="112" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:13px;font-weight:700;font-family:sans-serif">digitalData</text>
+        <text x="90" y="132" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:10px;font-family:sans-serif">the root</text>
+        <polygon points="182,98 170,92 170,104" style="fill:var(--border,#e2e8f0)"/>
+        <rect x="190" y="52" width="160" height="92" rx="8" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1"/>
+        <text x="270" y="44" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:10px;font-weight:700;font-family:sans-serif;letter-spacing:1px">QUESTION 2</text>
+        <text x="270" y="78" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">what kind of data?</text>
+        <text x="270" y="112" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:13px;font-weight:700;font-family:sans-serif">interaction</text>
+        <text x="270" y="132" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:10px;font-family:sans-serif">page level, or this</text>
+        <polygon points="362,98 350,92 350,104" style="fill:var(--border,#e2e8f0)"/>
+        <rect x="370" y="52" width="150" height="92" rx="8" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1"/>
+        <text x="445" y="44" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:10px;font-weight:700;font-family:sans-serif;letter-spacing:1px">QUESTION 3</text>
+        <text x="445" y="78" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">which element?</text>
+        <text x="445" y="112" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:13px;font-weight:700;font-family:sans-serif">dropDown</text>
+        <text x="445" y="132" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:10px;font-family:sans-serif">one of many</text>
+        <polygon points="532,98 520,92 520,104" style="fill:var(--border,#e2e8f0)"/>
+        <rect x="540" y="52" width="150" height="92" rx="8" style="fill:var(--card,#ffffff);stroke:var(--accent,#e11d48);stroke-width:2"/>
+        <text x="615" y="44" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:10px;font-weight:700;font-family:sans-serif;letter-spacing:1px">QUESTION 4</text>
+        <text x="615" y="78" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">worth knowing?</text>
+        <text x="615" y="106" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:12px;font-weight:700;font-family:sans-serif">name / module</text>
+        <text x="615" y="122" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:12px;font-weight:700;font-family:sans-serif">/ value</text>
+        <text x="615" y="138" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:10px;font-family:sans-serif">not just the value</text>
+        <rect x="10" y="170" width="680" height="42" rx="8" style="fill:var(--card,#ffffff);stroke:var(--success,#10b981);stroke-width:2"/>
+        <text x="350" y="196" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:13px;font-weight:700;font-family:sans-serif">digitalData.interaction.dropDown.value</text>
+    </svg>
+</div>
+<p><strong>Question one is already answered.</strong> The root is <code>digitalData</code>, decided by the standard, requiring no thought. Move on.</p>
+<p><strong>Question two is the one that does the work.</strong> Not "where does this dropdown go" but the much larger question hiding behind it: what kinds of data will this site produce at all? Ask it properly and two categories emerge almost immediately. There is data that is true about the page, and there is data about something a person did.</p>
+<p>Naming that second category deserves a moment. <code>event</code>, <code>action</code>, <code>activity</code> and <code>interaction</code> are all reasonable candidates. Rule out <code>event</code> and <code>activity</code> first, because both already carry specific meanings in Adobe Analytics, and a data layer node that collides with a platform term will muddle every conversation that follows it. <code>action</code> is available but reads too narrowly, since a mouseover is worth capturing and is not really an action. <code>interaction</code> is generic enough to cover the whole family and collides with nothing.</p>
+<p><strong>Question three opens the picture up.</strong> Once the category exists, the full inventory becomes visible: link clicks, button and call-to-action clicks, dropdowns, checkboxes, radio buttons, hamburger menus, navigation clicks, mouseover. The element type belongs here, which gives <code>digitalData.interaction.dropDown</code>.</p>
+<p><strong>Question four is where most designs go wrong.</strong> The natural guess is that the last node holds the selected value. It is the obvious answer and it is a trap, because every element carries more than one fact worth recording. Which control was it. Where on the page did it sit. What did the visitor choose. Put the value at level four and there is nowhere left for the rest.</p>
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>Attribute</th><th>What it answers</th><th>Include it?</th></tr></thead>
+        <tbody>
+            <tr><td><code>name</code></td><td>Which specific control was this</td><td><strong>Minimum set</strong></td></tr>
+            <tr><td><code>module</code></td><td>Where on the page it sits: banner, footer, side bar, a named form</td><td><strong>Minimum set</strong></td></tr>
+            <tr><td><code>value</code></td><td>What the visitor selected or entered</td><td><strong>Minimum set</strong></td></tr>
+            <tr><td><code>type</code></td><td>Dropdown, checkbox, radio</td><td>Usually redundant, the parent node already says it</td></tr>
+            <tr><td><code>position</code></td><td>Index within a list or carousel</td><td>Only when order carries meaning</td></tr>
+            <tr><td><code>label</code></td><td>The visible text, when it differs from the internal name</td><td>Only when the two genuinely differ</td></tr>
+            <tr><td><code>destination</code></td><td>Where a click leads</td><td>Links and calls to action only</td></tr>
+        </tbody>
+    </table>
+</div>
+<p>Three of those are worth taking as a default set. They answer which control, where it lives, and what happened, and that combination is enough to build a usable report without inventing fields nobody will populate.</p>
+<p>Put it together with a real situation. A gender dropdown sits inside an inquiry form, and the visitor selects Male.</p>
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">One dropdown selection, traditional CEDDL layer</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>digitalData.interaction.dropDown.name   = "Gender Selection"
+digitalData.interaction.dropDown.module = "Inquiry Form"
+digitalData.interaction.dropDown.value  = "Male"</pre></div>
+</div>
+<p>The same design expressed through the Adobe Client Data Layer keeps every naming decision intact and changes only how the values arrive.</p>
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">The identical design, expressed in ACDL</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>adobeDataLayer.push({
+  event: "interaction",
+  interaction: {
+    dropDown: {
+      name: "Gender Selection",
+      module: "Inquiry Form",
+      value: "Male"
+    }
+  }
+});</pre></div>
+</div>
+<p>That is the quiet reward for designing the hierarchy properly rather than designing for a technology. The structure survived the change of model entirely. A good design is portable, and a design that only makes sense inside one delivery mechanism was never a design in the first place.</p>
+
+<h3 class="subsec-title">Casing: the rule that is not a rule</h3>
+<p>Look closely at <code>digitalData</code> and <code>dropDown</code>. Neither is lowercase, neither is Title Case, and neither uses underscores. The convention is lower camelCase: begin in lowercase, then capitalise the first letter of every subsequent word. <code>digital</code> plus <code>D</code> plus <code>ata</code>. <code>drop</code> plus <code>D</code> plus <code>own</code>.</p>
+<p>Nothing enforces this. Casing has no effect on how data is collected or how reporting behaves. JavaScript is case sensitive, so a layer must be internally consistent or lookups simply fail, but which convention you pick is entirely free.</p>
+<p>Pick camelCase regardless, because the specification uses it, the surrounding ecosystem uses it, and consistency is the entire product here.</p>
+<p>Then there is the acronym exception, which looks like a lapse in discipline and is not. <code>customerId</code> reads awkwardly and <code>customerID</code> reads correctly, so acronyms keep their capitals. The standard does this to itself: <code>pageInstanceID</code> capitalises the acronym while every neighbouring property stays in plain camelCase. When the specification breaks its own pattern for readability, that is a convention rather than an accident.</p>
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>Prefer</th><th>Avoid</th><th>Why</th></tr></thead>
+        <tbody>
+            <tr><td><code>pageName</code></td><td><code>page_name</code>, <code>PageName</code>, <code>pagename</code></td><td>Matches the specification and everything built around it</td></tr>
+            <tr><td><code>dropDown</code></td><td><code>dropdown</code>, <code>drop_down</code></td><td>The word boundary stays visible at a glance</td></tr>
+            <tr><td><code>customerID</code></td><td><code>customerId</code>, <code>customer_id</code></td><td>Acronyms keep their capitals, as in <code>pageInstanceID</code></td></tr>
+            <tr><td><code>loginStatus</code></td><td><code>LoginStatus</code></td><td>The leading character stays lowercase</td></tr>
+        </tbody>
+    </table>
+</div>
+<p>The rule underneath all of these is the only one that truly matters: choose a convention, write it down, and apply it without exception. A data layer that is ninety percent camelCase is worse than one that is consistently anything, because partial consistency teaches the reader a pattern and then betrays it.</p>
+
+<h3 class="subsec-title">What the design looks like when it reaches a developer</h3>
+<p>A design is not finished when the structure is settled in your head. It is finished when somebody else can build from it without asking you a question.</p>
+<p>That artefact is a mapping, and it is deliberately boring: the Adobe variable, the name the business uses for it, what it contains, and the exact path it is read from.</p>
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>Variable</th><th>Variable name</th><th>Details</th><th>Data layer path</th></tr></thead>
+        <tbody>
+            <tr><td>pageName</td><td>Page</td><td></td><td><code>digitalData.page.pageInfo.pageName</code></td></tr>
+            <tr><td>eVar1</td><td>Custom Page Name</td><td></td><td><code>digitalData.page.pageInfo.pageName</code></td></tr>
+            <tr><td>prop1</td><td>Custom Page Name</td><td></td><td><code>digitalData.page.pageInfo.pageName</code></td></tr>
+            <tr><td>Channel</td><td>Site Section</td><td>PDP, PLP, Cart, Help</td><td><code>digitalData.page.pageInfo.section</code></td></tr>
+            <tr><td>prop3</td><td>Page Type</td><td>Search, Browse, Product Detail, Cart</td><td><code>digitalData.page.pageInfo.pageType</code></td></tr>
+            <tr><td>eVar8</td><td>Customer ID</td><td>Email address or mobile number</td><td><code>digitalData.account.info.custID</code></td></tr>
+            <tr><td>eVar9</td><td>Website Identifier</td><td>Brand or property name</td><td><code>digitalData.page.pageInfo.website</code></td></tr>
+            <tr><td>eVar10</td><td>Login Status</td><td>Logged In, Anonymous</td><td><code>digitalData.account.info.loginStatus</code></td></tr>
+            <tr><td>eVar11</td><td>Platform</td><td>App, Website</td><td><code>digitalData.page.pageInfo.platform</code></td></tr>
+        </tbody>
+    </table>
+</div>
+<p>Two things in that table are worth reading deliberately.</p>
+<p>The first three rows point at the same path. That is not duplication and it is not a mistake. One data layer field routinely feeds several Adobe variables, because a prop and an eVar do different things with the same value. The data layer describes the site; the variables describe what you intend to do with it. Keeping those two concerns separate is what allows you to add a new eVar later without touching a line of site code.</p>
+<p>The second is the row that carries a customer identifier. The moment a data layer field holds an email address or a mobile number, it stops being purely an implementation decision and becomes a privacy obligation, because that value has to be labeled before Adobe can act on it in a deletion request. <a href="/adobe-analytics-learning/foundations/report-suites/privacy-data-retention/">Privacy and Data Retention</a> covers the labeling that makes such a field findable, and the silent failure when it is missing.</p>
+<div class="pro-tip">
+    <div class="pro-tip-hdr">💡 The path column is the contract, and it is the only column developers need</div>
+    <p>Everything to the left of the path belongs to analytics: which variable, what it is called in reports, what the business expects to see. Only the rightmost column is a build instruction. Keeping that boundary visible is what stops a mapping document turning into a negotiation, because the developer can be handed one column and be certain it is complete.</p>
+</div>
+<p>The equivalent under the Adobe Client Data Layer swaps the path for a state read, so <code>digitalData.page.pageInfo.pageName</code> becomes <code>adobeDataLayer.getState("page.pageInfo.pageName")</code>. The mapping document keeps its shape, and so does every naming decision inside it.</p>
+
+<h3 class="subsec-title">What you have now</h3>
+<p>Every rule in this section is a readability rule wearing technical clothing. Nothing here is enforced, nothing produces an error, and a design that ignores all of it will collect data perfectly well on launch day. That is precisely why the discipline has to come from you.</p>
+<p>The nodes are a lineage rather than a set of categories, so a path can describe itself. The standard names are worth keeping because their value accrues to whoever arrives after you. A node is designed by asking four questions in order, and the fourth one is the one that catches people, because an element is never just its value. One casing convention, applied without exception. And a mapping so plain that a developer needs a single column from it.</p>
+<p>The test at the start still applies to all of it. If a business user can read the structure and follow what it holds, and it still meets every requirement, the design is good. If it needs you in the room to be understood, it is not finished, however elegant it looks.</p>
+<p>A design is only worth what gets read from it. The mechanism that does that reading in a tag management system is the data element, a named reference that points at a path and hands its value to rules without any of them knowing where it came from. <a href="/adobe-analytics-learning/collect/adobe-launch-tags/data-elements/">Data Elements</a> covers how that indirection works and why bypassing it costs you later.</p>
+
+<div class="ref-box">
+    <div class="ref-title">📚 Learn More</div>
+    <ul>
+        <li><a href="https://www.w3.org/2013/12/ceddl-201312.pdf" target="_blank">W3C: Customer Experience Digital Data Layer 1.0 (specification)</a></li>
+        <li><a href="https://www.w3.org/community/custexpdata/" target="_blank">W3C: Customer Experience Digital Data Community Group</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/experience-platform/tags/extensions/client/client-data-layer/overview" target="_blank">Adobe Docs: Adobe Client Data Layer Extension</a></li>
+        <li><a href="https://github.com/adobe/adobe-client-data-layer" target="_blank">Adobe: Adobe Client Data Layer (source and API)</a></li>
+    </ul>
+</div>
