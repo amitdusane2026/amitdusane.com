@@ -200,12 +200,12 @@ digitalData.interaction.dropDown.value  = "Male"</pre></div>
     <table>
         <thead><tr><th>Variable</th><th>Variable name</th><th>Details</th><th>Data layer path</th></tr></thead>
         <tbody>
-            <tr><td>pageName</td><td>Page</td><td></td><td><code>digitalData.page.pageInfo.pageName</code></td></tr>
-            <tr><td>eVar1</td><td>Custom Page Name</td><td></td><td><code>digitalData.page.pageInfo.pageName</code></td></tr>
-            <tr><td>prop1</td><td>Custom Page Name</td><td></td><td><code>digitalData.page.pageInfo.pageName</code></td></tr>
+            <tr><td>pageName</td><td>Page</td><td>The reporting name of the page, set on every page</td><td><code>digitalData.page.pageInfo.pageName</code></td></tr>
+            <tr><td>eVar1</td><td>Custom Page Name</td><td>The same value in an eVar, so it persists and can carry attribution</td><td><code>digitalData.page.pageInfo.pageName</code></td></tr>
+            <tr><td>prop1</td><td>Custom Page Name</td><td>The same value in a prop, for pathing and traffic reports</td><td><code>digitalData.page.pageInfo.pageName</code></td></tr>
             <tr><td>Channel</td><td>Site Section</td><td>PDP, PLP, Cart, Help</td><td><code>digitalData.page.pageInfo.section</code></td></tr>
             <tr><td>prop3</td><td>Page Type</td><td>Search, Browse, Product Detail, Cart</td><td><code>digitalData.page.pageInfo.pageType</code></td></tr>
-            <tr><td>eVar8</td><td>Customer ID</td><td>Email address or mobile number</td><td><code>digitalData.account.info.custID</code></td></tr>
+            <tr><td>eVar8</td><td>Customer ID</td><td>Your own internal identifier for a signed-in user</td><td><code>digitalData.account.info.custID</code></td></tr>
             <tr><td>eVar9</td><td>Website Identifier</td><td>Brand or property name</td><td><code>digitalData.page.pageInfo.website</code></td></tr>
             <tr><td>eVar10</td><td>Login Status</td><td>Logged In, Anonymous</td><td><code>digitalData.account.info.loginStatus</code></td></tr>
             <tr><td>eVar11</td><td>Platform</td><td>App, Website</td><td><code>digitalData.page.pageInfo.platform</code></td></tr>
@@ -214,7 +214,8 @@ digitalData.interaction.dropDown.value  = "Male"</pre></div>
 </div>
 <p>Two things in that table are worth reading deliberately.</p>
 <p>The first three rows point at the same path. That is not duplication and it is not a mistake. One data layer field routinely feeds several Adobe variables, because a prop and an eVar do different things with the same value. The data layer describes the site; the variables describe what you intend to do with it. Keeping those two concerns separate is what allows you to add a new eVar later without touching a line of site code.</p>
-<p>The second is the row that carries a customer identifier. The moment a data layer field holds an email address or a mobile number, it stops being purely an implementation decision and becomes a privacy obligation, because that value has to be labeled before Adobe can act on it in a deletion request. <a href="/adobe-analytics-learning/foundations/report-suites/privacy-data-retention/">Privacy and Data Retention</a> covers the labeling that makes such a field findable, and the silent failure when it is missing.</p>
+<p>The second is the row carrying a customer identifier, and what goes into it is a deliberate decision rather than a convenience. Use your own internal identifier, never a raw email address or phone number. A data layer is a global object on the page, readable by every script the site loads, including tags nobody on your team wrote, so a contact detail placed there has effectively been handed to all of them. The reporting is identical either way, which makes the safe choice free.</p>
+<p>An internal identifier still carries an obligation, because it identifies a person the moment it is joined to your own systems. It has to be labeled before Adobe can act on it in a deletion request, and <a href="/adobe-analytics-learning/foundations/report-suites/privacy-data-retention/">Privacy and Data Retention</a> covers that labeling, along with the silent failure when it is missing.</p>
 <div class="pro-tip">
     <div class="pro-tip-hdr">💡 The path column is the contract, and it is the only column developers need</div>
     <p>Everything to the left of the path belongs to analytics: which variable, what it is called in reports, what the business expects to see. Only the rightmost column is a build instruction. Keeping that boundary visible is what stops a mapping document turning into a negotiation, because the developer can be handed one column and be certain it is complete.</p>
