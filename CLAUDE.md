@@ -265,6 +265,8 @@ Run this whenever Amit says to close out, wrap up, or end the session. It is wha
 
 ## Session start routine
 
+`.claude/hooks/session-start.sh` runs steps 1 and 2 automatically: it fetches, says how far behind `origin/develop` the checkout is, lists the incoming commits, and installs Hugo in web sessions, which do not ship it. Read its output before anything else. It deliberately does not pull, because the commit messages have to be read first.
+
 1. **Pull first, always.** `git fetch origin && git status` to see whether `origin/develop` is ahead. Amit works from more than one device: this laptop and web or mobile sessions on claude.ai/code, both against the `develop` branch. A local copy that has not pulled is stale, and advice given from it will be wrong.
 
    If the remote is ahead, `git pull` and read the incoming commit messages before proposing anything. They carry the reasoning for whatever changed.
@@ -274,3 +276,11 @@ Run this whenever Amit says to close out, wrap up, or end the session. It is wha
 2. **Read `development-plan.md` and `completion-tracker.tsv`** before proposing work. The plan says what phase we are in; the tracker says exactly which sections are written and QA'd.
 
 3. **Confirm the working tree is clean** and report where things stand in a line or two.
+
+### Never report status from a stale ref
+
+**Fetch immediately before any status claim, not once at the start of the session.** A status report is worth exactly as much as its last fetch. Name the commit it rests on, so Amit can see how fresh it is.
+
+**The tracker records intent; the files and the build are the truth.** Cross-check every count against the content files before reporting it. A number read out of `completion-tracker.tsv` and never verified is a guess wearing a suit.
+
+On 7 Aug 2026 a session fetched once at startup, reported detailed status forty minutes later from that same snapshot, and called two finished, signed-off sections unwritten. It was eleven commits behind and had said itself, in the same conversation, that staleness was the main risk in a two-device setup. Had Amit not known better, the next hour would have gone into rewriting Module 2.
