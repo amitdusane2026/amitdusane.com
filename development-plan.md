@@ -27,7 +27,7 @@ Everything below was verified against the actual files and the built output, not
 
 So the existing body of a pending section is never opened. The tracker's `Content created?` column is the only authority on what needs writing, and every one of the 50 is the same job: read the neighbouring completed sections for continuity, take naming from the structure map, and write with a fresh mind.
 
-**A work item neither of us had listed: 12 written sections are not QA'd.** The tracker shows Modules 11 (Classifications) and 13 (Segments), all 12 sections, as created but not QA-approved. They are the two most recent modules. Under the QA Rulebook they cannot be called done.
+**~~A work item neither of us had listed: 12 written sections are not QA'd.~~ Resolved 7 Aug 2026.** The tracker showed Modules 11 (Classifications) and 13 (Segments), all 12 sections, as created but not QA-approved. Amit confirmed the QA had in fact been done at the time and the tracker was never updated. All 12 marked QA'd and final. This was tracker drift, not outstanding work, and it is the second instance of the same failure found in one session (see the SEO title audit below).
 
 **The structure map's status line is stale.** It says "nothing has been built" and "modules 1 to 19". The restructure has in fact been built: `/deliver/` exists, the data-layers module exists, `[params.phases]` already lists modules 1 to 21. Treat the map as authoritative for *naming*, not for *status*.
 
@@ -105,9 +105,11 @@ A full audit against the front matter of all 116 slugged pages found the same de
 
 **Eleven rows flipped to `Final result = Yes` as a result**, all of Launch (M06 §1 to §6) and most of Data Collection (M04). Those sections were finished long ago; the tracker was simply under-reporting them. Totals are now 70 created, 58 QA'd, 58 final, and `final` equals `QA'd` exactly, which is the expected state once SEO is no longer a blocker.
 
-The remaining 12 created-but-not-QA'd rows are Classifications and Segments, which is Phase 4 and unchanged.
+Immediately afterwards the same failure appeared again from a different direction: the 12 Classifications and Segments rows carried `Content QA'd? = No` when the QA had actually been done and simply never been recorded. Marking those closed Phase 4 outright. Final totals for the session: **70 created, 70 QA'd, 70 final.**
 
-**Lesson for the close-out routine: the tracker can be wrong in the direction of under-reporting, and that is the harder error to notice**, because nothing looks broken. Sections quietly sit at `No` and a future session reads them as outstanding work. Re-run this audit whenever a row refuses to reach `Final result = Yes` for no visible reason.
+**Lesson for the close-out routine: the tracker can be wrong in the direction of under-reporting, and that is the harder error to notice**, because nothing looks broken. Sections quietly sit at `No` and a future session reads them as outstanding work. Two separate instances surfaced in one session, together hiding 23 finished sections and a whole closed phase.
+
+The root cause is structural and worth stating: **the tracker is updated by hand, and every column except `Content created?` has no automatic check against reality.** `Content created?` is self-verifying, because the `description` publish flag makes an unwritten section visibly dimmed in the maps. The SEO and QA columns have no such feedback, so drift there is silent and accumulates. Re-run the front-matter audit whenever a row refuses to reach `Final result = Yes` for no visible reason, and treat any `No` on an old row as suspect rather than as work.
 
 ### What M02 §7 taught about writing the technically dense sections
 
@@ -150,9 +152,11 @@ M19 (SDR, 6 sections, all new) is the largest single piece and doubles as the pr
 
 ---
 
-## Phase 4 — QA the 12 unQA'd sections
+## Phase 4 — QA the 12 unQA'd sections ✅ CLOSED 7 Aug 2026
 
-Modules 11 and 13 against the QA Rulebook: 13 checks, binary verdict, reported in the rulebook's own format. Independent of writing, so it can slot in whenever you want a break from drafting.
+Modules 11 (Classifications) and 13 (Segments) were never unQA'd. The QA had been done and the tracker was not updated. All 12 rows marked QA'd and final; no content work was required.
+
+**The written corpus is now fully reconciled: 70 created, 70 QA'd, 70 final.** Every page that exists is signed off, and `Content created?` is now the only column that distinguishes done from outstanding. The remaining work is purely the 46 unwritten sections, with no QA backlog behind it.
 
 ---
 
