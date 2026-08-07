@@ -2,10 +2,160 @@
 slug: "consent-and-tag-management"
 title: "Consent and Tag Management"
 seotitle: "Consent Management in Adobe Launch"
-lastmod: 2026-07-18
+description: "Consent is a race between the page loading and the visitor deciding. Who wins it, what happens to the data in between, and the default that is wrong."
+lastmod: 2026-08-07
 type: lesson
 modulenum: 6
 sectionnum: 8
 weight: 8
 ---
-<p>This section is not yet written.</p>
+<p>A visitor in Germany opens your site. The consent banner appears, and they read it for about four seconds before clicking Accept.</p>
+<p>Something happened during those four seconds. The page finished loading, the tag library initialised, and every rule you built became ready to fire. Whether any of them did, and what became of the data if they did, was decided long before this visitor arrived, by whoever configured the implementation. Possibly by nobody, because most of these settings have a default.</p>
+<p>That gap is the whole subject. Consent is not a feature you switch on, it is a race between the page loading and the visitor deciding, and your job is to determine who wins it.</p>
+
+<h3 class="subsec-title">The four seconds before anybody clicks anything</h3>
+<p>Nothing about that window is unusual. Every consent implementation has one, because a banner cannot be answered before it is displayed, and a page cannot wait indefinitely for an answer that may never come.</p>
+<p>What differs between implementations is what happens to the events that occur inside it.</p>
+<div class="diagram-box">
+    <div class="diagram-title">The same four seconds, under three different settings</div>
+    <svg viewBox="0 0 700 218" style="width:100%;height:auto;display:block" role="img" aria-label="A timeline showing the window between a page loading and a visitor answering the consent banner, and how three default consent settings treat events in that window: In collects them, Out discards them permanently, and Pending queues them and then sends or discards based on the answer.">
+        <line x1="90" y1="46" x2="670" y2="46" style="stroke:var(--border,#e2e8f0);stroke-width:2"/>
+        <line x1="160" y1="38" x2="160" y2="54" style="stroke:var(--text3,#94a3b8);stroke-width:2"/>
+        <line x1="520" y1="38" x2="520" y2="54" style="stroke:var(--accent,#e11d48);stroke-width:2"/>
+        <text x="160" y="30" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">tags ready to fire</text>
+        <text x="520" y="30" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:11px;font-weight:700;font-family:sans-serif">visitor chooses</text>
+        <text x="340" y="66" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:10px;font-family:sans-serif;letter-spacing:1px">THE WINDOW</text>
+        <text x="12" y="94" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">In</text>
+        <rect x="90" y="76" width="430" height="26" rx="4" style="fill:var(--success,#10b981);opacity:0.18"/>
+        <rect x="90" y="76" width="430" height="26" rx="4" style="fill:none;stroke:var(--success,#10b981);stroke-width:1.5"/>
+        <text x="305" y="94" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-family:sans-serif">collected before the answer</text>
+        <rect x="520" y="76" width="150" height="26" rx="4" style="fill:var(--success,#10b981);opacity:0.18"/>
+        <rect x="520" y="76" width="150" height="26" rx="4" style="fill:none;stroke:var(--success,#10b981);stroke-width:1.5"/>
+        <text x="595" y="94" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-family:sans-serif">collected</text>
+        <text x="12" y="132" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">Out</text>
+        <rect x="90" y="114" width="430" height="26" rx="4" style="fill:var(--warning,#f59e0b);opacity:0.18"/>
+        <rect x="90" y="114" width="430" height="26" rx="4" style="fill:none;stroke:var(--warning,#f59e0b);stroke-width:1.5"/>
+        <text x="305" y="132" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-family:sans-serif">discarded, and never recoverable</text>
+        <rect x="520" y="114" width="150" height="26" rx="4" style="fill:var(--success,#10b981);opacity:0.18"/>
+        <rect x="520" y="114" width="150" height="26" rx="4" style="fill:none;stroke:var(--success,#10b981);stroke-width:1.5"/>
+        <text x="595" y="132" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-family:sans-serif">collected</text>
+        <text x="12" y="170" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">Pending</text>
+        <rect x="90" y="152" width="430" height="26" rx="4" style="fill:var(--bg3,#f1f5f9);stroke:var(--text3,#94a3b8);stroke-width:1.5"/>
+        <text x="305" y="170" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-family:sans-serif">held in a queue, nothing sent yet</text>
+        <rect x="520" y="152" width="150" height="26" rx="4" style="fill:var(--success,#10b981);opacity:0.18"/>
+        <rect x="520" y="152" width="150" height="26" rx="4" style="fill:none;stroke:var(--success,#10b981);stroke-width:1.5"/>
+        <text x="595" y="170" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-family:sans-serif">released, or dropped</text>
+        <text x="340" y="202" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">One setting decides all three outcomes, and it has a default</text>
+    </svg>
+</div>
+<p>Read the three lanes and the trade becomes obvious. In keeps the most data and respects the least. Out respects the choice absolutely and permanently loses whatever happened first. Pending is the only one that defers the decision rather than pre-empting it, which is why it exists.</p>
+
+<h3 class="subsec-title">Consent is not a tag management feature, and that is the first thing to get right</h3>
+<p>A great many failed implementations begin with one misunderstanding: that consent is something the tag manager does. It is not. Three separate systems are involved, they own different jobs, and no one of them can do another's work.</p>
+<div class="diagram-box">
+    <div class="diagram-title">Three systems, three jobs, and none of them overlap</div>
+    <svg viewBox="0 0 700 180" style="width:100%;height:auto;display:block" role="img" aria-label="Three systems involved in consent: the consent management platform asks the visitor and stores the answer, the tag management system decides whether to act on it, and the SDK decides what happens to events. None of them can do another's job.">
+        <rect x="10" y="30" width="215" height="106" rx="9" style="fill:var(--card,#ffffff);stroke:var(--accent,#e11d48);stroke-width:2"/>
+        <text x="117" y="56" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:12px;font-weight:700;font-family:sans-serif">The CMP</text>
+        <text x="117" y="80" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-family:sans-serif">Asks the visitor.</text>
+        <text x="117" y="98" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-family:sans-serif">Stores the answer.</text>
+        <text x="117" y="120" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:10px;font-family:sans-serif">Adobe does not do this part</text>
+        <rect x="242" y="30" width="215" height="106" rx="9" style="fill:var(--card,#ffffff);stroke:var(--accent,#e11d48);stroke-width:2"/>
+        <text x="349" y="56" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:12px;font-weight:700;font-family:sans-serif">The tag manager</text>
+        <text x="349" y="80" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-family:sans-serif">Reads the answer.</text>
+        <text x="349" y="98" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-family:sans-serif">Decides whether to act.</text>
+        <text x="349" y="120" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:10px;font-family:sans-serif">rules, conditions, ordering</text>
+        <rect x="474" y="30" width="216" height="106" rx="9" style="fill:var(--card,#ffffff);stroke:var(--accent,#e11d48);stroke-width:2"/>
+        <text x="582" y="56" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:12px;font-weight:700;font-family:sans-serif">The SDK</text>
+        <text x="582" y="80" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-family:sans-serif">Holds or releases</text>
+        <text x="582" y="98" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-family:sans-serif">the events themselves.</text>
+        <text x="582" y="120" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:10px;font-family:sans-serif">in, out, or pending</text>
+        <text x="350" y="164" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">Give one system another's job and the implementation fails quietly</text>
+    </svg>
+</div>
+<p>Adobe states this boundary explicitly about its own tooling. The Opt-in service does not gather consent preferences and does not store them. It acts on a decision somebody else captured. Expecting Adobe to run your banner is the single most common way this goes wrong at the design stage, long before any code is written.</p>
+
+<h3 class="subsec-title">The three places you can enforce it</h3>
+<p>Given those three systems, there are three points at which a decision can actually be enforced, and they are not equivalent.</p>
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>Where</th><th>How it works</th><th>What it costs you</th></tr></thead>
+        <tbody>
+            <tr><td><strong>At the CMP</strong></td><td>The consent platform blocks the tag from loading at all</td><td>Total control, but Adobe never initialises, so nothing is queued and nothing is recoverable</td></tr>
+            <tr><td><strong>At the tag manager</strong></td><td>A rule condition reads the stored consent value and refuses to run</td><td>Flexible and familiar, but it depends on the answer already existing when the rule evaluates</td></tr>
+            <tr><td><strong>At the SDK</strong></td><td>The library itself holds, drops, or sends events based on a declared consent state</td><td>Handles the waiting window properly, but it is a configuration nobody sees unless they look</td></tr>
+        </tbody>
+    </table>
+</div>
+<p>Most real implementations use two of the three together, and that is correct rather than redundant. The CMP owns the visitor's answer, and the SDK owns the events that arrive before the answer does.</p>
+
+<h3 class="subsec-title">Why the rule condition is the fragile one</h3>
+<p>The tag manager approach is the one practitioners reach for first, because it uses machinery they already know. <a href="/adobe-analytics-learning/collect/adobe-launch-tags/rules/">Rules</a> makes the case for it directly: a condition reads the cookie holding the visitor's choice, and the rule becomes self-policing, running only when permission is present.</p>
+<p>That reasoning is sound and the technique is genuinely useful. It also has a limit that is easy to miss, and the limit is timing.</p>
+<p>A condition can only evaluate what exists at the moment it runs. On a first visit, at the instant a page-load rule fires, the visitor has not answered anything, so the cookie the condition is looking for is not there. The condition reads an absent value, treats it as no permission, and the rule does not run. Then the visitor clicks Accept four seconds later, and nothing goes back to collect the page view that was skipped.</p>
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ A rule that does not run leaves no evidence that it did not run</div>
+    <p>There is no error, no console warning, and no entry in any report. A skipped rule and a rule that never existed look identical from the outside, and the only visible symptom is a number lower than expected, which is indistinguishable from a quiet week. Consent conditions are worth testing on a genuinely fresh browser profile, because the second visit, when the cookie already exists, works perfectly and proves nothing.</p>
+</div>
+<p>The lesson is not that conditions are wrong. It is that a condition enforces a decision that has already been made, and something else has to handle the period before it was made.</p>
+
+<h3 class="subsec-title">The Web SDK answer: decide in advance what happens to events nobody has permitted yet</h3>
+<p>The Web SDK extension addresses the window directly, with a setting that declares what the library should do before it hears anything. It takes three values.</p>
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>Default consent</th><th>Behaviour before the visitor answers</th><th>Suits</th></tr></thead>
+        <tbody>
+            <tr><td><strong>In</strong></td><td>Events are collected normally. The library does not wait.</td><td>Regions with no prior-consent requirement</td></tr>
+            <tr><td><strong>Out</strong></td><td>No request fires at all until consent changes to In. Anything in the window is gone.</td><td>The strictest reading of an explicit-consent regime</td></tr>
+            <tr><td><strong>Pending</strong></td><td>Events are queued. On consent they are sent, on refusal they are discarded.</td><td>Most explicit-consent implementations</td></tr>
+        </tbody>
+    </table>
+</div>
+<p>Pending is the setting worth understanding properly, because it is the only one that does not force a choice between the data and the obligation. Nothing leaves the browser without permission, and nothing is thrown away before the visitor has spoken. If they accept, the queued page view is released and your first-page data survives. If they refuse, it is discarded and no request is ever made.</p>
+<p>The value can also come from a data element rather than a fixed radio button, which is how one property serves several jurisdictions: pending for visitors in the European Union, in for regions where prior consent is not required.</p>
+<div class="info-box">
+    <div class="info-hdr">ℹ️ The default is a posture, not a record</div>
+    <p>Adobe is precise that the default consent level is not written to the visitor's profile. It governs how the library behaves while it waits, and nothing more. The actual recorded consent comes from <code>setConsent</code>, which both updates the profile and creates a timestamped event describing the change. Confusing the two leads to teams believing they have a consent audit trail when all they have configured is a waiting-room policy.</p>
+</div>
+
+<h3 class="subsec-title">The AppMeasurement answer: the Opt-in service</h3>
+<p>Implementations still running AppMeasurement and the Experience Cloud ID extension have a different mechanism, and it predates the Web SDK approach. The Opt-in service is a JavaScript library bundled with the ID service, exposed as <code>adobe.optIn</code>, and configured in Launch through its own extension rather than by hand.</p>
+<p>Its distinguishing feature is granularity. Rather than one consent state for everything Adobe does, it gates each solution separately, so Analytics, Target and Audience Manager can be permitted independently. That maps neatly onto a banner offering categories rather than a single yes, because a visitor who accepts measurement but refuses personalisation is expressing exactly that distinction.</p>
+<p>What it controls is cookie creation before consent, which is the specific thing an explicit-consent regime cares about. And as stated earlier, it does not gather or store the preference. It reads what your consent platform decided and acts accordingly.</p>
+
+<h3 class="subsec-title">The setting that is wrong by default for a large part of the world</h3>
+<p>Now the part that costs organisations real money, and it is a single radio button.</p>
+<p>The permissive option collects events before the visitor has agreed to anything. It is the setting that produces complete data, it is the setting that makes a new implementation look like it is working, and for any jurisdiction requiring prior consent it is the wrong one. Adobe's own guidance for organisations needing explicit consent is to choose Out or Pending.</p>
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ Nothing tells you the setting is inappropriate for your visitors</div>
+    <p>The library does not know which jurisdiction a visitor is in, and it does not read your privacy policy. A permissive default produces clean, complete, entirely plausible reports while collecting data that was never permitted, and the reports are the only feedback most teams ever look at. Nobody discovers this by watching dashboards. It surfaces during a privacy review, an audit, or a complaint, at which point the collection has been running for months.</p>
+</div>
+<p>This is the same shape as the traps in <a href="/adobe-analytics-learning/foundations/report-suites/privacy-data-retention/">Privacy and Data Retention</a>, where a missing label produces a successful-looking response to a deletion request. The failure is silent, the reports look healthy, and the discovery mechanism sits outside analytics entirely.</p>
+
+<h3 class="subsec-title">What refusing consent does to identity</h3>
+<p>One consequence deserves stating on its own, because it explains report behaviour that otherwise looks like a bug.</p>
+<p>Withholding consent generally means no cookie is written. No cookie means no persistent identifier, and no persistent identifier means the visitor cannot be recognised on the next page, let alone the next visit. Every page view becomes a first visit by a brand new person.</p>
+<p>So a site with a strict consent posture and a large share of refusals will show unique visitors climbing, visits per visitor stuck near one, and multi-page journeys collapsing into single-page sessions. None of that is a tagging fault. It is the direct arithmetic of identity that was never allowed to persist, and the mechanism behind it is covered in <a href="/adobe-analytics-learning/collect/tracking-calls/experience-cloud-id-ecid/">Experience Cloud ID (ECID)</a>.</p>
+
+<h3 class="subsec-title">What you have now</h3>
+<p>Consent is a race, and the four seconds before a visitor answers are the part that implementations get wrong. Three systems share the work and none can cover for another: your consent platform asks and remembers, the tag manager decides whether to act, and the Adobe library decides what becomes of events that arrived before anybody had permission to collect them.</p>
+<p>The rule condition is the tempting answer because it uses machinery you already know, and it is genuinely useful once a decision exists. It cannot help with the window before one does, and a rule that declines to run says nothing about having declined. That is what the library-level setting is for, and Pending is the value that refuses to choose between the obligation and the data.</p>
+<p>Everything in this module has been about building an implementation that fires correctly. Consent is the layer that decides whether it is permitted to fire at all, which makes it the last thing to configure and the first thing anyone from legal will ask about.</p>
+<p>What actually travels when permission is granted is a request carrying an identity, and that identity is the thread every report depends on. <a href="/adobe-analytics-learning/collect/tracking-calls/experience-cloud-id-ecid/">Experience Cloud ID (ECID)</a> covers what that identifier is, where it lives, and why it is a great deal more fragile than it looks.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Launch</div>
+    <p>Web SDK consent: open the property, then <span class="path">Extensions &gt; Adobe Experience Platform Web SDK &gt; Configure &gt; Consent</span>, and set the default consent level or point it at a data element.</p>
+    <p>Recording a decision: build a rule with the Web SDK <span class="path">Set Consent</span> action, triggered by your consent platform's own event.</p>
+    <p>AppMeasurement path: install the <span class="path">Opt-in</span> extension alongside the Experience Cloud ID extension and enable the solutions you need to gate.</p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title">📚 Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/experience-platform/tags/extensions/client/web-sdk/configure/consent" target="_blank">Adobe Docs: Consent Configuration Settings (Web SDK extension)</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/experience-platform/landing/governance-privacy-security/consent/sdk" target="_blank">Adobe Docs: Process Customer Consent Data Using the Web SDK</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/id-service/using/implementation/opt-in-service/optin-overview" target="_blank">Adobe Docs: Opt-in Service Overview</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/experience-platform/web-sdk/consent/iab-tcf/with-tags" target="_blank">Adobe Docs: IAB TCF 2.0 Support with Tags and the Web SDK</a></li>
+    </ul>
+</div>
