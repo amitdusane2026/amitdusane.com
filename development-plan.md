@@ -91,11 +91,23 @@ Five single gaps sitting inside modules that are otherwise finished, so each is 
 |---|---|---|
 | M02 §6 Bot Filtering | `foundations/report-suites/06-bot-filtering.html` | **Signed off 6 Aug 2026** |
 | M02 §7 Privacy and Data Retention | `foundations/report-suites/07-privacy-data-retention.html` | **Signed off 7 Aug 2026** |
-| M05 §4 Data Layer Design | `collect/data-layers/04-data-layer-design.html` | |
+| M05 §4 Data Layer Design | `collect/data-layers/04-data-layer-design.html` | **Signed off 7 Aug 2026** |
 | M06 §8 Consent and Tag Management | `collect/adobe-launch-tags/08-consent-and-tag-management.html` | |
 | M07 §5 Experience Cloud ID (ECID) | `collect/tracking-calls/05-experience-cloud-id-ecid.html` | |
 
-**Module 2 is now complete: all eight sections created, QA'd and signed off.** It is the first module in the learning world finished end to end under this process.
+**Modules 2 and 5 are now complete**, all sections created, QA'd and signed off. Phase 2 is three of five done, with M06 §8 Consent and Tag Management and M07 §5 ECID remaining.
+
+### Tracker audit, 7 Aug 2026: the SEO title column was systematically stale
+
+Marking M05 §4 done surfaced two sections in the same module that were content-complete and QA'd but stuck at `Final result = No`. The cause was not the content. The tracker's `SEO title` cell was empty and flagged `No`, while the page files carried a perfectly good `seotitle`.
+
+A full audit against the front matter of all 116 slugged pages found the same defect on **23 rows**, every one of them the identical clean case: tracker blank, file populated, zero rows where the two disagreed on an actual value. Descriptions were fully in sync, so the defect was confined to that one column. All 23 were synced from the files, per the precedence rule that code wins.
+
+**Eleven rows flipped to `Final result = Yes` as a result**, all of Launch (M06 §1 to §6) and most of Data Collection (M04). Those sections were finished long ago; the tracker was simply under-reporting them. Totals are now 70 created, 58 QA'd, 58 final, and `final` equals `QA'd` exactly, which is the expected state once SEO is no longer a blocker.
+
+The remaining 12 created-but-not-QA'd rows are Classifications and Segments, which is Phase 4 and unchanged.
+
+**Lesson for the close-out routine: the tracker can be wrong in the direction of under-reporting, and that is the harder error to notice**, because nothing looks broken. Sections quietly sit at `No` and a future session reads them as outstanding work. Re-run this audit whenever a row refuses to reach `Final result = Yes` for no visible reason.
 
 ### What M02 §7 taught about writing the technically dense sections
 
