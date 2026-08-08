@@ -175,6 +175,22 @@ Two live defects were found during the inventory and are recorded as rows rather
 
 **Landing pages need content, and it is not the same job as a section.** All 21 module landings and 5 category landings sit at `Content created? = No`. Each needs a short description of what the phase or module covers, not a full section. That work belongs with the features pass, after the sections are done.
 
+## PENDING — E-E-A-T and SEO discoverability audit (raised 7 Aug 2026, deferred by Amit)
+
+Amit asked for a comprehensive E-E-A-T and search-discoverability analysis of the whole site, then deferred it to continue content work. **Do it before the learning world is published**, because every fix is free while the section still 404s and expensive once Google has indexed it.
+
+Scope agreed: Experience, Expertise, Authoritativeness and Trust signals as they actually appear in the built HTML, plus the mechanical discoverability layer (indexation, structured data, canonicals, titles and descriptions across every page, heading structure, internal link depth, orphan pages, Core Web Vitals proxies, mobile rendering). Report ranked by impact, each finding naming file and line, split into pre-launch blockers and improvements. No fabricated score: E-E-A-T is a rater framework, not a measurable ranking factor.
+
+Known findings already banked, so they do not need rediscovering:
+
+- **No article-level author markup or byline anywhere.** Amit's 16 years, 7 of them at Adobe, appear on the About page and essentially nowhere else. A search lander on any section sees no indication of who wrote it. This is the single largest E-E-A-T gap and the cheapest to fix.
+- No `Article` schema and no `datePublished`/`dateModified` on any learning page; only `BreadcrumbList` renders.
+- Google Analytics emits nothing, so there is currently no measurement of discoverability at all.
+- No RSS feed, and the learning-world search button is a dead control.
+- 45 sections still unwritten. A half-finished section competes against its own site.
+
+**Honest note for the report:** sections written from documentation rather than Amit's notes (Privacy and Data Retention, and the first draft of Consent) are thinner on the Experience axis than notes-driven ones. The corpus is not uniform and the report should say so rather than average it away.
+
 ## Phase 5 — Small corrections
 
 - Three `description` outliers: `collect/_index.html` (180 chars), `deliver/_index.html` (187), `collect/data-layers/_index.md` (94).
