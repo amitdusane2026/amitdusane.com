@@ -42,7 +42,9 @@ The other repo on that account, `amitdusane2026/adobe-analytics-learning`, is an
 
 This file is the startup core: it holds only what applies to every task, and it is loaded every session. Everything else is read when the work calls for it.
 
-**Keep this file under roughly 250 lines.** When something matters only for one kind of work, it belongs in a document this table points at, not here. A startup core that grows without limit costs tokens in every session, including the ones that never need the part that grew.
+**There is no line limit. The rule is supersession, not accumulation.** This file is meant to carry the memory of decisions that shape the site, so it will grow, and that is correct. What it must never do is grow exponentially by stacking new guidance on top of old guidance that the new guidance has replaced.
+
+So whenever something written here is made wrong, narrower, or redundant by a later decision, **delete the old text rather than qualifying it**. The new rule takes over. A file holding two rules that disagree is worse than a longer file holding one rule that is right. When something matters only for one kind of work, it still belongs in a document this table points at rather than here.
 
 | Document | Authority over | Read it before |
 |---|---|---|
@@ -131,7 +133,7 @@ This is the test a draft has to pass. Everything below is mechanics in service o
 
 Three things follow directly, and they are easy to get wrong:
 
-- **Problem first, then why, then how.** A section that opens by defining the feature has already failed. Open with the real problem, establish why the technology exists, and only then explain its mechanics.
+- **A section that opens by defining the feature has already failed.** The operational form of the WHY-then-HOW rule stated above.
 - **Components are load-bearing, not decorative.** An analogy, a diagram, a warning, or a tip is there to build a mental model that survives the reader closing the tab. This is the same judgment the rulebook enforces when it says a component is earned.
 - **The reader should finish thinking differently.** Not merely informed. If a draft only transfers facts, it is not done, however accurate it is.
 
@@ -141,7 +143,11 @@ The rulebook states the prose rules. What follows is measured from the corpus an
 
 **Second person only. Zero first person.** Measured: 1,756 "you" and 0 "I" across the learning world. The only "I" on the whole site is in `content/about.html`. The documented exception is quoted speech, and it is used sparingly: a team saying "we set up a CNAME" is a character speaking.
 
-**War stories carry no author.** Because first person is banned, experience is signalled structurally: name a generic actor ("teams", "practitioners", "everyone", "nobody"), predict the failure in future tense, and attach an organisational rather than technical consequence. "Skipping side-by-side parity is how discrepancies surface in month-end reporting, in front of stakeholders." Not "I once saw a client".
+**Experience carries no author.** Because first person is banned, there are two ways to signal it and both are in use.
+
+The first is structural, for failure modes: name a generic actor ("teams", "practitioners", "everyone", "nobody"), predict the failure in future tense, and attach an organisational rather than technical consequence. "Skipping side-by-side parity is how discrepancies surface in month-end reporting, in front of stakeholders." Not "I once saw a client".
+
+The second is an extended scenario or analogy carried through the whole section, which is what the strongest sections use: the camera in the shared garden in M06 §8, the shopkeeper's register in M07 §5. These are not war stories and they attribute nothing to anyone. Reach for this one when the section needs to answer *why does this exist* before it can explain anything, which is most of the time.
 
 **The recurring theme is silence.** Things break without telling you. "Nothing breaks, no error appears, and..." is the signature construction. When a topic has a silent failure mode, that is usually the spine of the section.
 
@@ -163,7 +169,11 @@ Invariant structure:
 
 1. **Untitled opener.** One to three paragraphs before the first h3, doing continuity recap or scenario setup, with inline links back to earlier sections.
 2. **Body.** The h3 stack, each 2 to 6 paragraphs, interleaved with earned components.
-3. **Final h3 is synthesis plus onward link**, named by function not topic: "What you have now", "Everything hinges on one thing", "Where this module leaves you". Its last paragraph names a related section, says what that section covers, and links it.
+3. **The practical walkthrough, second to last h3.** Before the section closes, answer the question the reader actually has: *what do I do with all of this?* An ordered, numbered walkthrough in a `code-block` — which screen to open, what to install, what to save, how to verify — ending with an explicit statement that there is nothing else to configure. Deployment gotchas hang off this block rather than sitting apart from it, because they belong to the doing. Established 10 Aug 2026 on M07 §5; skip it only when the subject genuinely has nothing to configure.
+4. **Final h3 is synthesis plus onward link**, named by function not topic: "What you have now", "Everything hinges on one thing", "Where this module leaves you". Its last paragraph names a related section, says what that section covers, and links it.
+5. **`path-box`**, then **`ref-box`** last, always, exactly one. Nothing follows it.
+
+Heading wording is editorial, not label-like. Full clauses, often with a comma, often a promise or a question. "The waterfall, and why order decides everything", not "Rule Order".
 
 **The completed-site rule governs every reference, in both directions.** Write as though the whole site is already finished and the reader arrived from a search engine, because most of them do. They have read nothing else and are not working through the curriculum in order.
 
@@ -177,10 +187,8 @@ Instead: **name the concept, link it, and recap it in a few words**, so the sent
 - Right: "Tag management has surfaced before, most directly in [Deployment: TMS vs Direct], where the choice was framed as a trade."
 
 This is QA Rulebook check 4 and rule 5 of the component rulebook. It is the easiest rule on the site to break while writing a good sentence.
-4. **`path-box`**, second to last, if and only if the subject has a screen.
-5. **`ref-box`**, last, always, exactly one. Nothing follows it.
 
-Heading wording is editorial, not label-like. Full clauses, often with a comma, often a promise or a question. "The waterfall, and why order decides everything", not "Rule Order".
+A `path-box` is included only if the subject has an Adobe screen. A data layer does not; a report suite setting does.
 
 ---
 
