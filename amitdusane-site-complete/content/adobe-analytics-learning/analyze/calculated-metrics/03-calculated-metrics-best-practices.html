@@ -1,10 +1,196 @@
 ---
 slug: "calculated-metrics-best-practices"
 title: "Calculated Metrics Best Practices"
-lastmod: 2026-07-18
+seotitle: "Calculated Metrics Best Practices in Adobe Analytics"
+description: "Anyone can build one in a minute. Two years on the library holds four Conversion Rates, and the total row does not add up. Both are the same problem."
+lastmod: 2026-08-10
 type: lesson
 modulenum: 12
 sectionnum: 3
 weight: 3
 ---
-<p>This section is not yet written.</p>
+<p>Two years after a company finally agrees what its conversion rate is, open the metric list and count. There will be four of them. One called Conversion Rate, one called Conversion Rate (Visits), one called CVR, and one called Conversion Rate NEW that has been called that since a Tuesday in March.</p>
+
+<p>Nobody did anything wrong. Each was built by a competent person solving a real problem in the four minutes they had. That is precisely the mechanism: a feature that costs nothing to use, produces something permanent, and has no owner will always end in the same place.</p>
+
+<p>Two kinds of failure live in that library, and they need separating. One is a number that is wrong and looks fine. The other is a library that is full of numbers nobody can choose between. The first is arithmetic. The second is ownership. Most of this section is about the first, because the second gets far more attention and does far less damage.</p>
+
+<h3 class="subsec-title">The total row does not add up, and that is correct</h3>
+<p>Sooner or later somebody exports a table, sums a column in a spreadsheet, compares it against the total row, finds a gap, and concludes that Adobe is wrong.</p>
+
+<p>Adobe is not wrong. The rows and the total are answering different questions, and the difference is deduplication.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">📊 One visit, three rows, counted once at the bottom</div>
+    <svg viewBox="0 0 700 250" style="width:100%;height:auto;display:block;margin:4px 0 8px"
+         role="img" aria-label="A table of three pages each showing visits and orders. Adding the visits column by hand gives two hundred and forty, but the reported total is one hundred and ninety, because a single visit that touched all three pages is counted in each row and only once in the deduplicated total. The conversion rate total is therefore computed from the deduplicated totals rather than by averaging the three row rates.">
+        <rect x="20" y="20" width="660" height="34" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <text x="36" y="42" style="fill:var(--text2,#475569);font-size:12px;font-weight:700;font-family:sans-serif">Page</text>
+        <text x="330" y="42" style="fill:var(--text2,#475569);font-size:12px;font-weight:700;font-family:sans-serif">Visits</text>
+        <text x="450" y="42" style="fill:var(--text2,#475569);font-size:12px;font-weight:700;font-family:sans-serif">Orders</text>
+        <text x="570" y="42" style="fill:var(--text2,#475569);font-size:12px;font-weight:700;font-family:sans-serif">Conv. rate</text>
+
+        <text x="36" y="80" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">/home</text>
+        <text x="330" y="80" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">100</text>
+        <text x="450" y="80" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">4</text>
+        <text x="570" y="80" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">4.0%</text>
+
+        <text x="36" y="110" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">/search</text>
+        <text x="330" y="110" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">80</text>
+        <text x="450" y="110" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">3</text>
+        <text x="570" y="110" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">3.8%</text>
+
+        <text x="36" y="140" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">/cart</text>
+        <text x="330" y="140" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">60</text>
+        <text x="450" y="140" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">5</text>
+        <text x="570" y="140" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">8.3%</text>
+
+        <line x1="20" y1="158" x2="680" y2="158" style="stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+
+        <text x="36" y="182" style="fill:var(--text3,#94a3b8);font-size:12px;font-family:sans-serif">added up by hand</text>
+        <text x="330" y="182" style="fill:var(--text3,#94a3b8);font-size:12px;font-family:sans-serif">240</text>
+        <text x="450" y="182" style="fill:var(--text3,#94a3b8);font-size:12px;font-family:sans-serif">12</text>
+        <text x="570" y="182" style="fill:var(--text3,#94a3b8);font-size:12px;font-family:sans-serif">5.4%</text>
+
+        <rect x="20" y="194" width="660" height="34" rx="6" style="fill:var(--accent-light,rgba(225,29,72,.10));stroke:var(--accent,#e11d48);stroke-width:1.5"/>
+        <text x="36" y="216" style="fill:var(--accent,#e11d48);font-size:12px;font-weight:700;font-family:sans-serif">what the total row reports</text>
+        <text x="330" y="216" style="fill:var(--accent,#e11d48);font-size:12px;font-weight:700;font-family:sans-serif">190</text>
+        <text x="450" y="216" style="fill:var(--accent,#e11d48);font-size:12px;font-weight:700;font-family:sans-serif">12</text>
+        <text x="570" y="216" style="fill:var(--accent,#e11d48);font-size:12px;font-weight:700;font-family:sans-serif">6.3%</text>
+
+        <text x="20" y="246" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">A visit that touched all three pages appears in all three rows and once in the total. Both numbers are right.</text>
+    </svg>
+</div>
+
+<p>A visit that lands on the home page, searches, and reaches the cart is a visit to all three pages. It appears in all three rows, because each row is asking how many visits touched that page. The total row is asking a different question, how many visits there were in total, and it answers with a deduplicated figure calculated on the server rather than by adding the column.</p>
+
+<p>The ratio inherits that behavior, which is the part people find genuinely counterintuitive. The conversion rate on the total row is not the average of the three row rates. It is orders divided by visits, computed from the deduplicated totals, so it can sit outside the range of every individual row on the table and still be exactly right.</p>
+
+<p>Two things follow. Never validate a rate by summing rows, and never let a stakeholder do it either, because the conversation that follows is expensive. And when a table is deliberately configured to show a total as the sum of its current rows, expect the deduplication to disappear and the numbers to move, which is intended behavior rather than a defect.</p>
+
+<h3 class="subsec-title">Before you trust a number, run these six</h3>
+<p>Every one of the following returns a clean, well formatted, confidently wrong figure. None of them produces an error, and none of them is caught by anything except a person who thought to look.</p>
+
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>Check</th><th>What it catches</th></tr></thead>
+        <tbody>
+            <tr><td>Is the denominator the one the name implies</td><td>A metric called Conversion Rate dividing by unique visitors instead of visits. Both are legitimate. Only one matches what the room agreed.</td></tr>
+            <tr><td>Is metric type Standard or Total</td><td>A grand total set by accident produces a column of shares that reads like a column of rates.</td></tr>
+            <tr><td>Is there a segment inside the metric</td><td>A filter fused into a column is invisible in the column header, and it stacks with whatever the panel is already filtering.</td></tr>
+            <tr><td>Is a non default attribution model set</td><td>A metric carrying first touch credit next to metrics carrying last touch will never reconcile, and the table gives no hint that they differ.</td></tr>
+            <tr><td>Is the format right</td><td>A rate shown as a decimal gets multiplied by a hundred somewhere downstream, or read as zero.</td></tr>
+            <tr><td>Does the underlying variable expire the way you assumed</td><td>A rate built on an <a href="/adobe-analytics-learning/foundations/variables/evars-conversion-variables/">eVar</a> whose expiration outlives the question counts conversions the visitor made weeks after the interaction being measured.</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<p>The last one is the reason metric design cannot be done entirely in the reporting interface. A formula is only as honest as the persistence rules of the things it divides, and those rules were decided during implementation by somebody who was not thinking about this metric.</p>
+
+<h3 class="subsec-title">The dependency graph nobody drew</h3>
+<p>A calculated metric can contain another calculated metric, and it can contain a segment that other people also use. Both are references rather than copies, so both are live.</p>
+
+<p>The consequence takes a while to appear and then appears everywhere at once. An analyst adjusts a base metric to fix their own report. Four metrics built on top of it move. Two of those are approved, one of them feeds a scheduled Report Builder workbook, and the finance figure in Monday's pack is different from last Monday's for reasons nobody in the room can reconstruct.</p>
+
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ Check the Used in column before touching anything</div>
+    <p>The Calculated metrics manager carries a <strong>Used in</strong> column listing the projects, mobile scorecards, alerts and Report Builder workbooks that reference each metric, and a <strong>Last used</strong> date beside it. A metric with entries there has consumers who were never told it was being edited. Reading that column takes seconds and is the only thing standing between a tidy edit and a silent change to somebody else's reporting.</p>
+</div>
+
+<p>The habit worth building is small. Anything with consumers gets a new metric rather than an edit, and the old one is renamed to say it is superseded rather than deleted. Renaming is visible to everybody using it. Editing is visible to nobody.</p>
+
+<h3 class="subsec-title">When not to build one at all</h3>
+<p>Three requests arrive looking like calculated metrics and are not.</p>
+
+<p><strong>If the request is about who, it is a segment.</strong> Visitors from paid search, people who used the store locator, sessions on mobile. A slice of the audience is a segment applied to a report, not a metric. The tell is that the answer is a population rather than a number. <a href="/adobe-analytics-learning/analyze/segments/understanding-segments/">Understanding Segments</a> covers what belongs there.</p>
+
+<p><strong>If it is genuinely one off, keep it out of the library.</strong> The builder can hold a metric inside the single project it was made in. An exploratory ratio built during one investigation should live and die there. Saving it to the shared library adds a permanent object to serve a temporary question, and that is the mechanism by which libraries reach four hundred entries.</p>
+
+<p><strong>If the number needs data nobody collects, it is an implementation request.</strong> No formula recovers a value that was never sent. That is the boundary drawn in <a href="/adobe-analytics-learning/analyze/calculated-metrics/what-are-calculated-metrics/">What Are Calculated Metrics</a>, where the choice between deriving a number and collecting it is the architect's decision rather than the analyst's.</p>
+
+<h3 class="subsec-title">A name that survives its author</h3>
+<p>Library hygiene as a general discipline is covered in <a href="/adobe-analytics-learning/analyze/segments/segment-best-practices/">Segment Best Practices</a>, where naming, tagging and findability are worked through for components at large, and none of that changes here. Two things are specific to metrics and worth stating.</p>
+
+<p><strong>Put the denominator in the title.</strong> Conversion Rate (Visits) and Conversion Rate (Visitors) can coexist forever without confusing anybody. Two metrics both called Conversion Rate cannot coexist for a week.</p>
+
+<p><strong>Write the description as though the reader is arguing with the number.</strong> Not a restatement of the formula, which is visible anyway, but the decision behind it: what it counts, what it deliberately excludes, and which conversation it was built to settle. That field is the only thing that will still be explaining this metric after its author has changed jobs.</p>
+
+<h3 class="subsec-title">Approved is a promise somebody has to keep</h3>
+<p>An administrator can mark a metric as approved, and the flag then shows up beside it in the component list and in the Data Dictionary. Most organizations treat this as a tidiness feature. It is closer to a signature.</p>
+
+<p>Approval tells every analyst in the company that this definition is the canonical one and that they should stop building their own. That is a strong claim, and it is only worth making if somebody will actually maintain the metric when the business changes, when a variable is repurposed, or when the definition turns out to be wrong. An approved metric that nobody owns is worse than an unapproved one, because it stops other people from questioning it.</p>
+
+<p>So approve a small number of metrics and mean it. A library with twelve approved metrics and two hundred unapproved ones is in far better shape than one where everything carries a checkmark.</p>
+
+<h3 class="subsec-title">Auditing a library in an afternoon</h3>
+<p>The audit below is deliberately mechanical, because the value is in doing it at all rather than in doing it cleverly. It is a read for the first five steps, and nothing is deleted until the consumers of a metric are known.</p>
+
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">Follow along: audit a calculated metrics library</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>Analytics &gt; Components &gt; Calculated metrics
+
+1  Clear every filter
+       Owner: all.  Approved: all.  Tags: none.
+       You are looking at the whole library, including the
+       metrics built by people who have left.
+
+2  Show the columns that matter
+       Owner, Tags, Approved, Used in, Last used
+
+3  Export to CSV
+       Sorting and reading 300 rows is a spreadsheet job,
+       not an interface job.
+
+4  Sort by title and read for collisions
+       Anything whose names differ only by a suffix, a case
+       change, or the word NEW is a duplicate until proven
+       otherwise. Open both and compare the definitions.
+
+5  Sort by Last used
+       Unused for a year, zero entries under Used in, owner
+       has left: that is the deletion pile.
+
+6  For everything with entries under Used in
+       Do not edit it. Build the corrected metric alongside,
+       rename the old one to say it is superseded, and let
+       its consumers move at their own pace.
+
+7  Fix the descriptions before the definitions
+       An accurate metric nobody understands still causes
+       the argument. The description is the cheaper fix.
+
+8  Approve the survivors, and only the survivors
+       Each approval is a commitment that somebody will
+       maintain that metric. Approve accordingly.
+
+Steps 1 to 5 change nothing. The first write happens at step 6.</pre></div>
+</div>
+
+<p>Nothing else needs to be configured, and there is no scheduled job or automation to set up: Adobe provides no housekeeping for this, which is exactly why it accumulates. This sequence is a floor rather than a ceiling. A mature practice does it quarterly, keeps the CSV exports, and can therefore say how the library changed over a year. A practice doing it for the first time will find most of the value in step 4 alone.</p>
+
+<div class="info-box">
+    <div class="info-hdr">ℹ️ Deleting is not the goal, and it is not usually the win</div>
+    <p>A library shrinks by two or three metrics and improves enormously, because the improvement came from naming and descriptions rather than from removal. Deletion is satisfying and slightly risky. Renaming, describing, and approving are unglamorous, reversible, and where the value actually is.</p>
+</div>
+
+<h3 class="subsec-title">Where this leaves you</h3>
+<p>A calculated metric is arithmetic over collected data, which makes it almost free. Everything difficult about it comes from the fact that the arithmetic is invisible once the metric has a name: the denominator, the metric type, the fused segment, the attribution model, and the persistence of the variables underneath all vanish behind a label in a component list. A wrong metric never announces itself, because there is nothing to announce. It simply produces a number, and people plan around it.</p>
+
+<p>That is why the checks in this section are worth more than the building technique in <a href="/adobe-analytics-learning/analyze/calculated-metrics/building-calculated-metrics/">Building Calculated Metrics</a>, and why the naming and approval habits matter more than they appear to. The technique takes an afternoon to learn. The discipline is what keeps a metric library usable by somebody who was not there when it was built.</p>
+
+<p>Metrics answer how much. The other half of analysis asks about whom, and that is the work of segmentation, starting with <a href="/adobe-analytics-learning/analyze/segments/understanding-segments/">Understanding Segments</a>, where a saved definition of a population becomes an object you can apply anywhere, including inside the metrics built here. Both instruments meet in <a href="/adobe-analytics-learning/analyze/analysis-workspace/analysis-workspace-overview/">Analysis Workspace Overview</a>, which is where a formula and a population finally become an answer somebody can act on.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Analytics</div>
+    <p>Analytics &gt; <span class="path">Components &gt; Calculated metrics</span> opens the manager, where the left panel filters by tag, approval status, owner and report suite, and the row actions cover tagging, approving, copying, renaming, deleting and exporting to CSV.</p>
+    <p>Approval is an administrator action, available both here and in the <span class="path">Data Dictionary</span> in the Analysis Workspace left rail. Approving in either place is reflected in the other.</p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title">📚 Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/calculated-metrics/calcmetric-workflow/cm-manager" target="_blank">Adobe Docs: Manage Calculated Metrics</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/calculated-metrics/calcmetric-workflow/cm-approving" target="_blank">Adobe Docs: Approve Calculated Metrics</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/calculated-metrics/calcmetrics-reference/cm-totals" target="_blank">Adobe Docs: Calculated Metrics Totals</a></li>
+    </ul>
+</div>

@@ -59,7 +59,7 @@ So whenever something written here is made wrong, narrower, or redundant by a la
 
 These documents were produced during earlier plain chat sessions. They are close to accurate but not infallible, and they predate parts of what shipped. Never follow a specific literally without checking it.
 
-**Precedence when documents disagree with the code: the code wins. Say so out loud, then correct the source document and add a revision-history entry**, so it becomes fact rather than a legacy record of intent. Amit has asked explicitly for this; the documents are meant to get stronger as the site grows, not to rot. The rulebook states this principle itself about the stylesheet. Two known stale spots: the rulebook's front matter examples omit `seotitle` and `tagline` (both required) and number Classifications as module 10 (it is 11); the structure map says "nothing has been built" (the restructure shipped) and its M03 §8 note says SDR is M20 (it is M19).
+**Precedence when documents disagree with the code: the code wins. Say so out loud, then correct the source document and add a revision-history entry**, so it becomes fact rather than a legacy record of intent. Amit has asked explicitly for this; the documents are meant to get stronger as the site grows, not to rot. The rulebook states this principle itself about the stylesheet. One known stale spot: the structure map says "nothing has been built" (the restructure shipped) and its M03 §8 note says SDR is M20 (it is M19). The rulebook's front matter examples were the other, and they were fixed in its own 6 August 2026 revision: `seotitle` and `tagline` are both present and marked required, and Classifications is numbered 11.
 
 ---
 

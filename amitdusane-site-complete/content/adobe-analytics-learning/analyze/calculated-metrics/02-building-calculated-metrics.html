@@ -2,67 +2,213 @@
 slug: "building-calculated-metrics"
 title: "Building Calculated Metrics"
 seotitle: "Building Calculated Metrics in Adobe Analytics"
-lastmod: 2026-07-15
+description: "Orders divided by visits looks like one formula. It is at least four, and the builder decides which one you saved without ever telling you."
+lastmod: 2026-08-10
 type: lesson
 modulenum: 12
 sectionnum: 2
 weight: 2
 ---
-<p>Calculated metrics allow you to create custom metrics using mathematical formulas, combining existing metrics into new insights.</p>
-                <h3 class="subsec-title">Building Calculated Metrics</h3>
-                <ul>
-                    <li><strong>Basic math:</strong> Add, subtract, multiply, divide metrics</li>
-                    <li><strong>Functions:</strong> Use statistical and advanced functions</li>
-                    <li><strong>Segments:</strong> Apply segments within the formula</li>
-                    <li><strong>Nesting:</strong> Use calculated metrics within other calculated metrics</li>
-                </ul>
+<p>A room has finally agreed that the conversion rate is orders divided by visits. Everybody nods, somebody writes it down, and the argument is declared over.</p>
 
-                <h3 class="subsec-title">Common Calculated Metrics</h3>
-                <div class="tbl-wrap">
-                    <table>
-                        <thead><tr><th>Metric</th><th>Formula</th><th>Purpose</th></tr></thead>
-                        <tbody>
-                            <tr><td><strong>Conversion Rate</strong></td><td>Orders / Visits</td><td>Purchase efficiency</td></tr>
-                            <tr><td><strong>Average Order Value</strong></td><td>Revenue / Orders</td><td>Order size</td></tr>
-                            <tr><td><strong>Bounce Rate</strong></td><td>Bounces / Entries</td><td>Engagement quality</td></tr>
-                            <tr><td><strong>Pages per Visit</strong></td><td>Page Views / Visits</td><td>Depth of engagement</td></tr>
-                            <tr><td><strong>Revenue per Visitor</strong></td><td>Revenue / Unique Visitors</td><td>Visitor value</td></tr>
-                            <tr><td><strong>Cart Abandonment Rate</strong></td><td>1 - (Orders / Carts)</td><td>Checkout friction</td></tr>
-                        </tbody>
-                    </table>
-                </div>
+<p>It is not over. That sentence still has at least four different meanings inside the builder, and choosing between them takes four clicks that nobody in the room knew existed. Whether orders are counted per row or against the grand total. Whether the visits being divided into are all visits or only some. Whether the orders carry last touch credit or first touch. Whether the result is formatted as a percentage or as a decimal that everybody then misreads by two orders of magnitude.</p>
 
-                <h3 class="subsec-title">Advanced Functions</h3>
-                <div class="code-block">
-                    <div class="code-hdr"><span class="code-lang">Calculated Metric Examples</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-                    <div class="code-body"><pre>// Segmented Metric: Mobile Conversion Rate
-Orders (where Mobile Visitors segment) / Visits (where Mobile Visitors segment)
+<p>The builder will accept every one of those combinations without complaint, and each one produces a clean number that looks exactly as authoritative as the others.</p>
 
-// Statistical Function: Revenue Z-Score
-(Revenue - Mean(Revenue)) / Standard Deviation(Revenue)
+<h3 class="subsec-title">The canvas, and the five things you can put on it</h3>
+<p>The builder is a drag and drop canvas rather than a formula box, which is either liberating or annoying depending on the day. Five kinds of thing can land on it.</p>
 
-// Approximate Count Distinct (cardinality)
-Approximate Count Distinct (User ID)
+<p><strong>Metrics.</strong> Standard metrics, Adobe defined metrics, and other calculated metrics. Yes, a calculated metric can contain a calculated metric, which is powerful and is also how dependency chains nobody drew come into existence.</p>
 
-// Cumulative Sum
-Cumulative(Revenue)
+<p><strong>Operators.</strong> Divide, multiply, subtract, add. One appears automatically between any two components, and it defaults to divide, which is correct often enough that it is easy to stop noticing.</p>
 
-// Percentile
-Percentile(Revenue, 90)  // 90th percentile</pre></div>
-                </div>
-                <div class="pro-tip">
-                    <div class="pro-tip-hdr">💡 Pro Tip</div>
-                    <p>Add "polarity" to your calculated metrics (green = good, red = bad) to help users quickly understand if a value is positive or negative for the business.</p>
-                </div>
-                <div class="path-box">
-                    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to Find</div>
-                    <p>Analytics → <span class="path">Components → Calculated Metrics</span></p>
-                </div>
-                <div class="ref-box">
-                    <div class="ref-title">📚 Learn More</div>
-                    <ul>
-                        <li><a href="https://experienceleague.adobe.com/docs/analytics/components/calculated-metrics/cm-overview.html" target="_blank">Adobe Docs: Calculated Metrics Overview</a></li>
-                        <li><a href="https://experienceleague.adobe.com/docs/analytics/components/calculated-metrics/cm-workflow/cm-build-metrics.html" target="_blank">Adobe Docs: Build Calculated Metrics</a></li>
-                    </ul>
-                </div>
-            
+<p><strong>Segments.</strong> Dropped into a container, a segment restricts what the metric inside it counts. This is the feature that makes the whole module worth reading, and it gets its own treatment below.</p>
+
+<p><strong>Functions.</strong> Statistical and structural operations wrapped around a metric: sums down a column, means, medians, percentiles, distinct counts.</p>
+
+<p><strong>Static numbers.</strong> A literal value. Multiply by 100, divide by 1000, subtract a target. Small and occasionally exactly what is needed.</p>
+
+<p>Containers nest all of this. A segment container applies a filter to whatever sits inside it, a function container applies a function, and a plain container exists only to force an order of operations. That last one matters more than it looks: arithmetic without explicit grouping is arithmetic somebody will misread.</p>
+
+<h3 class="subsec-title">The denominator is the entire argument</h3>
+<p>Almost every disagreement about a rate is a disagreement about its denominator, and the numerator is rarely in dispute at all. Orders are orders. What divides them is a choice about what the rate is supposed to mean.</p>
+
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>Formula</th><th>The question it actually answers</th><th>Who asks it</th></tr></thead>
+        <tbody>
+            <tr><td>Orders / Visits</td><td>How often does a session end in a purchase</td><td>Ecommerce and site optimization. The default, and usually the right one.</td></tr>
+            <tr><td>Orders / Unique Visitors</td><td>How many purchases does a person make in this period</td><td>Retention and lifecycle. Rises with the length of the date range, which surprises people.</td></tr>
+            <tr><td>Orders / Cart Additions</td><td>Once intent exists, how often is it completed</td><td>Checkout and payments. A far higher number, and a far narrower claim.</td></tr>
+            <tr><td>Orders / Page Views</td><td>Almost nothing worth knowing</td><td>Nobody, and yet it gets built, because both metrics were in the list.</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<p>All four are arithmetically valid. Only the first three are meaningful, and they are meaningful to different people. The practical rule is to name the denominator in the metric title rather than trusting anybody to remember it, which is why a library full of metrics called Conversion Rate is a library that has not solved anything.</p>
+
+<p>One trap deserves naming on its own. Dividing by unique visitors produces a number that changes when the date range changes, because a person visiting across two months is one unique visitor over the quarter and two over the individual months. Sum the monthly figures and they will not agree with the quarterly one. Nothing is broken. Unique visitors were never additive.</p>
+
+<h3 class="subsec-title">Standard or Total, and why every row suddenly changed</h3>
+<p>Select the gear on any metric inside the builder and one of the settings is Metric type, with two values.</p>
+
+<p><strong>Standard</strong> is the ordinary behavior. The metric is evaluated for each row of the table, so Orders divided by Visits gives each page its own conversion rate.</p>
+
+<p><strong>Total</strong> replaces the metric with the grand total for the entire report, held constant on every row. Orders divided by Total Visits gives each page its share of all site traffic, not its own rate. This is how a share of total column is built, and there is no other clean way to build one.</p>
+
+<p>The two settings produce columns that look identical in structure and mean completely different things. A metric intended as a rate, built with Total by accident, produces a column of small percentages that decrease as the table gets longer, which reads as plausible for exactly as long as nobody adds up the column.</p>
+
+<h3 class="subsec-title">A segment inside the metric, and why a panel filter cannot do it</h3>
+<p>Here is the capability worth the price of the whole feature.</p>
+
+<p>Applying a segment to a panel filters everything in that panel. Every table, every column, every visualization now describes only the people who qualified. That is usually what you want, and it makes one thing impossible: comparing the segment against anything else in the same table.</p>
+
+<p>Fuse the segment into the metric instead and the filter travels with that one column. Revenue sits beside Revenue from New Visitors, in one table, broken down by whatever dimension you please, and the comparison a stakeholder actually asked for is right there instead of spread across two screenshots.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">📊 A panel segment filters the room. A metric segment filters one column.</div>
+    <svg viewBox="0 0 700 250" style="width:100%;height:auto;display:block;margin:4px 0 8px"
+         role="img" aria-label="Two freeform tables side by side. On the left, a segment applied to the panel filters every column, so there is nothing left to compare against. On the right, a segment fused into a single calculated metric filters only that column, leaving the unfiltered metric beside it so both populations appear in one table.">
+        <text x="20" y="26" style="fill:var(--text1,#0f172a);font-size:13px;font-weight:700;font-family:sans-serif">Segment applied to the panel</text>
+        <text x="370" y="26" style="fill:var(--accent,#e11d48);font-size:13px;font-weight:700;font-family:sans-serif">Segment fused into the metric</text>
+
+        <rect x="20" y="42" width="300" height="150" rx="6" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <rect x="20" y="42" width="300" height="28" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <rect x="140" y="70" width="180" height="122" style="fill:var(--accent-light,rgba(225,29,72,.10));stroke:none"/>
+        <line x1="140" y1="42" x2="140" y2="192" style="stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <line x1="230" y1="42" x2="230" y2="192" style="stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <text x="30" y="61" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">Page</text>
+        <text x="150" y="61" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">Visits</text>
+        <text x="240" y="61" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">Revenue</text>
+        <text x="30" y="94" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">/home</text>
+        <text x="30" y="124" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">/search</text>
+        <text x="30" y="154" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">/cart</text>
+
+        <rect x="370" y="42" width="300" height="150" rx="6" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <rect x="370" y="42" width="300" height="28" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <rect x="580" y="70" width="90" height="122" style="fill:var(--accent-light,rgba(225,29,72,.10));stroke:none"/>
+        <rect x="580" y="42" width="90" height="150" rx="0" style="fill:none;stroke:var(--accent,#e11d48);stroke-width:2"/>
+        <line x1="490" y1="42" x2="490" y2="192" style="stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <text x="380" y="61" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">Page</text>
+        <text x="500" y="61" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">Revenue</text>
+        <text x="590" y="61" style="fill:var(--accent,#e11d48);font-size:11px;font-weight:700;font-family:sans-serif">Rev, new</text>
+        <text x="380" y="94" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">/home</text>
+        <text x="380" y="124" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">/search</text>
+        <text x="380" y="154" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">/cart</text>
+
+        <text x="20" y="214" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">Everything is filtered, so there is</text>
+        <text x="20" y="230" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">nothing left in the table to compare against.</text>
+        <text x="370" y="214" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">One column is filtered, the rest are not.</text>
+        <text x="370" y="230" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">Both populations sit in one table.</text>
+    </svg>
+</div>
+
+<p>The mechanic is undramatic: drop a segment into a container in the builder, put the metric inside it, and the segment is evaluated at report run time against whatever the report is looking at. Nothing about the implementation changes, and no data is precomputed. What you have built is a column that quietly asks a narrower question than its neighbors.</p>
+
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ The panel segment does not step aside for the metric segment</div>
+    <p>Both filters apply. A panel scoped to mobile traffic, containing a metric with new visitors fused into it, returns revenue from mobile new visitors, and the column header says nothing about mobile. The number is correct and the label is a lie of omission. This is the most common way a segmented metric misleads, and it never produces an error, because logically there is nothing wrong with asking two questions at once.</p>
+</div>
+
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ Editing a shared segment rewrites every metric that contains it</div>
+    <p>A segment inside a calculated metric is a live reference, not a copy. Adobe updates the segment everywhere it is used the moment it is saved, including inside metric definitions. So an analyst tightening one segment for their own project can silently change an approved company metric, in a dashboard they have never opened, for people they have never met. Nothing warns either party. Before editing any shared segment, check what it is embedded in.</p>
+</div>
+
+<h3 class="subsec-title">Attribution belongs to the metric, when the metric is an attribution question</h3>
+<p>The same gear that holds Metric type also holds an attribution model and a lookback window. Setting them here means this metric, and only this metric, credits conversions differently from every other column in the table.</p>
+
+<p>Adobe offers a long list of models, from last touch and first touch through linear, participation, U shaped, time decay and algorithmic, each with its own lookback window. <a href="/adobe-analytics-learning/analyze/attribution-models/what-is-attribution/">What Is Attribution</a> covers what those models mean and when each is defensible, and <a href="/adobe-analytics-learning/analyze/attribution-models/lookback-windows/">Lookback Windows</a> covers how far back credit is allowed to reach.</p>
+
+<p>The opinion for a first build is narrow: leave attribution alone unless the metric exists to answer an attribution question. A metric named First Touch Revenue is honest, because its name declares the model. A metric named Revenue that quietly carries first touch attribution is a trap, and the person who finds it will be debugging a discrepancy at the time.</p>
+
+<h3 class="subsec-title">Format is not decoration</h3>
+<p>Four format options exist: decimal, currency, percent and time. Percent is the one that gets missed, and the failure is invisible in exactly the wrong way. A conversion rate built without it displays as 0.021 rather than 2.1 percent, and somewhere downstream a person reads it as two percent, or as zero, or multiplies it by a hundred a second time.</p>
+
+<p>Two smaller settings sit beside it and are worth thirty seconds each. Decimal places, because a rate quoted to six decimal places implies a precision the data does not have. And the setting that decides whether an upward trend is drawn as good in green or bad in red, which exists because half of all useful metrics are ones you want to go down. Bounce rate, exit rate, average page load, cost per order. Left at the default, a rising bounce rate is celebrated in green on every summary tile in the building.</p>
+
+<h3 class="subsec-title">Functions, and where to stop</h3>
+<p>The function list is long and mostly statistical: mean, median, percentile, quartile, standard deviation, variance, column sum, row sum, count, round, absolute value. The reference documentation lists every one with its arguments, and copying that list here would help nobody.</p>
+
+<p>Two are worth knowing by name before the rest. <strong>Column Sum</strong> is what most share of total metrics are built from, dividing a row value by the sum of the column. <strong>Approximate Count Distinct</strong> returns an approximate count of distinct values in a dimension, which is how a question like "how many distinct customer IDs bought this month" gets answered without exporting anything. Approximate is the operative word, and it belongs in the metric description so that nobody later reports it as exact.</p>
+
+<div class="pro-tip">
+    <div class="pro-tip-hdr">💡 Cumulative average over a rate metric averages the wrong thing</div>
+    <p>Adobe documents this one directly. Applying a cumulative average to a rate, such as revenue per person, averages the rates themselves rather than dividing cumulative revenue by cumulative people, and those two answers are not the same whenever the daily volumes differ. Build it as cumulative revenue divided by cumulative people instead. The same reasoning applies to any average of an average: aggregate the parts first, then divide.</p>
+</div>
+
+<h3 class="subsec-title">Building the metric this section started with</h3>
+<p>Enough theory. Here is the conversion rate that room agreed on, built so that the agreement survives contact with a report.</p>
+
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">Follow along: build Conversion Rate (Visits)</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>Analytics &gt; Components &gt; Calculated metrics &gt; Add
+
+1  Title:        Conversion Rate (Visits)
+       The denominator is in the name on purpose. It is the only
+       thing that stops a second, different Conversion Rate
+       appearing next quarter.
+
+2  Description:  Orders divided by visits. Session level purchase
+                 rate. Agreed definition for site reporting.
+       Not optional. This field is the only explanation a
+       stranger will ever get.
+
+3  Report suite: the suite you report on
+4  Tags:         Standard, Ecommerce
+
+5  Definition:
+       Drag  Orders   onto the canvas
+       Drag  Visits   below it
+       The operator between them defaults to Divide. Leave it.
+
+6  On each metric, open the gear:
+       Metric type:        Standard        (not Total)
+       Attribution model:  leave default   (this is not an
+                                            attribution question)
+
+7  Format:            Percent
+   Decimal places:    1
+   Show upward trend: Good, green
+
+8  Preview
+       The builder charts the last 90 days. A rate that is
+       flat at zero, or that spikes to several hundred percent,
+       is a formula error and not a data story.
+
+9  Save
+
+10 Verify before anyone else sees it:
+       Open a Freeform table. Add Orders, Visits, and the new
+       metric side by side. Check two or three rows by hand.
+       Then change the date range and check that the number
+       moves the way a rate should.
+
+Nothing else needs configuring. The metric is now available in
+every project in the report suite, over all history, immediately.</pre></div>
+</div>
+
+<p>Those ten steps are a floor rather than a ceiling. They produce one correct, well labeled metric; they do not make anybody an architect of a metric library. Step 10 is the one that gets skipped, and it is the only step that would have caught a wrong denominator before a stakeholder did.</p>
+
+<p>Two things about the environment are worth knowing before saving anything. The builder can keep a metric inside the single project it was created in rather than adding it to the shared library, which is the right choice for genuinely one off analysis and the wrong choice for anything anybody else will quote. And a saved metric applies to all report suites in the login company, so a name that made sense for one brand's suite will be sitting in front of every other brand's analyst tomorrow.</p>
+
+<h3 class="subsec-title">What you can build now, and what you have not solved</h3>
+<p>The mechanics are finite and they fit on one page: components on a canvas, an operator between them, a gear holding metric type and attribution, a container holding a segment, a format that decides how the number reads. Everything the builder can express is some arrangement of those parts.</p>
+
+<p>What none of it solves is the problem that arrives about eighteen months later. Every one of these metrics is cheap to make, immediate, and permanent unless somebody deletes it, and a feature with those three properties always produces the same end state: a library nobody trusts, containing four metrics with almost the same name, at least one of which is quietly wrong. <a href="/adobe-analytics-learning/analyze/calculated-metrics/calculated-metrics-best-practices/">Calculated Metrics Best Practices</a> is about the arithmetic that fails silently, and about keeping a library that a stranger can still use.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Analytics</div>
+    <p>Analytics &gt; <span class="path">Components &gt; Calculated metrics &gt; Add</span> opens the builder from the manager.</p>
+    <p>Inside a project, the same builder opens from the <span class="path">Add</span> control in the Metrics section of the left panel, from <span class="path">Components &gt; Create metric</span>, by right clicking a metric column header and choosing to create a metric from the selection, or with <span class="path">Shift + Ctrl + C</span> on Windows and <span class="path">Shift + Cmd + C</span> on Mac.</p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title">📚 Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/calculated-metrics/calcmetric-workflow/cm-build-metrics" target="_blank">Adobe Docs: Build Calculated Metrics</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/calculated-metrics/calcmetric-workflow/m-metric-type-alloc" target="_blank">Adobe Docs: Metric Type and Attribution</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/calculated-metrics/calcmetric-workflow/metrics-with-segments" target="_blank">Adobe Docs: Segmented Metrics</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/calculated-metrics/calcmetrics-reference/cm-adv-functions" target="_blank">Adobe Docs: Advanced Functions</a></li>
+    </ul>
+</div>
