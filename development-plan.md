@@ -93,7 +93,13 @@ Five single gaps sitting inside modules that are otherwise finished, so each is 
 | M02 §7 Privacy and Data Retention | `foundations/report-suites/07-privacy-data-retention.html` | **Signed off 7 Aug 2026** |
 | M05 §4 Data Layer Design | `collect/data-layers/04-data-layer-design.html` | **Signed off 7 Aug 2026** |
 | M06 §8 Consent and Tag Management | `collect/adobe-launch-tags/08-consent-and-tag-management.html` | |
-| M07 §5 Experience Cloud ID (ECID) | `collect/tracking-calls/05-experience-cloud-id-ecid.html` | |
+| M07 §5 Experience Cloud ID (ECID) | `collect/tracking-calls/05-experience-cloud-id-ecid.html` | **Signed off 7 Aug 2026** |
+
+**Phase 2 is complete. All five orphan sections written and signed off.**
+
+Modules 6 and 7 closed with them, taking the total to **12 of 21 modules complete** and sections to 71 of 116 (61.2%), with `final` now equal to `created` at 71.
+
+**M12 Calculated Metrics is the only gap in Modules 1 to 13**, and it is three sections. Everything else from Fundamentals through Segments is finished. Writing those three is what makes the first half of the curriculum read end to end with no holes, which is the next real milestone rather than a percentage.
 
 **Modules 2 and 5 are now complete**, all sections created, QA'd and signed off. Phase 2 is three of five done, with M06 §8 Consent and Tag Management and M07 §5 ECID remaining.
 
@@ -142,7 +148,7 @@ Per section, repeatable:
 4. **Verify** — `hugo --gc`, assert page count, then the QA Rulebook's 13 points and the rulebook's 20-item section checklist.
 5. **You edit for accuracy**, I apply corrections.
 
-**Order after the 4 remaining orphans**, following the structure map's arc, one module at a time and complete before moving on:
+**Order now that the orphans are done**, following the structure map's arc, one module at a time and complete before moving on. M12 first, because three sections close the gap in Modules 1 to 13:
 
 M12 (3) → M14 (10) → M15 (4) → M16 (4) → M17 (4) → M18 (4) → M19 (6) → M20 (5) → M21 (5)
 
