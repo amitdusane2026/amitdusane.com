@@ -53,6 +53,7 @@ weight: 5
 <p>Adobe Analytics is not on the page to tell you how many times the Submit button was clicked. A counter could do that, and the answer would be nearly useless. What earns its keep is the other question: how many <strong>people</strong> clicked Submit this month.</p>
 <p>Counting clicks is arithmetic. Counting people requires a serial number.</p>
 <p>So Adobe issues one. On a visitor's first arrival at a site where the implementation is running, the library writes a cookie containing a 38-digit number that visitor has never seen and will never be told about, and sends it along with every subsequent request. The shopkeeper's register, at internet scale.</p>
+<p>That cookie is written by your own domain, which is what keeps it working. A second, third-party cookie on Adobe's <code>demdex.net</code> domain once helped recognise the same visitor across different sites, and browsers now block it by default. Nothing on your own domain suffers for that, but it is the reason carrying identity between two sites you own takes deliberate work rather than happening by itself.</p>
 
 <h3 class="subsec-title">The identifier that kept changing its name</h3>
 <p>The concept has been stable for many years. The label has not, and knowing why saves confusion when reading older material or an API method name.</p>
@@ -200,11 +201,61 @@ visitor.getMarketingCloudVisitorID(function (id) {
 
 <h3 class="subsec-title">The modern answer: keep both and let the graph do the work</h3>
 <p>The current approach does not ask you to choose. Keep the ECID exactly as it is, and additionally capture your own person-level identifier, using an internal customer ID rather than a raw email address or phone number for the reasons set out in <a href="/adobe-analytics-learning/collect/data-layers/data-layer-design/">Data Layer Design</a>.</p>
+<p>The ID service has a method for exactly this. <code>setCustomerIDs</code> attaches your own identifier to the ECID already in play, which is what lets a phone and a laptop be recognised as one person later.</p>
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">Attaching your own identifier at sign-in</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>visitor.setCustomerIDs({
+  "crm_id": {
+    "id": "8842197",
+    "authState": Visitor.AuthState.AUTHENTICATED
+  }
+});</pre></div>
+</div>
+<div class="pro-tip">
+    <div class="pro-tip-hdr">💡 Send it on every authenticated hit, not only on the login page</div>
+    <p>Signing in happens once, and the session that follows can run for hours across dozens of page views. Setting the identifier only where the login occurs means every hit afterwards carries the browser identity alone, and the stitching you were relying on covers one page view instead of the whole visit. If the visitor is signed in, say so on every hit. This is the single most common way an otherwise correct identity setup underdelivers.</p>
+</div>
 <p>Both then travel into Adobe Experience Platform, where the person identifier joins the identity graph and pulls the scattered cookie identities together into one profile. Analytics keeps its integrations. You gain the person-level view. Nothing is overridden.</p>
 <p>The part that makes this genuinely different from anything Analytics could do alone is that Platform is not restricted to online behaviour. It will ingest from a CRM, a call centre, a store system, a loyalty database. Where the same customer identifier is maintained in those systems, web behaviour joins purchases made in a shop and conversations with an agent, and the result is an omnichannel view of one person rather than a browser. Building analysis on top of that view is the work of Customer Journey Analytics, which is where this curriculum eventually arrives.</p>
 <div class="info-box">
     <div class="info-hdr">ℹ️ Identity is also what makes a privacy request answerable</div>
     <p>There is a compliance dimension to keeping a person-level identifier that is easy to overlook while thinking about reporting. A deletion request arrives naming a human being, usually by email address, and Adobe Analytics knows only cookie identities. Without a stored person-level identifier there is no route from the request to the data, and the request cannot be honoured properly. <a href="/adobe-analytics-learning/foundations/report-suites/privacy-data-retention/">Privacy and Data Retention</a> covers what that failure looks like, which is a clean and entirely successful-looking response that found nothing.</p>
+</div>
+
+<h3 class="subsec-title">What you actually do, and the two things that bite</h3>
+<p>Everything so far is understanding. Here is the work, and it is genuinely short.</p>
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">Follow along: ECID, start to finish</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>1  Launch > your property > Extensions > Catalog
+   Install "Experience Cloud ID Service"
+   Check the Organization ID is correct (usually pre-filled)
+
+2  Launch > Data Elements > Add > Custom Code
+   Return the ECID, using getMarketingCloudVisitorID()
+
+3  Launch > Extensions > Adobe Analytics > Configure
+   Assign that data element to a spare eVar
+
+4  Publish through development, then staging, then production
+
+5  Verify: use the site yourself with a counted pattern,
+   note your own ECID, wait more than 90 minutes,
+   then filter a report to that single ECID
+
+Done. There is nothing else to configure.</pre></div>
+</div>
+<p>Step one is the part people get wrong by looking in the wrong place, hunting for an identity setting inside the Adobe Analytics extension. It is not there. Step two exists purely so future-you can debug, and step five is what turns an implementation you believe in into one you have proved.</p>
+<p>Two things go wrong often enough to be worth knowing before they happen.</p>
+<p><strong>Loading order, if any code is placed by hand.</strong> The ID service has to run before AppMeasurement, because AppMeasurement asks it for an identity while building the request and gets nothing if the service has not finished initialising. Inside Launch the extensions handle this for you and it is a non-issue. It becomes an issue when hand-written tags are mixed with the tag manager, or when one library loads asynchronously and the other does not.</p>
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ If unique visitors are slightly too high forever, check this first</div>
+    <p>A request built before the ID service is ready does not fail. It is sent, it is processed, and it arrives carrying a different identity from every other hit in the same visit. The visit fragments, the visitor count inflates, and the pages that load fastest are the ones affected. No console error, no failed request, no report that flags it. This is the diagnosis nobody reaches for, because everything looks like it is working. Implementations on the Web SDK are exempt: the Edge Network owns identity there, so the ordering problem cannot occur.</p>
+</div>
+<p><strong>Deploying onto a site that already has history.</strong> A frequent and reasonable worry is that switching the ID service on will orphan years of existing visitors. It does not. Where the older Analytics visitor cookie is present, that legacy identifier is carried into the new cookie alongside the freshly issued ECID, and it continues to identify the visitor until the cookie expires or is cleared. Existing visitors keep their history rather than appearing as a wave of new people.</p>
+<p>The wrinkle is a partial rollout. If some pages have the ID service and some do not while all of them report into the same suite, the two kinds of page will disagree about who the visitor is, and the numbers will look wrong in ways nobody can pin down. Adobe Customer Care can apply a grace period, during which the service returns both identifiers so the pages agree. It runs up to 180 days and can be renewed.</p>
+<div class="pro-tip">
+    <div class="pro-tip-hdr">💡 Turn the grace period off when the rollout finishes</div>
+    <p>It exists to cover a migration, not to run indefinitely, and there is nothing in any interface that will remind you. A grace period still running years after the last page was converted is a loose end worth checking for on any implementation you inherit.</p>
 </div>
 
 <h3 class="subsec-title">What you have now</h3>
