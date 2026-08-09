@@ -105,11 +105,17 @@ Then crawl the built HTML, not the source. Source passing every check proves not
 
 ## What this site is for, and why anyone would return to it
 
-**The site is not a better-worded Adobe documentation.** Adobe's documentation is reference material for people who already know what they need, and it is good at that. It does not teach, and it was never trying to. The gap it leaves is practical advice and a stated opinion on how to proceed, and that gap is the entire market position here.
+**Write for one reader: somebody who has already been through the documentation, still has questions, and finds the topic rigid and boring.** Not a beginner, and not someone who needs convincing that Adobe Analytics exists. Somebody stuck. That single assumption decides what to explain and what to take as read, and it is the most useful line in this file.
+
+**The site is not a replacement for Adobe's documentation. It is what makes that documentation legible.** Adobe writes reference material for people who already know what they need, which is a permanent constraint rather than a failing: they sell to every customer, so every answer has to be "it depends". That constraint is exactly why the gap here is durable. A reader who understands why a thing exists can go back to Experience League and find that it suddenly makes sense, including the parts that previously looked arbitrary. **The `ref-box` is that handoff, not a courtesy** — it is where an equipped reader goes next.
+
+**The real subject is how to think about a topic, not the topic.** Any single section teaches one concept and opens doors to others. What should survive is the method, because a reader who has it can teach themselves the next thing without you. That is the master key, and it is why a section that only transfers facts has failed even when every fact is right.
 
 **The identity is deliberately narrow: answer WHY, then solve HOW.** Not comprehensive coverage. An actor who tries every genre masters none; the ones who last pick a lane. History, story and real situations are how the WHY gets delivered, and the technical detail follows once the reader knows why they need it.
 
-**Give opinions, not options.** A learner driver facing an oncoming car does not need four alternatives and a trade-off table, they need "do this". Four options is what documentation already provides and it is why documentation does not teach. Take a position, say which one to use, and let the reader develop their own judgment later.
+**Give opinions, not options.** A learner driver facing an oncoming car does not need four alternatives and a trade-off table, they need "do this". Four options is what documentation already provides and it is why documentation does not teach. Take a position and say which one to use.
+
+**An opinion is scaffolding, not doctrine, and that has to be visible.** The framing is *follow these for your first case*, with *then derive your own* implied rather than laboured. Stated that way an opinion needs no hedging, because its status already carries the limit. Data Layer Design does this well: "There is no single correct design, which is not the same as anything goes." ECID's walkthrough closes on "there is nothing else to configure", which is true and reads as doctrine. Make the scaffolding explicit once per section rather than leaving it to whether it occurred to me that day.
 
 **The test is the meeting, not the exam.** Picture a room arguing about why visitor numbers do not match CRM, why revenue does not match the order system, why the company is not using its own customer ID. Reciting cookie names answers none of it. Write what equips somebody to make a decision and hold that conversation.
 
@@ -169,7 +175,9 @@ Invariant structure:
 
 1. **Untitled opener.** One to three paragraphs before the first h3, doing continuity recap or scenario setup, with inline links back to earlier sections.
 2. **Body.** The h3 stack, each 2 to 6 paragraphs, interleaved with earned components.
-3. **The practical walkthrough, second to last h3.** Before the section closes, answer the question the reader actually has: *what do I do with all of this?* An ordered, numbered walkthrough in a `code-block` — which screen to open, what to install, what to save, how to verify — ending with an explicit statement that there is nothing else to configure. Deployment gotchas hang off this block rather than sitting apart from it, because they belong to the doing. Established 10 Aug 2026 on M07 §5; skip it only when the subject genuinely has nothing to configure.
+3. **The practical walkthrough, second to last h3.** Before the section closes, answer the question the reader actually has: *what do I do with all of this?* An ordered, numbered walkthrough in a `code-block` — which screen to open, what to install, what to save, how to verify — ending with an explicit statement that there is nothing else to configure, and a line making clear these steps are a floor rather than a ceiling. Deployment gotchas hang off this block rather than sitting apart from it, because they belong to the doing. Established 10 Aug 2026 on M07 §5; skip it only when the subject genuinely has nothing to configure.
+
+   **This block is the engine, not the appendix.** Amit learned by following experts' steps first, getting an outcome, and only then asking whether there was a better way, at which point the documentation finally made sense. Outcome precedes understanding, so the walkthrough is what earns the reader's second visit and their willingness to think harder. Treat it as load-bearing.
 4. **Final h3 is synthesis plus onward link**, named by function not topic: "What you have now", "Everything hinges on one thing", "Where this module leaves you". Its last paragraph names a related section, says what that section covers, and links it.
 5. **`path-box`**, then **`ref-box`** last, always, exactly one. Nothing follows it.
 
