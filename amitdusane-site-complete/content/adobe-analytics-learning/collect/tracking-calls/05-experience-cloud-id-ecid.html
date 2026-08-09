@@ -2,157 +2,222 @@
 slug: "experience-cloud-id-ecid"
 title: "Experience Cloud ID (ECID)"
 seotitle: "Experience Cloud ID (ECID) in Adobe Analytics"
-description: "One identifier shared by every Adobe solution. Where it lives, why it identifies a browser rather than a person, and the load order that breaks it silently."
+description: "A shopkeeper solved this with a serial number column. What the ECID identifies, what it honestly cannot, and why that is not a flaw."
 lastmod: 2026-08-07
 type: lesson
 modulenum: 7
 sectionnum: 5
 weight: 5
 ---
-<p>Here is a question that sounds trivial and, for years, could not be answered. A visitor sees a personalised offer, comes back the following week, and buys something. Did the offer work?</p>
-<p>Answering it requires one thing: agreement that the person who saw the offer and the person who bought are the same person. Adobe Target knew about the first. Adobe Analytics knew about the second. Neither had any way of knowing they were discussing one human being, because each of them had invented its own name for the visitor and never told the other.</p>
-<p>The Experience Cloud ID is the fix for that, and understanding what it actually identifies is the difference between reports you can trust and reports that quietly overcount every person who owns two devices.</p>
+<p>A shopkeeper decides to keep records. Nothing sophisticated, just a register: the customer's name, their contact details, their address, and what they bought. Over months the book fills up, and it starts paying him back. He can see that a customer named ABC has spent a considerable amount over the year, so ABC gets remembered, greeted, and looked after.</p>
+<p>Then a second customer walks in, and his name is also ABC.</p>
+<p>Nothing about that is unusual, which is exactly the problem. The register has just stopped working, and no amount of care in filling it in will fix it.</p>
 
-<h3 class="subsec-title">The problem it was built to solve</h3>
-<p>Before a shared identifier existed, every Adobe solution minted its own. Analytics wrote a visitor ID into a cookie named <code>s_vi</code>. Target maintained its own identifier. Audience Manager had another. Each was perfectly correct within its own product, and each was useless outside it.</p>
-<p>The consequence was not a reporting inconvenience. It made whole categories of question unanswerable. An audience built in one tool could not be measured in another. A test could not be connected to the conversion it produced. Every solution held a fragment of the same person and no two fragments could be joined.</p>
+<h3 class="subsec-title">The column that solves it was already in the register</h3>
+<p>The obvious repair is to write more down. Name plus address should separate them.</p>
+<p>It does, briefly. Then it gets unwieldy, because identifying somebody by two long strings is tedious every single time. Worse, both of them move. People relocate, and people change their names, which is uncommon but entirely legal and entirely their business. Anything that can change is not an identity. It is a description.</p>
+<p>The shopkeeper already has the answer and has been writing it down without noticing. It is the first column of his register: the serial number.</p>
 <div class="diagram-box">
-    <div class="diagram-title">One visitor, before and after a shared identifier</div>
-    <svg viewBox="0 0 700 200" style="width:100%;height:auto;display:block" role="img" aria-label="A comparison showing that before the Experience Cloud ID each Adobe solution held its own separate identifier for the same visitor, so no solution could be joined to another, and afterwards all solutions share one organisation-level ID.">
-        <text x="170" y="26" text-anchor="middle" style="fill:var(--warning,#f59e0b);font-size:11px;font-weight:700;font-family:sans-serif;letter-spacing:1px">SOLUTION-SPECIFIC IDS</text>
-        <rect x="18" y="42" width="96" height="44" rx="7" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
-        <text x="66" y="62" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-weight:700;font-family:sans-serif">Analytics</text>
-        <text x="66" y="78" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:10px;font-family:sans-serif">s_vi</text>
-        <rect x="122" y="42" width="96" height="44" rx="7" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
-        <text x="170" y="62" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-weight:700;font-family:sans-serif">Target</text>
-        <text x="170" y="78" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:10px;font-family:sans-serif">its own</text>
-        <rect x="226" y="42" width="96" height="44" rx="7" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
-        <text x="274" y="62" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-weight:700;font-family:sans-serif">Audience Mgr</text>
-        <text x="274" y="78" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:10px;font-family:sans-serif">another</text>
-        <text x="170" y="112" text-anchor="middle" style="fill:var(--warning,#f59e0b);font-size:11px;font-family:sans-serif">three names, no way to join them</text>
-        <rect x="18" y="128" width="304" height="46" rx="7" style="fill:var(--warning,#f59e0b);opacity:0.15"/>
-        <rect x="18" y="128" width="304" height="46" rx="7" style="fill:none;stroke:var(--warning,#f59e0b);stroke-width:1.5"/>
-        <text x="170" y="156" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-family:sans-serif">"Did the offer work?" cannot be answered</text>
-        <line x1="350" y1="20" x2="350" y2="184" style="stroke:var(--border,#e2e8f0);stroke-width:1;stroke-dasharray:4 4"/>
-        <text x="525" y="26" text-anchor="middle" style="fill:var(--success,#10b981);font-size:11px;font-weight:700;font-family:sans-serif;letter-spacing:1px">ONE SHARED ID</text>
-        <rect x="452" y="42" width="146" height="44" rx="7" style="fill:var(--card,#ffffff);stroke:var(--success,#10b981);stroke-width:2"/>
-        <text x="525" y="62" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">ECID</text>
-        <text x="525" y="78" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:10px;font-family:sans-serif">one per organisation</text>
-        <path d="M525 88 L525 100 L410 100 L410 118" style="fill:none;stroke:var(--success,#10b981);stroke-width:1.5"/>
-        <path d="M525 100 L525 118" style="fill:none;stroke:var(--success,#10b981);stroke-width:1.5"/>
-        <path d="M525 100 L640 100 L640 118" style="fill:none;stroke:var(--success,#10b981);stroke-width:1.5"/>
-        <text x="410" y="134" text-anchor="middle" style="fill:var(--text2,#475569);font-size:10px;font-family:sans-serif">Analytics</text>
-        <text x="525" y="134" text-anchor="middle" style="fill:var(--text2,#475569);font-size:10px;font-family:sans-serif">Target</text>
-        <text x="640" y="134" text-anchor="middle" style="fill:var(--text2,#475569);font-size:10px;font-family:sans-serif">Audience Mgr</text>
-        <rect x="374" y="146" width="308" height="34" rx="7" style="fill:var(--success,#10b981);opacity:0.15"/>
-        <rect x="374" y="146" width="308" height="34" rx="7" style="fill:none;stroke:var(--success,#10b981);stroke-width:1.5"/>
-        <text x="528" y="168" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-family:sans-serif">the question becomes answerable</text>
+    <div class="diagram-title">The register, and the one column that never lies</div>
+    <svg viewBox="0 0 700 205" style="width:100%;height:auto;display:block" role="img" aria-label="A shopkeeper's register with columns for serial number, name, address and purchases. Two different customers are both named ABC, so the name column cannot tell them apart, but the serial number column identifies each one unambiguously.">
+        <rect x="14" y="30" width="86" height="150" rx="6" style="fill:var(--accent-light,rgba(225,29,72,.10));stroke:var(--accent,#e11d48);stroke-width:2"/>
+        <text x="57" y="52" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:11px;font-weight:700;font-family:sans-serif">Sr No</text>
+        <text x="57" y="88" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:15px;font-weight:700;font-family:sans-serif">17</text>
+        <text x="57" y="128" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:15px;font-weight:700;font-family:sans-serif">34</text>
+        <text x="57" y="166" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">never reused</text>
+        <text x="120" y="52" style="fill:var(--text3,#94a3b8);font-size:11px;font-weight:700;font-family:sans-serif">Name</text>
+        <text x="120" y="88" style="fill:var(--warning,#f59e0b);font-size:13px;font-weight:700;font-family:sans-serif">ABC</text>
+        <text x="120" y="128" style="fill:var(--warning,#f59e0b);font-size:13px;font-weight:700;font-family:sans-serif">ABC</text>
+        <text x="120" y="166" style="fill:var(--warning,#f59e0b);font-size:11px;font-family:sans-serif">identical</text>
+        <text x="250" y="52" style="fill:var(--text3,#94a3b8);font-size:11px;font-weight:700;font-family:sans-serif">Address</text>
+        <text x="250" y="88" style="fill:var(--text2,#475569);font-size:12px;font-family:sans-serif">12 Station Road</text>
+        <text x="250" y="128" style="fill:var(--text2,#475569);font-size:12px;font-family:sans-serif">4 Mill Lane</text>
+        <text x="250" y="166" style="fill:var(--warning,#f59e0b);font-size:11px;font-family:sans-serif">people move</text>
+        <text x="470" y="52" style="fill:var(--text3,#94a3b8);font-size:11px;font-weight:700;font-family:sans-serif">Business</text>
+        <text x="470" y="88" style="fill:var(--text2,#475569);font-size:12px;font-family:sans-serif">1,000</text>
+        <text x="470" y="128" style="fill:var(--text2,#475569);font-size:12px;font-family:sans-serif">80</text>
+        <line x1="110" y1="62" x2="686" y2="62" style="stroke:var(--border,#e2e8f0);stroke-width:1"/>
+        <line x1="110" y1="100" x2="686" y2="100" style="stroke:var(--border,#e2e8f0);stroke-width:1"/>
+        <line x1="110" y1="140" x2="686" y2="140" style="stroke:var(--border,#e2e8f0);stroke-width:1"/>
+        <rect x="560" y="74" width="126" height="54" rx="6" style="fill:var(--card,#ffffff);stroke:var(--success,#10b981);stroke-width:2"/>
+        <text x="623" y="96" text-anchor="middle" style="fill:var(--success,#10b981);font-size:11px;font-weight:700;font-family:sans-serif">Customer 17</text>
+        <text x="623" y="114" text-anchor="middle" style="fill:var(--text2,#475569);font-size:10px;font-family:sans-serif">the valued one</text>
+        <text x="350" y="196" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">Every other column describes the customer. Only the first one identifies them.</text>
     </svg>
 </div>
-<p>The ECID is issued at the organisation level rather than the product level. That single change is what makes a shared audience, a cross-solution report, and eventually Customer Journey Analytics possible at all.</p>
+<p>Customer ABC is number 17. The shopkeeper never mentions this to him, and would sound strange if he did. But when the accounts are reconciled at the end of the year, the calculation runs on 17, not on a name that two people share.</p>
+<p>That is the origin of every identifier you have ever been issued. Customer ID, employee ID, student ID, citizen ID. Each one exists because names, addresses and attributes describe a person without distinguishing them, and the fix is a value chosen to carry no meaning at all. A serial number cannot be wrong about you, because it was never trying to say anything about you.</p>
 
-<h3 class="subsec-title">What the ECID actually is, and where it lives</h3>
-<p>The identifier is produced by the Experience Cloud ID Service, delivered on the page by a library called <code>VisitorAPI.js</code>, and stored in cookies. Three of them matter, and knowing which does what turns most identity debugging into a thirty-second check.</p>
+<h3 class="subsec-title">What Adobe Analytics is actually counting</h3>
+<p>Now bring that into the tool, because the same problem sits underneath every report you have ever run.</p>
+<p>Adobe Analytics is not on the page to tell you how many times the Submit button was clicked. A counter could do that, and the answer would be nearly useless. What earns its keep is the other question: how many <strong>people</strong> clicked Submit this month.</p>
+<p>Counting clicks is arithmetic. Counting people requires a serial number.</p>
+<p>So Adobe issues one. On a visitor's first arrival at a site where the implementation is running, the library writes a cookie containing a 38-digit number that visitor has never seen and will never be told about, and sends it along with every subsequent request. The shopkeeper's register, at internet scale.</p>
+
+<h3 class="subsec-title">The identifier that kept changing its name</h3>
+<p>The concept has been stable for many years. The label has not, and knowing why saves confusion when reading older material or an API method name.</p>
+<p>It began as the visitor ID, which is exactly what it was. It later became the Marketing Cloud ID, or MCID, because Adobe Analytics, Target and Audience Manager were then gathered under the Marketing Cloud banner. In 2017 that banner was renamed to Experience Cloud, and the identifier followed it to become the Experience Cloud ID.</p>
+<p>Three names, one idea, no change in behaviour. The old name still surfaces in places, most visibly in the method used to read the value, which is still called <code>getMarketingCloudVisitorID()</code> years after the cloud it referred to stopped existing. Naming survives renaming, in Adobe as everywhere else.</p>
+
+<h3 class="subsec-title">How the number becomes Unique Visitors</h3>
+<p>When somebody in the business asks for visitors last month, this is what happens underneath.</p>
+<p>Adobe takes the reporting logic and the date range, finds the distinct ECID values that qualify, and counts them. That count is Unique Visitors. Visits are assembled from the same identity with timeout rules applied on top, and the precise definitions of both live in <a href="/adobe-analytics-learning/foundations/adobe-analytics-fundamentals/key-terminology/">Key Terminology</a>.</p>
+<p>The consequence is worth stating plainly, because it explains why this section sits where it does. Identity is upstream of almost every number you will ever quote. Get it wrong and nothing downstream can be right, no matter how carefully the rest of the implementation is built.</p>
+
+<h3 class="subsec-title">It is not an Analytics identifier, and your Launch property says so</h3>
+<p>The name is doing honest work. It says Experience Cloud, not Analytics, and that is a statement about ownership.</p>
+<p>Whichever Adobe product the visitor encounters first creates the ID. Every other product then reuses it rather than inventing its own. If Target renders a personalised offer before any Analytics call fires, Target's request produced the ECID and Analytics inherits it.</p>
+<div class="diagram-box">
+    <div class="diagram-title">One identifier, issued once, reused by everything</div>
+    <svg viewBox="0 0 700 190" style="width:100%;height:auto;display:block" role="img" aria-label="A diagram showing that whichever Adobe product the visitor encounters first creates the Experience Cloud ID, and Analytics, Target, Audience Manager and Experience Platform all reuse the same identifier rather than creating their own.">
+        <rect x="14" y="60" width="150" height="62" rx="8" style="fill:var(--card,#ffffff);stroke:var(--text3,#94a3b8);stroke-width:1.5"/>
+        <text x="89" y="84" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-weight:700;font-family:sans-serif">First product</text>
+        <text x="89" y="101" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-weight:700;font-family:sans-serif">the visitor touches</text>
+        <text x="89" y="116" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:10px;font-family:sans-serif">creates it</text>
+        <line x1="166" y1="91" x2="196" y2="91" style="stroke:var(--border,#e2e8f0);stroke-width:2"/>
+        <polygon points="204,91 192,85 192,97" style="fill:var(--border,#e2e8f0)"/>
+        <rect x="208" y="52" width="150" height="78" rx="9" style="fill:var(--accent-light,rgba(225,29,72,.10));stroke:var(--accent,#e11d48);stroke-width:2"/>
+        <text x="283" y="80" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:14px;font-weight:700;font-family:sans-serif">ECID</text>
+        <text x="283" y="100" text-anchor="middle" style="fill:var(--text2,#475569);font-size:10px;font-family:sans-serif">one 38-digit number</text>
+        <text x="283" y="116" text-anchor="middle" style="fill:var(--text2,#475569);font-size:10px;font-family:sans-serif">per organisation</text>
+        <path d="M360 91 L392 91 L392 34 L440 34" style="fill:none;stroke:var(--success,#10b981);stroke-width:1.5"/>
+        <path d="M392 91 L440 91" style="fill:none;stroke:var(--success,#10b981);stroke-width:1.5"/>
+        <path d="M392 91 L392 62 L440 62" style="fill:none;stroke:var(--success,#10b981);stroke-width:1.5"/>
+        <path d="M392 91 L392 120 L440 120" style="fill:none;stroke:var(--success,#10b981);stroke-width:1.5"/>
+        <rect x="444" y="20" width="180" height="28" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1"/>
+        <text x="534" y="39" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-family:sans-serif">Adobe Analytics</text>
+        <rect x="444" y="48" width="180" height="28" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1"/>
+        <text x="534" y="67" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-family:sans-serif">Adobe Target</text>
+        <rect x="444" y="77" width="180" height="28" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1"/>
+        <text x="534" y="96" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-family:sans-serif">Audience Manager</text>
+        <rect x="444" y="106" width="180" height="28" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1"/>
+        <text x="534" y="125" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-family:sans-serif">Experience Platform</text>
+        <text x="350" y="168" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">This is why it is configured in its own extension, not inside the Analytics one</text>
+    </svg>
+</div>
+<p>That ownership shows up the moment you open a Launch property. The ECID is not a setting inside the Adobe Analytics extension, where most people first look for it. It has an <a href="/adobe-analytics-learning/collect/adobe-launch-tags/extensions/">extension</a> of its own, named Experience Cloud ID Service, whose entire job is creating and maintaining the identifier in the visitor's browser. The <a href="/adobe-analytics-learning/foundations/adobe-analytics-fundamentals/adobe-analytics-ecosystem/">wider Adobe ecosystem</a> is the reason it earns that separate billing.</p>
+
+<h3 class="subsec-title">What one shared identifier unlocked</h3>
+<p>The payoff is that products stop being islands. An audience assembled in Audience Manager can be delivered by Target and measured in Analytics, because all three are discussing the same number rather than three private ones. A test can finally be connected to the conversion it produced, which was the question that could not be answered before.</p>
+<p>There is a sharp consequence hidden in that, and it becomes important later in this section: <strong>segments shared across Experience Cloud products do not include visitors who have no ECID.</strong> A visitor without one is invisible to every integration, however complete their Analytics data looks in isolation. <a href="/adobe-analytics-learning/analyze/segments/segment-types-sharing/">Segment Types and Sharing</a> covers what travels between products and what does not.</p>
+
+<h3 class="subsec-title">Then the identifier became a foundation</h3>
+<p>Adobe did not stop at making products agree. In Adobe Experience Platform the ECID stopped being a convenience and became structural.</p>
+<p>Platform sorts identifiers into three kinds, and the distinction is the single most useful thing to carry out of this section:</p>
 <div class="tbl-wrap">
     <table>
-        <thead><tr><th>Cookie</th><th>Party</th><th>What it holds</th><th>Lifetime</th></tr></thead>
+        <thead><tr><th>Kind</th><th>Examples</th><th>What it can honestly claim</th></tr></thead>
         <tbody>
-            <tr><td><code>AMCV_&lt;org id&gt;@AdobeOrg</code></td><td>First-party, your domain</td><td>The ECID itself, as <code>MCMID|&lt;value&gt;</code></td><td>Persistent, subject to browser limits</td></tr>
-            <tr><td><code>AMCVS_&lt;org id&gt;@AdobeOrg</code></td><td>First-party, your domain</td><td>A session flag, value <code>1</code></td><td>Ends with the session</td></tr>
-            <tr><td><code>demdex</code></td><td>Third-party, on <code>demdex.net</code></td><td>An Adobe-side ID used to recognise a returning visitor across sites</td><td>Persistent where third-party cookies survive at all</td></tr>
+            <tr><td><strong>Person</strong></td><td>CRM ID, email address, phone number</td><td>This is a specific human being</td></tr>
+            <tr><td><strong>Device</strong></td><td>Mobile advertising identifiers</td><td>This is a physical device</td></tr>
+            <tr><td><strong>Cookie</strong></td><td><strong>ECID</strong>, legacy Analytics ID</td><td>This is one browser on one device</td></tr>
         </tbody>
     </table>
 </div>
-<p>The important line in that table is the last one. The demdex cookie is the only third-party item, and third-party cookies are blocked by default in Safari and Firefox. Where that happens the service falls back to the first-party <code>AMCV_</code> cookie alone, which still works perfectly well on your own domain and does nothing at all across domains. That single fact drives both <a href="/adobe-analytics-learning/collect/tracking-calls/cross-domain-tracking/">Cross-Domain Tracking</a> and <a href="/adobe-analytics-learning/collect/tracking-calls/first-party-cookies/">First-Party Cookies</a>.</p>
-
-<h3 class="subsec-title">It identifies a browser, not a person</h3>
-<p>This is the correction that matters most, and almost every misuse of Adobe Analytics data traces back to not having made it.</p>
-<p>An ECID is written into a cookie. A cookie belongs to one browser on one device. So the identifier does not describe a human being, it describes a browser, and the moment those two things diverge your reports diverge with them.</p>
+<p>The ECID sits in the third row. It is the primary device-level identifier that personalisation, analytics and audience activation are all built on, and it is deliberately not a claim about a person.</p>
+<p>What Platform adds is a way to connect the rows. An identity graph maps the relationships between these namespaces, so several cookie identities can be tied to one person identity. Real-Time Customer Profile then reads that graph, gathers the fragments that belong to the same person, and merges them into a single profile. Adobe's guidance is to make a person-level namespace the primary identity wherever one exists, precisely because the cookie-level one cannot carry that weight.</p>
 <div class="diagram-box">
-    <div class="diagram-title">One human being, three unique visitors</div>
-    <svg viewBox="0 0 700 195" style="width:100%;height:auto;display:block" role="img" aria-label="A diagram showing one person using a phone, a laptop, and the same laptop after clearing cookies, producing three separate Experience Cloud IDs and therefore counting as three unique visitors.">
-        <rect x="40" y="26" width="180" height="46" rx="8" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
-        <text x="130" y="46" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">Phone, Tuesday</text>
-        <text x="130" y="63" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:10px;font-family:sans-serif">browses a product</text>
-        <rect x="260" y="26" width="180" height="46" rx="8" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
-        <text x="350" y="46" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">Laptop, Thursday</text>
-        <text x="350" y="63" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:10px;font-family:sans-serif">buys the product</text>
-        <rect x="480" y="26" width="180" height="46" rx="8" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
-        <text x="570" y="46" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">Laptop, Friday</text>
-        <text x="570" y="63" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:10px;font-family:sans-serif">after clearing cookies</text>
-        <line x1="130" y1="76" x2="130" y2="96" style="stroke:var(--warning,#f59e0b);stroke-width:2"/>
-        <line x1="350" y1="76" x2="350" y2="96" style="stroke:var(--warning,#f59e0b);stroke-width:2"/>
-        <line x1="570" y1="76" x2="570" y2="96" style="stroke:var(--warning,#f59e0b);stroke-width:2"/>
-        <rect x="60" y="100" width="140" height="32" rx="6" style="fill:var(--warning,#f59e0b);opacity:0.16"/>
-        <rect x="60" y="100" width="140" height="32" rx="6" style="fill:none;stroke:var(--warning,#f59e0b);stroke-width:1.5"/>
-        <text x="130" y="121" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-weight:700;font-family:sans-serif">ECID A</text>
-        <rect x="280" y="100" width="140" height="32" rx="6" style="fill:var(--warning,#f59e0b);opacity:0.16"/>
-        <rect x="280" y="100" width="140" height="32" rx="6" style="fill:none;stroke:var(--warning,#f59e0b);stroke-width:1.5"/>
-        <text x="350" y="121" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-weight:700;font-family:sans-serif">ECID B</text>
-        <rect x="500" y="100" width="140" height="32" rx="6" style="fill:var(--warning,#f59e0b);opacity:0.16"/>
-        <rect x="500" y="100" width="140" height="32" rx="6" style="fill:none;stroke:var(--warning,#f59e0b);stroke-width:1.5"/>
-        <text x="570" y="121" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-weight:700;font-family:sans-serif">ECID C</text>
-        <rect x="40" y="146" width="620" height="38" rx="8" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
-        <text x="350" y="163" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">Three unique visitors. One customer. One purchase attributed to a stranger.</text>
-        <text x="350" y="178" text-anchor="middle" style="fill:var(--text2,#475569);font-size:10px;font-family:sans-serif">and nothing in any report indicates this happened</text>
+    <div class="diagram-title">Three browsers, one person, once a graph exists to say so</div>
+    <svg viewBox="0 0 700 215" style="width:100%;height:auto;display:block" role="img" aria-label="A diagram showing three separate Experience Cloud IDs from a phone, a laptop and the same laptop after clearing cookies. Without a person-level identifier they are three unrelated visitors. Linked to a CRM ID in an identity graph, they resolve to one profile.">
+        <text x="150" y="24" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:10px;font-weight:700;font-family:sans-serif;letter-spacing:1px">COOKIE IDENTITIES</text>
+        <rect x="30" y="36" width="240" height="34" rx="6" style="fill:var(--warning,#f59e0b);opacity:0.16"/>
+        <rect x="30" y="36" width="240" height="34" rx="6" style="fill:none;stroke:var(--warning,#f59e0b);stroke-width:1.5"/>
+        <text x="150" y="58" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-family:sans-serif">ECID A &middot; phone</text>
+        <rect x="30" y="78" width="240" height="34" rx="6" style="fill:var(--warning,#f59e0b);opacity:0.16"/>
+        <rect x="30" y="78" width="240" height="34" rx="6" style="fill:none;stroke:var(--warning,#f59e0b);stroke-width:1.5"/>
+        <text x="150" y="100" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-family:sans-serif">ECID B &middot; laptop</text>
+        <rect x="30" y="120" width="240" height="34" rx="6" style="fill:var(--warning,#f59e0b);opacity:0.16"/>
+        <rect x="30" y="120" width="240" height="34" rx="6" style="fill:none;stroke:var(--warning,#f59e0b);stroke-width:1.5"/>
+        <text x="150" y="142" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-family:sans-serif">ECID C &middot; after clearing cookies</text>
+        <text x="150" y="176" text-anchor="middle" style="fill:var(--warning,#f59e0b);font-size:11px;font-family:sans-serif">on their own: three unrelated visitors</text>
+        <path d="M276 53 L320 53 L320 95" style="fill:none;stroke:var(--success,#10b981);stroke-width:1.5"/>
+        <path d="M276 95 L320 95" style="fill:none;stroke:var(--success,#10b981);stroke-width:1.5"/>
+        <path d="M276 137 L320 137 L320 95" style="fill:none;stroke:var(--success,#10b981);stroke-width:1.5"/>
+        <line x1="320" y1="95" x2="350" y2="95" style="stroke:var(--success,#10b981);stroke-width:1.5"/>
+        <polygon points="358,95 346,89 346,101" style="fill:var(--success,#10b981)"/>
+        <rect x="362" y="60" width="150" height="70" rx="8" style="fill:var(--card,#ffffff);stroke:var(--success,#10b981);stroke-width:2"/>
+        <text x="437" y="84" text-anchor="middle" style="fill:var(--success,#10b981);font-size:11px;font-weight:700;font-family:sans-serif">Identity graph</text>
+        <text x="437" y="102" text-anchor="middle" style="fill:var(--text2,#475569);font-size:10px;font-family:sans-serif">linked by a person</text>
+        <text x="437" y="117" text-anchor="middle" style="fill:var(--text2,#475569);font-size:10px;font-family:sans-serif">identifier, at sign-in</text>
+        <line x1="514" y1="95" x2="544" y2="95" style="stroke:var(--success,#10b981);stroke-width:1.5"/>
+        <polygon points="552,95 540,89 540,101" style="fill:var(--success,#10b981)"/>
+        <rect x="556" y="60" width="130" height="70" rx="8" style="fill:var(--success,#10b981);opacity:0.15"/>
+        <rect x="556" y="60" width="130" height="70" rx="8" style="fill:none;stroke:var(--success,#10b981);stroke-width:2"/>
+        <text x="621" y="90" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-weight:700;font-family:sans-serif">One profile</text>
+        <text x="621" y="110" text-anchor="middle" style="fill:var(--text2,#475569);font-size:10px;font-family:sans-serif">one human being</text>
+        <text x="470" y="176" text-anchor="middle" style="fill:var(--success,#10b981);font-size:11px;font-family:sans-serif">with a person identifier: one customer, three devices</text>
+        <text x="350" y="204" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:10px;font-family:sans-serif">Adobe Analytics alone sees the left-hand side. Platform can see the right.</text>
     </svg>
 </div>
+
+<h3 class="subsec-title">Back inside Adobe Analytics: what the number cannot tell you</h3>
+<p>Return to the report, because that diagram has an uncomfortable implication for numbers you may already have presented.</p>
+<p>An ECID identifies a browser on a device. Nothing more. It is not a person, was never designed to be, and the gap runs in both directions.</p>
+<p>One person produces several ECIDs. A phone, a work laptop, a private window, and a fresh one each time cookies are cleared. And one ECID can cover several people, because a shared tablet at home or a machine in a library is one browser used by many humans.</p>
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ Unique Visitors counts browsers, and it has always counted browsers</div>
-    <p>The metric is frequently read aloud in meetings as though it meant people, and it does not. A household sharing a tablet is one ECID covering several humans. One human with a phone, a work laptop and a private window is three ECIDs. Neither direction produces an error or a warning, and the number looks equally credible either way. If a business decision depends on a count of people rather than browsers, that count has to come from an authenticated identifier, not from this one.</p>
+    <div class="warn-hdr">⚠️ Unique Visitors counts browsers, and has always counted browsers</div>
+    <p>The metric gets read aloud in meetings as though it meant people. It does not, and no configuration changes that. There is no error, no warning, and the number looks equally credible whether it is close to the human count or nowhere near it. If a business decision genuinely depends on a count of people, that count has to come from an authenticated identifier or from a system that holds one, not from this metric.</p>
 </div>
 
-<h3 class="subsec-title">setCustomerIDs, and the identity you actually control</h3>
-<p>The escape from the browser boundary is to supply an identifier of your own, at the one moment you genuinely know who somebody is: when they sign in.</p>
-<p>The ID service accepts customer identifiers through <code>setCustomerIDs</code>, which associates your own value with the ECID currently in play. Sign in on a phone and again on a laptop, and both ECIDs become associated with the same customer identifier, which is what allows the two devices to be recognised as one person downstream.</p>
-<p>What you pass matters, and the rule from <a href="/adobe-analytics-learning/collect/data-layers/data-layer-design/">Data Layer Design</a> applies directly: use your own internal identifier, never a raw email address or phone number. The identifier still identifies a person once joined to your systems, which is precisely why it is useful and precisely why it carries the labeling obligation described in <a href="/adobe-analytics-learning/foundations/report-suites/privacy-data-retention/">Privacy and Data Retention</a>.</p>
-<div class="pro-tip">
-    <div class="pro-tip-hdr">💡 Set the customer ID on every authenticated page, not only at sign-in</div>
-    <p>Sign-in happens once, and the session that follows can run for hours across many page views. Sending the identifier only on the login page means every subsequent hit carries the browser identity alone, and any device-stitching that depended on it applies to one page view rather than the whole visit. If the visitor is authenticated, say so on every hit.</p>
-</div>
+<h3 class="subsec-title">Which is fine, because that is not what this tool is for</h3>
+<p>It would be easy to read all of that as a catalogue of flaws. It is not. It is a description of scope, and confusing the two leads teams to demand something from digital analytics it was never built to provide.</p>
+<p>The ECID is not accurate. It is <em>consistent</em>, and consistency is what a trend needs. Whether more distinct visitors came this month than last is a question the number answers well, because the same imperfection applies to both months. How many actual human beings visited is a question it cannot answer, and no amount of implementation work will change that.</p>
+<p>Which sets a boundary worth stating without hedging. If you are relying on a digital analytics tool as your book of record for orders and revenue, that is a category error. Those numbers belong in a CRM, an order management system, a finance system, somewhere built for accuracy and reconciliation. Digital analytics exists to attribute, to connect scattered activity into a model of behaviour, and to show you which direction things are moving.</p>
+<p>Used for that, the ECID is more than good enough. Used as a headcount, it will quietly mislead every quarter.</p>
 
-<h3 class="subsec-title">The load order that breaks implementations without saying so</h3>
-<p>Now the operational detail that has cost more implementations than any other in this section, and it is not conceptual at all.</p>
-<p><code>VisitorAPI.js</code> must execute before AppMeasurement. Adobe places it at the beginning of the head, ahead of every other solution's code, and the reason is mechanical: AppMeasurement asks the ID service for an identity when it builds a request. If the ID service has not finished initialising, there is nothing to ask.</p>
+<h3 class="subsec-title">Capture the ECID, and use it to prove your own work</h3>
+<p>Practical advice that costs almost nothing and repays itself the first time something breaks: capture the ECID into an Analytics variable.</p>
+<p>The method carries its own history, as noted earlier, and reads the value from the ID service instance.</p>
 <div class="code-block">
-    <div class="code-hdr"><span class="code-lang">The order that has to hold</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-    <div class="code-body"><pre>&lt;head&gt;
-    VisitorAPI.js          first, always
-    AppMeasurement.js      after it, never before
-    other solution code
-&lt;/head&gt;
+    <div class="code-hdr"><span class="code-lang">Reading the ECID into a variable</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>var visitor = Visitor.getInstance("YOUR_ORG_ID@AdobeOrg");
 
-In Launch this ordering is handled by the extensions.
-It breaks when hand-placed code is mixed with a tag manager,
-or when one library is loaded async and the other is not.</pre></div>
+// The old cloud name survives in the method name
+s.eVar60 = visitor.getMarketingCloudVisitorID();
+
+// A callback form exists for cases where the ID
+// may not be resolved yet
+visitor.getMarketingCloudVisitorID(function (id) {
+  s.eVar60 = id;
+});</pre></div>
 </div>
+<p>Storing it turns an abstract identifier into something you can search for, and that unlocks a verification technique worth building into every release.</p>
+<div class="pro-tip">
+    <div class="pro-tip-hdr">💡 Prove a new feature works by becoming a known visitor</div>
+    <p>Ship a new tracked feature, then go and use it yourself with a deliberate, counted pattern: exactly five visits, exactly ten clicks on the new button, nothing else. Note your own ECID from the browser before you start. Wait past the processing window, then filter a report to that single ECID and check whether it shows exactly five and exactly ten. Numbers that match mean the implementation is correct end to end, from tag to report. Numbers that do not tell you precisely where to look. It is the cheapest end-to-end test in Adobe Analytics and almost nobody runs it.</p>
+</div>
+<p>On the waiting: standard processing latency runs roughly thirty to ninety minutes, because collection servers batch and upload on an hourly cycle. Checking after ten minutes and concluding the implementation is broken is a common and avoidable panic. Give it more than ninety minutes before drawing conclusions.</p>
+<p>Which variable to spend on this is a planning decision rather than an afterthought, and the trade-offs sit in <a href="/adobe-analytics-learning/foundations/variables/variable-planning/">Variable Planning</a>.</p>
+
+<h3 class="subsec-title">The old fix: replacing the ID entirely</h3>
+<p>Sites with a login have always had a tempting shortcut available. Adobe Analytics exposes a <code>visitorID</code> variable, and setting it to your own customer identifier makes Analytics identify people by that value instead of by the cookie.</p>
+<p>The appeal is obvious. Sign in on a phone and a laptop and both become the same visitor, so your unique visitor count starts approximating actual people. It genuinely works, and it is genuinely not recommended.</p>
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ The hit still goes out, which is why nobody notices</div>
-    <p>A request built before the ID service is ready does not fail. It is sent, it is processed, and it appears in reports carrying a different identity from every other hit in the same visit. The visit fragments, unique visitors inflate, and the pages that happen to load fastest are the ones affected. There is no console error, no failed request in the network tab, and no report that highlights it. The symptom is a visitor count that is slightly too high forever.</p>
+    <div class="warn-hdr">⚠️ It overrides everything, and the damage is outside Analytics</div>
+    <p>The <code>visitorID</code> variable overrides every other method of visitor identification. Adobe advises against it directly. Analytics itself will run perfectly well and your numbers will look better than before, which is exactly why the problem goes unnoticed: the breakage is elsewhere. A visitor identified this way has no ECID, and segments shared across Experience Cloud products do not include visitors without one. Target and Audience Manager stop seeing them. Every integration you might want later has been quietly disabled in exchange for a tidier number in one report.</p>
 </div>
+<p>It is an artefact of an era when Adobe Analytics stood alone and integration was not the point. That era has been over for some time.</p>
 
-<h3 class="subsec-title">Coming from the legacy Analytics ID, and the grace period nobody plans for</h3>
-<p>Implementations that predate the ID service already identified visitors, using the Analytics visitor ID stored in the <code>s_vi</code> cookie, often called the AAID. Deploying the ID service on top of that history raises an obvious question: what happens to everyone already being tracked?</p>
-<p>The service handles it rather than discarding it. Where an <code>s_vi</code> cookie exists, the existing Analytics ID is written into the <code>AMCV_</code> cookie alongside a newly issued ECID, so both identifiers travel together. The legacy ID sits higher in the order of operations, so it continues to be the visitor identifier until the <code>AMCV_</code> cookie expires or is cleared. Existing visitors keep their history instead of appearing as a wave of new people on deployment day.</p>
+<h3 class="subsec-title">The modern answer: keep both and let the graph do the work</h3>
+<p>The current approach does not ask you to choose. Keep the ECID exactly as it is, and additionally capture your own person-level identifier, using an internal customer ID rather than a raw email address or phone number for the reasons set out in <a href="/adobe-analytics-learning/collect/data-layers/data-layer-design/">Data Layer Design</a>.</p>
+<p>Both then travel into Adobe Experience Platform, where the person identifier joins the identity graph and pulls the scattered cookie identities together into one profile. Analytics keeps its integrations. You gain the person-level view. Nothing is overridden.</p>
+<p>The part that makes this genuinely different from anything Analytics could do alone is that Platform is not restricted to online behaviour. It will ingest from a CRM, a call centre, a store system, a loyalty database. Where the same customer identifier is maintained in those systems, web behaviour joins purchases made in a shop and conversations with an agent, and the result is an omnichannel view of one person rather than a browser. Building analysis on top of that view is the work of Customer Journey Analytics, which is where this curriculum eventually arrives.</p>
 <div class="info-box">
-    <div class="info-hdr">ℹ️ The grace period exists for partial rollouts, and it has a clock</div>
-    <p>Rolling the ID service out across a large estate rarely happens in one night, and a half-migrated site creates a specific problem: pages with the service and pages without it, all reporting into the same report suite, disagreeing about who the visitor is. Adobe Customer Care can enable a grace period, during which the service returns both identifiers so the two kinds of page continue to agree. It runs for up to 180 days and can be renewed. It is meant to be switched off once every page reporting into that suite has the service deployed, and a grace period quietly left running long after the migration finished is a loose end worth checking for.</p>
+    <div class="info-hdr">ℹ️ Identity is also what makes a privacy request answerable</div>
+    <p>There is a compliance dimension to keeping a person-level identifier that is easy to overlook while thinking about reporting. A deletion request arrives naming a human being, usually by email address, and Adobe Analytics knows only cookie identities. Without a stored person-level identifier there is no route from the request to the data, and the request cannot be honoured properly. <a href="/adobe-analytics-learning/foundations/report-suites/privacy-data-retention/">Privacy and Data Retention</a> covers what that failure looks like, which is a clean and entirely successful-looking response that found nothing.</p>
 </div>
-
-<h3 class="subsec-title">The same identity, without the library</h3>
-<p>Implementations on the <a href="/adobe-analytics-learning/collect/data-collection/adobe-web-sdk/">Web SDK</a> do not load <code>VisitorAPI.js</code> at all. Identity is managed by the Edge Network, which issues and returns the ECID as part of handling the request, so the load-order problem above simply does not exist in that architecture.</p>
-<p>What does not change is the concept. It is still an organisation-level identifier, still tied to a browser rather than a person, still dependent on a first-party cookie surviving, and still improved enormously by supplying an authenticated identifier of your own. Moving to the Web SDK changes which component holds the responsibility. It does not change what the identifier means or what it cannot tell you.</p>
 
 <h3 class="subsec-title">What you have now</h3>
-<p>The ECID exists because identity used to belong to products rather than to organisations, and that made the most valuable questions unanswerable. One shared identifier at the organisation level is what turned a set of separate tools into something that can describe a single journey.</p>
-<p>The part to carry away is what it identifies. Not a person, a browser. Every unique visitor count you have ever quoted is a count of browsers, and the gap between those two things widens with every device your customers own. Closing it requires an identifier you control, supplied when somebody signs in, on every authenticated hit rather than only the first.</p>
-<p>Around that sit two failure modes that never announce themselves: a library load order that produces perfectly valid hits carrying the wrong identity, and a grace period left running years after the migration it was created for.</p>
-<p>All of this holds while the visitor stays on one domain, because the cookie carrying the ECID is readable only by the domain that wrote it. The moment a journey crosses to a domain you also own, that identifier does not travel and the visitor becomes two strangers. <a href="/adobe-analytics-learning/collect/tracking-calls/cross-domain-tracking/">Cross-Domain Tracking</a> covers how to carry it across on purpose.</p>
+<p>The shopkeeper's problem and yours are the same problem. Names, addresses and attributes describe people without distinguishing them, and everything that can change is a description rather than an identity. The fix in both cases is a value chosen to mean nothing: a serial number in a register, a 38-digit number in a cookie.</p>
+<p>Adobe's version belongs to the whole Experience Cloud rather than to Analytics, which is why it has its own extension and why every product reuses the one identifier instead of minting its own. In Experience Platform it became structural, the cookie-level identity that a graph ties to a person so several browsers resolve to one profile.</p>
+<p>What it identifies is a browser. Not a person, in either direction: one human generates several, and a shared device collapses several humans into one. That is a limit rather than a defect, because the tool exists to show direction rather than to count heads, and anything requiring an exact number belongs in a system built for exactness.</p>
+<p>Capture it in a variable, because a stored identifier turns you into a visitor you can search for, and that is the cheapest end-to-end test available. Do not replace it, because the tidier number costs you every integration you have not needed yet.</p>
+<p>One assumption has been quietly holding all of this together: that the cookie carrying the identifier is readable when the visitor arrives. It is readable only by the domain that wrote it. The moment a journey crosses to another domain you own, the identifier does not travel and one visitor becomes two strangers. <a href="/adobe-analytics-learning/collect/tracking-calls/cross-domain-tracking/">Cross-Domain Tracking</a> covers how to carry it across on purpose.</p>
 
 <div class="path-box">
     <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Launch</div>
-    <p>Install and configure identity: open the property, then <span class="path">Extensions &gt; Experience Cloud ID Service</span>, where the organisation ID is set and customer ID variables are declared.</p>
-    <p>Verify a live ECID: open the browser console and inspect the <span class="path">AMCV_&lt;org id&gt;@AdobeOrg</span> cookie, or read the ECID directly with the Adobe Experience Platform Debugger.</p>
+    <p>Identity configuration: open the property, then <span class="path">Extensions &gt; Experience Cloud ID Service</span>. It is a separate extension, not a setting inside the Adobe Analytics extension.</p>
+    <p>Read a live value: open the browser console and inspect the <span class="path">AMCV_&lt;org id&gt;@AdobeOrg</span> cookie, where the ECID appears as <span class="path">MCMID|&lt;value&gt;</span>, or read it with the Adobe Experience Platform Debugger.</p>
 </div>
 
 <div class="ref-box">
@@ -160,7 +225,7 @@ or when one library is loaded async and the other is not.</pre></div>
     <ul>
         <li><a href="https://experienceleague.adobe.com/en/docs/id-service/using/home" target="_blank">Adobe Docs: Experience Cloud Identity Service Overview</a></li>
         <li><a href="https://experienceleague.adobe.com/en/docs/id-service/using/intro/cookies" target="_blank">Adobe Docs: Cookies and the Experience Cloud ID Service</a></li>
-        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/implementation/id/migration" target="_blank">Adobe Docs: Visitor ID Service Migration Considerations for Analytics</a></li>
-        <li><a href="https://experienceleague.adobe.com/en/docs/experience-platform/tags/extensions/client/id-service/overview" target="_blank">Adobe Docs: Experience Cloud ID Service Extension</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/implementation/vars/config-vars/visitorid" target="_blank">Adobe Docs: The visitorID Variable</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/experience-platform/identity/home" target="_blank">Adobe Docs: Experience Platform Identity Service</a></li>
     </ul>
 </div>
