@@ -101,6 +101,22 @@ Then crawl the built HTML, not the source. Source passing every check proves not
 
 ---
 
+## What this site is for, and why anyone would return to it
+
+**The site is not a better-worded Adobe documentation.** Adobe's documentation is reference material for people who already know what they need, and it is good at that. It does not teach, and it was never trying to. The gap it leaves is practical advice and a stated opinion on how to proceed, and that gap is the entire market position here.
+
+**The identity is deliberately narrow: answer WHY, then solve HOW.** Not comprehensive coverage. An actor who tries every genre masters none; the ones who last pick a lane. History, story and real situations are how the WHY gets delivered, and the technical detail follows once the reader knows why they need it.
+
+**Give opinions, not options.** A learner driver facing an oncoming car does not need four alternatives and a trade-off table, they need "do this". Four options is what documentation already provides and it is why documentation does not teach. Take a position, say which one to use, and let the reader develop their own judgment later.
+
+**The test is the meeting, not the exam.** Picture a room arguing about why visitor numbers do not match CRM, why revenue does not match the order system, why the company is not using its own customer ID. Reciting cookie names answers none of it. Write what equips somebody to make a decision and hold that conversation.
+
+**Technical detail is not thrown away, it is subordinated.** Fundamentals matter when they are actually required, so include them where they carry a WHY or an opinion, and cut them where they only help someone recite facts. Amit's own test: he remembers relational concepts, keys and joins, and has always looked up SQL syntax. **The site should be the part you remember, not the part you look up.**
+
+Things worth saying that nobody else will say, like "if you are using analytics as your book-keeping system you are making a mistake", are the reason a reader comes back. Adobe will not say it. Neither will most blogs.
+
+---
+
 ## Voice
 
 ### The governing intent, in Amit's own words
@@ -242,6 +258,10 @@ Changing a slug on a live page requires an `aliases` entry. Never let an old URL
 So do not open the existing body to see what can be salvaged, do not summarise it back to him, and do not treat "rewrite" and "write" as different jobs. They are one job. Read the neighbouring completed sections for continuity and the structure map for naming, then write with a fresh mind.
 
 Per-section loop: notes, then a proposed h3 skeleton with component placement for approval, then the full `.html`, then verification, then his accuracy edits.
+
+**When revising a section he has already read, highlight the new material so he can read it end to end.** Agreed 7 Aug 2026 during M07 §5. Amber fill (`#fde68a` with `color:#1f2937`, which stays legible in dark mode) on new prose, and an amber outline on new components so `warn-box` and `pro-tip` keep their own colours and can still be judged. Tag every one with `data-newblock="1"`.
+
+**Commit the clean version first, then apply the highlighting as an uncommitted working-tree change.** Nothing highlighted ever enters git history, so it cannot reach the site if either of us forgets. Removal is then `git checkout` on the one file, followed by a grep for `data-newblock` that must return zero.
 
 Before declaring any section done: the rulebook's 20-item checklist, then the QA Rulebook's 13 points, then a real build with the page count asserted.
 
