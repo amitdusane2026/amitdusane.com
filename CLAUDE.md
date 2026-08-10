@@ -195,6 +195,16 @@ Instead: **name the concept, link it, and recap it in a few words**, so the sent
 - Right: "...carry obligations that sit outside analytics entirely, and they are covered in [Privacy and Data Retention]."
 - Right: "Tag management has surfaced before, most directly in [Deployment: TMS vs Direct], where the choice was framed as a trade."
 
+**Not assuming a journey is not the same as being complete alone.** A search lander arrives on one section, reads it, and leaves. So every section states the idea it rests on in its own opening, in its own words, at the size that section needs. The way to do that without three sections repeating each other is that **the recap has to do work inside the section carrying it**, never sit at the front as a preamble. In M12, §1 spends its whole opening on why a ratio reveals what a count hides; §2 recaps it in two sentences and then uses the funnel to choose denominators; §3 recaps it in two sentences and then audits the mess that follows. Nobody reading all three feels a repeat, because each version is being used for something different. Established 10 Aug 2026.
+
+### Landing pages are directional, and that is all
+
+**A module or category landing page is one or two paragraphs. No theory, no technical discussion, no argument.** It says what this phase or module covers, bridges from what came before, and points at the sections. A trailer.
+
+The reason is the learner's path, and Amit was explicit about it: somebody who reads a real explanation on a landing page, then walks into the curriculum and meets the same idea again at greater depth, has been made to backtrack and read the same thing twice. It breaks the flow and it confuses. **Knowledge lives in sections. A landing page exists so that a reader who arrives on one knows where to go next.**
+
+So material that belongs to a whole module gets distributed across its sections, never collected on the landing page. Established 10 Aug 2026, when exactly that was proposed for M12 and rejected.
+
 This is QA Rulebook check 4 and rule 5 of the component rulebook. It is the easiest rule on the site to break while writing a good sentence.
 
 A `path-box` is included only if the subject has an Adobe screen. A data layer does not; a report suite setting does.

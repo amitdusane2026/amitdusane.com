@@ -99,9 +99,25 @@ Five single gaps sitting inside modules that are otherwise finished, so each is 
 
 Modules 6 and 7 closed with them, taking the total to **12 of 21 modules complete** and sections to 71 of 116 (61.2%), with `final` now equal to `created` at 71.
 
-**M12 Calculated Metrics is the only gap in Modules 1 to 13**, and it is three sections. Everything else from Fundamentals through Segments is finished. Writing those three is what makes the first half of the curriculum read end to end with no holes, which is the next real milestone rather than a percentage.
+**Modules 2 and 5 are now complete**, all sections created, QA'd and signed off.
 
-**Modules 2 and 5 are now complete**, all sections created, QA'd and signed off. Phase 2 is three of five done, with M06 §8 Consent and Tag Management and M07 §5 ECID remaining.
+---
+
+## M12 Calculated Metrics ✅ SIGNED OFF 10 Aug 2026
+
+All three sections written, reviewed and signed off on content and QA together. **Modules 1 to 13 are now a contiguous run with no gaps**, which was the milestone Phase 2 was aiming at. Totals: **13 of 21 modules complete, 74 of 116 sections created, QA'd and final.**
+
+This was the first module written whole rather than a section at a time, and the process differed in a way worth keeping:
+
+**Amit wrote the module out in his own words first, as he would brief a colleague, and that draft reshaped the module.** It supplied the opener (calculation is what anybody does once data is quantifiable), the channel example where Search wins on 100 orders and loses badly on orders per 100 visits, the KPI framing that connects the feature to the vocabulary of the meeting, and the closing judgment that no single ratio is a verdict. §1 was rewritten around it; §2 and §3 were extended. **Ask for the module-level dump before the section skeleton on any module where he has the material.**
+
+Three rules were established or corrected during it, all now recorded in `CLAUDE.md`:
+
+1. **State facts on our own authority. Never cite Adobe as the source of a claim.** Amit had raised this in earlier QA and it had never been written down. Adobe as an actor stays ("Adobe ships", "Adobe provides no housekeeping for this"); Adobe as the authority behind our sentence goes.
+2. **Module and category landing pages are directional only, one or two paragraphs.** No theory, no technical discussion. A learner who reads an argument on a landing page and then meets it again inside the sections has been made to backtrack. This corrected a proposal to put the module-level material on the M12 landing.
+3. **Each section carries its own compressed why, doing work inside that section** rather than sitting as a preamble. Not assuming a journey is not the same as being complete alone, and most readers arrive on one section from a search.
+
+**Diagram density went up and should stay up.** Nine diagrams across three sections, on the standard that a reader gets the point in one or two seconds. Reach for a picture wherever a claim is comparative, sequential, or counterintuitive.
 
 ### Tracker audit, 7 Aug 2026: the SEO title column was systematically stale
 
@@ -148,11 +164,11 @@ Per section, repeatable:
 4. **Verify** — `hugo --gc`, assert page count, then the QA Rulebook's 13 points and the rulebook's 20-item section checklist.
 5. **You edit for accuracy**, I apply corrections.
 
-**Order now that the orphans are done**, following the structure map's arc, one module at a time and complete before moving on. M12 first, because three sections close the gap in Modules 1 to 13:
+**Order now that the orphans and M12 are done**, following the structure map's arc, one module at a time and complete before moving on:
 
-M12 (3) → M14 (10) → M15 (4) → M16 (4) → M17 (4) → M18 (4) → M19 (6) → M20 (5) → M21 (5)
+~~M12 (3)~~ **done** → M14 (10) → M15 (4) → M16 (4) → M17 (4) → M18 (4) → M19 (6) → M20 (5) → M21 (5)
 
-Finishing M12 makes modules 1 to 13 a contiguous run with no gaps, which is the first point at which half the curriculum reads end to end.
+**M14 Analysis Workspace is next, and it is the largest module in the curriculum at ten sections.** Six of those exist only as names. It is also the module every other analyze module points into, so it carries more inbound links than anything written so far.
 
 M19 (SDR, 6 sections, all new) is the largest single piece and doubles as the prototype for your later "how to create a delivery document" section.
 
