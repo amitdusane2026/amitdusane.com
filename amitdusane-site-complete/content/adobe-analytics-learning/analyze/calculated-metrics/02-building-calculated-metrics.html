@@ -11,16 +11,106 @@ weight: 2
 ---
 <p>A room has finally agreed that the conversion rate is orders divided by visits. Everybody nods, somebody writes it down, and the argument is declared over.</p>
 
-<p>It is not over. That sentence still has at least four different meanings inside the builder, and choosing between them takes four clicks that nobody in the room knew existed. Whether orders are counted per row or against the grand total. Whether the visits being divided into are all visits or only some. Whether the orders carry last touch credit or first touch. Whether the result is formatted as a percentage or as a decimal that everybody then misreads by two orders of magnitude.</p>
+<p>What they have agreed on is a calculated metric: two metrics already being collected, one operation between them, saved under a name and evaluated every time a report runs. Nothing gets deployed and nothing gets stored, which is why the whole thing takes minutes.</p>
 
-<p>The builder will accept every one of those combinations without complaint, and each one produces a clean number that looks exactly as authoritative as the others.</p>
+<p>It is also not over. That sentence still has at least four different meanings inside the builder, and choosing between them takes four clicks nobody in the room knew existed.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">📊 One agreed formula, four saved metrics, four different numbers</div>
+    <svg viewBox="0 0 700 260" style="width:100%;height:auto;display:block;margin:4px 0 8px"
+         role="img" aria-label="The single formula orders divided by visits branches into four saved metrics. Built as agreed it returns 2.1 percent. With metric type set to Total it returns 0.4 percent. With attribution set to first touch it returns 2.6 percent. With the format left as decimal it displays as 0.021. The builder accepts all four without warning.">
+        <rect x="240" y="16" width="220" height="46" rx="8" style="fill:var(--card,#ffffff);stroke:var(--text2,#475569);stroke-width:2"/>
+        <text x="350" y="45" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:15px;font-weight:700;font-family:monospace">Orders / Visits</text>
+
+        <line x1="350" y1="62" x2="350" y2="84" style="stroke:var(--border,#e2e8f0);stroke-width:2"/>
+        <line x1="100" y1="84" x2="600" y2="84" style="stroke:var(--border,#e2e8f0);stroke-width:2"/>
+        <line x1="100" y1="84" x2="100" y2="104" style="stroke:var(--border,#e2e8f0);stroke-width:2"/>
+        <line x1="266" y1="84" x2="266" y2="104" style="stroke:var(--border,#e2e8f0);stroke-width:2"/>
+        <line x1="433" y1="84" x2="433" y2="104" style="stroke:var(--border,#e2e8f0);stroke-width:2"/>
+        <line x1="600" y1="84" x2="600" y2="104" style="stroke:var(--border,#e2e8f0);stroke-width:2"/>
+
+        <rect x="24" y="104" width="152" height="118" rx="8" style="fill:var(--card,#ffffff);stroke:var(--accent,#e11d48);stroke-width:2.5"/>
+        <rect x="190" y="104" width="152" height="118" rx="8" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <rect x="357" y="104" width="152" height="118" rx="8" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <rect x="524" y="104" width="152" height="118" rx="8" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+
+        <text x="100" y="130" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:11px;font-weight:700;font-family:sans-serif;letter-spacing:1px">AS AGREED</text>
+        <text x="266" y="130" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif;letter-spacing:1px">METRIC TYPE</text>
+        <text x="433" y="130" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif;letter-spacing:1px">ATTRIBUTION</text>
+        <text x="600" y="130" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif;letter-spacing:1px">FORMAT</text>
+
+        <text x="100" y="152" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">standard, default,</text>
+        <text x="100" y="167" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">percent</text>
+        <text x="266" y="152" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">set to Total</text>
+        <text x="266" y="167" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">instead of Standard</text>
+        <text x="433" y="152" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">set to first touch</text>
+        <text x="433" y="167" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">instead of default</text>
+        <text x="600" y="152" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">left as decimal</text>
+        <text x="600" y="167" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">instead of percent</text>
+
+        <text x="100" y="205" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:22px;font-weight:700;font-family:sans-serif">2.1%</text>
+        <text x="266" y="205" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:22px;font-weight:700;font-family:sans-serif">0.4%</text>
+        <text x="433" y="205" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:22px;font-weight:700;font-family:sans-serif">2.6%</text>
+        <text x="600" y="205" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:22px;font-weight:700;font-family:sans-serif">0.021</text>
+
+        <text x="24" y="246" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">Nobody made an arithmetic mistake. The builder accepted all four without a word.</text>
+    </svg>
+</div>
+
+<p>Each of those is a clean number that looks exactly as authoritative as the others, and any of them can end up in a dashboard called Conversion Rate. The rest of this section is about the controls that decide which one you saved.</p>
+
+<h3 class="subsec-title">Conversion rate is not one number, it is a family</h3>
+<p>Before any of the controls matter, there is a question underneath them that most teams never make explicit. There is no universally accepted definition of conversion rate. There never has been, and any site of reasonable size needs several.</p>
+
+<p>The reason is visible the moment the journey is drawn out. A visitor arrives, looks at products, adds something to a cart, starts a checkout, and orders. Every one of those is a metric being collected. Pick any two of them and the ratio between them is a conversion rate, measuring a different stretch of the same journey.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">📊 Pick any two points, and you have a conversion rate</div>
+    <svg viewBox="0 0 700 250" style="width:100%;height:auto;display:block;margin:4px 0 8px"
+         role="img" aria-label="Five stages of a purchase journey shown as boxes: five thousand visits, two thousand one hundred product views, four hundred and twenty cart additions, one hundred and eighty checkouts, one hundred orders. Arcs connect different pairs of stages, each labelled with the rate between them: orders per hundred visits is two, cart additions per hundred visits is eight point four, and orders per hundred cart additions is twenty three point eight. Any pair of stages produces a valid conversion rate measuring a different stretch of the journey.">
+        <rect x="20" y="110" width="118" height="48" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <rect x="158" y="110" width="118" height="48" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <rect x="296" y="110" width="118" height="48" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <rect x="434" y="110" width="118" height="48" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <rect x="572" y="110" width="118" height="48" rx="6" style="fill:var(--card,#ffffff);stroke:var(--accent,#e11d48);stroke-width:2"/>
+
+        <text x="79" y="130" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">Visits</text>
+        <text x="217" y="130" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">Product views</text>
+        <text x="355" y="130" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">Cart additions</text>
+        <text x="493" y="130" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">Checkouts</text>
+        <text x="631" y="130" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:11px;font-weight:700;font-family:sans-serif">Orders</text>
+
+        <text x="79" y="149" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:14px;font-weight:700;font-family:sans-serif">5,000</text>
+        <text x="217" y="149" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:14px;font-weight:700;font-family:sans-serif">2,100</text>
+        <text x="355" y="149" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:14px;font-weight:700;font-family:sans-serif">420</text>
+        <text x="493" y="149" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:14px;font-weight:700;font-family:sans-serif">180</text>
+        <text x="631" y="149" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:14px;font-weight:700;font-family:sans-serif">100</text>
+
+        <path d="M79,110 Q355,-50 631,110" style="fill:none;stroke:var(--accent,#e11d48);stroke-width:1.8"/>
+        <text x="355" y="26" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:12px;font-weight:700;font-family:sans-serif">Orders per 100 visits: 2.0</text>
+
+        <path d="M79,158 Q217,214 355,158" style="fill:none;stroke:var(--text2,#475569);stroke-width:1.5"/>
+        <text x="217" y="206" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12px;font-family:sans-serif">Cart adds per 100 visits: 8.4</text>
+
+        <path d="M355,158 Q493,214 631,158" style="fill:none;stroke:var(--text2,#475569);stroke-width:1.5"/>
+        <text x="493" y="206" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12px;font-family:sans-serif">Orders per 100 cart adds: 23.8</text>
+
+        <text x="20" y="240" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">All three are conversion rates. All three are correct. They answer three different questions.</text>
+    </svg>
+</div>
+
+<p>Notice what keeps repeating in those labels. Per 100 visits. Per 100 cart additions. The hundred is not decoration, it is the whole reason a rate is legible: expressing a ratio out of a hundred is how a percentage gets inferred, and a percentage is what makes two unequal things comparable. It is also why the format setting further down this page matters more than a formatting option usually would.</p>
+
+<p>The rates anchored on visits measure the entire journey, so they move when anything at all changes, from an ad campaign to a checkout bug. The rates anchored deeper measure one step in isolation, which makes them far better for diagnosing where a problem actually is. A drop in orders per hundred visits tells you something is wrong. A stable cart addition rate with a collapsed checkout rate tells you where.</p>
+
+<p>The practical consequence is that an organization does not need one conversion rate, it needs a small set of them, deliberately chosen, named so they cannot be confused, and published so that everybody quotes the same ones. Which of them gets to be called "the" conversion rate is a decision somebody has to make and write down. That is not a reporting problem, and it is picked up in <a href="/adobe-analytics-learning/analyze/calculated-metrics/calculated-metrics-best-practices/">Calculated Metrics Best Practices</a>.</p>
 
 <h3 class="subsec-title">The canvas, and the five things you can put on it</h3>
 <p>The builder is a drag and drop canvas rather than a formula box, which is either liberating or annoying depending on the day. Five kinds of thing can land on it.</p>
 
 <p><strong>Metrics.</strong> Standard metrics, Adobe defined metrics, and other calculated metrics. Yes, a calculated metric can contain a calculated metric, which is powerful and is also how dependency chains nobody drew come into existence.</p>
 
-<p><strong>Operators.</strong> Divide, multiply, subtract, add. One appears automatically between any two components, and it defaults to divide, which is correct often enough that it is easy to stop noticing.</p>
+<p><strong>Operators.</strong> Divide, multiply, subtract, add. One appears automatically between any two components, and it defaults to divide. That default is not laziness on Adobe's part: division is the operation that produces something the two originals could not express, which is a rate, and a rate is what makes unequal things comparable. Most of what you build here will be a division.</p>
 
 <p><strong>Segments.</strong> Dropped into a container, a segment restricts what the metric inside it counts. This is the feature that makes the whole module worth reading, and it gets its own treatment below.</p>
 
@@ -31,7 +121,7 @@ weight: 2
 <p>Containers nest all of this. A segment container applies a filter to whatever sits inside it, a function container applies a function, and a plain container exists only to force an order of operations. That last one matters more than it looks: arithmetic without explicit grouping is arithmetic somebody will misread.</p>
 
 <h3 class="subsec-title">The denominator is the entire argument</h3>
-<p>Almost every disagreement about a rate is a disagreement about its denominator, and the numerator is rarely in dispute at all. Orders are orders. What divides them is a choice about what the rate is supposed to mean.</p>
+<p>Once the numerator is settled, and it usually is, every remaining disagreement about a rate is a disagreement about what it is divided by. Orders are orders. What divides them is a claim about what the rate is supposed to mean.</p>
 
 <div class="tbl-wrap">
     <table>
@@ -120,10 +210,10 @@ weight: 2
 
 <p>Adobe offers a long list of models, from last touch and first touch through linear, participation, U shaped, time decay and algorithmic, each with its own lookback window. <a href="/adobe-analytics-learning/analyze/attribution-models/what-is-attribution/">What Is Attribution</a> covers what those models mean and when each is defensible, and <a href="/adobe-analytics-learning/analyze/attribution-models/lookback-windows/">Lookback Windows</a> covers how far back credit is allowed to reach.</p>
 
-<p>The opinion for a first build is narrow: leave attribution alone unless the metric exists to answer an attribution question. A metric named First Touch Revenue is honest, because its name declares the model. A metric named Revenue that quietly carries first touch attribution is a trap, and the person who finds it will be debugging a discrepancy at the time.</p>
+<p>The opinion for a first build is narrow: leave attribution alone unless the metric exists to answer an attribution question. A metric named First Touch Revenue is honest, because its name declares the model. A metric named Revenue that quietly carries first touch attribution is a trap, and the person who finds it will be debugging a discrepancy at the time. Once you have built enough of these to know why a model was chosen, that rule stops being necessary and the question replaces it.</p>
 
 <h3 class="subsec-title">Format is not decoration</h3>
-<p>Four format options exist: decimal, currency, percent and time. Percent is the one that gets missed, and the failure is invisible in exactly the wrong way. A conversion rate built without it displays as 0.021 rather than 2.1 percent, and somewhere downstream a person reads it as two percent, or as zero, or multiplies it by a hundred a second time.</p>
+<p>Four format options exist: decimal, currency, percent and time. Percent is the one that gets missed, and it is the setting that turns a bare ratio into the per hundred reading that made the funnel legible earlier on this page. Built without it, a conversion rate displays as 0.021 rather than 2.1 percent, and somewhere downstream a person reads it as two percent, or as zero, or multiplies it by a hundred a second time.</p>
 
 <p>Two smaller settings sit beside it and are worth thirty seconds each. Decimal places, because a rate quoted to six decimal places implies a precision the data does not have. And the setting that decides whether an upward trend is drawn as good in green or bad in red, which exists because half of all useful metrics are ones you want to go down. Bounce rate, exit rate, average page load, cost per order. Left at the default, a rising bounce rate is celebrated in green on every summary tile in the building.</p>
 
@@ -193,7 +283,7 @@ every project in the report suite, over all history, immediately.</pre></div>
 <p>Two things about the environment are worth knowing before saving anything. The builder can keep a metric inside the single project it was created in rather than adding it to the shared library, which is the right choice for genuinely one off analysis and the wrong choice for anything anybody else will quote. And a saved metric applies to all report suites in the login company, so a name that made sense for one brand's suite will be sitting in front of every other brand's analyst tomorrow.</p>
 
 <h3 class="subsec-title">What you can build now, and what you have not solved</h3>
-<p>The mechanics are finite and they fit on one page: components on a canvas, an operator between them, a gear holding metric type and attribution, a container holding a segment, a format that decides how the number reads. Everything the builder can express is some arrangement of those parts.</p>
+<p>The mechanics are finite and they fit on one page: components on a canvas, an operator between them that is usually a divide, a gear holding metric type and attribution, a container holding a segment, a format that decides how the number reads. Everything the builder can express is some arrangement of those parts, and the four numbers at the top of this page were all produced by moving two of them.</p>
 
 <p>What none of it solves is the problem that arrives about eighteen months later. Every one of these metrics is cheap to make, immediate, and permanent unless somebody deletes it, and a feature with those three properties always produces the same end state: a library nobody trusts, containing four metrics with almost the same name, at least one of which is quietly wrong. <a href="/adobe-analytics-learning/analyze/calculated-metrics/calculated-metrics-best-practices/">Calculated Metrics Best Practices</a> is about the arithmetic that fails silently, and about keeping a library that a stranger can still use.</p>
 

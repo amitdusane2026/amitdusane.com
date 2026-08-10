@@ -2,34 +2,144 @@
 slug: "what-are-calculated-metrics"
 title: "What Are Calculated Metrics"
 seotitle: "What Are Calculated Metrics in Adobe Analytics"
-description: "Nobody ever collected a conversion rate. Every ratio the business asks for is built after the fact, and where you build it decides who gets to define it."
+description: "A count can point at the wrong winner. Ratios are how meaning appears in data, and calculated metrics are where you keep the ones your business runs on."
 lastmod: 2026-08-10
 type: lesson
 modulenum: 12
 sectionnum: 1
 weight: 1
 ---
-<p>Three people are asked for the conversion rate of the same website, in the same month, and they come back with 2.1 percent, 3.4 percent, and 1.8 percent. The ecommerce lead divided orders by visits. The performance marketer divided orders by unique visitors. Finance divided orders by the number of people who reached the cart, because in their world a browser was never a customer in the first place.</p>
+<p>Ask a student what they scored and they add the subjects together. Ask a player how many goals are still needed and they subtract what has been scored from what it takes to win. Ask a company how it did this year and somebody says the profit was significant, which sounds like an answer and is not one, because nobody can act on it until that profit is set against last year's profit, and against the revenue it came out of.</p>
 
-<p>Nobody made an arithmetic mistake. Nobody used the wrong data. All three numbers are defensible, and all three are now in circulation, which means the next hour of that meeting is spent not on the business but on whose definition wins.</p>
+<p>None of those three people are performing analytics. They are doing what anybody does the moment data becomes quantifiable, which is to combine numbers until one of them starts to mean something.</p>
 
-<p>The uncomfortable part is that Adobe Analytics collected none of those three numbers. It never has and it never will.</p>
+<p>Adobe Analytics collects something quantifiable and calls it a metric. Orders, visits, page views, cart additions, revenue. Everything in this section follows from a single fact about them: individually they are honest, and individually they are almost never enough.</p>
 
-<h3 class="subsec-title">Collection produces counts, and the business asks in ratios</h3>
-<p>Look at what actually arrives from a tracking call. A page view. An order. A visit. A product added to a cart. Every one of them is a count of something that happened, recorded because somebody decided in advance that it was worth recording. That is what <a href="/adobe-analytics-learning/foundations/variables/events-success-events/">Events (Success Events)</a> are for, and it is the whole job of collection: turn behavior into countable facts.</p>
+<div class="diagram-box">
+    <div class="diagram-title">📊 Nobody had to teach you this part</div>
+    <svg viewBox="0 0 700 190" style="width:100%;height:auto;display:block;margin:4px 0 8px"
+         role="img" aria-label="Three everyday situations shown side by side. Total marks requires addition. Goals still needed requires subtraction. Judging whether a profit is good requires comparing it against something else, which is division. In all three cases a single number is not an answer on its own.">
+        <rect x="14" y="20" width="212" height="150" rx="8" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <rect x="244" y="20" width="212" height="150" rx="8" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <rect x="474" y="20" width="212" height="150" rx="8" style="fill:var(--card,#ffffff);stroke:var(--accent,#e11d48);stroke-width:2"/>
 
-<p>Now listen to how questions are actually asked. What is the conversion rate. How much revenue does an average visit produce. What share of traffic bounces. How many orders per customer. Not one of those is a count. Every one of them is two counts and an operation between them, and no tracking call has ever sent an operation.</p>
+        <text x="120" y="48" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12px;font-family:sans-serif">"What did you score?"</text>
+        <text x="350" y="48" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12px;font-family:sans-serif">"How many more to win?"</text>
+        <text x="580" y="48" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12px;font-family:sans-serif">"Was the profit good?"</text>
 
-<p>So there is a permanent gap between the shape of what you collect and the shape of what you are asked. That gap has to be closed somewhere, and there are only two places it can happen. Either each person closes it privately, in a spreadsheet, on the way to the meeting. Or it is closed once, inside the tool, with a name attached.</p>
+        <text x="120" y="88" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:17px;font-weight:700;font-family:monospace">78 + 85 + 91</text>
+        <text x="350" y="88" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:17px;font-weight:700;font-family:monospace">4 - 2</text>
+        <text x="580" y="88" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:17px;font-weight:700;font-family:monospace">? / ?</text>
 
-<p>A calculated metric is the second option. It is the layer where counts become the numbers the business actually speaks in.</p>
+        <text x="120" y="116" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:14px;font-weight:700;font-family:sans-serif">254</text>
+        <text x="350" y="116" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:14px;font-weight:700;font-family:sans-serif">2 to go</text>
+        <text x="580" y="116" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:14px;font-weight:700;font-family:sans-serif">against what?</text>
 
-<h3 class="subsec-title">A saved formula, not a saved number</h3>
-<p>The mechanic underneath is smaller than most people expect, and everything useful about the feature follows from it.</p>
+        <text x="120" y="150" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif;letter-spacing:1px">ADDITION</text>
+        <text x="350" y="150" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif;letter-spacing:1px">SUBTRACTION</text>
+        <text x="580" y="150" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:11px;font-weight:700;font-family:sans-serif;letter-spacing:1px">NO ANSWER YET</text>
+    </svg>
+</div>
 
-<p>A calculated metric stores no data. It stores a formula. Orders divided by visits, held under a name, sitting in a list. Nothing is computed when you save it. The formula is evaluated when a report runs, against whatever rows that report happens to be looking at, and then it is thrown away and evaluated again the next time somebody asks.</p>
+<p>The third panel is the one worth sitting with, because it is the shape of almost every question a business actually asks. A profit figure on its own is a fact without a verdict. It becomes a verdict only when something is divided into it.</p>
 
-<p>That sounds like an implementation detail. It is the reason the feature matters.</p>
+<h3 class="subsec-title">A count can point at the wrong winner</h3>
+<p>Here is what that looks like with real reporting in front of you. Four marketing channels, one month, and the question is which of them deserves more money next month.</p>
+
+<p>Search produced 100 orders. Paid search produced 80. Direct produced 20. Email produced 10. Read that list and the conclusion is obvious, and it is also wrong.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">📊 Same four channels, same month, opposite answer</div>
+    <svg viewBox="0 0 700 300" style="width:100%;height:auto;display:block;margin:4px 0 8px"
+         role="img" aria-label="Two bar charts of the same four marketing channels. Counted as orders, Search is by far the tallest bar and Email is the shortest. Expressed as orders per one hundred visits, the picture inverts: Email is the tallest bar at ten percent and Search is the shortest at two percent. The raw count and the rate name different winners from identical data.">
+        <text x="30" y="24" style="fill:var(--text1,#0f172a);font-size:13px;font-weight:700;font-family:sans-serif">Orders, counted</text>
+        <text x="390" y="24" style="fill:var(--text1,#0f172a);font-size:13px;font-weight:700;font-family:sans-serif">Orders per 100 visits</text>
+
+        <line x1="30" y1="240" x2="330" y2="240" style="stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <rect x="44" y="120" width="46" height="120" rx="3" style="fill:var(--text2,#475569)"/>
+        <rect x="118" y="144" width="46" height="96" rx="3" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <rect x="192" y="216" width="46" height="24" rx="3" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <rect x="266" y="228" width="46" height="12" rx="3" style="fill:var(--accent,#e11d48)"/>
+        <text x="67" y="112" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">100</text>
+        <text x="141" y="136" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12px;font-family:sans-serif">80</text>
+        <text x="215" y="208" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12px;font-family:sans-serif">20</text>
+        <text x="289" y="220" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:12px;font-weight:700;font-family:sans-serif">10</text>
+
+        <line x1="390" y1="240" x2="690" y2="240" style="stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <rect x="404" y="216" width="46" height="24" rx="3" style="fill:var(--text2,#475569)"/>
+        <rect x="478" y="156" width="46" height="84" rx="3" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <rect x="552" y="204" width="46" height="36" rx="3" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <rect x="626" y="120" width="46" height="120" rx="3" style="fill:var(--accent,#e11d48)"/>
+        <text x="427" y="208" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">2.0%</text>
+        <text x="501" y="148" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12px;font-family:sans-serif">7.0%</text>
+        <text x="575" y="196" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12px;font-family:sans-serif">3.0%</text>
+        <text x="649" y="112" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:12px;font-weight:700;font-family:sans-serif">10.0%</text>
+
+        <text x="67" y="258" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">Search</text>
+        <text x="141" y="258" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">Paid</text>
+        <text x="215" y="258" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">Direct</text>
+        <text x="289" y="258" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:11px;font-weight:700;font-family:sans-serif">Email</text>
+        <text x="427" y="258" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">Search</text>
+        <text x="501" y="258" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">Paid</text>
+        <text x="575" y="258" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">Direct</text>
+        <text x="649" y="258" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:11px;font-weight:700;font-family:sans-serif">Email</text>
+
+        <text x="30" y="288" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">Identical data. The only thing that changed is what each number was divided by.</text>
+    </svg>
+</div>
+
+<p>Divide each channel's orders by the visits it delivered, and the ranking turns over completely.</p>
+
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>Channel</th><th>Visits</th><th>Orders</th><th>Orders per 100 visits</th></tr></thead>
+        <tbody>
+            <tr><td>Search</td><td>5,000</td><td>100</td><td>2.0</td></tr>
+            <tr><td>Paid search</td><td>1,140</td><td>80</td><td>7.0</td></tr>
+            <tr><td>Direct</td><td>670</td><td>20</td><td>3.0</td></tr>
+            <tr><td>Email</td><td>100</td><td>10</td><td>10.0</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<p>Search is still the largest source of orders and nobody should switch it off. But of every hundred people email brings, ten of them buy, and of every hundred people search brings, two do. Email is the channel with the strongest tendency to turn a visitor into a buyer, and the raw count not only failed to say so, it said the opposite loudly enough that a budget meeting would have acted on it.</p>
+
+<p>Both tables are true. Only one of them answers the question that was asked.</p>
+
+<h3 class="subsec-title">A metric alone is a number. A metric against another metric is a statement.</h3>
+<p>Every tracking call that reaches Adobe carries counts of things that happened, because that is what collection is for. A page view. An order. A visit. A product added to a cart. Those become the metrics you see in reporting, and they are built in the implementation, which is what <a href="/adobe-analytics-learning/foundations/variables/events-success-events/">Events (Success Events)</a> covers.</p>
+
+<p>Now listen to how questions are actually asked. What is the conversion rate. How much revenue does an average visit produce. What share of traffic bounces. How many orders per customer. Not one of those is a count. Every one of them is two counts with an operation between them, and no tracking call has ever sent an operation.</p>
+
+<p>So there is a permanent gap between the shape of what gets collected and the shape of what gets asked, and that gap has to be closed somewhere. There are only two places it can happen. Either every person closes it privately, in a spreadsheet, on the way to the meeting. Or it is closed once, inside the tool, with a name attached to it.</p>
+
+<p>A calculated metric is the second option. Put plainly, it is a metric you derive from two or more existing metrics by adding, subtracting, multiplying or dividing them, and then keep.</p>
+
+<h3 class="subsec-title">The business already has a word for these, and the word is KPI</h3>
+<p>None of this is new, and it did not start with digital analytics. Business has been dividing one number by another for as long as there have been two businesses to compare, and it gave the useful ones a name: key performance indicators.</p>
+
+<p>The reason for the name is comparability. Company A makes ten million in profit. Company B makes a hundred million. Company B is larger, and that is the only thing those two numbers establish. Which of them is performing better cannot be read off the raw figures at all, and it never could. It takes year over year growth, or margin per unit, or the ratio of cost to selling price, before the two become comparable, and at that point the smaller company frequently turns out to be the stronger one.</p>
+
+<p>Digital analytics has its own name for its KPIs, which is conversion metrics, and it is the same instrument. How many of the people who arrived went on to do the thing you wanted, expressed against a reference point so it can be compared with something else. The reference point moves, which is why there is more than one conversion rate, and that is the subject of <a href="/adobe-analytics-learning/analyze/calculated-metrics/building-calculated-metrics/">Building Calculated Metrics</a>.</p>
+
+<p>This is also the difference between a person reciting numbers in a meeting and a person holding the room. Anyone can read out that search delivered a hundred orders. Being able to say that the count favors search, the rate favors email, both are correct, and here is which one the budget question needs, is a different conversation entirely.</p>
+
+<div class="info-box">
+    <div class="info-hdr">ℹ️ One KPI is not a verdict</div>
+    <p>A single ratio never settles anything on its own, and treating one as though it does is how a business optimizes itself into trouble. Email converting at ten percent does not mean the budget should move to email, because email reached a hundred people and search reached five thousand. Rate and volume have to be read together, and both have to be read against what the organization actually set out to achieve. The rate tells you the quality of the traffic. It does not tell you how much of it there is, and it does not know what you promised the board.</p>
+</div>
+
+<h3 class="subsec-title">Mostly you will be dividing</h3>
+<p>Four operations are available and they are not used equally. Addition and subtraction combine metrics that are already in the same unit, which is occasionally what you want: total engagement events, orders minus returns, budget remaining. Multiplication turns up mostly for scaling a number into a readable form.</p>
+
+<p>Division is different in kind, because it is the only one of the four that produces something the originals could not express. Two counts go in and a rate comes out, and a rate can be compared across things of wildly different size. That is exactly what made the email channel legible next to the search channel, and it is why the builder in Adobe Analytics puts a divide operator between two metrics by default rather than making you choose.</p>
+
+<p>So the working rule for a first metric is simple: assume you are building a ratio, and make yourself justify it if you are not. That rule is scaffolding rather than law. Once you have built a few and can see what each one is for, you will know exactly when a subtraction is the honest answer, and at that point you should stop following the rule and follow the question instead.</p>
+
+<h3 class="subsec-title">A saved formula, not saved data</h3>
+<p>The mechanic underneath all of this is smaller than most people expect, and everything useful about the feature follows from it.</p>
+
+<p>A calculated metric stores no data. It stores a formula. Orders divided by visits, held under a name, sitting in a list. Nothing is computed when it is saved. The formula is evaluated when a report runs, against whatever rows that report happens to be looking at, and then it is discarded and evaluated again the next time somebody asks.</p>
 
 <div class="diagram-box">
     <div class="diagram-title">📊 One reaches forward. The other reaches back.</div>
@@ -81,26 +191,6 @@ weight: 1
 
 <p>Everything above that line, though, belongs in a formula. A team that reaches for implementation first spends weeks producing a number it could have had before lunch, and then owns that number forever whether it turns out to be the right one or not.</p>
 
-<h3 class="subsec-title">The library is where an organization keeps its vocabulary</h3>
-<p>Return to the meeting for a moment, because the technical answer to it is unsatisfying. Somebody eventually says the three conversion rates should be reconciled, everyone agrees, and nothing changes, because there is no object in the world that holds the agreement. The spreadsheets go back into their folders and the same argument runs again next quarter.</p>
-
-<p>A calculated metric is that object. It is a formula with a name, a description, and an owner, sitting somewhere both the marketer and the finance analyst can see it. That is a governance artifact wearing the costume of a reporting feature.</p>
-
-<p>A definition kept in a spreadsheet is a private opinion. A definition kept in the metric library is a public one, and public definitions get corrected, argued with, and eventually agreed. That is the entire difference, and it is why the feature deserves more attention than its size suggests.</p>
-
-<p>It also explains the failure mode this module ends on. Because building one is nearly free, a library that nobody curates fills with near-duplicates, and a company with four metrics named Conversion Rate has recreated the original problem with better formatting. Cheap to create is not the same as cheap to own.</p>
-
-<h3 class="subsec-title">Three shapes, and only the first one is arithmetic</h3>
-<p>Calculated metrics look like a single feature and behave like three, which is worth knowing before opening the builder.</p>
-
-<p><strong>The ratio.</strong> Two metrics and an operator. Orders divided by visits. Revenue divided by orders. This is what most people mean by the term, it covers most of what gets built, and it is where the denominator does the real damage.</p>
-
-<p><strong>The segmented metric.</strong> A metric with a filter fused into it, so it counts only part of the traffic while sitting in the same table as a metric that counts all of it. Revenue from new visitors, as a column, next to Revenue. A panel filter cannot do this, because a panel filter applies to everything in the panel. Fusing the filter into the metric is what allows two populations to appear side by side in one table.</p>
-
-<p><strong>The function.</strong> Statistical work applied to a column: means, medians, percentiles, standard deviations, an approximate count of distinct dimension values. Useful, occasionally essential, and not where anybody should start.</p>
-
-<p>The first two carry most of the value. <a href="/adobe-analytics-learning/analyze/calculated-metrics/building-calculated-metrics/">Building Calculated Metrics</a> takes all three apart in the builder.</p>
-
 <h3 class="subsec-title">The one direction the arrow does not run</h3>
 <p>A segment can live inside a calculated metric. A calculated metric cannot live inside a segment.</p>
 
@@ -145,19 +235,19 @@ Every step above is a read. Nothing here writes, changes,
 or deletes anything.</pre></div>
 </div>
 
-<p>There is nothing else to run. That sequence is a floor rather than a ceiling: it is the minimum a person should know about their own metric library before adding to it, and a team that repeats it once a quarter stops having the meeting this section opened with.</p>
+<p>There is nothing else to run. That sequence is a floor rather than a ceiling: it is the minimum a person should know about their own metric library before adding to it, and a team that repeats it once a quarter stops having most of its arguments about numbers.</p>
 
 <div class="pro-tip">
     <div class="pro-tip-hdr">💡 The Data Dictionary answers "where did this number come from" without a meeting</div>
     <p>Most disputes about a metric are not disputes at all. They are two people using the same word for two formulas, and neither of them has ever seen the other's. The Data Dictionary in the Workspace left rail shows the definition behind any component, including who owns it and whether it carries administrative approval, which turns an hour of debate into a thirty second lookup.</p>
 </div>
 
-<h3 class="subsec-title">What you have now</h3>
+<h3 class="subsec-title">The skill is asking, and this is the instrument</h3>
 <p>A calculated metric is a named formula, evaluated when a report runs, over data that was already collected. Because it stores nothing, it costs nothing, reaches back across all of history, and can be corrected the moment it is found to be wrong. Because it carries a name that other people see, it is also where an organization writes down what it means by its own words.</p>
 
-<p>Those two properties pull in opposite directions, and that tension is the whole module. The first makes the feature almost free to use. The second makes it expensive to own. Everything in <a href="/adobe-analytics-learning/analyze/calculated-metrics/calculated-metrics-best-practices/">Calculated Metrics Best Practices</a> exists because organizations enjoy the first property and forget the second.</p>
+<p>What the feature really gives you, though, is not arithmetic. Adding and dividing were never the difficult part. It is that most wrong answers in analytics are answers to a question nobody should have asked, and a rate is usually a better question than a count. Four channels ranked by orders is a question about volume. The same four ranked by orders per hundred visits is a question about quality. Knowing which one the room needs is the whole skill, and the metric library is where the good questions get kept once somebody has found them.</p>
 
-<p>Before that, the mechanics. <a href="/adobe-analytics-learning/analyze/calculated-metrics/building-calculated-metrics/">Building Calculated Metrics</a> opens the builder and works through the parts that decide whether a formula means what its author thought it meant: the denominator, the difference between a per-row and a grand total metric, the segment fused into a column, and the attribution model that can be set on the metric itself.</p>
+<p>Two things follow, and they are the rest of this module. <a href="/adobe-analytics-learning/analyze/calculated-metrics/building-calculated-metrics/">Building Calculated Metrics</a> takes the builder apart, because the same sentence, orders divided by visits, still has several different meanings inside it. Then <a href="/adobe-analytics-learning/analyze/calculated-metrics/calculated-metrics-best-practices/">Calculated Metrics Best Practices</a> deals with what happens when a feature this cheap has been in the hands of a whole organization for two years.</p>
 
 <div class="path-box">
     <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Analytics</div>

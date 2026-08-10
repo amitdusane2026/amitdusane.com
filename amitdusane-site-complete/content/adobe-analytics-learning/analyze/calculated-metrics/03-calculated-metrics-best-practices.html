@@ -11,9 +11,11 @@ weight: 3
 ---
 <p>Two years after a company finally agrees what its conversion rate is, open the metric list and count. There will be four of them. One called Conversion Rate, one called Conversion Rate (Visits), one called CVR, and one called Conversion Rate NEW that has been called that since a Tuesday in March.</p>
 
-<p>Nobody did anything wrong. Each was built by a competent person solving a real problem in the four minutes they had. That is precisely the mechanism: a feature that costs nothing to use, produces something permanent, and has no owner will always end in the same place.</p>
+<p>Each of them is a calculated metric: a formula over data already being collected, saved under a name, evaluated whenever a report runs. None of them required a developer, a release, or a single line of code, and each took about four minutes. That is exactly why there are four.</p>
 
-<p>Two kinds of failure live in that library, and they need separating. One is a number that is wrong and looks fine. The other is a library that is full of numbers nobody can choose between. The first is arithmetic. The second is ownership. Most of this section is about the first, because the second gets far more attention and does far less damage.</p>
+<p>Nobody did anything wrong. Each was built by a competent person solving a real problem in the time they had. A feature that costs nothing to use, produces something permanent, and has no owner will always end in the same place.</p>
+
+<p>Two kinds of failure live in that library, and they need separating. One is a number that is wrong and looks fine. The other is a library full of numbers nobody can choose between. The first is arithmetic. The second is ownership. Most of this section is about the first, because the second gets far more attention and does far less damage.</p>
 
 <h3 class="subsec-title">The total row does not add up, and that is correct</h3>
 <p>Sooner or later somebody exports a table, sums a column in a spreadsheet, compares it against the total row, finds a gap, and concludes that Adobe is wrong.</p>
@@ -90,7 +92,43 @@ weight: 3
 <h3 class="subsec-title">The dependency graph nobody drew</h3>
 <p>A calculated metric can contain another calculated metric, and it can contain a segment that other people also use. Both are references rather than copies, so both are live.</p>
 
-<p>The consequence takes a while to appear and then appears everywhere at once. An analyst adjusts a base metric to fix their own report. Four metrics built on top of it move. Two of those are approved, one of them feeds a scheduled Report Builder workbook, and the finance figure in Monday's pack is different from last Monday's for reasons nobody in the room can reconstruct.</p>
+<div class="diagram-box">
+    <div class="diagram-title">📊 One edit on the left. Everything to the right of it moved.</div>
+    <svg viewBox="0 0 700 260" style="width:100%;height:auto;display:block;margin:4px 0 8px"
+         role="img" aria-label="A dependency chain. One shared segment named New Visitors is edited. It feeds three calculated metrics, revenue from new visitors, conversion rate for new visitors, and average order value for new visitors. Those three metrics feed an approved executive dashboard and a scheduled Report Builder workbook. A single edit to the segment changes every one of them, and nobody downstream is notified.">
+        <rect x="14" y="104" width="156" height="52" rx="8" style="fill:var(--accent,#e11d48);stroke:var(--accent,#e11d48);stroke-width:2"/>
+        <text x="92" y="126" text-anchor="middle" style="fill:#ffffff;font-size:11px;font-family:sans-serif">Segment</text>
+        <text x="92" y="144" text-anchor="middle" style="fill:#ffffff;font-size:13px;font-weight:700;font-family:sans-serif">New Visitors</text>
+        <text x="92" y="176" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:11px;font-weight:700;font-family:sans-serif">edited this morning</text>
+
+        <line x1="170" y1="130" x2="246" y2="48" style="stroke:var(--accent,#e11d48);stroke-width:1.8"/>
+        <line x1="170" y1="130" x2="246" y2="130" style="stroke:var(--accent,#e11d48);stroke-width:1.8"/>
+        <line x1="170" y1="130" x2="246" y2="212" style="stroke:var(--accent,#e11d48);stroke-width:1.8"/>
+
+        <rect x="246" y="26" width="168" height="44" rx="6" style="fill:var(--card,#ffffff);stroke:var(--accent,#e11d48);stroke-width:1.5"/>
+        <rect x="246" y="108" width="168" height="44" rx="6" style="fill:var(--card,#ffffff);stroke:var(--accent,#e11d48);stroke-width:1.5"/>
+        <rect x="246" y="190" width="168" height="44" rx="6" style="fill:var(--card,#ffffff);stroke:var(--accent,#e11d48);stroke-width:1.5"/>
+        <text x="330" y="53" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">Revenue, new visitors</text>
+        <text x="330" y="135" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">Conv. rate, new visitors</text>
+        <text x="330" y="217" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">AOV, new visitors</text>
+
+        <line x1="414" y1="48" x2="486" y2="84" style="stroke:var(--accent,#e11d48);stroke-width:1.8"/>
+        <line x1="414" y1="130" x2="486" y2="84" style="stroke:var(--accent,#e11d48);stroke-width:1.8"/>
+        <line x1="414" y1="130" x2="486" y2="194" style="stroke:var(--accent,#e11d48);stroke-width:1.8"/>
+        <line x1="414" y1="212" x2="486" y2="194" style="stroke:var(--accent,#e11d48);stroke-width:1.8"/>
+
+        <rect x="486" y="60" width="200" height="48" rx="6" style="fill:var(--accent-light,rgba(225,29,72,.10));stroke:var(--accent,#e11d48);stroke-width:2"/>
+        <rect x="486" y="170" width="200" height="48" rx="6" style="fill:var(--accent-light,rgba(225,29,72,.10));stroke:var(--accent,#e11d48);stroke-width:2"/>
+        <text x="586" y="82" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">Executive dashboard</text>
+        <text x="586" y="99" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">approved, read by the board</text>
+        <text x="586" y="192" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">Report Builder workbook</text>
+        <text x="586" y="209" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">scheduled, sends Monday</text>
+
+        <text x="14" y="252" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">Nothing warned the analyst. Nothing warned the board. The numbers simply changed.</text>
+    </svg>
+</div>
+
+<p>The consequence takes a while to appear and then appears everywhere at once. An analyst adjusts a base metric or a shared segment to fix their own report. Every metric built on top of it moves. Some of those are approved, one of them feeds a scheduled workbook, and the finance figure in Monday's pack is different from last Monday's for reasons nobody in the room can reconstruct.</p>
 
 <div class="warn-box">
     <div class="warn-hdr">⚠️ Check the Used in column before touching anything</div>
@@ -98,6 +136,40 @@ weight: 3
 </div>
 
 <p>The habit worth building is small. Anything with consumers gets a new metric rather than an edit, and the old one is renamed to say it is superseded rather than deleted. Renaming is visible to everybody using it. Editing is visible to nobody.</p>
+
+<h3 class="subsec-title">Somebody has to decide which conversion rate is the conversion rate</h3>
+<p>There is no universally accepted definition of conversion rate. Not in Adobe, not in the industry, not anywhere. Orders per hundred visits, orders per hundred visitors, orders per hundred cart additions and orders per hundred checkouts are all conversion rates, all correct, and all measuring different stretches of the same journey.</p>
+
+<p>That is not a flaw to be fixed. A site of any size genuinely needs several of them, because a rate anchored on visits tells you that something is wrong and a rate anchored on checkouts tells you where. The flaw is leaving the choice implicit, because then every team makes it independently and the four metrics at the top of this page appear.</p>
+
+<p>So the decision has to be made once, by somebody, and then published. Which two or three rates are the organizational standard. What each one is called. What it deliberately excludes. Which one is meant when a person in a meeting says "the conversion rate" without qualifying it. None of that is a reporting task and none of it happens in the builder, which is precisely why it never gets done.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">A library that happened, and a library that was decided</div>
+    <div class="diagram-content">
+        <div class="strategy-diagram">
+            <div class="strategy-col">
+                <div class="strategy-header" style="background:var(--text2, #475569);color:#fff">What accumulates on its own</div>
+                <div class="strategy-item">Conversion Rate</div>
+                <div class="strategy-item">Conversion Rate (Visits)</div>
+                <div class="strategy-item">CVR</div>
+                <div class="strategy-item">Conversion Rate NEW</div>
+                <div class="strategy-item">No descriptions, four owners</div>
+                <div class="strategy-item">All four quoted in meetings</div>
+            </div>
+            <div class="strategy-col">
+                <div class="strategy-header" style="background:var(--accent, #e11d48);color:#fff">What somebody decided</div>
+                <div class="strategy-item">Conversion Rate (Visits), approved</div>
+                <div class="strategy-item">Cart Rate (Visits), approved</div>
+                <div class="strategy-item">Checkout Completion Rate, approved</div>
+                <div class="strategy-item">Each with a written definition</div>
+                <div class="strategy-item">Everything else left unapproved</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<p>The right hand column is not smaller because metrics were deleted. It is smaller because three of them were chosen, and the rest were allowed to exist without pretending to be the standard.</p>
 
 <h3 class="subsec-title">When not to build one at all</h3>
 <p>Three requests arrive looking like calculated metrics and are not.</p>
@@ -120,7 +192,9 @@ weight: 3
 
 <p>Approval tells every analyst in the company that this definition is the canonical one and that they should stop building their own. That is a strong claim, and it is only worth making if somebody will actually maintain the metric when the business changes, when a variable is repurposed, or when the definition turns out to be wrong. An approved metric that nobody owns is worse than an unapproved one, because it stops other people from questioning it.</p>
 
-<p>So approve a small number of metrics and mean it. A library with twelve approved metrics and two hundred unapproved ones is in far better shape than one where everything carries a checkmark.</p>
+<p>Approve a small set and mean it. A library with twelve approved metrics and two hundred unapproved ones is in far better shape than one where everything carries a checkmark.</p>
+
+<p>There is a second reason the approved set should be a set rather than a single blessed number, and it is worth stating plainly because the industry rarely does. A ratio on its own never settles anything. Email converting at ten percent against search at two percent says nothing about where the budget should go until somebody also looks at how many people each channel reached, and neither figure means much until both are read against what the organization actually committed to this year. Rate without volume is a half answer, volume without rate is the other half, and both without an objective are trivia. Approving a small basket, rather than crowning one metric, is what keeps that visible.</p>
 
 <h3 class="subsec-title">Auditing a library in an afternoon</h3>
 <p>The audit below is deliberately mechanical, because the value is in doing it at all rather than in doing it cleverly. It is a read for the first five steps, and nothing is deleted until the consumers of a metric are known.</p>
@@ -176,7 +250,7 @@ Steps 1 to 5 change nothing. The first write happens at step 6.</pre></div>
 <h3 class="subsec-title">Where this leaves you</h3>
 <p>A calculated metric is arithmetic over collected data, which makes it almost free. Everything difficult about it comes from the fact that the arithmetic is invisible once the metric has a name: the denominator, the metric type, the fused segment, the attribution model, and the persistence of the variables underneath all vanish behind a label in a component list. A wrong metric never announces itself, because there is nothing to announce. It simply produces a number, and people plan around it.</p>
 
-<p>That is why the checks in this section are worth more than the building technique in <a href="/adobe-analytics-learning/analyze/calculated-metrics/building-calculated-metrics/">Building Calculated Metrics</a>, and why the naming and approval habits matter more than they appear to. The technique takes an afternoon to learn. The discipline is what keeps a metric library usable by somebody who was not there when it was built.</p>
+<p>That is why the checks in this section are worth more than the building technique in <a href="/adobe-analytics-learning/analyze/calculated-metrics/building-calculated-metrics/">Building Calculated Metrics</a>, and why the naming and approval habits matter more than they appear to. The technique takes an afternoon to learn. The discipline is what keeps a metric library usable by somebody who was not there when it was built, and it is also what keeps the organization honest about the fact that no single number in that library is a verdict on anything.</p>
 
 <p>Metrics answer how much. The other half of analysis asks about whom, and that is the work of segmentation, starting with <a href="/adobe-analytics-learning/analyze/segments/understanding-segments/">Understanding Segments</a>, where a saved definition of a population becomes an object you can apply anywhere, including inside the metrics built here. Both instruments meet in <a href="/adobe-analytics-learning/analyze/analysis-workspace/analysis-workspace-overview/">Analysis Workspace Overview</a>, which is where a formula and a population finally become an answer somebody can act on.</p>
 
