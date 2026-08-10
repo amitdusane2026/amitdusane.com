@@ -70,7 +70,7 @@ weight: 3
 
 <p>Two things follow. Never validate a rate by summing rows, and never let a stakeholder do it either, because the conversation that follows is expensive. And when a table is deliberately configured to show a total as the sum of its current rows, expect the deduplication to disappear and the numbers to move, which is intended behavior rather than a defect.</p>
 
-<h3 class="subsec-title">Before you trust a number, run these six</h3>
+<h3 class="subsec-title">Before you trust a number, run these seven</h3>
 <p>Every one of the following returns a clean, well formatted, confidently wrong figure. None of them produces an error, and none of them is caught by anything except a person who thought to look.</p>
 
 <div class="tbl-wrap">
@@ -81,7 +81,8 @@ weight: 3
             <tr><td>Is metric type Standard or Total</td><td>A grand total set by accident produces a column of shares that reads like a column of rates.</td></tr>
             <tr><td>Is there a segment inside the metric</td><td>A filter fused into a column is invisible in the column header, and it stacks with whatever the panel is already filtering.</td></tr>
             <tr><td>Is a non default attribution model set</td><td>A metric carrying first touch credit next to metrics carrying last touch will never reconcile, and the table gives no hint that they differ.</td></tr>
-            <tr><td>Is the format right</td><td>A rate shown as a decimal gets multiplied by a hundred somewhere downstream, or read as zero.</td></tr>
+            <tr><td>Is the format right</td><td>A rate shown as a decimal gets multiplied by a hundred somewhere downstream, or read as zero. A rate that is also multiplied by 100 inside the formula ships at a hundred times its real value.</td></tr>
+            <tr><td>Does the metric depend on the table it sits in</td><td>Anything built with Column Sum, Mean, Row Count or a statistical function measures against the rows currently on screen. Moved to a summary number, a different dimension, or a trend, it returns something arithmetically valid and meaningless. Name the constraint into the metric: Share of Table Total travels, Share does not.</td></tr>
             <tr><td>Does the underlying variable expire the way you assumed</td><td>A rate built on an <a href="/adobe-analytics-learning/foundations/variables/evars-conversion-variables/">eVar</a> whose expiration outlives the question counts conversions the visitor made weeks after the interaction being measured.</td></tr>
         </tbody>
     </table>

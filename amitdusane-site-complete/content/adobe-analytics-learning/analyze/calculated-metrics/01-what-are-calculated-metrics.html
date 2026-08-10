@@ -205,6 +205,8 @@ weight: 1
 
 <p>The <a href="/adobe-analytics-learning/analyze/data-warehouse/data-warehouse-overview/">Data Warehouse</a> case is the one to plan for. Data Warehouse returns raw aggregated rows for you to process elsewhere, and a formula evaluated inside Adobe's reporting layer is simply not part of that pipeline. If a number has to appear in an export, the arithmetic happens in whatever consumes the export, and the calculated metric stays a reporting convenience.</p>
 
+<p>Behind all five exclusions sits one boundary, and it is worth carrying instead of the list. A calculated metric operates on data that has already been counted and arranged into rows. It never sees an individual hit. So any logic that has to look at a single server call and decide something about it, cleaning a value, setting a variable, classifying a request, is not a metric problem at all and no formula will reach it. That work belongs upstream, in the data layer, in <a href="/adobe-analytics-learning/shape/processing-rules/what-are-processing-rules/">Processing Rules</a>, or in the implementation itself. Knowing which side of that line a request falls on saves more time than knowing the whole function list.</p>
+
 <h3 class="subsec-title">Read the library before you add to it</h3>
 <p>The first useful thing to do with this feature is not to build anything. Adobe ships a set of default calculated metrics in every report suite, including Bounce Rate, Conversion Rate, Revenue per Order and Average Time on Site, and most organizations have built dozens more before anyone new arrives. Almost every metric a newcomer is asked to create already exists in some form.</p>
 

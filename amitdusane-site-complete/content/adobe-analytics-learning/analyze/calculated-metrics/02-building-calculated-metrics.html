@@ -139,6 +139,13 @@ weight: 2
 
 <p>One trap deserves naming on its own. Dividing by unique visitors produces a number that changes when the date range changes, because a person visiting across two months is one unique visitor over the quarter and two over the individual months. Sum the monthly figures and they will not agree with the quarterly one. Nothing is broken. Unique visitors were never additive.</p>
 
+<p>The same argument runs well outside conversion rate, and bounce rate is the case worth knowing because the convention is not obvious. Bounce rate divides bounces by <strong>entries</strong>, not by visits. On a page dimension those are different populations: entries counts the visits that started on that page, while visits counts every visit that touched it at any point. Build it against visits and the number comes out lower on every page that is more often passed through than landed on, which is most of them, and it will disagree with the built in Bounce Rate sitting two rows above it in the metric list.</p>
+
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ A cookie banner can make your bounces disappear</div>
+    <p>Bounces counts visits containing exactly one <strong>hit</strong>, not one page. So a visitor who lands, reads nothing, and leaves is not a bounce if a consent prompt, a pop up, or any other tracked interaction fired a second call on that page. Deploy a cookie banner that sends a hit and the bounce rate drops across the whole site overnight, with no change whatever in behavior. Where the question is really about disengagement, build the rate on Single Page Visits instead and say so in the description.</p>
+</div>
+
 <h3 class="subsec-title">Standard or Total, and why every row suddenly changed</h3>
 <p>Select the gear on any metric inside the builder and one of the settings is Metric type, with two values.</p>
 
@@ -215,12 +222,18 @@ weight: 2
 <h3 class="subsec-title">Format is not decoration</h3>
 <p>Four format options exist: decimal, currency, percent and time. Percent is the one that gets missed, and it is the setting that turns a bare ratio into the per hundred reading that made the funnel legible earlier on this page. Built without it, a conversion rate displays as 0.021 rather than 2.1 percent, and somewhere downstream a person reads it as two percent, or as zero, or multiplies it by a hundred a second time.</p>
 
+<p>The opposite error is more embarrassing and just as common. Setting the format to Percent and <em>also</em> multiplying the formula by 100 applies the hundred twice, and a two percent conversion rate ships as 210 percent. Build the bare ratio and let the format do its work. If a metric preview comes back in the hundreds, this is the first thing to check.</p>
+
 <p>Two smaller settings sit beside it and are worth thirty seconds each. Decimal places, because a rate quoted to six decimal places implies a precision the data does not have. And the setting that decides whether an upward trend is drawn as good in green or bad in red, which exists because half of all useful metrics are ones you want to go down. Bounce rate, exit rate, average page load, cost per order. Left at the default, a rising bounce rate is celebrated in green on every summary tile in the building.</p>
 
 <h3 class="subsec-title">Functions, and where to stop</h3>
 <p>The function list is long and mostly statistical: mean, median, percentile, quartile, standard deviation, variance, column sum, row sum, count, round, absolute value. The reference documentation lists every one with its arguments, and copying that list here would help nobody.</p>
 
 <p>Two are worth knowing by name before the rest. <strong>Column Sum</strong> is what most share of total metrics are built from, dividing a row value by the sum of the column. <strong>Approximate Count Distinct</strong> returns an approximate count of distinct values in a dimension, which is how a question like "how many distinct customer IDs bought this month" gets answered without exporting anything. Approximate is the operative word, and it belongs in the metric description so that nobody later reports it as exact.</p>
+
+<p>Column Sum carries a property that decides where the metric can be used at all. It sums the column <em>as the table currently stands</em>, not the whole report suite. Change the dimension, add a breakdown, filter the table or let it show a different number of rows, and the denominator moves with it. That is usually exactly what you want, and it is not the same thing as a share of the site total. It also means the metric stops meaning anything the moment somebody drags it into a summary number or a trended table, where the column is no longer a list of dimension items.</p>
+
+<p>One more is worth knowing because it solves a problem every ranked table has. The advanced list includes <strong>IF</strong> along with the comparison and logical operators, so a rate can be made to return zero below a volume threshold. A page with three visits and one order is not a 33 percent conversion rate, it is noise, and left alone it will sit at the top of the sorted table looking like the best page on the site. Wrapping the rate in a condition that requires, say, a hundred visits before it reports anything makes the table readable without deleting the underlying data. Put the threshold in the metric description, because a reader who does not know it is there will wonder why a row shows zero.</p>
 
 <div class="pro-tip">
     <div class="pro-tip-hdr">💡 Cumulative average over a rate metric averages the wrong thing</div>
