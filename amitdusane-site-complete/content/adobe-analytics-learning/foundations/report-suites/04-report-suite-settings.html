@@ -2,7 +2,7 @@
 slug: "report-suite-settings"
 title: "Report Suite Settings"
 seotitle: "Adobe Analytics Report Suite Settings"
-lastmod: 2026-07-15
+lastmod: 2026-08-10
 description: "The report suite settings panel, explained: general account settings, internal URL filters, bot rules, and the data-quality foundation underneath them."
 type: lesson
 modulenum: 2
@@ -67,7 +67,7 @@ weight: 4
 <p>One principle ties every setting together: they affect <strong>future data only</strong>. Adobe does not reprocess history when you change a setting. The day you change something is the day its new behavior begins, and everything before it stays exactly as it was collected. Picture a recording studio: you can change the mic setup for the next take, but you cannot re-EQ a take already recorded. The single exception is classifications, which are metadata layered on top of values you already have (post-production relabeling, not re-recording) and can be applied retroactively, covered in Classifications.</p>
 <div class="warn-box">
     <div class="warn-hdr">⚠️ Measure twice, cut once</div>
-    <p>Because nothing backfills, the cost of a wrong setting compounds with every day of data collected under it. Enable a variable late and you simply have no history for it. Change a suite's time zone partway through and you leave a visible seam in your trends, a shift that has nothing to do with real visitors. IP obfuscation is the harshest: set to remove, the address is never stored, so no later change brings back an address you might want to investigate months from now. Treat the core settings as deliberate launch-day decisions, the same discipline as drawing suite boundaries, not as dials to discover later.</p>
+    <p>Because nothing backfills, the cost of a wrong setting compounds with every day of data collected under it. Enable a variable late and you simply have no history for it. Change a suite's time zone partway through and you leave a visible seam in your trends, a shift that has nothing to do with real visitors. Change the base currency and history is not restated, because every hit was already converted at the rate of the day it arrived, so a revenue trend spanning the change is quietly comparing two different things. IP obfuscation is the harshest: set to remove, the address is never stored, so no later change brings back an address you might want to investigate months from now. Treat the core settings as deliberate launch-day decisions, the same discipline as drawing suite boundaries, not as dials to discover later.</p>
 </div>
 <p>The deep mechanics of each area live in their own modules, but the levers all sit in this one panel, and they all obey the forward-only rule. Learn to read this screen and you can read almost any Adobe Analytics implementation.</p>
 

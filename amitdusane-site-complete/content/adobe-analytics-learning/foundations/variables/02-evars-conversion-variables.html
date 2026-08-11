@@ -2,7 +2,7 @@
 slug: "evars-conversion-variables"
 title: "eVars (Conversion Variables)"
 seotitle: "eVars (Conversion Variables) in Adobe Analytics"
-lastmod: 2026-07-18
+lastmod: 2026-08-10
 description: "eVars persist, and persistence is the whole point. Expiration, allocation, merchandising eVars, and who actually gets the credit for a conversion."
 type: lesson
 modulenum: 3
@@ -31,6 +31,13 @@ weight: 2
 <p>Persistence is not a single on/off switch. Two settings define how each eVar behaves, and getting them right is the difference between attribution that tells the truth and reports that quietly mislead.</p>
 <h3 class="subsec-title">Expiration: how long the value sticks</h3>
 <p>Expiration is the attribution window: how long an eVar's value stays eligible to receive credit for a later event. The options run from short to effectively forever: <strong>visit</strong>, <strong>visitor</strong>, a set number of <strong>days, weeks, months, quarters, or years</strong>, <strong>until a specific success event</strong> (for example, expire the moment a purchase happens), or <strong>never</strong>. A campaign eVar expiring at "visit" credits only same-session conversions; the same eVar set to "30 days" keeps crediting that campaign for a month. Same data collected, very different story. You can also force an eVar to expire immediately by resetting it, which is how you cleanly repurpose a variable for a new use.</p>
+
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ A repurposed eVar makes one dimension mean two things</div>
+    <p>The word "cleanly" in that last sentence is carrying a lot of weight. Point an eVar at a new meaning without retiring the old one and both meanings now live in a single dimension. Run a report over any range spanning the changeover and campaign codes sit in the same list as product categories, sorted together, summed together, with nothing in the interface hinting that the values above and below a certain date are different kinds of thing. No error appears, because as far as Adobe is concerned these are all just values of eVar 12.</p>
+</div>
+
+<p>The repair is procedural rather than technical. Retire the old use, take a fresh slot if the suite has one to spare, and write down the changeover date somewhere a future analyst will actually look. Knowing that date is the only thing that lets somebody split their analysis at the right point, and it is invariably the thing nobody recorded. If the slot genuinely cannot be spared, the changeover date belongs in the variable's own documentation and in an annotation on the reports that use it, not in the memory of whoever made the change.</p>
 <h3 class="subsec-title">Allocation: who gets the credit</h3>
 <p>Allocation decides which value is credited when an eVar is set more than once before a conversion. There are three modes: <strong>Original Value (First Touch)</strong>, <strong>Most Recent (Last Touch)</strong>, and <strong>Linear</strong> (split evenly across all values). One subtlety worth internalizing: every value you send is always stored, regardless of allocation; allocation only governs which stored value gets <em>credit</em> for events. Here is one journey credited three ways:</p>
 <div class="diagram-box">

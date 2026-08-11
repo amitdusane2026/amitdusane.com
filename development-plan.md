@@ -213,6 +213,14 @@ Known findings already banked, so they do not need rediscovering:
 
 **Honest note for the report:** sections written from documentation rather than Amit's notes (Privacy and Data Retention, and the first draft of Consent) are thinner on the Experience axis than notes-driven ones. The corpus is not uniform and the report should say so rather than average it away.
 
+### Banked for M14 Analysis Workspace: annotations are absent from the whole corpus (10 Aug 2026)
+
+The word "annotation" appears nowhere in the learning world. Workspace annotations are a dated note attached to a project or a metric, explaining a spike, a release, an outage, or a configuration change, and they are the cheapest institutional memory the platform offers.
+
+They matter beyond M14, because several sections now end with advice to record a date somewhere a future analyst will find it: the eVar repurposing trap in M03 §2, the seam warnings in M02 §4, and the superseded-metric habit in M12 §3. **Annotations are the answer to all three, and there is currently nowhere to link.** When M14 covers them, those sections gain a destination.
+
+Surfaced by the M02 reference comparison. Not retrofitted, because M14 is unwritten and this belongs in its pre-drafting checklist rather than as a forward reference to a page that does not exist.
+
 ### Banked finding: the restructure orphaned content, and visit mechanics proves it (10 Aug 2026)
 
 M01 §3 Key Terminology defined a visit solely by the 30-minute timeout, in three places, and said nothing about the other three conditions or about visits spanning midnight. Amit knew the mechanics perfectly well; **he had planned to teach them in the old Dimensions and Metrics module, which the restructure deleted.** The knowledge fell through the seam and nobody noticed for months, because nothing was ever marked missing: the tracker showed the section written, QA'd and final, and it was.
