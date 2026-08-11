@@ -293,8 +293,10 @@ Per-section loop: notes, then a proposed h3 skeleton with component placement fo
 **Run this before every commit, without exception.** It must print nothing:
 
 ```bash
-git diff --cached --name-only -z | xargs -0 grep -l data-newblock
+git diff --cached --name-only -z -- amitdusane-site-complete | xargs -0 grep -l data-newblock
 ```
+
+Scope it to `amitdusane-site-complete` as shown. Unscoped, it flags this file and `development-plan.md`, which mention the attribute in prose rather than carrying it as markup.
 
 This exists because on 10 Aug 2026 a `git add -A` swept up two files that were still highlighted for review and committed them, then pushed. `main` was never touched so the site was safe, but the guard is the point: highlighting is applied for one file at a time while other files may still be marked, and "commit clean first" is not sufficient on its own once more than one file is in flight.
 
