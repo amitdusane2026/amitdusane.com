@@ -213,6 +213,33 @@ Known findings already banked, so they do not need rediscovering:
 
 **Honest note for the report:** sections written from documentation rather than Amit's notes (Privacy and Data Retention, and the first draft of Consent) are thinner on the Experience axis than notes-driven ones. The corpus is not uniform and the report should say so rather than average it away.
 
+### Banked finding: eight sections assert a journey the reader has not taken (10 Aug 2026)
+
+Found by sweeping the learning world for journey-assuming constructions. **All eight are signed off and all eight passed QA**, which is the same lesson as M02 §4: every check in the rulebook is a pattern match, and none of them reads a sentence and asks whether it is true for the reader in front of it. This is QA Rulebook check 4 and component rulebook rule 5, both failing silently.
+
+**Six of the eight are in the opening paragraph**, which is the worst place, because it is the first thing a search lander reads and it tells them they have read five sections they have not.
+
+| File | The line |
+|---|---|
+| `analyze/segments/05-segment-types-sharing.html:12` | "Everything in this module so far built a single segment, alone…" |
+| `analyze/segments/06-segment-best-practices.html:12` | "Everything in this module so far built the machinery…" |
+| `collect/adobe-launch-tags/05-rules.html:12` | "Everything in this module has been quietly building toward this section" |
+| `collect/adobe-launch-tags/06-publishing-workflow.html:12` | "By now you have done the heavy lifting" |
+| `collect/tracking-calls/03-server-calls-billing.html:12` | "By now you have sent two different kinds of calls…" |
+| `foundations/report-suites/05-multi-suite-tagging.html:12` | "By now you have effectively met it twice already" |
+| `collect/data-collection/06-mobile-sdk.html:131` | "Every method in this module so far…" |
+| `shape/marketing-channels/03-marketing-channel-processing-rules.html:364` | "the question this module has been building toward since the overview" |
+
+Each fix is one or two sentences: name the concept, link it, recap it in a few words, so the sentence is true for both a curriculum reader and a search lander. **Deliberately deferred by Amit to be handled holistically with this audit rather than scattered across content sessions**, because every one of them only damages a search lander and the learning world still 404s, which makes them free to fix now and expensive after indexation.
+
+Three near-misses were judged acceptable and left alone: `data-collection/01` ("Everything in this module is just detail hung on that line", a forward statement from the module's first section), `marketing-channels/05` ("Everything in this module now sits in a single line of causation", mid-section synthesis), and `marketing-channels/06` ("Everything in this module can be wrong without telling you", a statement about the subject rather than the reader).
+
+**Re-run the sweep before launch rather than trusting this list**, since sections written after this date could reintroduce the pattern:
+
+```
+grep -rn -i -o '[^.>]\{0,70\}\(so far in this\|in this module so far\|everything in this module\|the previous section\|the section before\|earlier we saw\|by now you have\|this module has been building\|as we saw\|we have met\|comes next\|is next\b\)[^.]\{0,60\}' --include=*.html .
+```
+
 ## Phase 5 — Small corrections
 
 - Three `description` outliers: `collect/_index.html` (180 chars), `deliver/_index.html` (187), `collect/data-layers/_index.md` (94).

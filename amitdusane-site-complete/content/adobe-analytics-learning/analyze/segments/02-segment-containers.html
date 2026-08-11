@@ -55,14 +55,14 @@ weight: 2
     </svg>
 </div>
 
-<h3 class="subsec-title">The narrowest container is not always narrow</h3>
-<p>A hit cannot see its neighbors. A value, however, can arrive on them without being sent again, and that is where Hit scope stops behaving the way its name promises.</p>
+<h3 class="subsec-title" data-newblock="1" style="background:#fde68a;color:#1f2937">The narrowest container is not always narrow</h3>
+<p data-newblock="1" style="background:#fde68a;color:#1f2937">A hit cannot see its neighbors. A value, however, can arrive on them without being sent again, and that is where Hit scope stops behaving the way its name promises.</p>
 
-<p><a href="/adobe-analytics-learning/foundations/variables/evars-conversion-variables/">eVars (Conversion Variables)</a> persist on purpose. Set one once and the collection servers carry that value forward onto every hit that follows, until something overwrites it or its expiration runs out. That is the entire point of an eVar, and it is what lets a campaign get credit for an order placed four pages later.</p>
+<p data-newblock="1" style="background:#fde68a;color:#1f2937"><a href="/adobe-analytics-learning/foundations/variables/evars-conversion-variables/">eVars (Conversion Variables)</a> persist on purpose. Set one once and the collection servers carry that value forward onto every hit that follows, until something overwrites it or its expiration runs out. That is the entire point of an eVar, and it is what lets a campaign get credit for an order placed four pages later.</p>
 
-<p>Now put a Hit container around a rule on that eVar. It does not return the one hit where the value was set. It returns every hit where the value was still in effect, which for a tracking code expiring after a week means the rest of the visit, and quite possibly several visits after it. The container is doing exactly what it was told. The variable underneath it was never hit-scoped in the first place.</p>
+<p data-newblock="1" style="background:#fde68a;color:#1f2937">Now put a Hit container around a rule on that eVar. It does not return the one hit where the value was set. It returns every hit where the value was still in effect, which for a tracking code expiring after a week means the rest of the visit, and quite possibly several visits after it. The container is doing exactly what it was told. The variable underneath it was never hit-scoped in the first place.</p>
 
-<div class="warn-box">
+<div class="warn-box" data-newblock="1" style="outline:3px solid #f59e0b;outline-offset:4px">
     <div class="warn-hdr">⚠️ A Hit container on an eVar quietly returns whole visits</div>
     <p>This is the reason a "narrow" segment comes back far larger than expected, and nothing about the definition looks wrong. When the question really is about the single moment a value was set, segment on the instance metric for that variable, or on a <a href="/adobe-analytics-learning/foundations/variables/props-traffic-variables/">prop</a> carrying the same value, since props do not persist. Check the expiration setting before trusting any hit-scoped rule on an eVar, because the segment inherits that setting whether or not anyone remembers it was configured.</p>
 </div>
