@@ -290,6 +290,14 @@ Per-section loop: notes, then a proposed h3 skeleton with component placement fo
 
 **Commit the clean version first, then apply the highlighting as an uncommitted working-tree change.** Nothing highlighted ever enters git history, so it cannot reach the site if either of us forgets. Removal is then `git checkout` on the one file, followed by a grep for `data-newblock` that must return zero.
 
+**Run this before every commit, without exception.** It must print nothing:
+
+```bash
+git diff --cached --name-only -z | xargs -0 grep -l data-newblock
+```
+
+This exists because on 10 Aug 2026 a `git add -A` swept up two files that were still highlighted for review and committed them, then pushed. `main` was never touched so the site was safe, but the guard is the point: highlighting is applied for one file at a time while other files may still be marked, and "commit clean first" is not sufficient on its own once more than one file is in flight.
+
 Before declaring any section done: the rulebook's 20-item checklist, then the QA Rulebook's 13 points, then a real build with the page count asserted.
 
 ---
