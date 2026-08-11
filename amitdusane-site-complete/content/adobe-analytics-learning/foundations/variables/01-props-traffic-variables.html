@@ -2,7 +2,7 @@
 slug: "props-traffic-variables"
 title: "Props (Traffic Variables)"
 seotitle: "Props (Traffic Variables) in Adobe Analytics"
-lastmod: 2026-07-18
+lastmod: 2026-08-10
 description: "Props are traffic variables, written in pencil. What they are for, their capacity and limits, and the two jobs they are quietly better at than eVars."
 type: lesson
 modulenum: 3
@@ -65,7 +65,7 @@ weight: 1
 <h3 class="subsec-title">The prop is not the weaker sibling</h3>
 <p>It is tempting to conclude that the eVar is simply more powerful and the prop a lesser tool. Not so. There are cases where persistence is exactly what you do <em>not</em> want, because it would distort the report. Say you capture the type of a form in a variable. Once the form is submitted, its job is done. You do not want that form type clinging to every action the visitor takes afterward, quietly attributing later outcomes to a form they already finished. Here, a variable that forgets after one hit is not a limitation, it is the correct behavior. That is a prop's moment.</p>
 <h3 class="subsec-title">Capacity and limits</h3>
-<p>Every report suite gives you up to <strong>75 props</strong> (the exact number depends on your Adobe contract), and each prop holds up to <strong>100 bytes</strong>; anything longer is truncated when it reaches Adobe. That is notably tighter than an eVar's 255 bytes, so props reward short, disciplined values. With only 75 to spend, plan what earns a slot.</p>
+<p>Every report suite gives you up to <strong>75 props</strong> (the exact number depends on your Adobe contract), and each prop holds up to <strong>100 bytes</strong>; anything longer is truncated when it reaches Adobe, silently, with nothing in the interface marking that it happened. The symptom is worth recognizing on sight: a prop report full of rows that look identical, because the values differ only past the cut. Long URLs, breadcrumb strings and concatenated page hierarchies all cross 100 bytes routinely. That is notably tighter than an eVar's 255 bytes, so props reward short, disciplined values. With only 75 to spend, plan what earns a slot.</p>
 <h3 class="subsec-title">Two things props are quietly good at</h3>
 <p><strong>List props.</strong> A prop can hold more than one value on a single hit. Say you run a survey with four options and a visitor can pick any combination. You want to know how often each option was chosen on its own, not as a tangle of combinations like "option 1 and option 3." Store the selections in one prop, separated by a delimiter, and switch that prop to list mode in the report suite settings. Adobe then reports each value independently, and if the same value appears twice on a hit, it is de-duplicated.</p>
 <div class="code-block">
