@@ -3,7 +3,7 @@ slug: "segment-containers"
 title: "Segment Containers"
 seotitle: "Segment Containers in Adobe Analytics"
 description: "The container decides how much of the journey a segment pulls in: one hit, one visit, or a whole visitor. Get it wrong and the numbers quietly lie."
-lastmod: 2026-07-15
+lastmod: 2026-08-10
 type: lesson
 modulenum: 13
 sectionnum: 2
@@ -53,6 +53,18 @@ weight: 2
         <text x="536" y="187" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">Every visit the</text>
         <text x="536" y="203" style="fill:var(--accent,#e11d48);font-size:11px;font-weight:600;font-family:sans-serif">buyer made.</text>
     </svg>
+</div>
+
+<h3 class="subsec-title">The narrowest container is not always narrow</h3>
+<p>A hit cannot see its neighbors. A value, however, can arrive on them without being sent again, and that is where Hit scope stops behaving the way its name promises.</p>
+
+<p><a href="/adobe-analytics-learning/foundations/variables/evars-conversion-variables/">eVars (Conversion Variables)</a> persist on purpose. Set one once and the collection servers carry that value forward onto every hit that follows, until something overwrites it or its expiration runs out. That is the entire point of an eVar, and it is what lets a campaign get credit for an order placed four pages later.</p>
+
+<p>Now put a Hit container around a rule on that eVar. It does not return the one hit where the value was set. It returns every hit where the value was still in effect, which for a tracking code expiring after a week means the rest of the visit, and quite possibly several visits after it. The container is doing exactly what it was told. The variable underneath it was never hit-scoped in the first place.</p>
+
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ A Hit container on an eVar quietly returns whole visits</div>
+    <p>This is the reason a "narrow" segment comes back far larger than expected, and nothing about the definition looks wrong. When the question really is about the single moment a value was set, segment on the instance metric for that variable, or on a <a href="/adobe-analytics-learning/foundations/variables/props-traffic-variables/">prop</a> carrying the same value, since props do not persist. Check the expiration setting before trusting any hit-scoped rule on an eVar, because the segment inherits that setting whether or not anyone remembers it was configured.</p>
 </div>
 
 <h3 class="subsec-title">Choosing the container</h3>
