@@ -2,7 +2,7 @@
 slug: "key-terminology"
 title: "Key Terminology"
 seotitle: "Adobe Analytics Terminology: Dimensions, Metrics, eVars"
-lastmod: 2026-07-18
+lastmod: 2026-08-10
 description: "Dimensions, metrics, hits, visits, and visitors. The vocabulary you need first, and the eVar-versus-prop distinction that people consistently get wrong."
 type: lesson
 modulenum: 1
@@ -27,6 +27,30 @@ weight: 3
 </div>
 
 <p>This nesting is not just trivia; it's the spine of segmentation. Every segment you build later asks the question at one of these three levels: "show me the <em>hits</em> where X," "the <em>visits</em> where X," or "the <em>visitors</em> who ever did X." Same data, three very different answers.</p>
+
+<h3 class="subsec-title">A visit ends four ways, and only one of them is famous</h3>
+<p>The 30-minute rule is the one everybody learns, and it is the one that fires almost every time, which is why it is fair to define a visit by it. It is not the only way a visit ends. Adobe closes a session under four conditions, and the other three are worth knowing because they are the ones that produce numbers nobody can explain.</p>
+
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>A visit ends after</th><th>What triggers it in practice</th></tr></thead>
+        <tbody>
+            <tr><td><strong>30 minutes of inactivity</strong></td><td>The everyday case. Somebody stops, and the next hit starts a new visit.</td></tr>
+            <tr><td><strong>12 hours of continuous activity</strong></td><td>A session that never goes quiet for 30 minutes. Kiosks, embedded displays, and anything left open on a second monitor.</td></tr>
+            <tr><td><strong>2,500 hits</strong></td><td>A single session that sends a very large number of calls. Densely instrumented apps and media experiences reach this far more easily than a page-view site ever would.</td></tr>
+            <tr><td><strong>100 hits in the first 100 seconds</strong></td><td>A bot-defense rule. Legitimate traffic almost never hits it; something firing in a loop does.</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<p>The middle two are the ones that catch experienced people, and they catch them quietly. A single-page application that sends a tracking call on every route change, filter, and lazily loaded panel accumulates hits at a rate a traditional page-view site never approaches, and a long media session is instrumented far more densely than the page it sits on. Nothing errors, nothing is flagged, and one person's single sitting is now two visits in the report.</p>
+
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ A split visit moves every per-visit number you own</div>
+    <p>When a session splits, the visit count goes up and nothing else does. Every rate built on visits, conversion rate, revenue per visit, pages per visit, drops by the same proportion, on exactly the properties most likely to trip the limits: video, apps, and anything with a chatty single-page front end. The numbers stay internally consistent, which is what makes it hard to spot. If a per-visit rate is inexplicably low on one property and normal everywhere else, count the hits in a long session before looking anywhere else.</p>
+</div>
+
+<p>One more piece of visit behavior surprises people, and it is worth carrying because it ends an argument rather than starting one. <strong>A visit does not end at midnight.</strong> A session running from 11:45 PM to 12:10 AM is one visit, not two. In a daily trend it appears on both days, because it genuinely happened on both, but the total for the period counts it once. That is why the daily visit numbers in a trend will not add up to the month's total, and the gap is not a defect. It is the same deduplication that makes unique visitors behave the way they do, applied to sessions.</p>
 
 <div class="info-box">
     <div class="info-hdr">ℹ️ "Near real time" is not instant</div>
@@ -54,7 +78,7 @@ weight: 3
         <thead><tr><th>Term</th><th>What it really means</th></tr></thead>
         <tbody>
             <tr><td><strong>Hit</strong></td><td>A single data collection call to Adobe (a page view, link click, or event)</td></tr>
-            <tr><td><strong>Visit</strong></td><td>A sequence of hits from one session, ending after 30 minutes of inactivity</td></tr>
+            <tr><td><strong>Visit</strong></td><td>A sequence of hits from one session. Ends after 30 minutes of inactivity, and also at 12 hours of continuous activity or 2,500 hits. Does not end at midnight.</td></tr>
             <tr><td><strong>Visitor</strong></td><td>A unique browser/device identified by a cookie or ID, not guaranteed to be one person</td></tr>
             <tr><td><strong>Report Suite</strong></td><td>The container where a set of Analytics data is collected and reported</td></tr>
             <tr><td><strong>Dimension</strong></td><td>A descriptive attribute you break data down by (page, browser, campaign)</td></tr>

@@ -213,6 +213,22 @@ Known findings already banked, so they do not need rediscovering:
 
 **Honest note for the report:** sections written from documentation rather than Amit's notes (Privacy and Data Retention, and the first draft of Consent) are thinner on the Experience axis than notes-driven ones. The corpus is not uniform and the report should say so rather than average it away.
 
+### Banked finding: the restructure orphaned content, and visit mechanics proves it (10 Aug 2026)
+
+M01 §3 Key Terminology defined a visit solely by the 30-minute timeout, in three places, and said nothing about the other three conditions or about visits spanning midnight. Amit knew the mechanics perfectly well; **he had planned to teach them in the old Dimensions and Metrics module, which the restructure deleted.** The knowledge fell through the seam and nobody noticed for months, because nothing was ever marked missing: the tracker showed the section written, QA'd and final, and it was.
+
+**The generalizable lesson: when the movement ledger deletes a section with a stated destination, the destination has to be verified, not assumed.** The structure map's ledger records these deletions from the old M13:
+
+| Deleted section | Stated destination |
+|---|---|
+| Understanding Dimensions | "taught in Props and eVars" |
+| Understanding Metrics | "taught in Events" |
+| Dimension and Metric Best Practices | deleted outright, no destination |
+
+Visit mechanics belonged to Understanding Metrics, and its stated destination was Events, which covers success events rather than baseline traffic metrics. So the handoff was incomplete in exactly the way that produces no error signal anywhere.
+
+**Work item for the pre-launch pass:** read the movement ledger's deleted sections, list what each was expected to carry, and confirm the receiving section actually carries it. Three deletions, so this is a short check, and it is the only mechanism that would catch a second instance. Anything found is likely to be foundational, because that is what an early module was holding.
+
 ### Banked finding: eight sections assert a journey the reader has not taken (10 Aug 2026)
 
 Found by sweeping the learning world for journey-assuming constructions. **All eight are signed off and all eight passed QA**, which is the same lesson as M02 §4: every check in the rulebook is a pattern match, and none of them reads a sentence and asks whether it is true for the reader in front of it. This is QA Rulebook check 4 and component rulebook rule 5, both failing silently.
