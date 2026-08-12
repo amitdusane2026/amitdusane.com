@@ -83,7 +83,7 @@ None of these produce an error. All three have bitten this site.
 
 2. **A new module must be added to `[params.phases]` in `hugo.toml`.** That block is the only module-to-phase mapping. Miss it and the module appears in the left navigation but vanishes from both maps, with no build error.
 
-3. **`layouts/lesson/single.html:9` regex-matches the literal string `<div class="ref-box">`** to inject the doc-note block above it. Single quotes, an extra class, or extra whitespace silently breaks the injection.
+3. **`layouts/lesson/single.html:9` regex-matches the literal string `<div class="ref-box">`** to inject the doc-note block above it. Single quotes, an extra class, or extra whitespace silently breaks the injection. **The match has a second condition that is easy to miss**: the regex also requires an Adobe domain (`experienceleague.adobe.com`, `adobe.com/go`, or `://adobe`) to appear inside the box, so a `ref-box` of purely internal links is deliberately skipped. That is intentional and commented in the template, but it means a `ref-box` can be perfectly well-formed and still get no doc-note, which looks identical to the injection being broken.
 
 A fourth, already fixed and documented in `hugo.toml`: the `[frontmatter]` block decouples `lastmod` from the `date` cascade. Without it a `lastmod` one day ahead of a UTC build clock gives the page a future `publishDate` and Hugo drops it silently. This once removed 103 pages while the build reported success. **Do not remove those lines.**
 

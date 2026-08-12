@@ -2,7 +2,7 @@
 slug: "adobe-client-data-layer"
 title: "Adobe Client Data Layer (ACDL)"
 seotitle: "Adobe Client Data Layer (ACDL) Explained"
-lastmod: 2026-07-18
+lastmod: 2026-08-12
 description: "The Adobe Client Data Layer, step by step: declare, push, catch it in Launch. Where its event history earns its keep, and what it honestly costs."
 type: lesson
 modulenum: 5
@@ -100,6 +100,11 @@ weight: 2
 <div class="warn-box">
     <div class="warn-hdr">⚠️ The mirror-image trap on single-page apps</div>
     <p>The flip side of <code>eventInfo</code> is a bug teams hit constantly. Because top-level data <em>persists</em> in the state, on a single-page application it carries over between virtual views unless you clear it. If page A pushes <code>page: { name: "Product" }</code> and the shopper navigates to page B without a reload, <code>getState()</code> still reports "Product" until something overwrites it, so page B's hit can be tagged with page A's values. The fix is deliberate: before the next view's data, push a null to wipe the stale branch, <code>adobeDataLayer.push({ page: null })</code>. Persistent state is a feature, but on a single-page app it is also a thing you must actively reset.</p>
+</div>
+<p>There is a shortcut that suggests itself at exactly this point, and it is worth refusing before you reach for it. Clearing a branch with a null push is deliberate and narrow. Emptying the whole array by assigning a fresh one looks like the same idea, only tidier.</p>
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ Never reassign the array to reset it</div>
+    <p><code>window.adobeDataLayer = []</code> does not clear the data layer. It discards the initialised instance along with every listener registered against it, and puts an ordinary array in its place, one with no <code>getState</code> and no <code>addEventListener</code>. Everything pushed after that lands in a plain array where nothing is listening. No error is raised, the page carries on, and collection simply stops. The same caution covers any array method that changes the log in place, <code>pop</code>, <code>shift</code>, <code>splice</code>, <code>sort</code> and <code>reverse</code>: the log is append-only, and <code>push</code> is the only method that belongs in your code.</p>
 </div>
 
 <h3 class="subsec-title">Step 4: catching it in Launch</h3>

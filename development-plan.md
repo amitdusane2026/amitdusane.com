@@ -227,6 +227,7 @@ A reference document on the same topic was generated externally and used as a **
 | M02 Report Suites | 1 | Landed in M03 (repurposed eVar), plus a currency clause in M02 |
 | M03 Variables | 3 | Never-expire warning, the expiration counterpart, prop truncation symptom |
 | M04 Data Collection | 3 + 1 banked | Identity reset on a tracking-server change, multi-suite settings divergence, PII in captured query strings; AQE truncation marker banked for M20 |
+| M05 Data Layers | 3 + 1 banked | SPA router double-count on the entry screen, data layer value discipline (types and enumerations), ACDL array reassignment; meaning-not-presence validation banked for M19 |
 
 **Nine modules remain unreviewed and that is deliberate.** Amit's ruling stands: do not sweep the finished modules. The pattern in the yield says where it pays. **Modules with mechanical depth reward it; conceptual modules do not.** M03 Variables scored highest of the retrospective runs because persistence is the hardest mechanism in the product. M02 Report Suites scored lowest because it is mostly architecture and judgment, which is where our writing is already stronger than a reference can be.
 
@@ -248,6 +249,28 @@ Amit asked for M04 Data Collection specifically, which overrides the no-sweep ru
 Two of the five previous runs also contained factual errors we had already corrected. **Record the wrong-here findings, because they are the only evidence that the corpus is ahead of a generated reference, and that is worth knowing before the E-E-A-T report characterises the site.**
 
 **A second framing lesson.** The reference organised by mechanism in eleven parts; our module organises by method in six sections. Its Parts 8 to 11 (post-hit processing, consent, debugging, architecture) map to M08 to M11, M02 §7, M20 and M19, not to M04 at all. A naive coverage read would have flagged all four as missing. **Check the module boundary before calling anything a gap.**
+
+### The M05 run: the reference got the module's central mechanic wrong (12 Aug 2026)
+
+Four sections read in full. Three additions applied, one banked, and the third bucket paid off again, harder than on M04.
+
+**The reference states ACDL's core rule as "the `event` key triggers listeners, everything else is merged into computed state."** Under that rule `eventInfo` merges into state. It does not, and M05 §2 demonstrates the opposite with two console readouts. Both documents name that split as the crux (the reference calls it "the key to using ACDL well", our §2 calls it "the single most important detail in the whole section") and only one has it right. It is also the mechanic that makes ACDL worth adopting at all, since getting it backwards means every add-to-cart overwrites the last.
+
+Two smaller places we are ahead: the reference never mentions that renaming the ACDL object leaves two objects on the page, and it presents "publish XDM directly versus domain-shaped" as an open fork without noting that ACDL feeds the Edge cleanly either way.
+
+**Not taken, but worth recording as the best idea in the document:** assert in the end-to-end test suite that a checkout flow produces the expected pushes, in the expected order, with the expected types. Not a trap, so it fails the filter, but it catches the one defect class manual tagging QA never catches, which is a refactor that removes a push nobody remembered was required. **Belongs in the M19 §6 Validation and Sign-off pre-drafting checklist**, alongside the banked meaning-not-presence item.
+
+**Also not taken, and a judgment call left open for Amit:** the reference takes a clear position on whether an application should publish XDM directly or publish domain-shaped data mapped to XDM in the tag layer. M05 does not address the question anywhere. It is not a trap, so it fails the filter, but it is exactly the kind of architectural fork the site exists to answer, and M05 §3 already has the character for it.
+
+### M05 §3 has no `ref-box`, deliberately (12 Aug 2026)
+
+`03-do-you-need-acdl.html` carried a `ref-box` titled "Related in this module" holding two internal links with no `target="_blank"`, the only one of its shape in the learning world. It broke the rulebook (Adobe docs only, external) and QA check 13 never caught it, because that check confirms a `ref-box` exists and is last, not what is inside it. Same lesson as M02 §4: the checks are pattern matches.
+
+**Amit's ruling: remove it outright rather than find Adobe links for it.** The section argues against Adobe's own recommendation, so a box pointing at Adobe documentation would undercut its position, and the two internal links are already made in the body.
+
+**So §3 is now the only section in the learning world with zero `ref-box`, and that is intentional. Do not "fix" it by adding one.** The section anatomy rule in `CLAUDE.md` still holds everywhere else.
+
+No rendering consequence: `layouts/lesson/single.html:9` only injects the doc-note when the `ref-box` contains an Adobe domain, so §3 was already getting no doc-note before the box was removed. That second condition was missing from `CLAUDE.md`'s description of trap 3 and has been corrected there.
 
 **One tooling lesson, learned the hard way.** A proposed addition to M03 §6 turned out to duplicate an info-box already there. The search used `do not sum`; the section is from the era that uses contractions and says `don't sum`. **The corpus is split by era, so every search pattern has to be contraction-tolerant**, or it will report a gap that is not there. Earlier comparisons in this session used the contraction-free forms and may have produced a false negative or two.
 
