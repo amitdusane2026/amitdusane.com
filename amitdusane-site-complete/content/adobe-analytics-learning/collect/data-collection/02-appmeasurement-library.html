@@ -2,7 +2,7 @@
 slug: "appmeasurement-library"
 title: "AppMeasurement Library"
 seotitle: "AppMeasurement Library in Adobe Analytics"
-lastmod: 2026-07-18
+lastmod: 2026-08-12
 description: "How AppMeasurement really works: where it slips into the page, what the s object packs into a hit, and the linkTrackVars trap that haunts everyone."
 type: lesson
 modulenum: 4
@@ -25,6 +25,63 @@ weight: 2
 <p>Once you see this, a whole pile of jargon suddenly makes sense. That Adobe server call you spotted in the network tab gets called an <strong>image request</strong>, a <strong>pixel</strong>, or a <strong>beacon</strong>, and now you know why, because it is, quite literally, a request for a 1x1 image. Copy the request's address into a fresh browser tab and you will get back a minuscule transparent dot. That dot is the image. The data was never about the picture.</p>
 <p>This is not an Adobe quirk, it is how the whole industry collects data. When you hear about a "Google pixel," a "Meta pixel," or a "LinkedIn pixel," it is the same trick: a third party's invisible image request carrying information back to its own servers. Adobe was simply one of the early, polished versions of it.</p>
 <p>One mechanical detail worth holding onto. By default the data rides inside the address of the request, which is a GET, the browser asking Adobe's server for the pixel. Addresses can only get so long before browsers refuse them, so when a hit carries a lot of data (a long products string, say), AppMeasurement automatically switches to sending it as a POST, where the data travels in the body of the request rather than the address. Same destination, no truncation, and you will see the method flip from GET to POST right there in the debugger.</p>
+<p>Here is one of those addresses, slowed down and taken apart. This is what the entry in your network tab is actually saying.</p>
+<div class="diagram-box">
+    <div class="diagram-title">One page view, on the wire</div>
+    <svg viewBox="0 0 700 232" style="width:100%;height:auto;display:block" role="img" aria-label="A single Adobe Analytics image request URL broken into its labelled parts. The first line shows the tracking server, the fixed b slash ss path, the report suite ID, the hit source, and the cache buster. The second line shows the payload: an opening marker, the page name, prop 1, eVar 1, the events fired, and a closing marker. The report suite and the payload values are highlighted as things the implementation chose, while the path, hit source, cache buster and markers are added by the library.">
+
+        <text x="24" y="22" style="fill:var(--accent,#e11d48);font-size:10.5px;font-weight:700;font-family:sans-serif">tracking server</text>
+        <text x="292.8" y="22" style="fill:var(--accent,#e11d48);font-size:10.5px;font-weight:700;font-family:sans-serif">report suite</text>
+        <text x="410.4" y="22" style="fill:var(--text2,#475569);font-size:10.5px;font-family:sans-serif">cache buster</text>
+
+        <rect x="14" y="32" width="580" height="44" rx="8" style="fill:var(--bg1,#f8fafc);stroke:var(--border,#e2e8f0);stroke-width:1"/>
+
+        <text x="24" y="60" textLength="226.8" lengthAdjust="spacing" style="fill:var(--accent,#e11d48);font-size:14px;font-weight:700;font-family:ui-monospace,SFMono-Regular,Menlo,monospace">https://metrics.example.com</text>
+        <text x="250.8" y="60" textLength="42" lengthAdjust="spacing" style="fill:var(--text2,#475569);font-size:14px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace">/b/ss</text>
+        <text x="292.8" y="60" textLength="100.8" lengthAdjust="spacing" style="fill:var(--accent,#e11d48);font-size:14px;font-weight:700;font-family:ui-monospace,SFMono-Regular,Menlo,monospace">/examplersid</text>
+        <text x="393.6" y="60" textLength="16.8" lengthAdjust="spacing" style="fill:var(--text2,#475569);font-size:14px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace">/1</text>
+        <text x="410.4" y="60" textLength="84" lengthAdjust="spacing" style="fill:var(--text2,#475569);font-size:14px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace">/s84920174</text>
+
+        <rect x="24" y="66" width="226.8" height="2.5" style="fill:var(--accent,#e11d48)"/>
+        <rect x="250.8" y="66" width="42" height="2.5" style="fill:var(--text2,#475569)"/>
+        <rect x="292.8" y="66" width="100.8" height="2.5" style="fill:var(--accent,#e11d48)"/>
+        <rect x="393.6" y="66" width="16.8" height="2.5" style="fill:var(--text2,#475569)"/>
+        <rect x="410.4" y="66" width="84" height="2.5" style="fill:var(--text2,#475569)"/>
+
+        <text x="250.8" y="90" style="fill:var(--text2,#475569);font-size:10.5px;font-family:sans-serif">fixed path, on every hit</text>
+        <text x="393.6" y="90" style="fill:var(--text2,#475569);font-size:10.5px;font-family:sans-serif">hit source</text>
+
+        <text x="24" y="124" style="fill:var(--text2,#475569);font-size:10.5px;font-family:sans-serif">payload opens</text>
+        <text x="192" y="124" style="fill:var(--accent,#e11d48);font-size:10.5px;font-weight:700;font-family:sans-serif">prop 1</text>
+        <text x="410.4" y="124" style="fill:var(--accent,#e11d48);font-size:10.5px;font-weight:700;font-family:sans-serif">events fired</text>
+
+        <rect x="14" y="134" width="580" height="44" rx="8" style="fill:var(--bg1,#f8fafc);stroke:var(--border,#e2e8f0);stroke-width:1"/>
+
+        <text x="24" y="162" textLength="50.4" lengthAdjust="spacing" style="fill:var(--text2,#475569);font-size:14px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace">?AQB=1</text>
+        <text x="74.4" y="162" textLength="117.6" lengthAdjust="spacing" style="fill:var(--accent,#e11d48);font-size:14px;font-weight:700;font-family:ui-monospace,SFMono-Regular,Menlo,monospace">&amp;pageName=Home</text>
+        <text x="192" y="162" textLength="109.2" lengthAdjust="spacing" style="fill:var(--accent,#e11d48);font-size:14px;font-weight:700;font-family:ui-monospace,SFMono-Regular,Menlo,monospace">&amp;c1=home-hero</text>
+        <text x="301.2" y="162" textLength="109.2" lengthAdjust="spacing" style="fill:var(--accent,#e11d48);font-size:14px;font-weight:700;font-family:ui-monospace,SFMono-Regular,Menlo,monospace">&amp;v1=logged-in</text>
+        <text x="410.4" y="162" textLength="117.6" lengthAdjust="spacing" style="fill:var(--accent,#e11d48);font-size:14px;font-weight:700;font-family:ui-monospace,SFMono-Regular,Menlo,monospace">&amp;events=event7</text>
+        <text x="528" y="162" textLength="50.4" lengthAdjust="spacing" style="fill:var(--text2,#475569);font-size:14px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace">&amp;AQE=1</text>
+
+        <rect x="24" y="168" width="50.4" height="2.5" style="fill:var(--text2,#475569)"/>
+        <rect x="74.4" y="168" width="117.6" height="2.5" style="fill:var(--accent,#e11d48)"/>
+        <rect x="192" y="168" width="109.2" height="2.5" style="fill:var(--accent,#e11d48)"/>
+        <rect x="301.2" y="168" width="109.2" height="2.5" style="fill:var(--accent,#e11d48)"/>
+        <rect x="410.4" y="168" width="117.6" height="2.5" style="fill:var(--accent,#e11d48)"/>
+        <rect x="528" y="168" width="50.4" height="2.5" style="fill:var(--text2,#475569)"/>
+
+        <text x="74.4" y="192" style="fill:var(--accent,#e11d48);font-size:10.5px;font-weight:700;font-family:sans-serif">page name</text>
+        <text x="301.2" y="192" style="fill:var(--accent,#e11d48);font-size:10.5px;font-weight:700;font-family:sans-serif">eVar 1</text>
+        <text x="528" y="192" style="fill:var(--text2,#475569);font-size:10.5px;font-family:sans-serif">payload closes</text>
+
+        <rect x="24" y="215" width="11" height="2.5" style="fill:var(--accent,#e11d48)"/>
+        <text x="41" y="219" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">you chose this</text>
+        <rect x="150" y="215" width="11" height="2.5" style="fill:var(--text2,#475569)"/>
+        <text x="167" y="219" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">AppMeasurement adds this for you</text>
+    </svg>
+</div>
+<p>Two things are worth taking from that. The address is mostly not yours: the fixed path, the hit source and the cache buster are all added by the library, and the report suite is the only part of the address you decided. Everything you actually chose to measure sits in the second half, after the question mark, which is why a debugger session usually starts there.</p>
 
 <h3 class="subsec-title">The s object: what packs the pixel</h3>
 <p>So what assembles all that data and stuffs it into the request? A single object that lives on the page, named <code>s</code> by convention. Everything AppMeasurement does revolves around it. You write values into its fields, and when you fire a tracking call, AppMeasurement reads those fields, builds the pixel request, and sends it.</p>
