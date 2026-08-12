@@ -213,6 +213,26 @@ Known findings already banked, so they do not need rediscovering:
 
 **Honest note for the report:** sections written from documentation rather than Amit's notes (Privacy and Data Retention, and the first draft of Consent) are thinner on the Experience axis than notes-driven ones. The corpus is not uniform and the report should say so rather than average it away.
 
+### The generated-reference comparison: what has been run, and the rule for what comes next (10 Aug 2026)
+
+A reference document on the same topic was generated externally and used as a **trap checklist**, never as a coverage checklist. The filter, which held across every run and reproduced the calls actually made:
+
+> **Take it** if a reader who followed our section would produce a wrong number, or be genuinely surprised by a result, and nothing in the product would tell them. **Skip it** if it is a feature, a recipe, a catalogue, a platform translation, or anything whose absence only makes us less complete.
+
+| Module | Yield | What it produced |
+|---|---|---|
+| M12 Calculated Metrics | 6 | Bounce rate denominator, double percent, Column Sum context, the IF threshold, table-dependency check |
+| M13 Segments | 2 + 1 | eVar persistence at hit scope, unique visitors across columns, the noun heuristic |
+| M01 Fundamentals | 2 | The other three visit-end conditions, midnight |
+| M02 Report Suites | 1 | Landed in M03 (repurposed eVar), plus a currency clause in M02 |
+| M03 Variables | 3 | Never-expire warning, the expiration counterpart, prop truncation symptom |
+
+**Nine modules remain unreviewed and that is deliberate.** Amit's ruling stands: do not sweep the finished modules. The pattern in the yield says where it pays. **Modules with mechanical depth reward it; conceptual modules do not.** M03 Variables scored highest of the retrospective runs because persistence is the hardest mechanism in the product. M02 Report Suites scored lowest because it is mostly architecture and judgment, which is where our writing is already stronger than a reference can be.
+
+**For the 42 unwritten sections, generate the reference before drafting**, not after. It costs nothing, catches gaps at their cheapest, and touches no signed-off work. Start with M14.
+
+**One tooling lesson, learned the hard way.** A proposed addition to M03 §6 turned out to duplicate an info-box already there. The search used `do not sum`; the section is from the era that uses contractions and says `don't sum`. **The corpus is split by era, so every search pattern has to be contraction-tolerant**, or it will report a gap that is not there. Earlier comparisons in this session used the contraction-free forms and may have produced a false negative or two.
+
 ### Banked for M14 Analysis Workspace: annotations are absent from the whole corpus (10 Aug 2026)
 
 The word "annotation" appears nowhere in the learning world. Workspace annotations are a dated note attached to a project or a metric, explaining a spike, a release, an outage, or a configuration change, and they are the cheapest institutional memory the platform offers.

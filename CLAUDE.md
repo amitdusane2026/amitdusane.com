@@ -166,6 +166,8 @@ The second is an extended scenario or analogy carried through the whole section,
 
 **Contractions split by era.** `foundations/variables/` and the migration world use them. The July 2026 modules (Classifications, Marketing Channels, Segments) are near contraction-free: "it is", "do not", "cannot". Match the era of the module being worked on; new work follows the July 2026 register.
 
+**That split makes every corpus search a trap.** Grepping `do not sum` misses a section that says `don't sum`, and the result looks exactly like a gap. On 10 Aug 2026 that produced a proposed addition to M03 §6 that duplicated an info-box already sitting three paragraphs away. **Always search both forms**, or match on the distinctive noun rather than the verb phrase.
+
 **Sentence rhythm is long and comma-chained, broken by one-sentence paragraphs used as beats.** "The data is not lost. It is in the wrong building." A long paragraph is almost always followed by a short one. Nothing exceeds about 120 words.
 
 **Openers are never definitions.** Three patterns recur: a continuity recap that walks back over what the reader has and names the gap; a concrete scenario or extended metaphor carried through the whole section; or the failing report shown before the feature is named.
