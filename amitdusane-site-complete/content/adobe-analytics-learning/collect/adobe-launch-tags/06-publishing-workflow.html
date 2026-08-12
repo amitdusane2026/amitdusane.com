@@ -2,7 +2,7 @@
 slug: "publishing-workflow"
 title: "Publishing Workflow"
 seotitle: "The Adobe Launch Publishing Workflow"
-lastmod: 2026-07-15
+lastmod: 2026-08-13
 description: "The four states a library moves through, the approval gates and why they exist, publishing day, and what to do when production goes wrong."
 type: lesson
 modulenum: 6
@@ -114,6 +114,13 @@ PUBLISHED
 <div class="warn-box">
     <div class="warn-hdr">⚠️ Only one library can sit in Submitted or Approved at a time</div>
     <p>The workflow is a single lane, not a queue. While one library is waiting for approval, nobody else can submit. On a small team that is invisible. On a team of six, all shipping in the same week, it becomes the thing everyone is waiting on, and the temptation is to bundle unrelated changes into one library to get them through together. Resist it: a library is the unit you roll back, and a library carrying four teams' work is a library you cannot roll back.</p>
+</div>
+
+<p>The single lane is the constraint you can see. There is a second one underneath it that is invisible, and it catches the same teams.</p>
+<p>Rules, data elements and extensions belong to the property, not to a library. A library holds a <em>revision</em> of each resource it touches. So two people can open two libraries in Development, edit the same rule in each, and neither is told the other exists. Both build. Both pass QA, because each library contains its own author's version and behaves exactly as that author intended.</p>
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ The second library to publish wins, and nobody is told</div>
+    <p>When the second one reaches production it carries its own revision of that shared rule, and that revision replaces the first team's. Their change is gone from the live site while their library still shows as published, which is precisely why nobody thinks to look there. The symptom arrives days later as a report that stopped populating, and the team who lost the work is the least likely to suspect a publish they had nothing to do with. Keep libraries small, keep them short-lived, and publish them quickly, for the same reason short-lived branches are the rule in every other codebase.</p>
 </div>
 
 <h3 class="subsec-title">The approval gates, and why they exist</h3>

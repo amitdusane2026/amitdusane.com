@@ -2,7 +2,7 @@
 slug: "rules"
 title: "Rules"
 seotitle: "Rules in Adobe Launch (Tags)"
-lastmod: 2026-07-18
+lastmod: 2026-08-13
 description: "Every Launch rule has three parts: events, conditions, and actions. What each one decides, and how rule sequence makes several rules work together."
 type: lesson
 modulenum: 6
@@ -178,6 +178,14 @@ and then set the variables into the void.</pre></div>
     <div class="warn-hdr">⚠️ Do not clear before you send</div>
     <p>The sandwich has one classic failure. If the final rule clears variables <em>before</em> it sends, or starts with a clear, it wipes everything the earlier rules set, and the beacon goes out nearly empty. Clear only after the beacon has been sent. Watch repeated variables too: if two rules set the same variable, the later rule wins, so the last value on the shared object is the one that ships.</p>
 </div>
+
+<p>There is a second way the sandwich comes apart, and it is harder to catch because most of the time it works. Rule order decides when each rule <em>starts</em>. It does not hold the next rule back until the previous one has finished.</p>
+<p>A rule that sets its variables synchronously is safe, because it is done before it hands control on. A rule whose custom code fetches something, waits on a promise, or sets a timeout returns immediately and finishes later. The next rule in the order runs inside that gap, and the beacon leaves without the variable the earlier rule was still in the middle of setting.</p>
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ Rule order does not sequence asynchronous work</div>
+    <p>This passes every manual test, because on a warm cache and a fast connection the slow thing returns before the beacon rule runs and the data is correct. It fails on the connections nobody tests, for a fraction of visitors, producing a variable that is populated most of the time and empty the rest. Nothing errors and nothing is logged. The fix is not a higher order number. Either have the value ready before the sandwich starts, through a data element or an earlier event, or let whatever finishes the work fire the beacon itself through a direct call, so the send is caused by the data arriving rather than scheduled alongside it.</p>
+</div>
+<p>One related setting is worth knowing so you do not reach for it here. <strong>Run rule components in sequence</strong>, in the property's advanced settings, makes the conditions and actions <em>inside a single rule</em> wait for each other. It says nothing about the order of separate rules, so it does not solve the case above.</p>
 
 <div class="pro-tip">
     <div class="pro-tip-hdr">💡 Set global variables in a rule, not the extension config</div>

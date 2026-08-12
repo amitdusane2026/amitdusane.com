@@ -2,7 +2,7 @@
 slug: "environments"
 title: "Environments"
 seotitle: "Environments and Embed Codes in Adobe Launch"
-lastmod: 2026-07-18
+lastmod: 2026-08-13
 description: "Why Launch has development, staging, and production environments, why the last two are singular, and why you cannot edit them directly."
 type: lesson
 modulenum: 6
@@ -33,6 +33,8 @@ weight: 7
 <p>The analytics developer lives in <strong>Development</strong>. It is the one environment where you can make changes any number of times, run every experiment, and get your hands dirty without anyone questioning you or escalating to your manager. And you can have as many development environments as you want, which matters more than it first appears.</p>
 
 <p>A mature analytics practice is not a solo effort. One team may be working on third-party pixels, another only on the ecommerce flow, another only on content tracking, link clicks, CTAs, downloads. If all of them are forced to share a single development environment, work collides: one person writes a rule, another overwrites it, and you get technical messes and interpersonal friction in equal measure. Separate development environments give each team its own space to build, test, and promote independently, which makes the whole practice faster and cleaner.</p>
+
+<p>The isolation is real, and it is narrower than it looks. Separate environments separate the <em>builds</em>, not the resources. Two teams working in two development environments are still editing one shared pool of rules and data elements, so if both touch the same rule, nothing warns either of them and the collision surfaces at publish rather than at edit. <a href="/adobe-analytics-learning/collect/adobe-launch-tags/publishing-workflow/">Publishing Workflow</a> covers what that costs and how to avoid it.</p>
 
 <div class="pro-tip">
     <div class="pro-tip-hdr">💡 The audit trail is for context, not blame</div>

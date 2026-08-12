@@ -228,6 +228,7 @@ A reference document on the same topic was generated externally and used as a **
 | M03 Variables | 3 | Never-expire warning, the expiration counterpart, prop truncation symptom |
 | M04 Data Collection | 3 + 1 banked | Identity reset on a tracking-server change, multi-suite settings divergence, PII in captured query strings; AQE truncation marker banked for M20 |
 | M05 Data Layers | 3 + 1 banked | SPA router double-count on the entry screen, data layer value discipline (types and enumerations), ACDL array reassignment; meaning-not-presence validation banked for M19 |
+| M06 Adobe Launch (Tags) | 4 + 2 banked | Rule order does not sequence async work, parallel libraries silently revert each other, storage duration and default value hide problems, the property split is one-way; setDebug and the Debugger environment switch banked for M20 |
 
 **Nine modules remain unreviewed and that is deliberate.** Amit's ruling stands: do not sweep the finished modules. The pattern in the yield says where it pays. **Modules with mechanical depth reward it; conceptual modules do not.** M03 Variables scored highest of the retrospective runs because persistence is the hardest mechanism in the product. M02 Report Suites scored lowest because it is mostly architecture and judgment, which is where our writing is already stronger than a reference can be.
 
@@ -272,6 +273,16 @@ Two smaller places we are ahead: the reference never mentions that renaming the 
 
 No rendering consequence: `layouts/lesson/single.html:9` only injects the doc-note when the `ref-box` contains an Adobe domain, so §3 was already getting no doc-note before the box was removed. That second condition was missing from `CLAUDE.md`'s description of trap 3 and has been corrected there.
 
+### The M06 run: the first time a written sentence pointed the wrong way (13 Aug 2026)
+
+Eight sections read in full. Four additions applied, two banked, and one finding of a kind the previous runs did not produce.
+
+**M06 §7 Environments actively reassured the reader about something untrue.** It said separate development environments let teams "build, test, and promote independently, without disturbing anyone else's work in progress." Environments are isolated; the resources are not. Rules and data elements belong to the property, and two teams in two development environments edit the same pool, so the second library to publish silently replaces the first team's revision. Every earlier finding across M04, M05 and M06 was an omission. **This was the first one where the corpus told the reader something wrong**, and it survived QA because check 13 and the rulebook checklist both read structure, never claims. Corrected in §7 and given its own warn-box in §6.
+
+**Where the reference beat us on scope, and it is a real gap:** Part 10, the Reactor API. Export a property to version control on a schedule, template new properties, audit drift across an estate. Not a trap, so it failed the filter, but M06 has no coverage of Tags-as-software at all, and for an estate of a dozen properties it is the difference between managed and hoped-for. **Worth a decision before launch: either a short §9, or an explicit scope note that it is out of range.** Amit to rule.
+
+**Raised, not taken, and reflexive.** M06 §3 sells the extension catalogue enthusiastically and never mentions that an installed exchange extension runs third-party code in every visitor's browser with full page access. The reference does say it. Our §8 spends 29KB on what third-party code is permitted to do, so the omission in §3 is not a knowledge gap, it is a one-sidedness, produced by the same additions-only bias we identified in the M05 reference's treatment of ACDL. **The bias is not only in generated documents. It is in our own sections, and it shows up as an argument with no counterweight rather than as a missing fact.**
+
 **One tooling lesson, learned the hard way.** A proposed addition to M03 §6 turned out to duplicate an info-box already there. The search used `do not sum`; the section is from the era that uses contractions and says `don't sum`. **The corpus is split by era, so every search pattern has to be contraction-tolerant**, or it will report a gap that is not there. Earlier comparisons in this session used the contraction-free forms and may have produced a false negative or two.
 
 ### Banked for M14 Analysis Workspace: annotations are absent from the whole corpus (10 Aug 2026)
@@ -280,9 +291,13 @@ The word "annotation" appears nowhere in the learning world. Workspace annotatio
 
 They matter beyond M14, because several sections now end with advice to record a date somewhere a future analyst will find it: the eVar repurposing trap in M03 §2, the seam warnings in M02 §4, the superseded-metric habit in M12 §3, and, added 12 Aug 2026, the identity-reset warning in M07 §7 First-Party Cookies. **Annotations are the answer to all four, and there is currently nowhere to link.** When M14 covers them, those sections gain a destination.
 
-### Banked for M20 Testing and Debugging: the AQE truncation marker (12 Aug 2026)
+### Banked for M20 Testing and Debugging (12 to 13 Aug 2026)
 
-`AQB` and `AQE` appear nowhere in the learning world. `AQE=1` closes the payload of a classic hit, so its absence is the check that a hit arrived intact. Marginal as a retrofit, free as a pre-drafting note, because all five M20 sections are unwritten. Belongs in §3 Browser Developer Tools alongside the `b/ss` filter that section already documents. Surfaced by the M04 reference comparison.
+Three items, all free to bank because all five M20 sections are unwritten.
+
+- **The `AQE` truncation marker.** `AQB` and `AQE` appear nowhere in the learning world. `AQE=1` closes the payload of a classic hit, so its absence is the check that a hit arrived intact. Belongs in §3 Browser Developer Tools alongside the `b/ss` filter that section already documents. From the M04 run.
+- **`_satellite.setDebug(true)` as the first move when a rule is not firing.** It logs rule evaluation, which conditions passed, and which actions ran, which turns a guessing game into reading output. M06 §2 lists the function in a table without saying it is where triage starts. From the M06 run.
+- **The Experience Platform Debugger can switch a live production page onto a development build with no site change.** Arguably the single most useful validation trick in the product, and it appears nowhere in the corpus. Belongs in §2 Adobe Experience Platform Debugger. From the M06 run.
 
 Surfaced by the M02 reference comparison. Not retrofitted, because M14 is unwritten and this belongs in its pre-drafting checklist rather than as a forward reference to a page that does not exist.
 

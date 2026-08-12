@@ -2,7 +2,7 @@
 slug: "data-elements"
 title: "Data Elements"
 seotitle: "Data Elements in Adobe Launch (Tags)"
-lastmod: 2026-07-18
+lastmod: 2026-08-13
 description: "A data element is not just a variable, it carries capability. How it differs from the data layer, the types available, and why bypassing it costs you."
 type: lesson
 modulenum: 6
@@ -57,6 +57,13 @@ s.linkTrackEvents = "";</pre></div>
     <div class="pro-tip-hdr">💡 Capture once, let it ride the visit</div>
     <p>Storage duration turns a data element into memory. Read a campaign code or a landing entry point from the URL on the first page, set the duration to <code>Session</code> or <code>Visitor</code>, and it stays available to attach to every later hit without re-reading the source. It is one of the quietest, most useful things a data element does that a plain variable cannot.</p>
 </div>
+
+<p>That same persistence is worth turning over, because a data element that remembers is also a data element that can be wrong quietly. Storage duration puts a value somewhere the reader of a rule cannot see. Nothing in the rule says the value arrived three page views ago, and nothing in the data layer contradicts it, because the data layer is no longer where it is being read from.</p>
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ A remembered value looks exactly like a fresh one</div>
+    <p>Set a campaign code to <code>Visitor</code> and it attaches itself to hits for as long as the browser keeps it, including visits that had nothing to do with that campaign. The report is populated, the values are plausible, and the attribution is wrong. Choose the shortest duration that does the job, and when you do reach for <code>Session</code> or <code>Visitor</code>, say so in the data element's name, because the next person debugging it will be looking at the data layer and finding nothing wrong there.</p>
+</div>
+<p>The default value carries a smaller version of the same problem. A default of an empty string turns a broken source into an empty field, and those are two different diagnoses that now look identical in a report. A visible default like <code>n/a</code> or <code>unknown</code> keeps them apart: it groups in a report, it can be segmented on, and it tells you the element ran and found nothing, rather than leaving you to work out whether it ran at all.</p>
 
 <p><strong>It cleans the data.</strong> Two checkboxes, Force lowercase value and Clean text, let you standardise the case and strip out line breaks and leading or trailing spaces before the value is ever stored. Cleaner, normalised values reach Adobe Analytics, which matters a great deal when you later rely on exact matches for reporting and classifications.</p>
 
