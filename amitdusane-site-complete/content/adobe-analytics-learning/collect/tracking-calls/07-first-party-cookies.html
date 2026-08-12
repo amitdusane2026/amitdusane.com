@@ -2,7 +2,7 @@
 slug: "first-party-cookies"
 title: "First-Party Cookies"
 seotitle: "First-Party Cookies in Adobe Analytics"
-lastmod: 2026-07-18
+lastmod: 2026-08-12
 description: "First-party cookies are not the same as durable identity. Why identity keeps disappearing, the older fix that no longer holds, and the durable answer today."
 type: lesson
 modulenum: 7
@@ -80,6 +80,15 @@ Set-Cookie: FPID=123e4567-e89b-42d3-9456-426614174000;
 <p>Durability is not free. An FPID means your engineering team owns server-side cookie logic, has to coordinate it with your consent flow so the identifier is only set when it should be, and has to validate that returning visitors really do keep a stable identity. That is more responsibility than letting the library set a cookie for you. The judgment is worth making deliberately: the more your business depends on recognizing returning visitors, long consideration cycles, subscriptions, high-value purchases, the more that server-side effort pays for itself, and the less it matters for a site where almost everyone converts in a single session.</p>
 
 <p>The mistake to avoid is treating this as a checkbox. "We set up a CNAME" or "our cookies are first-party" sounds like the problem is solved, and on Safari it often is not. Durable identity now lives or dies on whether the cookie is written server-side on infrastructure the browser trusts as genuinely yours.</p>
+
+<p>One consequence of any of these moves deserves stating before you make it, because it lands in the reports rather than in the code. Identity <em>is</em> the cookie. Change where that cookie comes from, third-party to first-party, a new tracking server domain, a CNAME endpoint, a switch to server-generated FPIDs, and every visitor already carrying the old one stops being recognised. They are not lost. They are new.</p>
+
+<p>So the week of the switch shows a jump in unique visitors, a matching collapse in returning visitors, and a set of multi-visit journeys that simply end at the boundary. The data is not wrong. It is describing a population that was reset.</p>
+
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ An identity change looks exactly like a good week</div>
+    <p>Nothing breaks, no error appears, and every number is internally consistent, which is what makes this worth planning rather than merely worth knowing. Left unannounced, somebody in a marketing review reads the spike in new visitors as a campaign working and the drop in returning visitors as a retention problem, and both conclusions get acted on. Tell the reporting audience the date before the switch rather than after, and record it somewhere a future analyst comparing across the boundary will find it.</p>
+</div>
 
 <div class="pro-tip">
     <div class="pro-tip-hdr">💡 Measure the problem before you spend on it</div>

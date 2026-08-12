@@ -226,10 +226,28 @@ A reference document on the same topic was generated externally and used as a **
 | M01 Fundamentals | 2 | The other three visit-end conditions, midnight |
 | M02 Report Suites | 1 | Landed in M03 (repurposed eVar), plus a currency clause in M02 |
 | M03 Variables | 3 | Never-expire warning, the expiration counterpart, prop truncation symptom |
+| M04 Data Collection | 3 + 1 banked | Identity reset on a tracking-server change, multi-suite settings divergence, PII in captured query strings; AQE truncation marker banked for M20 |
 
 **Nine modules remain unreviewed and that is deliberate.** Amit's ruling stands: do not sweep the finished modules. The pattern in the yield says where it pays. **Modules with mechanical depth reward it; conceptual modules do not.** M03 Variables scored highest of the retrospective runs because persistence is the hardest mechanism in the product. M02 Report Suites scored lowest because it is mostly architecture and judgment, which is where our writing is already stronger than a reference can be.
 
 **For the 42 unwritten sections, generate the reference before drafting**, not after. It costs nothing, catches gaps at their cheapest, and touches no signed-off work. Start with M14.
+
+### The M04 run, and the third bucket the filter was missing (12 Aug 2026)
+
+Amit asked for M04 Data Collection specifically, which overrides the no-sweep ruling for that one module. Six sections read in full, every candidate checked against the whole corpus in both contraction forms. **Three additions applied, one banked, and the run produced something the previous five did not.**
+
+**The filter needs a third bucket: the reference is wrong here.** Four claims in the generated document are contradicted by our own corpus, and in each case we are right:
+
+| Reference claim | What the corpus says |
+|---|---|
+| Exclusions (bot rules, IP exclusion, IP obfuscation) run at stage 6, after marketing channels and attribution | `04-report-suite-settings.html:60` has IP exclusion, bot rules and geo-lookup all completing *before* obfuscation. This is the same error corrected in M02 §4 on 7 Aug |
+| VISTA rules "run after processing rules", stated flat | M09 §1 says Adobe can configure them either side, so a fixed order cannot be assumed |
+| A first-party CNAME sets the cookie in an HTTP header, "outside that particular cap" | M07 §7 has the post-Safari-16.4 position: a server-set cookie is still capped at seven days if Safari judges the CNAME to be cloaking. The reference gives the 2020 answer and would send a reader to a fix that stopped working |
+| Hierarchy variables "largely superseded" | M03 is more careful about where they still apply |
+
+Two of the five previous runs also contained factual errors we had already corrected. **Record the wrong-here findings, because they are the only evidence that the corpus is ahead of a generated reference, and that is worth knowing before the E-E-A-T report characterises the site.**
+
+**A second framing lesson.** The reference organised by mechanism in eleven parts; our module organises by method in six sections. Its Parts 8 to 11 (post-hit processing, consent, debugging, architecture) map to M08 to M11, M02 §7, M20 and M19, not to M04 at all. A naive coverage read would have flagged all four as missing. **Check the module boundary before calling anything a gap.**
 
 **One tooling lesson, learned the hard way.** A proposed addition to M03 §6 turned out to duplicate an info-box already there. The search used `do not sum`; the section is from the era that uses contractions and says `don't sum`. **The corpus is split by era, so every search pattern has to be contraction-tolerant**, or it will report a gap that is not there. Earlier comparisons in this session used the contraction-free forms and may have produced a false negative or two.
 
@@ -237,7 +255,11 @@ A reference document on the same topic was generated externally and used as a **
 
 The word "annotation" appears nowhere in the learning world. Workspace annotations are a dated note attached to a project or a metric, explaining a spike, a release, an outage, or a configuration change, and they are the cheapest institutional memory the platform offers.
 
-They matter beyond M14, because several sections now end with advice to record a date somewhere a future analyst will find it: the eVar repurposing trap in M03 §2, the seam warnings in M02 §4, and the superseded-metric habit in M12 §3. **Annotations are the answer to all three, and there is currently nowhere to link.** When M14 covers them, those sections gain a destination.
+They matter beyond M14, because several sections now end with advice to record a date somewhere a future analyst will find it: the eVar repurposing trap in M03 §2, the seam warnings in M02 §4, the superseded-metric habit in M12 §3, and, added 12 Aug 2026, the identity-reset warning in M07 §7 First-Party Cookies. **Annotations are the answer to all four, and there is currently nowhere to link.** When M14 covers them, those sections gain a destination.
+
+### Banked for M20 Testing and Debugging: the AQE truncation marker (12 Aug 2026)
+
+`AQB` and `AQE` appear nowhere in the learning world. `AQE=1` closes the payload of a classic hit, so its absence is the check that a hit arrived intact. Marginal as a retrofit, free as a pre-drafting note, because all five M20 sections are unwritten. Belongs in §3 Browser Developer Tools alongside the `b/ss` filter that section already documents. Surfaced by the M04 reference comparison.
 
 Surfaced by the M02 reference comparison. Not retrofitted, because M14 is unwritten and this belongs in its pre-drafting checklist rather than as a forward reference to a page that does not exist.
 
@@ -278,10 +300,27 @@ Each fix is one or two sentences: name the concept, link it, recap it in a few w
 
 Three near-misses were judged acceptable and left alone: `data-collection/01` ("Everything in this module is just detail hung on that line", a forward statement from the module's first section), `marketing-channels/05` ("Everything in this module now sits in a single line of causation", mid-section synthesis), and `marketing-channels/06` ("Everything in this module can be wrong without telling you", a statement about the subject rather than the reader).
 
-**Re-run the sweep before launch rather than trusting this list**, since sections written after this date could reintroduce the pattern:
+**The list was incomplete, and the grep is why (found 12 Aug 2026, no action taken, deferred with the rest).** The pattern searched `the previous section` but not `the last section`, which is a whole family the corpus actually prefers. Widening it finds **eight more instances, three of them in opening paragraphs**, taking the banked total from 8 to 16:
+
+| File | The line |
+|---|---|
+| `foundations/report-suites/02-global-vs-individual-report-suites.html:12` | "Remember the one-way rule from the last section" (opener) |
+| `foundations/report-suites/02-global-vs-individual-report-suites.html:13` | "take the automobile manufacturer from the last section" |
+| `foundations/report-suites/03-virtual-report-suites.html:12` | "The last two sections left one promise hanging" (opener) |
+| `foundations/report-suites/03-virtual-report-suites.html:74` | "defaulting to global in the last section" |
+| `foundations/variables/04-default-reserved-variables.html:49` | "The commerce events the last section pointed here" |
+| `foundations/variables/07-context-data-variables.html:12` | "The last section closed on a promise" (opener) |
+| `collect/data-collection/05-server-side-collection.html:24` | "from the last two sections" |
+| `collect/tracking-calls/04-spa-tracking.html:99` | "the discipline from the last section" |
+
+The `report-suites/02` pair is the worst of the sixteen: line 13 references an automobile-manufacturer example the search lander has never seen, so the sentence is not merely presumptuous, it is unintelligible.
+
+**The generalisable point is about the method, not the lines.** A sweep for a prose pattern is only as good as the phrasings that occurred to whoever wrote the grep, and this corpus has an era split that guarantees variants. Treat any pattern-based sweep as a lower bound, and widen it once before trusting the count.
+
+**Re-run the widened sweep before launch rather than trusting this list**, since sections written after this date could reintroduce the pattern:
 
 ```
-grep -rn -i -o '[^.>]\{0,70\}\(so far in this\|in this module so far\|everything in this module\|the previous section\|the section before\|earlier we saw\|by now you have\|this module has been building\|as we saw\|we have met\|comes next\|is next\b\)[^.]\{0,60\}' --include=*.html .
+grep -rn -i -o '[^.>]\{0,70\}\(so far in this\|in this module so far\|everything in this module\|the previous section\|the last section\|the last two sections\|the previous two sections\|the sections before\|the section before\|earlier we saw\|by now you have\|up to now you\|this module has been building\|as we saw\|we have met\|comes next\|is next\b\)[^.]\{0,60\}' --include=*.html .
 ```
 
 ## Phase 5 — Small corrections

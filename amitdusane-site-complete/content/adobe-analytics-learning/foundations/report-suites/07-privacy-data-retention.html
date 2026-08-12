@@ -3,7 +3,7 @@ slug: "privacy-data-retention"
 title: "Privacy and Data Retention"
 description: "How Adobe Analytics governs personal data: data retention periods, IP obfuscation, and the labeling that supports GDPR and CCPA compliance."
 seotitle: "Privacy and Data Retention in Adobe Analytics"
-lastmod: 2026-08-07
+lastmod: 2026-08-12
 type: lesson
 modulenum: 2
 sectionnum: 7
@@ -158,6 +158,12 @@ weight: 7
 <div class="warn-box">
     <div class="warn-hdr">⚠️ The gap surfaces years later, and never at a convenient moment</div>
     <p>An unlabeled variable produces no error at the time and no artefact afterwards, so the failure has no discovery mechanism of its own. It waits. What eventually surfaces it is an audit, a regulator's follow-up, or a second request from someone who has noticed their data is still in use, and by then the original response has been sent, logged and relied upon. Labeling is verified by opening the screen and reading it, because nothing in the system will ever raise a hand.</p>
+</div>
+<p>Labeling rests on an assumption worth examining, which is that you know which fields could be holding personal data. For eVar 12 you did. Somebody decided to put an email address there, and the only failure was never writing that decision down. The harder case is the field nobody decided anything about.</p>
+<p>A page URL captured whole is that field. Query strings collect whatever the site, a partner, or a customer's own pasted link happens to put in them, and that includes the password reset token, the email address in a pre-filled form link, the session identifier appended by a third-party tool. Nobody chose to send any of it. It arrived because the implementation captures the URL, which is what every implementation does.</p>
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ The variable nobody labeled because nobody knew it held anything</div>
+    <p>A labeling exercise walks the variable list and asks what each field is for, and the page URL answers "the page URL", which sounds like a location rather than a container. The personal data inside it is invisible to that question and stays unlabeled through every audit that asks it. The fix sits upstream of labeling: strip or allow-list query parameters at collection, so those values never reach a variable, rather than governing them once they have.</p>
 </div>
 
 <h3 class="subsec-title">Gate three: they signed in, which is the only reason this works</h3>
