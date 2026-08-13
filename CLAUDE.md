@@ -308,6 +308,10 @@ Scope it to `amitdusane-site-complete` as shown. Unscoped, it flags this file an
 
 This exists because on 10 Aug 2026 a `git add -A` swept up two files that were still highlighted for review and committed them, then pushed. `main` was never touched so the site was safe, but the guard is the point: highlighting is applied for one file at a time while other files may still be marked, and "commit clean first" is not sufficient on its own once more than one file is in flight.
 
+**To verify highlighting is gone, check the source and the tree, not `public/`.** The two authoritative checks are `grep -rl data-newblock amitdusane-site-complete/content/` returning nothing, and `git status --porcelain` returning nothing. The build directory lies in both directions, for two reasons proved on 13 Aug 2026: stale renders survive later builds, and `sed -i` leaves temp files there holding old copies of pages. **Use `Edit` rather than `sed -i` for front-matter changes** so those temp files never appear.
+
+**Never chain `git checkout` and a build in one command.** This repository sits inside OneDrive, whose sync layer can delay a restored file becoming readable, so Hugo reads the pre-checkout content and writes a stale page carrying that build's own timestamp. It looks exactly like a failed revert and is not one. Restore, verify the source, then build as a separate step.
+
 Before declaring any section done: the rulebook's 20-item checklist, then the QA Rulebook's 13 points, then a real build with the page count asserted.
 
 ---

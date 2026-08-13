@@ -168,7 +168,11 @@ Per section, repeatable:
 
 ~~M12 (3)~~ **done** → M14 (10) → M15 (4) → M16 (4) → M17 (4) → M18 (4) → M19 (6) → M20 (5) → M21 (5)
 
-**M14 Analysis Workspace is next, and it is the largest module in the curriculum at ten sections.** Six of those exist only as names. It is also the module every other analyze module points into, so it carries more inbound links than anything written so far.
+**M14 Analysis Workspace is next, and it is the largest module in the curriculum at ten sections.** **All ten are unwritten**, not six: every M14 row reads `Content created? = No` and no section file carries a `description`, so the whole module renders dimmed. Six of the ten files hold pre-restructure legacy prose and four are bare stubs, which per the working agreement is the same job ten times.
+
+Naming is mostly free. The structure map prescribes title and seotitle for §2 and §5 to §10. **Three seotitles need coining: §1 Analysis Workspace Overview, §3 Freeform Tables, §4 Visualizations**, and the map's own follow-up note already flags §3 and §4 as needing a pass.
+
+Six written sections link inbound, all to the module landing or §1: M12 §3, M13 §2 and §6, M01 §2, M03 §1 and §2. M13 §6 closes on "Analysis Workspace is where it finally gets played", which sets §1's opener. `[params.phases.analyze]` already lists module 14, so trap 2 is clear.
 
 M19 (SDR, 6 sections, all new) is the largest single piece and doubles as the prototype for your later "how to create a delivery document" section.
 
