@@ -2,7 +2,7 @@
 slug: "link-tracking"
 title: "Link Tracking"
 seotitle: "Link Tracking in Adobe Analytics (s.tl())"
-lastmod: 2026-07-18
+lastmod: 2026-08-13
 description: "The custom link call, s.tl(). Why these calls carry the real weight of an implementation, the three link types, and how they differ from a page call."
 type: lesson
 modulenum: 7
@@ -45,6 +45,14 @@ s.tl(this, "d", "User Guide PDF");</pre></div>
 </div>
 
 <p>The <code>linkName</code> is worth care. It is what makes the call findable later in a debugger and meaningful in reports, which is why naming custom links well is treated as a discipline in the Rules section. One technical note that catches people implementing manually: when you set variables in custom code on a link call, you must also list them in <code>s.linkTrackVars</code> and any events in <code>s.linkTrackEvents</code>, or they will not be sent. Page view calls do not need this. When you set variables through the extension's interface instead, it manages both lists for you. The full reasoning is in <a href="/adobe-analytics-learning/collect/adobe-launch-tags/rules/">the Rules section</a>; the point to carry here is that a link call is selective about what it sends by default.</p>
+
+<h3 class="subsec-title">The call that races the page it is leaving</h3>
+<p>That "holds a brief moment" in the code above deserves more than a comment, because it marks the one place a link call can be perfectly built and still never arrive.</p>
+<p>When a click both fires a tracking call and sends the browser somewhere else, two things start at once: the beacon is dispatched, and the new document begins loading. If the navigation wins, the page is torn down and the beacon goes with it. Passing <code>this</code> is what makes AppMeasurement hold the navigation back for a moment, around half a second, so the call gets away first. That is a trade rather than a fix. Every visitor who clicks a tracked outbound link waits through it, and on a slow connection the call can still lose.</p>
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ Exit and download clicks are the calls most likely to be missing</div>
+    <p>Nothing reports the loss. The click happened, the visitor arrived at the other site, and the only trace is a number lower than it should be, which is indistinguishable from a quiet week. The modern answer is <code>s.useBeacon = true</code>, which hands the request to the browser through <code>navigator.sendBeacon</code>. The browser then owns delivery and completes it even while the document is being destroyed, so the delay stops being necessary at all. What you give up is the response: no confirmation and no error, so you cannot verify delivery from the page. That is a fair trade for a call you were previously losing without knowing it.</p>
+</div>
 
 <h3 class="subsec-title">The three link types, and why they exist</h3>
 <p>The second argument, the link type, takes one of three values, and the reason there are exactly three goes back to the tool's history. In the early days the product paid special attention to two behaviors: file downloads, and exit links that carried a visitor off the site. Each got its own type and its own report. Everything else was lumped into a third, generic type.</p>

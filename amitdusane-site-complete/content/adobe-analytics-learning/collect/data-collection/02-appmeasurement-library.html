@@ -2,7 +2,7 @@
 slug: "appmeasurement-library"
 title: "AppMeasurement Library"
 seotitle: "AppMeasurement Library in Adobe Analytics"
-lastmod: 2026-08-12
+lastmod: 2026-08-13
 description: "How AppMeasurement really works: where it slips into the page, what the s object packs into a hit, and the linkTrackVars trap that haunts everyone."
 type: lesson
 modulenum: 4
@@ -28,11 +28,11 @@ weight: 2
 <p>Here is one of those addresses, slowed down and taken apart. This is what the entry in your network tab is actually saying.</p>
 <div class="diagram-box">
     <div class="diagram-title">One page view, on the wire</div>
-    <svg viewBox="0 0 700 232" style="width:100%;height:auto;display:block" role="img" aria-label="A single Adobe Analytics image request URL broken into its labelled parts. The first line shows the tracking server, the fixed b slash ss path, the report suite ID, the hit source, and the cache buster. The second line shows the payload: an opening marker, the page name, prop 1, eVar 1, the events fired, and a closing marker. The report suite and the payload values are highlighted as things the implementation chose, while the path, hit source, cache buster and markers are added by the library.">
+    <svg viewBox="0 0 700 232" style="width:100%;height:auto;display:block" role="img" aria-label="A single Adobe Analytics image request URL broken into its labelled parts. The first line shows the tracking server, the fixed b slash ss path, the report suite ID, the hit source, the library version, and the cache buster. The second line shows the payload: an opening marker, the page name, prop 1, eVar 1, the events fired, and a closing marker. The report suite and the payload values are highlighted as things the implementation chose, while the path, hit source, library version, cache buster and markers are added by the library.">
 
         <text x="24" y="22" style="fill:var(--accent,#e11d48);font-size:10.5px;font-weight:700;font-family:sans-serif">tracking server</text>
         <text x="292.8" y="22" style="fill:var(--accent,#e11d48);font-size:10.5px;font-weight:700;font-family:sans-serif">report suite</text>
-        <text x="410.4" y="22" style="fill:var(--text2,#475569);font-size:10.5px;font-family:sans-serif">cache buster</text>
+        <text x="410.4" y="22" style="fill:var(--text2,#475569);font-size:10.5px;font-family:sans-serif">library version</text>
 
         <rect x="14" y="32" width="580" height="44" rx="8" style="fill:var(--bg1,#f8fafc);stroke:var(--border,#e2e8f0);stroke-width:1"/>
 
@@ -40,16 +40,19 @@ weight: 2
         <text x="250.8" y="60" textLength="42" lengthAdjust="spacing" style="fill:var(--text2,#475569);font-size:14px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace">/b/ss</text>
         <text x="292.8" y="60" textLength="100.8" lengthAdjust="spacing" style="fill:var(--accent,#e11d48);font-size:14px;font-weight:700;font-family:ui-monospace,SFMono-Regular,Menlo,monospace">/examplersid</text>
         <text x="393.6" y="60" textLength="16.8" lengthAdjust="spacing" style="fill:var(--text2,#475569);font-size:14px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace">/1</text>
-        <text x="410.4" y="60" textLength="84" lengthAdjust="spacing" style="fill:var(--text2,#475569);font-size:14px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace">/s84920174</text>
+        <text x="410.4" y="60" textLength="84" lengthAdjust="spacing" style="fill:var(--text2,#475569);font-size:14px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace">/JS-2.23.0</text>
+        <text x="494.4" y="60" textLength="84" lengthAdjust="spacing" style="fill:var(--text2,#475569);font-size:14px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace">/s84920174</text>
 
         <rect x="24" y="66" width="226.8" height="2.5" style="fill:var(--accent,#e11d48)"/>
         <rect x="250.8" y="66" width="42" height="2.5" style="fill:var(--text2,#475569)"/>
         <rect x="292.8" y="66" width="100.8" height="2.5" style="fill:var(--accent,#e11d48)"/>
         <rect x="393.6" y="66" width="16.8" height="2.5" style="fill:var(--text2,#475569)"/>
         <rect x="410.4" y="66" width="84" height="2.5" style="fill:var(--text2,#475569)"/>
+        <rect x="494.4" y="66" width="84" height="2.5" style="fill:var(--text2,#475569)"/>
 
         <text x="250.8" y="90" style="fill:var(--text2,#475569);font-size:10.5px;font-family:sans-serif">fixed path, on every hit</text>
         <text x="393.6" y="90" style="fill:var(--text2,#475569);font-size:10.5px;font-family:sans-serif">hit source</text>
+        <text x="494.4" y="90" style="fill:var(--text2,#475569);font-size:10.5px;font-family:sans-serif">cache buster</text>
 
         <text x="24" y="124" style="fill:var(--text2,#475569);font-size:10.5px;font-family:sans-serif">payload opens</text>
         <text x="192" y="124" style="fill:var(--accent,#e11d48);font-size:10.5px;font-weight:700;font-family:sans-serif">prop 1</text>
@@ -81,7 +84,8 @@ weight: 2
         <text x="167" y="219" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">AppMeasurement adds this for you</text>
     </svg>
 </div>
-<p>Two things are worth taking from that. The address is mostly not yours: the fixed path, the hit source and the cache buster are all added by the library, and the report suite is the only part of the address you decided. Everything you actually chose to measure sits in the second half, after the question mark, which is why a debugger session usually starts there.</p>
+<p>Two things are worth taking from that. The address is mostly not yours: the fixed path, the hit source, the library version and the cache buster are all added for you, and the report suite is the only part of the address you decided. Everything you actually chose to measure sits in the second half, after the question mark, which is why a debugging session usually starts there.</p>
+<p>The version segment repays a second look, because it is the fastest way to find something nobody knew was still running. It names the library that built the request, so a <code>JS-</code> prefix is AppMeasurement and an <code>H.</code> prefix is the far older H-code library it replaced. Find an <code>H.</code> version on a site that migrated years ago and you have found a hardcoded library still firing from a template nobody remembers owning, which is not a thing any amount of reading the tag manager would have told you.</p>
 
 <h3 class="subsec-title">The s object: what packs the pixel</h3>
 <p>So what assembles all that data and stuffs it into the request? A single object that lives on the page, named <code>s</code> by convention. Everything AppMeasurement does revolves around it. You write values into its fields, and when you fire a tracking call, AppMeasurement reads those fields, builds the pixel request, and sends it.</p>

@@ -229,6 +229,7 @@ A reference document on the same topic was generated externally and used as a **
 | M04 Data Collection | 3 + 1 banked | Identity reset on a tracking-server change, multi-suite settings divergence, PII in captured query strings; AQE truncation marker banked for M20 |
 | M05 Data Layers | 3 + 1 banked | SPA router double-count on the entry screen, data layer value discipline (types and enumerations), ACDL array reassignment; meaning-not-presence validation banked for M19 |
 | M06 Adobe Launch (Tags) | 4 + 2 banked | Rule order does not sequence async work, parallel libraries silently revert each other, storage duration and default value hide problems, the property split is one-way; setDebug and the Debugger environment switch banked for M20 |
+| M07 Tracking Calls | 3 + 4 banked | sendBeacon and the exit-link race, `abort` resets after every hit, media heartbeats sit outside Server Call Usage; 200-is-not-acceptance, `pe`/`pev2`, preserve-log, and request-before-report banked for M20. Also corrected the M04 §2 beacon diagram |
 
 **Nine modules remain unreviewed and that is deliberate.** Amit's ruling stands: do not sweep the finished modules. The pattern in the yield says where it pays. **Modules with mechanical depth reward it; conceptual modules do not.** M03 Variables scored highest of the retrospective runs because persistence is the hardest mechanism in the product. M02 Report Suites scored lowest because it is mostly architecture and judgment, which is where our writing is already stronger than a reference can be.
 
@@ -283,6 +284,18 @@ Eight sections read in full. Four additions applied, two banked, and one finding
 
 **Raised, not taken, and reflexive.** M06 §3 sells the extension catalogue enthusiastically and never mentions that an installed exchange extension runs third-party code in every visitor's browser with full page access. The reference does say it. Our §8 spends 29KB on what third-party code is permitted to do, so the omission in §3 is not a knowledge gap, it is a one-sidedness, produced by the same additions-only bias we identified in the M05 reference's treatment of ACDL. **The bias is not only in generated documents. It is in our own sections, and it shows up as an argument with no counterweight rather than as a missing fact.**
 
+### The M07 run: two references contradicted each other, and checking paid twice (13 Aug 2026)
+
+Seven sections read. Three additions applied, four banked for M20, and one correction to our own diagram.
+
+**The M07 reference labelled the path segment after the report suite ID "response type", claiming `1` requests the pixel and `10` requests none. The M04 reference had called the same segment "hit source", and the M04 §2 beacon diagram was built on that.** Two generated documents flatly contradicting each other about a label added to a signed-off section the day before.
+
+**Verified against Adobe rather than picking a side.** [Implementing with hardcoded image requests](https://experienceleague.adobe.com/en/docs/analytics/implementation/other/hardcoded) states "/1/ is the hit source", cross-referenced to the `hit_source` column in the Data column reference. **Our label was right and the M07 reference is wrong**, along with its `10` claim, which follows from the same error. Worth noting how it went wrong: response type is a real concept in the [Data Insertion API](https://developer.adobe.com/analytics-apis/docs/1.4/guides/data-insertion/), where the path genuinely carries one. The reference imported a true fact from an adjacent context into the wrong slot, which is now the second time a run has produced exactly that failure shape.
+
+**But checking the challenged claim exposed a different defect beside it.** The diagram omitted the library version segment, so it matched Adobe's *hardcoded* image request example rather than what AppMeasurement actually puts on the wire. The diagram's stated purpose is "this is what the entry in your network tab is actually saying", so it was wrong by one segment on any live site. Rebuilt to six segments, geometry verified in the browser against the rendered font, and the version now earns its place with the H-code diagnostic: an `H.` prefix on a site that migrated years ago means a hardcoded library still firing from a forgotten template.
+
+**Two lessons worth keeping.** When two generated references disagree on the same fact, neither is evidence; go to Adobe. And **a challenge to one claim is worth treating as a prompt to re-examine everything around it**, because the thing that was actually wrong was not the thing being disputed.
+
 **One tooling lesson, learned the hard way.** A proposed addition to M03 §6 turned out to duplicate an info-box already there. The search used `do not sum`; the section is from the era that uses contractions and says `don't sum`. **The corpus is split by era, so every search pattern has to be contraction-tolerant**, or it will report a gap that is not there. Earlier comparisons in this session used the contraction-free forms and may have produced a false negative or two.
 
 ### Banked for M14 Analysis Workspace: annotations are absent from the whole corpus (10 Aug 2026)
@@ -298,6 +311,10 @@ Three items, all free to bank because all five M20 sections are unwritten.
 - **The `AQE` truncation marker.** `AQB` and `AQE` appear nowhere in the learning world. `AQE=1` closes the payload of a classic hit, so its absence is the check that a hit arrived intact. Belongs in §3 Browser Developer Tools alongside the `b/ss` filter that section already documents. From the M04 run.
 - **`_satellite.setDebug(true)` as the first move when a rule is not firing.** It logs rule evaluation, which conditions passed, and which actions ran, which turns a guessing game into reading output. M06 §2 lists the function in a table without saying it is where triage starts. From the M06 run.
 - **The Experience Platform Debugger can switch a live production page onto a development build with no site change.** Arguably the single most useful validation trick in the product, and it appears nowhere in the corpus. Belongs in §2 Adobe Experience Platform Debugger. From the M06 run.
+- **A 200 means the request arrived, not that the data was accepted.** A delivered hit can still be discarded by a VISTA rule, dropped by a processing rule, filtered as bot traffic, or land in a suite you did not intend. Network success is necessary and never sufficient. Belongs in §5 Common Issues and Solutions. From the M07 run.
+- **`pe`, `pev1` and `pev2` are what make a hit a link call**, and reading them is how you confirm a link call in a debugger. M07 §2 teaches the three link types and their reports but never the parameters. Belongs in §3 Browser Developer Tools. From the M07 run.
+- **Preserve the network log before testing exit links**, or the hit disappears along with the page you were on. From the M07 run.
+- **The habit that halves every investigation: look at the request before you look at the report.** Reporting problems have many causes; the request tells you immediately whether the data was ever collected. Worth being the opening principle of the whole M20 module rather than a tip inside one section. From the M07 run.
 
 Surfaced by the M02 reference comparison. Not retrofitted, because M14 is unwritten and this belongs in its pre-drafting checklist rather than as a forward reference to a page that does not exist.
 
