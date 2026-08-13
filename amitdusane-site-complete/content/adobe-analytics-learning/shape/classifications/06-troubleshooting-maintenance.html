@@ -2,7 +2,7 @@
 slug: "troubleshooting-maintenance"
 title: "Troubleshooting and Maintenance"
 seotitle: "Troubleshooting Classifications in Adobe Analytics"
-lastmod: 2026-07-15
+lastmod: 2026-08-13
 description: "Classifications do not break. They produce a confident, well-formatted, wrong report. The symptoms, the causes, and why Unspecified is your only witness."
 type: lesson
 modulenum: 11
@@ -138,7 +138,7 @@ weight: 6
     <p>If a historical report changes and nobody touched anything, stop looking inside Adobe Analytics. Go and ask the system that generates the key whether it reuses identifiers. That is where the answer lives, and it is the only failure in this module that Adobe genuinely cannot help you find.</p>
 </div>
 
-<h3 class="subsec-title">Three instruments, and almost nobody uses them</h3>
+<h3 class="subsec-title">Four instruments, and almost nobody uses them</h3>
 <p>Everything above is diagnosable, and the tools have been sitting in the interface the whole time.</p>
 
 <div class="tbl-wrap">
@@ -148,6 +148,7 @@ weight: 6
             <tr><td><strong>Jobs</strong></td><td>Components &gt; Classification sets &gt; Jobs</td><td>Did it actually run? Did it fail? Is the same file importing over and over?</td></tr>
             <tr><td><strong>Download</strong></td><td>Schema tab &gt; Download</td><td>What is <em>actually</em> in there right now, as opposed to what you believe you uploaded</td></tr>
             <tr><td><strong>Test rule set</strong></td><td>Rules tab &gt; Test rule set</td><td>What these rules <em>would</em> do, before they do it to production</td></tr>
+            <tr><td><strong>Unspecified, trended</strong></td><td>Analysis Workspace</td><td>Is coverage decaying, and in which of three distinct ways?</td></tr>
         </tbody>
     </table>
 </div>
@@ -155,6 +156,19 @@ weight: 6
 <p>The Jobs tab is the one to build a habit around. It is the only place in this entire feature where a failure is written down in plain language, and it is the first place to look when something is missing and you cannot say why. If an import silently failed at 2am, the Jobs tab knows. Nothing else does.</p>
 
 <p>And Download with Data Returned set to <strong>Any columns empty</strong> is the single most useful diagnostic in the module. It turns "something feels wrong with the tier data" into a list of exactly which keys are missing exactly which columns. Vague suspicion becomes a spreadsheet you can act on.</p>
+
+<p>The fourth instrument is the only one that lives outside the classification interface, and the only one that raises a problem before somebody reports it. Put Unspecified on a trend, as a percentage of whatever metric the business actually watches, and leave it somewhere it will be seen. The level is already covered above: a steady number you can explain is a healthy report. What a trend adds is the shape of the movement, and the shape names the cause.</p>
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>What the trend does</th><th>What it usually means</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Steps up, then holds</strong></td><td>A new campaign, agency, or platform started minting keys in a format no rule covers</td></tr>
+            <tr><td><strong>Drifts up slowly</strong></td><td>A manual upload is being skipped</td></tr>
+            <tr><td><strong>Sits on a floor and never moves</strong></td><td>A legacy key format nobody ever wrote a rule for, waiting quietly to be noticed</td></tr>
+        </tbody>
+    </table>
+</div>
+<p>The drift is the one worth building the habit for, because it is the one the level check cannot catch. A step is obvious to anybody who opens the report that week. A drift stays inside the band you would still call normal for months, which is comfortably long enough for the person who used to run the upload to move on and for nobody to learn that the job existed. It is the same instrument, and the same reasoning, as watching the Direct share in <a href="/adobe-analytics-learning/shape/marketing-channels/marketing-channel-troubleshooting/">Marketing Channels</a>: two cheap alarms that catch upstream failures in days rather than quarters, and both routinely missing from otherwise careful reporting setups.</p>
 
 <h3 class="subsec-title">Maintenance, which is really just deciding things once</h3>
 <p>Almost every failure in this section is a failure of ownership rather than a failure of technology. Two systems wrote to one column because nobody said which one should. A file stopped arriving because the person who uploaded it left. A bucket filled up because nobody agreed to empty it.</p>

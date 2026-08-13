@@ -2,7 +2,7 @@
 slug: "classification-sets"
 title: "Classification Sets"
 seotitle: "Classification Sets in Adobe Analytics"
-lastmod: 2026-07-15
+lastmod: 2026-08-13
 description: "Creating a classification set, step by step: subscriptions, the schema, primary and lookup types, and the identity name you can never change."
 type: lesson
 modulenum: 11
@@ -192,6 +192,11 @@ Resulting list:
 </div>
 
 <p>Each of those names becomes a real, reportable dimension in Analysis Workspace, sitting under the parent variable. Four names typed into a dialog, and the club can now report Hall Bookings by Membership Tier. Nothing was deployed. No developer was involved.</p>
+
+<h3 class="subsec-title">A column can itself be classified</h3>
+<p>One more thing belongs in the schema, and it is easy to miss because nothing on the screen advertises it. A classification column can be classified in turn. Adobe calls this a <strong>subclassification</strong>, and it is written with a caret, which is why the caret is a reserved character in a classification name.</p>
+<p>The reason to reach for one is repetition. Suppose two hundred tracking codes belong to twelve campaigns, and those twelve campaigns belong to four business units. You could hang Business Unit off every tracking code, which means maintaining the same four answers two hundred times and re-typing all of them the day the company reorganises. Or you classify tracking code into Campaign, and classify Campaign into Business Unit. The reorganisation is then four rows.</p>
+<p>The rule of thumb is to attach an attribute at the level it actually belongs to. Business Unit is a fact about a campaign, not a fact about a tracking code, and a schema that says so stays correct with far less work. It carries one consequence worth knowing before you build it: a subclassification cannot exist without its parent, so deleting a classification value takes everything hanging beneath it, which <a href="/adobe-analytics-learning/shape/classifications/importing-classification-data/">Importing Classification Data</a> returns to.</p>
 
 <h3 class="subsec-title">Classification Name and Identity Name are not the same thing</h3>
 <p>Look again at that second column, because it is doing something you did not ask it to do and cannot undo.</p>

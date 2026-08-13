@@ -232,6 +232,7 @@ A reference document on the same topic was generated externally and used as a **
 | M07 Tracking Calls | 3 + 4 banked | sendBeacon and the exit-link race, `abort` resets after every hit, media heartbeats sit outside Server Call Usage; 200-is-not-acceptance, `pe`/`pev2`, preserve-log, and request-before-report banked for M20. Also corrected the M04 §2 beacon diagram |
 | M08 Processing Rules | 4 | Delete does not undo persistence, an event outlives the value it was set on, guard the target as well as the source, test the negative case. **Three verified errors in the reference, two of which §4 had already named as myths** |
 | M10 Marketing Channels | 2 | Direct as a data-quality instrument, the Channel Breakdown setting. **Thinnest yield of any run, against three verified reference errors.** M09 VISTA skipped by Amit |
+| M11 Classifications | 2 | Unspecified trended over time as a fourth instrument, subclassifications introduced in the schema. Second consecutive thin yield; the reference omitted the legacy deprecation entirely |
 
 **Nine modules remain unreviewed and that is deliberate.** Amit's ruling stands: do not sweep the finished modules. The pattern in the yield says where it pays. **Modules with mechanical depth reward it; conceptual modules do not.** M03 Variables scored highest of the retrospective runs because persistence is the hardest mechanism in the product. M02 Report Suites scored lowest because it is mostly architecture and judgment, which is where our writing is already stronger than a reference can be.
 
@@ -333,6 +334,24 @@ Six sections read, two additions applied. **That is the lowest yield of any comp
 **What this says about the exercise.** Five earlier runs produced 17 additions; this one produced two. The modules that yield are the ones with mechanical depth, which is what the 10 Aug ruling already predicted. M10 is mostly judgment, sequencing and organisational design, and that is precisely the ground where a generated reference cannot compete, because it has no position to take and no engagement to draw on. **Yield falling as the module gets more conceptual is the expected result, not a sign the comparison stopped working.**
 
 **One genuine gap the filter rejected**, worth recording in case it is ever wanted: the reference argues for a single structured tracking parameter (`cid=em_welcome_2026q3_varB`) over five UTM-style parameters, on the grounds that five parameters are five things five agencies can misspell, and marketing channel rules cannot pattern-match their way out of it. M10 builds rules that match query parameters and never takes a position on how the codes should be designed. Governance rather than a trap, so it failed the filter, but it is the one real absence.
+
+### The M11 run, and the two cheap alarms now paired across modules (13 Aug 2026)
+
+Six sections read, two additions. Second consecutive thin yield, and the same explanation as M10: the module is unusually complete and in several places materially more precise than the reference.
+
+**The reference's largest failure is an omission, not an error.** Dated 12 August 2026, it says nothing about the legacy deprecation, eighteen days before the legacy Classification importer retires. §1 carries both dates and the point that matters: the importer and the Rule Builder are on separate clocks several months apart, so a team treating "classifications are being retired" as one event migrates the wrong things first.
+
+**Where ours is sharper on the same ground.** The reference says the rule lookback "varies, so confirm the current window." §5 gives the dropdown range, the default, the Perform lookback button, the six-month ceiling, and the framing that actually lands it: files are retroactive to the beginning of your data, rules are not, which contradicts the module's own opening claim. It also has no equivalent for two traps §1 already carries: classification values are absent from hit-level data feeds though Data Warehouse carries them, and the Customer Attributes distinction where the same CSV produces materially different numbers because a classification attaches to a key while Customer Attributes attaches to the visitor profile.
+
+**Both additions came from the same two places the last several runs did.** One is a coherence defect: §4 referenced subclassifications twice as though known, and no section had ever introduced them. Same class as M10's missing Channel Breakdown and the M04 diagram's missing segment, and the third time a list or forward reference presented as complete and was not.
+
+**The other creates a deliberate pair.** Unspecified trended over time in M11 §6 and the Direct share in M10 §6 are now matched instruments, cross-linked, both framed as cheap upstream alarms that catch tagging failures in days rather than quarters. The reference is what suggested the pairing, and it is a genuinely good observation. **Worth watching for more of these: an instrument that only exists in one module is easy to miss, and a pattern the reader meets twice is one they keep.**
+
+### PENDING before launch: M11 §1's deprecation warn-box goes stale on 31 Aug 2026
+
+§1 carries a warn-box marked "verified July 2026" stating that the legacy Classification importer is deprecated after **31 August 2026** and the legacy Rule Builder after **28 February 2027**. The treatment is correct for a perishable fact, and the box tells the reader to confirm against Experience League.
+
+**It becomes actively misleading the moment the first date passes.** Re-verify both dates and rewrite the box in the past tense for the importer before the learning world is published. This is the clearest example in the corpus of a dated snapshot that needs a scheduled review rather than a one-time check, and it is worth asking whether any other warn-box carries a date that will expire on its own.
 
 **One tooling lesson, learned the hard way.** A proposed addition to M03 §6 turned out to duplicate an info-box already there. The search used `do not sum`; the section is from the era that uses contractions and says `don't sum`. **The corpus is split by era, so every search pattern has to be contraction-tolerant**, or it will report a gap that is not there. Earlier comparisons in this session used the contraction-free forms and may have produced a false negative or two.
 
