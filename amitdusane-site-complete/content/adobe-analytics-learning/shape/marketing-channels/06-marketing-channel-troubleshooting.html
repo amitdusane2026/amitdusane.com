@@ -2,7 +2,7 @@
 slug: "marketing-channel-troubleshooting"
 title: "Marketing Channel Troubleshooting"
 seotitle: "Marketing Channel Troubleshooting in Adobe Analytics"
-lastmod: 2026-07-15
+lastmod: 2026-08-13
 description: "Marketing channel reports fail quietly and confidently. The seven ways this breaks, the instruments to check, and the order to check them in."
 type: lesson
 modulenum: 10
@@ -116,7 +116,7 @@ weight: 6
 <p>The second one deserves care, because it looks alarming and usually is not. Attribution models award credit on channel <strong>instances</strong>, meaning the moments a channel was actually set on a hit. If a channel was set before your reporting window opened and only its persisted value survives inside the window, a participation model hands the credit to None rather than to the channel. The configuration is fine. The reporting window and the engagement period are simply disagreeing, and a non-participation model will show the persisted value normally.</p>
 
 <h3 class="subsec-title">Your instruments</h3>
-<p>Guessing is not troubleshooting. Four instruments will resolve almost anything in this module.</p>
+<p>Guessing is not troubleshooting. Five instruments will resolve almost anything in this module.</p>
 
 <p><strong>Marketing Channel Instances against Visits.</strong> This is the sharpest diagnostic in the feature and almost nobody uses it. An <em>instance</em> counts only when a channel is genuinely <em>set</em> on a hit. A <em>visit</em> counts whenever the channel is credited, including when it merely persisted from an earlier visit. So the gap between them <em>is</em> your persistence, made visible. Visits far exceeding instances means channels are persisting heavily, which is exactly what you would expect with Direct and Internal not overriding. Instances near zero on a channel that shows visits means that channel is not actually being set by any rule any more, and something upstream has started catching its traffic first.</p>
 
@@ -125,6 +125,12 @@ weight: 6
 <p><strong>An external source of truth.</strong> This is the calibration weight. Your ad platform knows how many clicks it sent. Your email service provider knows how many people clicked through. Compare their number with your Paid Search or Email channel and a serious discrepancy will surface immediately. The two will never match exactly, and expecting them to is naive, but an order-of-magnitude gap is a finding.</p>
 
 <p><strong>The debugger, on a live hit.</strong> When a rule is not firing, stop theorizing and look. Load the landing URL yourself and inspect what actually arrives: the referrer, the query string parameters, the exact case and spelling. A rule failing to catch traffic is very often matching on a parameter that marketing renamed and did not mention.</p>
+
+<p><strong>Direct as a share, tracked over months.</strong> The other four answer a question somebody has already asked. This one raises the question for you, and almost nobody watches it. Direct is where hits land when no arrival signal survived, which is not the same thing as a visitor who deliberately typed your address. Referrers go missing for reasons that have nothing to do with intent: links opened from apps and messaging clients, redirect chains that drop the referrer, referrer policies that strip it, document links, and campaign templates that lose the query string somewhere between the send and the landing page.</p>
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ A rising Direct share reads as good news</div>
+    <p>This is the failure that gets celebrated. A marketer watches Direct grow, calls it brand strength, and argues for moving budget away from the paid channels that are now quietly under-credited because their tracking codes are being dropped somewhere. Nothing errors, the visit total does not move, and the only evidence is a line on a trend nobody plotted. Chart Direct as a percentage of visits across the last twelve months, and treat any step change as a data-quality investigation before anybody is allowed to read it as a marketing result. The step usually dates to the week something on your own side changed.</p>
+</div>
 
 <div class="pro-tip">
     <div class="pro-tip-hdr">💡 Do not compare Marketing Channels to the traffic sources or campaign reports</div>
