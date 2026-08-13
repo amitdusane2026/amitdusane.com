@@ -1,41 +1,379 @@
 ---
 slug: "analysis-workspace-overview"
 title: "Analysis Workspace Overview"
-lastmod: 2026-07-15
+seotitle: "What Is Analysis Workspace in Adobe Analytics"
+description: "Any dimension can meet any metric here, and the tool before it refused almost all of them. What Workspace is, how it is laid out, and what it replaced."
+lastmod: 2026-08-14
 type: lesson
 modulenum: 14
 sectionnum: 1
 weight: 1
 ---
-<p>Analysis Workspace is Adobe Analytics' powerful, flexible canvas for building custom analysis projects. It's the primary interface for data exploration, visualization, and reporting.</p>
-                <h3 class="subsec-title">Key Features</h3>
-                <ul>
-                    <li><strong>Drag-and-drop interface:</strong> Build reports without writing code</li>
-                    <li><strong>Flexible layouts:</strong> Arrange panels, tables, and visualizations freely</li>
-                    <li><strong>Real-time analysis:</strong> Data updates as you build</li>
-                    <li><strong>Collaboration:</strong> Share projects and curate for stakeholders</li>
-                    <li><strong>Advanced analytics:</strong> Attribution, anomaly detection, contribution analysis</li>
-                </ul>
-                <div class="diagram-box">
-                    <div class="diagram-title">📊 Workspace Interface Structure</div>
-                    <div class="diagram-content">
-                        <div class="workspace-layout">
-                            <div class="ws-rail">Left Rail<br><small>Components</small></div>
-                            <div class="ws-main">
-                                <div class="ws-panel">Panel 1<br><small>Date Range + Segment</small></div>
-                                <div class="ws-panel">Panel 2<br><small>Different Analysis</small></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="path-box">
-                    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to Find</div>
-                    <p>Adobe Analytics → <span class="path">Workspace</span></p>
-                </div>
-                <div class="ref-box">
-                    <div class="ref-title">📚 Learn More</div>
-                    <ul>
-                        <li><a href="https://experienceleague.adobe.com/docs/analytics/analyze/analysis-workspace/home.html" target="_blank">Adobe Docs: Analysis Workspace Overview</a></li>
-                    </ul>
-                </div>
-            
+<p>Think of a friend. What comes to mind first is their face. The voice, the job, the argument you had last year, all of that follows, but the face arrives first and everything else hangs off it.</p>
+
+<p>Cities work the same way. Say Paris and you picture a tower. Say New York and you picture a statue. One image comes first, and the details attach to it afterward.</p>
+
+<p>Now ask anyone who has used Adobe Analytics what the product looks like. Almost nobody describes a tracking call. They picture a screen: a table, a chart beside it, and a list down the left that they dragged things out of. That screen is Analysis Workspace, and for most of the people who use Adobe Analytics it is not a part of the product. It is the product.</p>
+
+<h3 class="subsec-title">Everything else in Adobe Analytics is upstream of this screen</h3>
+<p>That impression is not naive, and it is worth understanding why it is close to correct.</p>
+
+<p>A tracking call carries a value off a page. <a href="/adobe-analytics-learning/foundations/report-suites/what-are-report-suites/">Report suite</a> settings decide which values are switched on at all. <a href="/adobe-analytics-learning/shape/processing-rules/what-are-processing-rules/">Processing rules</a> rewrite them on the way in, before any human sees them. <a href="/adobe-analytics-learning/shape/classifications/classifications-overview/">Classifications</a> attach readable labels to codes that were never meant to be read. <a href="/adobe-analytics-learning/shape/marketing-channels/marketing-channels-overview/">Marketing channel</a> rules decide which source gets the credit. <a href="/adobe-analytics-learning/analyze/segments/understanding-segments/">Segments</a> describe which visits are worth isolating. <a href="/adobe-analytics-learning/analyze/calculated-metrics/what-are-calculated-metrics/">Calculated metrics</a> turn two counts into a rate.</p>
+
+<p>Not one of those produces a report. Every one of them is preparation, and each runs on its own, in its own screen, on its own schedule, answerable to nobody until the day somebody asks a question. They behave like rivers, which is to say that none of them is the destination and none of them means very much alone.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">📊 Everything upstream, and the one place it arrives</div>
+    <svg viewBox="0 0 700 320" style="width:100%;height:auto;display:block;margin:4px 0 8px"
+         role="img" aria-label="Six preparation stages listed down the left side: collection and tracking calls, report suite settings, processing rules, classifications, marketing channel rules, and segments with calculated metrics. Curved lines from all six converge on a single box on the right representing Analysis Workspace, which contains a small report table. None of the six produces a report on its own.">
+        <text x="16" y="16" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif;letter-spacing:1px">PREPARATION</text>
+
+        <path d="M192 41 C 320 41, 350 160, 468 160" style="fill:none;stroke:var(--border,#e2e8f0);stroke-width:2"/>
+        <path d="M192 87 C 320 87, 350 160, 468 160" style="fill:none;stroke:var(--border,#e2e8f0);stroke-width:2"/>
+        <path d="M192 133 C 320 133, 350 160, 468 160" style="fill:none;stroke:var(--border,#e2e8f0);stroke-width:2"/>
+        <path d="M192 179 C 320 179, 350 160, 468 160" style="fill:none;stroke:var(--border,#e2e8f0);stroke-width:2"/>
+        <path d="M192 225 C 320 225, 350 160, 468 160" style="fill:none;stroke:var(--border,#e2e8f0);stroke-width:2"/>
+        <path d="M192 271 C 320 271, 350 160, 468 160" style="fill:none;stroke:var(--border,#e2e8f0);stroke-width:2"/>
+
+        <rect x="16" y="24" width="176" height="34" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <rect x="16" y="70" width="176" height="34" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <rect x="16" y="116" width="176" height="34" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <rect x="16" y="162" width="176" height="34" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <rect x="16" y="208" width="176" height="34" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <rect x="16" y="254" width="176" height="34" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+
+        <text x="104" y="46" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12px;font-family:sans-serif">Tracking calls</text>
+        <text x="104" y="92" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12px;font-family:sans-serif">Report suite settings</text>
+        <text x="104" y="138" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12px;font-family:sans-serif">Processing rules</text>
+        <text x="104" y="184" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12px;font-family:sans-serif">Classifications</text>
+        <text x="104" y="230" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12px;font-family:sans-serif">Marketing channels</text>
+        <text x="104" y="276" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12px;font-family:sans-serif">Segments, metrics</text>
+
+        <rect x="468" y="70" width="216" height="180" rx="8" style="fill:var(--card,#ffffff);stroke:var(--accent,#e11d48);stroke-width:2.5"/>
+        <text x="576" y="96" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:13px;font-weight:700;font-family:sans-serif">Analysis Workspace</text>
+
+        <rect x="488" y="112" width="176" height="20" rx="3" style="fill:var(--bg3,#f1f5f9)"/>
+        <rect x="488" y="138" width="104" height="12" rx="2" style="fill:var(--border,#e2e8f0)"/>
+        <rect x="604" y="138" width="60" height="12" rx="2" style="fill:var(--accent,#e11d48)"/>
+        <rect x="488" y="158" width="104" height="12" rx="2" style="fill:var(--border,#e2e8f0)"/>
+        <rect x="604" y="158" width="42" height="12" rx="2" style="fill:var(--accent,#e11d48)"/>
+        <rect x="488" y="178" width="104" height="12" rx="2" style="fill:var(--border,#e2e8f0)"/>
+        <rect x="604" y="178" width="26" height="12" rx="2" style="fill:var(--accent,#e11d48)"/>
+        <rect x="488" y="198" width="104" height="12" rx="2" style="fill:var(--border,#e2e8f0)"/>
+        <rect x="604" y="198" width="14" height="12" rx="2" style="fill:var(--accent,#e11d48)"/>
+
+        <text x="576" y="234" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">the first place a question gets answered</text>
+
+        <text x="16" y="308" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">Each one runs alone and answers to nobody, until somebody asks a question here.</text>
+    </svg>
+</div>
+
+<p>There is a consequence to sitting at the bottom of that funnel, and it is the reason this screen matters to people who never intend to build a report. Analysis Workspace is where an implementation becomes visible. A variable that was never enabled does not announce itself as a fault. It appears as an absence in a list, quietly, months after somebody signed off the specification that promised it. The gap between what a <a href="/adobe-analytics-learning/deliver/solution-design-reference/what-is-an-sdr/">solution design reference</a> says is being collected and what is actually being collected is discovered here more often than anywhere else.</p>
+
+<h3 class="subsec-title">A space where the work is analysis, and the name is the whole definition</h3>
+<p>Read the name literally and there is very little left to explain. A workspace is a space where work is done. The work here is analysis. That is the definition, and it is worth saying plainly because most descriptions of this feature open with a list of capabilities and never get around to what it is for.</p>
+
+<p>A player spends years on technique, fitness and the rulebook, and none of that is the point of any of it. The point is the day they walk onto the ground and use it. Everything described in the previous heading is training. This is the ground.</p>
+
+<p>What you get is a blank canvas, and the blankness is deliberate. There is no default report waiting for you, no prescribed starting layout, and no opinion about what you came to find out. You bring a dimension, you bring a metric, and a table appears. Then you bring a second table, a fallout, a flow diagram, a cohort grid, a line chart, and arrange them however the question needs. Winning here means one thing: a number that somebody can act on, pointed at a decision that was going to be made anyway, with or without data.</p>
+
+<h3 class="subsec-title">Any dimension, any metric, nothing refused</h3>
+<p>Here is the single fact that separates this screen from everything Adobe shipped before it. Every dimension in the list can be combined with every metric in the list. Not a supported subset. All of them.</p>
+
+<p>That sounds ordinary until you know what it replaced. The interface that came before enforced the pairings. A <a href="/adobe-analytics-learning/foundations/variables/props-traffic-variables/">prop</a> could be reported against page views, visits and visitors. An <a href="/adobe-analytics-learning/foundations/variables/evars-conversion-variables/">eVar</a> could be reported against <a href="/adobe-analytics-learning/foundations/variables/events-success-events/">events</a>. Cross the two and the report was simply not offered.</p>
+
+<p>Workspace refuses nothing. Drag any two things together and it builds the table.</p>
+
+<h3 class="subsec-title">Where the freedom came from, and what had to die to get here</h3>
+<p>None of this arrived in one release, and the topic stays rigid and forgettable until you know the shape of what came before. There were two products, running in parallel for years, and Analysis Workspace is the survivor of both.</p>
+
+<p>The first is the one everybody remembers. Adobe Analytics began life as Omniture SiteCatalyst, and Adobe acquired Omniture in October 2009. The reporting interface that came with it survived the rebrand under the name Reports &amp; Analytics, in a distinctive green, and practitioners of a certain vintage still say the name with some affection.</p>
+
+<p>It was also strict in a way that is hard to imagine now. One report to a view, and saving was how you kept anything. A segment could be applied above a report but never dropped inside it. If several reports needed to sit together, that was a Dashboard, and a Dashboard drew from exactly one report suite, so any question that spanned two properties was two screens and a spreadsheet. The prop and eVar rule described above was enforced throughout.</p>
+
+<p>The second product is the one that actually became Workspace, and its ancestry runs through a different acquisition entirely. Omniture had bought Visual Sciences, whose high end data analysis engine Adobe later shipped as Adobe Insight and later still renamed Data Workbench. From roughly that period came Discover, a tool built for serious analysts rather than for report consumers: a dark themed desktop client with drag and drop, free combination of anything with anything, and none of SiteCatalyst's guardrails. Adobe renamed it Ad Hoc Analysis.</p>
+
+<p>Ad Hoc Analysis had one enormous problem, and it is the hinge of the whole story. It was a Java desktop application. It had to be installed, it was tied to the machine it was installed on, and it broke whenever the runtime beneath it moved. Adobe announced the intention to end its life in August 2018 and pointedly refused to name a final date until Analysis Workspace had matched the workflows analysts depended on, which is not how a product is usually retired and says something about who was using it.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">📊 Two products went in. One came out.</div>
+    <svg viewBox="0 0 700 300" style="width:100%;height:auto;display:block;margin:4px 0 8px"
+         role="img" aria-label="A timeline from 2006 to 2026 with three horizontal bars. The top bar is SiteCatalyst and Reports and Analytics, running from 2006 until it stops in 2023. The middle bar is Discover, later renamed Ad Hoc Analysis, running from 2006 until it stops in 2019. The bottom bar is Analysis Workspace, starting in 2015 and continuing to the present. Dotted arrows run down from the end of each retired product into Analysis Workspace, showing that capability from both was moved into it. Adobe acquired Omniture in 2009.">
+        <rect x="60" y="54" width="519" height="28" rx="5" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <text x="74" y="73" style="fill:var(--text2,#475569);font-size:12px;font-family:sans-serif">SiteCatalyst, then Reports &amp; Analytics</text>
+        <text x="589" y="73" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">retired</text>
+
+        <rect x="60" y="104" width="397" height="28" rx="5" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <text x="74" y="123" style="fill:var(--text2,#475569);font-size:12px;font-family:sans-serif">Discover, then Ad Hoc Analysis</text>
+        <text x="467" y="123" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">retired</text>
+
+        <rect x="335" y="154" width="335" height="28" rx="5" style="fill:var(--accent,#e11d48)"/>
+        <text x="349" y="173" style="fill:#ffffff;font-size:12px;font-weight:700;font-family:sans-serif">Analysis Workspace</text>
+
+        <line x1="457" y1="132" x2="457" y2="154" style="stroke:var(--text3,#94a3b8);stroke-width:1.5;stroke-dasharray:4 3"/>
+        <line x1="579" y1="82" x2="579" y2="154" style="stroke:var(--text3,#94a3b8);stroke-width:1.5;stroke-dasharray:4 3"/>
+
+        <line x1="40" y1="212" x2="684" y2="212" style="stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <line x1="151" y1="206" x2="151" y2="218" style="stroke:var(--text3,#94a3b8);stroke-width:1.5"/>
+        <line x1="335" y1="206" x2="335" y2="218" style="stroke:var(--text3,#94a3b8);stroke-width:1.5"/>
+        <line x1="457" y1="206" x2="457" y2="218" style="stroke:var(--text3,#94a3b8);stroke-width:1.5"/>
+        <line x1="579" y1="206" x2="579" y2="218" style="stroke:var(--text3,#94a3b8);stroke-width:1.5"/>
+
+        <text x="151" y="236" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-weight:700;font-family:sans-serif">2009</text>
+        <text x="335" y="236" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-weight:700;font-family:sans-serif">2015</text>
+        <text x="457" y="236" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-weight:700;font-family:sans-serif">2019</text>
+        <text x="579" y="236" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-weight:700;font-family:sans-serif">2024</text>
+
+        <text x="151" y="254" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:10px;font-family:sans-serif">Adobe buys</text>
+        <text x="151" y="267" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:10px;font-family:sans-serif">Omniture</text>
+        <text x="335" y="254" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:10px;font-family:sans-serif">Workspace</text>
+        <text x="335" y="267" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:10px;font-family:sans-serif">ships</text>
+        <text x="457" y="254" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:10px;font-family:sans-serif">Ad Hoc</text>
+        <text x="457" y="267" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:10px;font-family:sans-serif">goes</text>
+        <text x="579" y="254" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:10px;font-family:sans-serif">R&amp;A stops</text>
+        <text x="579" y="267" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:10px;font-family:sans-serif">working</text>
+
+        <text x="40" y="292" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">Analysis Workspace shipped in 2015 and spent nine years absorbing both of them before either was switched off.</text>
+    </svg>
+</div>
+
+<p>Analysis Workspace shipped in 2015 and is best understood as Ad Hoc Analysis rebuilt in the browser: the same interaction model, the same refusal to enforce pairings, the same audience. It is not a replica, and it did not arrive complete. It spent nine years absorbing the capabilities of both ancestors, and only when that was done did Adobe finish the job. Ad Hoc Analysis went first. Reports &amp; Analytics reached end of life on 31 December 2023 and stopped working altogether on 17 January 2024, taking its scheduled reports and data extracts with it.</p>
+
+<p>The move into the browser is the part worth pausing on, because it is easy to file as branding. Adobe put every business it had onto the cloud in that period, and in analytics the practical result was the removal of one dependency. No installation, no runtime, no machine that has the tool on it. Credentials and a browser, and the entire ecosystem is present: the data, the components, the projects somebody saved last year. That is not a convenience. For a tool whose users are constantly asked a question in a meeting they walked into unprepared, it is the difference between answering now and answering tomorrow.</p>
+
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th></th><th>Reports &amp; Analytics</th><th>Analysis Workspace</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Pairing a dimension with a metric</strong></td><td>Props with traffic metrics, eVars with events. Enforced.</td><td>Anything with anything. Nothing is enforced.</td></tr>
+            <tr><td><strong>Segments</strong></td><td>Applied above the report, one at a time</td><td>Dropped onto a project, a panel, a column, or a single cell</td></tr>
+            <tr><td><strong>Reports in one view</strong></td><td>One</td><td>As many tables and visualizations as the question needs</td></tr>
+            <tr><td><strong>Report suites in one view</strong></td><td>One per dashboard</td><td>One per panel, and a project holds many panels</td></tr>
+            <tr><td><strong>How it ran</strong></td><td>Pre-built reports you chose from</td><td>Queries composed as you drag</td></tr>
+            <tr><td><strong>Status</strong></td><td>Stopped working 17 January 2024</td><td>The reporting interface</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<p>One detail from that history is still on screen today, and it is easy to walk past. Color has been carrying meaning in this product for twenty years. SiteCatalyst's green was a brand. Discover's dark theme was a signal about who the tool was for. The colors in Analysis Workspace are the first ones that carry actual information, and they are the next thing to understand.</p>
+
+<h3 class="subsec-title">What you are actually looking at</h3>
+<p>The layout is what any serious data tool converges on, and once the four regions have names the screen stops being busy.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">📊 The four regions, and what belongs in each</div>
+    <svg viewBox="0 0 700 424" style="width:100%;height:auto;display:block;margin:4px 0 8px"
+         role="img" aria-label="A schematic of the Analysis Workspace screen. Along the top is a menu bar with Project, Edit, Insert, Component, Share and Help. Down the left is a rail with three tabs, Panels, Visualizations and Components, with Components active, showing a search box and four color coded groups: Dimensions in orange, Metrics in green, Segments in blue and Date Ranges in purple. The large area on the right is the canvas, holding one panel. The panel is named on the left of its header, and at the top right of that header sit the report suite selector and the date range calendar, side by side. Below the header sits a freeform table and beneath it a bar chart visualization.">
+        <rect x="8" y="8" width="684" height="24" rx="4" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <text x="20" y="24" style="fill:var(--text2,#475569);font-size:10px;font-family:sans-serif">Project     Edit     Insert     Component     Share     Help</text>
+        <text x="600" y="24" style="fill:var(--text3,#94a3b8);font-size:9px;font-family:sans-serif;letter-spacing:1px">MENU BAR</text>
+
+        <rect x="8" y="40" width="180" height="376" rx="6" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <rect x="12" y="46" width="56" height="22" rx="4" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1"/>
+        <rect x="70" y="46" width="56" height="22" rx="4" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1"/>
+        <rect x="128" y="46" width="56" height="22" rx="4" style="fill:var(--accent,#e11d48)"/>
+        <text x="40" y="61" text-anchor="middle" style="fill:var(--text2,#475569);font-size:9px;font-family:sans-serif">Panels</text>
+        <text x="98" y="61" text-anchor="middle" style="fill:var(--text2,#475569);font-size:9px;font-family:sans-serif">Visuals</text>
+        <text x="156" y="61" text-anchor="middle" style="fill:#ffffff;font-size:9px;font-weight:700;font-family:sans-serif">Compon.</text>
+
+        <rect x="12" y="76" width="172" height="20" rx="4" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1"/>
+        <text x="20" y="90" style="fill:var(--text3,#94a3b8);font-size:9px;font-family:sans-serif">Search components</text>
+
+        <rect x="12" y="108" width="4" height="14" rx="2" style="fill:#c2690c"/>
+        <text x="24" y="119" style="fill:#c2690c;font-size:10px;font-weight:700;font-family:sans-serif">DIMENSIONS</text>
+        <rect x="24" y="128" width="120" height="10" rx="2" style="fill:#c2690c;opacity:0.45"/>
+        <rect x="24" y="144" width="96" height="10" rx="2" style="fill:#c2690c;opacity:0.45"/>
+
+        <rect x="12" y="172" width="4" height="14" rx="2" style="fill:#2f8f3f"/>
+        <text x="24" y="183" style="fill:#2f8f3f;font-size:10px;font-weight:700;font-family:sans-serif">METRICS</text>
+        <rect x="24" y="192" width="108" height="10" rx="2" style="fill:#2f8f3f;opacity:0.45"/>
+        <rect x="24" y="208" width="84" height="10" rx="2" style="fill:#2f8f3f;opacity:0.45"/>
+
+        <rect x="12" y="236" width="4" height="14" rx="2" style="fill:#3d7fdd"/>
+        <text x="24" y="247" style="fill:#3d7fdd;font-size:10px;font-weight:700;font-family:sans-serif">SEGMENTS</text>
+        <rect x="24" y="256" width="128" height="10" rx="2" style="fill:#3d7fdd;opacity:0.45"/>
+        <rect x="24" y="272" width="92" height="10" rx="2" style="fill:#3d7fdd;opacity:0.45"/>
+
+        <rect x="12" y="300" width="4" height="14" rx="2" style="fill:#9370e0"/>
+        <text x="24" y="311" style="fill:#9370e0;font-size:10px;font-weight:700;font-family:sans-serif">DATE RANGES</text>
+        <rect x="24" y="320" width="100" height="10" rx="2" style="fill:#9370e0;opacity:0.45"/>
+        <rect x="24" y="336" width="76" height="10" rx="2" style="fill:#9370e0;opacity:0.45"/>
+
+        <text x="24" y="384" style="fill:var(--text3,#94a3b8);font-size:9px;font-family:sans-serif;letter-spacing:1px">LEFT RAIL</text>
+        <text x="24" y="399" style="fill:var(--text3,#94a3b8);font-size:9px;font-family:sans-serif">drag anything from here</text>
+
+        <rect x="196" y="40" width="496" height="376" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <rect x="204" y="48" width="480" height="360" rx="5" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+
+        <text x="212" y="72" style="fill:var(--text2,#475569);font-size:11px;font-weight:700;font-family:sans-serif">Panel 1</text>
+        <rect x="286" y="56" width="190" height="24" rx="4" style="fill:var(--card,#ffffff);stroke:var(--accent,#e11d48);stroke-width:1.5"/>
+        <text x="296" y="72" style="fill:var(--accent,#e11d48);font-size:10px;font-weight:700;font-family:sans-serif">Global Report Suite</text>
+        <rect x="486" y="56" width="190" height="24" rx="4" style="fill:var(--card,#ffffff);stroke:#9370e0;stroke-width:1.5"/>
+        <text x="496" y="72" style="fill:#9370e0;font-size:10px;font-weight:700;font-family:sans-serif">Aug 1 to Aug 31, 2026</text>
+
+        <text x="286" y="98" style="fill:var(--text3,#94a3b8);font-size:9px;font-family:sans-serif;letter-spacing:1px">TOP RIGHT: ONE REPORT SUITE, ONE DATE RANGE</text>
+
+        <rect x="212" y="106" width="464" height="20" rx="3" style="fill:var(--bg3,#f1f5f9)"/>
+        <text x="222" y="120" style="fill:#c2690c;font-size:10px;font-weight:700;font-family:sans-serif">Page</text>
+        <text x="560" y="120" style="fill:#2f8f3f;font-size:10px;font-weight:700;font-family:sans-serif">Visits</text>
+        <rect x="212" y="132" width="300" height="11" rx="2" style="fill:var(--border,#e2e8f0)"/>
+        <rect x="556" y="132" width="120" height="11" rx="2" style="fill:var(--accent,#e11d48)"/>
+        <rect x="212" y="151" width="300" height="11" rx="2" style="fill:var(--border,#e2e8f0)"/>
+        <rect x="556" y="151" width="88" height="11" rx="2" style="fill:var(--accent,#e11d48)"/>
+        <rect x="212" y="170" width="300" height="11" rx="2" style="fill:var(--border,#e2e8f0)"/>
+        <rect x="556" y="170" width="56" height="11" rx="2" style="fill:var(--accent,#e11d48)"/>
+        <rect x="212" y="189" width="300" height="11" rx="2" style="fill:var(--border,#e2e8f0)"/>
+        <rect x="556" y="189" width="34" height="11" rx="2" style="fill:var(--accent,#e11d48)"/>
+        <text x="212" y="220" style="fill:var(--text3,#94a3b8);font-size:9px;font-family:sans-serif;letter-spacing:1px">FREEFORM TABLE</text>
+
+        <rect x="212" y="238" width="464" height="150" rx="4" style="fill:var(--bg3,#f1f5f9)"/>
+        <rect x="240" y="318" width="42" height="52" rx="2" style="fill:var(--accent,#e11d48)"/>
+        <rect x="300" y="290" width="42" height="80" rx="2" style="fill:var(--accent,#e11d48)"/>
+        <rect x="360" y="266" width="42" height="104" rx="2" style="fill:var(--accent,#e11d48)"/>
+        <rect x="420" y="302" width="42" height="68" rx="2" style="fill:var(--accent,#e11d48)"/>
+        <rect x="480" y="278" width="42" height="92" rx="2" style="fill:var(--accent,#e11d48)"/>
+        <rect x="540" y="330" width="42" height="40" rx="2" style="fill:var(--accent,#e11d48)"/>
+        <line x1="228" y1="370" x2="660" y2="370" style="stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <text x="228" y="256" style="fill:var(--text3,#94a3b8);font-size:9px;font-family:sans-serif;letter-spacing:1px">VISUALIZATION</text>
+
+        <text x="450" y="404" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:9px;font-family:sans-serif">CANVAS, ONE PANEL SHOWN</text>
+    </svg>
+</div>
+
+<p>Along the top is a menu bar that behaves the way every office application has behaved for thirty years. Save, rename, open, insert, share. There is nothing to learn there and it is deliberately unremarkable.</p>
+
+<p>Down the left is the rail, and it holds three tabs rather than one list. <strong>Panels</strong>, <strong>Visualizations</strong>, and <strong>Components</strong>. That is worth noticing early, because those three tabs are close to a table of contents for this module: panels are the containers, covered in <a href="/adobe-analytics-learning/analyze/analysis-workspace/projects-and-panels/">Projects and Panels</a>; visualizations are the shapes the data takes; and components are everything the rest of Adobe Analytics spent its time preparing. The <a href="/adobe-analytics-learning/analyze/analysis-workspace/freeform-tables/">freeform table</a> is where the three meet.</p>
+
+<p>The large area to the right is the canvas, and everything on it lives inside a panel. A panel is the unit that owns a report suite and a date range, and the tables and charts inside it inherit both.</p>
+
+<h3 class="subsec-title">Four colors, and they are the fastest thing on the screen</h3>
+<p>Open the Components tab and the list is color coded into four types. These are not decorative, they are not theme colors, and they are the one piece of visual vocabulary in this product genuinely worth committing to memory.</p>
+
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>Color</th><th>Type</th><th>What is in the list</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Orange</strong></td><td>Dimensions</td><td>Every place a value is stored. Enabled eVars and props under the names an administrator gave them, plus the dimensions Adobe provides by default.</td></tr>
+            <tr><td><strong>Green</strong></td><td>Metrics</td><td>Everything countable. Default metrics, custom success events, and every calculated metric saved to the suite.</td></tr>
+            <tr><td><strong>Blue</strong></td><td>Segments</td><td>Filters over the data. The ones you built, the ones shared with you, and the set Adobe ships.</td></tr>
+            <tr><td><strong>Purple</strong></td><td>Date ranges</td><td>Mostly Adobe defaults, plus any custom or shared range. Rolling ranges as well as fixed ones.</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<p>The reason this pays for itself is that a freeform table does not police what goes where. A segment can be dropped into a column and used as a dimension. A dimension can be dropped where a metric would normally sit. Those are legitimate techniques, and they are the reason a report built by somebody else can be genuinely hard to read at a glance.</p>
+
+<p>Color is what rescues it. A person opening a project they have never seen does not need to inspect anything to know that the second column is a filter rather than a variable. It is blue. That single design decision does more for comprehension than any amount of documentation attached to the project, and it works on a screenshot pasted into an email, which is where most reports are actually read.</p>
+
+<h3 class="subsec-title">The report suite belongs to the panel, not to the project</h3>
+<p>This is the one setting that changes everything else on screen, and it is the one most often left at whatever it defaulted to.</p>
+
+<p>Every panel carries its own report suite selector at the top right of its header, with the calendar beside it. Whatever is chosen there decides which components exist: the dimension list, the metric list, the segments, all of it is drawn from that suite. Change the selector and the rail redraws underneath you. Select a different panel and the rail redraws again, because it follows whichever panel is active rather than the project as a whole.</p>
+
+<p>Both real report suites and <a href="/adobe-analytics-learning/foundations/report-suites/virtual-report-suites/">virtual report suites</a> appear in the same dropdown, and a virtual suite looks and behaves like any other suite once selected, which is exactly the point of one.</p>
+
+<p>Because the setting sits on the panel, a single project can compare two properties, two regions or two brands side by side. That is precisely the thing a Dashboard in the old interface could not do at any price, and it is why a report that once needed two screens and a spreadsheet is now one scroll.</p>
+
+<div class="info-box">
+    <div class="info-hdr">ℹ️ Two panels, two suites, and numbers that will never reconcile</div>
+    <p>The same flexibility produces a specific confusion, and it catches experienced people. Two panels in one project can sit on different report suites, and nothing in the body of the report says so. A colleague scrolls from one panel to the next, sees visits fall by half, and reaches for an explanation about traffic. The explanation is a dropdown they did not look at. When numbers between two panels refuse to agree, check the report suite and the date range in both headers before investigating anything else.</p>
+</div>
+
+<h3 class="subsec-title">Go and break something, because you cannot</h3>
+<p>The most useful advice for anybody with access to a real Adobe Analytics account is to open it and play. Combine things. Build a table nobody asked for. Break a dimension down by another dimension and see what falls out. Understanding tends to arrive after the outcome rather than before it, and no amount of reading substitutes for having built something and watched it behave.</p>
+
+<p>That advice is usually given nervously, and the nervousness is misplaced.</p>
+
+<div class="info-box">
+    <div class="info-hdr">ℹ️ Nothing done in Analysis Workspace can alter collected data</div>
+    <p>There is no path from this screen back to the data. No button renames a variable, changes what a past hit contained, re-runs processing, or deletes a day of history. Reporting reads. Every destructive setting in Adobe Analytics lives in the admin tools, not here. A person exploring a freeform table cannot damage anything, and knowing that is what makes it possible to explore properly rather than tentatively.</p>
+</div>
+
+<p>There is a real risk, and it is a different one. Some things created inside a project are saved to the shared component library the moment they are created, not when the project is saved. Build a segment or a calculated metric inside a table and it appears in a list that every colleague on that report suite has to scroll past. Nobody has broken any data. They have added to a list that only ever grows, and an organization two years into this has hundreds of abandoned experiments in it, which is the subject of <a href="/adobe-analytics-learning/analyze/analysis-workspace/curation-and-templates/">Curation and Templates</a>.</p>
+
+<div class="pro-tip">
+    <div class="pro-tip-hdr">💡 Prefix every experiment and the cleanup takes one search</div>
+    <p>Put a fixed marker at the front of anything created while learning, something like <code>zz test AD</code>, with initials in it. Everything sorts to the bottom of every list, it is obvious to a colleague that it is not for them, and clearing up later is one search and a multi-select rather than an archaeology exercise. Do not share any of it, and leave the tags and descriptions blank so nothing gets picked up by a curated view. This costs nothing at the moment of creation and is close to impossible to reconstruct three months later.</p>
+</div>
+
+<p>One caveat, and it is the only one. If the account carries administrator rights, the surrounding admin tools are reachable from the same login and those absolutely do change things permanently. The freedom described here belongs to Workspace. It does not extend to the menu above it.</p>
+
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ You cannot damage the data, but you can mislead yourself</div>
+    <p>Refusing nothing has a price, and it lands on the reader of the report rather than the data. A combination that makes no analytical sense still returns a number, formatted exactly like a good one, with a confident total at the bottom. The classic case is a prop broken down by a conversion metric: a prop does not survive the hit it was set on, so nearly every product shows zero orders and the confirmation page collects all the credit. Nothing on screen marks it as wrong. <a href="/adobe-analytics-learning/analyze/analysis-workspace/freeform-tables/">Freeform Tables</a> covers how a table decides what it is counting, which is the knowledge that keeps this from happening to you.</p>
+</div>
+
+<h3 class="subsec-title">Follow along: the first project, and the first thing to check in someone else's</h3>
+<p>Everything above is orientation. This is the part that turns it into muscle memory, and it takes about five minutes with a real account.</p>
+
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">Follow along: build one table, then learn to read a stranger's</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>PART ONE, BUILD SOMETHING
+
+1  Analytics &gt; Workspace &gt; Create new project &gt; Blank project
+
+2  Panel header, top right: set the report suite
+       Do this before anything else. Everything in the rail
+       is drawn from whatever is selected here.
+
+3  Panel header, top right: set the date range
+       The calendar sits beside the report suite. Pick a month
+       you know had traffic. A range with no data looks exactly
+       like a broken report.
+
+4  Left rail &gt; Components tab
+       Type "page" in the search box.
+       Drag the orange Page dimension into the empty table.
+
+5  Drag a green metric onto the table
+       Visits, or Occurrences. The table populates as it lands.
+       That is a report. It took four steps.
+
+6  Now drag a blue segment onto the same table
+       Watch it land as a column rather than replacing anything.
+       Two columns, same rows, filtered and unfiltered.
+
+PART TWO, READ SOMETHING YOU DID NOT BUILD
+
+7  Open any project a colleague shared with you
+
+8  Read the panel header first, not the numbers
+       Which report suite. Which date range. Every figure
+       below it means nothing until those two are known.
+
+9  Check the header of every panel, not just the first
+       Each one carries its own. They are frequently different,
+       and that difference is rarely mentioned in the title.
+
+10 Look at the color of every column before reading a value
+       Blue in a dimension position is a segment.
+       Orange where a metric belongs is a breakdown.
+
+There is nothing else to configure. Workspace has no setup
+step, no preferences to get right first, and no state to
+prepare. Access to a report suite is the entire prerequisite.</pre></div>
+</div>
+
+<p>Those ten steps are a floor rather than a ceiling. Part one is the smallest complete thing this tool does, and part two is the habit that separates somebody who builds reports from somebody who can be handed one and trusted to say what it means.</p>
+
+<h3 class="subsec-title">What you have now</h3>
+<p>Analysis Workspace is a browser canvas where any dimension can be combined with any metric, arranged into panels that each own a report suite and a date range, out of a color coded rail of components that the rest of Adobe Analytics exists to fill. It is the survivor of two products, and it inherited the interaction model of the one built for analysts rather than the one built for report consumers, which is why it enforces almost nothing.</p>
+
+<p>The thing worth carrying is that last clause, because it is the whole character of the tool. Reports &amp; Analytics answered a narrow set of questions and refused the rest, and refusal is a kind of guidance. Workspace answers every question it is asked, including the ones that should not have been asked, and returns all of the answers in the same typeface. That is an enormous amount of power handed over on trust, and it only works in the hands of somebody who knows what a prop is, what a segment does to a number, and which report suite is under the panel.</p>
+
+<p>Which is the argument for everything upstream of this screen, and the reason the rest of this module is worth the time. <a href="/adobe-analytics-learning/analyze/analysis-workspace/projects-and-panels/">Projects and Panels</a> takes apart the container that owns the report suite, the date range and the segments, because getting the panel right is most of getting the report right. Then <a href="/adobe-analytics-learning/analyze/analysis-workspace/freeform-tables/">Freeform Tables</a> goes into the one component that does the real work, where rows, columns, breakdowns and attribution settings decide what the numbers in front of you actually mean.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Analytics</div>
+    <p>Analytics &gt; <span class="path">Workspace</span> opens the Projects list, which is the landing page for every project in the login company. <span class="path">Create new project</span> offers a blank project or one of Adobe's templates.</p>
+    <p>The report suite selector and the calendar sit side by side at the top right of each panel header, not in the project. The three rail tabs, <span class="path">Panels</span>, <span class="path">Visualizations</span> and <span class="path">Components</span>, run down the left of every project.</p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title">📚 Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/analyze/analysis-workspace/home" target="_blank">Adobe Docs: Analysis Workspace Overview</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/analyze/analysis-workspace/components/analysis-workspace-components" target="_blank">Adobe Docs: Components in Analysis Workspace</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/discontinued/using/reports-and-analytics" target="_blank">Adobe Docs: Reports &amp; Analytics End-of-Life Notice</a></li>
+    </ul>
+</div>
