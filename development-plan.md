@@ -230,6 +230,7 @@ A reference document on the same topic was generated externally and used as a **
 | M05 Data Layers | 3 + 1 banked | SPA router double-count on the entry screen, data layer value discipline (types and enumerations), ACDL array reassignment; meaning-not-presence validation banked for M19 |
 | M06 Adobe Launch (Tags) | 4 + 2 banked | Rule order does not sequence async work, parallel libraries silently revert each other, storage duration and default value hide problems, the property split is one-way; setDebug and the Debugger environment switch banked for M20 |
 | M07 Tracking Calls | 3 + 4 banked | sendBeacon and the exit-link race, `abort` resets after every hit, media heartbeats sit outside Server Call Usage; 200-is-not-acceptance, `pe`/`pev2`, preserve-log, and request-before-report banked for M20. Also corrected the M04 §2 beacon diagram |
+| M08 Processing Rules | 4 | Delete does not undo persistence, an event outlives the value it was set on, guard the target as well as the source, test the negative case. **Three verified errors in the reference, two of which §4 had already named as myths** |
 
 **Nine modules remain unreviewed and that is deliberate.** Amit's ruling stands: do not sweep the finished modules. The pattern in the yield says where it pays. **Modules with mechanical depth reward it; conceptual modules do not.** M03 Variables scored highest of the retrospective runs because persistence is the hardest mechanism in the product. M02 Report Suites scored lowest because it is mostly architecture and judgment, which is where our writing is already stronger than a reference can be.
 
@@ -295,6 +296,26 @@ Seven sections read. Three additions applied, four banked for M20, and one corre
 **But checking the challenged claim exposed a different defect beside it.** The diagram omitted the library version segment, so it matched Adobe's *hardcoded* image request example rather than what AppMeasurement actually puts on the wire. The diagram's stated purpose is "this is what the entry in your network tab is actually saying", so it was wrong by one segment on any live site. Rebuilt to six segments, geometry verified in the browser against the rendered font, and the version now earns its place with the H-code diagnostic: an `H.` prefix on a site that migrated years ago means a hardcoded library still firing from a forgotten template.
 
 **Two lessons worth keeping.** When two generated references disagree on the same fact, neither is evidence; go to Adobe. And **a challenge to one claim is worth treating as a prompt to re-examine everything around it**, because the thing that was actually wrong was not the thing being disputed.
+
+### The M08 run: the module predicted the reference's mistakes (13 Aug 2026)
+
+Four sections read, four additions applied, and the strongest validation of the corpus these runs have produced.
+
+**M08 §4 contains this sentence, written months ago:** *"Two limits are worth naming precisely because they are widely believed and simply untrue. A rule is not restricted to a single action... And a rule is not stuck at 'if this, then that'; the Otherwise branch is a genuine else. Older guides still repeat both myths."*
+
+**The reference repeated both, and a third.** All three verified against Adobe:
+
+| Reference claim | Verified position |
+|---|---|
+| "Cannot express an else branch. Rules are independent if-blocks" | The [interface documentation](https://experienceleague.adobe.com/en/docs/analytics/admin/admin-tools/manage-report-suites/edit-report-suite/report-suite-general/processing-rules/pr-interface) documents an "Otherwise do the following" section that executes when the condition is false |
+| Four actions, with "Concatenate value of" listed separately | Three actions. Concatenation is done inside "Overwrite value of" by combining values, which is exactly §2's framing |
+| Processing rules run before VISTA rules, stated flat | [Processing order](https://experienceleague.adobe.com/en/docs/analytics/technotes/processing-order): VISTA "can potentially run before or after Processing rules... Most VISTA rules generally run after." §1 already carries that hedge |
+
+**A section written to inoculate readers against bad guidance correctly predicted what a fresh generated document would get wrong.** That is worth more than any individual trap the five runs have yielded, and it is the clearest evidence so far that the corpus is ahead of a generated reference rather than merely different from it. Worth citing in the E-E-A-T report when it runs.
+
+**The one genuinely new mechanic** came from verifying rather than from the reference's prose: Adobe's processing order puts processing rules at pre-processing step 7 and eVar persistence at visit/visitor-level step 5, far downstream. So deleting a value on a hit removes the incoming value and leaves the persisted one untouched, and the report goes on crediting it. §2 described delete as a way to "undo a value an earlier rule set", which is true within the hit and invites precisely the wrong expectation about attribution.
+
+**Held back deliberately, both open for Amit.** The reference's Web SDK double-mapping trap (a legacy rule and a datastream mapping both writing one eVar) asserts "the last one wins, the outcome depends on ordering you did not choose", which is not something to put in writing unverified. And its rule-register idea, a markdown file of every rule with owner and date living in the implementation repository rather than a wiki, is a governance practice rather than a trap, so it fails the filter while being the best thing in the document.
 
 **One tooling lesson, learned the hard way.** A proposed addition to M03 §6 turned out to duplicate an info-box already there. The search used `do not sum`; the section is from the era that uses contractions and says `don't sum`. **The corpus is split by era, so every search pattern has to be contraction-tolerant**, or it will report a gap that is not there. Earlier comparisons in this session used the contraction-free forms and may have produced a false negative or two.
 

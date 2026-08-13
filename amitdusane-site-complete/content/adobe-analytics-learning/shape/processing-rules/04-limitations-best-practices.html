@@ -2,7 +2,7 @@
 slug: "limitations-best-practices"
 title: "Limitations and Best Practices"
 seotitle: "Processing Rule Limitations and Best Practices"
-lastmod: 2026-07-18
+lastmod: 2026-08-13
 description: "Processing rules are permanent, immediate, and not retroactive. The limits are the shape of the tool, the mistakes they invite, and when Launch is better."
 type: lesson
 modulenum: 8
@@ -69,10 +69,12 @@ weight: 4
 </div>
 
 <h3 class="subsec-title">A checklist to carry into production</h3>
-<p>Before you enable any rule in a live report suite, walk this list. It is the whole module compressed into seven questions.</p>
+<p>Before you enable any rule in a live report suite, walk this list. It is the whole module compressed into nine questions.</p>
 <ul>
     <li>Could this be fixed at the source, in the implementation or Launch, instead? If yes, prefer that.</li>
     <li>Are you building and testing in a non-production report suite first?</li>
+    <li>Have you sent the hits the rule should <em>ignore</em>, as well as the ones it should catch? A condition that has never met a hit it must skip has not been tested.</li>
+    <li>Is any variable written by both the tag and a rule? Reduce it to one owner.</li>
     <li>Does every overwrite have an "is set" guard on its source, so it cannot blank good data?</li>
     <li>Is the rule order correct, with reads placed above the overwrites they depend on?</li>
     <li>Have you written a clear Reason (who asked, and why) and given the rule an understandable name?</li>

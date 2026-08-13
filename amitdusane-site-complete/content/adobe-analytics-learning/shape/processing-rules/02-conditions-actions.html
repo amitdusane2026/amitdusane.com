@@ -2,7 +2,7 @@
 slug: "conditions-actions"
 title: "Conditions and Actions"
 seotitle: "Processing Rule Conditions and Actions"
-lastmod: 2026-07-18
+lastmod: 2026-08-13
 description: "The anatomy of a processing rule. Conditions decide when it acts, actions decide what happens, and order is logic rather than layout."
 type: lesson
 modulenum: 8
@@ -67,15 +67,27 @@ weight: 2
     </table>
 </div>
 
+<p>One word in that table carries more weight than it looks. <strong>Delete</strong> removes the value from this hit, and that is the whole of what it does. It is not a way to stop a value being credited.</p>
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ Deleting a value does not undo persistence</div>
+    <p>An eVar that persisted from an earlier hit is resolved long after processing rules have finished, when Adobe works out attribution at the visitor level. So a rule that deletes <code>eVar5</code> on today's hit removes the incoming value and leaves the persisted one entirely alone, and the report goes on crediting it exactly as its expiration and allocation settings say it should. The rule ran. Nothing failed. If a value should stop being attributed, that is a question for the eVar's own settings in <a href="/adobe-analytics-learning/foundations/variables/evars-conversion-variables/">eVars</a>, not for a processing rule.</p>
+</div>
+
 <p>Because "overwrite" is a single action with three faces, the skill is not memorizing action names, it is choosing the source. Feeding it a fixed string sets a value, feeding it another variable copies one field into another, and feeding it a combination builds a compound dimension. The mirror image of Read access applies to all three actions: you can only act on a variable you have Write access to, so an action can touch only the variables your permissions let you change.</p>
 
 <h3 class="subsec-title">Order is logic, not layout</h3>
 <p>Rules run from the top, starting at rule 1, and every hit passes through every rule. There is no early exit: a rule cannot say "if this one matched, skip the rest." That single fact has two consequences that catch people out. Because every hit reaches every rule, each rule's condition has to be specific enough that it ignores the hits it was never meant to touch. And because the rules run in sequence, an earlier rule can change the ground a later rule stands on. If rule 1 overwrites <code>eVar3</code>, the original value of <code>eVar3</code> is gone by the time rule 2 looks at it. A rule that needs the original value must sit above the rule that overwrites it. Order here is not cosmetic ordering in a list, it is the execution order of your logic.</p>
 
+<p>There is a second, quieter version of the same problem, and it does not involve a value being lost at all. An action that has already run cannot be taken back by a later rule changing the ground it stood on. Suppose rule 2 sets an event because <code>eVar5</code> reads "product", and rule 5 then overwrites <code>eVar5</code> with "clearance". The event is already on the hit. It stays. What ships is a hit whose dimension says one thing and whose event was set on the basis of another, and no part of that is an error.</p>
+<p>The habit that prevents it is to group rules by what they do rather than by which feature they belong to: first the rules that <strong>set</strong> raw values, then the rules that <strong>refine</strong> them, then the rules that <strong>read</strong> them to derive events. Kept in that order, a derived event can never rest on a value that is still going to change. Dropped into an ungrouped list, a new rule breaks an old one without anybody editing the rule that broke.</p>
+
 <div class="warn-box">
     <div class="warn-hdr">⚠️ Guard an overwrite with a condition</div>
     <p>Actions do not check whether their source has a value first. A rule that overwrites <code>eVar1</code> with <code>eVar2</code> will blank out <code>eVar1</code> on every hit where <code>eVar2</code> happens to be empty, quietly destroying good data. Before you use one variable to overwrite another, add a condition that the source is set. The full catalog of traps like this lives in <a href="/adobe-analytics-learning/shape/processing-rules/limitations-best-practices/">Limitations and Best Practices</a>; this one is common enough to fix on sight.</p>
 </div>
+
+<p>That guard has a mirror image, and it is the one people miss. Conditioning on the <em>source</em> stops the rule blanking the target. Conditioning on the <em>target</em> decides who wins when two things want to write the same variable.</p>
+<p>There is no "set only if empty" action, so you express it as a condition: <em>if <code>eVar5</code> is not set, overwrite <code>eVar5</code> with the value of <code>c.pagetype</code></em>. Written that way, a value the tag has already placed survives, and the rule fills only the gap. Written without it, the rule overwrites the tag on every hit that carries both, and the dimension ends up correct on exactly the hits where the tag happened to be quiet. The discipline underneath is simpler than the mechanics: give every variable one owner, the tag or the rule set, and treat a variable written in both places as a defect to resolve rather than an arrangement to balance.</p>
 
 <h3 class="subsec-title">A rule from start to finish</h3>
 <p>Return to the page-type problem and read the rule in the diagram above as a single decision. The condition is "if <code>c.pagetype</code> is set," which is the guard: it stops the rule from writing an empty value over a good one on hits that never carried a page type. The then-branch overwrites both <code>eVar1</code> and <code>prop1</code> with the incoming value, sending the same data to a persistent conversion variable and a traffic variable at once, because reporting often needs it in both places. The otherwise-branch is deliberately empty, since on a hit with no page type there is simply nothing to do. And the reason line records why the rule exists, so the person who inherits it is not left guessing.</p>
