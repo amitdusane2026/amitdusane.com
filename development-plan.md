@@ -439,37 +439,34 @@ The `report-suites/02` pair is the worst of the sixteen: line 13 references an a
 grep -rn -i -o '[^.>]\{0,70\}\(so far in this\|in this module so far\|everything in this module\|the previous section\|the last section\|the last two sections\|the previous two sections\|the sections before\|the section before\|earlier we saw\|by now you have\|up to now you\|this module has been building\|as we saw\|we have met\|comes next\|is next\b\)[^.]\{0,60\}' --include=*.html .
 ```
 
-## BLOCKED: no screenshots ship in any form until Adobe answers (14 Aug 2026)
+## The licensing question: raised, researched, and closed (14 Aug 2026)
 
-**Amit's ruling, same day the specification below was written: nothing goes on the site until Adobe responds to a permissions request.** Not cropped, not full, not anywhere. The specification that follows is kept because most of it survives, but **it must not be acted on as written.**
+**Do not reopen this. It was examined properly and decided.**
 
-**What blocks it.** Adobe's [image use rights](https://www.adobe.com/legal/permissions/images-user-guides.html) page, read in full on 14 Aug 2026, is materially stricter than a summary of it suggests. Three clauses decide this:
+Adobe's [image use rights](https://www.adobe.com/legal/permissions/images-user-guides.html) page, read in full, is stricter than it first appears. Clause 4 says "your use must contain the entire screenshot, you may not use portions of the screenshot" and forbids altering one except to resize. Clause 10 repeats that screenshots must be reproduced in their entirety, with portions available only by written request. Clause 6 excludes third-party content. Clause 7 requires the attribution statement *"Adobe product screenshot(s) reprinted with permission from Adobe."*
 
-| Clause | Effect on the plan |
-|---|---|
-| 4. "Your use must contain the entire screenshot. You may not use portions of the screenshot" | **Kills tight cropping**, which was the whole mobile strategy and all four §1 briefs |
-| 10. "Screenshots must be reproduced in their entirety." Portions permitted only by written request via Adobe's online form, two weeks | The only route to the plan as designed |
-| 4. "You may not alter the screenshot in any way except to resize it" | **Kills redaction boxes** |
-| 6. "You may not use screenshots that contain third-party content" | Independent of any NDA |
-| 7. Mandatory: "Adobe product screenshot(s) reprinted with permission from Adobe." Plus clause 9's trademark attribution | Not previously planned for |
+Read literally, that prohibits cropping, which was the whole visual strategy.
 
-**So the position is:** full, entire, unaltered screenshots containing no third-party content and carrying attribution need no permission. Everything designed below needs written permission.
+**Amit researched it independently and ruled that the site proceeds as originally designed.** The reasoning, recorded so it does not have to be rebuilt:
 
-**Next action, off the critical path:** submit Adobe's online permissions form asking for cropped screenshots of Adobe Analytics for educational use on amitdusane.com. Two weeks of Adobe processing runs alongside months of module writing, so requesting early costs nothing.
+- **Terms of this kind are an anchor, not an enforcement program.** Adobe, Microsoft and Google all publish them so they retain the option to act against the cases they care about: competitive advertising, misrepresentation, embedding UI inside a competing product, disparagement. None of that describes a teaching site.
+- **Observed reality across a decade supports it.** Cropped screenshots are ubiquitous across practitioner blogs and YouTube product training, much of it showing full interfaces and data, and none of it has been stopped. Most of those sites do not carry the attribution statement either.
+- **Adobe's terms are a license offer, not the outer limit of what is lawful.** Fair use exists independently and is not something Adobe can contract away from people who never agreed to it. Cropped screenshots used to teach and explain sit about as squarely inside it as anything does: educational and transformative purpose, functional rather than creative source, small portion, no substitution for anything Adobe sells.
+- **The realistic worst case is a request to remove some images**, not a legal consequence.
 
-**Until then the SVG schematics remain the site's visual language**, and that is not a downgrade. They are original work, carry no licensing burden, no attribution requirement and no third-party content risk, render legibly at 293px on a phone, and do not rot when Adobe redesigns.
+**The real risk was never the interface. It is the account and the data**, and that is controlled at source, below.
 
-### Where the captures will come from, when they happen
+### Capture source: the Adobe training account only
 
-**The Adobe training account, not the company account.** Amit's employer's Adobe Analytics access sits under a strict security policy, is reachable only from the company laptop, and nothing leaves it. That route is closed and should not be revisited.
+**Never the employer's company account.** That access sits under a strict security policy, is reachable only from the company laptop, and nothing leaves it. Closed permanently; do not suggest it.
 
-The training account granted during Adobe training carries **fictitious data throughout**. That is the right source and it removes most of the risk in one move: no client data, no NDA exposure, and no third-party content under clause 6, since Adobe's own demo brands are Adobe's content rather than a third party's.
+**The Adobe training account, granted during Adobe training, carries fictitious data throughout.** That is the only source. It removes the exposure that actually mattered: no client data, no NDA risk, and no third-party content, since Adobe's own demo brands are Adobe's content rather than a third party's.
 
-**One thing to confirm before capturing from it:** whether the training environment carries its own terms of use governing publication of what is on screen. Adobe's screenshot permission and a training account's acceptable-use policy are separate documents and both have to allow it.
+Amit's standing commitment: no account names, no organization names and no identifying data in any published capture. The pre-capture checklist in `screenshot-briefs.md` exists to make that mechanical rather than remembered.
 
-### The specification below is retained but NOT current. Do not act on it without checking the block above.
+**Worth adding anyway, cheap and unrelated to any of the above:** a trademark attribution line in the site footer, noting that Adobe and Adobe Analytics are trademarks of Adobe Inc. and that the site is not affiliated with or endorsed by Adobe. One line, it directly serves the no-implied-endorsement point, and it is what every serious independent training site carries. Tracked with the byline and Article schema in the pre-launch list.
 
-## Originally DECIDED, deferred by design: the site will carry screenshots (14 Aug 2026)
+## DECIDED, deferred by design: the site will carry screenshots (14 Aug 2026)
 
 **Amit's decision, and the reasoning is deliberate rather than an oversight.** The site has no product screenshots anywhere. It teaches interfaces with hand-built SVG schematics, which strip the noise out and are better for teaching *structure*, and which do not answer the question a first-time reader actually has, which is "will I recognize this when I open it."
 

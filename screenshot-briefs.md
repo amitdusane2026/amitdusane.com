@@ -1,18 +1,8 @@
-> ## ⛔ BLOCKED — do not capture, do not publish (14 Aug 2026)
->
-> **No screenshot goes on the site in any form until Adobe answers a permissions request.** Amit's ruling.
->
-> Adobe's [image use rights](https://www.adobe.com/legal/permissions/images-user-guides.html) forbid using **portions** of a screenshot without written permission (clauses 4 and 10), and forbid **altering** one except to resize (clause 4). **Every brief in this file specifies a crop, so every brief in this file is currently unusable.**
->
-> They are kept because they capture what each shot must prove, which is the expensive part and is unaffected by the ruling. If permission is granted they are ready to run. If it is refused they get rewritten as full-window captures.
->
-> **Capture source, when unblocked:** the Adobe training account only, which carries fictitious data. Never the employer's company account, which is under a strict security policy and reachable only from the company laptop. Confirm the training environment's own terms of use permit publication before capturing.
->
-> **Attribution is mandatory** on anything that ships: *"Adobe product screenshot(s) reprinted with permission from Adobe."* plus the trademark attribution statement.
-
----
-
 # Screenshot capture briefs
+
+> **Licensing was raised, researched and closed on 14 Aug 2026. The site proceeds with cropped screenshots as designed.** The reasoning is recorded in `development-plan.md`; do not reopen it.
+>
+> **The one rule that is not negotiable: capture only from the Adobe training account, which holds fictitious data.** Never the employer's company account. No account names, no organization names, no identifying data in anything published. That was always the real risk, and it is controlled at the source rather than by editing images afterward.
 
 Running record of every screenshot the site needs, one block per shot. Written while a section is drafted, so capture day is a checklist rather than an act of memory.
 
