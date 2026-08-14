@@ -61,18 +61,48 @@
     try { localStorage.setItem('site-theme', t); } catch (e) {}
   });
 
+  /* Screenshots have to survive printing, and lazy loading fights that.
+     The print document is a clone built at print time inside a
+     display:none container, and an image marked lazy inside a hidden
+     subtree never enters a viewport, so it never loads and the page
+     prints with a blank frame. Two defenses: warm the originals once the
+     page is idle, so the bytes are cached whichever way the user prints,
+     and force every clone eager. */
+  function lWarmShots() {
+    var imgs = document.querySelectorAll('.shot-frame img[loading="lazy"]');
+    Array.prototype.forEach.call(imgs, function (img) { img.setAttribute('loading', 'eager'); });
+  }
+  if (window.requestIdleCallback) { requestIdleCallback(lWarmShots, { timeout: 3000 }); }
+  else { window.addEventListener('load', function () { setTimeout(lWarmShots, 1200); }); }
+
   function lFillPrintDoc() {
     var src = document.querySelector('.lcontent'),
         body = document.getElementById('printBody'),
         ctx = document.getElementById('printCtx'),
         h1 = document.querySelector('.lcontent .lsec-title');
-    if (body && src) body.innerHTML = src.innerHTML;
+    if (body && src) {
+      body.innerHTML = src.innerHTML;
+      var imgs = body.querySelectorAll('img');
+      Array.prototype.forEach.call(imgs, function (img) { img.setAttribute('loading', 'eager'); });
+    }
     if (ctx) ctx.textContent = h1 ? h1.textContent : '';
   }
   var pb = document.getElementById('lPrintBtn');
   if (pb) pb.addEventListener('click', function () {
     lFillPrintDoc();
-    window.print();
+    /* Wait for the cloned images before handing over to the print dialog,
+       or the snapshot is taken while they are still decoding. */
+    var imgs = [].slice.call(document.querySelectorAll('#printBody img'));
+    var pending = imgs.filter(function (i) { return !i.complete; });
+    if (!pending.length) { window.print(); return; }
+    var done = 0, fired = false;
+    function go() { if (!fired) { fired = true; window.print(); } }
+    pending.forEach(function (i) {
+      function tick() { if (++done === pending.length) go(); }
+      i.addEventListener('load', tick, { once: true });
+      i.addEventListener('error', tick, { once: true });
+    });
+    setTimeout(go, 2500);
   });
   // Native browser print (Ctrl/Cmd+P or the browser menu) must populate the
   // same print container the button uses. Without this it prints an empty,

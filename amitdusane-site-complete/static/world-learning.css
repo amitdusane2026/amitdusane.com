@@ -612,7 +612,16 @@ body.shot-ov-open{overflow:hidden}
   .shot-frame img{max-height:260px}
   .shot-box.shot-tall .shot-frame img{max-height:340px}
 }
-@media print{.shot-zoom-btn{display:none}.shot-ov{display:none !important}}
+@media print{
+  .shot-zoom-btn{display:none !important}
+  .shot-ov{display:none !important}
+  /* Keep a screenshot and its note on one page, and size it for paper
+     rather than for a screen: the on-screen height caps are far too
+     small once the column is A4 wide. */
+  .print-doc .shot-box{break-inside:avoid;page-break-inside:avoid;box-shadow:none !important}
+  .print-doc .shot-frame{padding:8px;background:#fff}
+  .print-doc .shot-frame img,.print-doc .shot-box.shot-tall .shot-frame img{max-height:150mm;max-width:100%}
+}
 /* Screenshot placeholder. Deliberately loud: an unfilled slot reaching
    production is exactly the silent failure this site keeps being bitten
    by, so it is impossible to mistake for finished work. Guarded by a
