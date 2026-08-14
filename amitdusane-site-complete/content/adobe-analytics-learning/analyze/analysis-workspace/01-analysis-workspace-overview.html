@@ -162,92 +162,109 @@ weight: 1
 
 <div class="diagram-box">
     <div class="diagram-title">📊 The four regions, and what belongs in each</div>
-    <svg viewBox="0 0 700 424" style="width:100%;height:auto;display:block;margin:4px 0 8px"
-         role="img" aria-label="A schematic of the Analysis Workspace screen. Along the top is a menu bar with Project, Edit, Insert, Component, Share and Help. Down the left is a rail with three tabs, Panels, Visualizations and Components, with Components active, showing a search box and four color coded groups: Dimensions in orange, Metrics in green, Segments in blue and Date Ranges in purple. The large area on the right is the canvas, holding one panel. The panel is named on the left of its header, and at the top right of that header sit the report suite selector and the date range calendar, side by side. Below the header sits a freeform table and beneath it a bar chart visualization.">
+    <svg viewBox="0 0 700 444" style="width:100%;height:auto;display:block;margin:4px 0 8px"
+         role="img" aria-label="A schematic of the Analysis Workspace screen. Along the top is a menu bar with Project, Edit, Insert, Components, Share and Help. Down the far left edge is a narrow strip of five icons, numbered one to five: Panels, Visualizations, Components, Table of contents, and Data dictionary, with the third one active. Beside it the components panel names the report suite at its top, then a search box, then four color coded groups: Dimensions in orange, Metrics in green, Segments in blue and Date Ranges in purple. The large area on the right is the canvas, holding one panel. The report suite selector sits at the right of the panel title row, and the date range sits at the right of the row below it. Beneath them is a freeform table and then a bar chart visualization.">
         <rect x="8" y="8" width="684" height="24" rx="4" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
-        <text x="20" y="24" style="fill:var(--text2,#475569);font-size:10px;font-family:sans-serif">Project     Edit     Insert     Component     Share     Help</text>
+        <text x="20" y="24" style="fill:var(--text2,#475569);font-size:10px;font-family:sans-serif">Project     Edit     Insert     Components     Share     Help</text>
         <text x="600" y="24" style="fill:var(--text3,#94a3b8);font-size:9px;font-family:sans-serif;letter-spacing:1px">MENU BAR</text>
 
-        <rect x="8" y="40" width="180" height="376" rx="6" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
-        <rect x="12" y="46" width="56" height="22" rx="4" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1"/>
-        <rect x="70" y="46" width="56" height="22" rx="4" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1"/>
-        <rect x="128" y="46" width="56" height="22" rx="4" style="fill:var(--accent,#e11d48)"/>
-        <text x="40" y="61" text-anchor="middle" style="fill:var(--text2,#475569);font-size:9px;font-family:sans-serif">Panels</text>
-        <text x="98" y="61" text-anchor="middle" style="fill:var(--text2,#475569);font-size:9px;font-family:sans-serif">Visuals</text>
-        <text x="156" y="61" text-anchor="middle" style="fill:#ffffff;font-size:9px;font-weight:700;font-family:sans-serif">Compon.</text>
+        <rect x="8" y="40" width="38" height="376" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <rect x="14" y="48" width="26" height="26" rx="4" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1"/>
+        <rect x="14" y="82" width="26" height="26" rx="4" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1"/>
+        <rect x="14" y="116" width="26" height="26" rx="4" style="fill:var(--accent,#e11d48)"/>
+        <rect x="14" y="150" width="26" height="26" rx="4" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1"/>
+        <line x1="14" y1="188" x2="40" y2="188" style="stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <rect x="14" y="198" width="26" height="26" rx="4" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1"/>
+        <text x="27" y="66" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-weight:700;font-family:sans-serif">1</text>
+        <text x="27" y="100" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-weight:700;font-family:sans-serif">2</text>
+        <text x="27" y="134" text-anchor="middle" style="fill:#ffffff;font-size:11px;font-weight:700;font-family:sans-serif">3</text>
+        <text x="27" y="168" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-weight:700;font-family:sans-serif">4</text>
+        <text x="27" y="216" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-weight:700;font-family:sans-serif">5</text>
 
-        <rect x="12" y="76" width="172" height="20" rx="4" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1"/>
-        <text x="20" y="90" style="fill:var(--text3,#94a3b8);font-size:9px;font-family:sans-serif">Search components</text>
+        <rect x="50" y="40" width="146" height="376" rx="6" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <text x="58" y="61" style="fill:var(--text2,#475569);font-size:9px;font-weight:700;font-family:sans-serif">Test Report Suite</text>
+        <rect x="56" y="70" width="134" height="20" rx="4" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1"/>
+        <text x="63" y="84" style="fill:var(--text3,#94a3b8);font-size:9px;font-family:sans-serif">Search components</text>
 
-        <rect x="12" y="108" width="4" height="14" rx="2" style="fill:#c2690c"/>
-        <text x="24" y="119" style="fill:#c2690c;font-size:10px;font-weight:700;font-family:sans-serif">DIMENSIONS</text>
-        <rect x="24" y="128" width="120" height="10" rx="2" style="fill:#c2690c;opacity:0.45"/>
-        <rect x="24" y="144" width="96" height="10" rx="2" style="fill:#c2690c;opacity:0.45"/>
+        <rect x="56" y="104" width="4" height="13" rx="2" style="fill:#c2690c"/>
+        <text x="66" y="114" style="fill:#c2690c;font-size:9px;font-weight:700;font-family:sans-serif">DIMENSIONS</text>
+        <rect x="66" y="123" width="112" height="10" rx="2" style="fill:#c2690c;opacity:0.45"/>
+        <rect x="66" y="139" width="88" height="10" rx="2" style="fill:#c2690c;opacity:0.45"/>
 
-        <rect x="12" y="172" width="4" height="14" rx="2" style="fill:#2f8f3f"/>
-        <text x="24" y="183" style="fill:#2f8f3f;font-size:10px;font-weight:700;font-family:sans-serif">METRICS</text>
-        <rect x="24" y="192" width="108" height="10" rx="2" style="fill:#2f8f3f;opacity:0.45"/>
-        <rect x="24" y="208" width="84" height="10" rx="2" style="fill:#2f8f3f;opacity:0.45"/>
+        <rect x="56" y="166" width="4" height="13" rx="2" style="fill:#2f8f3f"/>
+        <text x="66" y="176" style="fill:#2f8f3f;font-size:9px;font-weight:700;font-family:sans-serif">METRICS</text>
+        <rect x="66" y="185" width="102" height="10" rx="2" style="fill:#2f8f3f;opacity:0.45"/>
+        <rect x="66" y="201" width="78" height="10" rx="2" style="fill:#2f8f3f;opacity:0.45"/>
 
-        <rect x="12" y="236" width="4" height="14" rx="2" style="fill:#3d7fdd"/>
-        <text x="24" y="247" style="fill:#3d7fdd;font-size:10px;font-weight:700;font-family:sans-serif">SEGMENTS</text>
-        <rect x="24" y="256" width="128" height="10" rx="2" style="fill:#3d7fdd;opacity:0.45"/>
-        <rect x="24" y="272" width="92" height="10" rx="2" style="fill:#3d7fdd;opacity:0.45"/>
+        <rect x="56" y="228" width="4" height="13" rx="2" style="fill:#3d7fdd"/>
+        <text x="66" y="238" style="fill:#3d7fdd;font-size:9px;font-weight:700;font-family:sans-serif">SEGMENTS</text>
+        <rect x="66" y="247" width="118" height="10" rx="2" style="fill:#3d7fdd;opacity:0.45"/>
+        <rect x="66" y="263" width="86" height="10" rx="2" style="fill:#3d7fdd;opacity:0.45"/>
 
-        <rect x="12" y="300" width="4" height="14" rx="2" style="fill:#9370e0"/>
-        <text x="24" y="311" style="fill:#9370e0;font-size:10px;font-weight:700;font-family:sans-serif">DATE RANGES</text>
-        <rect x="24" y="320" width="100" height="10" rx="2" style="fill:#9370e0;opacity:0.45"/>
-        <rect x="24" y="336" width="76" height="10" rx="2" style="fill:#9370e0;opacity:0.45"/>
+        <rect x="56" y="290" width="4" height="13" rx="2" style="fill:#9370e0"/>
+        <text x="66" y="300" style="fill:#9370e0;font-size:9px;font-weight:700;font-family:sans-serif">DATE RANGES</text>
+        <rect x="66" y="309" width="94" height="10" rx="2" style="fill:#9370e0;opacity:0.45"/>
+        <rect x="66" y="325" width="70" height="10" rx="2" style="fill:#9370e0;opacity:0.45"/>
 
-        <text x="24" y="384" style="fill:var(--text3,#94a3b8);font-size:9px;font-family:sans-serif;letter-spacing:1px">LEFT RAIL</text>
-        <text x="24" y="399" style="fill:var(--text3,#94a3b8);font-size:9px;font-family:sans-serif">drag anything from here</text>
+        <text x="58" y="382" style="fill:var(--text3,#94a3b8);font-size:9px;font-family:sans-serif;letter-spacing:1px">DRAG FROM HERE</text>
 
-        <rect x="196" y="40" width="496" height="376" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
-        <rect x="204" y="48" width="480" height="360" rx="5" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <rect x="204" y="40" width="488" height="376" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <rect x="212" y="48" width="472" height="344" rx="5" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
 
-        <text x="212" y="72" style="fill:var(--text2,#475569);font-size:11px;font-weight:700;font-family:sans-serif">Panel 1</text>
-        <rect x="286" y="56" width="190" height="24" rx="4" style="fill:var(--card,#ffffff);stroke:var(--accent,#e11d48);stroke-width:1.5"/>
-        <text x="296" y="72" style="fill:var(--accent,#e11d48);font-size:10px;font-weight:700;font-family:sans-serif">Global Report Suite</text>
-        <rect x="486" y="56" width="190" height="24" rx="4" style="fill:var(--card,#ffffff);stroke:#9370e0;stroke-width:1.5"/>
-        <text x="496" y="72" style="fill:#9370e0;font-size:10px;font-weight:700;font-family:sans-serif">Aug 1 to Aug 31, 2026</text>
+        <text x="222" y="72" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">Freeform</text>
+        <rect x="472" y="56" width="148" height="22" rx="4" style="fill:var(--card,#ffffff);stroke:var(--accent,#e11d48);stroke-width:1.5"/>
+        <text x="481" y="71" style="fill:var(--accent,#e11d48);font-size:9px;font-weight:700;font-family:sans-serif">Test Report Suite</text>
+        <text x="636" y="72" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">&#8964;</text>
+        <text x="662" y="72" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">&#215;</text>
 
-        <text x="286" y="98" style="fill:var(--text3,#94a3b8);font-size:9px;font-family:sans-serif;letter-spacing:1px">TOP RIGHT: ONE REPORT SUITE, ONE DATE RANGE</text>
+        <rect x="222" y="88" width="22" height="22" rx="4" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1"/>
+        <rect x="252" y="88" width="220" height="22" rx="4" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1"/>
+        <text x="262" y="103" style="fill:var(--text3,#94a3b8);font-size:9px;font-style:italic;font-family:sans-serif">Drop a component to filter</text>
+        <text x="676" y="103" text-anchor="end" style="fill:#9370e0;font-size:9px;font-weight:700;font-family:sans-serif">Jan 1, 2024 to Aug 13, 2026</text>
 
-        <rect x="212" y="106" width="464" height="20" rx="3" style="fill:var(--bg3,#f1f5f9)"/>
-        <text x="222" y="120" style="fill:#c2690c;font-size:10px;font-weight:700;font-family:sans-serif">Page</text>
-        <text x="560" y="120" style="fill:#2f8f3f;font-size:10px;font-weight:700;font-family:sans-serif">Visits</text>
-        <rect x="212" y="132" width="300" height="11" rx="2" style="fill:var(--border,#e2e8f0)"/>
-        <rect x="556" y="132" width="120" height="11" rx="2" style="fill:var(--accent,#e11d48)"/>
-        <rect x="212" y="151" width="300" height="11" rx="2" style="fill:var(--border,#e2e8f0)"/>
-        <rect x="556" y="151" width="88" height="11" rx="2" style="fill:var(--accent,#e11d48)"/>
-        <rect x="212" y="170" width="300" height="11" rx="2" style="fill:var(--border,#e2e8f0)"/>
-        <rect x="556" y="170" width="56" height="11" rx="2" style="fill:var(--accent,#e11d48)"/>
-        <rect x="212" y="189" width="300" height="11" rx="2" style="fill:var(--border,#e2e8f0)"/>
-        <rect x="556" y="189" width="34" height="11" rx="2" style="fill:var(--accent,#e11d48)"/>
-        <text x="212" y="220" style="fill:var(--text3,#94a3b8);font-size:9px;font-family:sans-serif;letter-spacing:1px">FREEFORM TABLE</text>
+        <text x="222" y="126" style="fill:var(--text3,#94a3b8);font-size:8px;font-family:sans-serif;letter-spacing:1px">REPORT SUITE ON THE TITLE ROW, DATE RANGE ON THE ROW BELOW. BOTH RIGHT.</text>
 
-        <rect x="212" y="238" width="464" height="150" rx="4" style="fill:var(--bg3,#f1f5f9)"/>
-        <rect x="240" y="318" width="42" height="52" rx="2" style="fill:var(--accent,#e11d48)"/>
-        <rect x="300" y="290" width="42" height="80" rx="2" style="fill:var(--accent,#e11d48)"/>
-        <rect x="360" y="266" width="42" height="104" rx="2" style="fill:var(--accent,#e11d48)"/>
-        <rect x="420" y="302" width="42" height="68" rx="2" style="fill:var(--accent,#e11d48)"/>
-        <rect x="480" y="278" width="42" height="92" rx="2" style="fill:var(--accent,#e11d48)"/>
-        <rect x="540" y="330" width="42" height="40" rx="2" style="fill:var(--accent,#e11d48)"/>
-        <line x1="228" y1="370" x2="660" y2="370" style="stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
-        <text x="228" y="256" style="fill:var(--text3,#94a3b8);font-size:9px;font-family:sans-serif;letter-spacing:1px">VISUALIZATION</text>
+        <rect x="222" y="136" width="452" height="20" rx="3" style="fill:var(--bg3,#f1f5f9)"/>
+        <text x="232" y="150" style="fill:#c2690c;font-size:10px;font-weight:700;font-family:sans-serif">Day</text>
+        <text x="590" y="150" style="fill:#2f8f3f;font-size:10px;font-weight:700;font-family:sans-serif">Page Views</text>
+        <rect x="222" y="162" width="280" height="11" rx="2" style="fill:var(--border,#e2e8f0)"/>
+        <rect x="564" y="162" width="110" height="11" rx="2" style="fill:var(--accent,#e11d48)"/>
+        <rect x="222" y="181" width="280" height="11" rx="2" style="fill:var(--border,#e2e8f0)"/>
+        <rect x="590" y="181" width="84" height="11" rx="2" style="fill:var(--accent,#e11d48)"/>
+        <rect x="222" y="200" width="280" height="11" rx="2" style="fill:var(--border,#e2e8f0)"/>
+        <rect x="616" y="200" width="58" height="11" rx="2" style="fill:var(--accent,#e11d48)"/>
+        <rect x="222" y="219" width="280" height="11" rx="2" style="fill:var(--border,#e2e8f0)"/>
+        <rect x="638" y="219" width="36" height="11" rx="2" style="fill:var(--accent,#e11d48)"/>
+        <text x="222" y="248" style="fill:var(--text3,#94a3b8);font-size:9px;font-family:sans-serif;letter-spacing:1px">FREEFORM TABLE</text>
 
-        <text x="450" y="404" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:9px;font-family:sans-serif">CANVAS, ONE PANEL SHOWN</text>
+        <rect x="222" y="258" width="452" height="124" rx="4" style="fill:var(--bg3,#f1f5f9)"/>
+        <rect x="252" y="322" width="40" height="42" rx="2" style="fill:var(--accent,#e11d48)"/>
+        <rect x="310" y="300" width="40" height="64" rx="2" style="fill:var(--accent,#e11d48)"/>
+        <rect x="368" y="282" width="40" height="82" rx="2" style="fill:var(--accent,#e11d48)"/>
+        <rect x="426" y="310" width="40" height="54" rx="2" style="fill:var(--accent,#e11d48)"/>
+        <rect x="484" y="292" width="40" height="72" rx="2" style="fill:var(--accent,#e11d48)"/>
+        <rect x="542" y="332" width="40" height="32" rx="2" style="fill:var(--accent,#e11d48)"/>
+        <line x1="240" y1="364" x2="656" y2="364" style="stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <text x="240" y="276" style="fill:var(--text3,#94a3b8);font-size:9px;font-family:sans-serif;letter-spacing:1px">VISUALIZATION</text>
+
+        <text x="448" y="408" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:9px;font-family:sans-serif">CANVAS, ONE PANEL SHOWN</text>
+
+        <text x="8" y="436" style="fill:var(--text2,#475569);font-size:9px;font-family:sans-serif">1 Panels    2 Visualizations    3 Components    4 Table of contents    5 Data dictionary</text>
     </svg>
 </div>
 
 <p>Along the top is a menu bar that behaves the way every office application has behaved for thirty years. Save, rename, open, insert, share. There is nothing to learn there and it is deliberately unremarkable.</p>
 
-<p>Down the left is the rail, and it holds three tabs rather than one list. <strong>Panels</strong>, <strong>Visualizations</strong>, and <strong>Components</strong>. That is worth noticing early, because those three tabs are close to a table of contents for this module: panels are the containers, covered in <a href="/adobe-analytics-learning/analyze/analysis-workspace/projects-and-panels/">Projects and Panels</a>; visualizations are the shapes the data takes; and components are everything the rest of Adobe Analytics spent its time preparing. The <a href="/adobe-analytics-learning/analyze/analysis-workspace/freeform-tables/">freeform table</a> is where the three meet.</p>
+<p>Down the far left edge is a narrow strip of five icons, and each one changes what the panel beside it shows. <strong>Panels</strong>, <strong>Visualizations</strong>, <strong>Components</strong>, <strong>Table of contents</strong>, and, below a divider, <strong>Data dictionary</strong>. Most people use the third one and never look at the other four.</p>
+
+<p>The first three are worth noticing early, because they are close to a map of this module. Panels are the containers, and they decide the report suite and the date range, which is the subject of <a href="/adobe-analytics-learning/analyze/analysis-workspace/projects-and-panels/">Projects and Panels</a>. Visualizations are the shapes data can take, from a bar chart to a fallout to a cohort grid. Components are everything the rest of Adobe Analytics spent its time preparing. The <a href="/adobe-analytics-learning/analyze/analysis-workspace/freeform-tables/">freeform table</a> is where all three meet.</p>
+
+<p>The last two are conveniences rather than building blocks, and both are worth knowing exist. Table of contents lists every panel and visualization in the current project, which matters once a project is long enough to scroll. Data dictionary explains what a component actually means, including who defined it and whether an administrator approved it, and it is the fastest way to settle an argument about a number that somebody else built.</p>
 
 <p>The large area to the right is the canvas, and everything on it lives inside a panel. A panel is the unit that owns a report suite and a date range, and the tables and charts inside it inherit both.</p>
 
 <h3 class="subsec-title">Four colors, and they are the fastest thing on the screen</h3>
-<p>Open the Components tab and the list is color coded into four types. These are not decorative, they are not theme colors, and they are the one piece of visual vocabulary in this product genuinely worth committing to memory.</p>
+<p>Open the Components icon, third down the strip, and the list is color coded into four types. These are not decorative, they are not theme colors, and they are the one piece of visual vocabulary in this product genuinely worth committing to memory.</p>
 
 <div class="tbl-wrap">
     <table>
@@ -321,12 +338,12 @@ weight: 1
        you know had traffic. A range with no data looks exactly
        like a broken report.
 
-4  Left rail &gt; Components tab
-       Type "page" in the search box.
-       Drag the orange Page dimension into the empty table.
+4  Left rail &gt; Components, the third icon down
+       Type "day" in the search box.
+       Drag the orange Day dimension into the empty table.
 
 5  Drag a green metric onto the table
-       Visits, or Occurrences. The table populates as it lands.
+       Page Views, or Visits. The table populates as it lands.
        That is a report. It took four steps.
 
 6  Now drag a blue segment onto the same table
@@ -366,7 +383,7 @@ prepare. Access to a report suite is the entire prerequisite.</pre></div>
 <div class="path-box">
     <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Analytics</div>
     <p>Analytics &gt; <span class="path">Workspace</span> opens the Projects list, which is the landing page for every project in the login company. <span class="path">Create new project</span> offers a blank project or one of Adobe's templates.</p>
-    <p>The report suite selector and the calendar sit side by side at the top right of each panel header, not in the project. The three rail tabs, <span class="path">Panels</span>, <span class="path">Visualizations</span> and <span class="path">Components</span>, run down the left of every project.</p>
+    <p>The report suite selector and the calendar sit side by side at the top right of each panel header, not in the project. The five rail icons, <span class="path">Panels</span>, <span class="path">Visualizations</span>, <span class="path">Components</span>, <span class="path">Table of contents</span> and <span class="path">Data dictionary</span>, run down the far left edge of every project.</p>
 </div>
 
 <div class="ref-box">
