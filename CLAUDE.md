@@ -85,7 +85,9 @@ None of these produce an error. All three have bitten this site.
 
 3. **`layouts/lesson/single.html:9` regex-matches the literal string `<div class="ref-box">`** to inject the doc-note block above it. Single quotes, an extra class, or extra whitespace silently breaks the injection. **The match has a second condition that is easy to miss**: the regex also requires an Adobe domain (`experienceleague.adobe.com`, `adobe.com/go`, or `://adobe`) to appear inside the box, so a `ref-box` of purely internal links is deliberately skipped. That is intentional and commented in the template, but it means a `ref-box` can be perfectly well-formed and still get no doc-note, which looks identical to the injection being broken.
 
-A fourth, already fixed and documented in `hugo.toml`: the `[frontmatter]` block decouples `lastmod` from the `date` cascade. Without it a `lastmod` one day ahead of a UTC build clock gives the page a future `publishDate` and Hugo drops it silently. This once removed 103 pages while the build reported success. **Do not remove those lines.**
+A fourth, fixed 14 Aug 2026 and easy to undo by accident: **the `?v=` content hash on the stylesheet and script tags** in `layouts/partials/head.html:41` and `layouts/_default/baseof.html:162`. Without it the asset URL never moves when the file changes, so browsers serve a stale copy and a CSS edit appears to do nothing at all. It cost an hour of debugging a component that was correct the whole time, and in production it would have left every returning visitor on the old stylesheet. **Do not remove those, and never confirm styling by injecting CSS into a page** — that proves the CSS works when applied, not that the page applies it. Check the delivered page.
+
+A fifth, already fixed and documented in `hugo.toml`: the `[frontmatter]` block decouples `lastmod` from the `date` cascade. Without it a `lastmod` one day ahead of a UTC build clock gives the page a future `publishDate` and Hugo drops it silently. This once removed 103 pages while the build reported success. **Do not remove those lines.**
 
 ---
 
@@ -234,6 +236,9 @@ Full specifications, including when each is earned, are in `content-component-ru
 | `tbl-wrap` | Wraps every table. Never a bare `<table>` |
 | `diagram-box` | `> .diagram-title` then inline `<svg>` directly, or `.diagram-content` wrapping a layout component |
 | `cards` | `> .card` (or `a.card`) `> .card-icon + .card-title + .card-desc` |
+| `shot-box` | `> .shot-title + .shot-frame` (holding the `<img>` and a `button.shot-zoom-btn`) `+ .shot-note`. Product screenshots |
+
+**A screenshot is never wrapped in a link and never redacted.** The image carries `pointer-events:none`; only the zoom button opens anything, and it opens an overlay in the same tab that `world-learning.js` builds. Crop to the feature rather than the screen, because the image area is about 290px on a phone. Every shot earns a `shot-note` that points at something, and if none can be written the shot is not earned. Two per section is plenty. Capture from the Adobe training account with a harmless dimension so there is nothing to hide; blur is not redaction. Files are `static/img/aal_module14_section01_ss1.png`, zero-padded, originals archived outside the site folder.
 
 Never invent a class. If it is not in `static/world-learning.css`, it does not exist.
 

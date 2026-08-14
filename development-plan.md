@@ -499,10 +499,27 @@ Raised while reviewing M14 §1 against the competitive field. It is the single l
 
 **7. Text-critical information never lives only inside a screenshot.** If the reader has to read a value, it appears in the caption or the prose as well. This is the mobile answer and the accessibility answer at the same time.
 
+### BUILT AND SHIPPED, 14 Aug 2026. The template for everything after.
+
+**M14 §1 carries the first two screenshots on the site, and the component is now the site standard.** Amit's ruling: this is the template for the modules still to be written *and* for retrofitting the finished ones. Full specification is in `content-component-rulebook.html` under `shot-box`; the short form is in `CLAUDE.md`.
+
+What settled during the build, all of it from Amit's review rather than from planning:
+
+- **The image is inert and never wrapped in a link.** The first version opened the full-size file in a new tab on any tap, which reads as broken. Only the zoom button opens anything, and it opens an overlay in the same tab.
+- **The frame caps height**, 360px desktop and 260px mobile, so a capture is clearly inset instead of setting its own size and dominating the page.
+- **The boundary has to be unmistakable.** Nested edges, 44px block margin, and a divider above the note. The first version blurred image, caption and body prose into one undifferentiated run and flattened the page hierarchy.
+- **No permission or credit line under the image.** It arrived from nowhere and broke the reading flow.
+- **Two screenshots per section is plenty**, and a screenshot has to beat the diagram that would otherwise sit in that slot. Three of the five planned for §1 were cut on that test.
+- **Redaction is a symptom of the wrong capture.** Both shipped shots carry zero blur, achieved by capturing from the training account and choosing a harmless dimension. Blur was tried, was readable at the first attempt, and looked censored even once it worked.
+
+**The infrastructure bug this exposed is the more valuable finding.** Asset URLs carried no cache busting, so the browser served a stale stylesheet and script and made a correct build look completely broken. Fixed with a content hash on both tags. In production it would have left every returning visitor on the old stylesheet after any CSS change. Recorded in `CLAUDE.md` as a trap and in the rulebook as a hard constraint.
+
+**And the process lesson, which is the one to carry.** The first version was reported as verified when it was not: styling had been checked by injecting a fresh stylesheet into the page, which proves the CSS works when applied and says nothing about whether the page applies it. **Verify the delivered page, never a patched one.** Now a checklist item.
+
 ### Still open, for when the pass actually starts
 
-1. **Dark mode.** Adobe's UI is captured light and will glare on a dark card. Recommendation, not yet ruled on: frame and slightly dim in CSS rather than capturing every screen twice.
-2. **The component does not exist.** Roughly twenty lines in `world-learning.css` for `shot-box`, `shot-slot`, `shot-title`, `shot-brief`, `shot-note` and the zoom affordance. A site-level component addition, which rulebook rule 1 permits deliberately and once, recorded here.
+1. ~~**Dark mode.**~~ **Settled.** Captured light, dimmed in CSS with `brightness(.9) contrast(1.02)` under `:root[data-theme="dark"]`. No second capture pass.
+2. ~~**The component does not exist.**~~ **Built 14 Aug 2026.** `shot-box`, `shot-title`, `shot-frame`, `shot-zoom-btn`, `shot-note` and the overlay, in `world-learning.css` plus a lightbox IIFE in `world-learning.js`. The `shot-slot` placeholder idea was never needed, because captures are being taken as sections are written rather than in a later batch.
 3. **No conversion tooling on the machine.** Checked 14 Aug 2026: no ImageMagick, no ffmpeg, no working Python, no Node. `winget install ImageMagick.ImageMagick` on capture day. Worst case the site ships PNG and the pages are heavier.
 4. **Screenshots are perishable facts.** Adobe redesigns. Each one carries `data-captured` so a future session can tell what has rotted, in the same spirit as the dated-snapshot `warn-box` rule.
 5. **Redaction.** Captures come from a real account and will contain real report suite names and real data. Every one needs a redaction check before it ships.
