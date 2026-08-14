@@ -1,41 +1,236 @@
 ---
 slug: "visualizations"
 title: "Visualizations"
-lastmod: 2026-07-15
+seotitle: "Visualizations in Analysis Workspace"
+description: "Every chart here is a drawing of a table and inherits its decisions. Which shape answers which question, and the setting that breaks charts quietly."
+lastmod: 2026-08-14
 type: lesson
 modulenum: 14
 sectionnum: 4
 weight: 4
 ---
-<p>Visualizations transform data into charts, graphs, and other visual formats for easier interpretation.</p>
-                <h3 class="subsec-title">Common Visualizations</h3>
-                <div class="tbl-wrap">
-                    <table>
-                        <thead><tr><th>Visualization</th><th>Best For</th><th>Data Requirements</th></tr></thead>
-                        <tbody>
-                            <tr><td><strong>Line</strong></td><td>Trends over time</td><td>Time dimension + metric(s)</td></tr>
-                            <tr><td><strong>Bar</strong></td><td>Comparing categories</td><td>Dimension + metric</td></tr>
-                            <tr><td><strong>Donut</strong></td><td>Part-to-whole</td><td>Dimension + metric (few items)</td></tr>
-                            <tr><td><strong>Freeform Table</strong></td><td>Detailed data</td><td>Any dimensions + metrics</td></tr>
-                            <tr><td><strong>Summary Number</strong></td><td>KPI display</td><td>Single metric</td></tr>
-                            <tr><td><strong>Flow</strong></td><td>Path analysis</td><td>Dimension (pages, events)</td></tr>
-                            <tr><td><strong>Fallout</strong></td><td>Funnel analysis</td><td>Touchpoints (pages, events)</td></tr>
-                            <tr><td><strong>Cohort</strong></td><td>Retention analysis</td><td>Inclusion + return criteria</td></tr>
-                            <tr><td><strong>Map</strong></td><td>Geographic data</td><td>Geo dimension + metric</td></tr>
-                            <tr><td><strong>Histogram</strong></td><td>Distribution</td><td>Metric only</td></tr>
-                            <tr><td><strong>Venn</strong></td><td>Segment overlap</td><td>2-3 segments</td></tr>
-                            <tr><td><strong>Scatter</strong></td><td>Correlation</td><td>2 metrics</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="info-box">
-                    <div class="info-hdr">ℹ️ Linked Visualizations</div>
-                    <p>When you create a visualization from a freeform table, they become linked. Changes to the table automatically update the visualization. Right-click to unlink if needed.</p>
-                </div>
-                <div class="ref-box">
-                    <div class="ref-title">📚 Learn More</div>
-                    <ul>
-                        <li><a href="https://experienceleague.adobe.com/docs/analytics/analyze/analysis-workspace/visualizations/freeform-analysis-visualizations.html" target="_blank">Adobe Docs: Visualizations Overview</a></li>
-                    </ul>
-                </div>
-            
+<p>Nobody has ever been persuaded by a table.</p>
+
+<p>The table is where the answer is decided, and it is almost never where the answer is delivered. Somewhere between the analysis and the meeting, a number has to become a shape that a person absorbs in two seconds while half-listening. That conversion is what visualizations are for, and it is a genuinely different job from analysis.</p>
+
+<p>It also has a mechanic underneath it that catches almost everybody once, because a chart in this product is not the independent object it appears to be.</p>
+
+<h3 class="subsec-title">Every chart is a drawing of a table, including the ones that look standalone</h3>
+<p>Drop a line chart into a panel and it appears with data already in it, which feels like magic and is not. The visualization has attached itself to the nearest freeform table and is drawing that table's numbers.</p>
+
+<p>It has no data of its own. It never had. It is a rendering, and the table is the thing.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">📊 One table, three pictures, no independent data anywhere</div>
+    <svg viewBox="0 0 700 280" style="width:100%;height:auto;display:block;margin:4px 0 8px"
+         role="img" aria-label="A freeform table sits at the top as the single source of data. Three arrows run down from it to a line chart, a bar chart and a summary number. All three read from the same table, so changing a row, a filter or an attribution setting in the table changes all three pictures at once. The visualizations hold no data of their own.">
+        <rect x="180" y="20" width="340" height="86" rx="8" style="fill:var(--card,#ffffff);stroke:var(--accent,#e11d48);stroke-width:2.5"/>
+        <text x="350" y="42" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:13px;font-weight:700;font-family:sans-serif">FREEFORM TABLE</text>
+        <rect x="200" y="54" width="300" height="14" rx="2" style="fill:var(--bg3,#f1f5f9)"/>
+        <rect x="200" y="74" width="180" height="10" rx="2" style="fill:var(--border,#e2e8f0)"/>
+        <rect x="420" y="74" width="80" height="10" rx="2" style="fill:var(--accent,#e11d48)"/>
+        <rect x="200" y="90" width="180" height="10" rx="2" style="fill:var(--border,#e2e8f0)"/>
+        <rect x="420" y="90" width="52" height="10" rx="2" style="fill:var(--accent,#e11d48)"/>
+
+        <line x1="350" y1="106" x2="350" y2="128" style="stroke:var(--text3,#94a3b8);stroke-width:1.5"/>
+        <line x1="120" y1="128" x2="580" y2="128" style="stroke:var(--text3,#94a3b8);stroke-width:1.5"/>
+        <line x1="120" y1="128" x2="120" y2="150" style="stroke:var(--text3,#94a3b8);stroke-width:1.5"/>
+        <line x1="350" y1="128" x2="350" y2="150" style="stroke:var(--text3,#94a3b8);stroke-width:1.5"/>
+        <line x1="580" y1="128" x2="580" y2="150" style="stroke:var(--text3,#94a3b8);stroke-width:1.5"/>
+        <polygon points="120,158 114,146 126,146" style="fill:var(--text3,#94a3b8)"/>
+        <polygon points="350,158 344,146 356,146" style="fill:var(--text3,#94a3b8)"/>
+        <polygon points="580,158 574,146 586,146" style="fill:var(--text3,#94a3b8)"/>
+
+        <rect x="30" y="162" width="180" height="80" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <polyline points="48,224 76,206 104,214 132,186 160,196 190,176" style="fill:none;stroke:var(--accent,#e11d48);stroke-width:2.5"/>
+        <text x="120" y="180" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">line</text>
+
+        <rect x="260" y="162" width="180" height="80" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <rect x="282" y="204" width="22" height="30" style="fill:var(--accent,#e11d48)"/>
+        <rect x="316" y="190" width="22" height="44" style="fill:var(--accent,#e11d48)"/>
+        <rect x="350" y="212" width="22" height="22" style="fill:var(--accent,#e11d48)"/>
+        <rect x="384" y="196" width="22" height="38" style="fill:var(--accent,#e11d48)"/>
+        <text x="350" y="180" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">bar</text>
+
+        <rect x="490" y="162" width="180" height="80" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <text x="580" y="216" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:26px;font-weight:700;font-family:sans-serif">2,140</text>
+        <text x="580" y="180" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">summary number</text>
+
+        <text x="30" y="268" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">Change a row, a filter or an attribution setting in the table, and all three change together. They hold nothing themselves.</text>
+    </svg>
+</div>
+
+<p>That is mostly a gift. It means a chart is never out of step with the analysis behind it, and it means you fix a wrong picture by fixing the table rather than by rebuilding the picture.</p>
+
+<p>It also means every warning in <a href="/adobe-analytics-learning/analyze/analysis-workspace/freeform-tables/">Freeform Tables</a> applies to charts without being repeated. A chart drawn from a breakdown is showing a breakdown's numbers, scoped to the parent row, with no indentation left to warn anybody.</p>
+
+<h3 class="subsec-title">The data source setting, and the chart that goes blank for no reason</h3>
+<p>Because a visualization attaches to the nearest table, "nearest" turns into a rule you did not choose and will eventually collide with.</p>
+
+<p>Add a second table above the chart and the chart may be reading something new. Delete the table a chart was drawing from, and the chart empties. Collapse or move things around while tidying a project, and a picture that was right yesterday now shows something else, with no error and no complaint, because every state involved is legitimate.</p>
+
+<p>The fix is the <strong>Data Source</strong> tab in the visualization's own settings, which shows exactly which table and which rows are feeding it, and lets you point it somewhere deliberate rather than accepting proximity.</p>
+
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ Deleting a table quietly empties every chart that was drawing from it</div>
+    <p>The link between a chart and its table is invisible on the canvas. Nothing draws a line between them, and a chart does not announce which table it belongs to. So the ordinary act of cleaning up a project, removing a working table that was only ever scaffolding, takes the charts with it. They do not error. They go blank, or worse, silently re-attach to whichever table is now nearest and carry on displaying confident numbers about a different subject. Before deleting any table, check the Data Source tab of every visualization near it.</p>
+</div>
+
+<h3 class="subsec-title">Pick the shape from the question, not from the catalogue</h3>
+<p>There are around two dozen visualization types, and the number is misleading, because most analysis is served by about five of them. The catalogue rewards browsing and punishes it: the temptation is to pick something that looks impressive, and impressive is not a property a chart should have.</p>
+
+<p>The useful way to choose is to say the sentence out loud first, then take the shape that matches its verb.</p>
+
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>The sentence</th><th>The shape</th><th>Why that one</th></tr></thead>
+        <tbody>
+            <tr><td>"This is going up, and here is when it turned"</td><td><strong>Line</strong></td><td>Time on the horizontal axis is the only thing people read without instruction</td></tr>
+            <tr><td>"These things are not the same size"</td><td><strong>Bar</strong>, or horizontal bar for long labels</td><td>Length is the one visual property humans compare accurately</td></tr>
+            <tr><td>"One number matters more than the rest"</td><td><strong>Summary number</strong> or <strong>summary change</strong></td><td>A chart of one value is a chart wasted</td></tr>
+            <tr><td>"These two groups overlap more than you think"</td><td><strong>Venn</strong></td><td>The only shape that shows membership in two sets at once</td></tr>
+            <tr><td>"We are tracking against a target"</td><td><strong>Bullet</strong></td><td>Built for actual against goal, which a bar cannot express</td></tr>
+            <tr><td>"Most of the total comes from a few items"</td><td><strong>Treemap</strong> or bar</td><td>Donuts are worse than bars at exactly this and get used anyway</td></tr>
+            <tr><td>"Where did people go, and where did they stop"</td><td><strong>Flow</strong>, <strong>Fallout</strong></td><td>Covered in <a href="/adobe-analytics-learning/analyze/analysis-workspace/fallout-and-flow-analysis/">Fallout and Flow Analysis</a></td></tr>
+        </tbody>
+    </table>
+</div>
+
+<p>The opinion worth holding, for a first pass: <strong>line for time, bar for comparison, summary number for the headline, and stop.</strong> That covers the large majority of what a business report needs. It is scaffolding rather than law, and the moment you can say precisely why a scatter or a histogram answers your question better, use it and ignore the rule.</p>
+
+<p>The one to be actively suspicious of is the donut. It asks the reader to compare angles, which people are measurably poor at, and it stops working entirely beyond about four slices. A horizontal bar answers the same question and can be read from the back of a room.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">📊 Same five numbers. Rank them on the left, then on the right.</div>
+    <svg viewBox="0 0 700 260" style="width:100%;height:auto;display:block;margin:4px 0 8px"
+         role="img" aria-label="The same five values shown twice. On the left as a donut chart with five slices labelled A to E, where the slices are close enough in size that putting them in order requires effort. On the right as a horizontal bar chart of the identical values, where the order is obvious immediately because length is easy to compare and angle is not.">
+        <text x="16" y="20" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif;letter-spacing:1px">AS A DONUT</text>
+        <text x="392" y="20" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif;letter-spacing:1px">AS A BAR</text>
+
+        <g transform="rotate(-90 140 140)">
+            <circle cx="140" cy="140" r="60" style="fill:none;stroke:var(--text2,#475569);stroke-width:40;stroke-dasharray:105.6 271.4;stroke-dashoffset:0;opacity:0.75"/>
+            <circle cx="140" cy="140" r="60" style="fill:none;stroke:var(--text2,#475569);stroke-width:40;stroke-dasharray:90.5 286.5;stroke-dashoffset:-105.6;opacity:0.55"/>
+            <circle cx="140" cy="140" r="60" style="fill:none;stroke:var(--text2,#475569);stroke-width:40;stroke-dasharray:79.2 297.8;stroke-dashoffset:-196.1;opacity:0.75"/>
+            <circle cx="140" cy="140" r="60" style="fill:none;stroke:var(--text2,#475569);stroke-width:40;stroke-dasharray:60.3 316.7;stroke-dashoffset:-275.3;opacity:0.55"/>
+            <circle cx="140" cy="140" r="60" style="fill:none;stroke:var(--text2,#475569);stroke-width:40;stroke-dasharray:41.5 335.5;stroke-dashoffset:-335.6;opacity:0.75"/>
+        </g>
+        <text x="205" y="90" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:13px;font-weight:700;font-family:sans-serif">A</text>
+        <text x="190" y="213" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:13px;font-weight:700;font-family:sans-serif">B</text>
+        <text x="80" y="204" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:13px;font-weight:700;font-family:sans-serif">C</text>
+        <text x="61" y="113" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:13px;font-weight:700;font-family:sans-serif">D</text>
+        <text x="111" y="64" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:13px;font-weight:700;font-family:sans-serif">E</text>
+
+        <text x="392" y="76" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">A</text>
+        <rect x="412" y="58" width="250" height="24" rx="3" style="fill:var(--accent,#e11d48)"/>
+        <text x="392" y="112" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">B</text>
+        <rect x="412" y="94" width="214" height="24" rx="3" style="fill:var(--accent,#e11d48);opacity:0.82"/>
+        <text x="392" y="148" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">C</text>
+        <rect x="412" y="130" width="188" height="24" rx="3" style="fill:var(--accent,#e11d48);opacity:0.66"/>
+        <text x="392" y="184" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">D</text>
+        <rect x="412" y="166" width="143" height="24" rx="3" style="fill:var(--accent,#e11d48);opacity:0.5"/>
+        <text x="392" y="220" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">E</text>
+        <rect x="412" y="202" width="98" height="24" rx="3" style="fill:var(--accent,#e11d48);opacity:0.36"/>
+
+        <text x="16" y="250" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">Identical data. The ranking took effort on the left and none on the right, and that difference is the whole argument.</text>
+    </svg>
+</div>
+
+<div class="shot-box shot-pending">
+    <div class="shot-title">📷 The visualization catalogue</div>
+    <div class="shot-frame">
+        <p class="shot-brief">FILE:       aal_module14_section04_ss1.png
+SCREEN:     Workspace, left rail, second icon (Visualizations)
+CROP:       the visualizations list, from the "Search
+            visualizations" box down through as many entries as
+            fit legibly. Include the narrow icon strip on the
+            left for context.
+MUST SHOW:  enough of the list to make the point that this is a
+            long catalogue, with Freeform table, Cohort table,
+            Fallout and Flow visible near the top since those
+            four are the ones this module covers in depth.
+NOTE:       you already captured this exact frame when you sent
+            the five rail screenshots. Reuse the original if it
+            is still on disk.
+REDACT:     nothing.
+WIDTH:      about 800px, narrow column. Mark the block shot-tall.</p>
+    </div>
+    <div class="shot-note">Placeholder. The point of the picture is the length of the list against how few of them earn regular use.</div>
+</div>
+
+<h3 class="subsec-title">Three of them are not charts, and they are what makes a project readable</h3>
+<p>Buried in the same catalogue are components that draw no data at all, and they matter more than their position in the list suggests.</p>
+
+<p><strong>Text</strong> puts a paragraph on the canvas. <strong>Section header</strong> puts a heading on it. Neither does anything analytical, and together they are the difference between a project a colleague can read alone and a project that requires you standing next to it explaining what they are looking at.</p>
+
+<p>This is worth taking seriously, because the failure mode is so ordinary. A project built in an afternoon of genuine investigation is perfectly legible to the person who built it and close to meaningless to anybody else, and the gap is never the data. It is that nothing on the canvas says what question was being asked or what the answer turned out to be.</p>
+
+<div class="pro-tip">
+    <div class="pro-tip-hdr">💡 Write the finding above the chart that proves it</div>
+    <p>A text block above each panel saying what the panel found, in one sentence, in plain language, does more for a project's usefulness than any chart choice. "Mobile converts at half the rate of desktop, and the gap is entirely in checkout" is a finding. A bar chart is evidence for it. Most projects ship the evidence and leave the finding in the analyst's head, which is why so many of them get opened once. It also ages well: in six months the sentence is what tells you whether the project is still worth keeping.</p>
+</div>
+
+<h3 class="subsec-title">Follow along: one table, three pictures, then break it on purpose</h3>
+<p>The mechanic in this section is easier to trust once you have watched it happen, particularly the part where a chart silently changes what it is about.</p>
+
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">Follow along: prove that the chart is a drawing of the table</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>PART ONE, ATTACHMENT
+
+1  A panel with one freeform table: Day in rows, Page Views in columns
+
+2  Left rail &gt; Visualizations &gt; drag a Line chart under the table
+       It arrives already populated. It found the table itself.
+
+3  Add a Bar chart and a Summary number the same way
+
+4  Now change the table: swap the metric, or add a segment to a column
+       All three pictures move together. None of them was edited.
+
+PART TWO, THE BREAK
+
+5  Insert a second freeform table ABOVE one of the charts
+       Check whether that chart is still reading the table you
+       think it is.
+
+6  Open the chart's settings &gt; Data Source
+       This is the only place the attachment is visible. Point it
+       deliberately at the table you actually mean.
+
+7  Delete the original table
+       Watch what happens to the charts that were drawing from it.
+       Undo immediately, and remember the shape of that failure.
+
+PART THREE, MAKE IT READABLE
+
+8  Left rail &gt; Visualizations &gt; Text, dropped above the panel
+       Write one sentence saying what the panel found. Not what
+       it shows. What it found.
+
+There is nothing else to configure. A visualization has almost no
+settings of its own, because almost every decision was already made
+in the table it is drawing.</pre></div>
+</div>
+
+<p>Those eight steps are a floor rather than a ceiling. Step 7 is the one worth doing deliberately, in a project nobody depends on, so that the first time a chart empties is a choice rather than an emergency.</p>
+
+<h3 class="subsec-title">What you have now</h3>
+<p>Every visualization in Analysis Workspace is a drawing of a freeform table. It holds no data, inherits every decision the table made, attaches itself to whichever table is nearest unless told otherwise, and empties without complaint if that table disappears. The Data Source tab is the only place that relationship is visible, and checking it is what separates a project that survives tidying from one that quietly starts lying.</p>
+
+<p>Choosing among two dozen shapes matters less than it appears to. Line for time, bar for comparison, a summary number for the headline, a sentence of text saying what was found. Most of what makes a project persuasive is not in the catalogue at all.</p>
+
+<p>Four of the entries in that list are different in kind, though. They do not draw an existing table, they perform an analysis of their own, and each answers a question a freeform table structurally cannot. <a href="/adobe-analytics-learning/analyze/analysis-workspace/cohort-analysis/">Cohort Analysis</a> is the first: it stops asking what happened this month and starts asking whether the people who arrived in January were ever seen again.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Analytics</div>
+    <p>Analytics &gt; <span class="path">Workspace</span>, then the <span class="path">Visualizations</span> icon, second in the left rail. Drag any entry onto the canvas, or use <span class="path">Insert</span> in the menu bar.</p>
+    <p>Every visualization carries a gear for its own settings. <span class="path">Data Source</span> inside those settings is where the link to a freeform table is shown and changed, and it is the first place to look when a chart shows something unexpected.</p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title">📚 Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/analyze/analysis-workspace/visualizations/freeform-analysis-visualizations" target="_blank">Adobe Docs: Visualizations Overview</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/analyze/analysis-workspace/visualizations/t-sync-visualization" target="_blank">Adobe Docs: Manage Data Sources</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/analyze/analysis-workspace/visualizations/summary-number-change" target="_blank">Adobe Docs: Summary Number and Summary Change</a></li>
+    </ul>
+</div>

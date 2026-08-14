@@ -2,10 +2,261 @@
 slug: "fallout-and-flow-analysis"
 title: "Fallout and Flow Analysis"
 seotitle: "Fallout and Flow Analysis in Analysis Workspace"
-lastmod: 2026-07-18
+description: "One tests a path you already believe in. The other shows the paths nobody designed. Both change their answer on a setting most people never open."
+lastmod: 2026-08-14
 type: lesson
 modulenum: 14
 sectionnum: 6
 weight: 6
 ---
-<p>This section is not yet written.</p>
+<p>Every website has a route somebody drew on a whiteboard. Home, category, product, cart, checkout, done. It is in the requirements document, it is what the pages were built for, and it is what everybody in the business believes happens.</p>
+
+<p>Two visualizations exist because that belief is worth checking. They sit next to each other in the menu, they both draw boxes joined by lines, and they answer opposite questions.</p>
+
+<p>One takes the route you drew and reports how many people survived it. The other ignores your route entirely and reports where people actually went. Reaching for the wrong one is the most common mistake in this part of the product, and it is not a mistake anybody notices, because both produce a confident diagram.</p>
+
+<h3 class="subsec-title">One of them tests a belief, the other produces one</h3>
+<p>That is the whole distinction, and it decides which to open before anything else.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">📊 You bring the path, or the data does</div>
+    <svg viewBox="0 0 700 270" style="width:100%;height:auto;display:block;margin:4px 0 8px"
+         role="img" aria-label="Two approaches side by side. On the left, fallout: you define the steps in advance and the visualization reports how many people survived each one, so the answer is a pass or fail against your hypothesis. On the right, flow: you name one starting point and the data supplies every path that actually followed, including ones nobody designed. Fallout tests a belief. Flow produces one.">
+        <rect x="14" y="24" width="322" height="212" rx="8" style="fill:var(--card,#ffffff);stroke:var(--accent,#e11d48);stroke-width:2"/>
+        <text x="32" y="48" style="fill:var(--accent,#e11d48);font-size:13px;font-weight:700;font-family:sans-serif">FALLOUT</text>
+        <text x="32" y="68" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">You supply the steps.</text>
+
+        <rect x="32" y="82" width="286" height="22" rx="3" style="fill:var(--accent,#e11d48);opacity:0.85"/>
+        <text x="42" y="98" style="fill:#ffffff;font-size:10px;font-weight:700;font-family:sans-serif">product page</text>
+        <text x="308" y="98" text-anchor="end" style="fill:#ffffff;font-size:10px;font-weight:700;font-family:sans-serif">100%</text>
+        <rect x="32" y="112" width="200" height="22" rx="3" style="fill:var(--accent,#e11d48);opacity:0.6"/>
+        <text x="42" y="128" style="fill:var(--text1,#0f172a);font-size:10px;font-family:sans-serif">cart</text>
+        <text x="308" y="128" text-anchor="end" style="fill:var(--text2,#475569);font-size:10px;font-family:sans-serif">38%</text>
+        <rect x="32" y="142" width="120" height="22" rx="3" style="fill:var(--accent,#e11d48);opacity:0.4"/>
+        <text x="42" y="158" style="fill:var(--text1,#0f172a);font-size:10px;font-family:sans-serif">checkout</text>
+        <text x="308" y="158" text-anchor="end" style="fill:var(--text2,#475569);font-size:10px;font-family:sans-serif">19%</text>
+        <rect x="32" y="172" width="62" height="22" rx="3" style="fill:var(--accent,#e11d48);opacity:0.25"/>
+        <text x="42" y="188" style="fill:var(--text1,#0f172a);font-size:10px;font-family:sans-serif">order</text>
+        <text x="308" y="188" text-anchor="end" style="fill:var(--text2,#475569);font-size:10px;font-family:sans-serif">9%</text>
+
+        <text x="32" y="216" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">Answers: did the funnel hold up?</text>
+
+        <rect x="364" y="24" width="322" height="212" rx="8" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <text x="382" y="48" style="fill:var(--text1,#0f172a);font-size:13px;font-weight:700;font-family:sans-serif">FLOW</text>
+        <text x="382" y="68" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">You supply one point. Data supplies the rest.</text>
+
+        <rect x="382" y="118" width="86" height="28" rx="4" style="fill:var(--bg3,#f1f5f9);stroke:var(--accent,#e11d48);stroke-width:1.5"/>
+        <text x="425" y="136" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:10px;font-weight:700;font-family:sans-serif">product</text>
+
+        <path d="M468 128 C 500 128, 510 92, 546 92" style="fill:none;stroke:var(--border,#e2e8f0);stroke-width:5"/>
+        <path d="M468 132 C 500 132, 510 132, 546 132" style="fill:none;stroke:var(--border,#e2e8f0);stroke-width:9"/>
+        <path d="M468 136 C 500 136, 510 172, 546 172" style="fill:none;stroke:var(--border,#e2e8f0);stroke-width:4"/>
+        <path d="M468 140 C 500 140, 510 208, 546 208" style="fill:none;stroke:var(--border,#e2e8f0);stroke-width:3"/>
+
+        <rect x="546" y="78" width="122" height="26" rx="4" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <text x="556" y="96" style="fill:var(--text2,#475569);font-size:10px;font-family:sans-serif">cart</text>
+        <rect x="546" y="118" width="122" height="26" rx="4" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <text x="556" y="136" style="fill:var(--text2,#475569);font-size:10px;font-family:sans-serif">another product</text>
+        <rect x="546" y="158" width="122" height="26" rx="4" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <text x="556" y="176" style="fill:var(--text2,#475569);font-size:10px;font-family:sans-serif">search again</text>
+        <rect x="546" y="194" width="122" height="26" rx="4" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <text x="556" y="212" style="fill:var(--text2,#475569);font-size:10px;font-family:sans-serif">exit</text>
+
+        <text x="382" y="234" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">Answers: what did they actually do?</text>
+
+        <text x="14" y="262" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">Open fallout when you have a hypothesis. Open flow when your hypothesis just failed and you need to know why.</text>
+    </svg>
+</div>
+
+<p>The working rule is simple enough to apply without thinking. <strong>If you can name the steps, use fallout. If you are surprised and cannot explain it, use flow.</strong> In practice they arrive in that order about an hour apart, because a fallout tells you where people left and almost never tells you where they went.</p>
+
+<h3 class="subsec-title">Fallout: the steps are yours, and they need not be pages</h3>
+<p>A fallout is a list of touchpoints in an order you choose, and the visualization reports how many people made it from each one to the next.</p>
+
+<p>The part most people never use is that a touchpoint does not have to be a page. Any dimension value, any metric, and any <a href="/adobe-analytics-learning/analyze/segments/understanding-segments/">segment</a> can be a step, and they can be mixed freely in one funnel. That turns fallout from a page-sequence report into something considerably more interesting: saw a product, used internal search, was a returning visitor, placed an order. Nothing in that list is a page, and it is a perfectly valid funnel.</p>
+
+<p>The moment a step drops sharply, right-clicking it produces a segment of exactly the people who fell out there, ready to drop into a panel and interrogate. That is the shortest path in this product from noticing a problem to studying the people it happened to.</p>
+
+<h3 class="subsec-title">Eventual path or next hit, and the same funnel gives two answers</h3>
+<p>Underneath every touchpoint sits a small selector that most people never open, and it changes the meaning of the whole diagram.</p>
+
+<p><strong>Eventual path</strong>, the default, asks whether somebody reached the next step at any point afterward. They can wander through forty pages, come back tomorrow, and still count as having passed. <strong>Next hit</strong> asks whether the next step happened <em>immediately</em>, on the very next hit, with nothing in between.</p>
+
+<p>The two produce wildly different numbers from the same data, and both are legitimate.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">📊 One visitor, one funnel, two completely honest answers</div>
+    <svg viewBox="0 0 700 260" style="width:100%;height:auto;display:block;margin:4px 0 8px"
+         role="img" aria-label="A visitor's actual hit sequence: product page, then reviews, then a comparison page, then back to the product page, then the cart. Under an eventual path setting the visitor counts as having moved from product to cart, because the cart was eventually reached. Under a next hit setting the same visitor does not count, because the hit immediately after the product page was the reviews page. Neither reading is wrong, and the funnel looks identical either way.">
+        <text x="16" y="20" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif;letter-spacing:1px">WHAT THE VISITOR ACTUALLY DID</text>
+        <rect x="16" y="32" width="118" height="30" rx="5" style="fill:var(--card,#ffffff);stroke:var(--accent,#e11d48);stroke-width:2"/>
+        <text x="75" y="52" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:11px;font-weight:700;font-family:sans-serif">product</text>
+        <rect x="150" y="32" width="118" height="30" rx="5" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <text x="209" y="52" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">reviews</text>
+        <rect x="284" y="32" width="118" height="30" rx="5" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <text x="343" y="52" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">compare</text>
+        <rect x="418" y="32" width="118" height="30" rx="5" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <text x="477" y="52" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">product again</text>
+        <rect x="552" y="32" width="132" height="30" rx="5" style="fill:var(--card,#ffffff);stroke:var(--accent,#e11d48);stroke-width:2"/>
+        <text x="618" y="52" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:11px;font-weight:700;font-family:sans-serif">cart</text>
+
+        <rect x="16" y="92" width="668" height="60" rx="6" style="fill:var(--card,#ffffff);stroke:#2f8f3f;stroke-width:2"/>
+        <text x="32" y="114" style="fill:#2f8f3f;font-size:11px;font-weight:700;font-family:sans-serif;letter-spacing:1px">EVENTUAL PATH, THE DEFAULT</text>
+        <text x="32" y="136" style="fill:var(--text2,#475569);font-size:12px;font-family:sans-serif">Did they reach the cart at any point after the product page? Yes. This visitor counts as fallen through.</text>
+
+        <rect x="16" y="166" width="668" height="60" rx="6" style="fill:var(--card,#ffffff);stroke:#c2690c;stroke-width:2"/>
+        <text x="32" y="188" style="fill:#c2690c;font-size:11px;font-weight:700;font-family:sans-serif;letter-spacing:1px">NEXT HIT</text>
+        <text x="32" y="210" style="fill:var(--text2,#475569);font-size:12px;font-family:sans-serif">Was the cart the very next hit? No, reviews was. This visitor counts as fallen out at step one.</text>
+
+        <text x="16" y="250" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">The diagram looks identical under both. Only the selector under the touchpoint says which question was asked.</text>
+    </svg>
+</div>
+
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ A funnel built on the default is measuring intent, not the journey you designed</div>
+    <p>Eventual path counts anybody who got there in the end, however long they wandered. That is the right question for "did they eventually buy" and the wrong one for "does this three-step checkout work", because a checkout that people escape and re-enter twenty minutes later scores as a success. The number will be comfortably high, nobody will query it, and the broken step stays broken. When the funnel is a designed sequence that people are meant to move straight through, set the intermediate touchpoints to next hit and expect the figure to fall, sometimes by a lot. The drop is not a worse result. It is the result the previous setting was hiding.</p>
+</div>
+
+<h3 class="subsec-title">The container decides whether tomorrow still counts</h3>
+<p>One more setting sits above the whole funnel, and it defaults to the more generous reading.</p>
+
+<p>Fallout runs at <strong>visitor</strong> level by default, which means somebody can see the product page today, disappear, and complete the purchase eleven days later, and the funnel counts it as a completed journey. Switching the container to <strong>visit</strong> confines the whole sequence to a single session.</p>
+
+<p>Which is correct depends entirely on the purchase. For a considered purchase across several days, visitor is honest and visit will make a healthy business look broken. For a checkout that should take ninety seconds, visitor is flattering to the point of uselessness. The mistake is not choosing wrong, it is never noticing there was a choice.</p>
+
+<h3 class="subsec-title">Flow: what people did, which is rarely what anyone designed</h3>
+<p>Flow starts from a single point and expands outward, showing what preceded and what followed, weighted by how many people took each route.</p>
+
+<p>Its value is the routes nobody would have thought to test. A fallout can only ever confirm or deny a path you already suspected, so it cannot surface the loop where people bounce between two pages because neither answers their question, or the fact that the second most common step after the product page is another product page, which is a browsing pattern rather than a purchasing one.</p>
+
+<p>Two settings decide whether the diagram is readable, and the first of them is responsible for most flow diagrams being incomprehensible.</p>
+
+<h3 class="subsec-title">Repeat instances, and the reload that swallows the diagram</h3>
+<p>Sites reload. Filters re-render the page, pagination fires another view, a form validation error redisplays the same screen. Every one of those is a hit carrying the same page value as the hit before it.</p>
+
+<p>With repeat instances included, the single most common path from any page becomes <strong>the same page again</strong>, and it swamps everything else. The diagram is technically accurate and analytically useless, because the interesting movement is buried under a self-referential loop.</p>
+
+<p>Excluding repeat instances collapses consecutive identical values into one, and the flow becomes about movement between different things, which is what anybody actually meant. Check the setting before reading the picture, because the two versions look equally authoritative.</p>
+
+<div class="info-box">
+    <div class="info-hdr">ℹ️ Flow also has a container, and it defaults to visitor like fallout does</div>
+    <p>At visitor level, hits are joined across visits, so the "next page" after somebody's final page of the day is their first page of the next visit, days later. That produces paths which are technically real and rarely what somebody means by a journey. Visit level stops the chain at the session boundary, which is usually the right reading for on-site behavior. As with fallout, the default is the generous one, and the setting is not visible in the diagram itself.</p>
+</div>
+
+<h3 class="subsec-title">Both refuse calculated metrics, and both are worth reading with suspicion</h3>
+<p>Fallout will not accept a <a href="/adobe-analytics-learning/analyze/calculated-metrics/what-are-calculated-metrics/">calculated metric</a> as a touchpoint, for the same reason a cohort table refuses one: a step has to be something a person did, and a formula evaluated over assembled rows cannot be tested against an individual. Reach for the underlying event instead.</p>
+
+<p>Beyond that, both visualizations share a habit worth naming. They produce diagrams that look like evidence and are actually the output of three or four settings nobody can see from the picture. Path type, container, repeat instances, and the segment applied to the panel around them all change the shape substantially, and none of them appears in a screenshot.</p>
+
+<div class="shot-box shot-pending">
+    <div class="shot-title">📷 The setting that changes the funnel's answer</div>
+    <div class="shot-frame">
+        <p class="shot-brief">FILE:       aal_module14_section06_ss1.png
+SCREEN:     Workspace, a built fallout visualization
+CROP:       two or three touchpoints of the funnel, including
+            the small selector that sits under a touchpoint.
+MUST SHOW:  the eventual path / next hit selector, open if
+            possible so both options are readable. The
+            percentages of at least two steps should be visible
+            so the reader connects the setting to the numbers.
+SETUP:      any three-step funnel with real drop-off. Page based
+            is fine; no sensitive values.
+REDACT:     nothing.
+WIDTH:      about 1200px.</p>
+    </div>
+    <div class="shot-note">Placeholder. The selector is physically small and decides the meaning of the entire diagram, which is exactly why it needs a picture.</div>
+</div>
+
+<div class="shot-box shot-pending">
+    <div class="shot-title">📷 A flow diagram, before and after repeat instances</div>
+    <div class="shot-frame">
+        <p class="shot-brief">FILE:       aal_module14_section06_ss2.png
+SCREEN:     Workspace, a flow visualization built on Page
+CROP:       the flow diagram itself, focus node plus the paths
+            immediately either side of it.
+MUST SHOW:  ideally the version WITH repeat instances included,
+            where the dominant path loops back to the same page,
+            because that is the failure the section describes.
+            If a single frame can show the setting alongside the
+            diagram, better still.
+SETUP:      settings gear on the flow visualization, include
+            repeat instances toggled on.
+REDACT:     page values only if identifiable; browser or country
+            based flow avoids the question entirely.
+WIDTH:      about 1400px.</p>
+    </div>
+    <div class="shot-note">Placeholder. Optional if the training data is too thin to produce a meaningful flow. The point survives in prose if the picture will not.</div>
+</div>
+
+<h3 class="subsec-title">Follow along: build the funnel, then take its settings apart</h3>
+<p>The settings in this section are worth changing one at a time on a funnel you built yourself, because the size of the swing is the lesson.</p>
+
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">Follow along: one funnel, four settings, four different answers</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>PART ONE, THE FUNNEL
+
+1  Visualizations &gt; Fallout, into a panel with a decent date range
+
+2  Drag three or four steps into it in order
+       Pages are fine to start. Note the percentage at each step.
+
+3  Now add a step that is NOT a page
+       A segment, or a metric like Orders. Mixing types is
+       allowed and it is the feature most people never use.
+
+PART TWO, THE SETTINGS THAT MOVE THE ANSWER
+
+4  Under an intermediate touchpoint, switch Eventual path to Next hit
+       Write down how far the percentage falls. That gap is the
+       difference between "got there eventually" and "went there".
+
+5  Change the container from Visitor to Visit
+       The number falls again. Decide which of the two matches
+       the purchase you are actually measuring.
+
+6  Right-click a step with a big drop &gt; create a segment of the
+   people who fell out there
+       Drop it on a new panel. That is the shortest route in this
+       product from spotting a problem to studying the people it
+       happened to.
+
+PART THREE, THE OTHER QUESTION
+
+7  Visualizations &gt; Flow, using the page where the biggest drop was
+
+8  Settings &gt; include repeat instances, on then off
+       On, the busiest path is usually the same page again. Off,
+       the diagram becomes about movement. Only one is readable.
+
+9  Read the paths out of that page and compare them with your funnel
+       This is where you find out whether the route on the
+       whiteboard exists.
+
+There is nothing else to configure. Path type, container, repeat
+instances. Three settings, and every one of them defaults to the
+more generous reading.</pre></div>
+</div>
+
+<p>Those nine steps are a floor rather than a ceiling. Step 4 and step 5 together are the pair worth repeating on real data, because a funnel that reads sixty percent on the defaults and twenty-two percent under next hit and visit is the same funnel, and somebody is about to make a decision on one of those numbers.</p>
+
+<h3 class="subsec-title">What you have now</h3>
+<p>Fallout takes a sequence you define and reports survival through it. Flow takes a single point and reports the routes that actually existed around it. The first tests a hypothesis and the second generates one, and most real investigations use them in that order within the same hour.</p>
+
+<p>Underneath both sits the point worth carrying out of this section: <strong>these diagrams are the output of settings that the diagram does not show.</strong> Eventual path against next hit, visitor against visit, repeat instances in or out. Every default is the generous one, every alternative produces a smaller and usually more honest number, and none of them survives a screenshot into a slide. A funnel figure quoted without its settings is not a measurement, it is a claim.</p>
+
+<p>Which is a problem of a different kind, because a project that has grown to hold several funnels, a cohort table and a dozen freeform tables is now a document that only its author can safely read. <a href="/adobe-analytics-learning/analyze/analysis-workspace/anomaly-detection-contribution-analysis/">Anomaly Detection and Contribution Analysis</a> takes the next step: instead of you deciding what to look at, the product proposes what changed and offers a first guess at why.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Analytics</div>
+    <p>Analytics &gt; <span class="path">Workspace</span>, then the <span class="path">Visualizations</span> icon in the left rail. <span class="path">Fallout</span> and <span class="path">Flow</span> sit near the top of the list, below Freeform table and Cohort table.</p>
+    <p>The eventual path and next hit selector appears <strong>under each touchpoint</strong> in a fallout, not in the visualization settings. Container, repeat instances and the other flow options live behind the gear on the visualization itself.</p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title">📚 Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/analyze/analysis-workspace/visualizations/fallout/fallout-flow" target="_blank">Adobe Docs: Fallout Overview</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/analyze/analysis-workspace/visualizations/fallout/configuring-fallout" target="_blank">Adobe Docs: Configure a Fallout Visualization</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/analyze/analysis-workspace/visualizations/c-flow/flow" target="_blank">Adobe Docs: Flow Overview</a></li>
+    </ul>
+</div>

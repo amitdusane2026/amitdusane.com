@@ -1,60 +1,278 @@
 ---
 slug: "freeform-tables"
 title: "Freeform Tables"
-lastmod: 2026-07-15
+seotitle: "Freeform Tables in Analysis Workspace"
+description: "The same two components can produce four different correct answers depending on the arrangement. How rows, breakdowns and columns decide what a number means."
+lastmod: 2026-08-14
 type: lesson
 modulenum: 14
 sectionnum: 3
 weight: 3
 ---
-<p>Freeform tables are the foundation of Analysis Workspace, providing flexible, pivot-table-like analysis capabilities.</p>
-                <h3 class="subsec-title">Table Building Basics</h3>
-                <ul>
-                    <li><strong>Rows:</strong> Drag dimensions to add breakdown categories</li>
-                    <li><strong>Columns:</strong> Drag metrics to add measurements</li>
-                    <li><strong>Breakdown:</strong> Drag dimension onto a row to break it down further</li>
-                    <li><strong>Segments:</strong> Drop segments on rows or columns to filter</li>
-                    <li><strong>Date ranges:</strong> Apply different date ranges to columns</li>
-                </ul>
+<p>A freeform table looks like the least interesting thing on the screen. It is a grid. Rows down the side, numbers in the middle, nothing that would survive a slide.</p>
 
-                <h3 class="subsec-title">Table Features</h3>
-                <div class="tbl-wrap">
-                    <table>
-                        <thead><tr><th>Feature</th><th>How to Access</th><th>Purpose</th></tr></thead>
-                        <tbody>
-                            <tr><td><strong>Column Settings</strong></td><td>Click column header gear</td><td>Wrap text, show totals, format</td></tr>
-                            <tr><td><strong>Row Settings</strong></td><td>Right-click row</td><td>Breakdown, create segment, exclude</td></tr>
-                            <tr><td><strong>Conditional Formatting</strong></td><td>Column settings</td><td>Color-code values</td></tr>
-                            <tr><td><strong>Totals</strong></td><td>Table settings</td><td>Show/hide grand total, subtotals</td></tr>
-                            <tr><td><strong>Static Row</strong></td><td>Right-click row</td><td>Lock row position regardless of sort</td></tr>
-                            <tr><td><strong>Pagination</strong></td><td>Table bottom</td><td>Control rows shown (default 400)</td></tr>
-                        </tbody>
-                    </table>
-                </div>
+<p>It is also where every number in Analysis Workspace is decided. The charts are drawings of it. The fallouts and the cohorts are specialized versions of it. And almost every confidently wrong figure this product has ever produced came out of a table that was arranged slightly differently from the way the person reading it assumed.</p>
 
-                <h3 class="subsec-title">Example: Multi-level Breakdown</h3>
-                <div class="code-block">
-                    <div class="code-hdr"><span class="code-lang">Table Structure</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-                    <div class="code-body"><pre>Marketing Channel (Dimension)
-├── Paid Search
-│   ├── Google (Tracking Code breakdown)
-│   │   ├── Brand Terms (Classification)
-│   │   └── Non-Brand Terms
-│   └── Bing
-│       ├── Brand Terms
-│       └── Non-Brand Terms
-├── Email
-│   └── Newsletter
-│       ├── Welcome Series
-│       └── Promotional
-└── Direct
+<p>Which makes this the one component worth understanding properly rather than operating.</p>
 
-Columns: Visits | Revenue | Orders | Conversion Rate</pre></div>
-                </div>
-                <div class="ref-box">
-                    <div class="ref-title">📚 Learn More</div>
-                    <ul>
-                        <li><a href="https://experienceleague.adobe.com/docs/analytics/analyze/analysis-workspace/visualizations/freeform-table/freeform-table.html" target="_blank">Adobe Docs: Freeform Table</a></li>
-                    </ul>
-                </div>
-            
+<h3 class="subsec-title">Rows ask what, columns ask how much</h3>
+<p>The grammar is small enough to state in a sentence. A dimension in the rows names the things you want separated. A metric in the columns says how those things are measured. Drop <span class="path">Page</span> into the rows and <span class="path">Page Views</span> into the columns, and you have asked for page views, separated by page.</p>
+
+<p>Everything else in this section is what happens when that sentence gets more than one clause.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">📊 The whole grammar, before anything gets complicated</div>
+    <svg viewBox="0 0 700 240" style="width:100%;height:auto;display:block;margin:4px 0 8px"
+         role="img" aria-label="A freeform table split into its parts. Down the left, a dimension in the rows names the things being separated, labelled what. Across the top, a metric in the columns says how those things are measured, labelled how much. The cells where they meet hold the numbers, each one the answer to the row and column together.">
+        <text x="16" y="20" style="fill:#c2690c;font-size:11px;font-weight:700;font-family:sans-serif;letter-spacing:1px">ROWS: WHAT</text>
+        <text x="330" y="20" style="fill:#2f8f3f;font-size:11px;font-weight:700;font-family:sans-serif;letter-spacing:1px">COLUMNS: HOW MUCH</text>
+
+        <rect x="16" y="34" width="300" height="30" rx="4" style="fill:#c2690c;opacity:0.16"/>
+        <text x="28" y="54" style="fill:#c2690c;font-size:12px;font-weight:700;font-family:sans-serif">Page</text>
+        <text x="86" y="54" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">a dimension, one row per value</text>
+
+        <rect x="330" y="34" width="354" height="30" rx="4" style="fill:#2f8f3f;opacity:0.16"/>
+        <text x="342" y="54" style="fill:#2f8f3f;font-size:12px;font-weight:700;font-family:sans-serif">Page Views</text>
+        <text x="428" y="54" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">a metric, one number per row</text>
+
+        <rect x="16" y="86" width="668" height="26" rx="3" style="fill:var(--bg3,#f1f5f9)"/>
+        <text x="28" y="104" style="fill:#c2690c;font-size:11px;font-weight:700;font-family:sans-serif">Page</text>
+        <text x="560" y="104" style="fill:#2f8f3f;font-size:11px;font-weight:700;font-family:sans-serif">Page Views</text>
+
+        <line x1="16" y1="118" x2="684" y2="118" style="stroke:var(--border,#e2e8f0);stroke-width:1"/>
+        <text x="28" y="138" style="fill:var(--text2,#475569);font-size:12px;font-family:sans-serif">home</text>
+        <text x="660" y="138" text-anchor="end" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">1,204</text>
+        <line x1="16" y1="148" x2="684" y2="148" style="stroke:var(--border,#e2e8f0);stroke-width:1"/>
+        <text x="28" y="168" style="fill:var(--text2,#475569);font-size:12px;font-family:sans-serif">search results</text>
+        <text x="660" y="168" text-anchor="end" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">832</text>
+        <line x1="16" y1="178" x2="684" y2="178" style="stroke:var(--border,#e2e8f0);stroke-width:1"/>
+        <text x="28" y="198" style="fill:var(--text2,#475569);font-size:12px;font-family:sans-serif">product detail</text>
+        <text x="660" y="198" text-anchor="end" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">417</text>
+        <line x1="16" y1="208" x2="684" y2="208" style="stroke:var(--border,#e2e8f0);stroke-width:1"/>
+
+        <text x="16" y="232" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">Every cell is the row and the column answered together. Change either side and every cell changes meaning.</text>
+    </svg>
+</div>
+
+<h3 class="subsec-title">A breakdown is a second question asked inside the first</h3>
+<p>Here is the mechanic that produces more misread reports than anything else in the product, and it is disguised as an obvious convenience.</p>
+
+<p>Take that table and break the <em>product detail</em> row down by <span class="path">Browser</span>. Numbers appear underneath it, indented. It looks like you have added a second dimension to the table.</p>
+
+<p>You have not. You have asked a completely new question: <strong>which browsers were used, among the page views of that one page.</strong> The breakdown is scoped inside the row above it. It is not a list of browsers, it is a list of browsers for that page, and the numbers underneath will never sum to the site's browser totals.</p>
+
+<p>That distinction sounds pedantic until somebody screenshots the indented rows, drops them into a deck, and labels them "browser usage".</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">📊 The same two dimensions, swapped, are two different reports</div>
+    <svg viewBox="0 0 700 290" style="width:100%;height:auto;display:block;margin:4px 0 8px"
+         role="img" aria-label="Two tables side by side using the same two dimensions in opposite order. On the left, pages broken down by browser: each page row expands into the browsers used on that page. On the right, browsers broken down by page: each browser row expands into the pages seen in that browser. The two produce different rows, different groupings and different numbers, and neither is more correct than the other.">
+        <rect x="14" y="26" width="322" height="222" rx="8" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <text x="30" y="48" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">Page, broken down by Browser</text>
+        <rect x="30" y="60" width="290" height="24" rx="3" style="fill:#c2690c;opacity:0.18"/>
+        <text x="40" y="77" style="fill:#c2690c;font-size:11px;font-weight:700;font-family:sans-serif">product detail</text>
+        <text x="306" y="77" text-anchor="end" style="fill:var(--text1,#0f172a);font-size:11px;font-weight:700;font-family:sans-serif">417</text>
+        <text x="56" y="102" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">Chrome</text>
+        <text x="306" y="102" text-anchor="end" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">301</text>
+        <text x="56" y="122" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">Safari</text>
+        <text x="306" y="122" text-anchor="end" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">88</text>
+        <text x="56" y="142" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">Edge</text>
+        <text x="306" y="142" text-anchor="end" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">28</text>
+        <rect x="30" y="156" width="290" height="24" rx="3" style="fill:#c2690c;opacity:0.18"/>
+        <text x="40" y="173" style="fill:#c2690c;font-size:11px;font-weight:700;font-family:sans-serif">search results</text>
+        <text x="306" y="173" text-anchor="end" style="fill:var(--text1,#0f172a);font-size:11px;font-weight:700;font-family:sans-serif">832</text>
+        <text x="30" y="204" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">Reads: which browsers, on this page.</text>
+        <text x="30" y="224" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">The indented rows sum to 417,</text>
+        <text x="30" y="240" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">not to Chrome's site total.</text>
+
+        <rect x="364" y="26" width="322" height="222" rx="8" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <text x="380" y="48" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">Browser, broken down by Page</text>
+        <rect x="380" y="60" width="290" height="24" rx="3" style="fill:#c2690c;opacity:0.18"/>
+        <text x="390" y="77" style="fill:#c2690c;font-size:11px;font-weight:700;font-family:sans-serif">Chrome</text>
+        <text x="656" y="77" text-anchor="end" style="fill:var(--text1,#0f172a);font-size:11px;font-weight:700;font-family:sans-serif">2,140</text>
+        <text x="406" y="102" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">home</text>
+        <text x="656" y="102" text-anchor="end" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">910</text>
+        <text x="406" y="122" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">search results</text>
+        <text x="656" y="122" text-anchor="end" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">604</text>
+        <text x="406" y="142" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">product detail</text>
+        <text x="656" y="142" text-anchor="end" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">301</text>
+        <rect x="380" y="156" width="290" height="24" rx="3" style="fill:#c2690c;opacity:0.18"/>
+        <text x="390" y="173" style="fill:#c2690c;font-size:11px;font-weight:700;font-family:sans-serif">Safari</text>
+        <text x="656" y="173" text-anchor="end" style="fill:var(--text1,#0f172a);font-size:11px;font-weight:700;font-family:sans-serif">640</text>
+        <text x="380" y="204" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">Reads: which pages, in this browser.</text>
+        <text x="380" y="224" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">One number appears in both tables.</text>
+        <text x="380" y="240" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">Everything around it differs.</text>
+
+        <text x="14" y="272" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">Only 301 is common to both. Order of breakdown is not a display preference, it is the question.</text>
+    </svg>
+</div>
+
+<p>Both tables are correct. They answer different questions, and the only visible difference is which dimension was dragged first. A colleague handed the wrong one will read it fluently and reach the wrong conclusion without ever noticing there was a choice.</p>
+
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ Indented rows never sum to the site total, and they look exactly like rows that do</div>
+    <p>A breakdown inherits every filter above it, including the parent row itself. So the numbers under a broken-down row are scoped to that row and nothing else. Copy them into a slide and they become a claim about the whole site, which is a claim the table never made. The tell is indentation, and indentation survives neither a screenshot nor a paste into a spreadsheet. If a figure is going to travel, take it from a table where the dimension sits at the top level, not from a breakdown.</p>
+</div>
+
+<h3 class="subsec-title">Attribution is a column setting, and it is where props stop being second class</h3>
+<p>Every column carries an attribution model, whether or not anybody chose one. Left alone, a metric is credited according to the dimension's own behavior, which is why a <a href="/adobe-analytics-learning/foundations/variables/props-traffic-variables/">prop</a> broken down by orders normally reports almost nothing: a prop holds its value for a single hit, so only the hit that carried the order can receive credit.</p>
+
+<p>Open the column settings, apply an attribution model, and that stops being true.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">📊 Same visit, same order, and the model decides who gets credit</div>
+    <svg viewBox="0 0 700 300" style="width:100%;height:auto;display:block;margin:4px 0 8px"
+         role="img" aria-label="A three hit visit. Hit one is a product page setting the value running-shoes. Hit two is the cart. Hit three is the purchase where the order fires and the page value is checkout-confirm. Without an attribution model the prop credits the order to checkout-confirm only. With a last-touch model applied at report time, the same prop credits the order to running-shoes, because attribution is recalculated from the underlying hits rather than from the variable's stored persistence.">
+        <rect x="16" y="26" width="200" height="44" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <rect x="246" y="26" width="200" height="44" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <rect x="476" y="26" width="208" height="44" rx="6" style="fill:var(--card,#ffffff);stroke:var(--accent,#e11d48);stroke-width:2"/>
+        <text x="116" y="44" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:10px;font-family:sans-serif;letter-spacing:1px">HIT 1</text>
+        <text x="346" y="44" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:10px;font-family:sans-serif;letter-spacing:1px">HIT 2</text>
+        <text x="580" y="44" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:10px;font-weight:700;font-family:sans-serif;letter-spacing:1px">HIT 3</text>
+        <text x="116" y="62" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12px;font-family:sans-serif">prop = running-shoes</text>
+        <text x="346" y="62" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12px;font-family:sans-serif">prop = cart</text>
+        <text x="580" y="62" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:12px;font-weight:700;font-family:sans-serif">checkout-confirm, order</text>
+
+        <text x="16" y="106" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif;letter-spacing:1px">COLUMN WITH NO ATTRIBUTION MODEL</text>
+        <rect x="16" y="116" width="668" height="34" rx="5" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <text x="32" y="138" style="fill:var(--text2,#475569);font-size:12px;font-family:sans-serif">running-shoes</text>
+        <text x="240" y="138" style="fill:var(--text2,#475569);font-size:12px;font-weight:700;font-family:sans-serif">0 orders</text>
+        <text x="360" y="138" style="fill:var(--text2,#475569);font-size:12px;font-family:sans-serif">checkout-confirm</text>
+        <text x="590" y="138" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">1 order</text>
+
+        <text x="16" y="184" style="fill:var(--accent,#e11d48);font-size:11px;font-weight:700;font-family:sans-serif;letter-spacing:1px">SAME COLUMN, LAST TOUCH APPLIED</text>
+        <rect x="16" y="194" width="668" height="34" rx="5" style="fill:var(--card,#ffffff);stroke:var(--accent,#e11d48);stroke-width:2"/>
+        <text x="32" y="216" style="fill:var(--accent,#e11d48);font-size:12px;font-weight:700;font-family:sans-serif">running-shoes</text>
+        <text x="240" y="216" style="fill:var(--accent,#e11d48);font-size:12px;font-weight:700;font-family:sans-serif">1 order</text>
+        <text x="360" y="216" style="fill:var(--text2,#475569);font-size:12px;font-family:sans-serif">checkout-confirm</text>
+        <text x="590" y="216" style="fill:var(--text2,#475569);font-size:12px;font-family:sans-serif">0 orders</text>
+
+        <text x="16" y="258" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">Nothing was recollected. The model is recalculated from the same hits when the report runs,</text>
+        <text x="16" y="276" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">which is why the variable's own persistence stops deciding the answer.</text>
+    </svg>
+</div>
+
+<p>Two things follow from that, and both are larger than a column setting has any right to be.</p>
+
+<p>The first is that the distinction between props and eVars, which governs so much implementation planning, <strong>does not survive contact with an attribution model</strong>. Applied at report time, a prop can carry any lookback window you choose, and an eVar's configured allocation and expiration are set aside entirely.</p>
+
+<p>The second is that a decision you thought was permanent turns out not to be. An eVar's expiry is chosen on the day it is implemented and lived with for years. Here the same question is a dropdown, answerable differently by two people looking at the same data on the same afternoon. <a href="/adobe-analytics-learning/analyze/attribution-models/what-is-attribution/">What Is Attribution</a> takes the models themselves apart.</p>
+
+<div class="shot-box shot-pending">
+    <div class="shot-title">📷 A breakdown, and the column that controls attribution</div>
+    <div class="shot-frame">
+        <p class="shot-brief">FILE:       aal_module14_section03_ss1.png
+SCREEN:     Workspace, a freeform table with one row broken
+            down by a second dimension
+CROP:       the table only, header row plus the parent row and
+            its indented children. No panel header needed.
+MUST SHOW:  the indentation clearly, so the reader can see that
+            the child rows belong to the parent rather than to
+            the table. Ideally the parent total is visible above
+            children that sum to it.
+SETUP:      any harmless pair works: Browser broken down by Day,
+            or Day broken down by Browser.
+REDACT:     nothing.
+WIDTH:      about 1200px.</p>
+    </div>
+    <div class="shot-note">Placeholder. The indentation is the entire warning, and it is the thing that vanishes when a number is copied out.</div>
+</div>
+
+<h3 class="subsec-title">Dynamic rows keep re-asking, static rows freeze the answer</h3>
+<p>Drag a dimension into the rows and the table fills with whatever the top values happen to be. Those rows are <strong>dynamic</strong>: they are a standing instruction to fetch the top items, re-evaluated every time the report runs.</p>
+
+<p>That is usually what you want, and occasionally a quiet disaster. A project built in March showing the top ten products, opened in September, is showing September's top ten. The chart has the same title and a different subject, and nobody scrolling past it will suspect anything, because it looks exactly as it did.</p>
+
+<p>Dragging a specific dimension <em>item</em> instead pins it. That row is now <strong>static</strong>: it will report that one value forever, and will show zero rather than silently substituting a replacement.</p>
+
+<div class="pro-tip">
+    <div class="pro-tip-hdr">💡 Anything a stakeholder will read monthly should be pinned</div>
+    <p>The rule that avoids most of this: dynamic rows for exploring, static rows for anything scheduled, shared, or repeated. If a project goes to the same five people every month, they are reading it for change over time, and change over time is meaningless if the rows themselves change underneath the numbers. Pinning also makes a disappearance visible, because a static row that drops to zero is a finding, while a dynamic row that quietly falls out of the top ten is nothing at all.</p>
+</div>
+
+<h3 class="subsec-title">Percentages are honest about the number and quiet about the denominator</h3>
+<p>A percentage column looks like the least ambiguous thing on the page. It is a share, and shares are simple.</p>
+
+<p>The question a percentage never answers on screen is <em>a share of what</em>. Within a breakdown, the percentage is of the parent row. At the top level, it is of the column. Change the arrangement, and the same visual percentage measures something else entirely while looking identical.</p>
+
+<p>This compounds with the breakdown problem, because the most quotable figure in any table is a percentage inside a breakdown, and that is exactly the one whose denominator is invisible.</p>
+
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>Setting</th><th>What it changes</th><th>Worth knowing</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Row settings</strong></td><td>How many rows, static or dynamic, and a filter on which items appear</td><td>The row count also decides what the totals mean if a filter is applied</td></tr>
+            <tr><td><strong>Column settings</strong></td><td>Attribution model, number format, percentages, and conditional formatting</td><td>The one place attribution lives outside the Attribution panel</td></tr>
+            <tr><td><strong>Percent shading</strong></td><td>Only the visual heat, never the numbers</td><td>Shading is relative to the visible rows, so paginating changes the colors</td></tr>
+            <tr><td><strong>Totals</strong></td><td>Whether the header total is the grand total or the sum of shown rows</td><td>These disagree the moment a filter or a row limit is in play</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<h3 class="subsec-title">Follow along: build one table four ways and watch the meaning move</h3>
+<p>This is the exercise that makes the rest of this section permanent, and it takes about five minutes. The point is not the numbers. It is watching how little has to change for a number to mean something else.</p>
+
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">Follow along: four arrangements, four different questions</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>SETUP
+
+1  A blank panel, a report suite with data, a month that has some
+
+ARRANGEMENT ONE, the plain question
+
+2  Rows: Browser.  Columns: Page Views.
+       Note the number against the top browser. Write it down.
+
+ARRANGEMENT TWO, the breakdown
+
+3  Right-click the top browser row &gt; Break down &gt; Day
+       The indented numbers now sum to that browser's total,
+       not to the site's daily totals. Same data, narrower question.
+
+ARRANGEMENT THREE, the swap
+
+4  New table. Rows: Day.  Break the top day down by Browser.
+       Find the cell that matches step 3. It is the only figure
+       the two tables share. Everything around it has changed.
+
+ARRANGEMENT FOUR, pinned
+
+5  From the left rail, expand the Browser dimension and drag one
+   specific browser into the rows, instead of the dimension itself
+       That row is now static. It will report that browser next
+       year, or report zero, and will never quietly become a
+       different browser.
+
+THE COLUMN SETTING
+
+6  Column settings on a conversion metric &gt; Attribution &gt; Last touch
+       If the row dimension is a prop, watch the numbers move.
+       Nothing was recollected. The model was recalculated.
+
+There is nothing else to configure. Every table in this product is
+these few settings in some combination.</pre></div>
+</div>
+
+<p>Those six steps are a floor rather than a ceiling. Step 3 and step 4 together are the ones worth repeating until the difference is obvious, because that pair is the difference between reading a table and operating one.</p>
+
+<h3 class="subsec-title">What you have now</h3>
+<p>A freeform table is a question written in two directions: rows name what is being separated, columns say how it is measured, and every cell is both answered together. A breakdown does not widen that question, it nests a new one inside a row, scoped by everything above it. Rows are dynamic unless you pin them. Attribution lives in the column settings and quietly overrides how a variable was ever configured to behave.</p>
+
+<p>The habit that comes out of all of it is small and worth keeping: <strong>before reading any number, read the arrangement that produced it.</strong> Which dimension is at the top level, what is indented under what, whether the rows are pinned, and what the percentage is a percentage of. Those four things decide the meaning of every figure on the screen, and none of them are visible in the figure itself.</p>
+
+<p>That is also why the charts in this product are less independent than they look. Every visualization is drawn from a table exactly like this one, inherits its arrangement, and repeats whatever that arrangement decided. <a href="/adobe-analytics-learning/analyze/analysis-workspace/visualizations/">Visualizations</a> covers what happens when a number becomes a picture, and why the picture is never the analysis.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Analytics</div>
+    <p>A freeform table is the default content of any new panel in Analytics &gt; <span class="path">Workspace</span>. It is also the first entry under the <span class="path">Visualizations</span> icon in the left rail.</p>
+    <p>Right-click a row for <span class="path">Break down</span> and the row actions. The gear beside a column opens <span class="path">Column settings</span>, which is where attribution, number format and percentages live. Row settings sit under the row header itself.</p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title">📚 Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/analyze/analysis-workspace/visualizations/freeform-table/freeform-table" target="_blank">Adobe Docs: Freeform Table</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/analyze/analysis-workspace/visualizations/freeform-table/column-row-settings/table-settings" target="_blank">Adobe Docs: Row and Column Settings</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/analyze/analysis-workspace/attribution/models" target="_blank">Adobe Docs: Attribution Models</a></li>
+    </ul>
+</div>
