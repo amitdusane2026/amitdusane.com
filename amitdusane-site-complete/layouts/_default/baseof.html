@@ -159,7 +159,7 @@
   <script src="{{ "world-migration.js" | relURL }}"></script>
   {{ end }}
   {{ if $learn }}
-  <script src="{{ "world-learning.js" | relURL }}"></script>
+  <script src="{{ "world-learning.js" | relURL }}?v={{ substr (sha256 (readFile "static/world-learning.js")) 0 10 }}"></script>
   {{ end }}
   <script src="{{ "author.js" | relURL }}"></script>
 </body>

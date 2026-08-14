@@ -34,7 +34,11 @@
   <meta name="twitter:description" content="{{ $ogdesc }}">
   <meta name="twitter:image" content="{{ "og-default.jpg" | absURL }}">
   {{ partial "schema.html" . }}
-  {{ if hasPrefix .RelPermalink "/web-sdk-migration" }}<link rel="stylesheet" href="{{ "world-shell.css" | relURL }}">{{ else if hasPrefix .RelPermalink "/adobe-analytics-learning" }}<link rel="stylesheet" href="{{ "world-learning.css" | relURL }}">{{ else }}
+  {{/* Asset URLs carry a content hash. Without it the browser keeps a stale
+       copy of a stylesheet that changed, because the URL never moves. That
+       bit us on 14 Aug 2026 and would hit every returning visitor in
+       production too. Hash only, no minify: the minifier breaks inline SVG. */}}
+  {{ if hasPrefix .RelPermalink "/web-sdk-migration" }}<link rel="stylesheet" href="{{ "world-shell.css" | relURL }}?v={{ substr (sha256 (readFile "static/world-shell.css")) 0 10 }}">{{ else if hasPrefix .RelPermalink "/adobe-analytics-learning" }}<link rel="stylesheet" href="{{ "world-learning.css" | relURL }}?v={{ substr (sha256 (readFile "static/world-learning.css")) 0 10 }}">{{ else }}
   <style>
   :root{
     --ink:#1c1f24; --ink-soft:#3b4048; --muted:#6b7280; --faint:#9aa1ab;
