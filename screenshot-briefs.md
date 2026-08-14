@@ -7,7 +7,19 @@
 Running record of every screenshot the site needs, one block per shot. Written while a section is drafted, so capture day is a checklist rather than an act of memory.
 
 **Save to:** `amitdusane-site-complete/static/img/`
-**Format:** PNG. Conversion to WebP happens on the way into the page.
+**Format:** save PNG. Conversion to WebP happens on the way into the page, from the archived original so there is only one resample.
+
+**Conversion, ImageMagick 7 (installed 14 Aug 2026):**
+
+```
+magick ORIGINAL.png -resize 1500x -define webp:lossless=true static/img/NAME.webp
+```
+
+Add `-crop x<height>+0+0 +repage` before `-resize` to trim page bleed off the bottom.
+
+**Always lossless, never lossy.** Measured on the first two shots: lossless WebP is 64% smaller than PNG at RMSE 0, pixel for pixel identical. Lossy `-quality 85` is 82% smaller but introduces about 1% error, concentrated on high-contrast edges, which is exactly where interface text lives. Readers zoom into these to read Adobe's labels. The extra ~70KB across a section is not worth softening that.
+
+**`hugo --gc` does not delete a stale file from `public/`.** After changing a format or a filename, remove `public/` and rebuild, or the old copy lingers and every size measurement is wrong.
 **Naming:** `aal_module<NN>_section<NN>_ss<N>.png`, lowercase, numbers zero-padded to two digits.
 
 **Before every capture:** browser zoom at 100% (`Ctrl+0`), the same window width every time, Adobe's light theme, and never so narrow that Workspace collapses its left rail.
