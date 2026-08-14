@@ -248,3 +248,67 @@
     });
   })();
 })();
+
+/* Screenshot lightbox (added 14 Aug 2026).
+   The image itself is inert: only the zoom button opens anything, and it
+   opens in this tab rather than navigating away. The overlay shows the
+   capture at natural size inside a scroller, so a wide screenshot pans
+   left and right on a phone instead of being shrunk to nothing. */
+(function () {
+  var frames = document.querySelectorAll('.shot-box .shot-frame');
+  if (!frames.length) return;
+
+  var ov = document.createElement('div');
+  ov.className = 'shot-ov';
+  ov.setAttribute('role', 'dialog');
+  ov.setAttribute('aria-modal', 'true');
+  ov.innerHTML =
+    '<div class="shot-ov-hint">Scroll to pan &middot; Esc to close</div>' +
+    '<button type="button" class="shot-ov-close" aria-label="Close">&#215;</button>' +
+    '<div class="shot-ov-scroll"><img alt=""></div>';
+  document.body.appendChild(ov);
+
+  var ovImg = ov.querySelector('img'),
+      scroller = ov.querySelector('.shot-ov-scroll'),
+      closeBtn = ov.querySelector('.shot-ov-close'),
+      opener = null;
+
+  function open(src, alt, btn) {
+    ovImg.setAttribute('src', src);
+    ovImg.setAttribute('alt', alt || '');
+    ov.classList.add('open');
+    document.body.classList.add('shot-ov-open');
+    scroller.scrollTop = 0;
+    scroller.scrollLeft = 0;
+    opener = btn || null;
+    closeBtn.focus();
+  }
+
+  function close() {
+    if (!ov.classList.contains('open')) return;
+    ov.classList.remove('open');
+    document.body.classList.remove('shot-ov-open');
+    ovImg.removeAttribute('src');
+    if (opener) { opener.focus(); opener = null; }
+  }
+
+  Array.prototype.forEach.call(frames, function (frame) {
+    var btn = frame.querySelector('.shot-zoom-btn'),
+        img = frame.querySelector('img');
+    if (!btn || !img) return;
+    btn.addEventListener('click', function (ev) {
+      ev.preventDefault();
+      open(img.getAttribute('src'), img.getAttribute('alt'), btn);
+    });
+  });
+
+  /* Close on the button, on the backdrop, or on the padding around the
+     image. Never on the image, so a click while panning does not dismiss. */
+  ov.addEventListener('click', function (ev) {
+    if (ev.target === ov || ev.target === scroller || ev.target === closeBtn) close();
+  });
+
+  document.addEventListener('keydown', function (ev) {
+    if (ev.key === 'Escape' || ev.keyCode === 27) close();
+  });
+})();
