@@ -9,23 +9,20 @@ modulenum: 14
 sectionnum: 5
 weight: 5
 ---
-<p>A gym in January is the busiest room in the country. Memberships climb, the floor is full, and every number the manager looks at is up.</p>
+<p>A gym signs up four hundred people in January, which is a very good January, and the manager has the numbers to prove it. By the middle of February the floor is noticeably quieter, but the monthly report is still fine: new joiners are still arriving, total membership is holding, and revenue has not moved. In March it is quieter again, and the report says the same thing. Nobody is lying to anybody. Every number on the page is correct.</p>
 
-<p>By March the same gym is quiet, and the reports still look fine. New joiners keep arriving, total members holds steady, revenue is flat rather than falling. Nothing on the dashboard says that almost nobody who joined in January is still coming, because the arrivals are covering for the departures.</p>
+<p>What the report cannot show is that almost none of the four hundred people from January are still coming. They stopped in the second week, quietly and individually, and the March arrivals are covering the gap they left behind. The total is doing what totals do, which is to add the people arriving and the people leaving into a single figure and then present it as though it described a stable situation.</p>
 
-<p>Finding that out requires a different question. Not how many people are here, but what happened to a specific group of people over time. That question has a shape of its own, and a freeform table cannot express it.</p>
+<p>Analytics has exactly this problem, constantly. Visits are up. Registered users are up. Everything looks like growth right up until somebody asks what happened to the people who registered last spring, and it turns out nobody has ever asked that question, because the reporting was not shaped to answer it.</p>
+
+<p>Answering it needs a different arrangement entirely, and that arrangement is what a cohort table is.</p>
 
 <h3 class="subsec-title">A cohort is a group defined by when, not by who</h3>
-<p>Most of analytics separates people by attribute. Which channel they came from, which country they are in, which device they used. A <a href="/adobe-analytics-learning/analyze/segments/understanding-segments/">segment</a> is exactly that: a description of who somebody is or what they did.</p>
+<p>Almost everything else in analytics separates people by attribute. Which channel they came from, which country they are in, which device they used, whether they bought anything. A <a href="/adobe-analytics-learning/analyze/segments/understanding-segments/">segment</a> is precisely that: a description of who somebody is, or of something they did, applied to whatever period you happen to be looking at.</p>
 
-<p>A cohort is different. It groups people by <strong>when they first did something</strong>, and then follows that group forward through time regardless of anything else about them. Everyone who first purchased in week one is a cohort. Everyone who first purchased in week two is a different cohort, and the two are never mixed again.</p>
+<p>A cohort groups people differently. It puts them together according to <strong>when they first did something</strong>, fixes that group, and then follows it forward through time regardless of anything else about them. Everybody whose first purchase was in week one is a cohort. Everybody whose first purchase was in week two is a different cohort, and those two groups are never mixed together again, no matter how similar the people in them are.</p>
 
-<p>That single change is what makes decline visible. Totals hide it, because a total is a snapshot with new arrivals blended in. Follow one group and there is nowhere for the loss to hide.</p>
-
-<h3 class="subsec-title">Two criteria, and confusing them is the standard mistake</h3>
-<p>A cohort table asks you for two things, and they sound similar enough that people set both to the same value and then wonder why the first column is always one hundred percent.</p>
-
-<p><strong>Inclusion criteria</strong> decides who gets into the cohort and when their clock starts. <strong>Return criteria</strong> decides what counts as coming back. They are separate questions and they are frequently different actions.</p>
+<p>That single change is what makes a slow loss visible, and it is worth understanding why. A total is a snapshot, so arrivals and departures cancel each other out inside it and the result looks like stability. Follow one fixed group forward and there are no arrivals to hide behind. Whatever is left in week eight is what is left, and if that number is small then the number is small.</p>
 
 <div class="diagram-box">
     <div class="diagram-title">📊 One event puts you in the group. A different event proves you stayed.</div>
@@ -74,32 +71,35 @@ weight: 5
     </svg>
 </div>
 
-<p>Two readings come free from that grid and both are worth naming.</p>
+<h3 class="subsec-title">Two criteria, and confusing them is the standard mistake</h3>
+<p>Building one of these asks you for two things, and they sound similar enough that a great many people set both to the same value, get a table where the first column reads a hundred percent and the rest looks oddly healthy, and conclude that retention is fine.</p>
 
-<p>Reading <strong>across</strong> a row shows the life of one group: how quickly a single intake fell away. Reading <strong>down</strong> a column compares intakes at the same age, which is the only fair comparison and the one people skip. January's cohort at week three against February's cohort at week three is a real question. January's cohort at week eight against February's at week two is not a comparison at all, and the triangular shape of the table invites exactly that mistake.</p>
+<p><strong>Inclusion criteria</strong> decides who gets into the cohort at all and when their clock starts running. <strong>Return criteria</strong> decides what counts as having come back. Those are genuinely different questions, and in most useful cohorts they are different actions: included by making a first purchase, returning by visiting at all. Set both to purchase and you have asked whether people who bought went on to buy again, which is a real question but a much narrower one than most people think they are asking.</p>
+
+<p>Once the grid is built there are two ways to read it, and only one of them is a fair comparison. Reading <strong>across</strong> a row follows the life of one intake, showing how quickly that particular group fell away. Reading <strong>down</strong> a column compares different intakes at the same age, which is the comparison that actually means something. January's cohort at week three against February's cohort at week three is a real question about whether acquisition quality is changing. January at week eight against February at week two is not a comparison at all, and the triangular shape of the table invites people to make it constantly, because the eye is drawn along the longest row.</p>
 
 <h3 class="subsec-title">Three tables wearing the same grid</h3>
-<p>The table type changes what the grid measures without changing how it looks, which is worth knowing before somebody hands you one.</p>
+<p>The table type changes what every cell measures without changing anything about how the grid looks, which is worth knowing before somebody hands you one and tells you what it proves.</p>
 
 <div class="tbl-wrap">
     <table>
         <thead><tr><th>Type</th><th>What each cell says</th><th>Reach for it when</th></tr></thead>
         <tbody>
             <tr><td><strong>Retention</strong></td><td>How many of the cohort met the return criteria in this period</td><td>The default question: did they stay</td></tr>
-            <tr><td><strong>Churn</strong></td><td>The inverse: how many did not return</td><td>The number has to land in a meeting. Sixty percent lost reads harder than forty percent kept</td></tr>
-            <tr><td><strong>Latency</strong></td><td>Time before and after the inclusion event, with inclusion in the middle</td><td>You want to know what people did in the run-up, not only afterward</td></tr>
+            <tr><td><strong>Churn</strong></td><td>The inverse, how many did not return</td><td>The number has to land in a meeting. Sixty percent lost reads harder than forty percent kept</td></tr>
+            <tr><td><strong>Latency</strong></td><td>Time before and after the inclusion event, with inclusion in the middle</td><td>You want the run-up as well as the aftermath</td></tr>
         </tbody>
     </table>
 </div>
 
-<p>Latency is the one most people never open and the one that most often changes a decision. It puts the inclusion event at the center and shows the periods on both sides, so it answers what somebody was doing before they converted as well as after. That is the half of the journey most reporting throws away.</p>
+<p>Latency is the one almost nobody opens and the one that most often changes a decision, because it puts the inclusion event at the center of the grid and shows the periods on both sides of it. That means it can answer what people were doing in the weeks before they converted, not only what they did afterward, and the run-up is the half of the journey that ordinary reporting throws away entirely.</p>
 
 <h3 class="subsec-title">Rolling calculation moves the denominator, and the numbers get better</h3>
-<p>There is a switch called rolling calculation, and it is the one setting in this visualization that can flatter a decline into something acceptable.</p>
+<p>There is a switch called rolling calculation, and it is the one setting in this visualization capable of turning a collapse into something that reads like an improving trend.</p>
 
-<p>By default, every percentage is measured against the original cohort. Week three is a share of everybody who joined. With rolling calculation on, each period is measured against <strong>the period before it</strong> instead.</p>
+<p>By default, every percentage in the grid is measured against the original cohort, so week three is a share of everybody who joined in week zero. Switch rolling calculation on and each period is measured against <strong>the period immediately before it</strong> instead. Both of those are legitimate calculations and they answer different questions: against the original cohort is survival, meaning how much of the intake is still here, while against the previous period is period-over-period retention, meaning that of the people who were still here last week, this many are still here now.</p>
 
-<p>Both are legitimate and they answer different questions. Against the original cohort is survival: how much of the intake is left. Against the previous period is period-over-period retention: of the people still here last week, how many are still here now. The second is almost always the higher number, because it forgives everyone who already left.</p>
+<p>The second is almost always the higher number, because it quietly forgives everybody who already left.</p>
 
 <div class="diagram-box">
     <div class="diagram-title">📊 Identical people, identical weeks, and the percentages climb</div>
@@ -135,35 +135,24 @@ weight: 5
 
 <div class="warn-box">
     <div class="warn-hdr">⚠️ Rolling calculation makes retention look better and does not say so</div>
-    <p>Switch it on and every figure after the first column improves, because the denominator shrinks to match the survivors rather than the intake. Nothing in the table announces which mode is active, and both produce a plausible-looking percentage in the same cell. A cohort quoted at "sixty-eight percent retention at week four" means something completely different under the two settings, and the flattering reading is the one that gets into a deck. Whenever a retention figure is presented, ask what the denominator is before asking whether the number is good.</p>
+    <p>Switch it on and every figure after the first column improves, because the denominator has shrunk to match the survivors rather than the intake. Nothing in the table announces which mode is active, both produce a perfectly plausible percentage in the same cell, and a cohort described as showing "sixty-eight percent retention at week four" means two completely different things under the two settings. The flattering reading is the one that tends to reach a deck, because it is the one somebody screenshotted while it was showing a good number. Whenever a retention figure is presented to you, ask what the denominator is before asking whether the number is good.</p>
 </div>
 
 <h3 class="subsec-title">What the cohort table refuses to accept</h3>
-<p>This visualization is fussier about metrics than anything else in Workspace, and discovering that mid-build is a familiar frustration.</p>
+<p>This visualization is fussier about which metrics it will take than anything else in Workspace, and finding that out halfway through building something is a familiar and slightly infuriating experience.</p>
 
-<p>It takes only metrics it can filter people by, which rules out several things you will reach for on instinct:</p>
+<p>It accepts only metrics it can use to filter people, which rules out several things you will reach for on instinct. Calculated metrics are refused, because they are evaluated after rows have been assembled and there is nothing left to test an individual person against. Revenue and other non-integer metrics are refused, because a cohort asks whether somebody did a thing rather than how much the thing was worth. Occurrences is refused for the same reason: it is not a filterable action.</p>
 
-<div class="tbl-wrap">
-    <table>
-        <thead><tr><th>Refused</th><th>Why</th></tr></thead>
-        <tbody>
-            <tr><td><strong>Calculated metrics</strong></td><td>They are evaluated after rows are assembled, so there is nothing to test a person against</td></tr>
-            <tr><td><strong>Revenue and other non-integer metrics</strong></td><td>A cohort asks whether somebody did a thing, not how much the thing was worth</td></tr>
-            <tr><td><strong>Occurrences</strong></td><td>Not a filterable action</td></tr>
-        </tbody>
-    </table>
-</div>
-
-<p>The calculated metric exclusion is the one that stings, because the natural instinct is to build a cohort on conversion rate, and conversion rate is a ratio rather than an action. The way through is to reach for the underlying event instead: not "converted at some rate" but "placed an order". <a href="/adobe-analytics-learning/analyze/calculated-metrics/what-are-calculated-metrics/">Calculated Metrics</a> covers why a formula cannot reach back to an individual person, and cohort tables are one of the five places that boundary is visible.</p>
+<p>The calculated metric exclusion is the one that stings, since the natural instinct is to build a cohort on conversion rate, and conversion rate is a ratio rather than something a person can be said to have done. The way through is always to reach for the underlying event instead, so not "converted at some rate" but "placed an order". <a href="/adobe-analytics-learning/analyze/calculated-metrics/what-are-calculated-metrics/">Calculated Metrics</a> covers why a formula cannot reach back to an individual, and the cohort table is one of the five places in the product where that boundary becomes visible.</p>
 
 <h3 class="subsec-title">Cohorts do not have to be about time</h3>
-<p>The default reading of a cohort is temporal, and it is not the only one available. A cohort can be built on a dimension instead: everybody who first arrived through paid search, everybody whose first purchase was in a particular category, everybody who started on mobile.</p>
+<p>The default reading of a cohort is temporal, and it is easy to assume that is all there is, but a cohort can be built on a dimension instead. Everybody whose first visit came through paid search. Everybody whose first purchase was in a particular category. Everybody who started on mobile.</p>
 
-<p>That turns the grid into something more useful than a retention curve. It stops asking how long people stay and starts asking <strong>which kind of first experience produces people who stay</strong>. Those are the same numbers pointed at an acquisition decision rather than a loyalty one, and the second is usually the one somebody is about to spend money on.</p>
+<p>That turns the same grid into a considerably more useful instrument, because it stops asking how long people stay and starts asking <strong>which kind of first experience produces people who stay</strong>. Those are the same numbers pointed at an acquisition decision rather than a loyalty one, and the acquisition decision is usually the one somebody is about to spend real money on.</p>
 
 <div class="pro-tip">
     <div class="pro-tip-hdr">💡 The comparison that pays for the whole exercise</div>
-    <p>Build the same cohort table twice, split by first acquisition channel. Retention curves by channel almost always diverge more sharply than acquisition volumes do, and the channel that looks cheapest per visit is regularly the one whose people are gone by week two. That single comparison reframes a budget conversation from cost per acquisition to cost per acquisition that lasted, and it is difficult to argue with because it follows named groups rather than averages.</p>
+    <p>Build the same cohort table split by first acquisition channel and put the versions side by side. Retention curves by channel almost always diverge far more sharply than acquisition volumes do, and the channel that looks cheapest per visit turns out with some regularity to be the one whose people have all gone by week two. That single comparison moves a budget conversation from cost per acquisition to cost per acquisition that lasted, and it is unusually hard to argue with, because it follows named groups of real people forward rather than averaging anything.</p>
 </div>
 
 <div class="shot-box shot-pending">
@@ -176,19 +165,19 @@ CROP:       the settings area only: inclusion criteria, return
             criteria, granularity, and the table type options.
 MUST SHOW:  inclusion and return as two separate controls, since
             the section's main point is that they are different
-            questions. If rolling calculation and the retention
-            / churn / latency choice are visible in the same
-            frame, better.
-SETUP:      set inclusion and return to DIFFERENT metrics so the
+            questions. If rolling calculation and the retention,
+            churn and latency choice are visible in the same
+            frame, better still.
+SETUP:      set inclusion and return to DIFFERENT metrics, so the
             picture does not reinforce the mistake.
 REDACT:     nothing.
 WIDTH:      about 1200px.</p>
     </div>
-    <div class="shot-note">Placeholder. Two separate criteria in one frame is the whole teaching point.</div>
+    <div class="shot-note">Placeholder. Two separate criteria visible in one frame is the whole teaching point.</div>
 </div>
 
 <h3 class="subsec-title">Follow along: watch a total hide a collapse</h3>
-<p>The gym at the top of this section is easier to believe once you have seen the same data both ways in your own account.</p>
+<p>The gym at the top of this section is much easier to believe once you have seen the same months read both ways in your own account, and the whole exercise takes about ten minutes.</p>
 
 <div class="code-block">
     <div class="code-hdr"><span class="code-lang">Follow along: the same months, read two different ways</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
@@ -206,9 +195,9 @@ PART TWO, THE COHORT
        Orders, or a signup event. Something that means arrival.
 
 4  Return criteria: something DIFFERENT
-       Visits, or any engagement event. If you set this to the
-       same metric as inclusion, you are asking whether buyers
-       bought, and the answer will look better than it is.
+       Visits, or any engagement event. Setting this to the same
+       metric as inclusion asks whether buyers bought, and the
+       answer will look better than the business is.
 
 5  Granularity: Monthly.  Table type: Retention.
 
@@ -219,34 +208,34 @@ PART TWO, THE COHORT
 PART THREE, THE SETTINGS THAT CHANGE THE STORY
 
 7  Switch table type to Churn
-       Identical data, and note how differently it reads.
+       Identical data, and notice how differently it reads.
 
 8  Switch rolling calculation on
        Every figure improves. Nothing about the business did.
        Turn it off again and decide which one you would present.
 
 9  Change the cohort to a dimension instead of a date
-       First marketing channel, if you have it. Now the table
-       is about acquisition quality rather than loyalty.
+       First marketing channel, if you have it. Now the table is
+       about acquisition quality rather than loyalty.
 
 There is nothing else to configure. Inclusion, return, granularity,
 table type. Four choices, and the last two change the story more
 than most people expect.</pre></div>
 </div>
 
-<p>Those nine steps are a floor rather than a ceiling. Step 8 in particular is worth doing once with a real dataset, because seeing your own numbers improve without anything improving is more persuasive than any warning about denominators.</p>
+<p>Those nine steps are a floor rather than a ceiling. Step 8 is worth doing once on real data, because watching your own numbers improve while nothing improves is considerably more persuasive than any warning about denominators.</p>
 
 <h3 class="subsec-title">What you have now</h3>
-<p>A cohort groups people by when they first did something and follows that group forward, which is the only arrangement in this product that makes a slow loss visible. Inclusion criteria starts the clock, return criteria decides what counts as coming back, and setting them to the same thing produces a table that flatters you. Retention, churn and latency are three readings of one grid. Rolling calculation quietly changes the denominator and improves every number after the first.</p>
+<p>A cohort groups people by when they first did something and follows that fixed group forward, which is the only arrangement in this product that makes a slow loss visible at all. Inclusion criteria starts the clock, return criteria decides what counts as coming back, and setting them to the same thing produces a table that flatters you. Retention, churn and latency are three readings of one grid, and latency is the one that shows the run-up. Rolling calculation quietly changes the denominator and improves every figure after the first.</p>
 
-<p>The reason it matters beyond retention reporting is the habit it builds. Almost every reassuring number in analytics is a total, and almost every total is new arrivals covering for departures. Once you have seen a cohort table disagree with a healthy-looking trend line, you stop trusting aggregates on their own, and that suspicion is worth more than the visualization.</p>
+<p>What matters beyond retention reporting is the suspicion it teaches. Almost every reassuring number in analytics is a total, and almost every total is new arrivals covering for departures. Once you have watched a cohort table disagree with a healthy-looking trend line drawn from the same data, you stop trusting aggregates on their own, and that habit is worth considerably more than the visualization that produced it.</p>
 
-<p>Cohorts answer whether people came back. They say nothing about what those people did while they were there, or where the ones who left gave up. <a href="/adobe-analytics-learning/analyze/analysis-workspace/fallout-and-flow-analysis/">Fallout and Flow Analysis</a> covers both: one tests a path you already believe in, and the other shows you the paths you never thought to look for.</p>
+<p>Cohorts answer whether people came back. They say nothing at all about what those people did while they were there, or about where the ones who left actually gave up. <a href="/adobe-analytics-learning/analyze/analysis-workspace/fallout-and-flow-analysis/">Fallout and Flow Analysis</a> covers both of those: one tests a path you already believe in, and the other shows you the paths nobody thought to look for.</p>
 
 <div class="path-box">
     <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Analytics</div>
     <p>Analytics &gt; <span class="path">Workspace</span>, then the <span class="path">Visualizations</span> icon in the left rail, and <span class="path">Cohort table</span>. It can also be added from <span class="path">Insert</span> in the menu bar.</p>
-    <p>Inclusion criteria, return criteria, granularity and the table type all sit in the configuration panel that appears before the table is built. The gear on a finished cohort table reopens them, including <span class="path">Rolling calculation</span> and the latency option.</p>
+    <p>Inclusion criteria, return criteria, granularity and table type all sit in the configuration panel that appears before the table is built. The gear on a finished cohort table reopens them, including <span class="path">Rolling calculation</span> and the latency option.</p>
 </div>
 
 <div class="ref-box">

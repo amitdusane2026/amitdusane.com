@@ -2,10 +2,198 @@
 slug: "workspace-performance-and-limits"
 title: "Workspace Performance and Limits"
 seotitle: "Analysis Workspace Performance and Limits"
-lastmod: 2026-07-18
+description: "The project everybody depends on is usually the slowest one in the company. What actually costs time, the guardrails worth knowing, and how to get it back."
+lastmod: 2026-08-14
 type: lesson
 modulenum: 14
 sectionnum: 10
 weight: 10
 ---
-<p>This section is not yet written.</p>
+<p>There is a project in most companies that started life as one panel answering one question. Somebody added a second panel because a related question came up. A colleague asked for last year alongside this year, so a comparison went in. Somebody else needed the same view for a different region, and rather than build a new project it was easier to add a panel. A director wanted a summary at the top, so a summary panel arrived. Over eighteen months it accumulated the way a shared document accumulates, one entirely reasonable addition at a time.</p>
+
+<p>It is now the most important project in the company, and it takes about ninety seconds to load.</p>
+
+<p>Which means that the person who opens it in front of a room does so knowing they will be talking over a loading spinner, and that anybody who wanted to check one number decides not to bother. The analysis is good. The numbers are right. And the thing has become slightly too heavy to actually use, which is a failure mode nobody planned and nobody owns.</p>
+
+<p>This section is about why that happens, what the real ceilings are, and what to do about it, because a report nobody waits for is a report nobody reads.</p>
+
+<h3 class="subsec-title">What a project is actually doing while you wait</h3>
+<p>The spinner is easy to read as one slow thing happening. It is not. Opening a project fires a large number of separate queries at Adobe, and the wait is the slowest of them plus the queueing of all the rest.</p>
+
+<p>Every freeform table is at least one query. So is every anomaly detection band, because the statistics are computed rather than stored. So are the sparklines in a summary, the components listed in the left rail, and each of the visualizations that turned out to be reading a different table. A project that looks like eight panels can easily be fifty or sixty requests, and the browser is holding all of them in flight while the person watching decides whether they have time for this.</p>
+
+<p>Which reframes the problem usefully. Making a project faster is almost never about one heavy table. It is about the number of separate things being asked for, and the two levers that matter most are how many queries there are and how much work each one requires.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">📊 What the spinner is actually waiting for</div>
+    <svg viewBox="0 0 700 250" style="width:100%;height:auto;display:block;margin:4px 0 8px"
+         role="img" aria-label="A project breaking into its component requests. One project produces separate queries for every freeform table, every anomaly detection band, every sparkline, and the component list in the left rail. These queue together, so the wait is the slowest request plus the queue behind it, and the total is driven by how many separate things were asked for rather than by any single heavy table.">
+        <rect x="16" y="24" width="150" height="60" rx="8" style="fill:var(--card,#ffffff);stroke:var(--accent,#e11d48);stroke-width:2"/>
+        <text x="91" y="50" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:12px;font-weight:700;font-family:sans-serif">ONE PROJECT</text>
+        <text x="91" y="70" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">8 panels</text>
+
+        <line x1="166" y1="54" x2="206" y2="54" style="stroke:var(--text3,#94a3b8);stroke-width:1.5"/>
+        <polygon points="214,54 202,48 202,60" style="fill:var(--text3,#94a3b8)"/>
+
+        <rect x="222" y="20" width="240" height="22" rx="3" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1"/>
+        <text x="232" y="36" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">every freeform table</text>
+        <rect x="222" y="48" width="240" height="22" rx="3" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1"/>
+        <text x="232" y="64" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">every anomaly band</text>
+        <rect x="222" y="76" width="240" height="22" rx="3" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1"/>
+        <text x="232" y="92" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">every sparkline</text>
+        <rect x="222" y="104" width="240" height="22" rx="3" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1"/>
+        <text x="232" y="120" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">the left rail components</text>
+        <rect x="222" y="132" width="240" height="22" rx="3" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1"/>
+        <text x="232" y="148" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">each visualization's source</text>
+
+        <line x1="470" y1="88" x2="510" y2="88" style="stroke:var(--text3,#94a3b8);stroke-width:1.5"/>
+        <polygon points="518,88 506,82 506,94" style="fill:var(--text3,#94a3b8)"/>
+
+        <rect x="526" y="44" width="158" height="88" rx="8" style="fill:var(--card,#ffffff);stroke:var(--accent,#e11d48);stroke-width:2.5"/>
+        <text x="605" y="78" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:22px;font-weight:700;font-family:sans-serif">60+</text>
+        <text x="605" y="100" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">separate requests</text>
+        <text x="605" y="118" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:10px;font-family:sans-serif">queued together</text>
+
+        <text x="16" y="192" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">The wait is the slowest request plus everything queued behind it.</text>
+        <text x="16" y="214" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">So the fix is almost never "optimize the big table". It is "ask for fewer things, over a shorter window".</text>
+    </svg>
+</div>
+
+<h3 class="subsec-title">The guardrails, and what they are actually telling you</h3>
+<p>Adobe publishes guidelines rather than hard walls for most of this, and the numbers are worth knowing because they are lower than people assume.</p>
+
+<p>The guideline for total freeform table cells across a whole project, meaning rows multiplied by columns and then added up across every table, sits around <strong>four thousand</strong>. That sounds generous until you do the arithmetic: a single table showing two hundred rows against ten columns is two thousand on its own, and there are usually several tables. The guideline for panels in one project is around <strong>a hundred</strong>, which nobody hits deliberately and some projects reach by accretion. And the guidance on date range is that the longest range in a project should stay within about a year.</p>
+
+<p>That last one carries a detail that catches people out. A year-over-year comparison does not fetch two ranges, it reaches across the whole span between them, so a comparison between this month and the same month last year is pulling against roughly thirteen months of data. Put three of those in one project and the date range guideline has been passed several times over without any single panel looking unreasonable.</p>
+
+<div class="info-box">
+    <div class="info-hdr">ℹ️ These are guidelines, and that is worse than a limit rather than better</div>
+    <p>A hard limit tells you when you have crossed it. A guideline lets you go past quietly, and the only symptom is that things get slower, which people attribute to the network, or to Adobe, or to the time of day. That is why projects degrade for months without anybody diagnosing them: nothing ever failed, so nothing was ever investigated. If a project has become noticeably slow, the useful assumption is that it has drifted past one of these numbers rather than that something is wrong with the platform.</p>
+</div>
+
+<h3 class="subsec-title">Where the time actually goes, in rough order</h3>
+<p>Not everything costs the same, and knowing the order stops you optimizing the wrong thing. In practice the biggest wins come from the top of this list and almost nothing comes from the bottom.</p>
+
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>What costs time</th><th>Why</th><th>What to do about it</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Row counts nobody reads</strong></td><td>A table set to show two hundred rows fetches two hundred rows whether or not anybody scrolls</td><td>Drop it to what is actually looked at, usually ten</td></tr>
+            <tr><td><strong>Long and overlapping date ranges</strong></td><td>Year-over-year spans the whole period between, not just the two ends</td><td>Shorten the range, and keep comparisons to the ones somebody uses</td></tr>
+            <tr><td><strong>Too many panels in one project</strong></td><td>Everything loads, including the panels nobody scrolls to</td><td>Split by audience into separate projects</td></tr>
+            <tr><td><strong>Anomaly detection left on everywhere</strong></td><td>Each band is computed at load, not stored</td><td>Keep it on the metrics somebody acts on</td></tr>
+            <tr><td><strong>Expanded visualizations below the fold</strong></td><td>They render on load even though nobody has scrolled</td><td>Collapse anything that is supporting rather than headline</td></tr>
+            <tr><td><strong>Breakdowns left expanded</strong></td><td>Each expanded branch is more rows fetched</td><td>Collapse them before saving</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<p>The pattern running through all of it is that Workspace fetches what the project asks for, not what the reader looks at. A table showing two hundred rows on a panel nobody scrolls to, with an expanded breakdown and an anomaly band, costs exactly as much as one somebody reads carefully. Most slow projects are slow because they are answering questions that were relevant eight months ago and have never been removed.</p>
+
+<h3 class="subsec-title">The fix that works better than any setting</h3>
+<p>All of the tuning above is real and worth doing, and none of it addresses the actual cause, which is that one project is trying to serve several different audiences at once.</p>
+
+<p>Think about who opens the project from the opening of this section. A director wants three numbers and a direction. A channel manager wants their own channel in detail and does not care about the others. An analyst wants everything, including the working. Those are three genuinely different documents, and they have been merged into one because merging was easier than maintaining three, and because every individual addition was small.</p>
+
+<p>Splitting them is the single most effective performance change available, and it is not really a performance change. Each audience gets a project that loads quickly because it is only holding what they need, each one is legible because nobody is scrolling past six panels that are not for them, and the analyst's version can stay as heavy as it likes because one person waiting thirty seconds while they think is a completely different situation from a director waiting thirty seconds in front of a room.</p>
+
+<p>That also makes <a href="/adobe-analytics-learning/analyze/analysis-workspace/curation-and-templates/">curation</a> easier rather than harder, because a project built for one audience has an obvious answer to the question of which components belong in it.</p>
+
+<div class="pro-tip">
+    <div class="pro-tip-hdr">💡 Collapse everything that is not the headline before you save</div>
+    <p>Collapsed panels and collapsed visualizations do not render on load, which means a project can keep all of its supporting detail and still open quickly, as long as the detail arrives collapsed. Build the habit of saving a shared project in the state you want somebody to find it: headline panel open at the top, everything supporting collapsed underneath, breakdowns closed. It costs nothing, it survives being handed around, and it is the cheapest way to make a heavy project behave like a light one for the ninety percent of readers who only ever look at the top.</p>
+</div>
+
+<div class="shot-box shot-pending">
+    <div class="shot-title">📷 Row settings, where most of the weight is hiding</div>
+    <div class="shot-frame">
+        <p class="shot-brief">FILE:       aal_module14_section10_ss1.png
+SCREEN:     Workspace, a freeform table with row settings open
+CROP:       the row settings panel, showing the control for how
+            many rows the table shows.
+MUST SHOW:  the row count control with a large value in it if
+            possible, since the section's argument is that this
+            single number is fetched whether or not anybody
+            scrolls to read it.
+REDACT:     nothing.
+WIDTH:      about 1000px.</p>
+    </div>
+    <div class="shot-note">Placeholder. The row count is the most common cause of a slow project and the one setting people never think of as a performance decision.</div>
+</div>
+
+<h3 class="subsec-title">Follow along: take ninety seconds off a real project</h3>
+<p>This works best on a project that genuinely is slow, and the order matters, because the first three steps usually account for most of the improvement.</p>
+
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">Follow along: make a heavy project usable again</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>MEASURE FIRST
+
+1  Open the slow project and count, roughly:
+       how many panels, how many tables, how many rows each
+       table is set to show, and the longest date range in it
+
+2  Multiply rows by columns across every table and add them up
+       Compare that against the four thousand cell guideline.
+       Most slow projects are well past it.
+
+THE THREE CHANGES THAT DO MOST OF THE WORK
+
+3  Row settings on every table: drop to what people actually read
+       Ten is usually enough. If somebody needs two hundred rows
+       they need an export, not a table.
+
+4  Shorten the date range, and remove year-over-year comparisons
+   nobody quotes
+       Remember each one reaches across the whole span between
+       the two periods, not just the two ends.
+
+5  Collapse every panel and visualization that is not the headline
+       Then save it in that state so recipients get it that way.
+
+THEN THE STRUCTURAL ONE
+
+6  List who opens this project and what each of them needs
+
+7  If that list has more than one kind of reader on it, split it
+       Director version: three numbers and a direction.
+       Team version: their own slice, in detail.
+       Analyst version: everything, and it can stay slow.
+
+8  Curate each one, and share at the right level
+
+CHECK
+
+9  Reopen the director version and time it
+       If it is not noticeably faster, go back to step 3,
+       because the row counts are almost always the culprit.
+
+There is nothing else to configure. Workspace has no performance
+settings. Every improvement available is a decision about asking
+for less.</pre></div>
+</div>
+
+<p>Those nine steps are a floor rather than a ceiling. Step 6 is the one that feels like organizational work rather than analytics work, and it is the one that permanently fixes the problem rather than deferring it for another eighteen months of accretion.</p>
+
+<h3 class="subsec-title">Where this module leaves you</h3>
+<p>A project is slow because of how many separate things it asks for, not because any one table is heavy. Rows fetched but never read, date ranges longer than anybody uses, comparisons that span thirteen months to show two, anomaly bands computed on metrics nobody acts on, panels that load for readers who never scroll to them. The published guidelines are guidelines rather than walls, which means a project passes them quietly and simply gets slower, and the real fix is usually structural: one project per audience, curated, shared at the level that matches what the reader is actually doing.</p>
+
+<p>Step back from that and the whole module has been circling one idea. Analysis Workspace refuses almost nothing, and every one of the ten sections has been about a place where that freedom hands you a decision the product will not make for you. Which dimension goes at the top level of the table. Whether the funnel means eventually or immediately. Whether the retention percentage is measured against the intake or the survivors. Which of three roles the person receiving your work should get. How much a project is allowed to ask for. None of those have a default that is right in every case, and none of them announce themselves in the number that comes out.</p>
+
+<p>That is the actual skill this module has been teaching, and it is not really about Workspace. It is that in a tool which will answer any question you can express, the quality of your answers is decided almost entirely by the quality of your questions, and by whether you know what you just asked for.</p>
+
+<p>The data has been collected, shaped and now analyzed. What remains is everything that happens around the analysis: writing down what the implementation is supposed to do, proving that it does it, and keeping both true as the site changes underneath. <a href="/adobe-analytics-learning/deliver/solution-design-reference/what-is-an-sdr/">What Is an SDR</a> opens that last stretch of the curriculum.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Analytics</div>
+    <p>There is no performance screen. Everything in this section is changed in the places the settings already live: <span class="path">Row settings</span> under a table's row header, the date range in each <span class="path">panel header</span>, and the collapse control on every panel and visualization.</p>
+    <p>Anomaly detection is switched off in <span class="path">Column settings</span> on the metric that carries it. Splitting a project is <span class="path">Project &gt; Save as</span>, followed by deleting the panels that do not belong to the audience you just built for.</p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title">📚 Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/analyze/analysis-workspace/workspace-faq/optimizing-performance" target="_blank">Adobe Docs: Optimize Analysis Workspace Performance</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/analyze/analysis-workspace/workspace-faq/aw-limitations" target="_blank">Adobe Docs: Analysis Workspace Known Limitations</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/analyze/analysis-workspace/workspace-faq/error-messages" target="_blank">Adobe Docs: Workspace Error Messages</a></li>
+    </ul>
+</div>

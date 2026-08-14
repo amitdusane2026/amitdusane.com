@@ -2,75 +2,178 @@
 slug: "anomaly-detection-contribution-analysis"
 title: "Anomaly Detection and Contribution Analysis"
 seotitle: "Anomaly Detection in Adobe Analytics"
-lastmod: 2026-07-15
+description: "Nobody can watch four hundred numbers each morning. What the statistics do, why a flagged point is a question rather than a finding, and where it ends."
+lastmod: 2026-08-14
 type: lesson
 modulenum: 14
 sectionnum: 7
 weight: 7
 ---
-<p>Adobe Analytics uses machine learning to automatically detect unusual patterns in your data and identify factors contributing to anomalies.</p>
-                <h3 class="subsec-title">Anomaly Detection</h3>
-                <ul>
-                    <li><strong>Automatic:</strong> Runs on any trended metric in Workspace</li>
-                    <li><strong>Statistical model:</strong> Uses historical data to predict expected values</li>
-                    <li><strong>Confidence bounds:</strong> Shows upper and lower expected ranges</li>
-                    <li><strong>Visual indicators:</strong> Dots highlight statistically significant deviations</li>
-                </ul>
+<p>Somebody in every analytics team has the morning job. They open a project at nine, run their eye down a column of numbers, and look for anything that seems wrong. Most days nothing does, so they close it and get on with the actual work. It takes four minutes and it feels responsible.</p>
 
-                <h3 class="subsec-title">How to Use Anomaly Detection</h3>
-                <div class="code-block">
-                    <div class="code-hdr"><span class="code-lang">Enabling Anomaly Detection</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-                    <div class="code-body"><pre>In Analysis Workspace:
-1. Create a line visualization with time dimension
-2. Right-click the metric column header
-3. Select "Run Anomaly Detection"
+<p>The trouble is what that job is really asking a person to do. To spot something unusual you have to know what usual looks like, and usual is not one number. Orders on a Tuesday are not orders on a Saturday. December is not February. A campaign that ended last week moved the baseline and nobody wrote it down. So the person doing the morning check is quietly holding a mental model of normal for every metric they look at, and that model is built from memory, and memory is generous about numbers that were fine and vague about numbers that were not.</p>
 
-Or in Column Settings:
-1. Click gear icon on metric column
-2. Enable "Show Anomalies"
+<p>Then there is the arithmetic of the thing. A serious report suite has a few hundred metric and dimension combinations that somebody would care about, and no team checks a few hundred of anything every morning. They check the six they always check, which means every problem that happens somewhere else waits until it is large enough to be noticed by accident, and by then it has usually been happening for a fortnight.</p>
 
-Configuration Options:
-├── Training Period: How much history to analyze (default: 35 days)
-├── Confidence: Statistical confidence level (90%, 95%, 99%)
-└── Granularity: Day, Week, Month
+<p>Anomaly detection exists because that job should not belong to a person's memory at nine in the morning.</p>
 
-Interpreting Results:
-- Gray band = Expected range
-- Point above band = Positive anomaly (spike)
-- Point below band = Negative anomaly (drop)
-- Larger deviation = More significant anomaly</pre></div>
-                </div>
+<h3 class="subsec-title">What the product is actually doing when it draws that band</h3>
+<p>Turn anomaly detection on and a line chart gains a shaded band around it, with the occasional dot sitting outside. The band is the range the product expected, the dot is a value that fell outside that range, and the whole thing looks reassuringly like the software knows something.</p>
 
-                <h3 class="subsec-title">Contribution Analysis</h3>
-                <p>When an anomaly is detected, Contribution Analysis identifies which dimension values most contributed to the unusual change.</p>
-                <div class="code-block">
-                    <div class="code-hdr"><span class="code-lang">Running Contribution Analysis</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-                    <div class="code-body"><pre>1. Right-click on anomaly point in visualization
-2. Select "Analyze" → "Run Contribution Analysis"
-3. Select dimensions to analyze
+<p>It is worth understanding how that band gets drawn, because the answer explains most of what anomaly detection is good and bad at. Adobe looks backward over a training window, works out what the metric normally does including its weekly rhythm and its trend, projects that forward, and draws the range where the next value should land if nothing has changed. A point outside the range is not being called wrong or important. It is being called <strong>surprising given the recent past</strong>, which is a narrower claim than most people hear.</p>
 
-Analysis Returns:
-├── Top contributing dimension values
-├── Change in metric for each value
-├── Percentage contribution to anomaly
-└── Statistical significance score
+<p>The training window varies with the granularity you are looking at, and the differences matter more than they sound. A daily view learns from roughly the last thirty-five days plus the same period a year ago, so it knows about last month and about last Christmas. A weekly view learns from about fifteen weeks plus the same range last year, and a monthly view from about fifteen months on the same basis. Hourly works from the last few hundred hours. The technique underneath changes too: daily granularity uses a time-series model that accounts for error, trend and seasonality, while weekly and monthly switch to an outlier test that asks how extreme a value is against the spread of the others rather than trying to forecast it.</p>
 
-Example Output:
-Metric: Orders (dropped 40% on Tuesday)
+<div class="diagram-box">
+    <div class="diagram-title">📊 The band is a forecast. The dot is a point that ignored it.</div>
+    <svg viewBox="0 0 700 260" style="width:100%;height:auto;display:block;margin:4px 0 8px"
+         role="img" aria-label="A line chart of a metric over time. A shaded band runs along the line showing the range the model expected, widening slightly as it projects forward. Most points sit inside the band. One point sits well below it and is marked as an anomaly. The band is built from a training window of past data including the same period a year earlier, so it already accounts for weekly rhythm and trend.">
+        <text x="16" y="20" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif;letter-spacing:1px">TRAINING WINDOW</text>
+        <text x="470" y="20" style="fill:var(--accent,#e11d48);font-size:11px;font-weight:700;font-family:sans-serif;letter-spacing:1px">WHAT HAPPENED NEXT</text>
+        <line x1="452" y1="28" x2="452" y2="212" style="stroke:var(--border,#e2e8f0);stroke-width:1.5;stroke-dasharray:4 4"/>
 
-Top Contributors:
-1. Mobile Device Type: iPhone (-35% of drop)
-   → iOS app crash causing checkout failures
-2. Marketing Channel: Paid Search (-25% of drop)
-   → Campaign paused by mistake
-3. Geography: California (-20% of drop)
-   → Regional site outage</pre></div>
-                </div>
-                <div class="ref-box">
-                    <div class="ref-title">📚 Learn More</div>
-                    <ul>
-                        <li><a href="https://experienceleague.adobe.com/docs/analytics/analyze/analysis-workspace/virtual-analyst/anomaly-detection/anomaly-detection.html" target="_blank">Adobe Docs: Anomaly Detection</a></li>
-                        <li><a href="https://experienceleague.adobe.com/docs/analytics/analyze/analysis-workspace/virtual-analyst/contribution-analysis/run-contribution-analysis.html" target="_blank">Adobe Docs: Contribution Analysis</a></li>
-                    </ul>
-                </div>
-            
+        <path d="M30 96 L92 84 L154 104 L216 78 L278 92 L340 74 L402 88 L452 78 L514 72 L576 84 L638 70 L668 78
+                 L668 128 L638 122 L576 136 L514 124 L452 130 L402 140 L340 126 L278 144 L216 130 L154 156 L92 136 L30 148 Z"
+              style="fill:var(--accent,#e11d48);opacity:0.13"/>
+
+        <polyline points="30,122 92,110 154,130 216,104 278,118 340,100 402,114 452,104 514,98 576,196 638,96 668,102"
+                  style="fill:none;stroke:var(--text2,#475569);stroke-width:2.5"/>
+
+        <circle cx="576" cy="196" r="8" style="fill:var(--accent,#e11d48)"/>
+        <circle cx="576" cy="196" r="14" style="fill:none;stroke:var(--accent,#e11d48);stroke-width:2"/>
+        <text x="576" y="230" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:12px;font-weight:700;font-family:sans-serif">outside the expected range</text>
+
+        <line x1="16" y1="212" x2="684" y2="212" style="stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <text x="16" y="252" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">The band already knows about weekends, seasonality and trend. It knows nothing about your release calendar.</text>
+    </svg>
+</div>
+
+<p>Two things follow from that, and both are worth carrying. The first is that the band is not a judgment about whether a number is good. A metric can be alarmingly low and entirely unsurprising, because it has been alarmingly low for a month and the model has learned to expect it. The second is that the model only knows what is in the data. It has no idea that marketing paused a campaign, that a release shipped on Thursday, or that a tracking change went live and broke a variable, so a perfectly explainable event and a genuine problem arrive on the screen looking exactly the same.</p>
+
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ An anomaly is a question, and treating it as a finding is how teams learn to ignore it</div>
+    <p>The flagged dot means one thing only: this value is unusual against the recent past. It does not mean something broke, it does not mean anybody should act, and on a metric with genuine volatility a handful of points will fall outside the band in any given month simply because that is what statistical ranges do. Teams that treat every flag as an incident spend a fortnight chasing normal variation and then quietly stop looking, which leaves them worse off than before, because now there is a monitoring system everybody has been trained to dismiss. Read a flag as a prompt to go and look, never as a conclusion that has already been reached.</p>
+</div>
+
+<h3 class="subsec-title">So what do you do with a dot</h3>
+<p>Somebody hands you an anomaly and the useful sequence is short, and it is worth having before you need it, because the alternative is opening twelve tables in a slightly panicked order.</p>
+
+<p>Start by asking whether the data arrived at all, since a collection failure and a business event look identical in a report and only one of them is worth a meeting. Then check whether the whole metric moved or one slice of it, because a site-wide drop and a single-channel drop have completely different causes. Then check whether anything shipped, which is the question the model cannot ask and a person can answer in thirty seconds by looking at a release calendar. Only after those three is it worth building anything.</p>
+
+<p>Contribution analysis is the tool that shortens the second of those questions, and it is the piece of this feature most people never use.</p>
+
+<h3 class="subsec-title">Contribution analysis, and what it is really for</h3>
+<p>Run contribution analysis against a daily anomaly and Adobe goes through the dimensions available in that report suite, looks at how each value behaved on the anomalous day compared with how it normally behaves, and reports the ones that moved most. The output arrives as a set of dimension items ranked by how much they appear to have contributed, with segments generated for the top few so you can drop them straight into a panel and carry on.</p>
+
+<p>The value is not that it thinks. It does not. What it does is search, and it searches a space you would never search by hand: every value of every available dimension, all at once, in the time it takes to fetch a coffee. When a drop turns out to be one browser version on one operating system in one country, a person will eventually find that by breaking the data apart for an hour, and contribution analysis will hand it over before the hour starts.</p>
+
+<p>What it will not do is tell you why. It reports that Safari 17 on iOS accounted for most of the movement, which is a fact and not an explanation, and the explanation still requires somebody who knows that the release last Thursday touched the checkout script. That gap between correlation and cause is permanent, and the feature is honest about it, but the ranked list is persuasive enough that people forget.</p>
+
+<div class="info-box">
+    <div class="info-hdr">ℹ️ Contribution analysis is not included in every Adobe Analytics package</div>
+    <p>Access depends on the package a company bought, and the number of analyses available per month can be limited rather than unlimited. That is worth checking before building a workflow around it or promising it to a team, because discovering the limit halfway through an incident is an unpleasant way to learn. Anomaly detection itself is broadly available; it is specifically the contribution step that carries the entitlement question.</p>
+</div>
+
+<h3 class="subsec-title">Where it earns its place, and where it does not</h3>
+<p>Anomaly detection is at its best on metrics that are high volume, reasonably stable, and genuinely important, which describes a surprisingly small set. Orders, revenue, visits, a few conversion events. Those have enough data every day for the model to know what normal looks like, and enough consequence that an unusual day is worth somebody's attention.</p>
+
+<p>It is close to useless on metrics that are small, spiky, or seasonal in ways the training window cannot see. A form submission that happens forty times a day will flag constantly, because forty is a number where ordinary randomness looks dramatic in percentage terms. A metric driven entirely by campaign activity will flag every time a campaign starts and stops, correctly and uselessly. And anything with an annual rhythm the window does not cover will be surprised by the same event every year.</p>
+
+<p>The judgment, then, is not whether to switch it on. It is what to point it at, and the honest answer is fewer things than the feature invites. A handful of metrics that somebody would genuinely act on, checked automatically, beats a wall of flags that trains a team to look away.</p>
+
+<div class="pro-tip">
+    <div class="pro-tip-hdr">💡 The alert is the useful half, and it lives somewhere else</div>
+    <p>Anomaly detection inside a project only helps somebody who opened the project. The version that changes behavior is an intelligent alert, built on the same statistics, which watches a metric continuously and emails when it moves outside its expected range by a threshold you set. That turns the morning ritual into something that happens whether or not anybody had time, and it converts the four minutes at nine o'clock into four minutes on the days it actually matters. Build the anomaly view first to see how noisy a metric is, then set the alert threshold from what you learned rather than guessing.</p>
+</div>
+
+<div class="shot-box shot-pending">
+    <div class="shot-title">📷 A line chart with anomaly detection switched on</div>
+    <div class="shot-frame">
+        <p class="shot-brief">FILE:       aal_module14_section07_ss1.png
+SCREEN:     Workspace, a line chart of a daily metric with
+            anomaly detection enabled
+CROP:       the chart itself, including the shaded expected
+            range and at least one flagged point.
+MUST SHOW:  the band around the line, and a dot sitting outside
+            it. If the hover tooltip showing the expected value
+            versus the actual can be captured, better still,
+            since that tooltip is what makes the band's meaning
+            concrete.
+SETUP:      a metric with enough daily volume for the band to be
+            narrow. Page Views usually works in a training suite.
+REDACT:     nothing.
+WIDTH:      about 1400px.</p>
+    </div>
+    <div class="shot-note">Placeholder. Readers need to see that the band is a range rather than a threshold line, which prose struggles to convey.</div>
+</div>
+
+<h3 class="subsec-title">Follow along: find out how noisy your own metrics are</h3>
+<p>The most useful thing you can do with this feature on a first pass is not to hunt for a problem. It is to learn which of your metrics are quiet enough for the statistics to be worth anything, because that tells you what to monitor and what to leave alone.</p>
+
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">Follow along: calibrate before you monitor</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>PART ONE, TURN IT ON
+
+1  Freeform table: Day in rows, a high volume metric in columns
+       Ninety days or so, enough for the model to have learned.
+
+2  Add a Line visualization underneath it
+
+3  Column settings on the metric &gt; enable anomaly detection
+       The band appears. Count the flagged points.
+
+PART TWO, CALIBRATE
+
+4  Repeat with a small metric: something under a hundred a day
+       Count the flags again. It will be a lot more, and none of
+       them will mean anything. That contrast is the lesson.
+
+5  Repeat with a campaign driven metric
+       Watch it flag every start and stop, correctly and
+       uselessly. This is what "the model cannot see your
+       calendar" looks like in practice.
+
+PART THREE, INVESTIGATE ONE
+
+6  Pick a real flagged day on a metric that matters
+
+7  Ask, in this order:
+       Did the data arrive at all?
+       Did everything move, or one slice of it?
+       Did anything ship that day?
+
+8  Right-click the anomaly &gt; run contribution analysis
+       Read the ranked dimension items. Note that it tells you
+       WHERE the movement was and never WHY.
+
+9  Take the generated segment into a new panel and go and find
+   the why yourself
+
+There is nothing else to configure. The statistics have no settings
+worth arguing with. The judgment is entirely in what you point them
+at and what you do with a flag.</pre></div>
+</div>
+
+<p>Those nine steps are a floor rather than a ceiling. Step 4 is the one worth doing on your own data, because a small metric flagging six times in ninety days is the single fastest way to understand why teams stop trusting automated monitoring.</p>
+
+<h3 class="subsec-title">What you have now</h3>
+<p>Anomaly detection builds a picture of what a metric normally does, using a training window that already understands weekends, seasonality and trend, and flags the points that fall outside it. The technique changes with granularity, the window changes with it, and none of it knows anything about releases, campaigns or tracking changes, which means a flag is always a prompt to look and never a conclusion. Contribution analysis takes a daily anomaly and searches every dimension at once to say where the movement came from, which is a genuine time saving and still stops one step short of why.</p>
+
+<p>The habit worth taking is the calibration rather than the feature. Point it at a few metrics that matter, learn how noisy each of them really is, and set expectations from that rather than from the assumption that a flag means something is broken. A monitoring system a team believes is worth more than one that is technically more sensitive, because the second one gets ignored within a month.</p>
+
+<p>All of which assumes somebody is opening the project. By this point in the module a project can hold panels on several report suites, freeform tables with breakdowns nobody else can interpret, cohorts, funnels, and a statistical band that needs a paragraph of explanation, and it is entirely legible to the person who built it. <a href="/adobe-analytics-learning/analyze/analysis-workspace/curation-and-templates/">Curation and Templates</a> deals with what happens when that project has to be handed to somebody else.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Analytics</div>
+    <p>Anomaly detection is switched on per column, inside <span class="path">Column settings</span> on a freeform table, and it appears visually on a <span class="path">Line</span> visualization drawn from that table. The date granularity of the table decides which statistical technique is used.</p>
+    <p>Right-click a flagged point to run <span class="path">Contribution analysis</span>, which opens in its own panel with the top contributing dimension items and generated segments. Continuous monitoring lives outside a project, under Analytics &gt; <span class="path">Components &gt; Alerts</span>.</p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title">📚 Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/analyze/analysis-workspace/anomaly-detection/anomaly-detection" target="_blank">Adobe Docs: Anomaly Detection Overview</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/analyze/analysis-workspace/anomaly-detection/statistics-anomaly-detection" target="_blank">Adobe Docs: Statistical Techniques Used in Anomaly Detection</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/analyze/analysis-workspace/virtual-analyst/contribution-analysis/run-contribution-analysis" target="_blank">Adobe Docs: Run a Contribution Analysis</a></li>
+    </ul>
+</div>

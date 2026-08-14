@@ -2,10 +2,208 @@
 slug: "curation-and-templates"
 title: "Curation and Templates"
 seotitle: "Curating Workspace Projects and Templates"
-lastmod: 2026-07-18
+description: "A project that makes sense to its author and nobody else is the normal outcome. Curation, annotations and templates are the three habits that fix it."
+lastmod: 2026-08-14
 type: lesson
 modulenum: 14
 sectionnum: 8
 weight: 8
 ---
-<p>This section is not yet written.</p>
+<p>A marketing manager asks for a report on campaign performance. Somebody builds it properly, over an afternoon, with panels for each channel, a fallout for the signup journey, a cohort table showing whether the people acquired in each campaign came back, and a set of carefully chosen segments applied where they belong. It is genuinely good work and it answers the question that was asked.</p>
+
+<p>Two weeks later the same manager is back, slightly embarrassed, asking whether somebody could just pull the numbers again. They opened the project, saw a left rail with three hundred components in it, dragged something that looked right into a table, got a number that disagreed with the one in the meeting, and decided it was safer to ask.</p>
+
+<p>Nothing broke. The project is exactly as it was. What happened is the ordinary fate of analysis handed to somebody who does not share the mental model that produced it, and it happens to almost every project that gets built for another person. The tables are correct, the segments are right, and none of that survives contact with a reader who does not know which of three similarly named metrics is the one the business agreed on.</p>
+
+<p>Curation is Adobe's answer to that, and it is a smaller feature than the problem, so this section covers the feature and then the two habits around it that do most of the actual work.</p>
+
+<h3 class="subsec-title">What curation actually removes</h3>
+<p>Curating a project means choosing which components a recipient can see in the left rail when they open it. You pick a handful of dimensions, metrics, segments and date ranges, and everything else disappears from their view.</p>
+
+<p>It is worth being precise about what that does and does not do, because the name suggests something grander. Curation does not change the data, it does not restrict what the person is permitted to access elsewhere in Adobe Analytics, and it does not lock the tables. Somebody with edit rights can still rebuild whatever they like. What it changes is the size of the room: instead of three hundred components with four similar-sounding conversion metrics among them, the rail holds the eight that belong to this question, one of which is the conversion metric the business actually agreed on.</p>
+
+<p>Which sounds modest until you think about what a person does when they are handed too many options and no guidance. They pick the one whose name most resembles what they were asked for, which in a mature report suite is roughly a coin toss, and then they quote it. Curation is not really about tidiness. It is about removing the opportunity to be confidently wrong.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">📊 The same project, opened by two people</div>
+    <svg viewBox="0 0 700 280" style="width:100%;height:auto;display:block;margin:4px 0 8px"
+         role="img" aria-label="Two versions of the same project side by side. On the left, the uncurated view shows a long component rail with dozens of entries including four similarly named conversion metrics, and the reader has no way to know which one is intended. On the right, the curated view shows a short rail of eight components chosen deliberately, with one conversion metric. The tables and data are identical in both.">
+        <rect x="14" y="24" width="322" height="216" rx="8" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <text x="30" y="48" style="fill:var(--text2,#475569);font-size:12px;font-weight:700;font-family:sans-serif">Uncurated</text>
+        <text x="30" y="66" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">everything the suite has</text>
+        <g>
+            <rect x="30" y="78" width="180" height="9" rx="2" style="fill:#c2690c;opacity:0.4"/>
+            <rect x="30" y="92" width="150" height="9" rx="2" style="fill:#c2690c;opacity:0.4"/>
+            <rect x="30" y="106" width="196" height="9" rx="2" style="fill:#2f8f3f;opacity:0.4"/>
+            <rect x="30" y="120" width="170" height="9" rx="2" style="fill:#2f8f3f;opacity:0.4"/>
+            <rect x="30" y="134" width="186" height="9" rx="2" style="fill:#2f8f3f;opacity:0.4"/>
+            <rect x="30" y="148" width="162" height="9" rx="2" style="fill:#2f8f3f;opacity:0.4"/>
+            <rect x="30" y="162" width="140" height="9" rx="2" style="fill:#3d7fdd;opacity:0.4"/>
+            <rect x="30" y="176" width="176" height="9" rx="2" style="fill:#3d7fdd;opacity:0.4"/>
+            <rect x="30" y="190" width="130" height="9" rx="2" style="fill:#9370e0;opacity:0.4"/>
+            <rect x="30" y="204" width="158" height="9" rx="2" style="fill:#9370e0;opacity:0.4"/>
+        </g>
+        <text x="238" y="118" style="fill:var(--text3,#94a3b8);font-size:10px;font-family:sans-serif">four metrics</text>
+        <text x="238" y="132" style="fill:var(--text3,#94a3b8);font-size:10px;font-family:sans-serif">with similar</text>
+        <text x="238" y="146" style="fill:var(--text3,#94a3b8);font-size:10px;font-family:sans-serif">names</text>
+        <text x="30" y="230" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">Reader picks the closest match and hopes.</text>
+
+        <rect x="364" y="24" width="322" height="216" rx="8" style="fill:var(--card,#ffffff);stroke:var(--accent,#e11d48);stroke-width:2"/>
+        <text x="380" y="48" style="fill:var(--accent,#e11d48);font-size:12px;font-weight:700;font-family:sans-serif">Curated</text>
+        <text x="380" y="66" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">what this question needs</text>
+        <rect x="380" y="78" width="160" height="9" rx="2" style="fill:#c2690c"/>
+        <rect x="380" y="98" width="140" height="9" rx="2" style="fill:#c2690c"/>
+        <rect x="380" y="118" width="176" height="9" rx="2" style="fill:#2f8f3f"/>
+        <rect x="380" y="138" width="150" height="9" rx="2" style="fill:#3d7fdd"/>
+        <rect x="380" y="158" width="130" height="9" rx="2" style="fill:#9370e0"/>
+        <text x="380" y="196" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">One conversion metric. The agreed one.</text>
+        <text x="380" y="230" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">Nothing to get wrong.</text>
+
+        <text x="14" y="268" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">Identical data, identical tables. The only difference is how many ways there are to misread it.</text>
+    </svg>
+</div>
+
+<h3 class="subsec-title">Annotations, and the note that answers a question before it is asked</h3>
+<p>The second habit is smaller than curation and, over a couple of years, probably matters more.</p>
+
+<p>An annotation is a dated note attached to a date range, a metric, or a whole project, and it shows up on the chart at the point in time it refers to. Traffic dropped on the eleventh because a CDN change broke tagging for four hours. Revenue jumped in the third week because a partner promotion ran. The variable stopped being populated in March because it was repurposed for something else.</p>
+
+<p>Every one of those facts is known by exactly one person on the day it happens, and completely lost within about six weeks. What follows is a familiar and expensive ritual: somebody notices the dip a quarter later, asks what happened, three people guess, one of them goes and rebuilds an investigation that was already done at the time, and eventually somebody who was there remembers. That whole sequence is prevented by a sentence typed on the day, and the sentence takes thirty seconds.</p>
+
+<p>This matters beyond charts, because several things elsewhere in Adobe Analytics quietly depend on somebody having written a date down somewhere findable. An <a href="/adobe-analytics-learning/foundations/variables/evars-conversion-variables/">eVar</a> that was repurposed has a seam in its history where old and new meanings meet, and anybody reading across that seam gets nonsense. Report suite settings change, and the day they changed is the day trends stop being comparable. A <a href="/adobe-analytics-learning/analyze/calculated-metrics/what-are-calculated-metrics/">calculated metric</a> whose formula was corrected re-answers all of history under the new rule, so the number in last quarter's deck no longer reproduces. In every one of those cases the advice is the same, which is to record the date where a future analyst will find it, and an annotation is the only place in this product that qualifies.</p>
+
+<div class="pro-tip">
+    <div class="pro-tip-hdr">💡 Annotate the day it happens, not the day somebody asks</div>
+    <p>The reason this habit fails is never that people disagree with it. It fails because the value arrives months later and the cost arrives now, on a day when something is already going wrong and writing notes feels like the least urgent thing available. The way through is to make it part of the incident rather than a follow-up: whoever works out why a number moved writes the annotation before closing the tab, in one plain sentence, while they still have the answer in their head. A team that does this for a year ends up with a chart that explains itself, and the first time somebody avoids a two-day investigation by reading a note, the habit stops needing to be argued for.</p>
+</div>
+
+<h3 class="subsec-title">Templates, and the difference between reuse and copying</h3>
+<p>The third habit is about what happens when the same project gets built for the fourth time.</p>
+
+<p>Adobe ships a set of templates for common questions, and a company can save its own projects as templates for everyone else to start from. Both are useful, and the second is the one that changes how an organization works, because it moves the standard version of a recurring analysis out of one person's folder and into something the team starts from by default.</p>
+
+<p>The alternative, which is what most teams do, is copying. Somebody finds a project that looks close, saves a copy, changes the dates and a segment, and ships it. That works, and it works right up until the definition underneath changes, at which point there are eleven copies in circulation and the correction reaches one of them. Six months later two people present different numbers for the same thing and both of them are reading a report that was correct when it was made.</p>
+
+<p>A template does not entirely solve that, since a project created from a template is still a copy from that moment on. What it does is make the starting point deliberate and singular, so that new work begins from the agreed shape rather than from whichever old project happened to be nearby, and so that the agreed shape has an owner who can update it.</p>
+
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>Habit</th><th>What it prevents</th><th>Cost to you</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Curation</strong></td><td>A reader quoting the wrong one of four similar metrics</td><td>Two minutes, once, before sharing</td></tr>
+            <tr><td><strong>Annotation</strong></td><td>An investigation being run twice, months apart</td><td>Thirty seconds, on the day</td></tr>
+            <tr><td><strong>Template</strong></td><td>Eleven diverging copies of one recurring report</td><td>One save, plus somebody owning it</td></tr>
+            <tr><td><strong>A text block saying what was found</strong></td><td>The project being opened once and never reopened</td><td>One sentence per panel</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="shot-box shot-pending">
+    <div class="shot-title">📷 The curation panel, choosing what a recipient will see</div>
+    <div class="shot-frame">
+        <p class="shot-brief">FILE:       aal_module14_section08_ss1.png
+SCREEN:     Workspace &gt; Share &gt; Curate project data, with some
+            components already selected
+CROP:       the curation interface, showing the selected
+            components and the fact that the rest are excluded.
+MUST SHOW:  a clearly shorter curated list than the full rail,
+            since the section's whole argument is the size of
+            the room the reader is put in.
+SETUP:      select five or six components across dimensions,
+            metrics, segments and date ranges so the colour
+            coding is visible in the selection.
+REDACT:     nothing.
+WIDTH:      about 1400px.</p>
+    </div>
+    <div class="shot-note">Placeholder. Worth pairing conceptually with the annotation shot below, since together they are the two things a reader can act on immediately.</div>
+</div>
+
+<div class="shot-box shot-pending">
+    <div class="shot-title">📷 An annotation sitting on a chart</div>
+    <div class="shot-frame">
+        <p class="shot-brief">FILE:       aal_module14_section08_ss2.png
+SCREEN:     Workspace, a line chart with an annotation marker on
+            a date, ideally with the note text visible on hover
+CROP:       the chart plus the annotation marker and its text.
+MUST SHOW:  that the note is attached to a point in time on the
+            chart itself, which is the thing prose cannot convey
+            and the reason the habit works.
+SETUP:      create an annotation on any date with a plausible
+            generic note, for example "tracking change deployed".
+REDACT:     nothing. Write a fictional note rather than a real
+            incident.
+WIDTH:      about 1400px.</p>
+    </div>
+    <div class="shot-note">Placeholder. Optional if annotations are unavailable in the training account, in which case the curation shot carries the section alone.</div>
+</div>
+
+<h3 class="subsec-title">Follow along: hand a project over properly</h3>
+<p>The exercise here is not building anything new. It is taking a project you already have and doing the four things that decide whether somebody else can use it.</p>
+
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">Follow along: make a project survive being handed over</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>START WITH A PROJECT YOU BUILT FOR SOMEBODY ELSE
+
+1  Open it and read it as if you had never seen it
+       Can you tell what question each panel answers? If not,
+       nobody else can either.
+
+WRITE THE FINDINGS
+
+2  Visualizations &gt; Text, above each panel
+       One sentence per panel saying what it found. Not what it
+       shows. What it found.
+
+CURATE
+
+3  Share &gt; Curate project data
+
+4  Select only the components this project needs
+       Include the ONE conversion metric the business agreed on,
+       and leave the three that sound like it out.
+
+5  Reopen as a recipient would see it, and count the rail
+
+ANNOTATE
+
+6  Find a date in the data where something visibly moved
+
+7  Create an annotation on that date with one plain sentence
+       If you do not know what happened, that is the finding:
+       nobody wrote it down, and now nobody can.
+
+TEMPLATE, IF IT RECURS
+
+8  If this project will be rebuilt monthly, save it as a
+   company template rather than letting people copy it
+       Then decide who owns it, because a template without an
+       owner becomes eleven copies within a year anyway.
+
+There is nothing else to configure. Curation is a selection,
+annotations are sentences, and templates are a save. The work is
+entirely in deciding what a stranger needs.</pre></div>
+</div>
+
+<p>Those eight steps are a floor rather than a ceiling. Step 1 is the one people skip and the one that produces the finding, because reading your own project cold is uncomfortable in a way that is immediately instructive.</p>
+
+<h3 class="subsec-title">What you have now</h3>
+<p>Curation reduces the component rail a recipient sees to the handful that belong to the question, which does not restrict their access anywhere else and does remove most of the opportunity for a confident mistake. Annotations attach a dated sentence to the chart where the event happened, which is the only place in this product that a future analyst will reliably find it. Templates move the standard version of a recurring analysis out of one person's folder and give it an owner.</p>
+
+<p>None of the three is technically interesting, and that is rather the point. The hard part of analysis was over several sections ago, and everything that decides whether the work is used by anybody else is this kind of small, dull, unglamorous discipline applied on the day rather than later.</p>
+
+<p>What remains is the act of handing it over, which turns out to have more shape to it than it appears. There are several ways to share a project, they grant genuinely different powers, and picking the wrong one either strands the recipient or gives them the ability to change a report that other people depend on. <a href="/adobe-analytics-learning/analyze/analysis-workspace/sharing-collaboration/">Sharing and Collaboration</a> covers the choices and what each one really means.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Analytics</div>
+    <p>Curation sits under <span class="path">Share &gt; Curate project data</span> inside an open project. It applies to anybody the project is shared with, and it can be changed at any time.</p>
+    <p>Annotations are created from the <span class="path">Components &gt; Annotations</span> manager, or directly by right-clicking a point on a time-based visualization. Templates are saved through <span class="path">Project &gt; Save as template</span>, and Adobe's own templates appear on the <span class="path">Workspace</span> landing page when you create a new project.</p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title">📚 Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/analyze/analysis-workspace/curate-share/curate" target="_blank">Adobe Docs: Curate Projects</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/analyze/analysis-workspace/components/annotations/overview" target="_blank">Adobe Docs: Annotations Overview</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/analyze/analysis-workspace/build-workspace-project/starter-projects" target="_blank">Adobe Docs: Templates and Starter Projects</a></li>
+    </ul>
+</div>

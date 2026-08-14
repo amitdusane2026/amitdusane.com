@@ -9,16 +9,16 @@ modulenum: 14
 sectionnum: 3
 weight: 3
 ---
-<p>A freeform table looks like the least interesting thing on the screen. It is a grid. Rows down the side, numbers in the middle, nothing that would survive a slide.</p>
+<p>Two people are looking at the same report and disagreeing about a number. One of them says Chrome accounts for eleven percent of traffic, the other has it at sixty-two percent, and both are reading a table they built themselves in the last ten minutes from the same report suite over the same dates. Neither has made a mistake, neither has misread anything, and the argument will run for a while before somebody works out what happened.</p>
 
-<p>It is also where every number in Analysis Workspace is decided. The charts are drawings of it. The fallouts and the cohorts are specialized versions of it. And almost every confidently wrong figure this product has ever produced came out of a table that was arranged slightly differently from the way the person reading it assumed.</p>
+<p>What happened is that one of them broke Page down by Browser, and the other broke Browser down by Page, and then both took a percentage from a row somewhere in the middle. The two tables contain overlapping data, they look nearly identical on screen, and they are answering completely different questions. Nothing about either report announces this.</p>
 
-<p>Which makes this the one component worth understanding properly rather than operating.</p>
+<p>That kind of disagreement is the everyday cost of the freeform table, which looks like the least interesting thing in Analysis Workspace. It is a grid. Rows down the side, numbers in the middle, and nothing about it that would survive a slide. It is also where every number in this product is decided, since the charts are drawings of it and the cohorts and funnels are specialized versions of it, and it deserves more attention than its appearance invites.</p>
 
 <h3 class="subsec-title">Rows ask what, columns ask how much</h3>
-<p>The grammar is small enough to state in a sentence. A dimension in the rows names the things you want separated. A metric in the columns says how those things are measured. Drop <span class="path">Page</span> into the rows and <span class="path">Page Views</span> into the columns, and you have asked for page views, separated by page.</p>
+<p>The grammar underneath is small enough to say in a sentence, and it is worth saying before anything gets complicated. A dimension in the rows names the things you want held apart from each other. A metric in the columns says how each of those things is being measured. Drop <span class="path">Page</span> into the rows and <span class="path">Page Views</span> into the columns, and what you have asked for is page views, separated out by page, which is exactly what appears.</p>
 
-<p>Everything else in this section is what happens when that sentence gets more than one clause.</p>
+<p>Everything difficult about tables comes from what happens when that sentence gains a second clause.</p>
 
 <div class="diagram-box">
     <div class="diagram-title">📊 The whole grammar, before anything gets complicated</div>
@@ -54,14 +54,12 @@ weight: 3
     </svg>
 </div>
 
-<h3 class="subsec-title">A breakdown is a second question asked inside the first</h3>
-<p>Here is the mechanic that produces more misread reports than anything else in the product, and it is disguised as an obvious convenience.</p>
+<h3 class="subsec-title">What a breakdown really does</h3>
+<p>Take that table, right-click the product detail row, and break it down by <span class="path">Browser</span>. Numbers appear underneath it, indented slightly, and the natural reading is that a second dimension has been added to the table and now you are looking at pages and browsers together.</p>
 
-<p>Take that table and break the <em>product detail</em> row down by <span class="path">Browser</span>. Numbers appear underneath it, indented. It looks like you have added a second dimension to the table.</p>
+<p>That is not what happened. What you asked for is narrower and more specific: which browsers were used, among the page views of that one page. The breakdown is scoped inside the row above it, so it inherits that row as a condition, and the numbers underneath describe only the traffic that was already counted in the parent. They are not a list of browsers on the site, they will never sum to the browser totals, and they cannot be compared with a browser figure taken from anywhere else without a great deal of care.</p>
 
-<p>You have not. You have asked a completely new question: <strong>which browsers were used, among the page views of that one page.</strong> The breakdown is scoped inside the row above it. It is not a list of browsers, it is a list of browsers for that page, and the numbers underneath will never sum to the site's browser totals.</p>
-
-<p>That distinction sounds pedantic until somebody screenshots the indented rows, drops them into a deck, and labels them "browser usage".</p>
+<p>All of which sounds pedantic right up until somebody screenshots the indented rows, drops them into a deck, and labels the slide "browser usage".</p>
 
 <div class="diagram-box">
     <div class="diagram-title">📊 The same two dimensions, swapped, are two different reports</div>
@@ -107,17 +105,65 @@ weight: 3
     </svg>
 </div>
 
-<p>Both tables are correct. They answer different questions, and the only visible difference is which dimension was dragged first. A colleague handed the wrong one will read it fluently and reach the wrong conclusion without ever noticing there was a choice.</p>
+<p>Both of those tables are correct, and that is what makes the situation awkward. Neither is a better version of the other, neither contains an error, and the only visible difference between them is which dimension was dragged in first. A colleague handed the wrong one will read it perfectly fluently, quote a figure from it with complete confidence, and never encounter anything that suggests there was a choice made on their behalf.</p>
 
 <div class="warn-box">
     <div class="warn-hdr">⚠️ Indented rows never sum to the site total, and they look exactly like rows that do</div>
-    <p>A breakdown inherits every filter above it, including the parent row itself. So the numbers under a broken-down row are scoped to that row and nothing else. Copy them into a slide and they become a claim about the whole site, which is a claim the table never made. The tell is indentation, and indentation survives neither a screenshot nor a paste into a spreadsheet. If a figure is going to travel, take it from a table where the dimension sits at the top level, not from a breakdown.</p>
+    <p>A breakdown inherits every condition above it, including the parent row itself, so the numbers underneath a broken-down row describe that row and nothing wider. Copy one of them into a slide and it quietly becomes a claim about the whole site, which is a claim the table never made and cannot support. The only thing distinguishing the two on screen is an indentation, and an indentation survives neither a screenshot nor a paste into a spreadsheet nor somebody reading a figure out loud. If a number is going to travel beyond the person who built the table, take it from a table where that dimension sits at the top level rather than from a breakdown.</p>
 </div>
 
-<h3 class="subsec-title">Attribution is a column setting, and it is where props stop being second class</h3>
-<p>Every column carries an attribution model, whether or not anybody chose one. Left alone, a metric is credited according to the dimension's own behavior, which is why a <a href="/adobe-analytics-learning/foundations/variables/props-traffic-variables/">prop</a> broken down by orders normally reports almost nothing: a prop holds its value for a single hit, so only the hit that carried the order can receive credit.</p>
+<h3 class="subsec-title">Working the table, which is a skill nobody teaches</h3>
+<p>Everything above is about what a table means. This part is about how you actually operate one, and it matters more than it sounds, because the difference between somebody who slices data quickly and somebody who does not is mostly a handful of interactions that never appear in documentation.</p>
 
-<p>Open the column settings, apply an attribution model, and that stops being true.</p>
+<p>Start with selection, because it changes what every other action does. Click a row and it is selected. Hold <strong>shift</strong> and click another and everything between the two is selected. Hold <strong>ctrl</strong>, or command on a Mac, and you pick individual rows that are nowhere near each other. That is ordinary enough, and the useful part is what selection then does to the next thing you do.</p>
+
+<p>With several rows selected, breaking down applies to <strong>exactly those rows and nothing else</strong>. So if a page report has four hundred rows and five of them are the checkout funnel, select those five, break them down by browser, and you get browsers for those five pages only, rather than an unusable expansion of everything. The same selection can be right-clicked to create a segment containing precisely those items, which is the fastest route in the product from noticing something to isolating it. And dragging a component onto a selection behaves differently from dragging it onto the table as a whole, which is the source of a great deal of accidental restructuring.</p>
+
+<p>The same idea reaches the panel. Select several segments in the left rail with shift or ctrl and drag them into the panel drop zone together, and instead of stacking them as a combined filter, Workspace builds a <strong>dropdown</strong>, so the reader can switch between them. That single behavior turns a project that would have needed five panels into one panel with a control on it, and almost nobody discovers it by accident. Dropping several date ranges in behaves the same way.</p>
+
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>Do this</th><th>And you get</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Shift-click</strong> two rows</td><td>Everything between them selected</td></tr>
+            <tr><td><strong>Ctrl-click</strong> or cmd-click rows</td><td>Scattered rows selected individually</td></tr>
+            <tr><td>Break down with rows selected</td><td>The breakdown applies to only those rows</td></tr>
+            <tr><td>Right-click a selection</td><td>A segment built from exactly those items</td></tr>
+            <tr><td>Drag several segments into the panel drop zone</td><td>A dropdown the reader can switch between</td></tr>
+            <tr><td>Drag a component onto a <em>cell</em></td><td>It applies to that intersection only</td></tr>
+            <tr><td>Drag a component onto a <em>column header</em></td><td>It applies to the whole column</td></tr>
+            <tr><td>Drag a dimension <em>item</em> rather than the dimension</td><td>A pinned row that will not change next month</td></tr>
+            <tr><td>Right-click a row &gt; copy to clipboard</td><td>The values, without rebuilding anything in a spreadsheet</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<p>None of those are tricks in the sense of being clever or optional. They are the difference between interrogating data and typing at it, and a person who knows six of them works several times faster than a person who knows none, on identical software.</p>
+
+<div class="shot-box shot-pending">
+    <div class="shot-title">📷 A breakdown, and the indentation that carries the whole warning</div>
+    <div class="shot-frame">
+        <p class="shot-brief">FILE:       aal_module14_section03_ss1.png
+SCREEN:     Workspace, a freeform table with one row broken
+            down by a second dimension
+CROP:       the table only, header row plus the parent row and
+            its indented children.
+MUST SHOW:  the indentation clearly, with the parent total
+            visible above children that sum to it, since the
+            section's argument is that this indentation is the
+            only signal and it does not survive being copied.
+SETUP:      any harmless pair. Browser broken down by Day, or
+            Day broken down by Browser.
+REDACT:     nothing.
+WIDTH:      about 1200px.</p>
+    </div>
+    <div class="shot-note">Placeholder. If a second frame is easy, one showing several rows multi-selected before a breakdown would carry the interaction section too.</div>
+</div>
+
+<h3 class="subsec-title">Attribution lives in the column, and it overrules how a variable was built</h3>
+<p>Every column carries an attribution model whether or not anybody chose one, and the default is to credit a metric according to how the dimension behaves on its own. That is why a <a href="/adobe-analytics-learning/foundations/variables/props-traffic-variables/">prop</a> broken down by orders usually reports almost nothing useful: a prop holds its value for exactly one hit, so the only value that can receive credit for an order is whatever the prop happened to contain on the hit where the order fired, which on most sites is a confirmation page.</p>
+
+<p>Open the column settings, apply an attribution model, and that stops being true, because the model is recalculated from the underlying hits at the moment the report runs rather than depending on what was stored at collection time.</p>
 
 <div class="diagram-box">
     <div class="diagram-title">📊 Same visit, same order, and the model decides who gets credit</div>
@@ -152,65 +198,41 @@ weight: 3
     </svg>
 </div>
 
-<p>Two things follow from that, and both are larger than a column setting has any right to be.</p>
+<p>Two consequences follow, and both are larger than a column setting has any business being. The first is that the distinction between props and eVars, which governs an enormous amount of implementation planning and occupies whole meetings, does not survive contact with an attribution model: applied at report time, a prop can carry any lookback window you choose, and an eVar's carefully configured allocation and expiration are simply set aside.</p>
 
-<p>The first is that the distinction between props and eVars, which governs so much implementation planning, <strong>does not survive contact with an attribution model</strong>. Applied at report time, a prop can carry any lookback window you choose, and an eVar's configured allocation and expiration are set aside entirely.</p>
-
-<p>The second is that a decision you thought was permanent turns out not to be. An eVar's expiry is chosen on the day it is implemented and lived with for years. Here the same question is a dropdown, answerable differently by two people looking at the same data on the same afternoon. <a href="/adobe-analytics-learning/analyze/attribution-models/what-is-attribution/">What Is Attribution</a> takes the models themselves apart.</p>
-
-<div class="shot-box shot-pending">
-    <div class="shot-title">📷 A breakdown, and the column that controls attribution</div>
-    <div class="shot-frame">
-        <p class="shot-brief">FILE:       aal_module14_section03_ss1.png
-SCREEN:     Workspace, a freeform table with one row broken
-            down by a second dimension
-CROP:       the table only, header row plus the parent row and
-            its indented children. No panel header needed.
-MUST SHOW:  the indentation clearly, so the reader can see that
-            the child rows belong to the parent rather than to
-            the table. Ideally the parent total is visible above
-            children that sum to it.
-SETUP:      any harmless pair works: Browser broken down by Day,
-            or Day broken down by Browser.
-REDACT:     nothing.
-WIDTH:      about 1200px.</p>
-    </div>
-    <div class="shot-note">Placeholder. The indentation is the entire warning, and it is the thing that vanishes when a number is copied out.</div>
-</div>
+<p>The second is that a decision everybody treats as permanent turns out to be provisional. An eVar's expiry gets chosen on the day it is implemented and lived with for years afterward, because changing it means changing collection. Here the same question is a dropdown, and two people can answer it differently over the same data on the same afternoon. <a href="/adobe-analytics-learning/analyze/attribution-models/what-is-attribution/">What Is Attribution</a> takes the models themselves apart.</p>
 
 <h3 class="subsec-title">Dynamic rows keep re-asking, static rows freeze the answer</h3>
-<p>Drag a dimension into the rows and the table fills with whatever the top values happen to be. Those rows are <strong>dynamic</strong>: they are a standing instruction to fetch the top items, re-evaluated every time the report runs.</p>
+<p>Drag a dimension into the rows and the table fills with whatever the top values currently happen to be. Those rows are <strong>dynamic</strong>, which means they are not really a list at all, they are a standing instruction to go and fetch the top items, re-evaluated every single time the report runs.</p>
 
-<p>That is usually what you want, and occasionally a quiet disaster. A project built in March showing the top ten products, opened in September, is showing September's top ten. The chart has the same title and a different subject, and nobody scrolling past it will suspect anything, because it looks exactly as it did.</p>
+<p>Most of the time that is exactly right, and occasionally it is a quiet disaster. A project built in March showing the top ten products, opened again in September, is showing September's top ten. The title is the same, the layout is the same, the chart looks the way it always looked, and the subject has changed completely without any visible event. Somebody comparing this month against the version in last quarter's deck is comparing two different sets of products and has no way to notice.</p>
 
-<p>Dragging a specific dimension <em>item</em> instead pins it. That row is now <strong>static</strong>: it will report that one value forever, and will show zero rather than silently substituting a replacement.</p>
+<p>Dragging a specific dimension <em>item</em> into the table instead of the dimension itself pins it. That row becomes <strong>static</strong>, it will report that one value for as long as the project exists, and if the value stops appearing in the data the row shows zero rather than quietly substituting a replacement.</p>
 
 <div class="pro-tip">
-    <div class="pro-tip-hdr">💡 Anything a stakeholder will read monthly should be pinned</div>
-    <p>The rule that avoids most of this: dynamic rows for exploring, static rows for anything scheduled, shared, or repeated. If a project goes to the same five people every month, they are reading it for change over time, and change over time is meaningless if the rows themselves change underneath the numbers. Pinning also makes a disappearance visible, because a static row that drops to zero is a finding, while a dynamic row that quietly falls out of the top ten is nothing at all.</p>
+    <div class="pro-tip-hdr">💡 Anything a stakeholder reads monthly should be pinned</div>
+    <p>The rule that avoids most of this is short: dynamic rows while you are exploring, static rows for anything scheduled, shared or repeated. A project that goes to the same five people every month exists so they can see change over time, and change over time means nothing at all if the rows themselves change underneath the numbers. Pinning has a second benefit that matters during an incident, which is that it makes a disappearance visible: a static row dropping to zero is a finding somebody can act on, while a dynamic row quietly falling out of the top ten is not an event at all.</p>
 </div>
 
 <h3 class="subsec-title">Percentages are honest about the number and quiet about the denominator</h3>
-<p>A percentage column looks like the least ambiguous thing on the page. It is a share, and shares are simple.</p>
+<p>A percentage column looks like the least ambiguous thing available. It is a share, shares are simple, and nobody asks a follow-up question about a percentage in a meeting.</p>
 
-<p>The question a percentage never answers on screen is <em>a share of what</em>. Within a breakdown, the percentage is of the parent row. At the top level, it is of the column. Change the arrangement, and the same visual percentage measures something else entirely while looking identical.</p>
-
-<p>This compounds with the breakdown problem, because the most quotable figure in any table is a percentage inside a breakdown, and that is exactly the one whose denominator is invisible.</p>
+<p>The question it never answers on screen is what it is a share of. Inside a breakdown, the percentage is of the parent row. At the top level, it is of the column total. Rearrange the table and the same visual percentage in the same position is suddenly measuring something else, while looking exactly as it did before. That compounds badly with everything in the breakdown section, because the most quotable figure in any table is a percentage sitting inside a breakdown, and that is precisely the one whose denominator is invisible.</p>
 
 <div class="tbl-wrap">
     <table>
         <thead><tr><th>Setting</th><th>What it changes</th><th>Worth knowing</th></tr></thead>
         <tbody>
-            <tr><td><strong>Row settings</strong></td><td>How many rows, static or dynamic, and a filter on which items appear</td><td>The row count also decides what the totals mean if a filter is applied</td></tr>
-            <tr><td><strong>Column settings</strong></td><td>Attribution model, number format, percentages, and conditional formatting</td><td>The one place attribution lives outside the Attribution panel</td></tr>
-            <tr><td><strong>Percent shading</strong></td><td>Only the visual heat, never the numbers</td><td>Shading is relative to the visible rows, so paginating changes the colors</td></tr>
-            <tr><td><strong>Totals</strong></td><td>Whether the header total is the grand total or the sum of shown rows</td><td>These disagree the moment a filter or a row limit is in play</td></tr>
+            <tr><td><strong>Row settings</strong></td><td>How many rows, static or dynamic, and a filter on which items appear</td><td>The row count also decides what the totals mean once a filter is applied</td></tr>
+            <tr><td><strong>Column settings</strong></td><td>Attribution model, number format, percentages, conditional formatting</td><td>The one place attribution lives outside the Attribution panel</td></tr>
+            <tr><td><strong>Percent shading</strong></td><td>Only the visual heat, never the numbers</td><td>Shading is relative to visible rows, so paginating changes the colors</td></tr>
+            <tr><td><strong>Totals</strong></td><td>Whether the header total is the grand total or the sum of shown rows</td><td>These two disagree the moment a filter or row limit is in play</td></tr>
         </tbody>
     </table>
 </div>
 
 <h3 class="subsec-title">Follow along: build one table four ways and watch the meaning move</h3>
-<p>This is the exercise that makes the rest of this section permanent, and it takes about five minutes. The point is not the numbers. It is watching how little has to change for a number to mean something else.</p>
+<p>This is the exercise that makes the rest of the section permanent, and it takes about five minutes. The numbers are not the point. What you are watching for is how little has to change before a number means something else.</p>
 
 <div class="code-block">
     <div class="code-hdr"><span class="code-lang">Follow along: four arrangements, four different questions</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
@@ -227,25 +249,39 @@ ARRANGEMENT TWO, the breakdown
 
 3  Right-click the top browser row &gt; Break down &gt; Day
        The indented numbers now sum to that browser's total,
-       not to the site's daily totals. Same data, narrower question.
+       not to the site's daily totals. Same data, narrower
+       question, no visible warning.
 
 ARRANGEMENT THREE, the swap
 
-4  New table. Rows: Day.  Break the top day down by Browser.
+4  New table. Rows: Day. Break the top day down by Browser.
        Find the cell that matches step 3. It is the only figure
        the two tables share. Everything around it has changed.
 
 ARRANGEMENT FOUR, pinned
 
-5  From the left rail, expand the Browser dimension and drag one
-   specific browser into the rows, instead of the dimension itself
-       That row is now static. It will report that browser next
+5  Expand the Browser dimension in the left rail and drag ONE
+   specific browser into the rows
+       That row is static now. It will report that browser next
        year, or report zero, and will never quietly become a
        different browser.
 
+WORKING IT
+
+6  Shift-click three rows, then break those three down
+       Only the selection expands. Try the same with ctrl-click
+       on rows that are far apart.
+
+7  Select several rows &gt; right-click &gt; create a segment
+       You now have exactly those items isolated, in seconds.
+
+8  Shift-select two segments in the rail and drag both onto the
+   panel drop zone
+       A dropdown appears rather than a stacked filter.
+
 THE COLUMN SETTING
 
-6  Column settings on a conversion metric &gt; Attribution &gt; Last touch
+9  Column settings on a conversion metric &gt; Attribution &gt; Last touch
        If the row dimension is a prop, watch the numbers move.
        Nothing was recollected. The model was recalculated.
 
@@ -253,19 +289,19 @@ There is nothing else to configure. Every table in this product is
 these few settings in some combination.</pre></div>
 </div>
 
-<p>Those six steps are a floor rather than a ceiling. Step 3 and step 4 together are the ones worth repeating until the difference is obvious, because that pair is the difference between reading a table and operating one.</p>
+<p>Those nine steps are a floor rather than a ceiling. Steps 3 and 4 together are the pair worth repeating until the difference is instant, because that is the difference between reading a table and operating one, and steps 6 to 8 are where most of the speed lives.</p>
 
 <h3 class="subsec-title">What you have now</h3>
-<p>A freeform table is a question written in two directions: rows name what is being separated, columns say how it is measured, and every cell is both answered together. A breakdown does not widen that question, it nests a new one inside a row, scoped by everything above it. Rows are dynamic unless you pin them. Attribution lives in the column settings and quietly overrides how a variable was ever configured to behave.</p>
+<p>A freeform table is a question written in two directions, with rows naming what is held apart and columns saying how it is measured, and every cell answering both at once. A breakdown does not widen that question, it nests a narrower one inside a row and inherits everything above it, which is why indented figures never sum to a site total. Rows are dynamic and will change under you unless you pin them. Attribution lives in the column settings and quietly overrides how a variable was ever configured to behave. And the selection behaviors are not shortcuts, they are how the tool is actually used.</p>
 
-<p>The habit that comes out of all of it is small and worth keeping: <strong>before reading any number, read the arrangement that produced it.</strong> Which dimension is at the top level, what is indented under what, whether the rows are pinned, and what the percentage is a percentage of. Those four things decide the meaning of every figure on the screen, and none of them are visible in the figure itself.</p>
+<p>What comes out of all of that is one habit, and it is small enough to carry everywhere: <strong>before reading any number, read the arrangement that produced it.</strong> Which dimension is at the top level, what is indented underneath what, whether the rows are pinned, what the percentage is a percentage of. Those four things decide the meaning of every figure on the screen, and not one of them is visible in the figure itself.</p>
 
-<p>That is also why the charts in this product are less independent than they look. Every visualization is drawn from a table exactly like this one, inherits its arrangement, and repeats whatever that arrangement decided. <a href="/adobe-analytics-learning/analyze/analysis-workspace/visualizations/">Visualizations</a> covers what happens when a number becomes a picture, and why the picture is never the analysis.</p>
+<p>It also explains why the charts in this product are less independent than they look. Every visualization is drawn from a table exactly like this one, inherits its arrangement without comment, and repeats whatever that arrangement decided, with no indentation left to warn anybody. <a href="/adobe-analytics-learning/analyze/analysis-workspace/visualizations/">Visualizations</a> covers what happens when a number becomes a picture, and why the picture is never the analysis.</p>
 
 <div class="path-box">
     <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Analytics</div>
-    <p>A freeform table is the default content of any new panel in Analytics &gt; <span class="path">Workspace</span>. It is also the first entry under the <span class="path">Visualizations</span> icon in the left rail.</p>
-    <p>Right-click a row for <span class="path">Break down</span> and the row actions. The gear beside a column opens <span class="path">Column settings</span>, which is where attribution, number format and percentages live. Row settings sit under the row header itself.</p>
+    <p>A freeform table is the default content of any new panel in Analytics &gt; <span class="path">Workspace</span>, and it is also the first entry under the <span class="path">Visualizations</span> icon in the left rail.</p>
+    <p>Right-click a row for <span class="path">Break down</span>, segment creation and the copy options. The gear beside a column opens <span class="path">Column settings</span>, where attribution, number format and percentages live. Row settings sit under the row header, and that is where the row count and the static or dynamic choice are made.</p>
 </div>
 
 <div class="ref-box">
