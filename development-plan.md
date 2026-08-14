@@ -439,6 +439,50 @@ The `report-suites/02` pair is the worst of the sixteen: line 13 references an a
 grep -rn -i -o '[^.>]\{0,70\}\(so far in this\|in this module so far\|everything in this module\|the previous section\|the last section\|the last two sections\|the previous two sections\|the sections before\|the section before\|earlier we saw\|by now you have\|up to now you\|this module has been building\|as we saw\|we have met\|comes next\|is next\b\)[^.]\{0,60\}' --include=*.html .
 ```
 
+## DECIDED, deferred by design: the site will carry screenshots (14 Aug 2026)
+
+**Amit's decision, and the reasoning is deliberate rather than an oversight.** The site has no product screenshots anywhere. It teaches interfaces with hand-built SVG schematics, which strip the noise out and are better for teaching *structure*, and which do not answer the question a first-time reader actually has, which is "will I recognize this when I open it."
+
+Screenshots are going in. **They were delayed on purpose so that concrete content existed first**, because a screenshot chosen to fit finished prose is a different and better artifact than prose written around a screenshot somebody already had. The order is: finish all modules, then the screenshot pass.
+
+Raised while reviewing M14 §1 against the competitive field. It is the single largest gap versus Adobe documentation, practitioner blogs and video training, and it matters most in M14, which is the most visual module in the curriculum and expected to take most of the site's search traffic.
+
+### The shape of the work, agreed in principle, not yet built
+
+**Placeholder slots, not a post-hoc sweep.** A sitewide analysis after the modules are finished will re-derive intent from prose and will do it badly. The moment a section is written is the moment its author knows what the screenshot must show. So:
+
+- **While writing each section**, drop an empty slot where a screenshot belongs, carrying the capture brief: which screen, which state, what must be visible, what must be redacted. Costs seconds. Makes capture a checklist later instead of an act of memory.
+- **After the modules are done**, run the sitewide audit as an *audit*: catch sections that should have a slot and do not, remove slots that turned out to be decorative, and rationalize the set so the same screen is not captured five times.
+
+**The slot must be self-announcing and countable**, because an un-filled placeholder reaching `main` is exactly the class of silent failure this site has already been bitten by three times. One class name, one grep, and a pre-commit guard in the same shape as the `data-newblock` guard.
+
+### Settled specification (Amit's rulings, 14 Aug 2026)
+
+**1. Screenshots are never hidden on mobile.** Considered and rejected. Google indexes the mobile rendering under mobile-first indexing, so hiding the images there would mean doing the whole capture programme and having the indexed version of the page not contain any of it. A "switch to desktop" message is also a request to leave, aimed at the readers most likely to arrive from a phone search.
+
+**2. Crop to the feature, not the screen.** This is the primary mobile answer and it governs capture, not just presentation. Measured on a 375px phone, the image area renders at **293px**, so a 1500px full-screen capture shrinks 5.1x and Adobe's 12px interface labels land at roughly 2px. A header strip, a dropdown or one table region reads perfectly at that width. A whole window never will. Target roughly eighty percent of shots readable inline without zooming.
+
+**3. Zoom uses native browser capability, no JavaScript.** The image is wrapped in a plain link to the full-size file, with a zoom icon supplied in CSS for discoverability. Tapping hands off to the browser's own image viewer, which already provides pinch-zoom, panning and scrolling on every phone and is maintained by the browser vendor. Deliberately not a JS lightbox: the learning world already carries one dead JS control (the search button), and the `<a>` wrapper is forward-compatible, so a lightbox can be added later without re-editing a single section.
+
+**4. Naming.** `aal_module14_section01_ss1.png`. Lowercase, underscores, `aal` for Adobe Analytics Learning, **module and section numbers zero-padded to two digits** so 116 sections sort correctly. The same string is the file name, the slot's `data-shot` id, the grep target and the guard target.
+
+**5. Location and format.** Files live in `amitdusane-site-complete/static/img/`, which does not exist yet and needs creating. There is no `assets/` directory in this project and Hugo's image pipeline is not in use (`Processed images | 0`). Amit captures and saves **PNG**; conversion to WebP happens on the way in, so no generation loss and nothing for him to think about.
+
+**6. Capture discipline.** Browser zoom at 100%, the same window width every time, Adobe's light theme throughout, and never so narrow that Workspace collapses its left rail. Delivery widths after resize: about 1500px for a full canvas, 1200px for a panel or region, 800px for a single control. Exact dimensions are not a capture-time concern.
+
+**7. Text-critical information never lives only inside a screenshot.** If the reader has to read a value, it appears in the caption or the prose as well. This is the mobile answer and the accessibility answer at the same time.
+
+### Still open, for when the pass actually starts
+
+1. **Dark mode.** Adobe's UI is captured light and will glare on a dark card. Recommendation, not yet ruled on: frame and slightly dim in CSS rather than capturing every screen twice.
+2. **The component does not exist.** Roughly twenty lines in `world-learning.css` for `shot-box`, `shot-slot`, `shot-title`, `shot-brief`, `shot-note` and the zoom affordance. A site-level component addition, which rulebook rule 1 permits deliberately and once, recorded here.
+3. **No conversion tooling on the machine.** Checked 14 Aug 2026: no ImageMagick, no ffmpeg, no working Python, no Node. `winget install ImageMagick.ImageMagick` on capture day. Worst case the site ships PNG and the pages are heavier.
+4. **Screenshots are perishable facts.** Adobe redesigns. Each one carries `data-captured` so a future session can tell what has rotted, in the same spirit as the dated-snapshot `warn-box` rule.
+5. **Redaction.** Captures come from a real account and will contain real report suite names and real data. Every one needs a redaction check before it ships.
+6. **Captions.** Every screenshot gets a note, and if no note can be written the screenshot is not earned. The note points at the thing to look at, states what is absent, or names what changed. It never describes the frame, which is the `alt` attribute's job.
+
+**`CLAUDE.md` gains a short entry about inline slotting once the component exists.** Nothing goes in there before that, per its own supersession rule.
+
 ## Phase 5 — Small corrections
 
 - Three `description` outliers: `collect/_index.html` (180 chars), `deliver/_index.html` (187), `collect/data-layers/_index.md` (94).
