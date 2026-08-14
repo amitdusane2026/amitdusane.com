@@ -55,8 +55,8 @@ weight: 2
         <text x="577" y="142" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">assembled afterward</text>
         <line x1="500" y1="164" x2="654" y2="164" style="stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
         <text x="577" y="192" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:12px;font-weight:700;font-family:sans-serif">In Analysis Workspace</text>
-        <text x="577" y="218" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">five panels</text>
-        <text x="577" y="238" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">on one canvas</text>
+        <text x="577" y="218" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">five reports</text>
+        <text x="577" y="238" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">inside one panel</text>
         <text x="577" y="258" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">while the room waits</text>
     </svg>
 </div>
@@ -134,24 +134,14 @@ weight: 2
     <p>Any comparison that holds the analysis constant and varies one dimension of context is a duplicate rather than a rebuild. Same tables, last quarter instead of this one. Same tables, the German suite instead of the global one. Same tables, first-time visitors instead of everyone. Right-click the panel header and duplicate it, change the single setting, and the two sit side by side answering the same question about different worlds. Rebuilding by hand is how the second version quietly ends up not matching the first.</p>
 </div>
 
-<div class="shot-box shot-pending">
-    <div class="shot-title">📷 The three controls a panel owns</div>
+<div class="shot-box">
+    <div class="shot-title">📷 Everything a panel owns, in one strip</div>
     <div class="shot-frame">
-        <p class="shot-brief">FILE:       aal_module14_section02_ss1.png
-SCREEN:     Workspace, the header area of one panel
-CROP:       the panel header strip only, full panel width.
-            Nothing of the table below it.
-MUST SHOW:  the report suite selector and the date range at the
-            top right, AND a segment sitting as a chip inside the
-            "Drop a component to filter" zone. All three visible
-            in one frame, because the section's claim is that a
-            panel owns exactly these three things.
-SETUP:      drag any segment onto the panel drop zone first, so
-            the zone shows a chip rather than the empty prompt.
-REDACT:     nothing. Training account, generic suite name.
-WIDTH:      about 1200px.</p>
+        <img src="/img/aal_module14_section02_ss1.webp" width="1400" height="263" loading="lazy"
+             alt="The header of a Freeform panel. The panel name sits at the left. At the top right, the report suite selector reads Test Report Suite. Below it, a segment labelled Mobile Hits sits as a chip in the segment area, beside an empty drop zone reading drop a component to filter or break down the data. At the far right of that row is the date range, January 1 to January 31, 2025.">
+        <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
     </div>
-    <div class="shot-note">Placeholder. This shot proves the section's central claim in one frame.</div>
+    <div class="shot-note">Three controls, one strip, and every number in the panel below answers to all three. The segment chip is blue for the same reason everything else is colour coded: at a glance you can tell a filter from a dimension without reading it.</div>
 </div>
 
 <h3 class="subsec-title">Where you drop a segment decides what it touches</h3>
@@ -202,40 +192,19 @@ WIDTH:      about 1200px.</p>
 
 <p>Segment comparison is the one most people never open and should. It takes two segments and works through every dimension and metric available, then reports where they genuinely diverge rather than where you thought to look. It answers a question you did not know how to ask, which is a rare thing in reporting software.</p>
 
-<div class="shot-box shot-pending">
-    <div class="shot-title">📷 The panel picker</div>
+<p>One entry in that list is doing something the others are not, and it is worth flagging here even though it belongs elsewhere. The <strong>Attribution</strong> panel accepts any dimension, not only marketing channels, and it recalculates its models at the moment a report runs rather than depending on decisions made when the data was collected. That is why it can re-answer history, and why a variable's own persistence stops constraining it. It is the first place this product separated what was collected from how it is interpreted, which is the idea Customer Journey Analytics was later built on.</p>
+
+<p>Attribution is a large enough subject to have a module of its own, and this panel dominates it. <a href="/adobe-analytics-learning/analyze/attribution-models/what-is-attribution/">What Is Attribution</a> is where the models get taken apart.</p>
+
+<div class="shot-box shot-tall">
+    <div class="shot-title">📷 The panel picker, and how short the list actually is</div>
     <div class="shot-frame">
-        <p class="shot-brief">FILE:       aal_module14_section02_ss2.png
-SCREEN:     Workspace, left rail, first icon (Panels)
-CROP:       the Panels list only, from the "Search panels"
-            box down through the last visible panel type.
-MUST SHOW:  the full list of panel names available in the
-            account: Blank panel, Analytics for Target,
-            Attribution, Freeform, Next or previous item,
-            Page summary, Quick insights, Segment comparison.
-NOTE:       you already captured almost exactly this frame when
-            you sent the five rail screenshots. If that original
-            is still on disk it can be reused as is.
-REDACT:     nothing.
-WIDTH:      about 800px, it is a narrow column.</p>
+        <img src="/img/aal_module14_section02_ss2.webp" width="781" height="991" loading="lazy"
+             alt="The Panels tab of the Analysis Workspace left rail, opened from the first icon in the narrow strip. A search box sits at the top, and below it a list headed Panels containing Blank panel, Analytics for Target, Attribution, Freeform, Next or previous item, Page summary, Quick insights and Segment comparison.">
+        <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
     </div>
-    <div class="shot-note">Placeholder. Shows that the pre-shaped questions are a real, short, readable list rather than an abstract idea.</div>
+    <div class="shot-note">Eight entries, and most people only ever use two of them. This list is from an account without Streaming Media Collection, which is why no media panels appear.</div>
 </div>
-
-<h3 class="subsec-title">One panel is doing something the others are not</h3>
-<p>The Attribution panel deserves separating out, because it is not simply another arrangement of tables. It changed what the product could do.</p>
-
-<p>Attribution normally sounds like a marketing concern, and the panel is often described as though it only applies to campaigns. It does not. <strong>It accepts any dimension</strong>, and internal search terms, product categories or site sections are as valid a subject as marketing channels.</p>
-
-<p>What makes it different is when the work happens. The models are <strong>recalculated at the moment the report runs</strong>, from the underlying data, rather than being fixed by decisions made when the data was collected. Two consequences follow, and both are larger than they look.</p>
-
-<p>The first is that it applies to history. Change the model and every day already collected re-answers under the new rule, including the years before anybody thought of the question.</p>
-
-<p>The second is stranger. Because attribution is computed at report time, <strong>the variable's own persistence stops mattering</strong>. A prop, which holds a value for exactly one hit and normally cannot receive credit for a conversion three pages later, behaves like an eVar once an attribution model is applied. An eVar's configured allocation and expiration are set aside for the same reason. Settings that are otherwise permanent, and expensive to get wrong, become a dropdown.</p>
-
-<p>That is worth sitting with, because it is the first place this product separated <em>what was collected</em> from <em>how it is interpreted</em>. Everything before it baked the interpretation into collection: choose an eVar's expiry on the day you implement it, and live with that choice for years. Here the interpretation moved to report time, where it can be changed and changed back.</p>
-
-<p>That idea did not stop with one panel. It is the principle Customer Journey Analytics is built on, where the whole model of what a visit is and how a value persists became something you decide when you ask rather than when you collect. <a href="/adobe-analytics-learning/analyze/attribution-models/what-is-attribution/">What Is Attribution</a> takes the models themselves apart, and <a href="/adobe-analytics-learning/deliver/adobe-analytics-cja/what-is-customer-journey-analytics/">What Is Customer Journey Analytics</a> covers where the idea ended up.</p>
 
 <h3 class="subsec-title">A project is an object, and deliberately not a file</h3>
 <p>Save a project and it stops being a screen and becomes a thing with an identity. It has a name, an owner, a location in a folder structure, and a set of behaviors that belong to it: it can be shared with named people, scheduled to send itself on a timetable, exported, copied, and curated so that a recipient sees a deliberately reduced set of components. <a href="/adobe-analytics-learning/analyze/analysis-workspace/sharing-collaboration/">Sharing and Collaboration</a> covers what that opens up, and <a href="/adobe-analytics-learning/analyze/analysis-workspace/curation-and-templates/">Curation and Templates</a> covers the reduction.</p>
