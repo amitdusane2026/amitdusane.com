@@ -9,16 +9,18 @@ modulenum: 14
 sectionnum: 4
 weight: 4
 ---
-<p>Nobody has ever been persuaded by a table.</p>
+<p>An analyst spends a morning on a real piece of work. Mobile conversion has fallen and nobody knows why, so they break the data apart for an hour and eventually find it: the drop sits in one step of the checkout, on one operating system, and only since the release two weeks ago. The freeform table on the screen holds every part of that. It is correct, every number in it can be defended, and it took genuine skill to build.</p>
 
-<p>The table is where the answer is decided, and it is almost never where the answer is delivered. Somewhere between the analysis and the meeting, a number has to become a shape that a person absorbs in two seconds while half-listening. That conversion is what visualizations are for, and it is a genuinely different job from analysis.</p>
+<p>Then they carry it into the eleven o'clock meeting. Somebody asks about the second row. Somebody else is reading the wrong column and arguing with a number that is not there. The product manager, who is the one person in the room who actually has to decide whether to roll the release back, looks at forty numbers in a grid and says he will take it away and read it properly afterward, which everybody present understands to mean never.</p>
 
-<p>It also has a mechanic underneath it that catches almost everybody once, because a chart in this product is not the independent object it appears to be.</p>
+<p>The following week the same analyst brings one line chart with two lines on it and a single sentence underneath. The decision takes about ninety seconds.</p>
 
-<h3 class="subsec-title">Every chart is a drawing of a table, including the ones that look standalone</h3>
-<p>Drop a line chart into a panel and it appears with data already in it, which feels like magic and is not. The visualization has attached itself to the nearest freeform table and is drawing that table's numbers.</p>
+<p>Nothing about the analysis changed in between. The table was right the first time, and the chart the second time was drawn from that same table without one number being recalculated. What changed is that the finding had been given a shape a person can absorb while half-listening, and turning an answer into that shape is a genuinely different job from finding the answer. That second job is what this part of Workspace is for.</p>
 
-<p>It has no data of its own. It never had. It is a rendering, and the table is the thing.</p>
+<h3 class="subsec-title">Why the chart arrives already filled in</h3>
+<p>Drag a line chart into a panel and something slightly odd happens: it appears with your data already in it. You did not choose a dimension, you did not choose a metric, and yet there it is, plotting the right thing.</p>
+
+<p>That is not cleverness on Adobe's part, and it is worth knowing what actually happened, because everything else in this section follows from it. The chart looked around, found the nearest freeform table, and started drawing that table's numbers. It has no data of its own, it never asked for any, and if you deleted the table it would have nothing to show. A visualization in Workspace is a rendering, and the table underneath is the thing being rendered.</p>
 
 <div class="diagram-box">
     <div class="diagram-title">📊 One table, three pictures, no independent data anywhere</div>
@@ -60,45 +62,48 @@ weight: 4
     </svg>
 </div>
 
-<p>That is mostly a gift. It means a chart is never out of step with the analysis behind it, and it means you fix a wrong picture by fixing the table rather than by rebuilding the picture.</p>
+<p>Most of the time this arrangement is a gift, and it is worth being clear about why. It means a chart can never drift out of step with the analysis behind it, the way a number pasted into a slide drifts the moment somebody reruns the report. It means that when a picture is wrong you go and fix the table, and every chart drawing from that table corrects itself while you watch. And it means you can put a line, a bar and a headline number beside one another knowing that all three are telling the same story, because all three are reading the same rows.</p>
 
-<p>It also means every warning in <a href="/adobe-analytics-learning/analyze/analysis-workspace/freeform-tables/">Freeform Tables</a> applies to charts without being repeated. A chart drawn from a breakdown is showing a breakdown's numbers, scoped to the parent row, with no indentation left to warn anybody.</p>
+<p>It also means something less comfortable, which is that every warning in <a href="/adobe-analytics-learning/analyze/analysis-workspace/freeform-tables/">Freeform Tables</a> now applies to charts as well, without a word of it being repeated on screen. A chart drawn from a broken-down row is showing that breakdown's numbers, scoped to whatever the parent row was. In the table there was at least an indentation hinting at it. In the chart there is nothing at all.</p>
 
-<h3 class="subsec-title">The data source setting, and the chart that goes blank for no reason</h3>
-<p>Because a visualization attaches to the nearest table, "nearest" turns into a rule you did not choose and will eventually collide with.</p>
+<h3 class="subsec-title">So what actually breaks</h3>
+<p>The rule that the chart finds the nearest table is convenient right up until the moment it is not, and then it fails in a way that produces no error message anywhere.</p>
 
-<p>Add a second table above the chart and the chart may be reading something new. Delete the table a chart was drawing from, and the chart empties. Collapse or move things around while tidying a project, and a picture that was right yesterday now shows something else, with no error and no complaint, because every state involved is legitimate.</p>
+<p>Think about how a project grows over a working day. You build a table to check something, then another table next to it, then a chart, then you scroll up and add a table above the whole lot because a colleague asked a different question. Later you tidy up, because half of those tables were scaffolding and nobody needs to see them. Every one of those actions is completely ordinary, and any one of them can change which table a chart is reading.</p>
 
-<p>The fix is the <strong>Data Source</strong> tab in the visualization's own settings, which shows exactly which table and which rows are feeding it, and lets you point it somewhere deliberate rather than accepting proximity.</p>
+<p>Delete the table a chart was drawing from and the chart empties. Insert a new table above a chart and the chart may quietly switch to it, keep its title, keep its colors, and start describing a different subject entirely with total confidence. Nothing on the canvas draws a line between a chart and its table, so there is no visual clue that the relationship exists, let alone that it has changed.</p>
 
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ Deleting a table quietly empties every chart that was drawing from it</div>
-    <p>The link between a chart and its table is invisible on the canvas. Nothing draws a line between them, and a chart does not announce which table it belongs to. So the ordinary act of cleaning up a project, removing a working table that was only ever scaffolding, takes the charts with it. They do not error. They go blank, or worse, silently re-attach to whichever table is now nearest and carry on displaying confident numbers about a different subject. Before deleting any table, check the Data Source tab of every visualization near it.</p>
+    <div class="warn-hdr">⚠️ Tidying a project is how charts start describing the wrong thing</div>
+    <p>The most dangerous moment in the life of a project is not building it, it is cleaning it up. Removing a working table that was only ever there to check something takes the charts with it, and they do not complain. They go blank, which at least you notice, or they attach themselves to whichever table is now closest and carry on producing perfectly confident pictures about a subject nobody intended. Before deleting any table, open the Data Source tab on every visualization near it and read which table each one is actually using. It takes ten seconds and it is the only place that relationship is visible.</p>
 </div>
 
-<h3 class="subsec-title">Pick the shape from the question, not from the catalogue</h3>
-<p>There are around two dozen visualization types, and the number is misleading, because most analysis is served by about five of them. The catalogue rewards browsing and punishes it: the temptation is to pick something that looks impressive, and impressive is not a property a chart should have.</p>
+<p>The fix, once you know the problem exists, is small. Every visualization has a <strong>Data Source</strong> tab in its own settings, and that tab tells you exactly which table it is reading and which rows within that table it is using. You can point it somewhere deliberately instead of leaving it to proximity. Doing that on anything you intend to keep is the difference between a project that survives being edited and one that quietly starts lying the first time somebody moves a panel.</p>
 
-<p>The useful way to choose is to say the sentence out loud first, then take the shape that matches its verb.</p>
+<h3 class="subsec-title">There are two dozen shapes, and you will use about five</h3>
+<p>Open the visualizations list and it is long. Line, bar, stacked bar, horizontal bar, area, stacked area, donut, scatter, histogram, treemap, bullet, combo, Venn, map, summary number, summary change, key metric summary, and several more underneath. It looks like a set of choices to be worked through.</p>
+
+<p>It is not, really. Most analysis is served by four or five of them, and the length of the list is closer to a trap than an opportunity, because browsing it encourages picking something interesting. A chart has no business being interesting. Its entire job is to make one relationship obvious faster than a sentence could, and the shapes that do that best are mostly the boring ones.</p>
+
+<p>The way to choose without thinking about the catalogue at all is to say the finding out loud first, in plain words, and then take the shape that matches the verb you used.</p>
 
 <div class="tbl-wrap">
     <table>
-        <thead><tr><th>The sentence</th><th>The shape</th><th>Why that one</th></tr></thead>
+        <thead><tr><th>What you said out loud</th><th>The shape</th><th>Why that one</th></tr></thead>
         <tbody>
-            <tr><td>"This is going up, and here is when it turned"</td><td><strong>Line</strong></td><td>Time on the horizontal axis is the only thing people read without instruction</td></tr>
-            <tr><td>"These things are not the same size"</td><td><strong>Bar</strong>, or horizontal bar for long labels</td><td>Length is the one visual property humans compare accurately</td></tr>
-            <tr><td>"One number matters more than the rest"</td><td><strong>Summary number</strong> or <strong>summary change</strong></td><td>A chart of one value is a chart wasted</td></tr>
-            <tr><td>"These two groups overlap more than you think"</td><td><strong>Venn</strong></td><td>The only shape that shows membership in two sets at once</td></tr>
+            <tr><td>"This is going up, and here is where it turned"</td><td><strong>Line</strong></td><td>Time along the bottom is the only convention every reader already knows</td></tr>
+            <tr><td>"These things are not the same size"</td><td><strong>Bar</strong>, horizontal if the labels are long</td><td>Length is the one visual property people compare accurately</td></tr>
+            <tr><td>"One number matters more than the rest"</td><td><strong>Summary number</strong> or <strong>summary change</strong></td><td>A chart of a single value is a chart wasted</td></tr>
+            <tr><td>"These two groups overlap more than anyone thinks"</td><td><strong>Venn</strong></td><td>The only shape that shows membership of two sets at once</td></tr>
             <tr><td>"We are tracking against a target"</td><td><strong>Bullet</strong></td><td>Built for actual against goal, which a bar cannot express</td></tr>
-            <tr><td>"Most of the total comes from a few items"</td><td><strong>Treemap</strong> or bar</td><td>Donuts are worse than bars at exactly this and get used anyway</td></tr>
             <tr><td>"Where did people go, and where did they stop"</td><td><strong>Flow</strong>, <strong>Fallout</strong></td><td>Covered in <a href="/adobe-analytics-learning/analyze/analysis-workspace/fallout-and-flow-analysis/">Fallout and Flow Analysis</a></td></tr>
         </tbody>
     </table>
 </div>
 
-<p>The opinion worth holding, for a first pass: <strong>line for time, bar for comparison, summary number for the headline, and stop.</strong> That covers the large majority of what a business report needs. It is scaffolding rather than law, and the moment you can say precisely why a scatter or a histogram answers your question better, use it and ignore the rule.</p>
+<p>For a first pass the working rule is short enough to remember: line for time, bar for comparison, a summary number for the headline, and stop there. That covers most of what a business report ever needs to say. It is scaffolding rather than law, and the day you can explain precisely why a scatter or a histogram answers your question better than a bar would, use it and forget the rule.</p>
 
-<p>The one to be actively suspicious of is the donut. It asks the reader to compare angles, which people are measurably poor at, and it stops working entirely beyond about four slices. A horizontal bar answers the same question and can be read from the back of a room.</p>
+<p>There is one shape worth being actively suspicious of, and it is the one that gets reached for most. A donut asks the reader to compare angles, and people are measurably poor at comparing angles. Try it on the picture below: the same five values are drawn twice, once as a donut and once as bars, and putting them in order is a small task on one side and no task at all on the other.</p>
 
 <div class="diagram-box">
     <div class="diagram-title">📊 Same five numbers. Rank them on the left, then on the right.</div>
@@ -135,7 +140,9 @@ weight: 4
     </svg>
 </div>
 
-<div class="shot-box shot-pending">
+<p>A donut also stops working entirely somewhere around four slices, and almost nobody stops at four. The horizontal bar answers the same question, holds any number of categories, keeps its labels readable, and can be understood from the back of a room. If somebody asks for a pie chart because the last deck had one, this is the substitution to make quietly.</p>
+
+<div class="shot-box shot-pending shot-tall">
     <div class="shot-title">📷 The visualization catalogue</div>
     <div class="shot-frame">
         <p class="shot-brief">FILE:       aal_module14_section04_ss1.png
@@ -152,25 +159,25 @@ NOTE:       you already captured this exact frame when you sent
             the five rail screenshots. Reuse the original if it
             is still on disk.
 REDACT:     nothing.
-WIDTH:      about 800px, narrow column. Mark the block shot-tall.</p>
+WIDTH:      about 800px, narrow column.</p>
     </div>
-    <div class="shot-note">Placeholder. The point of the picture is the length of the list against how few of them earn regular use.</div>
+    <div class="shot-note">Placeholder. The point of the picture is the length of the list set against how few of them earn regular use.</div>
 </div>
 
-<h3 class="subsec-title">Three of them are not charts, and they are what makes a project readable</h3>
-<p>Buried in the same catalogue are components that draw no data at all, and they matter more than their position in the list suggests.</p>
+<h3 class="subsec-title">Three of them draw no data at all</h3>
+<p>Sitting in the same list, easy to scroll past, are a few components that plot nothing whatsoever. <strong>Text</strong> puts a paragraph on the canvas. <strong>Section header</strong> puts a heading on it. Neither performs any analysis, neither touches a report suite, and between them they do more for a project's usefulness than any choice of chart.</p>
 
-<p><strong>Text</strong> puts a paragraph on the canvas. <strong>Section header</strong> puts a heading on it. Neither does anything analytical, and together they are the difference between a project a colleague can read alone and a project that requires you standing next to it explaining what they are looking at.</p>
+<p>The reason is worth spelling out, because the failure they prevent is so ordinary that most people have stopped noticing it. A project built over an afternoon of genuine investigation is completely legible to the person who built it. They remember which question each panel was answering, why that segment is applied, and what the odd-looking table in the middle was for. Hand the same project to a colleague a week later and none of that is present. The tables are all still correct. The charts are all still accurate. And there is nothing anywhere on the canvas that says what was being asked or what the answer turned out to be, so the colleague reads forty numbers, forms no conclusion, and closes it.</p>
 
-<p>This is worth taking seriously, because the failure mode is so ordinary. A project built in an afternoon of genuine investigation is perfectly legible to the person who built it and close to meaningless to anybody else, and the gap is never the data. It is that nothing on the canvas says what question was being asked or what the answer turned out to be.</p>
+<p>Which is how a good piece of analysis ends up being opened exactly once.</p>
 
 <div class="pro-tip">
     <div class="pro-tip-hdr">💡 Write the finding above the chart that proves it</div>
-    <p>A text block above each panel saying what the panel found, in one sentence, in plain language, does more for a project's usefulness than any chart choice. "Mobile converts at half the rate of desktop, and the gap is entirely in checkout" is a finding. A bar chart is evidence for it. Most projects ship the evidence and leave the finding in the analyst's head, which is why so many of them get opened once. It also ages well: in six months the sentence is what tells you whether the project is still worth keeping.</p>
+    <p>Put a text block above each panel and write, in one plain sentence, what that panel found. Not what it shows, what it found. "Mobile converts at half the rate of desktop, and the entire gap is in checkout" is a finding, and the bar chart underneath is the evidence for it. Most projects ship the evidence and leave the finding in the analyst's head, which is why so many of them get read once and never reopened. The habit pays a second time months later, when you come back to a project and the sentence tells you immediately whether it is still worth keeping, without having to reconstruct what you were thinking at the time.</p>
 </div>
 
-<h3 class="subsec-title">Follow along: one table, three pictures, then break it on purpose</h3>
-<p>The mechanic in this section is easier to trust once you have watched it happen, particularly the part where a chart silently changes what it is about.</p>
+<h3 class="subsec-title">Follow along: build three pictures, then break them on purpose</h3>
+<p>The attachment between a chart and its table is easier to trust once you have watched it work and then watched it fail, and the failure is much better met in a project nobody depends on.</p>
 
 <div class="code-block">
     <div class="code-hdr"><span class="code-lang">Follow along: prove that the chart is a drawing of the table</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
@@ -178,52 +185,54 @@ WIDTH:      about 800px, narrow column. Mark the block shot-tall.</p>
 
 1  A panel with one freeform table: Day in rows, Page Views in columns
 
-2  Left rail &gt; Visualizations &gt; drag a Line chart under the table
-       It arrives already populated. It found the table itself.
+2  Left rail &gt; Visualizations &gt; drag a Line chart underneath it
+       It arrives already populated. Nothing was configured.
+       It went looking for a table and found yours.
 
 3  Add a Bar chart and a Summary number the same way
 
-4  Now change the table: swap the metric, or add a segment to a column
-       All three pictures move together. None of them was edited.
+4  Now change the table: swap the metric, or drop a segment on a column
+       All three pictures move together, and none of them was
+       touched. That is the whole mechanic in one action.
 
 PART TWO, THE BREAK
 
 5  Insert a second freeform table ABOVE one of the charts
        Check whether that chart is still reading the table you
-       think it is.
+       think it is. It may not be.
 
-6  Open the chart's settings &gt; Data Source
-       This is the only place the attachment is visible. Point it
-       deliberately at the table you actually mean.
+6  Open that chart's settings &gt; Data Source
+       This is the only place the relationship is visible. Point
+       it deliberately at the table you actually mean.
 
 7  Delete the original table
-       Watch what happens to the charts that were drawing from it.
-       Undo immediately, and remember the shape of that failure.
+       Watch what happens to the charts that were drawing from
+       it. Undo straight away, and remember the shape of it.
 
 PART THREE, MAKE IT READABLE
 
 8  Left rail &gt; Visualizations &gt; Text, dropped above the panel
-       Write one sentence saying what the panel found. Not what
-       it shows. What it found.
+       One sentence saying what the panel found. Not what it
+       shows. What it found.
 
 There is nothing else to configure. A visualization has almost no
-settings of its own, because almost every decision was already made
-in the table it is drawing.</pre></div>
+settings of its own, because nearly every decision it displays was
+already made in the table it is reading.</pre></div>
 </div>
 
-<p>Those eight steps are a floor rather than a ceiling. Step 7 is the one worth doing deliberately, in a project nobody depends on, so that the first time a chart empties is a choice rather than an emergency.</p>
+<p>Those eight steps are a floor rather than a ceiling. Step 7 is the one worth doing deliberately, so that the first time a chart empties on you it is a thing you recognize rather than a thing you panic about with a stakeholder waiting.</p>
 
 <h3 class="subsec-title">What you have now</h3>
-<p>Every visualization in Analysis Workspace is a drawing of a freeform table. It holds no data, inherits every decision the table made, attaches itself to whichever table is nearest unless told otherwise, and empties without complaint if that table disappears. The Data Source tab is the only place that relationship is visible, and checking it is what separates a project that survives tidying from one that quietly starts lying.</p>
+<p>Every visualization in Analysis Workspace is a drawing of a freeform table. It holds no data, it inherits every decision the table made including the ones you have forgotten about, it attaches itself to whichever table happens to be nearest unless you tell it otherwise, and it empties without complaint when that table goes away. The Data Source tab is the only place that relationship can be seen, and checking it before deleting anything is the difference between a project that survives being edited and one that starts describing the wrong subject.</p>
 
-<p>Choosing among two dozen shapes matters less than it appears to. Line for time, bar for comparison, a summary number for the headline, a sentence of text saying what was found. Most of what makes a project persuasive is not in the catalogue at all.</p>
+<p>Choosing among two dozen shapes matters far less than the catalogue suggests. Line for time, bar for comparison, a summary number for the headline, a sentence of text saying what was found. Most of what makes a project persuasive is not in the list of visualizations at all, and the components that plot nothing are doing more work than the ones that do.</p>
 
-<p>Four of the entries in that list are different in kind, though. They do not draw an existing table, they perform an analysis of their own, and each answers a question a freeform table structurally cannot. <a href="/adobe-analytics-learning/analyze/analysis-workspace/cohort-analysis/">Cohort Analysis</a> is the first: it stops asking what happened this month and starts asking whether the people who arrived in January were ever seen again.</p>
+<p>Four entries in that same list are different in kind, though. They do not draw an existing table, they run an analysis of their own, and each one answers a question a freeform table cannot express however it is arranged. <a href="/adobe-analytics-learning/analyze/analysis-workspace/cohort-analysis/">Cohort Analysis</a> is the first of them, and it stops asking what happened this month in order to ask something harder: of the people who arrived in January, how many were ever seen again.</p>
 
 <div class="path-box">
     <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Analytics</div>
-    <p>Analytics &gt; <span class="path">Workspace</span>, then the <span class="path">Visualizations</span> icon, second in the left rail. Drag any entry onto the canvas, or use <span class="path">Insert</span> in the menu bar.</p>
-    <p>Every visualization carries a gear for its own settings. <span class="path">Data Source</span> inside those settings is where the link to a freeform table is shown and changed, and it is the first place to look when a chart shows something unexpected.</p>
+    <p>Analytics &gt; <span class="path">Workspace</span>, then the <span class="path">Visualizations</span> icon, second down the left rail. Drag any entry onto the canvas, or use <span class="path">Insert</span> in the menu bar above.</p>
+    <p>Every visualization carries a gear for its own settings, and <span class="path">Data Source</span> inside those settings is where the link to a freeform table is shown and changed. It is the first place to look whenever a chart shows something unexpected.</p>
 </div>
 
 <div class="ref-box">
