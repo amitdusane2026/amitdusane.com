@@ -576,3 +576,20 @@ body.world-learning .lcontent .path{background:#CECBF6;padding:3px 9px;border-ra
 .section .hp-badge.primary{background:var(--accent,#e11d48);color:#fff}
 .section .hp-badge.secondary{background:var(--bg3,#eef2f7);color:var(--text2,#475569)}
 .section .hp-node.support{opacity:.72}
+
+/* --- shot-box: product screenshots (added 14 Aug 2026) ------------------
+   Sibling of .diagram-box. A screenshot needs three things a diagram does
+   not: a visible frame (light Adobe UI on a light card vanishes without
+   one), a dimming pass in dark mode so it does not glare, and a zoom
+   affordance. Zoom is a plain link to the full-size file, so the browser's
+   own image viewer supplies pinch-zoom and panning with no JavaScript. */
+.shot-box{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:24px;margin:24px 0}
+.shot-title{font-weight:700;color:var(--text1);margin-bottom:16px;font-size:16px}
+.shot-zoom{position:relative;display:block;border:1px solid var(--border);border-radius:8px;overflow:hidden;background:var(--bg3)}
+.shot-zoom img{display:block;width:100%;height:auto}
+.shot-zoom::after{content:"⤢";position:absolute;top:10px;right:10px;width:28px;height:28px;line-height:28px;text-align:center;font-size:14px;border-radius:6px;background:rgba(15,23,42,.72);color:#fff;opacity:.85}
+.shot-zoom:hover::after{opacity:1}
+.shot-note{margin-top:12px;font-size:14px;color:var(--text2);line-height:1.6}
+.shot-credit{margin-top:10px;font-size:12px;color:var(--text3)}
+:root[data-theme="dark"] .shot-zoom img{filter:brightness(.88) contrast(1.02)}
+@media print{.shot-zoom::after{display:none}}

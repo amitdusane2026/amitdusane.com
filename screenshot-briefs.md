@@ -20,7 +20,21 @@ Running record of every screenshot the site needs, one block per shot. Written w
 
 ## M14 Analysis Workspace
 
-### §1 Analysis Workspace Overview
+### §1 Analysis Workspace Overview — **DONE, 2 shots shipped**
+
+**Shipped:** `ss1` the whole screen, `ss2` the Data Dictionary showing all four colors. Both live in the section, zero blur in either.
+
+**Cut deliberately, and the reasoning matters for every later section.** The original list had five. Three were dropped because the section already carries three diagrams, and eight visuals in 3,600 words is clutter:
+
+- **`ss3` panel header** — `ss1` already shows the report suite top right and the schematic labels it. Redundant.
+- **`ss4` table with a segment column** — the blue-segment-as-a-column point belongs to §3 Freeform Tables, where it can be taught rather than illustrated. **Banked there.**
+- **`ss5` blank project** — the prose does it in one sentence.
+
+**The working rule that came out of it: two screenshots per section is plenty, and a screenshot has to beat the diagram that would otherwise sit in that slot.** Colour was the case that could not be done in text. Layout could have been, and the screenshot only earns its place because the schematic beside it is doing the abstract half.
+
+**Processing, for reference.** Originals are archived unmodified in `screenshot-originals/` in the working directory. Web copies in `static/img/` are resized with `System.Drawing`: `ss1` to 1500px, `ss2` to 1200px with 82px of page bleed trimmed off the bottom. Still PNG, not WebP, because no conversion tooling is installed. `winget install ImageMagick.ImageMagick` when that becomes worth doing.
+
+### §1 original briefs, kept for reference
 
 ---
 
