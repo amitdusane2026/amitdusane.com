@@ -439,7 +439,37 @@ The `report-suites/02` pair is the worst of the sixteen: line 13 references an a
 grep -rn -i -o '[^.>]\{0,70\}\(so far in this\|in this module so far\|everything in this module\|the previous section\|the last section\|the last two sections\|the previous two sections\|the sections before\|the section before\|earlier we saw\|by now you have\|up to now you\|this module has been building\|as we saw\|we have met\|comes next\|is next\b\)[^.]\{0,60\}' --include=*.html .
 ```
 
-## DECIDED, deferred by design: the site will carry screenshots (14 Aug 2026)
+## BLOCKED: no screenshots ship in any form until Adobe answers (14 Aug 2026)
+
+**Amit's ruling, same day the specification below was written: nothing goes on the site until Adobe responds to a permissions request.** Not cropped, not full, not anywhere. The specification that follows is kept because most of it survives, but **it must not be acted on as written.**
+
+**What blocks it.** Adobe's [image use rights](https://www.adobe.com/legal/permissions/images-user-guides.html) page, read in full on 14 Aug 2026, is materially stricter than a summary of it suggests. Three clauses decide this:
+
+| Clause | Effect on the plan |
+|---|---|
+| 4. "Your use must contain the entire screenshot. You may not use portions of the screenshot" | **Kills tight cropping**, which was the whole mobile strategy and all four §1 briefs |
+| 10. "Screenshots must be reproduced in their entirety." Portions permitted only by written request via Adobe's online form, two weeks | The only route to the plan as designed |
+| 4. "You may not alter the screenshot in any way except to resize it" | **Kills redaction boxes** |
+| 6. "You may not use screenshots that contain third-party content" | Independent of any NDA |
+| 7. Mandatory: "Adobe product screenshot(s) reprinted with permission from Adobe." Plus clause 9's trademark attribution | Not previously planned for |
+
+**So the position is:** full, entire, unaltered screenshots containing no third-party content and carrying attribution need no permission. Everything designed below needs written permission.
+
+**Next action, off the critical path:** submit Adobe's online permissions form asking for cropped screenshots of Adobe Analytics for educational use on amitdusane.com. Two weeks of Adobe processing runs alongside months of module writing, so requesting early costs nothing.
+
+**Until then the SVG schematics remain the site's visual language**, and that is not a downgrade. They are original work, carry no licensing burden, no attribution requirement and no third-party content risk, render legibly at 293px on a phone, and do not rot when Adobe redesigns.
+
+### Where the captures will come from, when they happen
+
+**The Adobe training account, not the company account.** Amit's employer's Adobe Analytics access sits under a strict security policy, is reachable only from the company laptop, and nothing leaves it. That route is closed and should not be revisited.
+
+The training account granted during Adobe training carries **fictitious data throughout**. That is the right source and it removes most of the risk in one move: no client data, no NDA exposure, and no third-party content under clause 6, since Adobe's own demo brands are Adobe's content rather than a third party's.
+
+**One thing to confirm before capturing from it:** whether the training environment carries its own terms of use governing publication of what is on screen. Adobe's screenshot permission and a training account's acceptable-use policy are separate documents and both have to allow it.
+
+### The specification below is retained but NOT current. Do not act on it without checking the block above.
+
+## Originally DECIDED, deferred by design: the site will carry screenshots (14 Aug 2026)
 
 **Amit's decision, and the reasoning is deliberate rather than an oversight.** The site has no product screenshots anywhere. It teaches interfaces with hand-built SVG schematics, which strip the noise out and are better for teaching *structure*, and which do not answer the question a first-time reader actually has, which is "will I recognize this when I open it."
 
