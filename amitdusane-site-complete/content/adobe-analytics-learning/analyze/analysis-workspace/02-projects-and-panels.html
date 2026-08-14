@@ -2,42 +2,317 @@
 slug: "projects-and-panels"
 title: "Projects and Panels"
 seotitle: "Projects and Panels in Analysis Workspace"
-lastmod: 2026-07-15
+description: "A panel decides which suite, which dates and which segment everything inside it answers to. What a project really is, and why one report was never enough."
+lastmod: 2026-08-14
 type: lesson
 modulenum: 14
 sectionnum: 2
 weight: 2
 ---
-<p>Panels are containers that hold visualizations and tables. Each panel can have its own date range and segments.</p>
-                <h3 class="subsec-title">Panel Types</h3>
-                <div class="tbl-wrap">
-                    <table>
-                        <thead><tr><th>Panel</th><th>Purpose</th><th>Key Features</th></tr></thead>
-                        <tbody>
-                            <tr><td><strong>Blank Panel</strong></td><td>Custom analysis</td><td>Start from scratch, full flexibility</td></tr>
-                            <tr><td><strong>Freeform</strong></td><td>General analysis</td><td>Tables and visualizations</td></tr>
-                            <tr><td><strong>Attribution</strong></td><td>Attribution modeling</td><td>Compare models, conversion analysis</td></tr>
-                            <tr><td><strong>Quick Insights</strong></td><td>Fast answers</td><td>Guided analysis for beginners</td></tr>
-                            <tr><td><strong>Segment Comparison</strong></td><td>Compare audiences</td><td>Statistical significance testing</td></tr>
-                            <tr><td><strong>Media Concurrent Viewers</strong></td><td>Streaming analysis</td><td>Peak concurrency, time-spent</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-                <h3 class="subsec-title">Panel Settings</h3>
-                <ul>
-                    <li><strong>Date range:</strong> Each panel can have independent date ranges</li>
-                    <li><strong>Segments:</strong> Apply segments at panel level (affects all content)</li>
-                    <li><strong>Report suite:</strong> Change report suite per panel</li>
-                    <li><strong>Collapse/Expand:</strong> Manage screen space with large projects</li>
-                </ul>
-                <div class="pro-tip">
-                    <div class="pro-tip-hdr">💡 Pro Tip</div>
-                    <p>Use multiple panels to compare time periods side-by-side. Set Panel 1 to "This Month" and Panel 2 to "Last Month" with the same visualizations for easy comparison.</p>
-                </div>
-                <div class="ref-box">
-                    <div class="ref-title">📚 Learn More</div>
-                    <ul>
-                        <li><a href="https://experienceleague.adobe.com/docs/analytics/analyze/analysis-workspace/panels/panels.html" target="_blank">Adobe Docs: Panels Overview</a></li>
-                    </ul>
-                </div>
-            
+<p>Somebody asks which channel brought the most traffic last month. Search, comfortably. That took one report and about forty seconds.</p>
+
+<p>Nobody has ever stopped there. The next question is what Search converts at. Then how that conversion rate is defined, because two people in the room are using the number differently. Then what those visitors actually did after they arrived, and where most of them gave up.</p>
+
+<p>Four follow-ups, and they are not four separate pieces of work. They are one conversation, and each one only exists because of the answer before it.</p>
+
+<h3 class="subsec-title">One question is never one question</h3>
+<p>That chain is worth looking at closely, because it is the entire argument for how this screen is built.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">📊 One question, forty seconds. The next four, five different reports.</div>
+    <svg viewBox="0 0 700 300" style="width:100%;height:auto;display:block;margin:4px 0 8px"
+         role="img" aria-label="A chain of five questions running down the page, each triggered by the answer to the one above it. Which channel brought the most traffic, answered by a channel report. What does Search convert at, answered by a rate. How is that rate defined, answered by a calculated metric. What did those visitors do next, answered by a flow. Where did they give up, answered by a fallout. Each question needs a different kind of report, and all five belong to one conversation.">
+        <text x="16" y="18" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif;letter-spacing:1px">ONE CONVERSATION</text>
+
+        <line x1="60" y1="42" x2="60" y2="266" style="stroke:var(--border,#e2e8f0);stroke-width:2"/>
+
+        <circle cx="60" cy="46" r="7" style="fill:var(--accent,#e11d48)"/>
+        <circle cx="60" cy="101" r="7" style="fill:var(--accent,#e11d48)"/>
+        <circle cx="60" cy="156" r="7" style="fill:var(--accent,#e11d48)"/>
+        <circle cx="60" cy="211" r="7" style="fill:var(--accent,#e11d48)"/>
+        <circle cx="60" cy="266" r="7" style="fill:var(--accent,#e11d48)"/>
+
+        <text x="82" y="43" style="fill:var(--text1,#0f172a);font-size:13px;font-family:sans-serif">"Which channel brought the most traffic?"</text>
+        <text x="82" y="59" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">a channel report</text>
+
+        <text x="82" y="98" style="fill:var(--text1,#0f172a);font-size:13px;font-family:sans-serif">"Fine, but what does Search convert at?"</text>
+        <text x="82" y="114" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">a rate, not a count</text>
+
+        <text x="82" y="153" style="fill:var(--text1,#0f172a);font-size:13px;font-family:sans-serif">"Hold on, how are we defining that?"</text>
+        <text x="82" y="169" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">a calculated metric</text>
+
+        <text x="82" y="208" style="fill:var(--text1,#0f172a);font-size:13px;font-family:sans-serif">"What did those visitors do next?"</text>
+        <text x="82" y="224" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">a flow</text>
+
+        <text x="82" y="263" style="fill:var(--text1,#0f172a);font-size:13px;font-family:sans-serif">"And where did we lose them?"</text>
+        <text x="82" y="279" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">a fallout</text>
+
+        <rect x="470" y="30" width="214" height="252" rx="8" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <text x="577" y="54" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12px;font-weight:700;font-family:sans-serif">In the old interface</text>
+        <text x="577" y="82" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">five reports</text>
+        <text x="577" y="102" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">built one at a time</text>
+        <text x="577" y="122" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">saved one at a time</text>
+        <text x="577" y="142" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">assembled afterward</text>
+        <line x1="500" y1="164" x2="654" y2="164" style="stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <text x="577" y="192" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:12px;font-weight:700;font-family:sans-serif">In Analysis Workspace</text>
+        <text x="577" y="218" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">five panels</text>
+        <text x="577" y="238" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">on one canvas</text>
+        <text x="577" y="258" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">while the room waits</text>
+    </svg>
+</div>
+
+<p>Data is connected because behavior is connected, so a genuine analytical question almost never resolves into a single number. It resolves into a thread. The reporting interface that Analysis Workspace replaced could answer every one of those five questions perfectly well, and could only answer them one at a time, each in its own view, each saved before the next could begin. Assembling them into something a person could read meant building a Dashboard afterward out of reports you had already finished.</p>
+
+<p>Fifteen minutes of thinking cost a day of clicking. That gap is what panels exist to close.</p>
+
+<h3 class="subsec-title">A project is the whole conversation, not one answer</h3>
+<p>Start with what you are actually making, because the vocabulary matters here and Adobe chose its word carefully.</p>
+
+<p>Ask somebody what they build in Workspace and the answer wobbles. A report? A dashboard? A set of tables with some charts? It is all of those and none of them, because it may hold twelve tables, four charts, a fallout, notes to a colleague, and data drawn from three different <a href="/adobe-analytics-learning/foundations/report-suites/what-are-report-suites/">report suites</a> that have nothing to do with each other.</p>
+
+<p>"Report" is too small for that. "Dashboard" implies a fixed set of tiles somebody reads rather than works in. So Adobe called it a <strong>project</strong>, and the word is doing real work: a project is a body of connected analysis with a purpose, not a single output.</p>
+
+<p>The consequence that catches people out is ownership. <strong>A project does not belong to a report suite.</strong> It belongs to the login company, and to the person who created it. That is why one project can compare two brands, two regions, or last year's suite against this year's replacement, and it is why you will not find your projects by going looking inside a report suite's settings.</p>
+
+<h3 class="subsec-title">The panel is where a question gets its context</h3>
+<p>Underneath the project sits the piece that does the actual work, and it is easy to mistake for visual grouping. It is not. A panel is a scope boundary.</p>
+
+<p>Every panel owns three things, and everything placed inside it inherits all three without being asked.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">📊 Three settings on the panel, inherited by everything inside it</div>
+    <svg viewBox="0 0 700 330" style="width:100%;height:auto;display:block;margin:4px 0 8px"
+         role="img" aria-label="A hierarchy. At the top, one project belonging to the login company, holding many panels. Below it a single panel carrying three settings: a report suite, a date range and any segments dropped on it. Arrows run down from those three settings into the panel's contents, a freeform table and two visualizations, showing that all of them inherit the same context. A second panel sits alongside with entirely different settings.">
+        <rect x="16" y="20" width="668" height="40" rx="8" style="fill:var(--card,#ffffff);stroke:var(--accent,#e11d48);stroke-width:2"/>
+        <text x="32" y="45" style="fill:var(--accent,#e11d48);font-size:13px;font-weight:700;font-family:sans-serif">PROJECT</text>
+        <text x="128" y="45" style="fill:var(--text2,#475569);font-size:12px;font-family:sans-serif">belongs to the login company, not to any report suite</text>
+
+        <rect x="16" y="76" width="420" height="236" rx="8" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <text x="32" y="98" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">PANEL</text>
+
+        <rect x="32" y="110" width="126" height="30" rx="5" style="fill:var(--card,#ffffff);stroke:var(--accent,#e11d48);stroke-width:1.5"/>
+        <text x="95" y="129" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:10px;font-weight:700;font-family:sans-serif">report suite</text>
+        <rect x="166" y="110" width="126" height="30" rx="5" style="fill:var(--card,#ffffff);stroke:#9370e0;stroke-width:1.5"/>
+        <text x="229" y="129" text-anchor="middle" style="fill:#9370e0;font-size:10px;font-weight:700;font-family:sans-serif">date range</text>
+        <rect x="300" y="110" width="120" height="30" rx="5" style="fill:var(--card,#ffffff);stroke:#3d7fdd;stroke-width:1.5"/>
+        <text x="360" y="129" text-anchor="middle" style="fill:#3d7fdd;font-size:10px;font-weight:700;font-family:sans-serif">segments</text>
+
+        <line x1="95" y1="140" x2="95" y2="166" style="stroke:var(--text3,#94a3b8);stroke-width:1.5"/>
+        <line x1="229" y1="140" x2="229" y2="166" style="stroke:var(--text3,#94a3b8);stroke-width:1.5"/>
+        <line x1="360" y1="140" x2="360" y2="166" style="stroke:var(--text3,#94a3b8);stroke-width:1.5"/>
+        <line x1="95" y1="166" x2="360" y2="166" style="stroke:var(--text3,#94a3b8);stroke-width:1.5"/>
+        <line x1="226" y1="166" x2="226" y2="182" style="stroke:var(--text3,#94a3b8);stroke-width:1.5"/>
+        <polygon points="226,190 220,178 232,178" style="fill:var(--text3,#94a3b8)"/>
+
+        <text x="32" y="212" style="fill:var(--text3,#94a3b8);font-size:10px;font-family:sans-serif;letter-spacing:1px">EVERYTHING BELOW INHERITS ALL THREE</text>
+        <rect x="32" y="222" width="388" height="24" rx="4" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <text x="42" y="238" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">freeform table</text>
+        <rect x="32" y="252" width="188" height="24" rx="4" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <text x="42" y="268" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">line chart</text>
+        <rect x="232" y="252" width="188" height="24" rx="4" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <text x="242" y="268" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">fallout</text>
+        <text x="32" y="298" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">Nothing here was asked which suite or which dates.</text>
+
+        <rect x="452" y="76" width="232" height="236" rx="8" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5;stroke-dasharray:5 4"/>
+        <text x="468" y="98" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">ANOTHER PANEL</text>
+        <text x="468" y="126" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">a different report suite</text>
+        <text x="468" y="146" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">a different date range</text>
+        <text x="468" y="166" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">different segments</text>
+        <text x="468" y="196" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">In the same project,</text>
+        <text x="468" y="214" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">on the same screen,</text>
+        <text x="468" y="232" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">scrolled past without</text>
+        <text x="468" y="250" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">anyone noticing.</text>
+    </svg>
+</div>
+
+<p>That inheritance is the whole point of the container. You set the context once, at the top, and then stop thinking about it while you build. Drag in a table, a chart, a fallout, and none of them ask which suite or which dates, because the panel already answered.</p>
+
+<p>It also means a panel is cheap to reason about and cheap to copy. Duplicate a panel and you duplicate its context along with its contents, which is why the fastest way to compare two periods is rarely to build a second report. It is to duplicate the panel and change one date.</p>
+
+<div class="pro-tip">
+    <div class="pro-tip-hdr">💡 Duplicate the panel, change one thing</div>
+    <p>Any comparison that holds the analysis constant and varies one dimension of context is a duplicate rather than a rebuild. Same tables, last quarter instead of this one. Same tables, the German suite instead of the global one. Same tables, first-time visitors instead of everyone. Right-click the panel header and duplicate it, change the single setting, and the two sit side by side answering the same question about different worlds. Rebuilding by hand is how the second version quietly ends up not matching the first.</p>
+</div>
+
+<div class="shot-box shot-pending">
+    <div class="shot-title">📷 The three controls a panel owns</div>
+    <div class="shot-frame">
+        <p class="shot-brief">FILE:       aal_module14_section02_ss1.png
+SCREEN:     Workspace, the header area of one panel
+CROP:       the panel header strip only, full panel width.
+            Nothing of the table below it.
+MUST SHOW:  the report suite selector and the date range at the
+            top right, AND a segment sitting as a chip inside the
+            "Drop a component to filter" zone. All three visible
+            in one frame, because the section's claim is that a
+            panel owns exactly these three things.
+SETUP:      drag any segment onto the panel drop zone first, so
+            the zone shows a chip rather than the empty prompt.
+REDACT:     nothing. Training account, generic suite name.
+WIDTH:      about 1200px.</p>
+    </div>
+    <div class="shot-note">Placeholder. This shot proves the section's central claim in one frame.</div>
+</div>
+
+<h3 class="subsec-title">Where you drop a segment decides what it touches</h3>
+<p>The same flexibility that makes panels useful creates the one mistake worth naming in this section, and it produces no error at all.</p>
+
+<p>A segment can be dropped in several places, and each one scopes it differently. They look almost identical afterward.</p>
+
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>Dropped on</th><th>What it filters</th><th>Use it when</th></tr></thead>
+        <tbody>
+            <tr><td><strong>The panel drop zone</strong></td><td>Every table and every visualization in that panel</td><td>The whole question is about that audience</td></tr>
+            <tr><td><strong>A table column</strong></td><td>That column only, sitting beside unfiltered columns</td><td>You are comparing the segment against everyone</td></tr>
+            <tr><td><strong>A single cell</strong></td><td>That one intersection</td><td>Rarely, and usually by accident</td></tr>
+            <tr><td><strong>Another panel</strong></td><td>Nothing in this panel at all</td><td>Never, but it happens constantly</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ A segment on the wrong panel is invisible and produces a perfectly plausible number</div>
+    <p>Drop a segment on the panel and every number in it moves. Drop the same segment one panel lower, and the panel you were looking at goes on reporting unfiltered totals that look entirely reasonable. There is no error, no highlight, and no warning, because both states are legitimate. Two people reading the same project will then quote different figures for what they both believe is the same question. Before trusting any number in a project you did not build, read the panel header and the drop zone together: which suite, which dates, which segments. Those three lines decide what every figure beneath them means.</p>
+</div>
+
+<h3 class="subsec-title">Adobe pre-shaped some of the questions</h3>
+<p>A blank panel is the default and most work starts there. But the panel picker offers a set of pre-built panels, and they are not templates in the decorative sense. Each one is a question somebody asks often enough that Adobe built the arrangement for it.</p>
+
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>Panel</th><th>The question it answers</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Blank</strong></td><td>Anything. You choose the visualization yourself.</td></tr>
+            <tr><td><strong>Freeform</strong></td><td>The general-purpose table, and the one you will use most.</td></tr>
+            <tr><td><strong>Attribution</strong></td><td>Which model credits this dimension, and how differently.</td></tr>
+            <tr><td><strong>Segment comparison</strong></td><td>What is actually different between these two audiences, across everything.</td></tr>
+            <tr><td><strong>Next or previous item</strong></td><td>What did people see immediately before or after this.</td></tr>
+            <tr><td><strong>Page summary</strong></td><td>Everything worth knowing about one page, assembled.</td></tr>
+            <tr><td><strong>Quick insights</strong></td><td>A guided path for somebody who does not yet know what to drag.</td></tr>
+            <tr><td><strong>Analytics for Target</strong></td><td>How did the Target activity actually perform, read in Analytics.</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="info-box">
+    <div class="info-hdr">ℹ️ Your panel list may be shorter than somebody else's</div>
+    <p>The picker is not identical across companies. Three media panels, Average Minute Audience, Concurrent Viewers and Playback Time Spent, appear only where Streaming Media Collection is provisioned, and Analytics for Target needs the integration in place. A panel missing from your list is usually an entitlement question rather than a version difference, which matters when following a guide written against somebody else's account.</p>
+</div>
+
+<p>Segment comparison is the one most people never open and should. It takes two segments and works through every dimension and metric available, then reports where they genuinely diverge rather than where you thought to look. It answers a question you did not know how to ask, which is a rare thing in reporting software.</p>
+
+<div class="shot-box shot-pending">
+    <div class="shot-title">📷 The panel picker</div>
+    <div class="shot-frame">
+        <p class="shot-brief">FILE:       aal_module14_section02_ss2.png
+SCREEN:     Workspace, left rail, first icon (Panels)
+CROP:       the Panels list only, from the "Search panels"
+            box down through the last visible panel type.
+MUST SHOW:  the full list of panel names available in the
+            account: Blank panel, Analytics for Target,
+            Attribution, Freeform, Next or previous item,
+            Page summary, Quick insights, Segment comparison.
+NOTE:       you already captured almost exactly this frame when
+            you sent the five rail screenshots. If that original
+            is still on disk it can be reused as is.
+REDACT:     nothing.
+WIDTH:      about 800px, it is a narrow column.</p>
+    </div>
+    <div class="shot-note">Placeholder. Shows that the pre-shaped questions are a real, short, readable list rather than an abstract idea.</div>
+</div>
+
+<h3 class="subsec-title">One panel is doing something the others are not</h3>
+<p>The Attribution panel deserves separating out, because it is not simply another arrangement of tables. It changed what the product could do.</p>
+
+<p>Attribution normally sounds like a marketing concern, and the panel is often described as though it only applies to campaigns. It does not. <strong>It accepts any dimension</strong>, and internal search terms, product categories or site sections are as valid a subject as marketing channels.</p>
+
+<p>What makes it different is when the work happens. The models are <strong>recalculated at the moment the report runs</strong>, from the underlying data, rather than being fixed by decisions made when the data was collected. Two consequences follow, and both are larger than they look.</p>
+
+<p>The first is that it applies to history. Change the model and every day already collected re-answers under the new rule, including the years before anybody thought of the question.</p>
+
+<p>The second is stranger. Because attribution is computed at report time, <strong>the variable's own persistence stops mattering</strong>. A prop, which holds a value for exactly one hit and normally cannot receive credit for a conversion three pages later, behaves like an eVar once an attribution model is applied. An eVar's configured allocation and expiration are set aside for the same reason. Settings that are otherwise permanent, and expensive to get wrong, become a dropdown.</p>
+
+<p>That is worth sitting with, because it is the first place this product separated <em>what was collected</em> from <em>how it is interpreted</em>. Everything before it baked the interpretation into collection: choose an eVar's expiry on the day you implement it, and live with that choice for years. Here the interpretation moved to report time, where it can be changed and changed back.</p>
+
+<p>That idea did not stop with one panel. It is the principle Customer Journey Analytics is built on, where the whole model of what a visit is and how a value persists became something you decide when you ask rather than when you collect. <a href="/adobe-analytics-learning/analyze/attribution-models/what-is-attribution/">What Is Attribution</a> takes the models themselves apart, and <a href="/adobe-analytics-learning/deliver/adobe-analytics-cja/what-is-customer-journey-analytics/">What Is Customer Journey Analytics</a> covers where the idea ended up.</p>
+
+<h3 class="subsec-title">A project is an object, and deliberately not a file</h3>
+<p>Save a project and it stops being a screen and becomes a thing with an identity. It has a name, an owner, a location in a folder structure, and a set of behaviors that belong to it: it can be shared with named people, scheduled to send itself on a timetable, exported, copied, and curated so that a recipient sees a deliberately reduced set of components. <a href="/adobe-analytics-learning/analyze/analysis-workspace/sharing-collaboration/">Sharing and Collaboration</a> covers what that opens up, and <a href="/adobe-analytics-learning/analyze/analysis-workspace/curation-and-templates/">Curation and Templates</a> covers the reduction.</p>
+
+<p>In every respect it behaves like a document in an office suite, with one deliberate difference: <strong>there is no file.</strong> Nothing is written to a disk, nothing is emailed as an attachment, and nothing exists in one place that can be lost with a laptop.</p>
+
+<p>That is the same decision that moved this product into the browser in the first place. A project lives in the platform, so credentials and a connection are the entire prerequisite for reaching it, from any machine, including one you have never used before. The cost is that there is no offline copy and no local backup, which is a real trade and not a small one. The benefit is that the work is never stranded on a device.</p>
+
+<p>Until it is saved, though, none of that applies. An unsaved project carries a quiet "unsaved changes" note near its name and exists only in the browser tab you are looking at.</p>
+
+<h3 class="subsec-title">Follow along: build the container before the content</h3>
+<p>This is the habit worth forming, and it takes two minutes. Set the context first, then build inside it, rather than building something and trying to work out afterward what it was measuring.</p>
+
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">Follow along: two panels, one project, and inheritance you can see</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>PART ONE, SET THE CONTEXT
+
+1  Analytics &gt; Workspace &gt; Create new project &gt; Blank project
+
+2  Panel header, top right: choose the report suite, then the dates
+       Both before you drag anything in. Everything you build
+       next will silently inherit them.
+
+3  Drag any segment onto "Drop a component to filter"
+       That is the panel drop zone. The chip that appears now
+       applies to everything in this panel.
+
+PART TWO, WATCH IT INHERIT
+
+4  Build a freeform table: any dimension, any metric
+
+5  Add a second visualization to the same panel
+       Neither one asked you for a report suite or a date range.
+       They took the panel's.
+
+6  Change the panel date range
+       Both update together. That is the container doing its job.
+
+PART THREE, PROVE THE BOUNDARY
+
+7  Insert &gt; New blank panel
+
+8  Give the second panel a different date range
+       Now scroll between them. Nothing in the body of either
+       panel tells you they disagree. Only the headers do.
+
+9  Remove the segment from panel one and watch every number move
+       Then put it back. That is the difference between a panel
+       segment and a column segment, seen once rather than read.
+
+10 Project &gt; Save as, and give it a name you would recognize
+       in six months. Until this step, it exists only in this tab.
+
+There is nothing else to configure. A panel has no settings beyond
+the three in its header, and that is the entire design.</pre></div>
+</div>
+
+<p>Those ten steps are a floor rather than a ceiling. Step 8 in particular is worth doing deliberately once, because it is the failure you will otherwise meet for the first time in front of somebody who is asking why two numbers disagree.</p>
+
+<h3 class="subsec-title">What you have now</h3>
+<p>A project is a body of connected analysis that belongs to your company rather than to any report suite, and it exists as an object in the platform rather than a file on a machine. Inside it, panels are scope boundaries: each one owns a report suite, a date range and any segments dropped on it, and every table and chart placed inside inherits all three without being asked.</p>
+
+<p>The reason that structure exists is the conversation at the top of this section. Real questions arrive in threads, each one produced by the answer before it, and a tool that can only hold one answer at a time forces you to abandon the thread in order to record it. Panels let the thread stay on screen while it is still being followed.</p>
+
+<p>What is still missing is the thing inside the container. Every panel so far has been an empty context waiting for content, and almost all of that content, in almost every project ever built, is one component. <a href="/adobe-analytics-learning/analyze/analysis-workspace/freeform-tables/">Freeform Tables</a> takes it apart: how rows and columns decide what is being counted, what a breakdown really does to a number, and why the same two components can produce several different correct answers depending on how the table is arranged.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Analytics</div>
+    <p>Analytics &gt; <span class="path">Workspace</span> lists every project you own or that has been shared with you. <span class="path">Create new project</span> offers a blank project or a template.</p>
+    <p>Inside a project, the <span class="path">Panels</span> icon is the first in the left rail and holds the panel picker. <span class="path">Insert &gt; New blank panel</span> adds one directly. Right-click any panel header to duplicate, rename, collapse or delete it.</p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title">📚 Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/analyze/analysis-workspace/panels/panels" target="_blank">Adobe Docs: Panels in Analysis Workspace</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/analyze/analysis-workspace/panels/attribution" target="_blank">Adobe Docs: Attribution Panel</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/analyze/analysis-workspace/build-workspace-project/freeform-overview" target="_blank">Adobe Docs: Build a Workspace Project</a></li>
+    </ul>
+</div>

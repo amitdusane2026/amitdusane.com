@@ -309,6 +309,12 @@ Per-section loop: notes, then a proposed h3 skeleton with component placement fo
 git diff --cached --name-only -z -- amitdusane-site-complete | xargs -0 grep -l data-newblock
 ```
 
+**A second guard runs before any merge to `main`, never before a commit.** `shot-pending` marks a screenshot placeholder holding its capture brief. Those are meant to sit on `develop` while a module is drafted, so committing them is correct and expected. What must never happen is one reaching production:
+
+```bash
+grep -rl shot-pending amitdusane-site-complete/content/
+```
+
 Scope it to `amitdusane-site-complete` as shown. Unscoped, it flags this file and `development-plan.md`, which mention the attribute in prose rather than carrying it as markup.
 
 This exists because on 10 Aug 2026 a `git add -A` swept up two files that were still highlighted for review and committed them, then pushed. `main` was never touched so the site was safe, but the guard is the point: highlighting is applied for one file at a time while other files may still be marked, and "commit clean first" is not sufficient on its own once more than one file is in flight.
