@@ -144,6 +144,12 @@ weight: 2
     <div class="shot-note">Three controls, one strip, and every number in the panel below answers to all three. The segment chip is blue for the same reason everything else is colour coded: at a glance you can tell a filter from a dimension without reading it.</div>
 </div>
 
+<h3 class="subsec-title">The calendar holds more than a start and an end</h3>
+<p>The date range gets set once, early, and then stops being thought about, which is a shame because two things inside it change answers.</p>
+
+<p>The first is the comparison. Turning it on adds a second period and a set of percent-change columns, and the two presets are previous period and previous year. Previous period is the obvious choice and frequently the worse one, because periods do not contain equal amounts of week. Compare this month against last month and you may well be comparing four weekends against five, which moves almost every metric a consumer site has without anything having happened. Previous year lines the weekdays up far more closely, and for anything with a weekly rhythm it is the more honest comparison even though it feels like the more distant one.</p>
+
+<p>The second is quieter. The calendar runs on the <strong>report suite's time zone, not yours</strong>. A suite configured in another region has a different idea of when a day starts, so the "today" in your panel may not be your today, and a daily number can look wrong to two people in different offices who are both reading it correctly. The setting itself belongs to the suite and is covered in <a href="/adobe-analytics-learning/foundations/report-suites/report-suite-settings/">Report Suite Settings</a>. What matters here is knowing that the panel inherits it, and checking it before arguing about a figure that only disagrees by a day.</p>
 <h3 class="subsec-title">Where you drop a segment decides what it touches</h3>
 <p>The same flexibility that makes panels useful creates the one mistake worth naming in this section, and it produces no error at all.</p>
 

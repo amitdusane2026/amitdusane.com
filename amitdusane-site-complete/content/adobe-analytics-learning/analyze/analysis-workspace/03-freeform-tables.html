@@ -61,6 +61,8 @@ weight: 3
 
 <p>All of which sounds pedantic right up until somebody screenshots the indented rows, drops them into a deck, and labels the slide "browser usage".</p>
 
+<p>There is a second misreading, and it does more damage because it produces a story rather than a number. A breakdown says nothing whatsoever about <em>order</em>. Break Marketing Channel down by Page and you learn which pages were seen by traffic from that channel, not that the channel came first and the page came afterward. What you are looking at is an intersection, and an intersection has no direction in it at all. When the question is genuinely about sequence, the answer lives in <a href="/adobe-analytics-learning/analyze/analysis-workspace/fallout-and-flow-analysis/">Fallout and Flow Analysis</a> or in a sequential segment, and no arrangement of a table will substitute for either.</p>
+
 <div class="diagram-box">
     <div class="diagram-title">📊 The same two dimensions, swapped, are two different reports</div>
     <svg viewBox="0 0 700 290" style="width:100%;height:auto;display:block;margin:4px 0 8px"
@@ -215,12 +217,24 @@ weight: 3
         <tbody>
             <tr><td><strong>Row settings</strong></td><td>How many rows to show, and a filter on which items appear</td><td>There is no static or dynamic switch in here. That is decided by whether you dragged the dimension or a value from inside it</td></tr>
             <tr><td><strong>Column settings</strong></td><td>Attribution model, number format, percentages, conditional formatting</td><td>The one place attribution lives outside the Attribution panel</td></tr>
+            <tr><td><strong>Column-level segments and dates</strong></td><td>A column can carry its own segment and its own date range, narrower than the panel's</td><td>The only thing on screen saying so is a small icon in the column header. Hover every header before doubting a discrepancy</td></tr>
             <tr><td><strong>Percent shading</strong></td><td>Only the visual heat, never the numbers</td><td>Shading is relative to visible rows, so paginating changes the colors</td></tr>
             <tr><td><strong>Totals</strong></td><td>Whether the header total is the grand total or the sum of shown rows</td><td>These two disagree the moment a filter or row limit is in play</td></tr>
         </tbody>
     </table>
 </div>
 
+<h3 class="subsec-title">The total row, and the row nobody looks at</h3>
+<p>Two rows sit at the edges of every table and both are misread often enough to be worth naming.</p>
+
+<p>The first is the total. It is natural to read it as the sum of the rows above, and for most metrics that is exactly what it is. It is not what it is for anything deduplicated. <strong>Unique Visitors do not add up.</strong> One person who visited on Monday, Wednesday and Friday is one unique visitor for the week and appears in three daily rows, so a week of daily uniques summed by hand comes out considerably higher than the weekly figure the table itself reports. The same holds across dimension rows: somebody who used two browsers is counted once in each row and once in the total. Neither number is wrong, and anybody adding a column of them in a spreadsheet will produce something that is.</p>
+
+<p>The second is the row most people scroll past. <strong>Unspecified</strong>, sometimes shown as None, is what appears when a hit was counted but the dimension had no value on it. The reflex is to treat it as noise and exclude it, and the row settings will happily let you. That reflex hides the finding. A large Unspecified against a variable that is supposed to be populated everywhere is not an untidy row, it is a report telling you the implementation is not doing what the specification says, which is exactly the sort of thing this screen exists to surface. Look at it before you decide whether to hide it, and if it is large, go and find out why rather than tidying it away.</p>
+
+<div class="warn-box">
+    <div class="warn-hdr">⚠️ A column of Unique Visitors summed by hand will never match the total, and the table is the one that is right</div>
+    <p>This is the most common way a spreadsheet disagrees with Adobe Analytics, and the disagreement usually gets blamed on the tool. Deduplicated metrics cannot be reassembled from smaller pieces: monthly uniques are not the sum of the weeks, weekly uniques are not the sum of the days, and the total of a broken-down column is not the sum of its children. If a number has to be added up outside Workspace, use a metric that actually sums, such as Visits or Occurrences, and leave the deduplicated ones to be read where they are calculated.</p>
+</div>
 <h3 class="subsec-title">Follow along: build one table four ways and watch the meaning move</h3>
 <p>This is the exercise that makes the rest of the section permanent, and it takes about five minutes. The numbers are not the point. What you are watching for is how little has to change before a number means something else.</p>
 
