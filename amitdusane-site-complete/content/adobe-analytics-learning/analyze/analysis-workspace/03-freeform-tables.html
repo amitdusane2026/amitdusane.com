@@ -16,7 +16,7 @@ weight: 3
 <p>That kind of disagreement is the everyday cost of the freeform table, which looks like the least interesting thing in Analysis Workspace. It is a grid. Rows down the side, numbers in the middle, and nothing about it that would survive a slide. It is also where every number in this product is decided, since the charts are drawings of it and the cohorts and funnels are specialized versions of it, and it deserves more attention than its appearance invites.</p>
 
 <h3 class="subsec-title">Rows ask what, columns ask how much</h3>
-<p>The grammar underneath is small enough to say in a sentence, and it is worth saying before anything gets complicated. A dimension in the rows names the things you want held apart from each other. A metric in the columns says how each of those things is being measured. Drop <span class="path">Page</span> into the rows and <span class="path">Page Views</span> into the columns, and what you have asked for is page views, separated out by page, which is exactly what appears.</p>
+<p>The grammar underneath is small enough to say in a sentence, and it is worth saying before anything gets complicated. A dimension in the rows names the things you want held apart from each other. A metric in the columns says how each of those things is being measured. Drop <code>Page</code> into the rows and <code>Page Views</code> into the columns, and what you have asked for is page views, separated out by page, which is exactly what appears.</p>
 
 <p>Everything difficult about tables comes from what happens when that sentence gains a second clause.</p>
 
@@ -55,7 +55,7 @@ weight: 3
 </div>
 
 <h3 class="subsec-title">What a breakdown really does</h3>
-<p>Take that table, right-click the product detail row, and break it down by <span class="path">Browser</span>. Numbers appear underneath it, indented slightly, and the natural reading is that a second dimension has been added to the table and now you are looking at pages and browsers together.</p>
+<p>Take that table, right-click the product detail row, and break it down by <code>Browser</code>. Numbers appear underneath it, indented slightly, and the natural reading is that a second dimension has been added to the table and now you are looking at pages and browsers together.</p>
 
 <p>That is not what happened. What you asked for is narrower and more specific: which browsers were used, among the page views of that one page. The breakdown is scoped inside the row above it, so it inherits that row as a condition, and the numbers underneath describe only the traffic that was already counted in the parent. They are not a list of browsers on the site, they will never sum to the browser totals, and they cannot be compared with a browser figure taken from anywhere else without a great deal of care.</p>
 
@@ -112,7 +112,7 @@ weight: 3
     <p>A breakdown inherits every condition above it, including the parent row itself, so the numbers underneath a broken-down row describe that row and nothing wider. Copy one of them into a slide and it quietly becomes a claim about the whole site, which is a claim the table never made and cannot support. The only thing distinguishing the two on screen is an indentation, and an indentation survives neither a screenshot nor a paste into a spreadsheet nor somebody reading a figure out loud. If a number is going to travel beyond the person who built the table, take it from a table where that dimension sits at the top level rather than from a breakdown.</p>
 </div>
 
-<h3 class="subsec-title">Working the table, which is a skill nobody teaches</h3>
+<h3 class="subsec-title">Selecting and dragging, which is where most of the speed lives</h3>
 <p>Everything above is about what a table means. This part is about how you actually operate one, and it matters more than it sounds, because the difference between somebody who slices data quickly and somebody who does not is mostly a handful of interactions that never appear in documentation.</p>
 
 <p>Start with selection, because it changes what every other action does. Click a row and it is selected. Hold <strong>shift</strong> and click another and everything between the two is selected. Hold <strong>ctrl</strong>, or command on a Mac, and you pick individual rows that are nowhere near each other. That is ordinary enough, and the useful part is what selection then does to the next thing you do.</p>
@@ -168,7 +168,7 @@ WIDTH:      about 1200px.</p>
 <div class="diagram-box">
     <div class="diagram-title">📊 Same visit, same order, and the model decides who gets credit</div>
     <svg viewBox="0 0 700 300" style="width:100%;height:auto;display:block;margin:4px 0 8px"
-         role="img" aria-label="A three hit visit. Hit one is a product page setting the value running-shoes. Hit two is the cart. Hit three is the purchase where the order fires and the page value is checkout-confirm. Without an attribution model the prop credits the order to checkout-confirm only. With a last-touch model applied at report time, the same prop credits the order to running-shoes, because attribution is recalculated from the underlying hits rather than from the variable's stored persistence.">
+         role="img" aria-label="A three hit visit. Hit one is a product page setting the value running-shoes. Hit two is the cart. Hit three is the purchase where the order fires and the page value is checkout-confirm. Without an attribution model the prop credits the order to checkout-confirm only. With a first-touch model applied at report time, the same prop credits the order to running-shoes, because attribution is recalculated from the underlying hits rather than from the variable's stored persistence.">
         <rect x="16" y="26" width="200" height="44" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
         <rect x="246" y="26" width="200" height="44" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
         <rect x="476" y="26" width="208" height="44" rx="6" style="fill:var(--card,#ffffff);stroke:var(--accent,#e11d48);stroke-width:2"/>
@@ -186,7 +186,7 @@ WIDTH:      about 1200px.</p>
         <text x="360" y="138" style="fill:var(--text2,#475569);font-size:12px;font-family:sans-serif">checkout-confirm</text>
         <text x="590" y="138" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">1 order</text>
 
-        <text x="16" y="184" style="fill:var(--accent,#e11d48);font-size:11px;font-weight:700;font-family:sans-serif;letter-spacing:1px">SAME COLUMN, LAST TOUCH APPLIED</text>
+        <text x="16" y="184" style="fill:var(--accent,#e11d48);font-size:11px;font-weight:700;font-family:sans-serif;letter-spacing:1px">SAME COLUMN, FIRST TOUCH APPLIED</text>
         <rect x="16" y="194" width="668" height="34" rx="5" style="fill:var(--card,#ffffff);stroke:var(--accent,#e11d48);stroke-width:2"/>
         <text x="32" y="216" style="fill:var(--accent,#e11d48);font-size:12px;font-weight:700;font-family:sans-serif">running-shoes</text>
         <text x="240" y="216" style="fill:var(--accent,#e11d48);font-size:12px;font-weight:700;font-family:sans-serif">1 order</text>
@@ -203,11 +203,11 @@ WIDTH:      about 1200px.</p>
 <p>The second is that a decision everybody treats as permanent turns out to be provisional. An eVar's expiry gets chosen on the day it is implemented and lived with for years afterward, because changing it means changing collection. Here the same question is a dropdown, and two people can answer it differently over the same data on the same afternoon. <a href="/adobe-analytics-learning/analyze/attribution-models/what-is-attribution/">What Is Attribution</a> takes the models themselves apart.</p>
 
 <h3 class="subsec-title">Dynamic rows keep re-asking, static rows freeze the answer</h3>
-<p>Drag a dimension into the rows and the table fills with whatever the top values currently happen to be. Those rows are <strong>dynamic</strong>, which means they are not really a list at all, they are a standing instruction to go and fetch the top items, re-evaluated every single time the report runs.</p>
+<p>This one is simpler than the words make it sound, and the whole difference is in what you dragged.</p>
 
-<p>Most of the time that is exactly right, and occasionally it is a quiet disaster. A project built in March showing the top ten products, opened again in September, is showing September's top ten. The title is the same, the layout is the same, the chart looks the way it always looked, and the subject has changed completely without any visible event. Somebody comparing this month against the version in last quarter's deck is comparing two different sets of products and has no way to notice.</p>
+<p>Drag <strong>the dimension</strong> and the rows are dynamic. You have asked for the top ten of something, so the table shows whatever is in the top ten today and whatever is in it next year. Drag <strong>one value from inside that dimension</strong> and the row is static. You have asked for that particular thing, and it reports that thing and nothing else.</p>
 
-<p>Dragging a specific dimension <em>item</em> into the table instead of the dimension itself pins it. That row becomes <strong>static</strong>, it will report that one value for as long as the project exists, and if the value stops appearing in the data the row shows zero rather than quietly substituting a replacement.</p>
+<p>Which matters mostly for projects that get saved and reopened later. A top ten products table built in March is showing September's products in September, with the same title, the same layout and nothing at all to mark the change, so anybody comparing it against last quarter's deck is comparing two different sets of products without knowing it. A pinned row cannot do that, and if its value disappears from the data the row shows zero, which is a finding somebody can act on rather than a silent substitution.</p>
 
 <div class="pro-tip">
     <div class="pro-tip-hdr">💡 Anything a stakeholder reads monthly should be pinned</div>
@@ -223,7 +223,7 @@ WIDTH:      about 1200px.</p>
     <table>
         <thead><tr><th>Setting</th><th>What it changes</th><th>Worth knowing</th></tr></thead>
         <tbody>
-            <tr><td><strong>Row settings</strong></td><td>How many rows, static or dynamic, and a filter on which items appear</td><td>The row count also decides what the totals mean once a filter is applied</td></tr>
+            <tr><td><strong>Row settings</strong></td><td>How many rows to show, and a filter on which items appear</td><td>There is no static or dynamic switch in here. That is decided by whether you dragged the dimension or a value from inside it</td></tr>
             <tr><td><strong>Column settings</strong></td><td>Attribution model, number format, percentages, conditional formatting</td><td>The one place attribution lives outside the Attribution panel</td></tr>
             <tr><td><strong>Percent shading</strong></td><td>Only the visual heat, never the numbers</td><td>Shading is relative to visible rows, so paginating changes the colors</td></tr>
             <tr><td><strong>Totals</strong></td><td>Whether the header total is the grand total or the sum of shown rows</td><td>These two disagree the moment a filter or row limit is in play</td></tr>
@@ -281,7 +281,7 @@ WORKING IT
 
 THE COLUMN SETTING
 
-9  Column settings on a conversion metric &gt; Attribution &gt; Last touch
+9  Column settings on a conversion metric &gt; Attribution &gt; First touch
        If the row dimension is a prop, watch the numbers move.
        Nothing was recollected. The model was recalculated.
 
@@ -289,7 +289,7 @@ There is nothing else to configure. Every table in this product is
 these few settings in some combination.</pre></div>
 </div>
 
-<p>Those nine steps are a floor rather than a ceiling. Steps 3 and 4 together are the pair worth repeating until the difference is instant, because that is the difference between reading a table and operating one, and steps 6 to 8 are where most of the speed lives.</p>
+<p>Work through it once and the rest of this section stops being theory. Steps 3 and 4 together are the pair worth repeating until the difference is instant, because that is the difference between reading a table and operating one, and steps 6 to 8 are where most of the speed lives.</p>
 
 <h3 class="subsec-title">What you have now</h3>
 <p>A freeform table is a question written in two directions, with rows naming what is held apart and columns saying how it is measured, and every cell answering both at once. A breakdown does not widen that question, it nests a narrower one inside a row and inherits everything above it, which is why indented figures never sum to a site total. Rows are dynamic and will change under you unless you pin them. Attribution lives in the column settings and quietly overrides how a variable was ever configured to behave. And the selection behaviors are not shortcuts, they are how the tool is actually used.</p>

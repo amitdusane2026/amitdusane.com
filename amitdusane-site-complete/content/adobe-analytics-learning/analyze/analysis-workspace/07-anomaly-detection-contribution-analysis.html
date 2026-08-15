@@ -81,9 +81,18 @@ weight: 7
 
 <p>The judgment, then, is not whether to switch it on. It is what to point it at, and the honest answer is fewer things than the feature invites. A handful of metrics that somebody would genuinely act on, checked automatically, beats a wall of flags that trains a team to look away.</p>
 
+<h3 class="subsec-title">The half that actually changes behavior</h3>
+<p>Everything so far has one thing wrong with it, and it is not statistical. Anomaly detection inside a project only helps somebody who opened the project, which puts it in exactly the same position as the morning check it was supposed to replace. If nobody has time on Tuesday, Tuesday goes unwatched.</p>
+
+<p>The version that fixes that is an <strong>intelligent alert</strong>, and it runs on the same statistics. Rather than drawing a band in a report you have to open, it watches a metric continuously and sends an email or a text when the metric moves outside its expected range. The morning ritual stops depending on anybody having time, and the four minutes at nine o'clock become four minutes on the days something actually happened.</p>
+
+<p>An alert asks for three things. Which metric to watch, at what granularity, and how far outside normal something has to go before you hear about it. That last one is where alerts succeed or fail, and it is why the calibration exercise earlier in this section matters: you set the threshold from what you learned about how noisy that metric really is, rather than from a number that sounded reasonable. A metric that flags six times in ninety days inside a project will send six emails, and after the third one somebody sets up a mail rule.</p>
+
+<p>Alerts can also be stacked, so one alert watches for a small movement and another for a large one, which lets you separate the thing worth glancing at from the thing worth interrupting somebody about. And because they are built on the same anomaly model rather than on a fixed number, they already understand that Sunday is not Wednesday, which is the reason a hand-written "tell me if orders drop below 500" rule fires every weekend and gets switched off within a month.</p>
+
 <div class="pro-tip">
-    <div class="pro-tip-hdr">💡 The alert is the useful half, and it lives somewhere else</div>
-    <p>Anomaly detection inside a project only helps somebody who opened the project. The version that changes behavior is an intelligent alert, built on the same statistics, which watches a metric continuously and emails when it moves outside its expected range by a threshold you set. That turns the morning ritual into something that happens whether or not anybody had time, and it converts the four minutes at nine o'clock into four minutes on the days it actually matters. Build the anomaly view first to see how noisy a metric is, then set the alert threshold from what you learned rather than guessing.</p>
+    <div class="pro-tip-hdr">💡 Build the anomaly view first, then set the threshold from what it showed you</div>
+    <p>The order matters more than it sounds. Put the metric in a project with anomaly detection switched on, look at ninety days of it, and count how often it steps outside the band on its own. That count is your noise floor, and it tells you where the alert threshold has to sit to be worth having. Teams that skip this step guess a threshold, get flooded, and conclude that alerting does not work for their business, when what actually happened is that they pointed a sensitive instrument at a volatile metric and never checked how volatile it was.</p>
 </div>
 
 <div class="shot-box shot-pending">
@@ -154,7 +163,7 @@ worth arguing with. The judgment is entirely in what you point them
 at and what you do with a flag.</pre></div>
 </div>
 
-<p>Those nine steps are a floor rather than a ceiling. Step 4 is the one worth doing on your own data, because a small metric flagging six times in ninety days is the single fastest way to understand why teams stop trusting automated monitoring.</p>
+<p>None of that is exhaustive, and it does not need to be. Step 4 is the one worth doing on your own data, because a small metric flagging six times in ninety days is the single fastest way to understand why teams stop trusting automated monitoring.</p>
 
 <h3 class="subsec-title">What you have now</h3>
 <p>Anomaly detection builds a picture of what a metric normally does, using a training window that already understands weekends, seasonality and trend, and flags the points that fall outside it. The technique changes with granularity, the window changes with it, and none of it knows anything about releases, campaigns or tracking changes, which means a flag is always a prompt to look and never a conclusion. Contribution analysis takes a daily anomaly and searches every dimension at once to say where the movement came from, which is a genuine time saving and still stops one step short of why.</p>
@@ -174,6 +183,7 @@ at and what you do with a flag.</pre></div>
     <ul>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/analyze/analysis-workspace/anomaly-detection/anomaly-detection" target="_blank">Adobe Docs: Anomaly Detection Overview</a></li>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/analyze/analysis-workspace/anomaly-detection/statistics-anomaly-detection" target="_blank">Adobe Docs: Statistical Techniques Used in Anomaly Detection</a></li>
-        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/analyze/analysis-workspace/virtual-analyst/contribution-analysis/run-contribution-analysis" target="_blank">Adobe Docs: Run a Contribution Analysis</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/analyze/analysis-workspace/anomaly-detection/run-contribution-analysis" target="_blank">Adobe Docs: Run a Contribution Analysis</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/alerts/alerts-overview" target="_blank">Adobe Docs: Intelligent Alerts Overview</a></li>
     </ul>
 </div>
