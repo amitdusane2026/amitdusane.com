@@ -113,28 +113,34 @@ weight: 4
         <text x="392" y="20" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif;letter-spacing:1px">AS A BAR</text>
 
         <g transform="rotate(-90 140 140)">
-            <circle cx="140" cy="140" r="60" style="fill:none;stroke:#0f766e;stroke-width:40;stroke-dasharray:105.6 271.4;stroke-dashoffset:0"/>
-            <circle cx="140" cy="140" r="60" style="fill:none;stroke:#b45309;stroke-width:40;stroke-dasharray:90.5 286.5;stroke-dashoffset:-105.6"/>
-            <circle cx="140" cy="140" r="60" style="fill:none;stroke:#4f46e5;stroke-width:40;stroke-dasharray:79.2 297.8;stroke-dashoffset:-196.1"/>
-            <circle cx="140" cy="140" r="60" style="fill:none;stroke:#9d174d;stroke-width:40;stroke-dasharray:60.3 316.7;stroke-dashoffset:-275.3"/>
-            <circle cx="140" cy="140" r="60" style="fill:none;stroke:#4d7c0f;stroke-width:40;stroke-dasharray:41.5 335.5;stroke-dashoffset:-335.6"/>
+            <circle cx="140" cy="140" r="60" style="fill:none;stroke:var(--accent,#e11d48);stroke-width:40;stroke-dasharray:105.6 271.4;stroke-dashoffset:0"/>
+            <circle cx="140" cy="140" r="60" style="fill:none;stroke:var(--accent,#e11d48);stroke-width:40;stroke-dasharray:90.5 286.5;stroke-dashoffset:-105.6"/>
+            <circle cx="140" cy="140" r="60" style="fill:none;stroke:var(--accent,#e11d48);stroke-width:40;stroke-dasharray:79.2 297.8;stroke-dashoffset:-196.1"/>
+            <circle cx="140" cy="140" r="60" style="fill:none;stroke:var(--accent,#e11d48);stroke-width:40;stroke-dasharray:60.3 316.7;stroke-dashoffset:-275.3"/>
+            <circle cx="140" cy="140" r="60" style="fill:none;stroke:var(--accent,#e11d48);stroke-width:40;stroke-dasharray:41.5 335.5;stroke-dashoffset:-335.6"/>
         </g>
-        <text x="205" y="90" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:13px;font-weight:700;font-family:sans-serif">A</text>
+        <g style="stroke:var(--card,#ffffff);stroke-width:3">
+            <line x1="140" y1="100" x2="140" y2="60"/>
+            <line x1="179.3" y1="147.5" x2="218.6" y2="155.0"/>
+            <line x1="135.0" y1="179.7" x2="130.0" y2="219.4"/>
+            <line x1="100.3" y1="145.0" x2="60.6" y2="150.0"/>
+            <line x1="114.5" y1="109.2" x2="89.0" y2="78.4"/>
+        </g>        <text x="205" y="90" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:13px;font-weight:700;font-family:sans-serif">A</text>
         <text x="190" y="213" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:13px;font-weight:700;font-family:sans-serif">B</text>
         <text x="80" y="204" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:13px;font-weight:700;font-family:sans-serif">C</text>
         <text x="61" y="113" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:13px;font-weight:700;font-family:sans-serif">D</text>
         <text x="111" y="64" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:13px;font-weight:700;font-family:sans-serif">E</text>
 
         <text x="392" y="76" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">A</text>
-        <rect x="412" y="58" width="250" height="24" rx="3" style="fill:#0f766e"/>
+        <rect x="412" y="58" width="250" height="24" rx="3" style="fill:var(--accent,#e11d48)"/>
         <text x="392" y="112" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">B</text>
-        <rect x="412" y="94" width="214" height="24" rx="3" style="fill:#b45309"/>
+        <rect x="412" y="94" width="214" height="24" rx="3" style="fill:var(--accent,#e11d48);opacity:0.86"/>
         <text x="392" y="148" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">C</text>
-        <rect x="412" y="130" width="188" height="24" rx="3" style="fill:#4f46e5"/>
+        <rect x="412" y="130" width="188" height="24" rx="3" style="fill:var(--accent,#e11d48);opacity:0.72"/>
         <text x="392" y="184" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">D</text>
-        <rect x="412" y="166" width="143" height="24" rx="3" style="fill:#9d174d"/>
+        <rect x="412" y="166" width="143" height="24" rx="3" style="fill:var(--accent,#e11d48);opacity:0.58"/>
         <text x="392" y="220" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">E</text>
-        <rect x="412" y="202" width="98" height="24" rx="3" style="fill:#4d7c0f"/>
+        <rect x="412" y="202" width="98" height="24" rx="3" style="fill:var(--accent,#e11d48);opacity:0.44"/>
 
         <text x="16" y="250" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">Identical data. The ranking took effort on the left and none on the right, and that difference is the whole argument.</text>
     </svg>
@@ -142,26 +148,14 @@ weight: 4
 
 <p>A donut also stops working entirely somewhere around four slices, and almost nobody stops at four. The horizontal bar answers the same question, holds any number of categories, keeps its labels readable, and can be understood from the back of a room. If somebody asks for a pie chart because the last deck had one, this is the substitution to make quietly.</p>
 
-<div class="shot-box shot-pending shot-tall">
+<div class="shot-box shot-tall">
     <div class="shot-title">📷 The visualization catalogue</div>
     <div class="shot-frame">
-        <p class="shot-brief">FILE:       aal_module14_section04_ss1.png
-SCREEN:     Workspace, left rail, second icon (Visualizations)
-CROP:       the visualizations list, from the "Search
-            visualizations" box down through as many entries as
-            fit legibly. Include the narrow icon strip on the
-            left for context.
-MUST SHOW:  enough of the list to make the point that this is a
-            long catalogue, with Freeform table, Cohort table,
-            Fallout and Flow visible near the top since those
-            four are the ones this module covers in depth.
-NOTE:       you already captured this exact frame when you sent
-            the five rail screenshots. Reuse the original if it
-            is still on disk.
-REDACT:     nothing.
-WIDTH:      about 800px, narrow column.</p>
+        <img src="/img/aal_module14_section04_ss1.webp" width="628" height="1294" loading="lazy"
+             alt="The Visualizations tab of the Analysis Workspace left rail, showing a search box and a long list of visualization types including Freeform table, Cohort table, Fallout, Flow, Area, Bar, Donut, Line and others.">
+        <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
     </div>
-    <div class="shot-note">Placeholder. The point of the picture is the length of the list set against how few of them earn regular use.</div>
+    <div class="shot-note">A long list, and most analysis is served by the four or five nearest the top. Freeform table, Cohort table, Fallout and Flow are the ones this module takes apart.</div>
 </div>
 
 <h3 class="subsec-title">Two of them draw no data at all</h3>

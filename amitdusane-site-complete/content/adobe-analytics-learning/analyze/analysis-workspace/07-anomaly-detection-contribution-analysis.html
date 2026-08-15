@@ -95,25 +95,14 @@ weight: 7
     <p>The order matters more than it sounds. Put the metric in a project with anomaly detection switched on, look at ninety days of it, and count how often it steps outside the band on its own. That count is your noise floor, and it tells you where the alert threshold has to sit to be worth having. Teams that skip this step guess a threshold, get flooded, and conclude that alerting does not work for their business, when what actually happened is that they pointed a sensitive instrument at a volatile metric and never checked how volatile it was.</p>
 </div>
 
-<div class="shot-box shot-pending">
-    <div class="shot-title">📷 A line chart with anomaly detection switched on</div>
+<div class="shot-box">
+    <div class="shot-title">📷 The band, a flagged point, and what the tooltip actually claims</div>
     <div class="shot-frame">
-        <p class="shot-brief">FILE:       aal_module14_section07_ss1.png
-SCREEN:     Workspace, a line chart of a daily metric with
-            anomaly detection enabled
-CROP:       the chart itself, including the shaded expected
-            range and at least one flagged point.
-MUST SHOW:  the band around the line, and a dot sitting outside
-            it. If the hover tooltip showing the expected value
-            versus the actual can be captured, better still,
-            since that tooltip is what makes the band's meaning
-            concrete.
-SETUP:      a metric with enough daily volume for the band to be
-            narrow. Page Views usually works in a training suite.
-REDACT:     nothing.
-WIDTH:      about 1400px.</p>
+        <img src="/img/aal_module14_section07_ss1.webp" width="1400" height="665" loading="lazy"
+             alt="A line chart of weekly visits across a year with anomaly detection enabled. A shaded band shows the range the model expected and a dotted line shows the expected value. Three points sit outside the band and are circled. A tooltip on one of them reads Week of Sunday December 8 2024, 12 visits, anomaly detected, 83 percent below expected.">
+        <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
     </div>
-    <div class="shot-note">Placeholder. Readers need to see that the band is a range rather than a threshold line, which prose struggles to convey.</div>
+    <div class="shot-note">The tooltip is the useful part. It reports how far the value sat from what was expected, and stops there. Whether 83 percent below expected is a broken tag, a holiday or a campaign ending is not a question the band can answer.</div>
 </div>
 
 <h3 class="subsec-title">Follow along: find out how noisy your own metrics are</h3>

@@ -131,12 +131,12 @@ weight: 6
 
 <p>Two settings decide whether the diagram is readable at all, and the first of them is responsible for most flow diagrams being abandoned as incomprehensible.</p>
 
-<h3 class="subsec-title">Repeat instances, and the reload that swallows the diagram</h3>
+<h3 class="subsec-title">Repeats, and the reload that swallows the diagram</h3>
 <p>Websites reload constantly. A filter re-renders the page, pagination fires another view, a form validation error redisplays the screen somebody was already on, a tracking implementation fires twice on a single-page application route change. Every one of those produces a hit carrying the same page value as the hit before it.</p>
 
-<p>With repeat instances included, the single most common path out of any page becomes <strong>that same page again</strong>, and it dominates everything else in the diagram. The picture is technically accurate and analytically useless, because the movement you came to look at is buried underneath a self-referential loop that describes the site's rendering behavior rather than anybody's journey.</p>
+<p>With repeats switched on, the single most common path out of any page becomes <strong>that same page again</strong>, and it dominates everything else in the diagram. The picture is technically accurate and analytically useless, because the movement you came to look at is buried underneath a self-referential loop that describes the site's rendering behavior rather than anybody's journey.</p>
 
-<p>Excluding repeat instances collapses consecutive identical values into one, and the flow becomes a picture of movement between different things, which is what everybody meant in the first place. Check that setting before reading any flow diagram somebody hands you, because the two versions look equally authoritative and only one of them is about people.</p>
+<p>Switching repeats off collapses consecutive identical values into one, and the flow becomes a picture of movement between different things, which is what everybody meant in the first place. Check that setting before reading any flow diagram somebody hands you, because the two versions look equally authoritative and only one of them is about people.</p>
 
 <div class="info-box">
     <div class="info-hdr">ℹ️ Flow has a container too, and it defaults to visitor in the same way</div>
@@ -146,46 +146,26 @@ weight: 6
 <h3 class="subsec-title">Both refuse calculated metrics, and both deserve reading with suspicion</h3>
 <p>Fallout will not accept a <a href="/adobe-analytics-learning/analyze/calculated-metrics/what-are-calculated-metrics/">calculated metric</a> as a touchpoint, for the same reason the cohort table refuses one: a step has to be something an individual person did, and a formula evaluated over already-assembled rows cannot be tested against an individual. The way through is the same as well, which is to reach for the underlying event rather than the ratio built on top of it.</p>
 
-<p>Past that specific limit, both visualizations share a habit worth naming plainly. They produce diagrams that look like evidence, and are in fact the output of three or four settings that cannot be seen from the picture. Path type, container, repeat instances, and whatever segment is sitting on the panel around them all change the shape substantially, and none of them appear in a screenshot or survive being described out loud in a meeting.</p>
+<p>Past that specific limit, both visualizations share a habit worth naming plainly. They produce diagrams that look like evidence, and are in fact the output of three or four settings: path type, container, repeats, and whatever segment sits on the panel around them. To Adobe's credit those settings are on screen if you look. A fallout prints the path type under every touchpoint, and a flow spells out its container and repeat handling in a line across the top. What they do not survive is travel. Crop the diagram for a slide and the settings are gone, quote the percentage out loud in a meeting and they were never there, and at that point the number has stopped being a measurement and become a claim.</p>
 
-<div class="shot-box shot-pending">
-    <div class="shot-title">📷 The setting that changes the funnel's answer</div>
+<div class="shot-box">
+    <div class="shot-title">📷 The selector that decides what the funnel means</div>
     <div class="shot-frame">
-        <p class="shot-brief">FILE:       aal_module14_section06_ss1.png
-SCREEN:     Workspace, a built fallout visualization
-CROP:       two or three touchpoints of the funnel, including
-            the small selector that sits under a touchpoint.
-MUST SHOW:  the eventual path and next hit selector, open if
-            possible so both options are readable. The
-            percentages of at least two steps should be visible
-            so the reader connects the setting to the numbers.
-SETUP:      any three-step funnel with real drop-off. Page based
-            is fine, no sensitive values.
-REDACT:     nothing.
-WIDTH:      about 1200px.</p>
+        <img src="/img/aal_module14_section06_ss1.webp" width="1400" height="962" loading="lazy"
+             alt="A fallout visualization with four touchpoints, falling from 100 percent of 542 unique visitors, through 96.1 percent at the Home page, to 10.9 percent at Cart and 7.6 percent at Order confirmation. Under the second touchpoint the path type selector is open, showing Eventual Path currently ticked and Next Hit as the alternative.">
+        <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
     </div>
-    <div class="shot-note">Placeholder. The selector is physically tiny and decides the meaning of the whole diagram, which is exactly why it needs a picture.</div>
+    <div class="shot-note">The dropdown under the touchpoint is the whole argument. Eventual Path is ticked, which is the default, and switching it to Next Hit will move every percentage below it. Nothing else on the diagram changes.</div>
 </div>
 
-<div class="shot-box shot-pending">
-    <div class="shot-title">📷 A flow diagram, and what repeat instances do to it</div>
+<div class="shot-box">
+    <div class="shot-title">📷 Repeats switched on, and what it does to the picture</div>
     <div class="shot-frame">
-        <p class="shot-brief">FILE:       aal_module14_section06_ss2.png
-SCREEN:     Workspace, a flow visualization built on Page
-CROP:       the flow diagram itself, focus node plus the paths
-            immediately either side of it.
-MUST SHOW:  ideally the version WITH repeat instances included,
-            where the dominant path loops back to the same page,
-            because that is the failure the section describes.
-            If one frame can show the setting alongside the
-            diagram, better still.
-SETUP:      settings gear on the flow visualization, include
-            repeat instances toggled on.
-REDACT:     page values only if identifiable. A flow built on
-            Browser or Country avoids the question entirely.
-WIDTH:      about 1400px.</p>
+        <img src="/img/aal_module14_section06_ss2.webp" width="1400" height="868" loading="lazy"
+             alt="A flow visualization focused on the Home page. Its header reads Contains Home, Flow container Visitors, Repeats On, First and last occurrence limiting Off. On both sides of the focus node the largest single path is Home itself, at 74, ahead of Men at 67 and Sign In at 55.">
+        <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
     </div>
-    <div class="shot-note">Placeholder. Optional if the training data is too thin to produce a meaningful flow, in which case the point survives in prose.</div>
+    <div class="shot-note">Read the header line first, then the biggest path on each side. With Repeats on, the most common thing people do after Home is Home again, at 74, which is the page reloading rather than anybody travelling. The header also shows the container sitting at Visitors, which joins hits across separate visits.</div>
 </div>
 
 <h3 class="subsec-title">Follow along: build the funnel, then take its settings apart</h3>
@@ -223,7 +203,7 @@ PART THREE, THE OTHER QUESTION
 
 7  Visualizations &gt; Flow, focused on the page with the biggest drop
 
-8  Settings &gt; include repeat instances, on and then off
+8  Settings &gt; Repeats, on and then off
        On, the busiest path is usually the same page again. Off,
        the diagram becomes about movement. Only one is readable.
 
@@ -241,14 +221,14 @@ more generous reading.</pre></div>
 <h3 class="subsec-title">What you have now</h3>
 <p>Fallout takes a sequence you define and reports survival through it, so it tests a hypothesis and can only ever confirm or deny the route it was handed. Flow takes a single point and reports the routes that actually existed around it, so it generates hypotheses and shows you the behavior nobody designed. Most real investigations use them in that order, an hour apart, and the mistake in the story at the top of this section was reaching for the first one and stopping there.</p>
 
-<p>The point worth carrying past both of them is that <strong>these diagrams are the output of settings the diagram does not show</strong>. Eventual path against next hit. Visitor against visit. Repeat instances in or out. Every default is the generous reading, every alternative produces a smaller and usually more honest number, and none of that survives a screenshot into a slide. A funnel percentage quoted without its settings is not a measurement of anything, it is a claim that happens to have a number attached.</p>
+<p>The point worth carrying past both of them is that <strong>these diagrams are the output of settings the diagram does not show</strong>. Eventual path against next hit. Visitor against visit. Repeats on or off. Every default is the generous reading, every alternative produces a smaller and usually more honest number, and none of that survives a screenshot into a slide. A funnel percentage quoted without its settings is not a measurement of anything, it is a claim that happens to have a number attached.</p>
 
 <p>By this point a project can be carrying funnels, cohorts, a dozen freeform tables and several breakdowns, and it is entirely legible to the person who built it and close to unreadable for anybody else. Before dealing with that, there is one more thing the product can do that the previous sections cannot: instead of you deciding what to look at, it can tell you what changed. <a href="/adobe-analytics-learning/analyze/analysis-workspace/anomaly-detection-contribution-analysis/">Anomaly Detection and Contribution Analysis</a> covers what those statistics really claim, and where they stop.</p>
 
 <div class="path-box">
     <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Analytics</div>
     <p>Analytics &gt; <span class="path">Workspace</span>, then the <span class="path">Visualizations</span> icon in the left rail. <span class="path">Fallout</span> and <span class="path">Flow</span> sit near the top of the list, just below Freeform table and Cohort table.</p>
-    <p>The eventual path and next hit selector appears <strong>underneath each touchpoint</strong> in a fallout rather than in the visualization settings, which is why it goes unnoticed. Container, repeat instances and the rest of the flow options live behind the gear on the visualization itself.</p>
+    <p>The eventual path and next hit selector appears <strong>underneath each touchpoint</strong> in a fallout rather than in the visualization settings, which is why it goes unnoticed. Container, repeats and the rest of the flow options live behind the gear on the visualization, and a flow prints its current settings in a line across the top of itself.</p>
 </div>
 
 <div class="ref-box">
