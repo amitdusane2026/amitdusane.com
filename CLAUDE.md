@@ -99,6 +99,12 @@ hugo --gc
 
 **Never `hugo --minify`.** The minifier destroys inline SVG text elements.
 
+**Delete `public/` before rebuilding after any content change.** Building on top of an existing `public/` produced a corrupt page on 16 Aug 2026: M14 §2 rendered with its content cut off mid-tag, dropping the last `ref-box` link and its closing tags so the prev/next navigation fell inside the box. The source was perfect throughout, and a clean rebuild fixed it with no edit. A `hugo server` running against the same tree while `hugo --gc` collects the shared resource cache is the likely aggravator. It costs a second:
+
+```bash
+rm -rf amitdusane-site-complete/public && hugo --gc --source amitdusane-site-complete
+```
+
 **Assert the page count after every build.** Current baseline: 219 pages. If the count drops, stop and find out why before doing anything else. This single check would have caught the 103-page outage in one second.
 
 Then crawl the built HTML, not the source. Source passing every check proves nothing; the bug lives in the interaction between source and build.
@@ -171,6 +177,28 @@ The second is an extended scenario or analogy carried through the whole section,
 **That split makes every corpus search a trap.** Grepping `do not sum` misses a section that says `don't sum`, and the result looks exactly like a gap. On 10 Aug 2026 that produced a proposed addition to M03 §6 that duplicated an info-box already sitting three paragraphs away. **Always search both forms**, or match on the distinctive noun rather than the verb phrase.
 
 **Sentence rhythm is long and comma-chained, broken by one-sentence paragraphs used as beats.** "The data is not lost. It is in the wrong building." A long paragraph is almost always followed by a short one. Nothing exceeds about 120 words.
+
+**That ratio is the single easiest thing to get backwards, and getting it backwards is what makes writing read as generic.** During M14 the beats became the default texture and the long accumulating sentence nearly disappeared. Amit's diagnosis: "typical hook style, half sentences and pauses, dramatic, typical AI language." He was right, and the fault is measurable. Paragraph medians, taken from the corpus:
+
+| Section | Median paragraph | Under 18 words |
+|---|---|---|
+| M13 §1 understanding-segments | 75 words | 0% |
+| M11 §2 designing-the-key | 41 words | 8% |
+| M14 §4 **before** the fix | 39 words | 10% |
+| M14 §4 **after** the fix | 72 words | 3% |
+
+**Measure a draft against M13 §1 and M11 §2 before declaring it done.** Median paragraph in the sixties or seventies, beats at roughly one per section, not one per heading.
+
+The problem is structural rather than stylistic, and six habits fix it:
+
+1. **Openers are unfolding situations with people and time passing**, never aphorisms. M13 §1 opens on three requests across one working day before any summary lands. "Nobody has ever been persuaded by a table" is the failure mode.
+2. **Accumulate, do not reveal.** Paragraphs pile clauses until they arrive somewhere. The setup-turn-landing unit, repeated, is the signature of persuasive-essay AI prose.
+3. **Cut the turn construction.** "It is not." "You have not." "It never had." This was the most artificial habit in the writing and it was everywhere.
+4. **Headings ask or reassure**, rather than declaring. "Why not just call it a filter" beats a label.
+5. **Enumerate fully instead of compressing elegantly.** "Referrer Type report, then calculated metrics, then flows, then fallout" is better than "five report types". The full list is what makes a reader feel the weight.
+6. **Develop an analogy across a paragraph** and walk it through step by step, the way M13 §1 does with the encyclopedia. An analogy fired in one sentence is decoration.
+
+Add connective tissue, and allow productive redundancy: say a hard idea a second way. Prose where every paragraph could be reordered without damage is essay writing, not explaining. **The test is always the junior colleague sitting beside you**, which is Amit's own instruction and the thing all six habits serve.
 
 **Openers are never definitions.** Three patterns recur: a continuity recap that walks back over what the reader has and names the gap; a concrete scenario or extended metaphor carried through the whole section; or the failing report shown before the feature is named.
 

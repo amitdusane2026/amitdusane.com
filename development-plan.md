@@ -166,7 +166,7 @@ Per section, repeatable:
 
 **Order now that the orphans and M12 are done**, following the structure map's arc, one module at a time and complete before moving on:
 
-~~M12 (3)~~ **done** → M14 (10) → M15 (4) → M16 (4) → M17 (4) → M18 (4) → M19 (6) → M20 (5) → M21 (5)
+~~M12 (3)~~ **done** → ~~M14 (10)~~ **done 16 Aug 2026** → M15 (4) → M16 (4) → M17 (4) → M18 (4) → M19 (6) → M20 (5) → M21 (5)
 
 **M14 Analysis Workspace is next, and it is the largest module in the curriculum at ten sections.** **All ten are unwritten**, not six: every M14 row reads `Content created? = No` and no section file carries a `description`, so the whole module renders dimmed. Six of the ten files hold pre-restructure legacy prose and four are bare stubs, which per the working agreement is the same job ten times.
 
@@ -526,6 +526,41 @@ What settled during the build, all of it from Amit's review rather than from pla
 6. **Captions.** Every screenshot gets a note, and if no note can be written the screenshot is not earned. The note points at the thing to look at, states what is absent, or names what changed. It never describes the frame, which is the `alt` attribute's job.
 
 **`CLAUDE.md` gains a short entry about inline slotting once the component exists.** Nothing goes in there before that, per its own supersession rule.
+
+## M14 Analysis Workspace ✅ SIGNED OFF 16 Aug 2026
+
+**Ten sections, 28,187 words, 18 diagrams, 14 screenshots, 11 tables, 30 links to Adobe documentation.** The largest module in the curriculum by a wide margin, and the first to carry product screenshots. Totals: **14 of 21 modules complete, 84 of 116 sections created, QA'd and final.**
+
+The method changed partway through and the change is the reusable part. §1 and §2 were written from Amit's notes on the M12 pattern. §3 to §10 he handed over entirely, and the instruction was to write them as if he had.
+
+### The voice calibration, which is the most valuable thing this module produced
+
+After §3 to §6 were drafted, Amit rejected the prose: *"typical hook style, half sentences and pauses, dramatic, typical AI language."* He was right. The full diagnosis and the six habits that fix it are now recorded in `CLAUDE.md` under Voice, with the paragraph-median table.
+
+Two points worth keeping here rather than there. **The corpus was the calibration, not the theory.** Reading M13 §1 and M11 §2 and measuring them produced a far better answer than analysing Amit's raw notes. And **`CLAUDE.md` already described the rhythm correctly**; the failure was inverting the stated ratio until the beats were the whole texture. A rule can be right and still be applied backwards, so measure rather than assume compliance.
+
+### The external-draft comparison (16 Aug 2026)
+
+Amit commissioned an independent 4,102-word guide on the same subject and asked for a comparison. **Seven trap candidates survived the filter, five were taken.** That is the highest yield since M12, and it confirms the 10 Aug ruling: mechanically deep modules reward the comparison, and M14 is the most mechanical module in the curriculum.
+
+Taken: a breakdown says nothing about order; Unique Visitors do not sum; Unspecified is a finding rather than a row to hide; column-level segments and date ranges are near-invisible; previous period against previous year compares four weekends to five.
+
+Not taken, and why: most of its apparent breadth is our other modules. Segments is M13, calculated metrics M12, attribution M15, CJA M21, bot filters and virtual suites M02. **The module-boundary check did most of the work again**, exactly as on M04.
+
+**One structural idea was worth taking outright.** Its "Ten ways to be confidently wrong" is a better *artifact* than anything we had: a consolidated numbered trap list is what a practitioner bookmarks. Ours now sits at the end of §10, contents drawn from the module rather than copied. It also fixed a problem nobody had named, which is that the module previously ended on performance, the dullest possible last note.
+
+**Where the external draft is behind, for the E-E-A-T report:** it opens with a definition, carries no history at all, gives cohort analysis one bullet against our 2,451 words, cites Adobe nowhere, and used the same wrong share-role labels this module carried until a screenshot caught them.
+
+### Honest review of the finished module, for whoever revisits it
+
+Six weaknesses, none fatal, recorded so they are not rediscovered:
+
+1. **§1 is the front door and the least efficient section**, 4,082 words against a module average of 2,800. The history is the best writing in the module and also the thing between a search lander and an answer.
+2. **Ten follow-alongs is two or three too many.** Same failure class as the repeated "floor rather than a ceiling" closer: the sentence was fixed, the structure it sat in was not.
+3. **The module teaches every part and never assembles one.** There is no complete, realistic project anywhere in 28,000 words. This is the one real content hole and the thing a learner most wants after §3.
+4. **Two of the fourteen screenshots illustrate rather than prove** (§4's visualization list, §8's curation summary), against the standard set by §3's breakdown and §10's four-hundred-rows-on-twenty-four.
+5. **§10's trap list is the most useful artifact and sits on the least-visited page.** Structural mismatch with no clean fix inside a ten-section shape.
+6. **Recaps are applied unevenly.** §5 recaps calculated metrics properly when refusing them; §3 links props and eVars with no recap at all.
 
 ## Phase 5 — Small corrections
 
