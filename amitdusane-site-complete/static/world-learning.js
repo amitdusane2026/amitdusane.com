@@ -342,3 +342,187 @@
     if (ev.key === 'Escape' || ev.keyCode === 27) close();
   });
 })();
+
+/* ==========================================================================
+   PROTOTYPE v2, one section only (WAY-01, the in-page spine).
+   Runs on section pages only, which baseof marks with .has-rail server-side.
+
+   Three things worth knowing about the design:
+   - The first entry is "Introduction", pointing at the top of the article.
+     Without it the list starts at the first h3, which is NOT the start of
+     the page: every section opens with untitled prose before that heading,
+     so entry 01 would silently skip it and there would be no way back up.
+   - Labels are SHORTENED, not copied. A nav label is a signpost; the
+     headings on this site are full editorial clauses and reproducing them
+     makes a list that has to be scrolled. An author can override any label
+     with data-nav="..." on the heading.
+   - The pocket map trigger lives at the top of this rail rather than
+     floating over the page, so the two navigation devices sit together and
+     neither hides behind the other.
+
+   Heading IDs are generated here for the prototype. For real they belong to
+   WAY-02 and must be emitted server-side, or Google never sees them.
+   ========================================================================== */
+(function () {
+  if (!document.body.classList.contains('has-rail')) return;
+
+  var main = document.querySelector('.lmain'),
+      content = document.querySelector('.lcontent'),
+      article = document.querySelector('.section'),
+      title = document.querySelector('.lsec-title'),
+      heads = [].slice.call(document.querySelectorAll('.section > .subsec-title'));
+  if (!main || !content || !article || heads.length < 3) return;
+
+  if (title && !title.id) title.id = 'top';
+
+  /* ---- ids: stable, readable, and never cut mid-word ---- */
+  var used = {};
+  heads.forEach(function (h, i) {
+    if (h.id) return;
+    var s = (h.textContent || '').toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+    if (s.length > 60) s = s.slice(0, 60).replace(/-[^-]*$/, '');
+    if (!s) s = 'section-' + (i + 1);
+    if (used[s]) { s = s + '-' + (++used[s]); } else { used[s] = 1; }
+    h.id = s;
+  });
+
+  /* ---- label shortening ----
+     The house heading style is "clause, and clause" or "clause: detail".
+     Cutting at that joint gives a natural signpost rather than a truncation.
+     Verified against all ten headings on this page. */
+  function shortLabel(h) {
+    var override = h.getAttribute('data-nav');
+    if (override) return override;
+    var t = (h.textContent || '').trim(), i;
+    i = t.indexOf(': ');            if (i > 0 && i < 46) t = t.slice(0, i);
+    i = t.indexOf(', and ');        if (i > 0) t = t.slice(0, i);
+    i = t.search(/,\s+(not|because|which|so|but|where|until)\b/);
+    if (i > 0) t = t.slice(0, i);
+    if (t.length > 44) t = t.slice(0, 44).replace(/[\s,;:]+\S*$/, '') + '\u2026';
+    return t;
+  }
+
+  var rail = document.createElement('aside');
+  rail.className = 'wf-rail';
+  rail.setAttribute('aria-label', 'On this page');
+  /* ---- reading weight, first, in real ink ---- */
+  var words = (article.innerText || '').trim().split(/\s+/).length;
+  var meta = document.createElement('p');
+  meta.className = 'wf-meta';
+  meta.innerHTML = Math.max(1, Math.round(words / 220)) + ' min read' +
+                   '<span>' + words.toLocaleString() + ' words</span>';
+  rail.appendChild(meta);
+
+  /* ---- the pocket map, promoted out of the floating tab ----
+     Kept green and kept loud. It is the device that carries a reader across
+     116 sections, so it must not look like a sibling of the page list. */
+  var pocket = document.getElementById('wfFab');
+  if (pocket) {
+    var mapBtn = document.createElement('button');
+    mapBtn.type = 'button';
+    mapBtn.className = 'wf-map-btn';
+    mapBtn.innerHTML =
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" ' +
+      'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+      '<circle cx="12" cy="12" r="9"/><polygon points="15.5 8.5 13 13 8.5 15.5 11 11 15.5 8.5"/></svg>' +
+      '<span><b>See where this fits</b><em>Across the whole curriculum</em></span>';
+    mapBtn.addEventListener('click', function () { closeDrawer(); pocket.click(); });
+    rail.appendChild(mapBtn);
+  }
+
+  var hd = document.createElement('p');
+  hd.className = 'wf-rail-h';
+  hd.textContent = 'On this page';
+  rail.appendChild(hd);
+  var sub = document.createElement('p');
+  sub.className = 'wf-rail-sub';
+  sub.textContent = 'Jump within this section';
+  rail.appendChild(sub);
+
+  var ol = document.createElement('ol');
+  function addItem(href, text, full, cls) {
+    var li = document.createElement('li'), a = document.createElement('a');
+    if (cls) li.className = cls;
+    a.href = href;
+    a.textContent = text;
+    if (full && full !== text) a.title = full;
+    li.appendChild(a);
+    ol.appendChild(li);
+    return li;
+  }
+  addItem('#' + (title ? title.id : 'top'), 'Introduction', 'Start of the article', 'wf-intro');
+  heads.forEach(function (h) { addItem('#' + h.id, shortLabel(h), h.textContent.trim()); });
+
+  /* The path-box last: somebody who arrived from a search only wanting to
+     know where the screen lives should not have to read the section to find
+     it. Deliberately the path-box and NOT the ref-box, which sends people
+     to Adobe rather than answering here. The label is read from the box's
+     own title, so the two can never drift apart. Skipped where a section
+     has no Adobe screen, which is exactly when there is no path-box. */
+  var pathBox = document.querySelector('.section > .path-box');
+  if (pathBox) {
+    if (!pathBox.id) pathBox.id = 'where-to-find-it';
+    var pTitle = pathBox.querySelector('.path-title'),
+        pBody = pathBox.querySelector('p');
+    addItem('#' + pathBox.id,
+            pTitle ? pTitle.textContent.trim() : 'Where to find it in Adobe Analytics',
+            pBody ? pBody.textContent.trim().slice(0, 130) : '',
+            'wf-path');
+  }
+  rail.appendChild(ol);
+
+  main.appendChild(rail);
+
+  /* ---- drawer, for every width below the three-column threshold ---- */
+  var veil = document.createElement('div');
+  veil.className = 'wf-nav-veil';
+  document.body.appendChild(veil);
+
+  var fab = document.createElement('button');
+  fab.type = 'button';
+  fab.className = 'wf-nav-fab';
+  fab.setAttribute('aria-label', 'On this page');
+  fab.setAttribute('aria-expanded', 'false');
+  fab.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" ' +
+    'stroke-linecap="round" aria-hidden="true"><path d="M4 6h10M4 12h16M4 18h7"/>' +
+    '<circle cx="18" cy="6" r="2"/></svg>';
+  document.body.appendChild(fab);
+
+  function openDrawer() {
+    rail.classList.add('open'); veil.classList.add('open');
+    fab.setAttribute('aria-expanded', 'true');
+  }
+  function closeDrawer() {
+    rail.classList.remove('open'); veil.classList.remove('open');
+    fab.setAttribute('aria-expanded', 'false');
+  }
+  fab.addEventListener('click', function () {
+    rail.classList.contains('open') ? closeDrawer() : openDrawer();
+  });
+  veil.addEventListener('click', closeDrawer);
+  /* a jump should dismiss the drawer, or the reader lands behind it */
+  ol.addEventListener('click', function (ev) { if (ev.target.closest('a')) closeDrawer(); });
+  document.addEventListener('keydown', function (ev) {
+    if (ev.key === 'Escape' || ev.keyCode === 27) closeDrawer();
+  });
+
+  /* ---- scrollspy ---- */
+  var items = [].slice.call(ol.children), ticking = false;
+  function sync() {
+    var mark = window.innerHeight * 0.28, active = 0;
+    for (var i = 0; i < heads.length; i++) {
+      if (heads[i].getBoundingClientRect().top <= mark) active = i + 1; else break;
+    }
+    items.forEach(function (li, i) {
+      li.classList.toggle('on', i === active);
+      li.classList.toggle('seen', i < active);
+    });
+    ticking = false;
+  }
+  window.addEventListener('scroll', function () {
+    if (!ticking) { ticking = true; requestAnimationFrame(sync); }
+  }, { passive: true });
+  window.addEventListener('resize', sync);
+  sync();
+})();

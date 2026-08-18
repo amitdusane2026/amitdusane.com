@@ -6,6 +6,21 @@
 {{ with .Lastmod }}<p class="lupdated">Last updated: <time datetime="{{ .Format "2006-01-02" }}">{{ .Format "2 January 2006" }}</time></p>{{ end }}
 {{- /* Auto-insert the "Need implementation steps?" signpost just before the Adobe docs ref-box, but ONLY when that ref-box actually links to Adobe documentation. A ref-box of purely internal links does not get the note. */ -}}
 {{ $content := .Content }}
+{{- /* WAY-02: heading anchors, emitted at BUILD time and not by JavaScript.
+   Google reads the served HTML, so an id added on load gives the reader a
+   usable jump list and gives search nothing. These ids are also permanent
+   URLs once the section is published, so they are cut on a word boundary
+   rather than mid-word, and de-duplicated if two headings ever match. */ -}}
+{{ $seen := slice }}
+{{ range $h := findRE `<h[34] class="subsec-title">(?s).*?</h[34]>` $content }}
+  {{ $id := $h | plainify | htmlUnescape | chomp | urlize }}
+  {{ if gt (len $id) 60 }}{{ $id = replaceRE `-[^-]*$` "" (substr $id 0 60) }}{{ end }}
+  {{ if in $seen $id }}{{ $id = printf "%s-%d" $id (len $seen) }}{{ end }}
+  {{ $seen = $seen | append $id }}
+  {{ $new := replace $h `<h3 class="subsec-title">` (printf `<h3 class="subsec-title" id="%s">` $id) 1 }}
+  {{ $new = replace $new `<h4 class="subsec-title">` (printf `<h4 class="subsec-title" id="%s">` $id) 1 }}
+  {{ $content = replace $content $h $new 1 }}
+{{ end }}
 {{ if findRE `<div class="ref-box">(?s).*?(experienceleague\.adobe\.com|adobe\.com/go|://adobe)` $content 1 }}
   {{ $content = replaceRE `(<div class="ref-box")` (printf "%s$1" (partial "doc-note.html" .)) $content 1 }}
 {{ end }}

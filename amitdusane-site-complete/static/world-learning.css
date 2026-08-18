@@ -15,6 +15,47 @@
   --accent:#e11d48; --accent2:#be123c; --accent-light:rgba(225,29,72,.10);
   --success:#10b981; --warning:#f59e0b; --info:#3b82f6;
   --sidebar-w:280px; --header-h:60px; --logo-ink:#1E3A8A; --tagline-accent:#1E3A8A;
+
+  /* ---------------------------------------------------------------------
+     TYPE SCALE (TYP-01, 17 Aug 2026)
+     Before this existed the whole reading column was 16px: a section
+     heading was the same size as the sentence under it, so a 13-screen
+     page gave the eye no landmarks. Each step below has one stated job.
+     Change a size HERE, never in a component. The mobile step is a token
+     override in the 880px query, not eight per-component overrides.
+
+       --fs-title  page and module titles (h1)
+       --fs-h3     section headings, the h3 stack
+       --fs-body   body prose everywhere, including inside boxes
+       --fs-sm     supporting prose, table cells, notes, ref links
+       --fs-label  block titles and box headers
+       --fs-meta   breadcrumb, dates, table headers, card descriptions
+       --fs-micro  code language, copy button, small badges
+       --fs-code   monospace, which runs small at a given px
+     --------------------------------------------------------------------- */
+  --fs-title:34px; --fs-h3:24px; --fs-body:18px; --fs-sm:15.5px;
+  --fs-label:13.5px; --fs-meta:12.5px; --fs-micro:11.5px; --fs-code:14px;
+  --lh-title:1.2; --lh-h3:1.3; --lh-body:1.6;
+
+  /* ---------------------------------------------------------------------
+     COLUMN WIDTH (TYP-02)
+     One width for prose and components. The first attempt gave prose its
+     own narrower measure and left components at 800px; that produced a
+     540px strip of text with a 440px void beside it on a 1440px screen,
+     and was rejected on sight. The void was the fault, not the measure:
+     the reclaimed space all landed on one side because the prose was
+     left-aligned inside the old band.
+
+     The measured problem is still real and still unsolved here. From
+     52,686 characters of this site's own prose, rendered in the real
+     font: 800px = 111.6 characters per line, against a comfortable
+     65 to 75. The fix is being prototyped behind `body.world-learning` on one
+     section, where a narrower column, larger body type and the in-page
+     spine land together, because all three trade against the same
+     horizontal budget and cannot be judged separately.
+     --------------------------------------------------------------------- */
+  --column:760px; --title-indent:17px;
+  --rail-w:250px; --rail-gap:40px; --pocket:#16a34a; --pocket-dark:#15803d;
 }
 [data-theme="dark"]{
   --bg1:#0f172a; --bg2:#1e293b; --bg3:#334155; --card:#1e293b;
@@ -22,7 +63,7 @@
   --accent:#fb5277; --accent2:#e11d48; --accent-light:rgba(251,82,119,.14); --logo-ink:#ffffff; --tagline-accent:#818cf8;
 }
 
-body.world-learning{margin:0;background:var(--bg1);color:var(--text1);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;line-height:1.6}
+body.world-learning{margin:0;background:var(--bg1);color:var(--text1);font-family:'IBM Plex Sans',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;line-height:1.6}
 a{color:var(--accent);text-decoration:none}
 a:hover{text-decoration:underline}
 /* Inline content links (lesson + glossary body): persistent underline so a link reads as a link without relying on color alone. Crimson accent preserved; nav, cards, breadcrumb, prev/next and section lists are outside .section and unaffected. */
@@ -85,13 +126,208 @@ a:hover{text-decoration:underline}
 
 /* ---------- Main ---------- */
 .lmain{margin-left:var(--sidebar-w);margin-top:var(--header-h);min-height:calc(100vh - var(--header-h));padding:24px 32px}
-.lcontent{max-width:800px;margin:0 auto}
-.lcrumb{font-size:13px;color:var(--text2);margin:0 0 10px}
+.lcontent{max-width:var(--column);margin:0 auto}
+/* ==========================================================================
+   PROTOTYPE v2, one section only (M14 s1), behind `proto: true` front matter.
+
+   ONE WIDTH, decided 18 Aug after two rounds of review.
+   The two-width version (prose 620, figures 800) is typographically better
+   and was noticed as wrong twice, unprompted, in two separate reviews. A
+   layout a careful reader keeps reading as broken IS broken, whatever the
+   textbook says, so prose and figures share --column again.
+
+   760px at 18px measures ~94 characters against 111.6 at the old 800/16.
+   That is a real improvement and an honest admission that it is short of
+   the 65-75 target: you cannot have a 70-character measure, full-size
+   infographics and one width at this type size. Infographics won, because
+   they are the differentiator; at 760 they lose 5% and their internal text
+   still renders larger than the 620 version that was rejected.
+
+   THE OVERFLOW BUG, for whoever hits it next: a grid item with a px
+   max-width does NOT shrink below its track. `min-width:0` is not enough.
+   It needs max-width:min(...,100%). Without it the article ran 109px wider
+   than a 390px phone, which stretched the fixed header to the overflowed
+   width and made it slide away sideways.
+   ========================================================================== */
+/* --------------------------------------------------------------------------
+   TYP-04, prototype only. IBM Plex, self-hosted, no CDN link in the page.
+
+   Why a typeface at all: the system stack renders as Segoe UI on Windows,
+   SF on Mac and Roboto on Android, so it cannot carry an identity. Plex was
+   drawn for technical documentation, has character without being fashionable,
+   and its mono sibling shares the same skeleton so code and prose stop
+   looking like two different documents.
+
+   ONE variable file covers every weight the site uses (400/500/600/650/700)
+   in 44.6KB, against four or five static files. The single 800 in the
+   stylesheet clamps to 700 and is not used on a section page.
+
+   These @font-face rules are global but cost the other 115 sections nothing:
+   a face is only fetched when something actually uses it, and the family is
+   applied under body.world-learning alone.
+   -------------------------------------------------------------------------- */
+@font-face{
+  font-family:'IBM Plex Sans';
+  font-style:normal;
+  font-weight:100 700;              /* variable axis */
+  font-display:swap;
+  src:url('fonts/ibm-plex-sans-latin-wght-normal.woff2') format('woff2');
+}
+@font-face{
+  font-family:'IBM Plex Mono';
+  font-style:normal;
+  font-weight:400;
+  font-display:swap;
+  src:url('fonts/ibm-plex-mono-latin-400-normal.woff2') format('woff2');
+}
+
+/* TYP-04 site-wide: IBM Plex is the learning world font. */
+/* Mono is applied per selector because the base rules hardcode Consolas and
+   are declared later in this file. Doubling up the body class beats them on
+   specificity without reaching for !important. */
+body.world-learning .code-body pre,
+body.world-learning .lcontent code,
+body.world-learning .lcontent .path,
+body.world-learning .shot-brief,
+body.world-learning .wf-rail a::before{
+  font-family:'IBM Plex Mono',Consolas,monospace;
+}
+
+/* scroll-padding belongs on the SCROLLING element. Setting it on body does
+   nothing, which is why every jump landed with the heading under the header
+   and the reader looking at the paragraph after it. */
+html:has(body.world-learning){scroll-behavior:smooth; scroll-padding-top:calc(var(--header-h) + 24px)}
+@media(prefers-reduced-motion:reduce){html:has(body.world-learning){scroll-behavior:auto}}
+
+body.has-rail .lmain{
+  display:grid; align-items:start;
+  grid-template-columns:minmax(0,1fr) var(--rail-w);
+  column-gap:var(--rail-gap);
+}
+/* border-box so the gutter below cannot push the column past its track */
+body.world-learning .lcontent{
+  box-sizing:border-box; min-width:0; max-width:min(var(--column),100%);
+  margin:0 auto; padding-left:var(--title-indent);
+}
+/* The h1 carries a crimson accent rule as 14px padding + a 3px border, so
+   its TEXT starts 17px right of everything else and the page head read as
+   three lines starting in three different places. Rather than indent the
+   breadcrumb and date to match (which would then leave the body text out
+   of line instead), the column gains a 17px gutter that everything shares
+   and the h1 is pulled back into it, so the bar hangs in the margin and
+   every line of text on the page starts at exactly the same x. */
+body.world-learning .lcontent > h1.lsec-title{margin-left:calc(var(--title-indent) * -1)}
+
+/* ---- the rail ---- */
+.wf-rail{
+  position:sticky; top:calc(var(--header-h) + 22px);
+  max-height:calc(100vh - var(--header-h) - 48px);
+  overflow-y:auto; overscroll-behavior:contain;
+  padding:0 6px 8px 16px; border-left:1px solid var(--border);
+}
+.wf-meta{
+  font-size:var(--fs-meta); font-weight:600; color:var(--text1);
+  margin:0 0 14px; line-height:1.5;
+}
+.wf-meta span{display:block; font-weight:400; color:var(--text2)}
+
+/* The two navigation devices are deliberately NOT alike. The pocket map is
+   green because that colour is doing a job: it carries a reader across 116
+   sections and has to catch the eye. The page list is quiet because it only
+   moves you inside one page. */
+.wf-map-btn{
+  display:flex; align-items:center; gap:9px; width:100%; margin:0 0 20px;
+  padding:10px 12px; cursor:pointer; text-align:left;
+  font-family:inherit; color:#fff; background:var(--pocket);
+  border:none; border-radius:8px; box-shadow:0 2px 8px rgba(22,163,74,.28);
+}
+.wf-map-btn:hover{background:var(--pocket-dark)}
+.wf-map-btn svg{flex:none;width:17px;height:17px}
+.wf-map-btn b{display:block; font-size:var(--fs-meta); font-weight:700; line-height:1.3}
+.wf-map-btn em{display:block; font-style:normal; font-size:var(--fs-micro); opacity:.85; line-height:1.3}
+.wf-rail-h{
+  font-size:var(--fs-micro); font-weight:700; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--text3); margin:0 0 3px;
+}
+.wf-rail-sub{font-size:var(--fs-micro); color:var(--text3); margin:0 0 9px; line-height:1.4}
+.wf-rail ol{list-style:none; margin:0; padding:0; counter-reset:wf -1}
+.wf-rail li{counter-increment:wf; margin:0}
+.wf-rail a{
+  display:flex; gap:8px; padding:4px 6px 4px 0; border-radius:5px;
+  font-size:var(--fs-meta); line-height:1.35; color:var(--text2); text-decoration:none;
+}
+.wf-rail a::before{
+  content:counter(wf,decimal-leading-zero); flex:none;
+  font-family:Consolas,monospace; font-size:10.5px; color:var(--text3);
+  padding-top:2px; font-variant-numeric:tabular-nums;
+}
+.wf-rail a:hover{color:var(--text1); background:var(--bg3); text-decoration:none}
+.wf-rail li.on > a{color:var(--accent); font-weight:650}
+.wf-rail li.on > a::before{color:var(--accent)}
+.wf-rail li.seen > a{color:var(--text3)}
+.wf-rail li.wf-intro > a{font-style:italic}
+/* Jump to the path-box. Not a section, so it takes no number and sits below
+   a rule: a reader who landed here only wanting "where is this screen" can
+   find it without reading anything. It borrows the path-box's own violet so
+   the link and its destination are visibly the same thing, and it is
+   deliberately NOT the ref-box, which sends people off to Adobe. */
+.wf-rail li.wf-path{counter-increment:none; margin-top:9px; padding-top:9px; border-top:1px solid var(--border)}
+.wf-rail li.wf-path > a{color:#534AB7; font-weight:650}
+.wf-rail li.wf-path > a:hover{color:#3C3489; background:rgba(83,74,183,.08)}
+.wf-rail li.wf-path > a::before{
+  content:""; width:12px; height:12px; margin-top:3px; border-radius:50%;
+  background:radial-gradient(circle at 50% 50%, #534AB7 0 3.2px, transparent 3.4px);
+}
+[data-theme="dark"] .wf-rail li.wf-path > a{color:#CECBF6}
+[data-theme="dark"] .wf-rail li.wf-path > a:hover{color:#E6E4FB; background:rgba(206,203,246,.12)}
+[data-theme="dark"] .wf-rail li.wf-path > a::before{
+  background:radial-gradient(circle at 50% 50%, #CECBF6 0 3.2px, transparent 3.4px);
+}
+
+/* Three columns only: the pocket map lives in the rail, so the floating tab
+   would be a duplicate. Everywhere else the tab stays exactly as it was. */
+@media(min-width:1244px){ body.has-rail .wf-tab{display:none} }
+
+/* ---- drawer below the three-column threshold ---- */
+.wf-nav-fab{display:none}
+.wf-nav-veil{display:none}
+@media(max-width:1243px){
+  body.has-rail .lmain{grid-template-columns:minmax(0,1fr)}
+  /* the green tab is back and permanent here, so the drawer must not carry
+     a second copy of the same control */
+  .wf-map-btn{display:none}
+  .wf-rail{
+    position:fixed; top:0; right:0; z-index:945; box-sizing:border-box;
+    width:min(330px,88vw); height:100%; max-height:none;
+    padding:20px 18px 28px; border-left:1px solid var(--border);
+    background:var(--bg2); box-shadow:-8px 0 28px rgba(0,0,0,.16);
+    transform:translateX(101%); transition:transform .22s ease; visibility:hidden;
+  }
+  .wf-rail.open{transform:none; visibility:visible}
+  .wf-nav-veil{
+    display:block; position:fixed; inset:0; z-index:944;
+    background:rgba(0,0,0,.42); opacity:0; pointer-events:none; transition:opacity .22s;
+  }
+  .wf-nav-veil.open{opacity:1; pointer-events:auto}
+  .wf-nav-fab{
+    display:flex; align-items:center; justify-content:center;
+    position:fixed; right:18px; bottom:80px; z-index:940;
+    width:48px; height:48px; border-radius:50%; cursor:pointer;
+    color:#fff; background:var(--text1); border:none;
+    box-shadow:0 6px 18px rgba(15,23,42,.34);
+  }
+  .wf-nav-fab svg{width:21px;height:21px}
+  .wf-rail a{font-size:var(--fs-sm); padding:7px 6px 7px 0}
+}
+/* Scoped to beat `body.world-learning .lcontent p`, which is (0,2,2) and
+   otherwise wins: the breadcrumb is a <p> inside .lcontent. Before TYP-01
+   this rule said 13px and the page rendered it at 16px. */
+body.world-learning .lcontent .lcrumb{font-size:var(--fs-meta);color:var(--text2);margin:0 0 10px}
 .lcrumb a{color:var(--text2)} .lcrumb a:hover{color:var(--accent)}
-.lmod-title{font-size:28px;font-weight:700;color:var(--text1);margin:.1em 0 .4em}
-.lsec-title{font-size:22px;font-weight:700;color:var(--text1);margin:0 0 16px;padding-left:14px;border-left:3px solid var(--accent)}
+.lmod-title{font-size:var(--fs-title);line-height:var(--lh-title);font-weight:700;color:var(--text1);margin:.1em 0 .4em}
+.lsec-title{font-size:var(--fs-title);line-height:var(--lh-title);font-weight:700;color:var(--text1);margin:0 0 16px;padding-left:14px;border-left:3px solid var(--accent)}
 /* Last-updated stamp. Sits under the section title, aligned to the title text (14px padding + 3px rule). Lives inside .lcontent, so lFillPrintDoc carries it into the print document automatically. */
-body.world-learning .lcontent .lupdated{font-size:12px;color:var(--text3);font-weight:400;margin:-6px 0 20px;padding-left:0;letter-spacing:normal}
+body.world-learning .lcontent .lupdated{font-size:var(--fs-meta);color:var(--text3);font-weight:400;margin:-6px 0 20px;padding-left:0;letter-spacing:normal}
 .lupdated time{font-weight:500;color:inherit}
 .lcontent p{color:var(--text2);margin:0 0 1em}
 
@@ -131,9 +367,9 @@ body.world-learning .welcome-btn:hover{background:var(--accent2);text-decoration
 
 /* ---------- Lesson prev/next ---------- */
 .lpn{display:flex;justify-content:space-between;gap:14px;margin-top:34px;padding-top:18px;border-top:1px solid var(--border)}
-.lpn a{flex:1;border:1px solid var(--border);border-radius:9px;padding:12px 16px;color:var(--text1);font-size:13.5px}
+.lpn a{flex:1;border:1px solid var(--border);border-radius:9px;padding:12px 16px;color:var(--text1);font-size:var(--fs-sm)}
 .lpn a:hover{border-color:var(--accent);text-decoration:none}
-.lpn .lpn-lab{display:block;font-size:11px;color:var(--text3);margin-bottom:3px}
+.lpn .lpn-lab{display:block;font-size:var(--fs-micro);color:var(--text3);margin-bottom:3px}
 .lpn .lpn-next{text-align:right}
 
 /* ---------- Mobile drawer ---------- */
@@ -145,23 +381,26 @@ body.world-learning .welcome-btn:hover{background:var(--accent2);text-decoration
   body.lnav-open .loverlay{display:block}
   .lmain{margin-left:0;padding:18px 16px}
   .lsearch-btn{display:none}
-  :root{--header-h:52px}
+  /* TYP-01: the mobile step of the type scale is a TOKEN override, not a
+     per-component one. This block previously redefined eight components
+     individually and dropped body prose to 13px, which is too small for
+     long-form reading and is the rendering Google indexes. Add a component
+     override here only for something the scale genuinely cannot express. */
+  :root{
+    --header-h:52px;
+    --fs-title:27px; --fs-h3:20px; --fs-body:16.5px; --fs-sm:14.5px;
+    --fs-label:12.5px; --fs-meta:12px; --fs-micro:11px; --fs-code:13px;
+  }
   .lhead{padding:0 12px;gap:10px}
   .llogo-text{font-size:14px}
   .llogo-author{display:none}
   .llogo-icon{width:48px;height:48px}
-  body.world-learning .lcontent p,body.world-learning .lcontent ul,body.world-learning .lcontent ol,body.world-learning .lcontent li{font-size:13px}
   body.world-learning .lcontent p{margin-bottom:10px}
-  .pro-tip p,.info-box p,.warn-box p{font-size:13px}
-  .lsec-title{font-size:19px}
-  .subsec-title{font-size:15px;margin:14px 0 8px}
+  .subsec-title{margin:14px 0 8px}
   .path-box{padding:12px 14px}
-  .path-title{font-size:14px}
   .path-ico{width:26px;height:26px}
-  body.world-learning .lcontent .path{font-size:12px;padding:2px 7px}
+  body.world-learning .lcontent .path{padding:2px 7px}
   .ref-box{padding:12px 13px}
-  .ref-title{font-size:14px}
-  .ref-box li{font-size:12.5px}
 }
 /* Print: mirror the lesson into a document with a repeating author header and
    footer (matching the migration guide's print template), and hide the live app. */
@@ -173,7 +412,17 @@ body.world-learning .welcome-btn:hover{background:var(--accent2);text-decoration
     --text1:#0f172a; --text2:#475569; --text3:#94a3b8; --border:#e2e8f0;
     --accent:#e11d48; --accent2:#be123c; --accent-light:rgba(225,29,72,.10);
     --success:#10b981; --warning:#f59e0b; --info:#3b82f6;
+    /* TYP-01: the print step of the scale, in points. Without this the
+       print document inherits the 30px screen title. Paper wants a tighter
+       scale than a screen, but it still needs the hierarchy: before this,
+       print rendered headings and body prose at the identical size. */
+    --fs-title:19pt; --fs-h3:13.5pt; --fs-body:11pt; --fs-sm:9.5pt;
+    --fs-label:9.5pt; --fs-meta:8.5pt; --fs-micro:8pt; --fs-code:8.5pt;
+    /* Paper sets its own measure through the page margin, so the screen
+       column must not apply or every printed line would stop short. */
+    --column:none;
   }
+  .wf-rail{display:none !important}
   html{color-scheme:light !important;background:#fff !important}
   body{background:#fff !important}
   .print-doc tbody td{color:#1c2129}
@@ -217,35 +466,40 @@ body.world-learning .welcome-btn:hover{background:var(--accent2);text-decoration
    warning semantic colors) is left as the source intended.
    ========================================================================== */
 .section{margin-bottom:8px}
-.subsec-title{font-size:16px;font-weight:600;margin:16px 0 10px;color:var(--text1)}
-body.world-learning .lcontent p{margin-bottom:12px;color:var(--text2);font-size:16px}
-body.world-learning .lcontent ul,body.world-learning .lcontent ol{margin:12px 0;padding-left:20px;color:var(--text2);font-size:16px}
-body.world-learning .lcontent li{margin-bottom:6px;font-size:16px}
+.subsec-title{font-size:var(--fs-h3);line-height:var(--lh-h3);font-weight:600;margin:16px 0 10px;color:var(--text1)}
+body.world-learning .lcontent p{margin-bottom:12px;color:var(--text2);font-size:var(--fs-body)}
+body.world-learning .lcontent ul,body.world-learning .lcontent ol{margin:12px 0;padding-left:20px;color:var(--text2);font-size:var(--fs-body)}
+body.world-learning .lcontent li{margin-bottom:6px;font-size:var(--fs-body)}
 body.world-learning .lcontent li strong{color:var(--text1)}
 
 .pro-tip{background:var(--accent-light);border:1px solid rgba(225,29,72,.2);border-radius:6px;padding:14px 16px;margin:16px 0}
-.pro-tip-hdr{display:flex;align-items:center;gap:6px;font-weight:700;color:var(--accent);margin-bottom:8px;font-size:16px}
-.pro-tip p{margin:0;font-size:15px}
+.pro-tip-hdr{display:flex;align-items:center;gap:6px;font-weight:700;color:var(--accent);margin-bottom:8px;font-size:var(--fs-label)}
+/* Box prose is body-sized. Scoped so the token actually applies: the
+   generic .lcontent p rule outranks a bare `.pro-tip p`, so before this
+   these three declarations were dead and the 15px they asked for never
+   reached the page. A warn-box is often the most important thing on the
+   page, so it gets body size rather than a de-emphasised aside size. */
+body.world-learning .lcontent .pro-tip p{margin:0;font-size:var(--fs-body)}
 .info-box{background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.2);border-radius:6px;padding:14px 16px;margin:16px 0}
-.info-hdr{display:flex;align-items:center;gap:6px;font-weight:700;color:var(--info);margin-bottom:8px;font-size:16px}
-.info-box p{margin:0;font-size:15px}
+.info-hdr{display:flex;align-items:center;gap:6px;font-weight:700;color:var(--info);margin-bottom:8px;font-size:var(--fs-label)}
+body.world-learning .lcontent .info-box p{margin:0;font-size:var(--fs-body)}
 .warn-box{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);border-radius:6px;padding:14px 16px;margin:16px 0}
-.warn-hdr{display:flex;align-items:center;gap:6px;font-weight:700;color:var(--warning);margin-bottom:8px;font-size:16px}
-.warn-box p{margin:0;font-size:15px}
+.warn-hdr{display:flex;align-items:center;gap:6px;font-weight:700;color:var(--warning);margin-bottom:8px;font-size:var(--fs-label)}
+body.world-learning .lcontent .warn-box p{margin:0;font-size:var(--fs-body)}
 
 .code-block{background:#0d1117;border:1px solid var(--border);border-radius:6px;margin:14px 0;overflow:hidden}
 .code-hdr{display:flex;justify-content:space-between;padding:6px 12px;background:#161b22;border-bottom:1px solid var(--border)}
-.code-lang{font-size:11px;color:var(--text3);text-transform:uppercase}
-.code-copy{background:none;border:none;color:rgba(255,255,255,.55);cursor:pointer;font-size:11px}
+.code-lang{font-size:var(--fs-micro);color:var(--text3);text-transform:uppercase}
+.code-copy{background:none;border:none;color:rgba(255,255,255,.55);cursor:pointer;font-size:var(--fs-micro)}
 .code-copy:hover{color:#fff}
 .code-body{padding:12px;overflow-x:auto}
-.code-body pre{font-family:Consolas,monospace;font-size:12px;line-height:1.5;color:#e6edf3;margin:0}
-body.world-learning .lcontent code{font-family:Consolas,monospace;font-size:12px;background:var(--bg3);padding:2px 5px;border-radius:3px;color:#fb7185}
+.code-body pre{font-family:Consolas,monospace;font-size:var(--fs-code);line-height:1.5;color:#e6edf3;margin:0}
+body.world-learning .lcontent code{font-family:Consolas,monospace;font-size:var(--fs-code);background:var(--bg3);padding:2px 5px;border-radius:3px;color:#fb7185}
 
 .tbl-wrap{overflow-x:auto;margin:14px 0;border:1px solid var(--border);border-radius:6px}
-body.world-learning .lcontent table{width:100%;border-collapse:collapse;font-size:13px}
+body.world-learning .lcontent table{width:100%;border-collapse:collapse;font-size:var(--fs-sm)}
 body.world-learning .lcontent th,body.world-learning .lcontent td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--border)}
-body.world-learning .lcontent th{background:var(--bg3);font-weight:600;font-size:11px;color:var(--text3);text-transform:uppercase}
+body.world-learning .lcontent th{background:var(--bg3);font-weight:600;font-size:var(--fs-meta);color:var(--text3);text-transform:uppercase}
 body.world-learning .lcontent td{color:var(--text2)}
 body.world-learning .lcontent tr:last-child td{border-bottom:none}
 
@@ -259,8 +513,8 @@ a.card:hover{border-color:var(--accent)}
 a.card .card-title{color:var(--text1)}
 a.card .card-desc{color:var(--text2)}
 .card-icon{width:36px;height:36px;background:var(--accent-light);border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:10px;font-size:16px}
-.card-title{font-size:16px;font-weight:600;margin-bottom:6px;color:var(--text1)}
-.card-desc{font-size:12px;color:var(--text2)}
+.card-title{font-size:var(--fs-body);font-weight:600;margin-bottom:6px;color:var(--text1)}
+.card-desc{font-size:var(--fs-meta);color:var(--text2)}
 
 .flow{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;padding:20px;background:var(--card);border:1px solid var(--border);border-radius:6px;margin:16px 0}
 .flow-step{background:var(--bg3);padding:12px 20px;border-radius:8px;font-size:15px;font-weight:600}
@@ -274,23 +528,23 @@ a.card .card-desc{color:var(--text2)}
 .flow-horizontal{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap}
 
 .ref-box{background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2);border-radius:6px;padding:14px 16px;margin:16px 0}
-.ref-title{font-weight:700;color:var(--success);margin-bottom:10px;font-size:16px}
+.ref-title{font-weight:700;color:var(--success);margin-bottom:10px;font-size:var(--fs-label)}
 .ref-box ul{margin:0;padding-left:18px}
-.ref-box li{margin-bottom:4px;font-size:13px}
+body.world-learning .lcontent .ref-box li{margin-bottom:4px;font-size:var(--fs-sm)}
 .ref-box a{color:var(--success);text-decoration:none}
 .ref-box a:hover{text-decoration:underline}
 
 .path-box{background:rgba(167,139,250,.12);border:1px solid rgba(167,139,250,.35);border-radius:8px;padding:16px 18px;margin:20px 0}
-.path-title{display:flex;align-items:center;gap:10px;font-weight:700;color:#534AB7;margin-bottom:10px;font-size:16px}
+.path-title{display:flex;align-items:center;gap:10px;font-weight:700;color:#534AB7;margin-bottom:10px;font-size:var(--fs-label)}
 .path-ico{flex:none;width:30px;height:30px;border-radius:7px;background:#534AB7 url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23ffffff%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M9%2011a3%203%200%201%200%206%200a3%203%200%200%200%20-6%200%22%2F%3E%3Cpath%20d%3D%22M17.657%2016.657l-4.243%204.243a2%202%200%200%201%20-2.827%200l-4.244%20-4.243a8%208%200%201%201%2011.314%200z%22%2F%3E%3C%2Fsvg%3E") center/17px no-repeat}
-.path-box p{margin:5px 0;font-size:14px}
-body.world-learning .lcontent .path{background:#CECBF6;padding:3px 9px;border-radius:4px;font-family:Consolas,monospace;font-size:13px;color:#3C3489}
+body.world-learning .lcontent .path-box p{margin:5px 0;font-size:var(--fs-sm)}
+body.world-learning .lcontent .path{background:#CECBF6;padding:3px 9px;border-radius:4px;font-family:Consolas,monospace;font-size:var(--fs-code);color:#3C3489}
 [data-theme="dark"] .lupdated{color:var(--text3)}
 [data-theme="dark"] .path-title{color:#CECBF6}
 [data-theme="dark"] body.world-learning .lcontent .path{background:#3C3489;color:#E6E4FB}
 
 .diagram-box{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:24px;margin:24px 0}
-.diagram-title{font-weight:700;color:var(--text1);margin-bottom:16px;font-size:16px}
+.diagram-title{font-weight:700;color:var(--text1);margin-bottom:16px;font-size:var(--fs-label)}
 .diagram-content{display:flex;justify-content:center}
 .hierarchy{text-align:center}
 .h-level{padding:14px 28px;border-radius:8px;margin:6px 0;font-size:15px;font-weight:600}
@@ -367,8 +621,8 @@ body.world-learning .lcontent .path{background:#CECBF6;padding:3px 9px;border-ra
 .glossary-list{margin-bottom:24px}
 .glossary-item{padding:12px 0;border-bottom:1px solid var(--border)}
 .glossary-item:last-child{border-bottom:none}
-.glossary-term{font-weight:600;color:var(--accent);margin-bottom:4px;font-size:14px}
-.glossary-def{font-size:13px;color:var(--text2);line-height:1.6}
+.glossary-term{font-weight:600;color:var(--accent);margin-bottom:4px;font-size:var(--fs-sm)}
+.glossary-def{font-size:var(--fs-sm);color:var(--text2);line-height:1.6}
 
 .hierarchy-tree{text-align:left}
 .tree-item{padding:6px 12px;margin:4px 0;font-size:13px}
@@ -584,7 +838,7 @@ body.world-learning .lcontent .path{background:#CECBF6;padding:3px 9px;border-ra
    is inert. Only the button opens the overlay, and the overlay stays in
    the same tab. */
 .shot-box{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:22px;margin:44px 0}
-.shot-title{font-weight:700;color:var(--text1);margin-bottom:14px;font-size:16px}
+.shot-title{font-weight:700;color:var(--text1);margin-bottom:14px;font-size:var(--fs-label)}
 
 .shot-frame{position:relative;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:16px;display:flex;align-items:center;justify-content:center;min-height:120px}
 .shot-frame img{display:block;max-width:100%;max-height:360px;width:auto;height:auto;border:1px solid var(--border);border-radius:4px;background:#fff;pointer-events:none}
@@ -594,7 +848,7 @@ body.world-learning .lcontent .path{background:#CECBF6;padding:3px 9px;border-ra
 .shot-zoom-btn{position:absolute;top:8px;right:8px;width:30px;height:30px;display:flex;align-items:center;justify-content:center;padding:0;font-size:15px;line-height:1;border:1px solid var(--border);border-radius:6px;background:var(--card);color:var(--text2);cursor:pointer}
 .shot-zoom-btn:hover{background:var(--accent,#e11d48);border-color:var(--accent,#e11d48);color:#fff}
 
-.shot-note{margin-top:16px;padding-top:14px;border-top:1px solid var(--border);font-size:14px;color:var(--text2);line-height:1.65}
+.shot-note{margin-top:16px;padding-top:14px;border-top:1px solid var(--border);font-size:var(--fs-sm);color:var(--text2);line-height:1.65}
 :root[data-theme="dark"] .shot-frame img{filter:brightness(.9) contrast(1.02)}
 
 /* Overlay: same tab, natural size, scrollable in both directions. */

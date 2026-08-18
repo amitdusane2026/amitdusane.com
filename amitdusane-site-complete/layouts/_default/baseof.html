@@ -3,7 +3,11 @@
 {{ partial "head.html" . }}
 {{ $mig := hasPrefix .RelPermalink "/web-sdk-migration" }}
 {{ $learn := hasPrefix .RelPermalink "/adobe-analytics-learning" }}
-<body class="{{ if $mig }}world-migration{{ else if $learn }}world-learning{{ end }}">
+{{/* A section page gets `has-rail`, which turns on the three-column shell and
+     tells world-learning.js to build the in-page spine. Landing pages and the
+     glossary have no h3 stack worth indexing, so they stay two-column. Decided
+     server-side so the grid never reflows after JS runs. */}}
+<body class="{{ if $mig }}world-migration{{ else if $learn }}world-learning{{ end }}{{ if eq .Type "lesson" }} has-rail{{ end }}">
 {{ if $mig }}
   {{ $steps := (where .Site.RegularPages "Type" "step").ByWeight }}
   {{ $curnum := 0 }}{{ if eq .Type "step" }}{{ $curnum = .Params.stepnum }}{{ end }}
