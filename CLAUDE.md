@@ -71,13 +71,19 @@ These documents were produced during earlier plain chat sessions. They are close
 
 **A "world" is a self-contained sub-site** selected by URL prefix, with its own stylesheet, JS, shell, and print document. Two exist: `/web-sdk-migration/` (blue accent, `world-shell.css`) and `/adobe-analytics-learning/` (crimson accent, `world-learning.css`). The switch is an if/else chain in `layouts/partials/head.html:37` and `layouts/_default/baseof.html:4-6`.
 
+
+**Every size comes from a token. Never hard-code a px in a component.** `:root` in `world-learning.css` carries a type scale (`--fs-title` 34, `--fs-h3` 24, `--fs-body` 18, `--fs-sm`, `--fs-label`, `--fs-meta`, `--fs-micro`, `--fs-code`), a spacing scale (`--sp-xs` 6 through `--sp-xl` 48), line-heights, and one column width (`--column` 760px, prose and figures alike). Each has a mobile step in the 880px query and the type scale has a print step in points. Changing a size means changing a token, never a rule. Before this existed the whole reading column was 16px and component margins had drifted across five arbitrary values.
+
+**The typeface is IBM Plex Sans and IBM Plex Mono, self-hosted** in `static/fonts/`, 59KB for two woff2 files, preloaded on the learning world only. One variable file covers every weight. The migration world deliberately stays on the system stack. Never add a CDN font link; the site loads no external assets at all.
+
+**A section page is three columns above 1244px**: sidebar, article, and the in-page spine. The spine is built by `world-learning.js` from the h3 stack and is switched on by the `has-rail` body class, which `baseof.html` adds for `type: lesson` only. Below 1244px it becomes a drawer on a floating button. It is generated, never authored.
 **Content types** map to templates by front matter `type`: `category`, `module`, `lesson`, `glossary` in the learning world; `step`, `kb`, `ref` in the migration world.
 
 ---
 
-## The three silent-failure traps
+## The silent-failure traps
 
-None of these produce an error. All three have bitten this site.
+None of these produce an error. All of them have bitten this site.
 
 1. **`description:` is the publish flag.** `layouts/partials/wherefits.html:77` and `homemap.html:56` count child pages that have a `description`. A section without one renders dimmed and unclickable in the pocket map and the home map, and a module whose sections all lack one collapses to "Coming soon". The tracker's "Content created" column and this field agree exactly.
 
@@ -88,6 +94,8 @@ None of these produce an error. All three have bitten this site.
 A fourth, fixed 14 Aug 2026 and easy to undo by accident: **the `?v=` content hash on the stylesheet and script tags** in `layouts/partials/head.html:41` and `layouts/_default/baseof.html:162`. Without it the asset URL never moves when the file changes, so browsers serve a stale copy and a CSS edit appears to do nothing at all. It cost an hour of debugging a component that was correct the whole time, and in production it would have left every returning visitor on the old stylesheet. **Do not remove those, and never confirm styling by injecting CSS into a page** — that proves the CSS works when applied, not that the page applies it. Check the delivered page.
 
 A fifth, already fixed and documented in `hugo.toml`: the `[frontmatter]` block decouples `lastmod` from the `date` cascade. Without it a `lastmod` one day ahead of a UTC build clock gives the page a future `publishDate` and Hugo drops it silently. This once removed 103 pages while the build reported success. **Do not remove those lines.**
+
+A sixth, found 18 Aug 2026 while rolling out the three-column shell: **a CSS grid item with a pixel `max-width` does not shrink below its track.** `min-width:0` is not enough; it needs `max-width:min(760px,100%)`. Without it the article rendered 109px wider than a 390px phone, and because a `position:fixed` header with `left:0;right:0` sizes to the *overflowed* width, the header stretched too and slid away sideways when the reader scrolled. Two symptoms, one cause, and neither looks like a grid problem. **Whenever a container becomes a grid or flex item, check it at 390px before anything else.**
 
 ---
 
@@ -221,6 +229,12 @@ Invariant structure:
 5. **`path-box`**, then **`ref-box`** last, always, exactly one. Nothing follows it.
 
 Heading wording is editorial, not label-like. Full clauses, often with a comma, often a promise or a question. "The waterfall, and why order decides everything", not "Rule Order".
+
+**That comma-clause shape now has a second job, so the first clause has to stand alone.** The in-page spine builds its labels by cutting each heading at its natural joint, the `, and` or the `: `, because reproducing full editorial headings makes a list nobody can scan. "A space where the work is analysis, and the name is the whole definition" becomes "A space where the work is analysis". Write the heading so that first clause still says something on its own. Where it cannot, put `data-nav="short label"` on the `h3` and the spine uses that instead.
+
+**Heading text also becomes a permanent URL.** `layouts/lesson/single.html` slugifies every `h3.subsec-title` into an `id` at build time, so the anchors exist in the served HTML where Google can use them. Rewording a heading after publication changes its anchor and breaks any link made to it, in the same way changing a slug does.
+
+**The `path-box` is now linked from the spine as well**, as the last entry, so a reader who only wants to know which Adobe screen this lives on can get there without reading. Its `path-title` supplies the label, which is one more reason to word it plainly.
 
 **The completed-site rule governs every reference, in both directions.** Write as though the whole site is already finished and the reader arrived from a search engine, because most of them do. They have read nothing else and are not working through the curriculum in order.
 
