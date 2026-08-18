@@ -226,9 +226,23 @@ body.wf-lock{overflow:hidden}
    navy on crimson is unreadable. chrome.css carries no theme tokens and
    loads on every world, so the two states are written out explicitly here.
    -------------------------------------------------------------------------- */
-.author-fab{background:#ffffff; color:#1E3A8A; border:1px solid #e2e8f0;
-            box-shadow:0 6px 18px rgba(15,23,42,.18)}
-.author-fab:hover{border-color:#e11d48}
-[data-theme="dark"] .author-fab{background:#1e293b; color:#ffffff; border-color:#334155;
-            box-shadow:0 6px 18px rgba(0,0,0,.42)}
-[data-theme="dark"] .author-fab:hover{border-color:#fb5277}
+/* --------------------------------------------------------------------------
+   The About control has no disc. The monogram is a distinctive enough shape
+   to stand on its own, and a container was only ever there to hold a generic
+   glyph that needed one. Without it the question of whether the disc should
+   be light or dark disappears: there is no disc, only the mark, in the two
+   inks it already has.
+
+   A drop-shadow filter rather than a box-shadow, because the shadow has to
+   follow the letterforms rather than a box that is no longer there. The
+   button keeps a 54px hit area even though the mark is 44px, so the touch
+   target stays comfortable.
+   -------------------------------------------------------------------------- */
+.author-fab{background:none !important; border:none !important; box-shadow:none !important;
+            color:#1E3A8A; padding:0}
+.author-fab svg{width:44px; height:44px; filter:drop-shadow(0 2px 5px rgba(15,23,42,.28))}
+.author-fab:hover{transform:scale(1.10)}
+.author-fab:hover svg{filter:drop-shadow(0 3px 8px rgba(225,29,72,.42))}
+[data-theme="dark"] .author-fab{color:#ffffff}
+[data-theme="dark"] .author-fab svg{filter:drop-shadow(0 2px 6px rgba(0,0,0,.6))}
+@media(max-width:560px){ .author-fab svg{width:40px; height:40px} }

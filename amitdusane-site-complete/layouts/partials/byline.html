@@ -20,6 +20,10 @@
 {{- end -}}
 {{- $sameDay := eq $pubStr ($p.Lastmod.Format "2006-01-02") -}}
 <div class="byline{{ if not $full }} byline-lite{{ end }}"{{ if $full }} data-readmins="{{ $mins }}"{{ end }}>
+  {{- /* "Created by" only on landings. A section has dates and a read time
+     around the name, so it already reads as a byline; a landing has only the
+     name and the credential, and needs the grammar. */ -}}
+  {{ if not $full }}<span class="by-pre">Created by</span>{{ end }}
   <a class="by-who" href="{{ "/about/" | relURL }}">{{ $p.Site.Params.author }}</a>
   <span class="by-cred">16 years in digital analytics, seven of them at Adobe</span>
   {{- if $full }}

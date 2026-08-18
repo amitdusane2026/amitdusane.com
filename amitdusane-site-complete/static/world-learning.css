@@ -330,18 +330,22 @@ body.world-learning .lcontent > h1.lsec-title{margin-left:calc(var(--title-inden
     background:rgba(0,0,0,.42); opacity:0; pointer-events:none; transition:opacity .22s;
   }
   .wf-nav-veil.open{opacity:1; pointer-events:auto}
+  /* A quiet control, deliberately. It sits directly above the About mark,
+     and as a near-black solid disc it shouted over it: a utility for moving
+     inside one page was outweighing the site's own identity. The order of
+     loudness should be pocket map, then page nav, then identity, and this
+     is the middle one. Surface fill with a border reads as a button without
+     competing. */
   .wf-nav-fab{
     display:flex; align-items:center; justify-content:center;
-    position:fixed; right:18px; bottom:80px; z-index:940;
-    width:48px; height:48px; border-radius:50%; cursor:pointer;
-    /* The icon colour follows the GROUND, not white. --text1 flips to
-       near-white in dark mode, so a hardcoded white icon on a --text1
-       disc rendered as a plain white dot with nothing in it. Pairing
-       --bg1 against --text1 keeps the contrast inverted in both themes. */
-    color:var(--bg1); background:var(--text1); border:none;
-    box-shadow:0 6px 18px rgba(0,0,0,.34);
+    position:fixed; right:20px; bottom:86px; z-index:940;
+    width:44px; height:44px; border-radius:50%; cursor:pointer;
+    color:var(--text2); background:var(--bg2); border:1px solid var(--border);
+    box-shadow:0 3px 10px rgba(15,23,42,.14);
   }
-  .wf-nav-fab svg{width:21px;height:21px}
+  .wf-nav-fab:hover{color:var(--text1); border-color:var(--text3)}
+  [data-theme="dark"] .wf-nav-fab{box-shadow:0 3px 10px rgba(0,0,0,.45)}
+  .wf-nav-fab svg{width:20px;height:20px}
   .wf-rail a{font-size:var(--fs-sm); padding:7px 6px 7px 0}
 }
 /* Scoped to beat `body.world-learning .lcontent p`, which is (0,2,2) and
@@ -366,18 +370,17 @@ body.world-learning .lcontent .byline{
   border-top:1px solid var(--border); border-bottom:1px solid var(--border);
   font-size:var(--fs-meta); color:var(--text2); line-height:1.5;
 }
-/* Crimson and underlined, which is the treatment the header already used
-   for the name and the only thing on the site that signals "clickable".
-   Plain dark bold text read as a label, so nobody would ever click it, and
-   the one link that verifies the credential was the one nobody found. */
+/* The name carries by SIZE, not by looking like a hyperlink. Underlined
+   crimson made the byline read as a row of links; plain dark text read as a
+   label nobody would click. Setting it a step larger than the metadata
+   around it makes it the subject of the block, which is what it is, and the
+   underline arrives only on hover. */
 .byline .by-who{
-  font-weight:700; color:var(--accent); text-decoration:underline;
-  text-decoration-thickness:1px; text-underline-offset:3px;
-  text-decoration-color:rgba(225,29,72,.35);
+  font-size:var(--fs-sm); font-weight:700; color:var(--text1);
+  text-decoration:none; letter-spacing:-.008em;
 }
-.byline .by-who:hover{text-decoration-thickness:2px; text-decoration-color:var(--accent)}
-[data-theme="dark"] .byline .by-who{text-decoration-color:rgba(251,82,119,.4)}
-/* The lite byline on landings: no dates, no read time, so it needs less air */
+.byline .by-who:hover{color:var(--accent); text-decoration:underline;
+  text-decoration-thickness:1.5px; text-underline-offset:3px}
 .byline-lite{margin-bottom:var(--sp-lg) !important}
 .byline .by-cred{color:var(--text2)}
 .byline .by-sep{color:var(--text3)}
@@ -964,3 +967,7 @@ body.shot-ov-open{overflow:hidden}
 .shot-pending .shot-frame{background:transparent;border:2px dashed var(--border);min-height:150px;align-items:flex-start;justify-content:flex-start}
 .shot-pending .shot-brief{font-family:Consolas,monospace;font-size:12px;line-height:1.75;color:var(--text2);white-space:pre-wrap;margin:0}
 .shot-pending .shot-title::after{content:" — SCREENSHOT PENDING";color:var(--accent,#e11d48);font-weight:700;letter-spacing:.5px}
+
+/* "Created by" prefix, landings only. Sized with the metadata around it so
+   the name still steps up out of it. */
+.byline .by-pre{font-size:var(--fs-meta); color:var(--text2)}
