@@ -1,0 +1,1408 @@
+<title>Design and SEO Work Plan</title>
+<style>
+:root{
+  --ground:#f7f8fa; --surface:#ffffff; --surface-2:#eef1f5; --surface-3:#e2e7ee;
+  --ink:#0f172a; --ink-2:#4a5568; --ink-3:#8a95a5;
+  --line:#dfe4ea; --line-2:#c4ccd8;
+  --crimson:#c31840; --crimson-soft:rgba(195,24,64,.10);
+  --p0:#c31840; --p1:#b45309; --p2:#2563a8; --p3:#6b7280;
+  --p0-soft:rgba(195,24,64,.10); --p1-soft:rgba(180,83,9,.10);
+  --p2-soft:rgba(37,99,168,.10); --p3-soft:rgba(107,114,128,.10);
+  --ok:#0f7a52; --ok-soft:rgba(15,122,82,.10);
+  --seo:#6d28d9; --seo-soft:rgba(109,40,217,.10);
+  --shadow:0 1px 2px rgba(15,23,42,.05);
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --mono:"SFMono-Regular",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#0c1119; --surface:#141b26; --surface-2:#1c2531; --surface-3:#26313f;
+    --ink:#eef2f7; --ink-2:#a7b2c1; --ink-3:#6d7a8b;
+    --line:#28323f; --line-2:#3a4757;
+    --crimson:#f4708d; --crimson-soft:rgba(244,112,141,.14);
+    --p0:#f4708d; --p1:#f0b054; --p2:#6fa8e8; --p3:#8a95a5;
+    --p0-soft:rgba(244,112,141,.13); --p1-soft:rgba(240,176,84,.13);
+    --p2-soft:rgba(111,168,232,.13); --p3-soft:rgba(138,149,165,.13);
+    --ok:#3cc78d; --ok-soft:rgba(60,199,141,.13);
+    --seo:#b08bf5; --seo-soft:rgba(176,139,245,.14);
+    --shadow:0 1px 2px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0c1119; --surface:#141b26; --surface-2:#1c2531; --surface-3:#26313f;
+  --ink:#eef2f7; --ink-2:#a7b2c1; --ink-3:#6d7a8b;
+  --line:#28323f; --line-2:#3a4757;
+  --crimson:#f4708d; --crimson-soft:rgba(244,112,141,.14);
+  --p0:#f4708d; --p1:#f0b054; --p2:#6fa8e8; --p3:#8a95a5;
+  --p0-soft:rgba(244,112,141,.13); --p1-soft:rgba(240,176,84,.13);
+  --p2-soft:rgba(111,168,232,.13); --p3-soft:rgba(138,149,165,.13);
+  --ok:#3cc78d; --ok-soft:rgba(60,199,141,.13);
+  --seo:#b08bf5; --seo-soft:rgba(176,139,245,.14);
+  --shadow:0 1px 2px rgba(0,0,0,.35);
+}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:44px 22px 90px;display:flex;flex-direction:column;gap:38px}
+p{margin:0 0 10px;color:var(--ink-2);max-width:78ch}
+p:last-child{margin-bottom:0}
+strong{color:var(--ink);font-weight:650}
+code{font-family:var(--mono);font-size:.86em;background:var(--surface-2);padding:.08em .35em;border-radius:3px}
+a{color:var(--crimson)}
+
+/* masthead */
+.mast{border-bottom:3px solid var(--ink);padding-bottom:22px;display:flex;flex-direction:column;gap:14px}
+.kick{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--crimson);font-weight:700}
+h1{margin:0;font-size:clamp(1.9rem,4vw,2.6rem);font-weight:800;letter-spacing:-.028em;line-height:1.1}
+.meta{font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+
+/* summary */
+.sum{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.sc{background:var(--surface);padding:13px 15px}
+.sc b{display:block;font-size:1.5rem;font-weight:750;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.sc span{display:block;font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.09em;color:var(--ink-3);margin-top:2px}
+.sc.z-p0 b{color:var(--p0)} .sc.z-p1 b{color:var(--p1)} .sc.z-p2 b{color:var(--p2)} .sc.z-p3 b{color:var(--p3)}
+.sc.z-done b{color:var(--ok)}
+
+/* filters */
+.bar{display:flex;flex-wrap:wrap;gap:7px;align-items:center;position:sticky;top:0;z-index:20;background:var(--ground);padding:10px 0;border-bottom:1px solid var(--line)}
+.bar .lbl{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.09em;color:var(--ink-3);margin-right:2px}
+.fb{font-family:var(--mono);font-size:11px;letter-spacing:.05em;text-transform:uppercase;font-weight:700;padding:5px 10px;border-radius:4px;border:1px solid var(--line-2);background:var(--surface);color:var(--ink-2);cursor:pointer}
+.fb:hover{border-color:var(--ink-3);color:var(--ink)}
+.fb.on{background:var(--ink);color:var(--ground);border-color:var(--ink)}
+.fb:focus-visible{outline:2px solid var(--crimson);outline-offset:2px}
+
+/* sections */
+section{display:flex;flex-direction:column;gap:14px}
+.cat{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;border-bottom:2px solid var(--ink);padding-bottom:7px}
+.cat-id{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.1em;color:var(--crimson)}
+.cat h2{margin:0;font-size:1.2rem;font-weight:750;letter-spacing:-.018em}
+.cat .n{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+.cat-note{font-size:13.5px;color:var(--ink-2);max-width:80ch;margin:0}
+
+/* item */
+.it{border:1px solid var(--line);border-left:3px solid var(--pc);border-radius:6px;background:var(--surface);padding:13px 15px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:7px}
+.it[data-pri="P0"]{--pc:var(--p0)} .it[data-pri="P1"]{--pc:var(--p1)}
+.it[data-pri="P2"]{--pc:var(--p2)} .it[data-pri="P3"]{--pc:var(--p3)}
+.it.hide{display:none}
+.it-h{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap}
+.id{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--ink-3);letter-spacing:.04em;flex:none}
+.ti{font-weight:680;color:var(--ink);font-size:14.5px;letter-spacing:-.008em}
+.tags{margin-left:auto;display:flex;gap:5px;flex-wrap:wrap}
+.t{font-family:var(--mono);font-size:9.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:2px 6px;border-radius:3px;white-space:nowrap}
+.t.p0{background:var(--p0-soft);color:var(--p0)} .t.p1{background:var(--p1-soft);color:var(--p1)}
+.t.p2{background:var(--p2-soft);color:var(--p2)} .t.p3{background:var(--p3-soft);color:var(--p3)}
+.t.blk{background:var(--p0);color:#fff}
+.t.seo{background:var(--seo-soft);color:var(--seo)}
+.t.st{background:var(--surface-3);color:var(--ink-3)}
+.t.st.done{background:var(--ok-soft);color:var(--ok)}
+.t.st.decided{background:var(--ok-soft);color:var(--ok)}
+.t.st.part{background:var(--p1-soft);color:var(--p1)}
+.t.st.skipped{background:var(--p3-soft);color:var(--p3);text-decoration:line-through}
+.t.eff{background:var(--surface-2);color:var(--ink-3)}
+.row{display:grid;grid-template-columns:82px 1fr;gap:4px 12px;font-size:13.5px}
+.row dt{font-family:var(--mono);font-size:9.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-3);padding-top:3px}
+.row dd{margin:0;color:var(--ink-2)}
+.row dd.scope{color:var(--ink-3);font-family:var(--mono);font-size:11.5px}
+.row dd.seo-note{color:var(--seo)}
+
+.callout{border:1px solid var(--line);border-left:4px solid var(--crimson);background:var(--surface);border-radius:6px;padding:15px 17px;box-shadow:var(--shadow)}
+.callout .ch{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.1em;color:var(--crimson);font-weight:700;margin-bottom:6px}
+ul.plain{margin:0;padding-left:18px;color:var(--ink-2);font-size:14px}
+ul.plain li{margin-bottom:5px}
+ul.plain li:last-child{margin-bottom:0}
+footer.end{border-top:1px solid var(--line);padding-top:18px;font-family:var(--mono);font-size:11px;color:var(--ink-3);line-height:1.8}
+@media (max-width:640px){
+  .wrap{padding:28px 14px 60px;gap:30px}
+  .tags{margin-left:0;width:100%}
+  .row{grid-template-columns:1fr;gap:1px}
+  .row dt{padding-top:6px}
+}
+</style>
+
+<div class="wrap">
+
+<header class="mast">
+  <div class="kick">amitdusane.com &middot; design and SEO work plan</div>
+  <h1>Design and SEO Work Plan</h1>
+  <p>Everything raised in the design review of 17 August 2026, collated. Nothing has been dropped: items I recommend against are recorded with their reasoning rather than omitted, so a decision made once does not get re-argued in three weeks. Whether each change actually ships is decided when we reach it, and the outcome is written back here.</p>
+  <p><strong>SEO and E-E-A-T are treated as a property of every item, not as a section.</strong> Any item with a search or credibility consequence carries an <span class="t seo">SEO</span> tag and a one-line note saying what that consequence is. There is also a dedicated category for work that is purely discoverability, but the tag is the throughline.</p>
+  <p class="meta">Baseline: commit 3b6b3ba on <code>develop</code> &middot; 219 pages &middot; 84 of 116 sections written &middot; learning world unpublished. Counts below are computed from this document, never typed by hand.</p>
+</header>
+
+<div class="sum" id="summary"></div>
+
+<div class="callout">
+  <div class="ch">The single most important framing</div>
+  <p><strong>Every fix on this list is free right now and expensive later.</strong> The learning world 404s, so nothing here has been indexed, no URL has earned authority, and no citation points at a heading that is about to move. The moment the section is published, changing a slug, a heading anchor, or a page's structure carries a cost it does not carry today. That is the argument for doing the structural and SEO items before launch rather than after, and it is the reason this plan is ordered the way it is.</p>
+</div>
+
+<div class="bar">
+  <span class="lbl">Filter</span>
+  <button class="fb on" data-f="all">All</button>
+  <button class="fb" data-f="P0">P0</button>
+  <button class="fb" data-f="P1">P1</button>
+  <button class="fb" data-f="P2">P2</button>
+  <button class="fb" data-f="P3">P3</button>
+  <button class="fb" data-f="blocker">Launch blockers</button>
+  <button class="fb" data-f="seo">SEO / E-E-A-T</button>
+  <button class="fb" data-f="open">Open</button>
+  <button class="fb" data-f="decided">Decided</button>
+</div>
+
+<section>
+  <div class="cat"><span class="cat-id">HOW TO READ</span><h2>Priority tiers, status and scope</h2></div>
+  <ul class="plain">
+    <li><b>P0 &mdash; undisputed.</b> Measured defects, decisions already agreed, or work that gates publishing. No further debate needed on whether, only on how.</li>
+    <li><b>P1 &mdash; important.</b> Clear value, worth doing before launch if time allows, but the site would still be defensible without it.</li>
+    <li><b>P2 &mdash; good to have.</b> Real improvement, no urgency, safe to do after launch.</li>
+    <li><b>P3 &mdash; can be skipped.</b> Recorded so it is not rediscovered. Recommend against, or genuinely marginal.</li>
+    <li><b>Launch blocker</b> is separate from priority. Some P0 items are not blockers (they can ship later without harm) and some P1 items are (they cause damage once indexed).</li>
+    <li><b>Status</b> is <code>open</code>, <code>decided</code> (agreed, no build work), <code>done</code>, or <code>skipped</code>. I update it in this file; the counts recompute themselves so the summary can never drift from the list, which is the failure this project has already been bitten by twice.</li>
+  </ul>
+</section>
+
+<!-- ============ TYP ============ -->
+<section>
+  <div class="cat"><span class="cat-id">TYP</span><h2>Typography and reading</h2><span class="n">8 items</span></div>
+  <p class="cat-note">The measured core of the problem. These four P0 items are the highest-impact work on the entire list, they introduce no new components, and they are reversible. Two independent design reads arrived at the same three fixes.</p>
+
+  <div class="it" data-pri="P0" data-status="done" data-seo="1">
+    <div class="it-h"><span class="id">TYP-01</span><span class="ti">Introduce a real type scale</span>
+      <span class="tags"><span class="t p0">P0</span><span class="t seo">SEO</span><span class="t eff">M</span><span class="t st done">done 17 Aug</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>Measured: h1 is 22px and <em>everything else on the page is 16px</em>. <code>subsec-title</code> 16/600, <code>warn-hdr</code> 16/700, <code>diagram-title</code> 16/700, <code>ref-title</code> 16/700, body 16/400. A section heading is the same size as the sentence under it, so on a 13-screen page the eye has no landmarks. This is the largest single cause of the reading fatigue we are trying to remove.</dd>
+      <dt>What</dt><dd>Define a token-based scale with roughly a 1.4&ndash;1.5 ratio. Page title, section heading, body, small, and a distinct label size. Every component takes its size from a token rather than a hardcoded pixel value.</dd>
+      <dt>Scope</dt><dd class="scope">All 116 sections + every page in the learning world</dd>
+      <dt>SEO</dt><dd class="seo-note">Heading prominence is a readability and content-structure signal, and it is what makes a page scannable for the search lander who is the largest audience segment.</dd>
+      <dt>Result</dt><dd><strong>Eight tokens on <code>:root</code>, with a mobile step and a print step.</strong> Desktop: title 30px, heading 21px, body 16px, supporting 14px, label 13px, meta 12px, micro 11px, code 13px. Ratios 1.43 and 1.31 at the top, where they matter. Mobile redefines the same eight tokens rather than eight components, and body prose rises from 13px to 15px &mdash; 13px was too small for long-form reading on the rendering Google indexes. Print gains its own point-based step, without which it would have inherited the 30px screen title.
+        <br><br><strong>It also uncovered a live cascade fault.</strong> <code>body.world-learning .lcontent p</code> and <code>&hellip; li</code> are specificity (0,2,2) and were silently beating every component rule at (0,1,1). So <code>.lcrumb</code> asked for 13px and rendered at 16px, <code>.ref-box li</code> asked for 13px and rendered at 16px, and the three box-prose rules asking for 15px were dead declarations. Six rules re-scoped so their tokens actually reach the page.
+        <br><br>Verified on the delivered page at 1280px and 375px, in both themes, across a section, a module landing, and a page with body lists. Build 219 pages, no horizontal overflow, no <code>data-newblock</code>. <em>Not</em> included: the ~40 bespoke diagram internals, which stay hardcoded and belong to CMP-01 and CMP-05, and the injected <code>doc-note</code>, which uses <code>!important</code>.</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P0" data-status="partial" data-seo="1">
+    <div class="it-h"><span class="id">TYP-02</span><span class="ti">Reduce the reading measure to 65&ndash;75 characters</span>
+      <span class="tags"><span class="t p0">P0</span><span class="t seo">SEO</span><span class="t eff">S</span><span class="t st part">partial</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>Measured: <code>.lcontent</code> is <code>max-width:800px</code> at 16px. The original estimate of "roughly 100 characters" came from a formula; <strong>measuring the real prose in the real font gave 111.6</strong>, which is worse. Comfortable is 65&ndash;75. Over a 2,700-word section this is the difference between reading and enduring.</dd>
+      <dt>What</dt><dd>One token change, then verify against real sections rather than lorem. Wide content (tables, code, diagrams) keeps its own wider container and scrolls independently.</dd>
+      <dt>Scope</dt><dd class="scope">All 116 sections &middot; one CSS value</dd>
+      <dt>SEO</dt><dd class="seo-note">Dwell time and engagement follow readability. Cheapest possible improvement to both.</dd>
+      <dt>Result</dt><dd><strong>Partially delivered, and closed at that. 111.6 &rarr; 90.2 characters per line.</strong> One width for prose and figures, <code>--column:760px</code>, body at 18px.
+        <br><br><strong>The target was not met and is not reachable as specified.</strong> At 18px a 70-character measure needs roughly a 570px column, and the infographics were designed against 800px. You can have any two of: a 65&ndash;75 measure, full-size infographics, one width. Two attempts split prose from figure width to keep all three, and both were rejected on sight as looking broken. Infographics won, because they are the differentiator.
+        <br><br><strong>The item was also mis-scoped.</strong> It was written as "one CSS value, effort S". In reality the measure, the body size, the figure width and the side rail share a single horizontal budget and cannot move independently, so it pulled in TYP-07 and WAY-01 and took three rounds. Treat that as a warning about the other items scoped the same way.
+        <br><br>What it did produce beyond its own brief: a measured baseline (the original "roughly 100" estimate was 12% wrong), TYP-07's body size, WAY-01, a live cascade fault where five rules were dead declarations, a grid-overflow bug that broke mobile, and the page-head misalignment. Remaining lever for readability at 90 characters is line-height, which belongs to TYP-07.</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P0" data-status="done">
+    <div class="it-h"><span class="id">TYP-03</span><span class="ti">Give headings rhythm and rest stops</span>
+      <span class="tags"><span class="t p0">P0</span><span class="t eff">S</span><span class="t st done">done 18 Aug</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>Measured: <code>subsec-title</code> has 16px above and 10px below, which is tighter than the gap between two paragraphs in places. Headings do not own any whitespace, so they do not function as rest stops.</dd>
+      <dt>What</dt><dd>Substantially more space above each heading, and consider a hairline rule above it so each subsection reads as a discrete unit. Spacing comes from a token scale, not per-element margins.</dd>
+      <dt>Scope</dt><dd class="scope">All 116 sections &middot; 588 headings</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P1" data-status="done" data-seo="1">
+    <div class="it-h"><span class="id">TYP-04</span><span class="ti">Adopt a self-hosted typeface: IBM Plex Sans and IBM Plex Mono</span>
+      <span class="tags"><span class="t p1">P1</span><span class="t seo">SEO</span><span class="t eff">M</span><span class="t st done">done 18 Aug</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>The site currently uses a system stack, so it renders as Segoe UI on Windows, SF on Mac and Roboto on Android. <strong>A system stack cannot carry an identity</strong>, which is the requirement that matters most given this design has to serve future sites too. Plex was drawn for technical documentation, has character without being fashionable, its mono sibling shares the same skeleton, and at eight years old it already shows it will not date. It is also clearly not Adobe's typeface, which matters for the no-implied-endorsement position.</dd>
+      <dt>What</dt><dd>Subset woff2, self-hosted in <code>static/</code>, two or three weights maximum. No CDN, consistent with the site never loading an external asset.</dd>
+      <dt>Scope</dt><dd class="scope">Entire site, both worlds</dd>
+      <dt>SEO</dt><dd class="seo-note">Must not regress Core Web Vitals. Pairs with PERF-02, which is the guard.</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P1" data-status="open">
+    <div class="it-h"><span class="id">TYP-05</span><span class="ti">Decide: serif headings over sans body, or one family throughout</span>
+      <span class="tags"><span class="t p1">P1</span><span class="t eff">S</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>The external draft proposed a serif for headings and the display, sans for body, mono for labels. That pairing signals <em>publication</em> rather than <em>documentation</em>, which is exactly the positioning wanted. It is a genuine alternative to TYP-04's single family and the two decisions are entangled.</dd>
+      <dt>What</dt><dd>A decision, not a build. Note that the external draft used a <em>system</em> serif stack, which has the identical inconsistency problem as the current sans stack; if serif wins it must also be self-hosted. My lean is a single family for restraint and maintainability, but this is worth seeing side by side before committing.</dd>
+      <dt>Scope</dt><dd class="scope">Decision gates TYP-04</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P1" data-status="open">
+    <div class="it-h"><span class="id">TYP-06</span><span class="ti">Make mono the label voice</span>
+      <span class="tags"><span class="t p1">P1</span><span class="t eff">M</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>Inherited from the external draft and the strongest cheap idea in it. Setting every eyebrow, box header, table header, figure caption and path label in mono uppercase with letter-spacing is what makes a page read as an engineering field manual rather than a blog. It costs nothing and it is the most efficient identity move available.</dd>
+      <dt>What</dt><dd>Apply to <code>warn-hdr</code>, <code>info-hdr</code>, <code>pro-tip-hdr</code>, <code>path-title</code>, <code>ref-title</code>, <code>diagram-title</code>, <code>code-lang</code>, <code>shot-title</code>, table headers and breadcrumb.</dd>
+      <dt>Scope</dt><dd class="scope">10 components &times; 116 sections</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P1" data-status="done">
+    <div class="it-h"><span class="id">TYP-07</span><span class="ti">Review body size and line-height</span>
+      <span class="tags"><span class="t p1">P1</span><span class="t eff">S</span><span class="t st done">done 18 Aug</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>Currently 16px at 1.6. For a long-form teaching site, 17px at roughly 1.7 is usually more comfortable, and the external draft independently chose exactly that. Interacts with TYP-02, since raising the size at a fixed pixel width lowers the character count.</dd>
+      <dt>What</dt><dd>Test 16 and 17 against a real 3,000-word section in both themes before deciding. Do not decide from a specimen.</dd>
+      <dt>Scope</dt><dd class="scope">All reading surfaces</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P0" data-status="done" data-seo="1">
+    <div class="it-h"><span class="id">TYP-08</span><span class="ti">Font loading strategy</span>
+      <span class="tags"><span class="t p0">P0</span><span class="t seo">SEO</span><span class="t eff">S</span><span class="t st done">done 18 Aug</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>The site currently loads zero webfonts, which is a genuine performance asset. Introducing one without care trades a real Core Web Vitals advantage for an aesthetic one.</dd>
+      <dt>What</dt><dd>Subset to Latin, woff2 only, <code>preload</code> the two faces actually used above the fold, and choose <code>font-display</code> deliberately. Measure CLS and LCP before and after against PERF-01's baseline.</dd>
+      <dt>Scope</dt><dd class="scope">Conditional on TYP-04</dd>
+      <dt>SEO</dt><dd class="seo-note">CLS and LCP are ranking inputs. This item exists so the typeface decision cannot silently cost us them.</dd>
+    </dl>
+  </div>
+</section>
+
+<!-- ============ COL ============ -->
+<section>
+  <div class="cat"><span class="cat-id">COL</span><h2>Colour</h2><span class="n">6 items</span></div>
+  <p class="cat-note">Verdict already reached: keep crimson, deepen it, and make it work. A crimson site in a category where every tool is blue is genuinely differentiating.</p>
+
+  <div class="it" data-pri="P1" data-status="open">
+    <div class="it-h"><span class="id">COL-01</span><span class="ti">Deepen the crimson and move it off a framework default</span>
+      <span class="tags"><span class="t p1">P1</span><span class="t eff">S</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd><code>#e11d48</code> is Tailwind's <code>rose-600</code> verbatim, which is the same "unconsidered default" tell as reaching for Inter. It also reads a little bright and consumer-facing against the seriousness the site is aiming at.</dd>
+      <dt>What</dt><dd>Nudge deeper and slightly less saturated to a custom value. Do not go as far as the external draft's <code>#96222F</code>, which is dark enough to read brownish as a link colour and loses the clickable signal.</dd>
+      <dt>Scope</dt><dd class="scope">Learning world accent token</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P1" data-status="open">
+    <div class="it-h"><span class="id">COL-02</span><span class="ti">Make the accent actually do work on a section page</span>
+      <span class="tags"><span class="t p1">P1</span><span class="t eff">M</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>On a rendered section the crimson appears as a 3px rule beside the title and as link colour. That is all. Changing a hue that is barely present will not feel like anything, so usage has to be fixed before or alongside COL-01.</dd>
+      <dt>What</dt><dd>Decide the accent's job list deliberately: current position in the rail and the in-page spine, the <code>ref-box</code> as the handoff moment, the onward link, focus states, and ordered-list markers in walkthroughs. Then stop. An accent used everywhere is an accent used nowhere.</dd>
+      <dt>Scope</dt><dd class="scope">All learning-world pages</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P0" data-status="decided">
+    <div class="it-h"><span class="id">COL-03</span><span class="ti">Semantic colours stay fixed across every world</span>
+      <span class="tags"><span class="t p0">P0</span><span class="t eff">&mdash;</span><span class="t st decided">decided</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>Warning amber, info blue and success green are the cross-world constant so a reader never has to relearn the visual language when moving between Adobe Analytics, the migration guide, and future CJA or AEP worlds. Already the rulebook's porting rule.</dd>
+      <dt>What</dt><dd>No work. Recorded as a constraint on every other colour item.</dd>
+      <dt>Scope</dt><dd class="scope">All worlds, present and future</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P1" data-status="open">
+    <div class="it-h"><span class="id">COL-04</span><span class="ti">Re-derive the dark-mode accent after COL-01</span>
+      <span class="tags"><span class="t p1">P1</span><span class="t eff">S</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>Dark currently lightens crimson to <code>#fb5277</code>. Deepening the light accent changes what the dark counterpart should be, and a naive inversion produces a washed pink.</dd>
+      <dt>What</dt><dd>Derive rather than invert. Check the accent against the dark card colour, not only the dark ground.</dd>
+      <dt>Scope</dt><dd class="scope">Dark theme tokens</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P2" data-status="decided">
+    <div class="it-h"><span class="id">COL-05</span><span class="ti">Keep blue-biased slate neutrals</span>
+      <span class="tags"><span class="t p2">P2</span><span class="t eff">&mdash;</span><span class="t st decided">decided</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>The external draft proposed green-tinted neutrals (<code>#F2F4F3</code>, <code>#8B9490</code>). Green sits awkwardly under a red accent; the existing slate is blue-biased and supports crimson comfortably.</dd>
+      <dt>What</dt><dd>No change. Recorded so it is not reopened.</dd>
+      <dt>Scope</dt><dd class="scope">Neutral tokens</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P1" data-status="open" data-seo="1">
+    <div class="it-h"><span class="id">COL-06</span><span class="ti">Contrast audit, both themes, after every colour change</span>
+      <span class="tags"><span class="t p1">P1</span><span class="t seo">SEO</span><span class="t eff">S</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>Body prose currently uses the secondary ink rather than the primary, which is a deliberate softening but leaves less headroom than it looks. Any accent or neutral change can quietly push a component under AA.</dd>
+      <dt>What</dt><dd>Check every text-on-surface pairing in light and dark against WCAG AA, including the semantic box headers, which are the most likely to fail.</dd>
+      <dt>Scope</dt><dd class="scope">All components, both themes</dd>
+      <dt>SEO</dt><dd class="seo-note">Accessibility is a quality signal and a legal exposure; contrast failures also directly damage the mobile reading experience Google indexes.</dd>
+    </dl>
+  </div>
+</section>
+
+<!-- ============ IDN ============ -->
+<section>
+  <div class="cat"><span class="cat-id">IDN</span><h2>Identity and branding</h2><span class="n">6 items</span></div>
+  <p class="cat-note">Branding is currently thin and you were right about it. The answer is not more logo; it is a coordinate system, dignified diagrams, and a consistent label voice.</p>
+
+  <div class="it" data-pri="P1" data-status="open" data-seo="1">
+    <div class="it-h"><span class="id">IDN-01</span><span class="ti">Adopt the coordinate system, <code>06.5</code></span>
+      <span class="tags"><span class="t p1">P1</span><span class="t seo">SEO</span><span class="t eff">M</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>The strongest single idea to come out of the review, and one neither of us had. A stable module-dot-section address gives a reader a sense of place for almost no visual cost, survives print where every other wayfinding device dies, and makes the curriculum <strong>citable</strong> &mdash; in a meeting, in a message, and in your own SDR deliverables later. It is a branding device that is not a colour or a logo.</dd>
+      <dt>What</dt><dd>Surface it in the header chip, breadcrumb, prev/next cards, the onward link, the pocket map, search results, and figure captions. The data already exists as <code>modulenum</code> and <code>sectionnum</code> on all 116 pages.</dd>
+      <dt>Scope</dt><dd class="scope">Every learning-world page &middot; blocked by IDN-02</dd>
+      <dt>SEO</dt><dd class="seo-note">A citable address is a link magnet: it gives other people a way to reference a specific page, which is how external links get built.</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P0" data-status="open">
+    <div class="it-h"><span class="id">IDN-02</span><span class="ti">Commit to a module numbering policy before IDN-01</span>
+      <span class="tags"><span class="t p0">P0</span><span class="t eff">&mdash;</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>A printed coordinate is a promise of stability, and this curriculum's numbers have moved before: the restructure renumbered Classifications from M10 to M11 and Analysis Workspace from M13 to M14, and inserted M15. If someone cites <code>06.5</code> and a later insert shifts it, every citation breaks silently.</dd>
+      <dt>What</dt><dd>A decision: new modules are appended at the end of a phase, never inserted. If that is unacceptable, IDN-01 should not proceed &mdash; it is better to have no coordinate than an unreliable one.</dd>
+      <dt>Scope</dt><dd class="scope">Curriculum governance &middot; gates IDN-01</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P2" data-status="open">
+    <div class="it-h"><span class="id">IDN-03</span><span class="ti">Number the figures, generated rather than authored</span>
+      <span class="tags"><span class="t p2">P2</span><span class="t eff">M</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd><code>Figure 06.5.1</code> dignifies the diagrams and makes them referenceable. There are 136 of them and they are the site's real differentiator, currently presented in a plain box under a 16px bold title, indistinguishable from a warning.</dd>
+      <dt>What</dt><dd>Generate the number from DOM order at render or on load, never hand-authored, so inserting a diagram never requires renumbering the rest.</dd>
+      <dt>Scope</dt><dd class="scope">136 diagram blocks</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P2" data-status="open">
+    <div class="it-h"><span class="id">IDN-04</span><span class="ti">Extract the monogram into a partial</span>
+      <span class="tags"><span class="t p2">P2</span><span class="t eff">S</span><span class="t st done">done 18 Aug</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>The logo SVG is copy-pasted into seven templates. Any branding change currently means seven edits and one of them will be missed.</dd>
+      <dt>What</dt><dd><code>layouts/partials/logo.html</code>, taking a size argument. Prerequisite for IDN-05 rather than a nicety.</dd>
+      <dt>Scope</dt><dd class="scope">7 templates</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P1" data-status="open" data-seo="1">
+    <div class="it-h"><span class="id">IDN-05</span><span class="ti">Strengthen branding presence overall</span>
+      <span class="tags"><span class="t p1">P1</span><span class="t seo">SEO</span><span class="t eff">M</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>Your own assessment, and I agree. On a section page the brand is a monogram in the header and nothing else. A reader who lands from search, reads, and leaves has no impression of <em>whose</em> site they were on.</dd>
+      <dt>What</dt><dd>Distribute the brand across the moments that matter rather than enlarging the logo: the byline (EAT-01), the footer (SHL-02), the print document, the <code>og:image</code>, and the coordinate. Restraint is the point.</dd>
+      <dt>Scope</dt><dd class="scope">Site-wide</dd>
+      <dt>SEO</dt><dd class="seo-note">Brand recall drives branded search, which is the highest-quality traffic there is and the clearest authority signal.</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P1" data-status="open" data-seo="1">
+    <div class="it-h"><span class="id">IDN-06</span><span class="ti">Trademark attribution line in the footer</span>
+      <span class="tags"><span class="t p1">P1</span><span class="t blk">launch blocker</span><span class="t seo">SEO</span><span class="t eff">S</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>Already agreed on 14 Aug during the licensing review. Adobe and Adobe Analytics are trademarks of Adobe Inc. and the site is independent. It directly serves the no-implied-endorsement position and every serious independent training site carries one.</dd>
+      <dt>What</dt><dd>One line in the shared footer. The external draft's wording is usable close to verbatim.</dd>
+      <dt>Scope</dt><dd class="scope">Site-wide footer</dd>
+      <dt>SEO</dt><dd class="seo-note">A trust and transparency signal, and it removes an ambiguity a quality rater would otherwise have to resolve against us.</dd>
+    </dl>
+  </div>
+</section>
+
+<!-- ============ WAY ============ -->
+<section>
+  <div class="cat"><span class="cat-id">WAY</span><h2>Wayfinding and navigation</h2><span class="n">13 items</span></div>
+  <p class="cat-note">The largest audience is the search lander who wants an answer and leaves. Today a section is 13 screens with no in-page map, no anchors and a dead search button. This category is where that reader is served or lost.</p>
+
+  <div class="it" data-pri="P0" data-status="done" data-seo="1">
+    <div class="it-h"><span class="id">WAY-01</span><span class="ti">Build the in-page spine</span>
+      <span class="tags"><span class="t p0">P0</span><span class="t seo">SEO</span><span class="t eff">M</span><span class="t st done">done 18 Aug</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>A section is 9,265px, roughly 13 screens, with 9 headings and no way to see or reach them. You were sceptical because Experience League's version is dry and you do not use it &mdash; but theirs is dry because <em>their headings are labels</em>. Yours are written as questions and promises by rule, so the same component produces the argument of the section rather than a list of nouns. Your own reading style is expert behaviour; the site is written for someone stuck.</dd>
+      <dt>What</dt><dd>Use the empty right side of the desktop viewport. Active and read states as the reader scrolls. Built from the existing h3 stack so it needs no authoring.</dd>
+      <dt>Scope</dt><dd class="scope">All 116 sections</dd>
+      <dt>SEO</dt><dd class="seo-note">Directly serves the dominant search segment, and the anchors it depends on feed Google's jump-to links.</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P0" data-status="done" data-seo="1">
+    <div class="it-h"><span class="id">WAY-02</span><span class="ti">Give every heading a stable ID and anchor</span>
+      <span class="tags"><span class="t p0">P0</span><span class="t blk">launch blocker</span><span class="t seo">SEO</span><span class="t eff">S</span><span class="t st done">done 18 Aug</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>Measured: <strong>0 of 9 headings on a section carry an id</strong>. So there is nothing to deep-link, nothing to bookmark for the returning reader, and nothing for Google to build a jump-link from. The cheapest SEO win available and a usability win for the same reason.</dd>
+      <dt>What</dt><dd>Slugified, stable IDs, generated from heading text at build time rather than at runtime so they exist in the served HTML. Stability matters: an ID that changes when a heading is reworded breaks any link that was made to it.</dd>
+      <dt>Scope</dt><dd class="scope">588 headings across 116 sections</dd>
+      <dt>SEO</dt><dd class="seo-note">Enables the "jump to" links Google renders under a result, which materially raises click-through on long pages. Must be done before indexation, since anchors that appear later gain nothing retroactively.</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P0" data-status="done" data-seo="1">
+    <div class="it-h"><span class="id">WAY-03</span><span class="ti">A mobile answer for the in-page spine</span>
+      <span class="tags"><span class="t p0">P0</span><span class="t seo">SEO</span><span class="t eff">M</span><span class="t st done">done 18 Aug</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>The external draft hides its right rail below 1240px, so the feature that serves the largest audience disappears exactly where most of that audience is. Under mobile-first indexing the phone rendering <em>is</em> the indexed page. This is the biggest gap in their solution and we must not inherit it.</dd>
+      <dt>What</dt><dd>A collapsed "On this page" placed above the first heading on narrow screens. Same data, different presentation, not a second component.</dd>
+      <dt>Scope</dt><dd class="scope">All 116 sections, mobile and tablet</dd>
+      <dt>SEO</dt><dd class="seo-note">Mobile-first indexing. A desktop-only feature is, for ranking purposes, a feature that does not exist.</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P0" data-status="done">
+    <div class="it-h"><span class="id">WAY-04</span><span class="ti">Add <code>scroll-padding-top</code> for the fixed header</span>
+      <span class="tags"><span class="t p0">P0</span><span class="t eff">S</span><span class="t st done">done 18 Aug</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>The header is fixed at 60px. The moment anchors exist, every jump lands with the target hidden underneath it. Trivial, essential, and easy to forget until it is annoying.</dd>
+      <dt>What</dt><dd>One rule on <code>html</code>, sized from the header token so it stays correct if the header height changes.</dd>
+      <dt>Scope</dt><dd class="scope">Site-wide &middot; pairs with WAY-02</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P2" data-status="open">
+    <div class="it-h"><span class="id">WAY-05</span><span class="ti">Show position within the module</span>
+      <span class="tags"><span class="t p2">P2</span><span class="t eff">S</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>Serves the second audience segment, the reader working through two or three sections. Prev/next exists but says nothing about where they are in the arc.</dd>
+      <dt>What</dt><dd>"Section 5 of 8 in module 06" as text rather than a progress bar. Text is more precise and it survives print.</dd>
+      <dt>Scope</dt><dd class="scope">All 116 sections</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P2" data-status="open" data-seo="1">
+    <div class="it-h"><span class="id">WAY-06</span><span class="ti">Read time and word count</span>
+      <span class="tags"><span class="t p2">P2</span><span class="t seo">SEO</span><span class="t eff">S</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>An honest, auto-derived signal that helps a search lander decide whether to commit. Sections range from about 850 to 3,900 words, which is a large enough spread that the reader genuinely cannot tell.</dd>
+      <dt>What</dt><dd>Derived at build time. Place it with the byline so it forms one credibility block rather than another isolated element.</dd>
+      <dt>Scope</dt><dd class="scope">All 116 sections</dd>
+      <dt>SEO</dt><dd class="seo-note">Reduces immediate bounce from readers who would otherwise leave on seeing an unbounded page.</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P1" data-status="open">
+    <div class="it-h"><span class="id">WAY-07</span><span class="ti">Consolidate the floating controls</span>
+      <span class="tags"><span class="t p1">P1</span><span class="t eff">M</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>Measured: four fixed elements already, including two separate floating buttons &mdash; the pocket map tab at 112&times;52 and the author button at 54&times;54. You want search and stronger branding too. Individual circles do not scale, and on a phone they cover the content.</dd>
+      <dt>What</dt><dd>One quiet utility dock rather than accumulating separate affordances. Decide what belongs in the header versus what floats, and hold the line.</dd>
+      <dt>Scope</dt><dd class="scope">All learning-world pages</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P0" data-status="decided">
+    <div class="it-h"><span class="id">WAY-08</span><span class="ti">Keep the pocket map as built; do not downgrade it</span>
+      <span class="tags"><span class="t p0">P0</span><span class="t eff">&mdash;</span><span class="t st decided">decided</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>The external draft replaced the floating tab and full overlay &mdash; with the arrow trail connecting phase to module to section &mdash; with a flat accordion grid at the foot of the article. Ours does more and lands the "you are here in a 116-section curriculum" point that theirs loses.</dd>
+      <dt>What</dt><dd>No change to its behaviour. It will inherit the new type scale and tokens like everything else.</dd>
+      <dt>Scope</dt><dd class="scope">Pocket map component</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P0" data-status="open" data-seo="1">
+    <div class="it-h"><span class="id">WAY-09</span><span class="ti">Wire the learning-world search, or hide the button</span>
+      <span class="tags"><span class="t p0">P0</span><span class="t blk">launch blocker</span><span class="t seo">SEO</span><span class="t eff">L</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>A 320px control sits in the header with a <code>/</code> hint, no click handler, no overlay markup and no index. A visible affordance that does nothing is worse than no search at all, and it is the first thing a returning reader will reach for.</dd>
+      <dt>What</dt><dd>Widen the <code>Section</code> filter in <code>layouts/index.json</code>, move <code>SEARCH_INDEX</code> and <code>search.js</code> out of the migration-only branch, add the overlay, wire the button. <code>search.js</code> itself needs no changes. Binary at launch: working or invisible.</dd>
+      <dt>Scope</dt><dd class="scope">Learning world &middot; 145 pages indexed</dd>
+      <dt>SEO</dt><dd class="seo-note">Site search drives internal navigation depth and return visits, and a broken control damages the quality impression a rater forms.</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P1" data-status="open">
+    <div class="it-h"><span class="id">WAY-10</span><span class="ti">Design the search overlay properly</span>
+      <span class="tags"><span class="t p1">P1</span><span class="t eff">M</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>If WAY-09 is being built, the design work is nearly free at the same time and expensive to retrofit.</dd>
+      <dt>What</dt><dd>Result badges for module, lesson and glossary; the coordinate on each result; keyboard support for <code>/</code>, <code>Cmd-K</code>, arrows and Escape; and an empty state that teaches rather than apologises &mdash; the external draft's "Try a variable name, a screen name, or a term from the glossary" is the right instinct.</dd>
+      <dt>Scope</dt><dd class="scope">Search overlay</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P2" data-status="open">
+    <div class="it-h"><span class="id">WAY-11</span><span class="ti">Decide on a dedicated "Read next" block</span>
+      <span class="tags"><span class="t p2">P2</span><span class="t eff">S</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>The external draft adds an onward card with coordinate, title and a one-line description. The section anatomy already requires the final h3 to name and link a related section in prose. A component would serve the skimmer who scrolls to the bottom, but it risks duplicating the synthesis paragraph.</dd>
+      <dt>What</dt><dd>A decision. Options are to keep prose only, replace prose with the component, or allow both where the prose closes the argument and the card carries the coordinate. My lean is both, with the card kept deliberately plain so it reads as furniture rather than a second conclusion.</dd>
+      <dt>Scope</dt><dd class="scope">All 116 sections &middot; touches the anatomy rule</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P2" data-status="open">
+    <div class="it-h"><span class="id">WAY-12</span><span class="ti">Dim unwritten sections in the sidebar</span>
+      <span class="tags"><span class="t p2">P2</span><span class="t eff">S</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>The <code>description</code> publish flag already dims unwritten sections in both maps. Doing the same in the rail is consistent, shows the curriculum's full shape, and is honest about what exists rather than hiding it.</dd>
+      <dt>What</dt><dd>Muted and unclickable, matching the map treatment. Reconsider once the 32 remaining sections are written, since the feature loses its purpose then.</dd>
+      <dt>Scope</dt><dd class="scope">Sidebar &middot; currently 32 sections</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P0" data-status="decided">
+    <div class="it-h"><span class="id">WAY-13</span><span class="ti">Keep the left rail; no radical navigation change</span>
+      <span class="tags"><span class="t p0">P0</span><span class="t eff">&mdash;</span><span class="t st decided">decided</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>A 21-module, 116-section curriculum needs persistent hierarchy. For a search lander the rail does something specific: it says they landed inside a structure rather than on a loose page, which is what earns the second visit. A novel model would violate both "nothing there because it looks good" and "the reader should never have to learn how to operate the site".</dd>
+      <dt>What</dt><dd>No structural change. Differentiation belongs inside the reading column.</dd>
+      <dt>Scope</dt><dd class="scope">Shell</dd>
+    </dl>
+  </div>
+</section>
+
+<!-- ============ CMP ============ -->
+<section>
+  <div class="cat"><span class="cat-id">CMP</span><h2>Components</h2><span class="n">12 items</span></div>
+  <p class="cat-note">The class vocabulary is disciplined and does not need replacing. The work here is elevating what is undersold, and pricing one real maintenance liability.</p>
+
+  <div class="it" data-pri="P1" data-status="open">
+    <div class="it-h"><span class="id">CMP-01</span><span class="ti">Elevate the diagram component</span>
+      <span class="tags"><span class="t p1">P1</span><span class="t eff">M</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>136 diagram blocks and roughly 40 bespoke layouts are the site's genuine differentiator &mdash; nobody else publishing Adobe Analytics content has this. They currently sit in a plain bordered box under a 16px bold title, presented identically to a warning or a tip. <strong>The thing that makes the site unlike anything else looks like furniture.</strong> This is where the design budget should go.</dd>
+      <dt>What</dt><dd>Give the diagram its own visual register: caption treatment, frame, and space. Pairs with IDN-03.</dd>
+      <dt>Scope</dt><dd class="scope">136 diagram blocks</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P1" data-status="open" data-seo="1">
+    <div class="it-h"><span class="id">CMP-02</span><span class="ti">Let diagrams scroll rather than squash on mobile</span>
+      <span class="tags"><span class="t p1">P1</span><span class="t seo">SEO</span><span class="t eff">S</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>A wide SVG shrunk to a 340px phone is unreadable, and the mobile rendering is the indexed one.</dd>
+      <dt>What</dt><dd><code>overflow-x:auto</code> on <code>diagram-content</code>, with the container scrolling rather than the page body. Never allow the page itself to scroll sideways.</dd>
+      <dt>Scope</dt><dd class="scope">136 diagram blocks</dd>
+      <dt>SEO</dt><dd class="seo-note">Horizontal page overflow is a mobile usability failure Search Console reports directly.</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P2" data-status="open">
+    <div class="it-h"><span class="id">CMP-03</span><span class="ti">Consider selective tinted backgrounds on the semantic boxes</span>
+      <span class="tags"><span class="t p2">P2</span><span class="t eff">S</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>The external draft tints the whole box rather than only colouring the header. Tinting is more scannable for the skimmer, which is a real benefit &mdash; but a single section can carry two warn-boxes, a pro-tip, a path-box, a code-block, two tables, three diagrams and a screenshot. Tinting all of them would make the page loud.</dd>
+      <dt>What</dt><dd>Test tinting only <code>warn-box</code>, on the argument that a silent-failure warning is the one thing a skimmer must not miss, and leave the others on a neutral surface.</dd>
+      <dt>Scope</dt><dd class="scope">103 warn-boxes, 124 pro-tips, 65 info-boxes</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P1" data-status="open" data-seo="1">
+    <div class="it-h"><span class="id">CMP-04</span><span class="ti">Re-check <code>shot-box</code> under the new type scale</span>
+      <span class="tags"><span class="t p1">P1</span><span class="t seo">SEO</span><span class="t eff">S</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>The screenshot component was tuned against the current 16px-everything typography and a 293px mobile image area. Changing the measure and scale changes both. The external draft had no screenshot treatment at all, so nothing can be inherited here.</dd>
+      <dt>What</dt><dd>Re-verify frame height caps, the note treatment and the zoom affordance against the new scale, on a real phone width. All 14 existing shots must still read.</dd>
+      <dt>Scope</dt><dd class="scope">14 screenshots, M14 only, growing</dd>
+      <dt>SEO</dt><dd class="seo-note">Confirm alt text quality and explicit width/height at the same time, per SEO-10.</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P2" data-status="open">
+    <div class="it-h"><span class="id">CMP-05</span><span class="ti">Stop adding one-off diagram layouts; converge on primitives</span>
+      <span class="tags"><span class="t p2">P2</span><span class="t eff">L</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>Roughly 40 bespoke layouts each built for a single idea &mdash; <code>flow</code>, <code>hierarchy-tree</code>, <code>decision-tree</code>, <code>comparison-grid</code>, <code>launch-arch</code>, <code>publish-flow</code>, <code>cookie-compare</code> and the rest. This is the real maintenance liability, not the ten content components, and it is worth pricing now rather than at module thirty.</dd>
+      <dt>What</dt><dd>Remove nothing. Stop adding new one-offs, and as the remaining 32 sections are written, reach for an existing primitive first. Revisit consolidation once the curriculum is complete.</dd>
+      <dt>Scope</dt><dd class="scope">~40 layouts &middot; ongoing discipline</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P1" data-status="open">
+    <div class="it-h"><span class="id">CMP-06</span><span class="ti">Audit every SVG for hardcoded colour</span>
+      <span class="tags"><span class="t p1">P1</span><span class="t eff">M</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>The rulebook requires <code>var(--token, #fallback)</code> in a <code>style</code> attribute, and the last audit found zero violations. Worth re-running because <strong>the external draft's very first diagram hardcodes <code>#96222F</code>, <code>#4C555C</code> and <code>#C9D0CC</code>, which would be nearly unreadable in its own dark theme.</strong> A capable model produced a design system whose opening figure breaks in dark mode; our constraint caught it. Every token change is a chance to reintroduce that.</dd>
+      <dt>What</dt><dd>Re-run after any colour work, and confirm each of the 65 inline SVGs still resolves in both themes on the delivered page.</dd>
+      <dt>Scope</dt><dd class="scope">65 inline SVGs</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P1" data-status="open" data-seo="1">
+    <div class="it-h"><span class="id">CMP-07</span><span class="ti">Design the glossary</span>
+      <span class="tags"><span class="t p1">P1</span><span class="t seo">SEO</span><span class="t eff">M</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>1,366 words of A-to-Z definitions rendering through a simple list that was never designed. It is a natural search-landing page for exactly the definitional queries the site should own, and it is currently the least considered page in the learning world.</dd>
+      <dt>What</dt><dd>Alphabet jump navigation, anchored terms, and a link from each term to the section that teaches it properly. Resolve its tracker status at the same time &mdash; the row reads <code>Content created? = No</code> while the file is 25.8KB and renders.</dd>
+      <dt>Scope</dt><dd class="scope">1 page, high search value</dd>
+      <dt>SEO</dt><dd class="seo-note">Definitional queries are high-volume and low-competition, and anchored terms give each definition its own linkable address.</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P3" data-status="open">
+    <div class="it-h"><span class="id">CMP-08</span><span class="ti">Review the <code>cards</code> component</span>
+      <span class="tags"><span class="t p3">P3</span><span class="t eff">S</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>Only 9 uses across 84 sections, so it is barely load-bearing. Worth confirming it still earns its place rather than restyling it by reflex.</dd>
+      <dt>What</dt><dd>Look at all 9 uses. Either commit to it as the navigational grouping component or retire it.</dd>
+      <dt>Scope</dt><dd class="scope">9 instances</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P2" data-status="open">
+    <div class="it-h"><span class="id">CMP-09</span><span class="ti">Re-check <code>code-block</code> under the new scale</span>
+      <span class="tags"><span class="t p2">P2</span><span class="t eff">S</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>100 instances, and its most valuable use is the numbered UI walkthrough that the anatomy calls the engine of a section, not code. The dark <code>#0d1117</code> body is a fixed colour that will need re-examining beside a new light palette.</dd>
+      <dt>What</dt><dd>Verify the ordered-list rendering, the copy button, and the label treatment. Consider whether a walkthrough should look different from a code listing, since they currently do not.</dd>
+      <dt>Scope</dt><dd class="scope">100 code blocks</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P2" data-status="open">
+    <div class="it-h"><span class="id">CMP-10</span><span class="ti">Expand <code>ref-box</code> URLs in print</span>
+      <span class="tags"><span class="t p2">P2</span><span class="t eff">S</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>Inherited from the external draft and genuinely clever for a document meant to be printed: a printed link with no URL is a dead end, and the <code>ref-box</code> is the deliberate handoff to Adobe's documentation.</dd>
+      <dt>What</dt><dd><code>content:" (" attr(href) ")"</code> on <code>ref-box</code> links inside the print stylesheet only.</dd>
+      <dt>Scope</dt><dd class="scope">83 ref-boxes &middot; print only</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P1" data-status="open">
+    <div class="it-h"><span class="id">CMP-11</span><span class="ti">Honour <code>prefers-reduced-motion</code></span>
+      <span class="tags"><span class="t p1">P1</span><span class="t eff">S</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>Basic accessibility hygiene, and it becomes relevant the moment the in-page spine introduces smooth scrolling and active-state transitions.</dd>
+      <dt>What</dt><dd>Disable smooth scroll and transitions under the media query. Cheap now, awkward to retrofit across a design system later.</dd>
+      <dt>Scope</dt><dd class="scope">Site-wide</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P1" data-status="open" data-seo="1">
+    <div class="it-h"><span class="id">CMP-12</span><span class="ti">Inline-SVG diagrams become unreadable on a phone; HTML ones do not</span>
+      <span class="tags"><span class="t p1">P1</span><span class="t seo">SEO</span><span class="t eff">L</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>Spotted by Amit, 18 Aug 2026, and measured the same day. <strong>The corpus contains two kinds of diagram that behave in opposite ways at phone width.</strong> An HTML/CSS layout is real DOM text, so it reflows and keeps its font size. An inline SVG is one scalable image, so its text shrinks with the container. Measured at 390px on the same build:
+        <div class="tscroll" style="margin:10px 0"><table><thead><tr><th>Diagram type</th><th>Example</th><th class="num">Rendered text</th></tr></thead><tbody>
+        <tr><td class="k">HTML / CSS layout</td><td>M01 §1, the five-box flow</td><td class="num"><strong>12.5&ndash;15px</strong></td></tr>
+        <tr><td class="k">Inline SVG</td><td>M05 §4, the two-families tree</td><td class="num"><strong>4.6&ndash;5px</strong></td></tr>
+        <tr><td class="k">Body prose, for scale</td><td>&mdash;</td><td class="num">16.5px</td></tr>
+        </tbody></table></div>
+        <strong>4.6px is not small, it is unreadable.</strong> The SVG scales to 0.416 of its 700-unit viewBox in a 291px frame, so authored 11px text lands at 4.6px. This is not a regression from the v2 rollout: the same arithmetic applied at the old 800px column and it was always worse on a phone. The rollout only made it visible by putting the two kinds side by side.</dd>
+      <dt>What</dt><dd>Not yet decided, and deliberately not fixed now. The options, roughly in order of cost: give SVG diagrams a minimum rendered scale and let them scroll horizontally inside the box on narrow screens, per CMP-02; author a mobile viewBox or a stacked variant for the worst offenders; or convert the highest-traffic SVGs to the HTML/CSS layout pattern that already survives a phone. The last is what CMP-05 is circling, and this is the strongest argument yet for the HTML approach being the better primitive.</dd>
+      <dt>Scope</dt><dd class="scope">65 inline SVGs across 35 sections &middot; 76 HTML layouts unaffected</dd>
+      <dt>SEO</dt><dd class="seo-note">Mobile is the indexed rendering. The site's stated differentiator against the official documentation is its diagrams, and on more than half of the sections that carry one, that differentiator currently does not survive a phone. Also an accessibility problem: text below about 9px fails legibility on any handset.</dd>
+    </dl>
+  </div>
+</section>
+
+<!-- ============ EAT ============ -->
+<section>
+  <div class="cat"><span class="cat-id">EAT</span><h2>E-E-A-T and authorship</h2><span class="n">11 items</span></div>
+  <p class="cat-note">The single largest credibility gap on the site. Measured: a section page carries <em>no</em> author signal in the content, and the only structured data is <code>BreadcrumbList</code>. Sixteen years of experience, seven at Adobe, currently appear on the About page and behind a 54px floating button.</p>
+
+  <div class="it" data-pri="P0" data-status="done" data-seo="1">
+    <div class="it-h"><span class="id">EAT-01</span><span class="ti">An inline byline on every section</span>
+      <span class="tags"><span class="t p0">P0</span><span class="t blk">launch blocker</span><span class="t seo">SEO</span><span class="t eff">M</span><span class="t st done">done 18 Aug</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>A search lander reading a 3,000-word technical answer has no way to know who wrote it or why they should be believed. <strong>An author signal behind a floating button is invisible to the reader who needs it and worthless as a trust signal.</strong> This is the highest-value single change on the entire list.</dd>
+      <dt>What</dt><dd>A compact bounded band near the title: monogram, name, one credential line ("16 years in digital analytics, seven of them at Adobe"), the existing last-updated date, and read time from WAY-06. One block, not five scattered elements.</dd>
+      <dt>Scope</dt><dd class="scope">All 116 sections + 21 module + 5 category landings</dd>
+      <dt>SEO</dt><dd class="seo-note">Experience and Expertise are the two axes Google's rater guidelines weigh most for advice content, and both are currently unrepresented on the page a searcher actually lands on.</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P0" data-status="done" data-seo="1">
+    <div class="it-h"><span class="id">EAT-02</span><span class="ti">Add <code>Article</code> structured data</span>
+      <span class="tags"><span class="t p0">P0</span><span class="t blk">launch blocker</span><span class="t seo">SEO</span><span class="t eff">M</span><span class="t st done">done 18 Aug</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>Measured: a section page emits only <code>BreadcrumbList</code>. There is no machine-readable statement that this is an article, who wrote it, or when. Every competing source has this.</dd>
+      <dt>What</dt><dd><code>Article</code> or <code>TechArticle</code> in <code>partials/schema.html</code>, with <code>headline</code>, <code>author</code>, <code>publisher</code>, <code>datePublished</code>, <code>dateModified</code>, <code>image</code> and <code>mainEntityOfPage</code>. Validate every emitted type before launch, not after.</dd>
+      <dt>Scope</dt><dd class="scope">All learning-world content pages</dd>
+      <dt>SEO</dt><dd class="seo-note">Eligibility for rich results, and the primary machine-readable channel for authorship.</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P0" data-status="done" data-seo="1">
+    <div class="it-h"><span class="id">EAT-03</span><span class="ti">Emit <code>datePublished</code> and <code>dateModified</code></span>
+      <span class="tags"><span class="t p0">P0</span><span class="t seo">SEO</span><span class="t eff">S</span><span class="t st done">done 18 Aug</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>The visible "Last updated" stamp exists; the machine-readable half does not. Freshness matters disproportionately for a product that ships changes continuously, and the site has a real advantage here it is currently not declaring.</dd>
+      <dt>What</dt><dd>Derive from <code>lastmod</code>. <strong>Handle with care</strong>: the <code>[frontmatter]</code> block in <code>hugo.toml</code> deliberately decouples <code>lastmod</code> from the date cascade because a future date once silently dropped 103 pages. Do not reconnect them while adding this.</dd>
+      <dt>Scope</dt><dd class="scope">All content pages</dd>
+      <dt>SEO</dt><dd class="seo-note">Freshness signals, and date display in results.</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P1" data-status="open" data-seo="1">
+    <div class="it-h"><span class="id">EAT-04</span><span class="ti">Establish the author as an entity</span>
+      <span class="tags"><span class="t p1">P1</span><span class="t seo">SEO</span><span class="t eff">M</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>A byline is a name. An entity is a name Google can connect to a body of work across the web. <code>Person</code> schema already exists site-wide but is not linked from articles and carries no <code>sameAs</code>.</dd>
+      <dt>What</dt><dd>One canonical <code>Person</code> with <code>sameAs</code> to LinkedIn and any other genuine profile, referenced by every article's <code>author</code> rather than restated. <code>jobTitle</code> and <code>knowsAbout</code> are already partly in <code>hugo.toml</code>.</dd>
+      <dt>Scope</dt><dd class="scope">Site-wide</dd>
+      <dt>SEO</dt><dd class="seo-note">Entity consolidation is how Authoritativeness accrues to a person rather than being re-argued page by page.</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P0" data-status="done" data-seo="1">
+    <div class="it-h"><span class="id">EAT-05</span><span class="ti">Keep the visible "Last updated" stamp</span>
+      <span class="tags"><span class="t p0">P0</span><span class="t seo">SEO</span><span class="t eff">&mdash;</span><span class="t st done">done</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>Already built and appearing on every section. Most practitioner sites skip it. Recorded as a <em>protect</em> item so a redesign does not quietly drop it.</dd>
+      <dt>What</dt><dd>No new work. Verify it survives the redesign and that it still feeds the print document, which it currently does by living inside <code>.lcontent</code>.</dd>
+      <dt>Scope</dt><dd class="scope">All 116 sections</dd>
+      <dt>SEO</dt><dd class="seo-note">Visible freshness for the reader; EAT-03 supplies the machine-readable counterpart.</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P1" data-status="open" data-seo="1">
+    <div class="it-h"><span class="id">EAT-06</span><span class="ti">Strengthen the About page as the authority hub</span>
+      <span class="tags"><span class="t p1">P1</span><span class="t seo">SEO</span><span class="t eff">M</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>At 304 words it is the only place the credentials live, and it is the page a rater or a sceptical reader will check. It is also the only page on the site carrying first person, which is correct and should stay.</dd>
+      <dt>What</dt><dd>Expand into a genuine authority page: the sixteen years, the seven at Adobe, what was actually built, why the site exists, and what it deliberately does not cover. Link it from every byline.</dd>
+      <dt>Scope</dt><dd class="scope">1 page, high leverage</dd>
+      <dt>SEO</dt><dd class="seo-note">Raters check About pages explicitly. A thin one caps how much Trust the whole domain can earn.</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P2" data-status="open">
+    <div class="it-h"><span class="id">EAT-07</span><span class="ti">Decide the fate of the author floating button</span>
+      <span class="tags"><span class="t p2">P2</span><span class="t eff">S</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>You listed it as a feature to keep, and it works. But once EAT-01 puts the byline in the page, two author affordances may be one too many, and WAY-07 is trying to reduce floating controls.</dd>
+      <dt>What</dt><dd>A decision: keep both (byline for everyone, overlay for the curious), fold the overlay into the byline as a link, or retire it. My lean is to keep the overlay but trigger it from the byline rather than from a separate floating circle.</dd>
+      <dt>Scope</dt><dd class="scope">All learning-world pages</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P3" data-status="open">
+    <div class="it-h"><span class="id">EAT-08</span><span class="ti">Per-section "why trust this" notes</span>
+      <span class="tags"><span class="t p3">P3</span><span class="t eff">M</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>Considered, and I recommend against. A per-section credibility note would repeat 116 times, read as insecurity, and dilute the byline that is doing the job properly.</dd>
+      <dt>What</dt><dd>Skip unless the E-E-A-T audit surfaces a specific reason. Recorded so it is not proposed again.</dd>
+      <dt>Scope</dt><dd class="scope">&mdash;</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P0" data-status="open" data-seo="1">
+    <div class="it-h"><span class="id">EAT-09</span><span class="ti">Run the full E-E-A-T and discoverability audit</span>
+      <span class="tags"><span class="t p0">P0</span><span class="t blk">launch blocker</span><span class="t seo">SEO</span><span class="t eff">L</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>Raised 7 Aug and deferred by you to continue content work. It is the item this whole plan was spun out of, and it must run against the <em>redesigned</em> site rather than the current one, or it audits something that is about to change.</dd>
+      <dt>What</dt><dd>Experience, Expertise, Authoritativeness and Trust as they appear in the built HTML, plus indexation, structured data, canonicals, titles and descriptions across every page, heading structure, internal link depth, orphan pages, Core Web Vitals proxies and mobile rendering. Ranked by impact, each finding naming file and line, split into pre-launch blockers and improvements. No fabricated score: E-E-A-T is a rater framework, not a measurable ranking factor.</dd>
+      <dt>Scope</dt><dd class="scope">Whole site &middot; run after the redesign, before launch</dd>
+      <dt>SEO</dt><dd class="seo-note">This is the gate. Nothing publishes until it has run and its blockers are cleared.</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P2" data-status="open">
+    <div class="it-h"><span class="id">EAT-10</span><span class="ti">Report corpus non-uniformity honestly in the audit</span>
+      <span class="tags"><span class="t p2">P2</span><span class="t eff">S</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>Sections written from documentation rather than your notes &mdash; Privacy and Data Retention, and the first draft of Consent &mdash; are thinner on the Experience axis than notes-driven ones. Averaging that away would produce a flattering and useless report.</dd>
+      <dt>What</dt><dd>The audit names which sections are strongest and weakest on Experience, so the remediation is targeted rather than global.</dd>
+      <dt>Scope</dt><dd class="scope">Audit methodology</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P0" data-status="open" data-seo="1">
+    <div class="it-h"><span class="id">EAT-11</span><span class="ti">Reset every publish date to the launch date, on launch day</span>
+      <span class="tags"><span class="t p0">P0</span><span class="t blk">launch blocker</span><span class="t seo">SEO</span><span class="t eff">S</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>Amit's call, 18 Aug 2026, and it corrects what was built. The <code>published</code> field was seeded from each file's <code>lastmod</code>, giving July and August drafting dates &mdash; but <strong>none of those pages were ever public.</strong> Claiming a July publication date for a page Google first crawls months later is inaccurate, and the mismatch between the claimed date and the first crawl is visible to Google. A page published to the world on day X was published on day X.</dd>
+      <dt>What</dt><dd>On the day the learning world goes live, set <strong>both</strong> <code>published</code> and <code>lastmod</code> to the launch date across all 116 sections. Both, not just published: if <code>lastmod</code> stays at a July date it would precede <code>datePublished</code>, which is invalid schema. The byline already handles this &mdash; it shows only "Published" when the two dates match, so launch day renders one date rather than "Published 1 Oct &middot; Updated 1 Oct" on every page.
+        <br><br>After launch the two diverge naturally: <code>published</code> is frozen, <code>lastmod</code> moves with each revision, and the Updated date starts appearing only where something actually changed.
+        <br><br>One command over the content tree, but it must not be forgotten, which is the entire reason this is written down.</dd>
+      <dt>Scope</dt><dd class="scope">116 sections &middot; launch day only</dd>
+      <dt>SEO</dt><dd class="seo-note">Freshness signals rest on the dates being credible. A date Google can contradict from its own crawl history is worse than no date.</dd>
+    </dl>
+  </div>
+</section>
+
+<!-- ============ SEO ============ -->
+<section>
+  <div class="cat"><span class="cat-id">SEO</span><h2>Discoverability</h2><span class="n">16 items</span></div>
+  <p class="cat-note">Items whose primary purpose is search. Everything else with a search consequence carries the SEO tag in its own category rather than being duplicated here.</p>
+
+  <div class="it" data-pri="P0" data-status="decided" data-seo="1">
+    <div class="it-h"><span class="id">SEO-01</span><span class="ti">Mobile-first as a standing rule, not a checkpoint</span>
+      <span class="tags"><span class="t p0">P0</span><span class="t seo">SEO</span><span class="t eff">&mdash;</span><span class="t st decided">decided</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>Google indexes the mobile rendering. Whatever the phone shows <em>is</em> the page as far as ranking is concerned. The 293px screenshot constraint already applies this thinking to one component; it needs to be the posture for every item on this list.</dd>
+      <dt>What</dt><dd>No standalone work. Every design item is verified at phone width before it is called done, and "desktop-only" is not an acceptable answer for anything a reader needs.</dd>
+      <dt>Scope</dt><dd class="scope">Governs every item in this plan</dd>
+      <dt>SEO</dt><dd class="seo-note">The single most consequential SEO principle for a content site in 2026.</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P0" data-status="open" data-seo="1">
+    <div class="it-h"><span class="id">SEO-02</span><span class="ti">Fix Google Analytics, which emits nothing</span>
+      <span class="tags"><span class="t p0">P0</span><span class="t blk">launch blocker</span><span class="t seo">SEO</span><span class="t eff">M</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>The ID is correctly nested at <code>[services.googleAnalytics]</code> and the internal partial is invoked at <code>head.html:13</code>, yet a production build produces zero <code>gtag</code> output on any page. <strong>The site currently measures nothing about itself</strong>, which means there is no way to tell whether any of this work succeeded.</dd>
+      <dt>What</dt><dd>Diagnose the cause, then verify <code>gtag</code> in the built HTML rather than in the config. Add Search Console at the same time, which matters more than Analytics for this purpose.</dd>
+      <dt>Scope</dt><dd class="scope">Site-wide &middot; blocks measurement of everything else</dd>
+      <dt>SEO</dt><dd class="seo-note">Without this there is no baseline, so no item on this list can be shown to have worked.</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P0" data-status="open" data-seo="1">
+    <div class="it-h"><span class="id">SEO-03</span><span class="ti">Write the 26 landing pages before publishing</span>
+      <span class="tags"><span class="t p0">P0</span><span class="t blk">launch blocker</span><span class="t seo">SEO</span><span class="t eff">L</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>All 21 module landings and all 5 category landings have no body content. Publishing 26 near-empty pages inside a 145-page section is a thin-content signal across the whole world, and they are structurally the most linked-to pages in the curriculum.</dd>
+      <dt>What</dt><dd>Content work, tracked in detail under LND. Listed here because the SEO consequence is what makes it a blocker rather than a nicety.</dd>
+      <dt>Scope</dt><dd class="scope">26 pages</dd>
+      <dt>SEO</dt><dd class="seo-note">Thin content on hub pages damages the whole section, not only those pages.</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P0" data-status="open" data-seo="1">
+    <div class="it-h"><span class="id">SEO-04</span><span class="ti">Decide the publishing gate for the 32 unwritten sections</span>
+      <span class="tags"><span class="t p0">P0</span><span class="t blk">launch blocker</span><span class="t seo">SEO</span><span class="t eff">&mdash;</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>32 sections are unwritten and render dimmed. A half-finished section competes against its own site, and a reader who follows a dimmed link gets nothing.</dd>
+      <dt>What</dt><dd>A decision, not a build: publish only complete modules, publish everything with unwritten sections genuinely unreachable, or wait for all 116. The <code>description</code> publish flag already gives the mechanism; what is missing is the policy.</dd>
+      <dt>Scope</dt><dd class="scope">32 sections across 7 modules</dd>
+      <dt>SEO</dt><dd class="seo-note">Determines what Google sees on day one, and first impressions of a new section are expensive to revise.</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P1" data-status="open" data-seo="1">
+    <div class="it-h"><span class="id">SEO-05</span><span class="ti">Fix the 16 journey-assuming openers</span>
+      <span class="tags"><span class="t p1">P1</span><span class="t blk">launch blocker</span><span class="t seo">SEO</span><span class="t eff">M</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>Sixteen sections open by asserting a journey the reader has not taken &mdash; "the previous section closed on", "by now you have", "everything in this module so far". Nine are in the opening paragraph, which is the worst place. The worst pair, in <code>report-suites/02</code>, references an automobile-manufacturer example a search lander has never seen, making the sentence not merely presumptuous but unintelligible.</dd>
+      <dt>What</dt><dd>Name the concept, link it, recap it in a few words, so the sentence is true for a curriculum reader and a search lander alike. One or two sentences each. Deliberately deferred by you to be handled holistically rather than scattered across content sessions.</dd>
+      <dt>Scope</dt><dd class="scope">16 sections, mostly opening paragraphs</dd>
+      <dt>SEO</dt><dd class="seo-note">These damage only the search lander, who is the largest segment. Free to fix now, expensive after indexation.</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P1" data-status="open" data-seo="1">
+    <div class="it-h"><span class="id">SEO-06</span><span class="ti">Re-run the widened journey-phrase sweep before launch</span>
+      <span class="tags"><span class="t p1">P1</span><span class="t seo">SEO</span><span class="t eff">S</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>The original sweep searched "the previous section" but not "the last section", and widening it took the count from 8 to 16. The corpus is split by era on contractions, which guarantees more variants. <strong>Treat any pattern sweep as a lower bound.</strong> Sections written since then, including all ten of M14, have never been swept.</dd>
+      <dt>What</dt><dd>Re-run the widened pattern in both contraction forms across the whole corpus.</dd>
+      <dt>Scope</dt><dd class="scope">All 84 written sections</dd>
+      <dt>SEO</dt><dd class="seo-note">Same as SEO-05.</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P1" data-status="open" data-seo="1">
+    <div class="it-h"><span class="id">SEO-07</span><span class="ti">Internal link depth and orphan-page check</span>
+      <span class="tags"><span class="t p1">P1</span><span class="t seo">SEO</span><span class="t eff">M</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>Never audited. With 145 learning-world pages, some are certain to be reachable only through the sidebar, and cross-links between sections are the mechanism the whole "completed-site rule" depends on.</dd>
+      <dt>What</dt><dd>Crawl the built HTML, not the source. Map inbound links per page, find pages with none from body content, and check click depth from the home page.</dd>
+      <dt>Scope</dt><dd class="scope">219 built pages</dd>
+      <dt>SEO</dt><dd class="seo-note">Internal linking is the strongest signal fully under our control, and orphan pages are effectively invisible.</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P1" data-status="open" data-seo="1">
+    <div class="it-h"><span class="id">SEO-08</span><span class="ti">Verify the restructure did not orphan knowledge</span>
+      <span class="tags"><span class="t p1">P1</span><span class="t seo">SEO</span><span class="t eff">S</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>M01 §3 defined a visit solely by the 30-minute timeout because the other conditions were going to be taught in a module the restructure deleted. Nothing was ever marked missing: the tracker showed the section written, QA'd and final, and it was. The movement ledger records three deletions with stated destinations, and only one has been verified.</dd>
+      <dt>What</dt><dd>Read the ledger's deleted sections, list what each was expected to carry, and confirm the receiving section carries it. Three deletions, so a short check. Anything found is likely foundational.</dd>
+      <dt>Scope</dt><dd class="scope">3 deleted sections, unknown receivers</dd>
+      <dt>SEO</dt><dd class="seo-note">A foundational gap in an early module undermines topical authority for everything built on it.</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P1" data-status="open" data-seo="1">
+    <div class="it-h"><span class="id">SEO-09</span><span class="ti">Image alt text, explicit dimensions and lazy loading</span>
+      <span class="tags"><span class="t p1">P1</span><span class="t seo">SEO</span><span class="t eff">S</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>14 screenshots today and growing fast as the capture programme runs. Missing width and height causes layout shift; missing or lazy alt text wastes a real ranking surface. The rulebook already says the alt describes the frame and the note points at the thing to look at, which is the right split.</dd>
+      <dt>What</dt><dd>Explicit <code>width</code> and <code>height</code>, <code>loading="lazy"</code> below the fold, <code>decoding="async"</code>, and an alt-text quality pass. Fold into CMP-04.</dd>
+      <dt>Scope</dt><dd class="scope">14 images, growing</dd>
+      <dt>SEO</dt><dd class="seo-note">CLS is a Core Web Vital; alt text is an indexing surface and an accessibility requirement at once.</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P1" data-status="open" data-seo="1">
+    <div class="it-h"><span class="id">SEO-10</span><span class="ti">Re-verify canonicals, Open Graph and Twitter cards after the redesign</span>
+      <span class="tags"><span class="t p1">P1</span><span class="t seo">SEO</span><span class="t eff">S</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>All three are built and working. Recorded as a <em>protect</em> item because template surgery is exactly how a correct canonical quietly becomes a wrong one, and nothing in the build would report it.</dd>
+      <dt>What</dt><dd>Crawl the built HTML after the redesign and confirm one canonical per page, pointing at itself, with OG and Twitter tags intact.</dd>
+      <dt>Scope</dt><dd class="scope">219 pages</dd>
+      <dt>SEO</dt><dd class="seo-note">A broken canonical is one of the few SEO faults that can deindex pages outright.</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P2" data-status="open" data-seo="1">
+    <div class="it-h"><span class="id">SEO-11</span><span class="ti">Per-section Open Graph images</span>
+      <span class="tags"><span class="t p2">P2</span><span class="t seo">SEO</span><span class="t eff">M</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>Every page currently shares <code>og-default.jpg</code>. On LinkedIn, which is the most likely sharing surface for this audience, 116 different sections all preview identically.</dd>
+      <dt>What</dt><dd>Either a generated card per section carrying the title and coordinate, or a per-module image. Generation is the maintainable answer; a hand-made image per section is not.</dd>
+      <dt>Scope</dt><dd class="scope">116 sections</dd>
+      <dt>SEO</dt><dd class="seo-note">Social click-through rather than ranking, but LinkedIn is where this audience actually lives.</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P2" data-status="open" data-seo="1">
+    <div class="it-h"><span class="id">SEO-12</span><span class="ti">Add an RSS feed</span>
+      <span class="tags"><span class="t p2">P2</span><span class="t seo">SEO</span><span class="t eff">S</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>Absent. Practitioners in this field still use readers, and it is a genuine subscription surface for a site publishing regularly.</dd>
+      <dt>What</dt><dd>Enable Hugo's RSS output for the learning world and link it in the footer and head.</dd>
+      <dt>Scope</dt><dd class="scope">Site-wide</dd>
+      <dt>SEO</dt><dd class="seo-note">Distribution and return visits rather than ranking directly.</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P2" data-status="open" data-seo="1">
+    <div class="it-h"><span class="id">SEO-13</span><span class="ti">Resolve the h1-to-h3 heading skip</span>
+      <span class="tags"><span class="t p2">P2</span><span class="t seo">SEO</span><span class="t eff">S</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>Sections go from a single <code>h1</code> straight to <code>h3</code> with no <code>h2</code>. Google handles it fine, but every automated audit will flag it and accessibility tooling treats it as a defect. Notably the external draft made the identical choice, so it is not obviously wrong.</dd>
+      <dt>What</dt><dd>Either promote <code>subsec-title</code> to <code>h2</code>, or accept and document the reason. Promoting is a one-line template change but touches the no-H2-in-body rule, so it is a rulebook decision as much as a code one.</dd>
+      <dt>Scope</dt><dd class="scope">588 headings &middot; rulebook change</dd>
+      <dt>SEO</dt><dd class="seo-note">Minor ranking effect, real accessibility and audit-noise effect.</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P2" data-status="open" data-seo="1">
+    <div class="it-h"><span class="id">SEO-14</span><span class="ti">Fix the three <code>description</code> length outliers</span>
+      <span class="tags"><span class="t p2">P2</span><span class="t seo">SEO</span><span class="t eff">S</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>Three landing pages fall outside the 110&ndash;160 character rule: <code>collect/_index.html</code> at 180, <code>deliver/_index.html</code> at 187, <code>collect/data-layers/_index.md</code> at 94. Long ones get truncated in results, short ones waste the space.</dd>
+      <dt>What</dt><dd>Rewrite all three as promises rather than summaries. Bundle with the LND landing-page work since it touches the same files.</dd>
+      <dt>Scope</dt><dd class="scope">3 pages</dd>
+      <dt>SEO</dt><dd class="seo-note">Snippet quality drives click-through on pages that already rank.</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P2" data-status="open" data-seo="1">
+    <div class="it-h"><span class="id">SEO-15</span><span class="ti">Verify sitemap <code>lastmod</code> accuracy</span>
+      <span class="tags"><span class="t p2">P2</span><span class="t seo">SEO</span><span class="t eff">S</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>Hugo's sitemap is enabled and uses <code>lastmod</code>, which the <code>[frontmatter]</code> block deliberately decouples from the date cascade. Worth confirming the sitemap still reports real dates rather than build dates.</dd>
+      <dt>What</dt><dd>Inspect the built <code>sitemap.xml</code> and spot-check against the front matter of a handful of pages.</dd>
+      <dt>Scope</dt><dd class="scope">219 URLs</dd>
+      <dt>SEO</dt><dd class="seo-note">A sitemap claiming everything changed today teaches Google to ignore the field.</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P3" data-status="open" data-seo="1">
+    <div class="it-h"><span class="id">SEO-16</span><span class="ti"><code>HowTo</code> or <code>FAQ</code> structured data</span>
+      <span class="tags"><span class="t p3">P3</span><span class="t seo">SEO</span><span class="t eff">M</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>The numbered walkthrough in every section is structurally a HowTo, so it is technically eligible. But Google has steadily reduced these rich results, and marking up content purely for a rich result is the kind of thing that ages badly and can read as manipulation.</dd>
+      <dt>What</dt><dd>Recommend against for now. Revisit only if the E-E-A-T audit shows a concrete opportunity. Recorded so it is considered once, not repeatedly.</dd>
+      <dt>Scope</dt><dd class="scope">&mdash;</dd>
+      <dt>SEO</dt><dd class="seo-note">Diminishing returns and non-trivial maintenance across 116 sections.</dd>
+    </dl>
+  </div>
+</section>
+
+<!-- ============ PERF ============ -->
+<section>
+  <div class="cat"><span class="cat-id">PERF</span><h2>Performance and Core Web Vitals</h2><span class="n">5 items</span></div>
+  <p class="cat-note">The site is currently fast almost by accident: no webfonts, no framework, no external requests. That is an asset the redesign can easily spend without noticing.</p>
+
+  <div class="it" data-pri="P1" data-status="open" data-seo="1">
+    <div class="it-h"><span class="id">PERF-01</span><span class="ti">Take a Core Web Vitals baseline before touching anything</span>
+      <span class="tags"><span class="t p1">P1</span><span class="t seo">SEO</span><span class="t eff">S</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>Without a before, there is no way to prove the redesign did not cost performance. Take it now, while the current design is still intact.</dd>
+      <dt>What</dt><dd>LCP, CLS and INP on a representative section, a landing page and the home page, at mobile and desktop. Record the numbers in this document.</dd>
+      <dt>Scope</dt><dd class="scope">3 representative pages</dd>
+      <dt>SEO</dt><dd class="seo-note">Core Web Vitals are ranking inputs and the only part of this plan with a hard number attached.</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P0" data-status="done" data-seo="1">
+    <div class="it-h"><span class="id">PERF-02</span><span class="ti">Set a font budget and hold it</span>
+      <span class="tags"><span class="t p0">P0</span><span class="t seo">SEO</span><span class="t eff">S</span><span class="t st done">done 18 Aug</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>Zero webfonts today. TYP-04 spends that deliberately, and the budget is what stops it becoming four weights and two families by accident.</dd>
+      <dt>What</dt><dd>A stated maximum in kilobytes and file count, agreed before the typeface lands, and checked against PERF-01.</dd>
+      <dt>Scope</dt><dd class="scope">Gates TYP-04</dd>
+      <dt>SEO</dt><dd class="seo-note">LCP and CLS protection.</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P0" data-status="decided">
+    <div class="it-h"><span class="id">PERF-03</span><span class="ti">No <code>backdrop-filter</code> on the header</span>
+      <span class="tags"><span class="t p0">P0</span><span class="t eff">&mdash;</span><span class="t st decided">decided</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>The external draft frosts the header. Frosted glass is a 2020&ndash;2023 fashion, costs paint on every scroll frame, communicates nothing, and is precisely what will date the site. Fails the ten-year test on its own.</dd>
+      <dt>What</dt><dd>Solid or simple translucent header. Recorded so it is not reintroduced.</dd>
+      <dt>Scope</dt><dd class="scope">Header</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P0" data-status="done">
+    <div class="it-h"><span class="id">PERF-04</span><span class="ti">Protect the asset cache-busting hash</span>
+      <span class="tags"><span class="t p0">P0</span><span class="t eff">&mdash;</span><span class="t st done">done</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>The <code>?v=</code> content hash on the stylesheet and script tags was added 14 Aug after it cost an hour of debugging a component that was correct the whole time. In production its absence would leave every returning visitor on the old stylesheet after any CSS change &mdash; which, during a redesign, means most of the audience.</dd>
+      <dt>What</dt><dd>No new work. Recorded as a protect item because this plan touches those exact files repeatedly.</dd>
+      <dt>Scope</dt><dd class="scope"><code>head.html:41</code>, <code>baseof.html:162</code></dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P3" data-status="open">
+    <div class="it-h"><span class="id">PERF-05</span><span class="ti">Review inline SVG weight</span>
+      <span class="tags"><span class="t p3">P3</span><span class="t eff">M</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>65 inline SVGs plus roughly 40 HTML-based diagram layouts add page weight, but inlining is also why there are no extra requests and no flash of unstyled diagram. Probably fine; worth confirming rather than assuming.</dd>
+      <dt>What</dt><dd>Check the heaviest pages against PERF-01. Act only if a real number says so.</dd>
+      <dt>Scope</dt><dd class="scope">Heaviest sections</dd>
+    </dl>
+  </div>
+</section>
+
+<!-- ============ SHL ============ -->
+<section>
+  <div class="cat"><span class="cat-id">SHL</span><h2>Shell and chrome</h2><span class="n">6 items</span></div>
+
+  <div class="it" data-pri="P1" data-status="open">
+    <div class="it-h"><span class="id">SHL-01</span><span class="ti">Redesign the header</span>
+      <span class="tags"><span class="t p1">P1</span><span class="t eff">M</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>It has to absorb the coordinate chip (IDN-01), a working search (WAY-09), and whatever WAY-07 decides about floating controls, while staying 60px and quiet.</dd>
+      <dt>What</dt><dd>Do this after IDN-01, WAY-07 and WAY-09 are decided, not before, or it gets rebuilt three times.</dd>
+      <dt>Scope</dt><dd class="scope">Learning-world shell</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P1" data-status="open" data-seo="1">
+    <div class="it-h"><span class="id">SHL-02</span><span class="ti">Build out the footer</span>
+      <span class="tags"><span class="t p1">P1</span><span class="t seo">SEO</span><span class="t eff">S</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>Currently thin. It has to carry the trademark line (IDN-06), the author line, and cross-world navigation between the learning world, the migration guide and About.</dd>
+      <dt>What</dt><dd>One shared footer, both worlds, with the cross-links that currently do not exist between them.</dd>
+      <dt>Scope</dt><dd class="scope">Site-wide</dd>
+      <dt>SEO</dt><dd class="seo-note">Footer links are the main mechanism connecting the two worlds, which are otherwise almost entirely separate link graphs.</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P0" data-status="open" data-seo="1">
+    <div class="it-h"><span class="id">SHL-03</span><span class="ti">Add the second topic card to the home page</span>
+      <span class="tags"><span class="t p0">P0</span><span class="t blk">launch blocker</span><span class="t seo">SEO</span><span class="t eff">S</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>The home page has one card, the blue Web SDK Migration one. On launch day the learning world would be published with nothing on the home page pointing at it.</dd>
+      <dt>What</dt><dd>A crimson card using the existing <code>.tcard</code> component. It has to sit convincingly beside a card describing a finished guide, which is a copy problem as much as a design one.</dd>
+      <dt>Scope</dt><dd class="scope">Home page</dd>
+      <dt>SEO</dt><dd class="seo-note">The home page is the strongest internal link source on the domain; without this the learning world starts orphaned from it.</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P1" data-status="open">
+    <div class="it-h"><span class="id">SHL-04</span><span class="ti">Revisit the home page as a whole</span>
+      <span class="tags"><span class="t p1">P1</span><span class="t eff">M</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>It is a profile block plus topic cards, built when there was one topic. With two worlds and a third planned, and with the design system changing underneath it, it needs a deliberate pass rather than another card bolted on.</dd>
+      <dt>What</dt><dd>Decide what the home page is for: a portfolio of topics, an author page, or a front door to the current work. It cannot be all three well.</dd>
+      <dt>Scope</dt><dd class="scope">Home page</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P3" data-status="open">
+    <div class="it-h"><span class="id">SHL-05</span><span class="ti">Review the 404 page</span>
+      <span class="tags"><span class="t p3">P3</span><span class="t eff">S</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>It exists and works. Under the new design it should at least offer search and the curriculum map, since a 404 in a 145-page section is a wayfinding failure rather than an error.</dd>
+      <dt>What</dt><dd>Low priority. Fold into the shell work if it is cheap at that point.</dd>
+      <dt>Scope</dt><dd class="scope">1 page</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P2" data-status="open">
+    <div class="it-h"><span class="id">SHL-06</span><span class="ti">Re-verify the print document under the new design</span>
+      <span class="tags"><span class="t p2">P2</span><span class="t eff">M</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>The print builder assembles a branded document from <code>.lcontent</code>. Every typography and component change flows into it, and nothing in the build would report a broken print layout.</dd>
+      <dt>What</dt><dd>Print-preview a representative section after the type and component work. Confirm no component splits across a page break, the byline appears, and CMP-10's expanded URLs land correctly.</dd>
+      <dt>Scope</dt><dd class="scope">Both worlds</dd>
+    </dl>
+  </div>
+</section>
+
+<!-- ============ LND ============ -->
+<section>
+  <div class="cat"><span class="cat-id">LND</span><h2>Landing pages</h2><span class="n">3 items</span></div>
+  <p class="cat-note">The largest block of unbuilt surface on the site, and the place where wayfinding work pays twice: these pages are both a design problem and 26 opportunities to point readers at the right section.</p>
+
+  <div class="it" data-pri="P0" data-status="open" data-seo="1">
+    <div class="it-h"><span class="id">LND-01</span><span class="ti">Design the landing page pattern first</span>
+      <span class="tags"><span class="t p0">P0</span><span class="t seo">SEO</span><span class="t eff">M</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>26 pages built one at a time without a pattern will produce 26 slightly different pages. The constraint is already fixed and unusual: a landing page is one or two paragraphs, no theory, no argument, because knowledge lives in sections and a reader who meets an idea twice has been made to backtrack.</dd>
+      <dt>What</dt><dd>One template answering what this covers, what it assumes, and where to go, with the section list doing most of the work. The design has to make a short page feel deliberate rather than empty, which is the actual difficulty.</dd>
+      <dt>Scope</dt><dd class="scope">Gates LND-02 and LND-03</dd>
+      <dt>SEO</dt><dd class="seo-note">These are hub pages; their internal linking shapes how authority flows to every section beneath them.</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P0" data-status="open" data-seo="1">
+    <div class="it-h"><span class="id">LND-02</span><span class="ti">Write the 21 module landing pages</span>
+      <span class="tags"><span class="t p0">P0</span><span class="t blk">launch blocker</span><span class="t seo">SEO</span><span class="t eff">L</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>All 21 are empty. They are the most linked-to pages in the curriculum and currently say nothing.</dd>
+      <dt>What</dt><dd>One or two paragraphs each, following LND-01. Content work, but it cannot start until the pattern exists.</dd>
+      <dt>Scope</dt><dd class="scope">21 pages</dd>
+      <dt>SEO</dt><dd class="seo-note">Thin hub pages, per SEO-03.</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P0" data-status="open" data-seo="1">
+    <div class="it-h"><span class="id">LND-03</span><span class="ti">Write the 5 category landing pages</span>
+      <span class="tags"><span class="t p0">P0</span><span class="t blk">launch blocker</span><span class="t seo">SEO</span><span class="t eff">M</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>Same as LND-02, one level up. These five represent the phases and are the closest thing the curriculum has to a table of contents.</dd>
+      <dt>What</dt><dd>Follows LND-01. Fix the two <code>description</code> outliers here at the same time, per SEO-14.</dd>
+      <dt>Scope</dt><dd class="scope">5 pages</dd>
+      <dt>SEO</dt><dd class="seo-note">Phase pages are the natural target for broad category queries.</dd>
+    </dl>
+  </div>
+</section>
+
+<!-- ============ INF ============ -->
+<section>
+  <div class="cat"><span class="cat-id">INF</span><h2>Infrastructure and maintainability</h2><span class="n">8 items</span></div>
+  <p class="cat-note">Your point 8: the design has to be maintainable, with few moving parts. Two of these gate everything else and should be settled first.</p>
+
+  <div class="it" data-pri="P0" data-status="decided">
+    <div class="it-h"><span class="id">INF-01</span><span class="ti">Decide: evolve <code>world-learning.css</code>, or build a v2 system</span>
+      <span class="tags"><span class="t p0">P0</span><span class="t eff">&mdash;</span><span class="t st decided">decided</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>This decision gates every other item and determines the shape of the whole effort. Evolving is safer and leaves 84 signed-off sections untouched; a v2 is cleaner for the future-websites requirement and considerably more expensive.</dd>
+      <dt>What</dt><dd><strong>My recommendation is to evolve in place.</strong> The CSS is already token-shaped, the porting rule already exists, and the class vocabulary is not the problem &mdash; the values inside it are. A v2 would rebuild things that are already right.</dd>
+      <dt>Scope</dt><dd class="scope">Gates the entire plan</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P0" data-status="partial">
+    <div class="it-h"><span class="id">INF-02</span><span class="ti">Make every value derive from a token</span>
+      <span class="tags"><span class="t p0">P0</span><span class="t eff">L</span><span class="t st part">partial</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>This is what makes the design reusable for future sites, which is your point 4. Today font sizes are hardcoded throughout &mdash; 16px appears independently in dozens of rules &mdash; so a scale change means dozens of edits and one will be missed. Colour is already properly tokenised; type and spacing are not.</dd>
+      <dt>What</dt><dd>Type scale, spacing scale, radius and border tokens on <code>:root</code>, with every component referencing them. The porting promise then becomes real: copy the stylesheet, change the accent.</dd>
+      <dt>Scope</dt><dd class="scope"><code>world-learning.css</code>, 42KB</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P0" data-status="open">
+    <div class="it-h"><span class="id">INF-03</span><span class="ti">Regression-check all 84 signed-off sections after each change</span>
+      <span class="tags"><span class="t p0">P0</span><span class="t eff">M</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>84 sections are signed off and 172,642 words are already written against the current typography. A measure change alters every paragraph's rhythm; a component change can break a diagram nobody looks at for a month. Nothing in the build reports a visual regression.</dd>
+      <dt>What</dt><dd>A representative set covering every component and every diagram family, checked in both themes on the <em>delivered</em> page. Never confirm styling by injecting CSS into a page &mdash; that proves the CSS works when applied, not that the page applies it.</dd>
+      <dt>Scope</dt><dd class="scope">84 sections &middot; ongoing per change</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P0" data-status="done">
+    <div class="it-h"><span class="id">INF-04</span><span class="ti">Update the rulebook and CLAUDE.md as changes land</span>
+      <span class="tags"><span class="t p0">P0</span><span class="t eff">M</span><span class="t st done">done 18 Aug</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd><code>content-component-rulebook.html</code> is the formatting authority and <code>CLAUDE.md</code> is the startup core. Both describe the current design. If they are not updated as it changes, the next session writes M16 against a rulebook that no longer matches the site, and the documents rot exactly as the supersession rule warns.</dd>
+      <dt>What</dt><dd>Update as each change lands, not in a batch at the end. Delete superseded guidance rather than qualifying it. Add a revision-history entry each time.</dd>
+      <dt>Scope</dt><dd class="scope">Rulebook, CLAUDE.md, structure map</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P2" data-status="open">
+    <div class="it-h"><span class="id">INF-05</span><span class="ti">Scope <code>params.phases</code> per world</span>
+      <span class="tags"><span class="t p2">P2</span><span class="t eff">M</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd><code>wherefits.html:12</code> and <code>homemap.html:10</code> read <code>.Site.Params.phases</code> globally and unscoped, so a second world using those partials would inherit Adobe Analytics' phases. Cheap now, expensive once a third world exists.</dd>
+      <dt>What</dt><dd>Make phases per-world and have the partials take a world argument. Worth doing alongside any wayfinding work that touches those partials anyway.</dd>
+      <dt>Scope</dt><dd class="scope">2 partials &middot; blocks the CJA world</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P2" data-status="open">
+    <div class="it-h"><span class="id">INF-06</span><span class="ti">Key the world switch off <code>.Section</code> rather than a prefix chain</span>
+      <span class="tags"><span class="t p2">P2</span><span class="t eff">M</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>The world switch is an if/else chain on URL prefix in <code>head.html:37</code> and <code>baseof.html:4-6</code>. With CJA, RTCDP, AJO, AEP and certification prep on the roadmap it would be eight branches deep across two files.</dd>
+      <dt>What</dt><dd>Restructure before the third world, not after. Same argument as INF-05 and worth doing together.</dd>
+      <dt>Scope</dt><dd class="scope">2 templates</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P3" data-status="open">
+    <div class="it-h"><span class="id">INF-07</span><span class="ti">Remove dead code</span>
+      <span class="tags"><span class="t p3">P3</span><span class="t eff">S</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>Zero reader-visible value, but <code>static/guide.css</code> (16KB), <code>static/theme.js</code>, <code>partials/header.html</code> and <code>partials/footer.html</code> are unreferenced, and dead CSS beside a live stylesheet is a trap during a redesign &mdash; it is exactly the sort of thing that gets edited by mistake.</dd>
+      <dt>What</dt><dd>Confirm unreferenced, then delete. Worth doing early <em>because</em> of the redesign rather than despite it.</dd>
+      <dt>Scope</dt><dd class="scope">4 files</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P3" data-status="open">
+    <div class="it-h"><span class="id">INF-08</span><span class="ti">Fix small stale references</span>
+      <span class="tags"><span class="t p3">P3</span><span class="t eff">S</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>Hardcoded 13/24/42 statistics in <code>web-sdk-migration/list.html:10-12</code>, a stale comment at <code>world-learning.js:15</code>, and <code>brandColor</code>/<code>accentColor</code> mis-nested under <code>[services]</code> in <code>hugo.toml</code> so <code>.Site.Params.brandColor</code> does not resolve. That last one matters more during a rebrand than it does now.</dd>
+      <dt>What</dt><dd>Derive the stats, correct the comment, move the colour params. Small, unrelated, easy to batch.</dd>
+      <dt>Scope</dt><dd class="scope">3 files</dd>
+    </dl>
+  </div>
+</section>
+
+<!-- ============ CNT ============ -->
+<section>
+  <div class="cat"><span class="cat-id">CNT</span><h2>Content, adjacent to this plan</h2><span class="n">4 items</span></div>
+  <p class="cat-note">Raised in the same discussion and recorded here so nothing is lost, but owned by <code>development-plan.md</code> rather than by the design work. One has a clock running.</p>
+
+  <div class="it" data-pri="P1" data-status="open" data-seo="1">
+    <div class="it-h"><span class="id">CNT-01</span><span class="ti">M11 §1's deprecation warn-box expires 31 August 2026</span>
+      <span class="tags"><span class="t p1">P1</span><span class="t blk">launch blocker</span><span class="t seo">SEO</span><span class="t eff">S</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>It states the legacy Classification importer is deprecated <em>after</em> 31 Aug 2026 and the Rule Builder after 28 Feb 2027. <strong>It becomes actively wrong in two weeks.</strong> This is the only item on the entire list with a real external deadline.</dd>
+      <dt>What</dt><dd>Re-verify both dates against Experience League and rewrite the importer clause in past tense. The treatment is otherwise correct for a perishable fact.</dd>
+      <dt>Scope</dt><dd class="scope">1 warn-box &middot; deadline 31 Aug 2026</dd>
+      <dt>SEO</dt><dd class="seo-note">A visibly out-of-date fact on an indexed page damages Trust more than an omission does.</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P2" data-status="open" data-seo="1">
+    <div class="it-h"><span class="id">CNT-02</span><span class="ti">Audit every dated snapshot for its own expiry</span>
+      <span class="tags"><span class="t p2">P2</span><span class="t seo">SEO</span><span class="t eff">S</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>CNT-01 is the clearest example of a fact that goes stale on a schedule, and the question it raises is whether any other warn-box carries a date that will expire on its own. Nobody has checked.</dd>
+      <dt>What</dt><dd>Sweep all 103 warn-boxes for dates and verification stamps, and list anything with a future expiry so it can be scheduled rather than discovered.</dd>
+      <dt>Scope</dt><dd class="scope">103 warn-boxes</dd>
+      <dt>SEO</dt><dd class="seo-note">Same as CNT-01, across the corpus.</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P2" data-status="open">
+    <div class="it-h"><span class="id">CNT-03</span><span class="ti">M14 teaches every part and never assembles one</span>
+      <span class="tags"><span class="t p2">P2</span><span class="t eff">L</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>The one real content hole found in the honest review of the finished module: there is no complete, realistic project anywhere in 28,000 words, and it is the thing a learner most wants after §3. Listed here because it is also a design question &mdash; a worked project may not fit the section shape at all.</dd>
+      <dt>What</dt><dd>Decide whether this becomes an eleventh section, a different kind of page, or is accepted as out of scope.</dd>
+      <dt>Scope</dt><dd class="scope">M14, possibly a new page type</dd>
+    </dl>
+  </div>
+
+  <div class="it" data-pri="P0" data-status="open">
+    <div class="it-h"><span class="id">CNT-04</span><span class="ti">Keep the content stream running: M15 Attribution Models</span>
+      <span class="tags"><span class="t p0">P0</span><span class="t eff">L</span><span class="t st">open</span></span></div>
+    <dl class="row">
+      <dt>Why</dt><dd>32 sections remain unwritten and they gate publishing via SEO-04. Design work and content work are independent and should run in parallel rather than one blocking the other.</dd>
+      <dt>What</dt><dd>Four sections, all unwritten, notes awaited. Tracked properly in <code>development-plan.md</code>; recorded here only so the plan does not read as though design is the only thing happening.</dd>
+      <dt>Scope</dt><dd class="scope">4 sections &middot; then M16 to M21</dd>
+    </dl>
+  </div>
+</section>
+
+<!-- ============ REJ ============ -->
+<section>
+  <div class="cat"><span class="cat-id">REJ</span><h2>Considered and rejected</h2><span class="n">7 items</span></div>
+  <p class="cat-note">Recorded with reasoning so they are not re-argued. If any is reopened, the reason for reopening should be new information rather than a fresh opinion.</p>
+
+  <div class="it" data-pri="P3" data-status="skipped">
+    <div class="it-h"><span class="id">REJ-01</span><span class="ti">Drop cap on the opening paragraph</span>
+      <span class="tags"><span class="t p3">P3</span><span class="t st skipped">skipped</span></span></div>
+    <dl class="row"><dt>Why not</dt><dd>Purely decorative, fails the "must earn its place" rule, slows the search lander scanning the opener for a signal, and is the single most dated-looking element in the external draft. From the external draft.</dd></dl>
+  </div>
+
+  <div class="it" data-pri="P3" data-status="skipped">
+    <div class="it-h"><span class="id">REJ-02</span><span class="ti">Frosted-glass header</span>
+      <span class="tags"><span class="t p3">P3</span><span class="t st skipped">skipped</span></span></div>
+    <dl class="row"><dt>Why not</dt><dd>See PERF-03. Fashionable, costly to paint, communicates nothing, will date. From the external draft.</dd></dl>
+  </div>
+
+  <div class="it" data-pri="P3" data-status="skipped">
+    <div class="it-h"><span class="id">REJ-03</span><span class="ti">Reading progress hairline under the header</span>
+      <span class="tags"><span class="t p3">P3</span><span class="t st skipped">skipped</span></span></div>
+    <dl class="row"><dt>Why not</dt><dd>Redundant. The in-page spine already shows position with active and read states, and read time gives the reader the duration. Three progress indicators for one page is two too many. From the external draft.</dd></dl>
+  </div>
+
+  <div class="it" data-pri="P3" data-status="skipped">
+    <div class="it-h"><span class="id">REJ-04</span><span class="ti">The external draft's palette values</span>
+      <span class="tags"><span class="t p3">P3</span><span class="t st skipped">skipped</span></span></div>
+    <dl class="row"><dt>Why not</dt><dd><code>#96222F</code> is dark and low-chroma enough to read brownish as a link colour and lose the clickable signal; the green-tinted neutrals fight a red accent. The <em>direction</em> is taken in COL-01; the values are not.</dd></dl>
+  </div>
+
+  <div class="it" data-pri="P3" data-status="skipped">
+    <div class="it-h"><span class="id">REJ-05</span><span class="ti">Replacing the pocket map with an accordion grid</span>
+      <span class="tags"><span class="t p3">P3</span><span class="t st skipped">skipped</span></span></div>
+    <dl class="row"><dt>Why not</dt><dd>A downgrade. See WAY-08. The existing overlay with its arrow trail lands the "you are here in a 116-section curriculum" point that a flat grid loses.</dd></dl>
+  </div>
+
+  <div class="it" data-pri="P3" data-status="skipped">
+    <div class="it-h"><span class="id">REJ-06</span><span class="ti">Numbers hanging in the margin beside every heading</span>
+      <span class="tags"><span class="t p3">P3</span><span class="t st skipped">skipped</span></span></div>
+    <dl class="row"><dt>Why not</dt><dd>Elegant, but a reader gains nothing from knowing a heading is "04". Structural devices should encode something true; this is decoration dressed as information. The numbers stay in the in-page spine, where they genuinely aid scanning a list.</dd></dl>
+  </div>
+
+  <div class="it" data-pri="P3" data-status="skipped">
+    <div class="it-h"><span class="id">REJ-07</span><span class="ti">Radical UI change, or removing the left rail</span>
+      <span class="tags"><span class="t p3">P3</span><span class="t st skipped">skipped</span></span></div>
+    <dl class="row"><dt>Why not</dt><dd>See WAY-13. Persistent hierarchy is correct for a 116-section curriculum, and novel navigation is the fastest way to make a site harder to use. Differentiation belongs inside the reading column.</dd></dl>
+  </div>
+</section>
+
+<section>
+  <div class="cat"><span class="cat-id">ORDER</span><h2>Suggested order of work</h2></div>
+  <ul class="plain">
+    <li><b>Settle first, because they gate everything:</b> INF-01 (evolve or v2), IDN-02 (numbering policy), TYP-05 (one family or two), PERF-01 (baseline).</li>
+    <li><b>Then the structural core</b>, which costs no new components and is reversible: TYP-01, TYP-02, TYP-03, INF-02.</li>
+    <li><b>Then the reader-facing additions:</b> WAY-02 and WAY-04, then WAY-01 and WAY-03, then EAT-01, EAT-02 and EAT-03.</li>
+    <li><b>Then identity:</b> TYP-04 and TYP-06, COL-01 and COL-02, IDN-01, CMP-01.</li>
+    <li><b>Then the unbuilt surface:</b> LND-01 through LND-03, WAY-09 and WAY-10, SHL-03, CMP-07.</li>
+    <li><b>Then the gate:</b> EAT-09, the full audit, run against the redesigned site.</li>
+    <li><b>Throughout, in parallel:</b> CNT-04 content, INF-03 regression checks, INF-04 documentation.</li>
+    <li><b>CNT-01 is out of band.</b> It has a real deadline of 31 August 2026 and should be done in the next session regardless of where the design work has reached.</li>
+  </ul>
+</section>
+
+<footer class="end" id="foot"></footer>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var items = Array.prototype.slice.call(document.querySelectorAll('.it'));
+
+  /* ---- summary, computed from the list so it can never drift ---- */
+  function count(fn){ return items.filter(fn).length; }
+  var cards = [
+    {n: items.length,                                            l:'total items',    c:''},
+    {n: count(function(i){return i.dataset.pri==='P0'}),         l:'P0 undisputed',  c:'z-p0'},
+    {n: count(function(i){return i.dataset.pri==='P1'}),         l:'P1 important',   c:'z-p1'},
+    {n: count(function(i){return i.dataset.pri==='P2'}),         l:'P2 good to have',c:'z-p2'},
+    {n: count(function(i){return i.dataset.pri==='P3'}),         l:'P3 skippable',   c:'z-p3'},
+    {n: count(function(i){return i.querySelector('.t.blk')}),    l:'launch blockers',c:'z-p0'},
+    {n: count(function(i){return i.dataset.seo==='1'}),          l:'SEO impact',     c:''},
+    {n: count(function(i){return /done|decided/.test(i.dataset.status)}), l:'closed', c:'z-done'}
+  ];
+  document.getElementById('summary').innerHTML = cards.map(function(c){
+    return '<div class="sc '+c.c+'"><b>'+c.n+'</b><span>'+c.l+'</span></div>';
+  }).join('');
+
+  /* ---- filters ---- */
+  var btns = Array.prototype.slice.call(document.querySelectorAll('.fb'));
+  function apply(f){
+    items.forEach(function(i){
+      var show =
+        f==='all'      ? true :
+        f==='blocker'  ? !!i.querySelector('.t.blk') :
+        f==='seo'      ? i.dataset.seo==='1' :
+        f==='open'     ? i.dataset.status==='open' :
+        f==='decided'  ? /done|decided/.test(i.dataset.status) :
+                         i.dataset.pri===f;
+      i.classList.toggle('hide', !show);
+    });
+    /* hide a category heading whose items are all filtered out */
+    Array.prototype.forEach.call(document.querySelectorAll('section'), function(s){
+      var its = s.querySelectorAll('.it');
+      if(!its.length) return;
+      var vis = s.querySelectorAll('.it:not(.hide)').length;
+      s.style.display = vis ? '' : 'none';
+      var n = s.querySelector('.cat .n');
+      if(n) n.textContent = (f==='all') ? its.length+' items' : vis+' of '+its.length;
+    });
+  }
+  btns.forEach(function(b){
+    b.addEventListener('click', function(){
+      btns.forEach(function(x){x.classList.remove('on')});
+      b.classList.add('on');
+      apply(b.dataset.f);
+    });
+  });
+
+  /* ---- footer ---- */
+  var open = count(function(i){return i.dataset.status==='open'});
+  document.getElementById('foot').innerHTML =
+    'amitdusane.com &middot; design and SEO work plan<br>'+
+    items.length+' items &middot; '+open+' open &middot; '+
+    count(function(i){return /done|decided/.test(i.dataset.status)})+' closed &middot; '+
+    count(function(i){return i.dataset.status==='skipped'})+' rejected<br>'+
+    'Created 17 August 2026 &middot; baseline commit 3b6b3ba on develop &middot; counts computed from this document, never typed';
+})();
+</script>

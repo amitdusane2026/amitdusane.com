@@ -562,6 +562,41 @@ Six weaknesses, none fatal, recorded so they are not rediscovered:
 5. **§10's trap list is the most useful artifact and sits on the least-visited page.** Structural mismatch with no clean fix inside a ten-section shape.
 6. **Recaps are applied unevenly.** §5 recaps calculated metrics properly when refusing them; §3 links props and eVars with no recap at all.
 
+
+## Design phase, 17 to 18 August 2026
+
+Content work paused after M14 to fix the design before writing M15, on the reasoning that every fix is free while the learning world still 404s and expensive once Google has indexed it. **Sixteen commits, none pushed to `main`, nothing published.**
+
+The plan for this work is `design-plan.html` in the repo root: **105 items**, prioritised, with launch blockers flagged and rejected ideas recorded so they are not re-argued. It supersedes nothing here; this section records what actually shipped.
+
+### Shipped
+
+**Typography, the whole core.** A type scale where there was none: the reading column was 16px throughout, so a section heading measured the same as the sentence under it. Eight tokens with a mobile and a print step. Body to 18px, line-height to 1.7, a five-step spacing scale replacing margins that had drifted across five arbitrary values. Heading rest stops went from 16px to 48px above, a ratio of 1.3:1 to 2.7:1. IBM Plex Sans and Mono, self-hosted, 59KB, because a system stack renders as a different typeface on every operating system and so cannot carry an identity.
+
+**The measure, partially.** 111.6 characters per line measured across 52,686 characters of our own prose, now about 94 at 760px/18px. Short of the 65-75 target and deliberately so: at this type size you can have a 70-character measure, full-size infographics, or one width for prose and figures, but not all three. Infographics won. **TYP-02 is closed as partial, not done.**
+
+**The in-page spine**, on all 116 sections, built from the h3 stack. Read time, the pocket map promoted out of its floating tab, then the heading list. Below 1244px it becomes a drawer on a floating button.
+
+**Heading anchors at build time**, 629 of them, so Google sees them. A JS-injected id gives the reader a jump list and search nothing.
+
+**Authorship.** A byline on every section and a shorter form on all 26 landings, `TechArticle` schema with `datePublished` and `dateModified`, and the name standardised on **Amit G Dusane** across eleven places that disagreed. A section previously emitted `BreadcrumbList` and nothing else.
+
+**The monogram into one partial** after living in six copies, and the About control now carries the mark alone at 88px with no disc.
+
+### What this cost, and the lesson worth keeping
+
+**Seven of the sixteen commits were fixes to my own work**, and Amit found nearly all of them by looking at the rendered page. The pocket map vanished on 27 sections. 163 of 629 nav labels were meaningless. A floating button was white-on-white in dark mode. Two read times disagreed on the same screen.
+
+The pattern is identical every time: **I verified against one page, or one condition, and missed the edges.** Where the whole corpus was measured instead, the numbers held. The rule that comes out of it: *pick regression samples at the edges of a condition, not in the comfortable middle.* A section with ten headings proves nothing about a section with two.
+
+**A second lesson, about the plan rather than the work.** TYP-02 was written as "one CSS value, effort S". In reality the measure, the body size, the figure width and the side rail share one horizontal budget and cannot move independently; it took three rounds and two rejections to learn that. Several other items are scoped the same optimistic way and should be re-read before starting.
+
+### Carried forward
+
+- **`EAT-11`, a launch blocker**: on launch day set both `published` and `lastmod` to the launch date across all 116 sections. The dates were seeded from drafting dates, but none of those pages were ever public, and a date Google can contradict from its own crawl history is worse than no date.
+- **`CMP-12`**: 65 inline-SVG diagrams across 35 sections render their text at 4.6px on a phone, against 12.5px for the 76 HTML-based ones. Not a regression, it has always been so, but it means the site's differentiator does not survive the rendering Google indexes.
+- **`COL-06`**: `--text3` on white is 2.56:1 everywhere it appears, not only where it was fixed.
+
 ## Phase 5 — Small corrections
 
 - Three `description` outliers: `collect/_index.html` (180 chars), `deliver/_index.html` (187), `collect/data-layers/_index.md` (94).

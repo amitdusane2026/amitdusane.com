@@ -1,0 +1,254 @@
+<title>Monogram Options</title>
+<style>
+:root{
+  --ground:#f7f8fa; --card:#ffffff; --ink:#0f172a; --ink2:#475569; --ink3:#8a95a5;
+  --line:#dfe4ea; --accent:#e11d48; --accent2:#be123c;
+  --navy:#1E3A8A; --oldbar:#C8102E;
+  --sans:'IBM Plex Sans',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  --mono:"SFMono-Regular",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --ground:#0b1220; --card:#151f31; --ink:#f1f5f9; --ink2:#a3b0c2; --ink3:#6d7a8b;
+  --line:#2b3a50; --accent:#fb5277; --accent2:#e11d48;
+}}
+:root[data-theme="dark"]{
+  --ground:#0b1220; --card:#151f31; --ink:#f1f5f9; --ink2:#a3b0c2; --ink3:#6d7a8b;
+  --line:#2b3a50; --accent:#fb5277; --accent2:#e11d48;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.6}
+.wrap{max-width:1080px;margin:0 auto;padding:44px 22px 90px;display:flex;flex-direction:column;gap:34px}
+h1{margin:0;font-size:2.2rem;font-weight:800;letter-spacing:-.03em}
+h2{margin:0;font-size:1.15rem;font-weight:750;letter-spacing:-.02em}
+p{margin:0 0 10px;color:var(--ink2);max-width:74ch}
+p:last-child{margin-bottom:0}
+.kick{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:700}
+.mast{border-bottom:3px solid var(--ink);padding-bottom:20px;display:flex;flex-direction:column;gap:12px}
+
+.opt{border:1px solid var(--line);border-radius:10px;background:var(--card);overflow:hidden}
+.opt-h{display:flex;align-items:baseline;gap:12px;padding:14px 18px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.opt-id{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--accent)}
+.opt-h b{font-size:1.02rem}
+.opt-h .verdict{margin-left:auto;font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;padding:3px 9px;border-radius:4px}
+.v-yes{background:rgba(15,157,99,.13);color:#0f9d63}
+.v-no{background:rgba(200,60,60,.13);color:#c33}
+.v-mid{background:rgba(192,125,10,.13);color:#c07d0a}
+.opt-b{padding:18px}
+.why{font-size:13.5px;color:var(--ink2);margin-bottom:16px;max-width:80ch}
+
+.sizes{display:flex;align-items:flex-end;gap:26px;flex-wrap:wrap;padding:18px 20px;border-radius:8px}
+.sizes.lightbg{background:#ffffff;border:1px solid #dfe4ea}
+.sizes.darkbg{background:#0f172a;border:1px solid #2b3a50;margin-top:12px}
+.szi{display:flex;flex-direction:column;align-items:center;gap:7px}
+.szi span{font-family:var(--mono);font-size:9.5px;letter-spacing:.06em}
+.sizes.lightbg .szi span{color:#8a95a5}
+.sizes.darkbg .szi span{color:#6d7a8b}
+.sizes.lightbg .mk{color:var(--navy)}
+.sizes.darkbg .mk{color:#ffffff}
+.sizes.lightbg .mk.tok{color:#0f172a}
+.sizes.darkbg .mk.tok{color:#f1f5f9}
+.mk{display:block}
+
+.ctx{margin-top:16px;border-top:1px dashed var(--line);padding-top:16px}
+.ctx-l{font-family:var(--mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink3);margin-bottom:9px}
+.byline{display:flex;align-items:center;gap:11px;flex-wrap:wrap;padding:12px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-size:13.5px;color:var(--ink2)}
+.byline .who{display:flex;align-items:center;gap:9px;font-weight:650;color:var(--ink)}
+.byline .cred{color:var(--ink3);font-weight:400}
+.byline .dot{color:var(--ink3);opacity:.55}
+.hdr{display:flex;align-items:center;gap:11px;padding:11px 14px;border:1px solid var(--line);border-radius:8px;background:var(--card)}
+.hdr .t{font-weight:700;font-size:15px}
+.hdr .s{font-size:11.5px;color:var(--ink3)}
+
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th{text-align:left;padding:9px 12px;background:var(--ground);font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink2);border-bottom:1px solid var(--line)}
+td{padding:9px 12px;border-bottom:1px solid var(--line);color:var(--ink2);vertical-align:top}
+td:first-child{color:var(--ink);font-weight:650;white-space:nowrap}
+tr:last-child td{border-bottom:none}
+.tw{border:1px solid var(--line);border-radius:9px;overflow:hidden;background:var(--card)}
+.callout{border:1px solid var(--line);border-left:4px solid var(--accent);background:var(--card);border-radius:7px;padding:15px 17px}
+.callout .ch{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);font-weight:700;margin-bottom:6px}
+code{font-family:var(--mono);font-size:.87em;background:var(--ground);padding:.1em .36em;border-radius:3px}
+footer{border-top:1px solid var(--line);padding-top:16px;font-family:var(--mono);font-size:11px;color:var(--ink3)}
+</style>
+
+<div class="wrap">
+
+<header class="mast">
+  <div class="kick">amitdusane.com &middot; identity</div>
+  <h1>Monogram Options</h1>
+  <p>Every option below is drawn at the five sizes the mark will actually appear at, on both grounds. The 26px column is the one that decides it: that is the byline, and it is about to appear on all 116 sections.</p>
+</header>
+
+<div class="callout">
+  <div class="ch">Three faults in the current mark, before you choose</div>
+  <p><strong>Two reds.</strong> The bar is <code>#C8102E</code>, the site accent is <code>#e11d48</code>. Close but not equal reads as a mistake, not a decision.<br>
+  <strong>A third brand colour.</strong> The ink is navy <code>#1E3A8A</code>, alongside crimson and the migration guide's blue.<br>
+  <strong>The bar dies small.</strong> 3.5 units in a 64 viewBox is about 1.4px at byline size. It becomes a smudge.</p>
+</div>
+
+<!-- ============ A ============ -->
+<div class="opt">
+  <div class="opt-h"><span class="opt-id">A</span><b>Current mark, unchanged</b><span class="verdict v-mid">baseline</span></div>
+  <div class="opt-b">
+    <p class="why">What ships today. Navy ink, <code>#C8102E</code> bar. Shown so everything else has something to beat.</p>
+    <div class="sizes lightbg">
+      <div class="szi"><svg class="mk" width="58" height="58" viewBox="0 0 64 64" role="img" aria-label="Amit Dusane"><path fill="currentColor" d="M18 50 L32 18 L46 50 H40 L35 39 H29 L24 50 Z"/><path fill="currentColor" d="M34 18 H44 C54 18 58 24 58 32 C58 40 54 46 44 46 H38 L41 40 H44 C49 40 52 37 52 32 C52 27 49 24 44 24 H37 Z"/><rect x="24" y="44" width="20" height="3.5" rx="1.7" fill="#C8102E"/></svg><span>58 header</span></div>
+      <div class="szi"><svg class="mk" width="32" height="32" viewBox="0 0 64 64" aria-hidden="true"><path fill="currentColor" d="M18 50 L32 18 L46 50 H40 L35 39 H29 L24 50 Z"/><path fill="currentColor" d="M34 18 H44 C54 18 58 24 58 32 C58 40 54 46 44 46 H38 L41 40 H44 C49 40 52 37 52 32 C52 27 49 24 44 24 H37 Z"/><rect x="24" y="44" width="20" height="3.5" rx="1.7" fill="#C8102E"/></svg><span>32</span></div>
+      <div class="szi"><svg class="mk" width="26" height="26" viewBox="0 0 64 64" aria-hidden="true"><path fill="currentColor" d="M18 50 L32 18 L46 50 H40 L35 39 H29 L24 50 Z"/><path fill="currentColor" d="M34 18 H44 C54 18 58 24 58 32 C58 40 54 46 44 46 H38 L41 40 H44 C49 40 52 37 52 32 C52 27 49 24 44 24 H37 Z"/><rect x="24" y="44" width="20" height="3.5" rx="1.7" fill="#C8102E"/></svg><span>26 byline</span></div>
+      <div class="szi"><svg class="mk" width="20" height="20" viewBox="0 0 64 64" aria-hidden="true"><path fill="currentColor" d="M18 50 L32 18 L46 50 H40 L35 39 H29 L24 50 Z"/><path fill="currentColor" d="M34 18 H44 C54 18 58 24 58 32 C58 40 54 46 44 46 H38 L41 40 H44 C49 40 52 37 52 32 C52 27 49 24 44 24 H37 Z"/><rect x="24" y="44" width="20" height="3.5" rx="1.7" fill="#C8102E"/></svg><span>20 print</span></div>
+      <div class="szi"><svg class="mk" width="16" height="16" viewBox="0 0 64 64" aria-hidden="true"><path fill="currentColor" d="M18 50 L32 18 L46 50 H40 L35 39 H29 L24 50 Z"/><path fill="currentColor" d="M34 18 H44 C54 18 58 24 58 32 C58 40 54 46 44 46 H38 L41 40 H44 C49 40 52 37 52 32 C52 27 49 24 44 24 H37 Z"/><rect x="24" y="44" width="20" height="3.5" rx="1.7" fill="#C8102E"/></svg><span>16 favicon</span></div>
+    </div>
+    <div class="sizes darkbg">
+      <div class="szi"><svg class="mk" width="58" height="58" viewBox="0 0 64 64" aria-hidden="true"><path fill="currentColor" d="M18 50 L32 18 L46 50 H40 L35 39 H29 L24 50 Z"/><path fill="currentColor" d="M34 18 H44 C54 18 58 24 58 32 C58 40 54 46 44 46 H38 L41 40 H44 C49 40 52 37 52 32 C52 27 49 24 44 24 H37 Z"/><rect x="24" y="44" width="20" height="3.5" rx="1.7" fill="#C8102E"/></svg><span>58</span></div>
+      <div class="szi"><svg class="mk" width="26" height="26" viewBox="0 0 64 64" aria-hidden="true"><path fill="currentColor" d="M18 50 L32 18 L46 50 H40 L35 39 H29 L24 50 Z"/><path fill="currentColor" d="M34 18 H44 C54 18 58 24 58 32 C58 40 54 46 44 46 H38 L41 40 H44 C49 40 52 37 52 32 C52 27 49 24 44 24 H37 Z"/><rect x="24" y="44" width="20" height="3.5" rx="1.7" fill="#C8102E"/></svg><span>26</span></div>
+      <div class="szi"><svg class="mk" width="16" height="16" viewBox="0 0 64 64" aria-hidden="true"><path fill="currentColor" d="M18 50 L32 18 L46 50 H40 L35 39 H29 L24 50 Z"/><path fill="currentColor" d="M34 18 H44 C54 18 58 24 58 32 C58 40 54 46 44 46 H38 L41 40 H44 C49 40 52 37 52 32 C52 27 49 24 44 24 H37 Z"/><rect x="24" y="44" width="20" height="3.5" rx="1.7" fill="#C8102E"/></svg><span>16</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ B ============ -->
+<div class="opt">
+  <div class="opt-h"><span class="opt-id">B</span><b>Same shape, colours corrected</b><span class="verdict v-yes">lowest risk</span></div>
+  <div class="opt-b">
+    <p class="why">Identical letterforms. The bar becomes the site accent so there is one red, and the ink becomes <code>--text1</code> so there is no third brand colour. The bar is thickened so it still exists at 26px. <strong>Nothing about the mark's identity changes; only its inconsistencies go.</strong></p>
+    <div class="sizes lightbg">
+      <div class="szi"><svg class="mk tok" width="58" height="58" viewBox="0 0 64 64" role="img" aria-label="Amit Dusane"><path fill="currentColor" d="M18 50 L32 18 L46 50 H40 L35 39 H29 L24 50 Z"/><path fill="currentColor" d="M34 18 H44 C54 18 58 24 58 32 C58 40 54 46 44 46 H38 L41 40 H44 C49 40 52 37 52 32 C52 27 49 24 44 24 H37 Z"/><rect x="22" y="43.5" width="24" height="5" rx="2.5" fill="#e11d48"/></svg><span>58 header</span></div>
+      <div class="szi"><svg class="mk tok" width="32" height="32" viewBox="0 0 64 64" aria-hidden="true"><path fill="currentColor" d="M18 50 L32 18 L46 50 H40 L35 39 H29 L24 50 Z"/><path fill="currentColor" d="M34 18 H44 C54 18 58 24 58 32 C58 40 54 46 44 46 H38 L41 40 H44 C49 40 52 37 52 32 C52 27 49 24 44 24 H37 Z"/><rect x="22" y="43.5" width="24" height="5" rx="2.5" fill="#e11d48"/></svg><span>32</span></div>
+      <div class="szi"><svg class="mk tok" width="26" height="26" viewBox="0 0 64 64" aria-hidden="true"><path fill="currentColor" d="M18 50 L32 18 L46 50 H40 L35 39 H29 L24 50 Z"/><path fill="currentColor" d="M34 18 H44 C54 18 58 24 58 32 C58 40 54 46 44 46 H38 L41 40 H44 C49 40 52 37 52 32 C52 27 49 24 44 24 H37 Z"/><rect x="22" y="43.5" width="24" height="5" rx="2.5" fill="#e11d48"/></svg><span>26 byline</span></div>
+      <div class="szi"><svg class="mk tok" width="20" height="20" viewBox="0 0 64 64" aria-hidden="true"><path fill="currentColor" d="M18 50 L32 18 L46 50 H40 L35 39 H29 L24 50 Z"/><path fill="currentColor" d="M34 18 H44 C54 18 58 24 58 32 C58 40 54 46 44 46 H38 L41 40 H44 C49 40 52 37 52 32 C52 27 49 24 44 24 H37 Z"/><rect x="22" y="43.5" width="24" height="5" rx="2.5" fill="#e11d48"/></svg><span>20 print</span></div>
+      <div class="szi"><svg class="mk tok" width="16" height="16" viewBox="0 0 64 64" aria-hidden="true"><path fill="currentColor" d="M18 50 L32 18 L46 50 H40 L35 39 H29 L24 50 Z"/><path fill="currentColor" d="M34 18 H44 C54 18 58 24 58 32 C58 40 54 46 44 46 H38 L41 40 H44 C49 40 52 37 52 32 C52 27 49 24 44 24 H37 Z"/><rect x="22" y="43.5" width="24" height="5" rx="2.5" fill="#e11d48"/></svg><span>16 favicon</span></div>
+    </div>
+    <div class="sizes darkbg">
+      <div class="szi"><svg class="mk tok" width="58" height="58" viewBox="0 0 64 64" aria-hidden="true"><path fill="currentColor" d="M18 50 L32 18 L46 50 H40 L35 39 H29 L24 50 Z"/><path fill="currentColor" d="M34 18 H44 C54 18 58 24 58 32 C58 40 54 46 44 46 H38 L41 40 H44 C49 40 52 37 52 32 C52 27 49 24 44 24 H37 Z"/><rect x="22" y="43.5" width="24" height="5" rx="2.5" fill="#fb5277"/></svg><span>58</span></div>
+      <div class="szi"><svg class="mk tok" width="26" height="26" viewBox="0 0 64 64" aria-hidden="true"><path fill="currentColor" d="M18 50 L32 18 L46 50 H40 L35 39 H29 L24 50 Z"/><path fill="currentColor" d="M34 18 H44 C54 18 58 24 58 32 C58 40 54 46 44 46 H38 L41 40 H44 C49 40 52 37 52 32 C52 27 49 24 44 24 H37 Z"/><rect x="22" y="43.5" width="24" height="5" rx="2.5" fill="#fb5277"/></svg><span>26</span></div>
+      <div class="szi"><svg class="mk tok" width="16" height="16" viewBox="0 0 64 64" aria-hidden="true"><path fill="currentColor" d="M18 50 L32 18 L46 50 H40 L35 39 H29 L24 50 Z"/><path fill="currentColor" d="M34 18 H44 C54 18 58 24 58 32 C58 40 54 46 44 46 H38 L41 40 H44 C49 40 52 37 52 32 C52 27 49 24 44 24 H37 Z"/><rect x="22" y="43.5" width="24" height="5" rx="2.5" fill="#fb5277"/></svg><span>16</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ C ============ -->
+<div class="opt">
+  <div class="opt-h"><span class="opt-id">C</span><b>Solid badge, letters reversed out</b><span class="verdict v-yes">strongest small</span></div>
+  <div class="opt-b">
+    <p class="why">The same letterforms knocked out of a filled crimson square. <strong>A filled shape holds at any size because there is no hairline to lose</strong>, and it is the only option here that stays legible at 16px. It also carries the brand colour rather than merely being marked by it. The cost: it is heavier, and a solid block in the byline competes a little with the text beside it.</p>
+    <div class="sizes lightbg">
+      <div class="szi"><svg class="mk" width="58" height="58" viewBox="0 0 64 64" role="img" aria-label="Amit Dusane"><rect width="64" height="64" rx="14" fill="#e11d48"/><g transform="translate(1.6,4.8) scale(0.8)"><path fill="#fff" d="M18 50 L32 18 L46 50 H40 L35 39 H29 L24 50 Z"/><path fill="#fff" d="M34 18 H44 C54 18 58 24 58 32 C58 40 54 46 44 46 H38 L41 40 H44 C49 40 52 37 52 32 C52 27 49 24 44 24 H37 Z"/></g></svg><span>58 header</span></div>
+      <div class="szi"><svg class="mk" width="32" height="32" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#e11d48"/><g transform="translate(1.6,4.8) scale(0.8)"><path fill="#fff" d="M18 50 L32 18 L46 50 H40 L35 39 H29 L24 50 Z"/><path fill="#fff" d="M34 18 H44 C54 18 58 24 58 32 C58 40 54 46 44 46 H38 L41 40 H44 C49 40 52 37 52 32 C52 27 49 24 44 24 H37 Z"/></g></svg><span>32</span></div>
+      <div class="szi"><svg class="mk" width="26" height="26" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#e11d48"/><g transform="translate(1.6,4.8) scale(0.8)"><path fill="#fff" d="M18 50 L32 18 L46 50 H40 L35 39 H29 L24 50 Z"/><path fill="#fff" d="M34 18 H44 C54 18 58 24 58 32 C58 40 54 46 44 46 H38 L41 40 H44 C49 40 52 37 52 32 C52 27 49 24 44 24 H37 Z"/></g></svg><span>26 byline</span></div>
+      <div class="szi"><svg class="mk" width="20" height="20" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#e11d48"/><g transform="translate(1.6,4.8) scale(0.8)"><path fill="#fff" d="M18 50 L32 18 L46 50 H40 L35 39 H29 L24 50 Z"/><path fill="#fff" d="M34 18 H44 C54 18 58 24 58 32 C58 40 54 46 44 46 H38 L41 40 H44 C49 40 52 37 52 32 C52 27 49 24 44 24 H37 Z"/></g></svg><span>20 print</span></div>
+      <div class="szi"><svg class="mk" width="16" height="16" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#e11d48"/><g transform="translate(1.6,4.8) scale(0.8)"><path fill="#fff" d="M18 50 L32 18 L46 50 H40 L35 39 H29 L24 50 Z"/><path fill="#fff" d="M34 18 H44 C54 18 58 24 58 32 C58 40 54 46 44 46 H38 L41 40 H44 C49 40 52 37 52 32 C52 27 49 24 44 24 H37 Z"/></g></svg><span>16 favicon</span></div>
+    </div>
+    <div class="sizes darkbg">
+      <div class="szi"><svg class="mk" width="58" height="58" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#e11d48"/><g transform="translate(1.6,4.8) scale(0.8)"><path fill="#fff" d="M18 50 L32 18 L46 50 H40 L35 39 H29 L24 50 Z"/><path fill="#fff" d="M34 18 H44 C54 18 58 24 58 32 C58 40 54 46 44 46 H38 L41 40 H44 C49 40 52 37 52 32 C52 27 49 24 44 24 H37 Z"/></g></svg><span>58</span></div>
+      <div class="szi"><svg class="mk" width="26" height="26" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#e11d48"/><g transform="translate(1.6,4.8) scale(0.8)"><path fill="#fff" d="M18 50 L32 18 L46 50 H40 L35 39 H29 L24 50 Z"/><path fill="#fff" d="M34 18 H44 C54 18 58 24 58 32 C58 40 54 46 44 46 H38 L41 40 H44 C49 40 52 37 52 32 C52 27 49 24 44 24 H37 Z"/></g></svg><span>26</span></div>
+      <div class="szi"><svg class="mk" width="16" height="16" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#e11d48"/><g transform="translate(1.6,4.8) scale(0.8)"><path fill="#fff" d="M18 50 L32 18 L46 50 H40 L35 39 H29 L24 50 Z"/><path fill="#fff" d="M34 18 H44 C54 18 58 24 58 32 C58 40 54 46 44 46 H38 L41 40 H44 C49 40 52 37 52 32 C52 27 49 24 44 24 H37 Z"/></g></svg><span>16</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ D ============ -->
+<div class="opt">
+  <div class="opt-h"><span class="opt-id">D</span><b>Outlined badge, letters in the ink</b><span class="verdict v-mid">quietest</span></div>
+  <div class="opt-b">
+    <p class="why">The badge shape of C but hollow: a crimson keyline with the letters in text colour. Lighter than C in a byline, still a contained shape rather than free-floating letters. <strong>The keyline is the weak point</strong>, since a 2-unit stroke is under a pixel at 16px.</p>
+    <div class="sizes lightbg">
+      <div class="szi"><svg class="mk tok" width="58" height="58" viewBox="0 0 64 64" role="img" aria-label="Amit Dusane"><rect x="1.5" y="1.5" width="61" height="61" rx="13" fill="none" stroke="#e11d48" stroke-width="3"/><g transform="translate(1.6,4.8) scale(0.8)"><path fill="currentColor" d="M18 50 L32 18 L46 50 H40 L35 39 H29 L24 50 Z"/><path fill="currentColor" d="M34 18 H44 C54 18 58 24 58 32 C58 40 54 46 44 46 H38 L41 40 H44 C49 40 52 37 52 32 C52 27 49 24 44 24 H37 Z"/></g></svg><span>58 header</span></div>
+      <div class="szi"><svg class="mk tok" width="32" height="32" viewBox="0 0 64 64" aria-hidden="true"><rect x="1.5" y="1.5" width="61" height="61" rx="13" fill="none" stroke="#e11d48" stroke-width="3"/><g transform="translate(1.6,4.8) scale(0.8)"><path fill="currentColor" d="M18 50 L32 18 L46 50 H40 L35 39 H29 L24 50 Z"/><path fill="currentColor" d="M34 18 H44 C54 18 58 24 58 32 C58 40 54 46 44 46 H38 L41 40 H44 C49 40 52 37 52 32 C52 27 49 24 44 24 H37 Z"/></g></svg><span>32</span></div>
+      <div class="szi"><svg class="mk tok" width="26" height="26" viewBox="0 0 64 64" aria-hidden="true"><rect x="1.5" y="1.5" width="61" height="61" rx="13" fill="none" stroke="#e11d48" stroke-width="3"/><g transform="translate(1.6,4.8) scale(0.8)"><path fill="currentColor" d="M18 50 L32 18 L46 50 H40 L35 39 H29 L24 50 Z"/><path fill="currentColor" d="M34 18 H44 C54 18 58 24 58 32 C58 40 54 46 44 46 H38 L41 40 H44 C49 40 52 37 52 32 C52 27 49 24 44 24 H37 Z"/></g></svg><span>26 byline</span></div>
+      <div class="szi"><svg class="mk tok" width="20" height="20" viewBox="0 0 64 64" aria-hidden="true"><rect x="1.5" y="1.5" width="61" height="61" rx="13" fill="none" stroke="#e11d48" stroke-width="3"/><g transform="translate(1.6,4.8) scale(0.8)"><path fill="currentColor" d="M18 50 L32 18 L46 50 H40 L35 39 H29 L24 50 Z"/><path fill="currentColor" d="M34 18 H44 C54 18 58 24 58 32 C58 40 54 46 44 46 H38 L41 40 H44 C49 40 52 37 52 32 C52 27 49 24 44 24 H37 Z"/></g></svg><span>20 print</span></div>
+      <div class="szi"><svg class="mk tok" width="16" height="16" viewBox="0 0 64 64" aria-hidden="true"><rect x="1.5" y="1.5" width="61" height="61" rx="13" fill="none" stroke="#e11d48" stroke-width="3"/><g transform="translate(1.6,4.8) scale(0.8)"><path fill="currentColor" d="M18 50 L32 18 L46 50 H40 L35 39 H29 L24 50 Z"/><path fill="currentColor" d="M34 18 H44 C54 18 58 24 58 32 C58 40 54 46 44 46 H38 L41 40 H44 C49 40 52 37 52 32 C52 27 49 24 44 24 H37 Z"/></g></svg><span>16 favicon</span></div>
+    </div>
+    <div class="sizes darkbg">
+      <div class="szi"><svg class="mk tok" width="58" height="58" viewBox="0 0 64 64" aria-hidden="true"><rect x="1.5" y="1.5" width="61" height="61" rx="13" fill="none" stroke="#fb5277" stroke-width="3"/><g transform="translate(1.6,4.8) scale(0.8)"><path fill="currentColor" d="M18 50 L32 18 L46 50 H40 L35 39 H29 L24 50 Z"/><path fill="currentColor" d="M34 18 H44 C54 18 58 24 58 32 C58 40 54 46 44 46 H38 L41 40 H44 C49 40 52 37 52 32 C52 27 49 24 44 24 H37 Z"/></g></svg><span>58</span></div>
+      <div class="szi"><svg class="mk tok" width="26" height="26" viewBox="0 0 64 64" aria-hidden="true"><rect x="1.5" y="1.5" width="61" height="61" rx="13" fill="none" stroke="#fb5277" stroke-width="3"/><g transform="translate(1.6,4.8) scale(0.8)"><path fill="currentColor" d="M18 50 L32 18 L46 50 H40 L35 39 H29 L24 50 Z"/><path fill="currentColor" d="M34 18 H44 C54 18 58 24 58 32 C58 40 54 46 44 46 H38 L41 40 H44 C49 40 52 37 52 32 C52 27 49 24 44 24 H37 Z"/></g></svg><span>26</span></div>
+      <div class="szi"><svg class="mk tok" width="16" height="16" viewBox="0 0 64 64" aria-hidden="true"><rect x="1.5" y="1.5" width="61" height="61" rx="13" fill="none" stroke="#fb5277" stroke-width="3"/><g transform="translate(1.6,4.8) scale(0.8)"><path fill="currentColor" d="M18 50 L32 18 L46 50 H40 L35 39 H29 L24 50 Z"/><path fill="currentColor" d="M34 18 H44 C54 18 58 24 58 32 C58 40 54 46 44 46 H38 L41 40 H44 C49 40 52 37 52 32 C52 27 49 24 44 24 H37 Z"/></g></svg><span>16</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ E ============ -->
+<div class="opt">
+  <div class="opt-h"><span class="opt-id">E</span><b>Single A in a badge</b><span class="verdict v-no">not recommended</span></div>
+  <div class="opt-b">
+    <p class="why">One letter, maximum clarity at 16px. Shown because it is the obvious answer to the small-size problem &mdash; and because it is the wrong one. <strong>A lone "A" is not distinctive</strong>, it drops the surname the whole byline exists to establish, and it would sit oddly beside "Amit G. Dusane" in text.</p>
+    <div class="sizes lightbg">
+      <div class="szi"><svg class="mk" width="58" height="58" viewBox="0 0 64 64" role="img" aria-label="Amit Dusane"><rect width="64" height="64" rx="14" fill="#e11d48"/><g transform="translate(4.8,3.1) scale(0.85)"><path fill="#fff" d="M18 50 L32 18 L46 50 H40 L35 39 H29 L24 50 Z"/></g></svg><span>58 header</span></div>
+      <div class="szi"><svg class="mk" width="26" height="26" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#e11d48"/><g transform="translate(4.8,3.1) scale(0.85)"><path fill="#fff" d="M18 50 L32 18 L46 50 H40 L35 39 H29 L24 50 Z"/></g></svg><span>26 byline</span></div>
+      <div class="szi"><svg class="mk" width="16" height="16" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#e11d48"/><g transform="translate(4.8,3.1) scale(0.85)"><path fill="#fff" d="M18 50 L32 18 L46 50 H40 L35 39 H29 L24 50 Z"/></g></svg><span>16 favicon</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ IN CONTEXT ============ -->
+<div class="opt">
+  <div class="opt-h"><span class="opt-id">&mdash;</span><b>The three real candidates, in the byline they are for</b></div>
+  <div class="opt-b">
+    <p class="why">This is the decision. 26px, beside the credential line, on all 116 sections.</p>
+
+    <div class="ctx" style="border-top:none;padding-top:0">
+      <div class="ctx-l">B &middot; corrected mark</div>
+      <div class="byline">
+        <span class="who"><svg width="26" height="26" viewBox="0 0 64 64" aria-hidden="true" style="color:var(--ink)"><path fill="currentColor" d="M18 50 L32 18 L46 50 H40 L35 39 H29 L24 50 Z"/><path fill="currentColor" d="M34 18 H44 C54 18 58 24 58 32 C58 40 54 46 44 46 H38 L41 40 H44 C49 40 52 37 52 32 C52 27 49 24 44 24 H37 Z"/><rect x="22" y="43.5" width="24" height="5" rx="2.5" fill="var(--accent)"/></svg>Amit G. Dusane</span>
+        <span class="cred">16 years in digital analytics, seven of them at Adobe</span>
+        <span class="dot">&middot;</span><span>Updated 18 July 2026</span><span class="dot">&middot;</span><span>14 min read</span>
+      </div>
+    </div>
+
+    <div class="ctx">
+      <div class="ctx-l">C &middot; solid badge</div>
+      <div class="byline">
+        <span class="who"><svg width="26" height="26" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="var(--accent)"/><g transform="translate(1.6,4.8) scale(0.8)"><path fill="#fff" d="M18 50 L32 18 L46 50 H40 L35 39 H29 L24 50 Z"/><path fill="#fff" d="M34 18 H44 C54 18 58 24 58 32 C58 40 54 46 44 46 H38 L41 40 H44 C49 40 52 37 52 32 C52 27 49 24 44 24 H37 Z"/></g></svg>Amit G. Dusane</span>
+        <span class="cred">16 years in digital analytics, seven of them at Adobe</span>
+        <span class="dot">&middot;</span><span>Updated 18 July 2026</span><span class="dot">&middot;</span><span>14 min read</span>
+      </div>
+    </div>
+
+    <div class="ctx">
+      <div class="ctx-l">D &middot; outlined badge</div>
+      <div class="byline">
+        <span class="who"><svg width="26" height="26" viewBox="0 0 64 64" aria-hidden="true" style="color:var(--ink)"><rect x="1.5" y="1.5" width="61" height="61" rx="13" fill="none" stroke="var(--accent)" stroke-width="3"/><g transform="translate(1.6,4.8) scale(0.8)"><path fill="currentColor" d="M18 50 L32 18 L46 50 H40 L35 39 H29 L24 50 Z"/><path fill="currentColor" d="M34 18 H44 C54 18 58 24 58 32 C58 40 54 46 44 46 H38 L41 40 H44 C49 40 52 37 52 32 C52 27 49 24 44 24 H37 Z"/></g></svg>Amit G. Dusane</span>
+        <span class="cred">16 years in digital analytics, seven of them at Adobe</span>
+        <span class="dot">&middot;</span><span>Updated 18 July 2026</span><span class="dot">&middot;</span><span>14 min read</span>
+      </div>
+    </div>
+
+    <div class="ctx">
+      <div class="ctx-l">And in the header, at 58px</div>
+      <div style="display:flex;gap:14px;flex-wrap:wrap">
+        <div class="hdr"><svg width="42" height="42" viewBox="0 0 64 64" aria-hidden="true" style="color:var(--ink)"><path fill="currentColor" d="M18 50 L32 18 L46 50 H40 L35 39 H29 L24 50 Z"/><path fill="currentColor" d="M34 18 H44 C54 18 58 24 58 32 C58 40 54 46 44 46 H38 L41 40 H44 C49 40 52 37 52 32 C52 27 49 24 44 24 H37 Z"/><rect x="22" y="43.5" width="24" height="5" rx="2.5" fill="var(--accent)"/></svg><span><span class="t">Adobe Analytics Learning</span><br><span class="s">Created by Amit G Dusane</span></span></div>
+        <div class="hdr"><svg width="42" height="42" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="var(--accent)"/><g transform="translate(1.6,4.8) scale(0.8)"><path fill="#fff" d="M18 50 L32 18 L46 50 H40 L35 39 H29 L24 50 Z"/><path fill="#fff" d="M34 18 H44 C54 18 58 24 58 32 C58 40 54 46 44 46 H38 L41 40 H44 C49 40 52 37 52 32 C52 27 49 24 44 24 H37 Z"/></g></svg><span><span class="t">Adobe Analytics Learning</span><br><span class="s">Created by Amit G Dusane</span></span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ COMPARISON ============ -->
+<section>
+  <h2>How they compare</h2>
+  <div class="tw" style="margin-top:12px">
+    <table>
+      <thead><tr><th>&nbsp;</th><th>A current</th><th>B corrected</th><th>C solid</th><th>D outlined</th></tr></thead>
+      <tbody>
+        <tr><td>Legible at 16px</td><td>no, bar smudges</td><td>marginal</td><td><strong>yes</strong></td><td>no, keyline thins</td></tr>
+        <tr><td>Legible at 26px</td><td>marginal</td><td><strong>yes</strong></td><td><strong>yes</strong></td><td>yes</td></tr>
+        <tr><td>Brand colours</td><td>three</td><td><strong>one</strong></td><td><strong>one</strong></td><td><strong>one</strong></td></tr>
+        <tr><td>Works on both grounds</td><td>yes</td><td><strong>yes</strong></td><td><strong>yes</strong></td><td>yes</td></tr>
+        <tr><td>Weight in a byline</td><td>light</td><td><strong>light</strong></td><td>heavy</td><td>medium</td></tr>
+        <tr><td>Change from today</td><td>none</td><td><strong>colour only</strong></td><td>noticeable</td><td>noticeable</td></tr>
+        <tr><td>Files to edit</td><td>&mdash;</td><td>6, then 1 partial</td><td>6, then 1 partial</td><td>6, then 1 partial</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<div class="callout">
+  <div class="ch">My recommendation</div>
+  <p><strong>B for the byline and the header, C for the favicon.</strong></p>
+  <p>B keeps the mark you already have and only removes what is inconsistent about it: the second red and the third brand colour. It stays light enough to sit beside your name without shouting, which matters when it is about to appear on 116 pages. The thicker bar survives 26px.</p>
+  <p>C is genuinely the strongest small, and that is exactly what a favicon needs &mdash; a 16px tab icon has to be a shape, not a letterform. Using the solid badge there and the open mark everywhere else is normal practice, not an inconsistency.</p>
+  <p>Whichever you pick, it goes into <code>layouts/partials/logo.html</code> first. The mark currently lives in <strong>six</strong> copies, so every future change is six edits and one of them will get missed. That is <strong>IDN-04</strong> and it should be done as part of this, not after.</p>
+</div>
+
+<footer>amitdusane.com &middot; monogram options &middot; 18 August 2026 &middot; every mark drawn at true size, both grounds</footer>
+
+</div>

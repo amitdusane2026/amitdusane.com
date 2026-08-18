@@ -1,0 +1,778 @@
+<title>amitdusane.com Blueprint</title>
+<style>
+  :root{
+    --ground:#f8fafc; --surface:#ffffff; --surface-2:#f1f5f9; --surface-3:#e8edf3;
+    --ink:#0f172a; --ink-2:#475569; --ink-3:#94a3b8;
+    --line:#e2e8f0; --line-strong:#cbd5e1;
+    --crimson:#e11d48; --crimson-soft:rgba(225,29,72,.10);
+    --blue:#1f5fae; --blue-soft:rgba(31,95,174,.10);
+    --ok:#0f9d63; --warn:#c07d0a; --info:#3b82f6;
+    --ok-soft:rgba(15,157,99,.12); --warn-soft:rgba(192,125,10,.12);
+    --shadow:0 1px 2px rgba(15,23,42,.05),0 1px 3px rgba(15,23,42,.04);
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --mono:"SFMono-Regular",ui-monospace,Menlo,Consolas,monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ground:#0b1220; --surface:#151f31; --surface-2:#1e293b; --surface-3:#26344a;
+      --ink:#f1f5f9; --ink-2:#a3b0c2; --ink-3:#6b7a90;
+      --line:#2b3a50; --line-strong:#3d4f68;
+      --crimson:#fb5277; --crimson-soft:rgba(251,82,119,.15);
+      --blue:#6ea8f0; --blue-soft:rgba(110,168,240,.15);
+      --ok:#34d399; --warn:#fbbf24; --info:#60a5fa;
+      --ok-soft:rgba(52,211,153,.14); --warn-soft:rgba(251,191,36,.14);
+      --shadow:0 1px 2px rgba(0,0,0,.35),0 2px 6px rgba(0,0,0,.25);
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#0b1220; --surface:#151f31; --surface-2:#1e293b; --surface-3:#26344a;
+    --ink:#f1f5f9; --ink-2:#a3b0c2; --ink-3:#6b7a90;
+    --line:#2b3a50; --line-strong:#3d4f68;
+    --crimson:#fb5277; --crimson-soft:rgba(251,82,119,.15);
+    --blue:#6ea8f0; --blue-soft:rgba(110,168,240,.15);
+    --ok:#34d399; --warn:#fbbf24; --info:#60a5fa;
+    --ok-soft:rgba(52,211,153,.14); --warn-soft:rgba(251,191,36,.14);
+    --shadow:0 1px 2px rgba(0,0,0,.35),0 2px 6px rgba(0,0,0,.25);
+  }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--ground); color:var(--ink);
+    font-family:var(--sans); font-size:15px; line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1160px; margin:0 auto; padding:48px 24px 96px; display:flex; flex-direction:column; gap:56px}
+  p{margin:0 0 12px; max-width:74ch; color:var(--ink-2)}
+  p:last-child{margin-bottom:0}
+  strong{color:var(--ink); font-weight:650}
+  a{color:var(--crimson)}
+  code,.mono{font-family:var(--mono); font-size:.86em}
+
+  /* ---------- masthead ---------- */
+  .mast{display:flex; flex-direction:column; gap:18px; border-bottom:3px solid var(--ink); padding-bottom:26px}
+  .mast-kicker{font-family:var(--mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--crimson); font-weight:600}
+  .mast h1{margin:0; font-size:clamp(2rem,4.5vw,2.9rem); font-weight:800; letter-spacing:-.028em; line-height:1.08; text-wrap:balance}
+  .mast .lede{font-size:1.05rem; max-width:76ch; color:var(--ink-2)}
+  .mast-meta{font-family:var(--mono); font-size:11.5px; color:var(--ink-3); letter-spacing:.02em}
+
+  .stats{display:grid; grid-template-columns:repeat(auto-fit,minmax(128px,1fr)); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:8px; overflow:hidden}
+  .stat{background:var(--surface); padding:14px 16px}
+  .stat b{display:block; font-size:1.45rem; font-weight:750; letter-spacing:-.02em; font-variant-numeric:tabular-nums; color:var(--ink)}
+  .stat span{display:block; font-family:var(--mono); font-size:10.5px; text-transform:uppercase; letter-spacing:.09em; color:var(--ink-3); margin-top:2px}
+
+  /* ---------- sections ---------- */
+  section{display:flex; flex-direction:column; gap:18px}
+  .eyebrow{font-family:var(--mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-3); font-weight:600}
+  h2{margin:0; font-size:1.45rem; font-weight:750; letter-spacing:-.02em; line-height:1.2; text-wrap:balance}
+  .h2rule{height:2px; background:var(--ink); width:44px; border-radius:2px}
+  h3{margin:20px 0 0; font-size:1rem; font-weight:700; letter-spacing:-.008em}
+
+  /* ---------- callout ---------- */
+  .callout{border:1px solid var(--line); border-left:4px solid var(--warn); background:var(--surface); border-radius:6px; padding:16px 18px; box-shadow:var(--shadow)}
+  .callout .ch{font-family:var(--mono); font-size:11px; text-transform:uppercase; letter-spacing:.1em; color:var(--warn); font-weight:700; margin-bottom:6px}
+  .callout.crim{border-left-color:var(--crimson)}
+  .callout.crim .ch{color:var(--crimson)}
+
+  /* ---------- tables ---------- */
+  .tscroll{overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--surface); box-shadow:var(--shadow)}
+  table{border-collapse:collapse; width:100%; font-size:13.5px; min-width:540px}
+  th{
+    text-align:left; padding:10px 14px; background:var(--surface-2); color:var(--ink-2);
+    font-family:var(--mono); font-size:10.5px; text-transform:uppercase; letter-spacing:.08em; font-weight:700;
+    border-bottom:1px solid var(--line); white-space:nowrap;
+  }
+  td{padding:9px 14px; border-bottom:1px solid var(--line); vertical-align:top; color:var(--ink-2)}
+  tr:last-child td{border-bottom:none}
+  td.k{color:var(--ink); font-weight:600}
+  td.num{font-variant-numeric:tabular-nums; text-align:right; white-space:nowrap}
+  td .mono, th .mono{color:var(--ink-3)}
+
+  /* ---------- chips ---------- */
+  .chip{display:inline-block; font-family:var(--mono); font-size:10px; text-transform:uppercase; letter-spacing:.07em; font-weight:700; padding:2px 7px; border-radius:3px; white-space:nowrap}
+  .chip.done{background:var(--ok-soft); color:var(--ok)}
+  .chip.todo{background:var(--surface-3); color:var(--ink-3)}
+  .chip.part{background:var(--warn-soft); color:var(--warn)}
+  .chip.crim{background:var(--crimson-soft); color:var(--crimson)}
+  .chip.blue{background:var(--blue-soft); color:var(--blue)}
+
+  /* ---------- swatches ---------- */
+  .swatches{display:grid; grid-template-columns:repeat(auto-fill,minmax(126px,1fr)); gap:10px}
+  .sw{border:1px solid var(--line); border-radius:7px; overflow:hidden; background:var(--surface)}
+  .sw-c{height:52px; border-bottom:1px solid var(--line)}
+  .sw-t{padding:7px 9px}
+  .sw-t b{display:block; font-size:11.5px; font-weight:650; color:var(--ink)}
+  .sw-t span{display:block; font-family:var(--mono); font-size:10.5px; color:var(--ink-3); margin-top:1px}
+
+  /* ---------- world cards ---------- */
+  .worlds{display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:16px}
+  .world{border:1px solid var(--line); border-top:4px solid var(--wc); border-radius:8px; padding:18px; background:var(--surface); box-shadow:var(--shadow); display:flex; flex-direction:column; gap:10px}
+  .world h3{margin:0; font-size:1.1rem; color:var(--wc)}
+  .world dl{margin:0; display:grid; grid-template-columns:auto 1fr; gap:5px 14px; font-size:12.5px}
+  .world dt{font-family:var(--mono); font-size:10.5px; text-transform:uppercase; letter-spacing:.07em; color:var(--ink-3); padding-top:2px}
+  .world dd{margin:0; color:var(--ink-2)}
+
+  /* ---------- phases + modules ---------- */
+  .phase{display:flex; flex-direction:column; gap:12px; margin-top:12px}
+  .phase-h{display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; border-bottom:1px solid var(--line-strong); padding-bottom:8px}
+  .phase-n{font-family:var(--mono); font-size:11px; font-weight:700; letter-spacing:.1em; color:var(--crimson); text-transform:uppercase}
+  .phase-h b{font-size:1.1rem; font-weight:700; letter-spacing:-.015em; color:var(--ink)}
+  .phase-h em{font-style:normal; color:var(--ink-3); font-size:12.5px}
+  .phase-h .cnt{margin-left:auto; font-family:var(--mono); font-size:11px; color:var(--ink-3); font-variant-numeric:tabular-nums}
+
+  .mod{border:1px solid var(--line); border-radius:8px; background:var(--surface); overflow:hidden; box-shadow:var(--shadow)}
+  .mod-h{display:flex; align-items:center; gap:12px; padding:12px 14px; background:var(--surface-2); border-bottom:1px solid var(--line); flex-wrap:wrap}
+  .mod-n{flex:none; width:34px; height:34px; border-radius:6px; background:var(--ink); color:var(--ground); display:grid; place-items:center; font-family:var(--mono); font-size:12px; font-weight:700}
+  .mod-n.open{background:var(--surface-3); color:var(--ink-3)}
+  .mod-t{font-weight:700; color:var(--ink); font-size:14.5px; letter-spacing:-.01em}
+  .mod-slug{font-family:var(--mono); font-size:11px; color:var(--ink-3); word-break:break-all}
+  .mod-r{margin-left:auto; display:flex; align-items:center; gap:10px}
+  .bar{width:92px; height:6px; border-radius:3px; background:var(--surface-3); overflow:hidden; flex:none}
+  .bar i{display:block; height:100%; background:var(--ok); border-radius:3px}
+  .mod-c{font-family:var(--mono); font-size:11px; color:var(--ink-3); font-variant-numeric:tabular-nums; white-space:nowrap}
+
+  .secs{list-style:none; margin:0; padding:0}
+  .secs li{display:flex; align-items:baseline; gap:10px; padding:6px 14px; border-bottom:1px solid var(--line); font-size:13px}
+  .secs li:last-child{border-bottom:none}
+  .secs li.un{background:var(--surface-2)}
+  .secs .sn{flex:none; width:22px; font-family:var(--mono); font-size:11px; color:var(--ink-3); font-variant-numeric:tabular-nums; text-align:right}
+  .secs .st{color:var(--ink); font-weight:550}
+  .secs li.un .st{color:var(--ink-3); font-weight:500}
+  .secs .sw2{margin-left:auto; font-family:var(--mono); font-size:10.5px; color:var(--ink-3); font-variant-numeric:tabular-nums; white-space:nowrap}
+
+  ul.plain{margin:0; padding-left:18px; color:var(--ink-2); font-size:14px}
+  ul.plain li{margin-bottom:5px}
+  ul.plain li:last-child{margin-bottom:0}
+  ul.plain b{color:var(--ink)}
+
+  .legend{display:flex; gap:14px; flex-wrap:wrap; font-family:var(--mono); font-size:10.5px; color:var(--ink-3); text-transform:uppercase; letter-spacing:.07em}
+  .legend i{display:inline-block; width:9px; height:9px; border-radius:2px; margin-right:5px; vertical-align:middle}
+
+  footer.end{border-top:1px solid var(--line); padding-top:20px; font-family:var(--mono); font-size:11px; color:var(--ink-3); line-height:1.8}
+
+  @media (max-width:620px){
+    .wrap{padding:32px 16px 64px; gap:44px}
+    .mod-r{width:100%; margin-left:0}
+    .secs .sw2{display:none}
+  }
+</style>
+
+<div class="wrap">
+
+  <!-- ================= MASTHEAD ================= -->
+  <header class="mast">
+    <div class="mast-kicker">Site blueprint &middot; input for design work</div>
+    <h1>amitdusane.com</h1>
+    <p class="lede">A Hugo-built publication of practitioner-level Adobe Analytics content, written by a 16-year practitioner, seven of those years inside Adobe. It is not documentation. It answers <em>why</em> a thing exists before explaining <em>how</em> it works, and it is built as two self-contained sub-sites that share a shell but not an identity.</p>
+    <p class="mast-meta">Generated 17 Aug 2026 from the working tree at commit 3b6b3ba on branch <code>develop</code>. Every count below was measured from the content files and the build, not copied from a planning document.</p>
+    <div class="stats">
+      <div class="stat"><b>219</b><span>pages built</span></div>
+      <div class="stat"><b>2</b><span>worlds</span></div>
+      <div class="stat"><b>21</b><span>modules</span></div>
+      <div class="stat"><b>116</b><span>sections</span></div>
+      <div class="stat"><b>84</b><span>written</span></div>
+      <div class="stat"><b>172,642</b><span>words</span></div>
+    </div>
+  </header>
+
+  <!-- ================= READ THIS FIRST ================= -->
+  <section>
+    <div class="callout">
+      <div class="ch">Before pointing any tool at the GitHub repository</div>
+      <p>The repository is <code>amitdusane2026/amitdusane.com</code> and its <strong>default branch is <code>main</code>, which is the June 2026 site</strong>: 73 files, no learning world, the Hugo site sitting at the repo root. Everything described in this document lives on <code>develop</code>, 88 commits ahead, where the Hugo site sits inside <code>amitdusane-site-complete/</code>. A tool that reads the default branch will describe a site that no longer exists.</p>
+      <p>A second repository on the same account, <code>amitdusane2026/adobe-analytics-learning</code>, is an unrelated single-page guide from January 2026. The name is misleading; it is not this project.</p>
+    </div>
+  </section>
+
+  <!-- ================= WHAT IT IS ================= -->
+  <section>
+    <div class="eyebrow">Purpose</div>
+    <h2>What the site is for, and who reads it</h2>
+    <div class="h2rule"></div>
+    <p>The reader is one specific person: <strong>somebody who has already been through Adobe's documentation, still has questions, and finds the topic rigid and boring.</strong> Not a beginner. Not somebody who needs convincing Adobe Analytics exists. Somebody stuck.</p>
+    <p>Adobe writes reference material for people who already know what they need. That is a permanent constraint rather than a failing, and it is exactly why the gap here is durable. The site's job is to make that documentation legible, then hand the reader back to it equipped. Most readers arrive from a search engine on one page, having read nothing else.</p>
+    <h3>Editorial rules that shape the visual design</h3>
+    <ul class="plain">
+      <li><b>Second person only, zero first person.</b> 1,756 instances of "you" and zero of "I" across the learning world.</li>
+      <li><b>Components are load-bearing, never decorative.</b> A warning, an analogy, a diagram or a tip is there to build a mental model that survives the reader closing the tab. Each one has to be earned.</li>
+      <li><b>Opinions, not options.</b> The site takes a position and says which thing to use.</li>
+      <li><b>No H1 or H2 inside body content.</b> The layout supplies both. A section is a flat stack of <code>h3.subsec-title</code> blocks, typically 5 to 17 of them.</li>
+      <li><b>Landing pages are directional only</b>, one or two paragraphs, no theory. Knowledge lives in sections.</li>
+      <li><b>No em-dashes or en-dashes anywhere.</b> Verified at zero occurrences across the whole corpus.</li>
+    </ul>
+  </section>
+
+  <!-- ================= THE TWO WORLDS ================= -->
+  <section>
+    <div class="eyebrow">Architecture</div>
+    <h2>Two worlds, one shell</h2>
+    <div class="h2rule"></div>
+    <p>A "world" is a self-contained sub-site selected by URL prefix, with its own stylesheet, JavaScript, page shell and print document. The switch is an if/else chain on <code>hasPrefix .RelPermalink</code> in <code>layouts/partials/head.html</code> and <code>layouts/_default/baseof.html</code>. A reader inside one world never sees the other's chrome.</p>
+    <p><strong>The porting rule matters for any new design work:</strong> a third world copies <code>world-learning.css</code> and changes <code>--accent</code> only. The warning, info, success and path colours stay fixed across every world, so a reader never has to relearn the visual language.</p>
+
+    <div class="worlds">
+      <div class="world" style="--wc:var(--blue)">
+        <h3>Web SDK Migration</h3>
+        <dl>
+          <dt>URL</dt><dd><code>/web-sdk-migration/</code></dd>
+          <dt>Status</dt><dd><span class="chip done">Live</span> published and indexed</dd>
+          <dt>Accent</dt><dd><code>#1f5fae</code> functional blue</dd>
+          <dt>Stylesheet</dt><dd><code>world-shell.css</code>, 34&nbsp;KB</dd>
+          <dt>Script</dt><dd><code>world-migration.js</code> + <code>search.js</code></dd>
+          <dt>Shape</dt><dd>13 sequential steps, 24 knowledge-base articles, 1 references page</dd>
+          <dt>Words</dt><dd>~12,900</dd>
+          <dt>Chrome</dt><dd>Topbar with step rail, arrow brandmark, working search</dd>
+          <dt>Extra</dt><dd>A 234&nbsp;KB single-file offline guide in <code>static/</code></dd>
+        </dl>
+      </div>
+      <div class="world" style="--wc:var(--crimson)">
+        <h3>Adobe Analytics Learning</h3>
+        <dl>
+          <dt>URL</dt><dd><code>/adobe-analytics-learning/</code></dd>
+          <dt>Status</dt><dd><span class="chip part">Unpublished</span> returns 404 by design until finished</dd>
+          <dt>Accent</dt><dd><code>#e11d48</code> crimson</dd>
+          <dt>Stylesheet</dt><dd><code>world-learning.css</code>, 42&nbsp;KB</dd>
+          <dt>Script</dt><dd><code>world-learning.js</code>, 15&nbsp;KB</dd>
+          <dt>Shape</dt><dd>5 phases, 21 modules, 116 sections, 1 glossary</dd>
+          <dt>Words</dt><dd>172,642 across 84 written sections</dd>
+          <dt>Chrome</dt><dd>Fixed header, 280px collapsible left rail, dark-mode toggle, print button, pocket map</dd>
+          <dt>Extra</dt><dd>The only world carrying product screenshots</dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= BRANDING ================= -->
+  <section>
+    <div class="eyebrow">Identity</div>
+    <h2>Branding and design tokens</h2>
+    <div class="h2rule"></div>
+    <p>There is no theme and no CSS framework. Every colour, dimension and component is hand-authored in <code>static/</code> and addressed through a fixed class vocabulary. The tokens below are the real values, read from the stylesheets.</p>
+
+    <h3>Learning world palette &mdash; light</h3>
+    <div class="swatches">
+      <div class="sw"><div class="sw-c" style="background:#e11d48"></div><div class="sw-t"><b>Accent</b><span>#e11d48</span></div></div>
+      <div class="sw"><div class="sw-c" style="background:#be123c"></div><div class="sw-t"><b>Accent deep</b><span>#be123c</span></div></div>
+      <div class="sw"><div class="sw-c" style="background:#0f172a"></div><div class="sw-t"><b>Text 1</b><span>#0f172a</span></div></div>
+      <div class="sw"><div class="sw-c" style="background:#475569"></div><div class="sw-t"><b>Text 2</b><span>#475569</span></div></div>
+      <div class="sw"><div class="sw-c" style="background:#94a3b8"></div><div class="sw-t"><b>Text 3</b><span>#94a3b8</span></div></div>
+      <div class="sw"><div class="sw-c" style="background:#f8fafc; border-bottom:1px solid #e2e8f0"></div><div class="sw-t"><b>Ground</b><span>#f8fafc</span></div></div>
+      <div class="sw"><div class="sw-c" style="background:#ffffff; border-bottom:1px solid #e2e8f0"></div><div class="sw-t"><b>Card</b><span>#ffffff</span></div></div>
+      <div class="sw"><div class="sw-c" style="background:#e2e8f0"></div><div class="sw-t"><b>Border</b><span>#e2e8f0</span></div></div>
+    </div>
+
+    <h3>Semantic colours &mdash; fixed across every world</h3>
+    <div class="swatches">
+      <div class="sw"><div class="sw-c" style="background:#10b981"></div><div class="sw-t"><b>Success</b><span>#10b981</span></div></div>
+      <div class="sw"><div class="sw-c" style="background:#f59e0b"></div><div class="sw-t"><b>Warning</b><span>#f59e0b</span></div></div>
+      <div class="sw"><div class="sw-c" style="background:#3b82f6"></div><div class="sw-t"><b>Info</b><span>#3b82f6</span></div></div>
+      <div class="sw"><div class="sw-c" style="background:#1f5fae"></div><div class="sw-t"><b>Migration accent</b><span>#1f5fae</span></div></div>
+      <div class="sw"><div class="sw-c" style="background:#1E3A8A"></div><div class="sw-t"><b>Logo ink</b><span>#1E3A8A</span></div></div>
+      <div class="sw"><div class="sw-c" style="background:#C8102E"></div><div class="sw-t"><b>Monogram bar</b><span>#C8102E</span></div></div>
+    </div>
+
+    <h3>Learning world palette &mdash; dark</h3>
+    <p>Dark mode is a token swap on <code>:root[data-theme="dark"]</code>, toggled by a header button and persisted. The accent lightens so it stays legible on a dark ground; it is not the same crimson.</p>
+    <div class="swatches">
+      <div class="sw"><div class="sw-c" style="background:#fb5277"></div><div class="sw-t"><b>Accent</b><span>#fb5277</span></div></div>
+      <div class="sw"><div class="sw-c" style="background:#0f172a"></div><div class="sw-t"><b>Ground</b><span>#0f172a</span></div></div>
+      <div class="sw"><div class="sw-c" style="background:#1e293b"></div><div class="sw-t"><b>Card</b><span>#1e293b</span></div></div>
+      <div class="sw"><div class="sw-c" style="background:#334155"></div><div class="sw-t"><b>Border</b><span>#334155</span></div></div>
+      <div class="sw"><div class="sw-c" style="background:#f1f5f9"></div><div class="sw-t"><b>Text 1</b><span>#f1f5f9</span></div></div>
+      <div class="sw"><div class="sw-c" style="background:#818cf8"></div><div class="sw-t"><b>Tagline</b><span>#818cf8</span></div></div>
+    </div>
+
+    <h3>Typography and layout</h3>
+    <div class="tscroll">
+      <table>
+        <thead><tr><th>Token</th><th>Value</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Body face</td><td><code>-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif</code></td><td>System stack throughout. No webfont is loaded anywhere on the site.</td></tr>
+          <tr><td class="k">Mono face</td><td><code>Consolas, monospace</code></td><td>Code blocks and inline code only.</td></tr>
+          <tr><td class="k">Sidebar width</td><td><code>--sidebar-w: 280px</code></td><td>Collapses behind a hamburger below tablet.</td></tr>
+          <tr><td class="k">Header height</td><td><code>--header-h: 60px</code></td><td>Fixed. Sticky across the learning world.</td></tr>
+          <tr><td class="k">Measure</td><td><code>--measure: 760px</code></td><td>Migration world reading column.</td></tr>
+          <tr><td class="k">Screenshot frame</td><td>360px desktop / 260px mobile max height</td><td>Image area renders at 293px on a 375px phone, which governs how screenshots are cropped.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout crim">
+      <div class="ch">Two identity assets worth knowing about</div>
+      <p>The <strong>monogram</strong> is an inline SVG "AD" ligature in <code>currentColor</code> with a <code>#C8102E</code> underline bar, currently copy-pasted into seven templates rather than extracted into a partial. The <strong>home page</strong> is a profile block plus topic cards, and there is presently only <em>one</em> card, the blue Web SDK Migration one. A second crimson card for the learning world is required at launch.</p>
+    </div>
+  </section>
+
+  <!-- ================= PAGE TYPES ================= -->
+  <section>
+    <div class="eyebrow">Templates</div>
+    <h2>Page types and the templates that render them</h2>
+    <div class="h2rule"></div>
+    <p>Content type is set by a <code>type</code> field in front matter and maps directly to a template. There are no Hugo shortcodes anywhere on this site and there never have been. Every component is raw HTML written into <code>.html</code> content files.</p>
+    <div class="tscroll">
+      <table>
+        <thead><tr><th>Type</th><th>Template</th><th>What it is</th><th class="num">Pages</th></tr></thead>
+        <tbody>
+          <tr><td class="k">&mdash;</td><td><code>layouts/index.html</code></td><td>Home. Profile block plus topic cards.</td><td class="num">1</td></tr>
+          <tr><td class="k">&mdash;</td><td><code>adobe-analytics-learning/list.html</code></td><td>Learning world home. Full module grid and home map.</td><td class="num">1</td></tr>
+          <tr><td class="k">category</td><td><code>category/list.html</code></td><td>Phase landing. One of five.</td><td class="num">5</td></tr>
+          <tr><td class="k">module</td><td><code>module/list.html</code></td><td>Module landing. Lists its sections.</td><td class="num">21</td></tr>
+          <tr><td class="k">lesson</td><td><code>lesson/single.html</code></td><td><strong>The section page. The core artifact of the site.</strong></td><td class="num">116</td></tr>
+          <tr><td class="k">glossary</td><td><code>glossary/single.html</code></td><td>A to Z term list, learning world.</td><td class="num">1</td></tr>
+          <tr><td class="k">step</td><td><code>step/single.html</code></td><td>Migration world sequential step.</td><td class="num">13</td></tr>
+          <tr><td class="k">kb</td><td><code>kb/single.html</code></td><td>Migration world reference article.</td><td class="num">24</td></tr>
+          <tr><td class="k">ref</td><td><code>ref/single.html</code></td><td>Migration world references page.</td><td class="num">1</td></tr>
+          <tr><td class="k">&mdash;</td><td><code>404.html</code>, <code>robots.txt</code>, <code>index.json</code></td><td>Error page, crawler directives, search index.</td><td class="num">3</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Section page anatomy, in order</h3>
+    <ul class="plain">
+      <li><b>Untitled opener</b> &mdash; one to three paragraphs before the first heading. Never a definition. Either a scenario, an extended metaphor, or a failing report shown before the feature is named.</li>
+      <li><b>The h3 stack</b> &mdash; 5 to 17 <code>h3.subsec-title</code> blocks, each 2 to 6 paragraphs, interleaved with earned components. Heading wording is editorial, often a question or a promise, never a label.</li>
+      <li><b>The practical walkthrough</b> &mdash; second to last heading. A numbered, ordered <code>code-block</code> answering "what do I actually do". Treated as the engine of the section, not an appendix.</li>
+      <li><b>Synthesis and onward link</b> &mdash; final heading, named by function rather than topic. Its last paragraph names and links a related section.</li>
+      <li><b><code>path-box</code>, then <code>ref-box</code></b> &mdash; always last, exactly one <code>ref-box</code>, nothing after it. The <code>ref-box</code> holds 2 to 4 official Adobe links and triggers an auto-injected doc-note above itself.</li>
+    </ul>
+  </section>
+
+  <!-- ================= COMPONENTS ================= -->
+  <section>
+    <div class="eyebrow">Design system</div>
+    <h2>The component vocabulary</h2>
+    <div class="h2rule"></div>
+    <p>These are the only classes an author may use. Inventing a class is prohibited: if it is not in <code>world-learning.css</code>, it does not exist. Counts are live, measured across the 84 written sections.</p>
+    <div class="tscroll">
+      <table>
+        <thead><tr><th>Component</th><th>Structure</th><th>When it is earned</th><th class="num">In use</th></tr></thead>
+        <tbody>
+          <tr><td class="k">diagram-box</td><td><code>.diagram-title</code> then inline <code>&lt;svg&gt;</code> or <code>.diagram-content</code></td><td>Whenever a claim is comparative, sequential or counterintuitive. Reader gets it in one or two seconds.</td><td class="num">136</td></tr>
+          <tr><td class="k">pro-tip</td><td><code>.pro-tip-hdr + p</code></td><td>Earned, never decorative.</td><td class="num">124</td></tr>
+          <tr><td class="k">warn-box</td><td><code>.warn-hdr + p</code>, icon must carry U+FE0F</td><td>Irreversible, expensive or silent failures. Also every perishable dated fact.</td><td class="num">103</td></tr>
+          <tr><td class="k">code-block</td><td><code>.code-hdr &gt; .code-lang + .code-copy</code>, then <code>.code-body &gt; pre</code></td><td>Its label is a label, not a language. Most valuable for UI walkthroughs, not code.</td><td class="num">100</td></tr>
+          <tr><td class="k">tbl-wrap</td><td>Wraps every table</td><td>Mandatory. A bare <code>&lt;table&gt;</code> is a defect.</td><td class="num">94</td></tr>
+          <tr><td class="k">ref-box</td><td><code>.ref-title + ul &gt; li &gt; a</code></td><td>Exactly one per section, always last. Official Adobe links only, 2 to 4, new tab.</td><td class="num">83</td></tr>
+          <tr><td class="k">path-box</td><td><code>.path-title &gt; .path-ico</code>, then <code>p</code></td><td>Only if the subject has an actual Adobe screen. A data layer does not.</td><td class="num">73</td></tr>
+          <tr><td class="k">info-box</td><td><code>.info-hdr + p</code></td><td>Earned, never decorative.</td><td class="num">65</td></tr>
+          <tr><td class="k">shot-box</td><td><code>.shot-title + .shot-frame + .shot-note</code></td><td>Product screenshots. Two per section is plenty. Must beat the diagram that would sit in that slot.</td><td class="num">14</td></tr>
+          <tr><td class="k">cards</td><td><code>.card &gt; .card-icon + .card-title + .card-desc</code></td><td>Navigational groupings.</td><td class="num">9</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin-top:4px"><strong>Hard constraints.</strong> Never nest a <code>code-block</code> inside a box. SVG colour must live in a <code>style</code> attribute with a hex fallback, because <code>fill="var(--accent)"</code> as a presentation attribute does not resolve reliably. Every SVG carries <code>role="img"</code> and a full-sentence <code>aria-label</code>. Screenshots are never wrapped in a link and never redacted; the image is inert and only a zoom button opens the overlay.</p>
+
+    <h3>Bespoke layout diagrams</h3>
+    <p>Beyond the boxes above, the stylesheet carries roughly 40 purpose-built diagram layouts used inside <code>diagram-content</code>: <code>flow</code>, <code>flow-horizontal</code>, <code>flow-vertical</code>, <code>hierarchy-tree</code>, <code>decision-tree</code>, <code>comparison-grid</code>, <code>container-diagram</code>, <code>launch-arch</code>, <code>publish-flow</code>, <code>strategy-diagram</code>, <code>workspace-layout</code>, <code>calc-example</code>, <code>event-grid</code>, <code>cookie-compare</code>, <code>rule-structure</code>, <code>architecture-flow</code>, <code>howto</code>, <code>glossary-list</code>, <code>activity-map-demo</code>. These are the site's real visual signature and the least documented part of it.</p>
+  </section>
+
+  <!-- ================= CHROME ================= -->
+  <section>
+    <div class="eyebrow">Chrome</div>
+    <h2>Navigation and page furniture</h2>
+    <div class="h2rule"></div>
+    <div class="tscroll">
+      <table>
+        <thead><tr><th>Element</th><th>Where</th><th>Behaviour</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Learning header</td><td><code>baseof.html</code></td><td>Fixed 60px. Monogram plus "Adobe Analytics Learning / Created by Amit G Dusane", search button, print button, theme toggle.</td></tr>
+          <tr><td class="k">Left sidebar</td><td><code>baseof.html</code></td><td>280px. Phases collapse into modules, modules into numbered sections. Current branch auto-expands.</td></tr>
+          <tr><td class="k">Pocket map</td><td><code>partials/wherefits.html</code></td><td>"See where this fits". Renders the whole curriculum in miniature at the foot of a section. Dims any child page lacking a <code>description</code>.</td></tr>
+          <tr><td class="k">Home map</td><td><code>partials/homemap.html</code></td><td>The full phase and module grid on the learning world home.</td></tr>
+          <tr><td class="k">Prev / next</td><td><code>baseof.html</code></td><td>Resolves across module boundaries, not just within one.</td></tr>
+          <tr><td class="k">Doc-note</td><td><code>lesson/single.html</code></td><td>Injected automatically above a <code>ref-box</code>, but only when the box contains an Adobe domain. A purely internal box is deliberately skipped.</td></tr>
+          <tr><td class="k">Print document</td><td><code>world-learning.js</code></td><td>Builds a branded print layout on demand. One per world.</td></tr>
+          <tr><td class="k">Screenshot overlay</td><td><code>world-learning.js</code></td><td>Same-tab lightbox with pan and scroll. Opened only by the zoom button.</td></tr>
+          <tr><td class="k">Footer</td><td><code>baseof.html</code></td><td>Shared. Needs a trademark attribution line added before launch.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ================= SITEMAP ================= -->
+  <section>
+    <div class="eyebrow">Sitemap</div>
+    <h2>The learning curriculum, phase by phase</h2>
+    <div class="h2rule"></div>
+    <p>Five phases, defined editorially in <code>hugo.toml</code> under <code>[params.phases]</code> rather than derived from the folder tree. Hugo knows a module exists; it does not know which phase it belongs to, and that judgment lives in configuration. URL shape is <code>/adobe-analytics-learning/&lt;phase&gt;/&lt;module&gt;/&lt;section&gt;/</code>.</p>
+    <div class="legend">
+      <span><i style="background:var(--ok)"></i>written, QA'd, signed off</span>
+      <span><i style="background:var(--surface-3); border:1px solid var(--line-strong)"></i>not yet written</span>
+      <span>word counts exclude SVG</span>
+    </div>
+
+    <!-- PHASE 1 -->
+    <div class="phase">
+      <div class="phase-h"><span class="phase-n">Phase 1</span><b>Start with the foundations</b><em>What the tool is, and what everything rests on.</em><span class="cnt">21 / 21</span></div>
+
+      <div class="mod">
+        <div class="mod-h"><span class="mod-n">01</span><span><span class="mod-t">Adobe Analytics Fundamentals</span><br><span class="mod-slug">foundations/adobe-analytics-fundamentals/</span></span><span class="mod-r"><span class="bar"><i style="width:100%"></i></span><span class="mod-c">5/5 &middot; 6,399w</span></span></div>
+        <ul class="secs">
+          <li><span class="sn">1</span><span class="st">What Is Adobe Analytics</span><span class="sw2">1,107w</span></li>
+          <li><span class="sn">2</span><span class="st">Adobe Analytics Ecosystem</span><span class="sw2">1,189w</span></li>
+          <li><span class="sn">3</span><span class="st">Key Terminology</span><span class="sw2">1,666w</span></li>
+          <li><span class="sn">4</span><span class="st">Adobe Analytics vs Google Analytics</span><span class="sw2">1,312w</span></li>
+          <li><span class="sn">5</span><span class="st">Account Structure and Access</span><span class="sw2">1,125w</span></li>
+        </ul>
+      </div>
+
+      <div class="mod">
+        <div class="mod-h"><span class="mod-n">02</span><span><span class="mod-t">Report Suites</span><br><span class="mod-slug">foundations/report-suites/</span></span><span class="mod-r"><span class="bar"><i style="width:100%"></i></span><span class="mod-c">8/8 &middot; 12,474w</span></span></div>
+        <ul class="secs">
+          <li><span class="sn">1</span><span class="st">What Are Report Suites</span><span class="sw2">1,258w</span></li>
+          <li><span class="sn">2</span><span class="st">Global vs Individual Report Suites</span><span class="sw2">1,100w</span></li>
+          <li><span class="sn">3</span><span class="st">Virtual Report Suites</span><span class="sw2">1,246w</span></li>
+          <li><span class="sn">4</span><span class="st">Report Suite Settings</span><span class="sw2">1,243w</span></li>
+          <li><span class="sn">5</span><span class="st">Multi-Suite Tagging</span><span class="sw2">995w</span></li>
+          <li><span class="sn">6</span><span class="st">Bot Filtering</span><span class="sw2">2,207w</span></li>
+          <li><span class="sn">7</span><span class="st">Privacy and Data Retention</span><span class="sw2">3,040w</span></li>
+          <li><span class="sn">8</span><span class="st">Report Suite Best Practices</span><span class="sw2">1,385w</span></li>
+        </ul>
+      </div>
+
+      <div class="mod">
+        <div class="mod-h"><span class="mod-n">03</span><span><span class="mod-t">Variables: Props, eVars, and Events</span><br><span class="mod-slug">foundations/variables/</span></span><span class="mod-r"><span class="bar"><i style="width:100%"></i></span><span class="mod-c">8/8 &middot; 10,634w</span></span></div>
+        <ul class="secs">
+          <li><span class="sn">1</span><span class="st">Props (Traffic Variables)</span><span class="sw2">1,404w</span></li>
+          <li><span class="sn">2</span><span class="st">eVars (Conversion Variables)</span><span class="sw2">1,934w</span></li>
+          <li><span class="sn">3</span><span class="st">Events (Success Events)</span><span class="sw2">1,357w</span></li>
+          <li><span class="sn">4</span><span class="st">Default and Reserved Variables</span><span class="sw2">1,108w</span></li>
+          <li><span class="sn">5</span><span class="st">The Products String</span><span class="sw2">1,394w</span></li>
+          <li><span class="sn">6</span><span class="st">List Variables and List Props</span><span class="sw2">1,227w</span></li>
+          <li><span class="sn">7</span><span class="st">Context Data Variables</span><span class="sw2">859w</span></li>
+          <li><span class="sn">8</span><span class="st">Variable Planning</span><span class="sw2">1,351w</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- PHASE 2 -->
+    <div class="phase">
+      <div class="phase-h"><span class="phase-n">Phase 2</span><b>Collect the data</b><em>How data gets from a page or an app into Adobe.</em><span class="cnt">25 / 25</span></div>
+
+      <div class="mod">
+        <div class="mod-h"><span class="mod-n">04</span><span><span class="mod-t">Data Collection</span><br><span class="mod-slug">collect/data-collection/</span></span><span class="mod-r"><span class="bar"><i style="width:100%"></i></span><span class="mod-c">6/6 &middot; 11,247w</span></span></div>
+        <ul class="secs">
+          <li><span class="sn">1</span><span class="st">Collection Methods Overview</span><span class="sw2">918w</span></li>
+          <li><span class="sn">2</span><span class="st">AppMeasurement Library</span><span class="sw2">2,954w</span></li>
+          <li><span class="sn">3</span><span class="st">Adobe Web SDK</span><span class="sw2">2,066w</span></li>
+          <li><span class="sn">4</span><span class="st">Tag Management Systems</span><span class="sw2">1,609w</span></li>
+          <li><span class="sn">5</span><span class="st">Server-Side Collection</span><span class="sw2">1,532w</span></li>
+          <li><span class="sn">6</span><span class="st">Mobile SDK</span><span class="sw2">2,168w</span></li>
+        </ul>
+      </div>
+
+      <div class="mod">
+        <div class="mod-h"><span class="mod-n">05</span><span><span class="mod-t">Data Layers</span><br><span class="mod-slug">collect/data-layers/</span></span><span class="mod-r"><span class="bar"><i style="width:100%"></i></span><span class="mod-c">4/4 &middot; 9,947w</span></span></div>
+        <ul class="secs">
+          <li><span class="sn">1</span><span class="st">What Is a Data Layer</span><span class="sw2">2,288w</span></li>
+          <li><span class="sn">2</span><span class="st">Adobe Client Data Layer (ACDL)</span><span class="sw2">1,903w</span></li>
+          <li><span class="sn">3</span><span class="st">Do You Really Need ACDL?</span><span class="sw2">2,453w</span></li>
+          <li><span class="sn">4</span><span class="st">Data Layer Design</span><span class="sw2">3,303w</span></li>
+        </ul>
+      </div>
+
+      <div class="mod">
+        <div class="mod-h"><span class="mod-n">06</span><span><span class="mod-t">Adobe Launch (Tags)</span><br><span class="mod-slug">collect/adobe-launch-tags/</span></span><span class="mod-r"><span class="bar"><i style="width:100%"></i></span><span class="mod-c">8/8 &middot; 16,767w</span></span></div>
+        <ul class="secs">
+          <li><span class="sn">1</span><span class="st">Launch Architecture</span><span class="sw2">1,795w</span></li>
+          <li><span class="sn">2</span><span class="st">Properties</span><span class="sw2">1,956w</span></li>
+          <li><span class="sn">3</span><span class="st">Extensions</span><span class="sw2">1,969w</span></li>
+          <li><span class="sn">4</span><span class="st">Data Elements</span><span class="sw2">2,020w</span></li>
+          <li><span class="sn">5</span><span class="st">Rules</span><span class="sw2">2,717w</span></li>
+          <li><span class="sn">6</span><span class="st">Publishing Workflow</span><span class="sw2">2,026w</span></li>
+          <li><span class="sn">7</span><span class="st">Environments</span><span class="sw2">1,412w</span></li>
+          <li><span class="sn">8</span><span class="st">Consent and Tag Management</span><span class="sw2">2,872w</span></li>
+        </ul>
+      </div>
+
+      <div class="mod">
+        <div class="mod-h"><span class="mod-n">07</span><span><span class="mod-t">Adobe Analytics Tracking Calls</span><br><span class="mod-slug">collect/tracking-calls/</span></span><span class="mod-r"><span class="bar"><i style="width:100%"></i></span><span class="mod-c">7/7 &middot; 14,408w</span></span></div>
+        <ul class="secs">
+          <li><span class="sn">1</span><span class="st">Page View Tracking</span><span class="sw2">2,010w</span></li>
+          <li><span class="sn">2</span><span class="st">Link Tracking</span><span class="sw2">1,786w</span></li>
+          <li><span class="sn">3</span><span class="st">Server Calls and Billing</span><span class="sw2">2,167w</span></li>
+          <li><span class="sn">4</span><span class="st">SPA Tracking</span><span class="sw2">1,794w</span></li>
+          <li><span class="sn">5</span><span class="st">Experience Cloud ID (ECID)</span><span class="sw2">3,497w</span></li>
+          <li><span class="sn">6</span><span class="st">Cross-Domain Tracking</span><span class="sw2">1,507w</span></li>
+          <li><span class="sn">7</span><span class="st">First-Party Cookies</span><span class="sw2">1,647w</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- PHASE 3 -->
+    <div class="phase">
+      <div class="phase-h"><span class="phase-n">Phase 3</span><b>Shape the data</b><em>Make the raw data mean something before anyone reads it.</em><span class="cnt">19 / 19</span></div>
+
+      <div class="mod">
+        <div class="mod-h"><span class="mod-n">08</span><span><span class="mod-t">Processing Rules</span><br><span class="mod-slug">shape/processing-rules/</span></span><span class="mod-r"><span class="bar"><i style="width:100%"></i></span><span class="mod-c">4/4 &middot; 7,364w</span></span></div>
+        <ul class="secs">
+          <li><span class="sn">1</span><span class="st">What Are Processing Rules</span><span class="sw2">1,661w</span></li>
+          <li><span class="sn">2</span><span class="st">Conditions and Actions</span><span class="sw2">2,212w</span></li>
+          <li><span class="sn">3</span><span class="st">Use Cases and Examples</span><span class="sw2">1,866w</span></li>
+          <li><span class="sn">4</span><span class="st">Limitations and Best Practices</span><span class="sw2">1,625w</span></li>
+        </ul>
+      </div>
+
+      <div class="mod">
+        <div class="mod-h"><span class="mod-n">09</span><span><span class="mod-t">VISTA Rules</span><br><span class="mod-slug">shape/vista-rules/</span></span><span class="mod-r"><span class="bar"><i style="width:100%"></i></span><span class="mod-c">3/3 &middot; 4,882w</span></span></div>
+        <ul class="secs">
+          <li><span class="sn">1</span><span class="st">What Are VISTA Rules</span><span class="sw2">2,035w</span></li>
+          <li><span class="sn">2</span><span class="st">When to Use VISTA Rules</span><span class="sw2">1,485w</span></li>
+          <li><span class="sn">3</span><span class="st">Common VISTA Rules</span><span class="sw2">1,362w</span></li>
+        </ul>
+      </div>
+
+      <div class="mod">
+        <div class="mod-h"><span class="mod-n">10</span><span><span class="mod-t">Marketing Channels</span><br><span class="mod-slug">shape/marketing-channels/</span></span><span class="mod-r"><span class="bar"><i style="width:100%"></i></span><span class="mod-c">6/6 &middot; 16,477w</span></span></div>
+        <ul class="secs">
+          <li><span class="sn">1</span><span class="st">Marketing Channels Overview</span><span class="sw2">2,208w</span></li>
+          <li><span class="sn">2</span><span class="st">Channel Configuration</span><span class="sw2">2,406w</span></li>
+          <li><span class="sn">3</span><span class="st">Marketing Channel Processing Rules</span><span class="sw2">3,376w</span></li>
+          <li><span class="sn">4</span><span class="st">Channel Attribution</span><span class="sw2">3,011w</span></li>
+          <li><span class="sn">5</span><span class="st">Engagement Periods</span><span class="sw2">2,318w</span></li>
+          <li><span class="sn">6</span><span class="st">Marketing Channel Troubleshooting</span><span class="sw2">3,158w</span></li>
+        </ul>
+      </div>
+
+      <div class="mod">
+        <div class="mod-h"><span class="mod-n">11</span><span><span class="mod-t">Classifications</span><br><span class="mod-slug">shape/classifications/</span></span><span class="mod-r"><span class="bar"><i style="width:100%"></i></span><span class="mod-c">6/6 &middot; 15,908w</span></span></div>
+        <ul class="secs">
+          <li><span class="sn">1</span><span class="st">Classifications Overview</span><span class="sw2">2,801w</span></li>
+          <li><span class="sn">2</span><span class="st">Designing the Key</span><span class="sw2">2,916w</span></li>
+          <li><span class="sn">3</span><span class="st">Classification Sets</span><span class="sw2">2,460w</span></li>
+          <li><span class="sn">4</span><span class="st">Importing Classification Data</span><span class="sw2">2,566w</span></li>
+          <li><span class="sn">5</span><span class="st">Classification Rule Builder</span><span class="sw2">2,659w</span></li>
+          <li><span class="sn">6</span><span class="st">Troubleshooting and Maintenance</span><span class="sw2">2,506w</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- PHASE 4 -->
+    <div class="phase">
+      <div class="phase-h"><span class="phase-n">Phase 4</span><b>Analyze the data</b><em>Ask questions of the data and find the answers.</em><span class="cnt">19 / 35</span></div>
+
+      <div class="mod">
+        <div class="mod-h"><span class="mod-n">12</span><span><span class="mod-t">Calculated Metrics</span><br><span class="mod-slug">analyze/calculated-metrics/</span></span><span class="mod-r"><span class="bar"><i style="width:100%"></i></span><span class="mod-c">3/3 &middot; 8,703w</span></span></div>
+        <ul class="secs">
+          <li><span class="sn">1</span><span class="st">What Are Calculated Metrics</span><span class="sw2">2,801w</span></li>
+          <li><span class="sn">2</span><span class="st">Building Calculated Metrics</span><span class="sw2">3,261w</span></li>
+          <li><span class="sn">3</span><span class="st">Calculated Metrics Best Practices</span><span class="sw2">2,641w</span></li>
+        </ul>
+      </div>
+
+      <div class="mod">
+        <div class="mod-h"><span class="mod-n">13</span><span><span class="mod-t">Segments</span><br><span class="mod-slug">analyze/segments/</span></span><span class="mod-r"><span class="bar"><i style="width:100%"></i></span><span class="mod-c">6/6 &middot; 10,741w</span></span></div>
+        <ul class="secs">
+          <li><span class="sn">1</span><span class="st">Understanding Segments</span><span class="sw2">1,397w</span></li>
+          <li><span class="sn">2</span><span class="st">Segment Containers</span><span class="sw2">2,280w</span></li>
+          <li><span class="sn">3</span><span class="st">Segment Logic and Operators</span><span class="sw2">1,383w</span></li>
+          <li><span class="sn">4</span><span class="st">Sequential Segments</span><span class="sw2">1,847w</span></li>
+          <li><span class="sn">5</span><span class="st">Segment Types and Sharing</span><span class="sw2">1,830w</span></li>
+          <li><span class="sn">6</span><span class="st">Segment Best Practices</span><span class="sw2">2,004w</span></li>
+        </ul>
+      </div>
+
+      <div class="mod">
+        <div class="mod-h"><span class="mod-n">14</span><span><span class="mod-t">Analysis Workspace</span><br><span class="mod-slug">analyze/analysis-workspace/</span></span><span class="mod-r"><span class="bar"><i style="width:100%"></i></span><span class="mod-c">10/10 &middot; 26,691w</span></span></div>
+        <ul class="secs">
+          <li><span class="sn">1</span><span class="st">Analysis Workspace Overview</span><span class="sw2">3,872w</span></li>
+          <li><span class="sn">2</span><span class="st">Projects and Panels</span><span class="sw2">2,666w</span></li>
+          <li><span class="sn">3</span><span class="st">Freeform Tables</span><span class="sw2">3,351w</span></li>
+          <li><span class="sn">4</span><span class="st">Visualizations</span><span class="sw2">2,510w</span></li>
+          <li><span class="sn">5</span><span class="st">Cohort Analysis</span><span class="sw2">2,274w</span></li>
+          <li><span class="sn">6</span><span class="st">Fallout and Flow Analysis</span><span class="sw2">2,575w</span></li>
+          <li><span class="sn">7</span><span class="st">Anomaly Detection and Contribution Analysis</span><span class="sw2">2,638w</span></li>
+          <li><span class="sn">8</span><span class="st">Curation and Templates</span><span class="sw2">1,893w</span></li>
+          <li><span class="sn">9</span><span class="st">Sharing and Collaboration</span><span class="sw2">2,155w</span></li>
+          <li><span class="sn">10</span><span class="st">Workspace Performance and Limits</span><span class="sw2">2,757w</span></li>
+        </ul>
+      </div>
+
+      <div class="mod">
+        <div class="mod-h"><span class="mod-n open">15</span><span><span class="mod-t">Attribution Models</span><br><span class="mod-slug">analyze/attribution-models/</span></span><span class="mod-r"><span class="chip crim">next up</span><span class="bar"><i style="width:0%"></i></span><span class="mod-c">0/4</span></span></div>
+        <ul class="secs">
+          <li class="un"><span class="sn">1</span><span class="st">What Is Attribution</span><span class="sw2">&mdash;</span></li>
+          <li class="un"><span class="sn">2</span><span class="st">Attribution Models Compared</span><span class="sw2">&mdash;</span></li>
+          <li class="un"><span class="sn">3</span><span class="st">Lookback Windows</span><span class="sw2">&mdash;</span></li>
+          <li class="un"><span class="sn">4</span><span class="st">Choosing an Attribution Model</span><span class="sw2">&mdash;</span></li>
+        </ul>
+      </div>
+
+      <div class="mod">
+        <div class="mod-h"><span class="mod-n open">16</span><span><span class="mod-t">Data Warehouse</span><br><span class="mod-slug">analyze/data-warehouse/</span></span><span class="mod-r"><span class="bar"><i style="width:0%"></i></span><span class="mod-c">0/4</span></span></div>
+        <ul class="secs">
+          <li class="un"><span class="sn">1</span><span class="st">Data Warehouse Overview</span><span class="sw2">&mdash;</span></li>
+          <li class="un"><span class="sn">2</span><span class="st">Creating Data Warehouse Requests</span><span class="sw2">&mdash;</span></li>
+          <li class="un"><span class="sn">3</span><span class="st">Delivery Options</span><span class="sw2">&mdash;</span></li>
+          <li class="un"><span class="sn">4</span><span class="st">Best Practices and Use Cases</span><span class="sw2">&mdash;</span></li>
+        </ul>
+      </div>
+
+      <div class="mod">
+        <div class="mod-h"><span class="mod-n open">17</span><span><span class="mod-t">Data Feeds</span><br><span class="mod-slug">analyze/data-feeds/</span></span><span class="mod-r"><span class="bar"><i style="width:0%"></i></span><span class="mod-c">0/4</span></span></div>
+        <ul class="secs">
+          <li class="un"><span class="sn">1</span><span class="st">Data Feeds Overview</span><span class="sw2">&mdash;</span></li>
+          <li class="un"><span class="sn">2</span><span class="st">Feed Configuration</span><span class="sw2">&mdash;</span></li>
+          <li class="un"><span class="sn">3</span><span class="st">Data Feed Contents</span><span class="sw2">&mdash;</span></li>
+          <li class="un"><span class="sn">4</span><span class="st">Processing Data Feeds</span><span class="sw2">&mdash;</span></li>
+        </ul>
+      </div>
+
+      <div class="mod">
+        <div class="mod-h"><span class="mod-n open">18</span><span><span class="mod-t">Activity Map</span><br><span class="mod-slug">analyze/activity-map/</span></span><span class="mod-r"><span class="bar"><i style="width:0%"></i></span><span class="mod-c">0/4</span></span></div>
+        <ul class="secs">
+          <li class="un"><span class="sn">1</span><span class="st">Activity Map Overview</span><span class="sw2">&mdash;</span></li>
+          <li class="un"><span class="sn">2</span><span class="st">Implementation and Setup</span><span class="sw2">&mdash;</span></li>
+          <li class="un"><span class="sn">3</span><span class="st">Using Activity Map</span><span class="sw2">&mdash;</span></li>
+          <li class="un"><span class="sn">4</span><span class="st">Activity Map Best Practices</span><span class="sw2">&mdash;</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- PHASE 5 -->
+    <div class="phase">
+      <div class="phase-h"><span class="phase-n">Phase 5</span><b>Deliver and maintain</b><em>Design it before it is built, prove it works, and know where it goes next.</em><span class="cnt">0 / 16</span></div>
+
+      <div class="mod">
+        <div class="mod-h"><span class="mod-n open">19</span><span><span class="mod-t">Solution Design Reference (SDR)</span><br><span class="mod-slug">deliver/solution-design-reference/</span></span><span class="mod-r"><span class="bar"><i style="width:0%"></i></span><span class="mod-c">0/6</span></span></div>
+        <ul class="secs">
+          <li class="un"><span class="sn">1</span><span class="st">What Is an SDR</span><span class="sw2">&mdash;</span></li>
+          <li class="un"><span class="sn">2</span><span class="st">Business Requirements Document</span><span class="sw2">&mdash;</span></li>
+          <li class="un"><span class="sn">3</span><span class="st">SDR Structure</span><span class="sw2">&mdash;</span></li>
+          <li class="un"><span class="sn">4</span><span class="st">Variable Mapping</span><span class="sw2">&mdash;</span></li>
+          <li class="un"><span class="sn">5</span><span class="st">Developer Instructions</span><span class="sw2">&mdash;</span></li>
+          <li class="un"><span class="sn">6</span><span class="st">Validation and Sign-off</span><span class="sw2">&mdash;</span></li>
+        </ul>
+      </div>
+
+      <div class="mod">
+        <div class="mod-h"><span class="mod-n open">20</span><span><span class="mod-t">Testing and Debugging</span><br><span class="mod-slug">deliver/testing-debugging/</span></span><span class="mod-r"><span class="bar"><i style="width:0%"></i></span><span class="mod-c">0/5</span></span></div>
+        <ul class="secs">
+          <li class="un"><span class="sn">1</span><span class="st">Debugging Tools Overview</span><span class="sw2">&mdash;</span></li>
+          <li class="un"><span class="sn">2</span><span class="st">Adobe Experience Platform Debugger</span><span class="sw2">&mdash;</span></li>
+          <li class="un"><span class="sn">3</span><span class="st">Browser Developer Tools</span><span class="sw2">&mdash;</span></li>
+          <li class="un"><span class="sn">4</span><span class="st">Real-Time Validation</span><span class="sw2">&mdash;</span></li>
+          <li class="un"><span class="sn">5</span><span class="st">Common Issues and Solutions</span><span class="sw2">&mdash;</span></li>
+        </ul>
+      </div>
+
+      <div class="mod">
+        <div class="mod-h"><span class="mod-n open">21</span><span><span class="mod-t">Adobe Analytics and CJA</span><br><span class="mod-slug">deliver/adobe-analytics-cja/</span></span><span class="mod-r"><span class="bar"><i style="width:0%"></i></span><span class="mod-c">0/5</span></span></div>
+        <ul class="secs">
+          <li class="un"><span class="sn">1</span><span class="st">What Is Customer Journey Analytics</span><span class="sw2">&mdash;</span></li>
+          <li class="un"><span class="sn">2</span><span class="st">Adobe Experience Platform Integration</span><span class="sw2">&mdash;</span></li>
+          <li class="un"><span class="sn">3</span><span class="st">Cross-Device Analytics</span><span class="sw2">&mdash;</span></li>
+          <li class="un"><span class="sn">4</span><span class="st">Migrating to CJA</span><span class="sw2">&mdash;</span></li>
+          <li class="un"><span class="sn">5</span><span class="st">What to Learn Next</span><span class="sw2">&mdash;</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= MIGRATION WORLD ================= -->
+  <section>
+    <div class="eyebrow">Sitemap</div>
+    <h2>The migration world, which is already live</h2>
+    <div class="h2rule"></div>
+    <p>A finished, published guide with a different shape: a linear spine of 13 steps, backed by a knowledge base that steps link sideways into. It is the visual and structural precedent the learning world was designed against, and the only part of the site a visitor can currently read.</p>
+    <div class="tscroll">
+      <table>
+        <thead><tr><th>Group</th><th>Pages</th><th class="num">Count</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Steps</td><td>Understand what's changing &middot; Take inventory &middot; Create the schema &middot; Add the Analytics Full Extension field group &middot; Create the datastream &middot; Install and configure the Web SDK extension &middot; Migrate identity (ECID) &middot; Map your variables &middot; Build the Send Event rule &middot; Handle consent &middot; Validate the payload &middot; Prove parity &middot; Roll out and decommission</td><td class="num">13</td></tr>
+          <tr><td class="k">Knowledge base</td><td>Why Web SDK &middot; The Edge Network &middot; Schema and XDM &middot; The datastream &middot; The Full Extension &middot; One library (alloy) &middot; Identity and ECID &middot; The consent model &middot; Context data &middot; xdm vs data object &middot; Data-layer design &middot; Variable mapping catalog &middot; Variable groups and schema map &middot; Rule order and sendEvent &middot; Plugin cookbook &middot; The Profile lock &middot; Validation and parity &middot; Validation report suite &middot; Cookie reference &middot; Governance and ownership &middot; Rollout and decommission &middot; The strategic forks &middot; The forward path &middot; Glossary</td><td class="num">24</td></tr>
+          <tr><td class="k">Reference</td><td>References</td><td class="num">1</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ================= FEATURES ================= -->
+  <section>
+    <div class="eyebrow">Platform</div>
+    <h2>Feature inventory</h2>
+    <div class="h2rule"></div>
+    <p>Thirty-nine platform features are tracked separately from content. Twenty-eight are built. The eleven outstanding ones are listed in full, because most of them carry a design decision rather than only an engineering one.</p>
+    <div class="tscroll">
+      <table>
+        <thead><tr><th>Group</th><th>Built</th><th>Outstanding</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="k">Presentation <span class="chip done">8/8</span></td>
+            <td>Dual-world stylesheet switching &middot; dark and light theme toggle &middot; print document per world &middot; responsive layout &middot; code-block copy buttons &middot; doc-note injection &middot; the component class vocabulary</td>
+            <td>&mdash;</td>
+          </tr>
+          <tr>
+            <td class="k">Navigation <span class="chip part">6/7</span></td>
+            <td>Left sidebar &middot; pocket map &middot; home map &middot; prev/next &middot; migration-world search &middot; search index generation</td>
+            <td><strong>Learning-world search.</strong> The button and its <code>/</code> hint render today, but there is no click handler, no overlay markup and no index. A visible control that does nothing. At launch it is either wired or hidden.</td>
+          </tr>
+          <tr>
+            <td class="k">SEO <span class="chip part">7/11</span></td>
+            <td>Canonical URLs &middot; Open Graph &middot; Twitter cards &middot; sitemap.xml &middot; robots.txt &middot; JSON-LD WebSite and Person &middot; JSON-LD BreadcrumbList</td>
+            <td><strong>Article schema</strong> &middot; <strong>datePublished and dateModified</strong> &middot; <strong>a visible byline and published date on the page</strong> &middot; RSS feed. A search lander on any section currently sees no indication of who wrote it, which is the single largest credibility gap on the site.</td>
+          </tr>
+          <tr>
+            <td class="k">Chrome <span class="chip part">5/6</span></td>
+            <td>404 page &middot; favicon set &middot; Open Graph default image &middot; site footer &middot; glossary</td>
+            <td><strong>Home page topic cards.</strong> Only the blue migration card exists; the crimson learning card is required at launch.</td>
+          </tr>
+          <tr>
+            <td class="k">Infrastructure <span class="chip part">2/3</span></td>
+            <td>GitHub Actions deploy &middot; custom domain CNAME</td>
+            <td><strong>Google Analytics.</strong> The ID is correctly configured and the partial is invoked, yet a production build emits zero <code>gtag</code> output on every page. The site currently measures nothing about itself.</td>
+          </tr>
+          <tr>
+            <td class="k">Tech debt <span class="chip todo">0/4</span></td>
+            <td>&mdash;</td>
+            <td>Per-world <code>params.phases</code> scoping &middot; dead-code removal (<code>guide.css</code>, <code>theme.js</code>, two unused partials) &middot; hardcoded migration statistics &middot; logo partial extraction</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ================= WHERE DESIGN IS NEEDED ================= -->
+  <section>
+    <div class="eyebrow">Brief</div>
+    <h2>Where design work is actually needed</h2>
+    <div class="h2rule"></div>
+    <p>The section page is finished and heavily iterated; it does not need redesigning. Everything below is either unbuilt or known to be weak, and this is the honest list.</p>
+    <div class="tscroll">
+      <table>
+        <thead><tr><th>Surface</th><th>State</th><th>What is needed</th></tr></thead>
+        <tbody>
+          <tr><td class="k">26 landing pages</td><td><span class="chip todo">empty</span></td><td>All 21 module landings and all 5 phase landings have no body content. Each is deliberately short: one or two paragraphs saying what the phase or module covers and pointing at the sections. A trailer, not a lesson. This is the largest single block of unbuilt surface on the site.</td></tr>
+          <tr><td class="k">Home page</td><td><span class="chip part">half built</span></td><td>One topic card where there should be two. The learning card needs the crimson accent and has to sit convincingly beside a card describing a finished guide when the learning world is 72% written.</td></tr>
+          <tr><td class="k">Byline and author signals</td><td><span class="chip todo">absent</span></td><td>No author markup, byline, or date on any section. 16 years of experience appears on the About page and nowhere else. Needs a visible on-page treatment as well as the schema.</td></tr>
+          <tr><td class="k">Learning-world search</td><td><span class="chip part">dead control</span></td><td>An overlay, result badges for module / lesson / glossary, and an empty state. The migration world's implementation is the precedent.</td></tr>
+          <tr><td class="k">Glossary</td><td><span class="chip part">unstyled</span></td><td>1,366 words of definitions rendering through a simple <code>glossary-list</code>. Never designed properly, and it is a natural search-landing page.</td></tr>
+          <tr><td class="k">Footer</td><td><span class="chip part">thin</span></td><td>Needs a trademark attribution line stating that Adobe and Adobe Analytics are trademarks of Adobe Inc. and that this site is independent.</td></tr>
+          <tr><td class="k">A third world</td><td><span class="chip todo">planned</span></td><td>CJA, RTCDP, AJO, AEP fundamentals and certification prep are on the roadmap. The world-switching mechanism is currently an if/else chain across two files that would be eight branches deep by the sixth world.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ================= CONSTRAINTS ================= -->
+  <section>
+    <div class="eyebrow">Constraints</div>
+    <h2>Non-negotiables for anyone touching this build</h2>
+    <div class="h2rule"></div>
+    <ul class="plain">
+      <li><b>Hugo v0.123.7 extended, no theme, no shortcodes.</b> New content files are <code>.html</code>, never <code>.md</code>: <code>hugo.toml</code> has no Goldmark renderer block, so raw HTML is silently stripped from Markdown.</li>
+      <li><b>Never build with <code>--minify</code>.</b> The minifier destroys inline SVG text elements.</li>
+      <li><b><code>description</code> in front matter is the publish flag.</b> A page without one renders dimmed and unclickable in both maps. It is why the 32 unwritten sections are invisible rather than broken.</li>
+      <li><b>A new module must be added to <code>[params.phases]</code> in <code>hugo.toml</code>.</b> Miss it and the module appears in navigation but vanishes from both maps, with no build error.</li>
+      <li><b>Asset tags carry a <code>?v=</code> content hash.</b> Remove it and every returning visitor keeps the old stylesheet after any CSS change.</li>
+      <li><b>The <code>[frontmatter]</code> block in <code>hugo.toml</code> is load-bearing.</b> Without it a <code>lastmod</code> one day ahead of the UTC build clock silently drops the page. This once removed 103 pages while the build reported success.</li>
+      <li><b>Push to <code>main</code> publishes immediately.</b> There is no staging environment. <code>develop</code> publishes nothing, which is why the learning world can sit unfinished in the open.</li>
+    </ul>
+  </section>
+
+  <footer class="end">
+    amitdusane.com &middot; site blueprint<br>
+    Generated 17 August 2026 &middot; branch <code>develop</code> &middot; commit 3b6b3ba &middot; 219 pages, clean build<br>
+    Author: Amit G. Dusane &middot; Adobe Experience Platform architect
+  </footer>
+
+</div>

@@ -97,6 +97,8 @@ A fifth, already fixed and documented in `hugo.toml`: the `[frontmatter]` block 
 
 A sixth, found 18 Aug 2026 while rolling out the three-column shell: **a CSS grid item with a pixel `max-width` does not shrink below its track.** `min-width:0` is not enough; it needs `max-width:min(760px,100%)`. Without it the article rendered 109px wider than a 390px phone, and because a `position:fixed` header with `left:0;right:0` sizes to the *overflowed* width, the header stretched too and slid away sideways when the reader scrolled. Two symptoms, one cause, and neither looks like a grid problem. **Whenever a container becomes a grid or flex item, check it at 390px before anything else.**
 
+A seventh, and it has caught me three times in one session: **`body.world-learning .lcontent p` and `… li` are specificity (0,2,2) and beat any bare component selector.** A new rule like `.lscale{font-size:var(--fs-meta)}` silently renders at body size instead. It hit the breadcrumb, the five box-prose rules, and the landing-page scale line. **Any new `<p>` or `<li>` inside `.lcontent` needs the scoped form** — `body.world-learning .lcontent p.lscale` — or add an element qualifier to win on specificity. The symptom is always the same: the token is correct, the rule looks right, and the page ignores it.
+
 ---
 
 ## Building
