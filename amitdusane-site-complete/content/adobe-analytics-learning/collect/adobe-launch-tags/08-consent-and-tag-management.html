@@ -185,7 +185,7 @@ Action     Adobe Analytics - Set Variables
 </div>
 <p>Implementations still on <a href="/adobe-analytics-learning/collect/data-collection/appmeasurement-library/">AppMeasurement</a> have the older equivalent: the Opt-in service, a library bundled with the Experience Cloud ID service, exposed as <code>adobe.optIn</code> and configured through its own extension. Its distinguishing feature is granularity, gating Analytics, Target and Audience Manager separately, which maps neatly onto the category structure your consent platform already uses.</p>
 
-<h3 class="subsec-title">The setting that is wrong by default for a large part of the world</h3>
+<h3 class="subsec-title" data-nav="The setting that is wrong by default">The setting that is wrong by default for a large part of the world</h3>
 <p>One radio button carries more risk than everything else in this section combined.</p>
 <p>The permissive default collects events before the visitor has agreed to anything. It produces complete data, it makes a new implementation look like it is working, and for any jurisdiction requiring prior consent it is the wrong choice. Adobe's own guidance for organisations needing explicit consent is to use Out or Pending.</p>
 <div class="warn-box">

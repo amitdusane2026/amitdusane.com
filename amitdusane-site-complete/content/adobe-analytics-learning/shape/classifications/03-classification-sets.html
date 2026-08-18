@@ -198,7 +198,7 @@ Resulting list:
 <p>The reason to reach for one is repetition. Suppose two hundred tracking codes belong to twelve campaigns, and those twelve campaigns belong to four business units. You could hang Business Unit off every tracking code, which means maintaining the same four answers two hundred times and re-typing all of them the day the company reorganises. Or you classify tracking code into Campaign, and classify Campaign into Business Unit. The reorganisation is then four rows.</p>
 <p>The rule of thumb is to attach an attribute at the level it actually belongs to. Business Unit is a fact about a campaign, not a fact about a tracking code, and a schema that says so stays correct with far less work. It carries one consequence worth knowing before you build it: a subclassification cannot exist without its parent, so deleting a classification value takes everything hanging beneath it, which <a href="/adobe-analytics-learning/shape/classifications/importing-classification-data/">Importing Classification Data</a> returns to.</p>
 
-<h3 class="subsec-title">Classification Name and Identity Name are not the same thing</h3>
+<h3 class="subsec-title" data-nav="Classification Name is not Identity Name">Classification Name and Identity Name are not the same thing</h3>
 <p>Look again at that second column, because it is doing something you did not ask it to do and cannot undo.</p>
 
 <div class="tbl-wrap">

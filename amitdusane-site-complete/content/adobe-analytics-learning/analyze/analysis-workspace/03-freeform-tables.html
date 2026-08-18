@@ -206,7 +206,7 @@ weight: 3
     <p>The rule that avoids most of this is short: dynamic rows while you are exploring, static rows for anything scheduled, shared or repeated. A project that goes to the same five people every month exists so they can see change over time, and change over time means nothing at all if the rows themselves change underneath the numbers. Pinning has a second benefit that matters during an incident, which is that it makes a disappearance visible: a static row dropping to zero is a finding somebody can act on, while a dynamic row quietly falling out of the top ten is not an event at all.</p>
 </div>
 
-<h3 class="subsec-title">Percentages are honest about the number and quiet about the denominator</h3>
+<h3 class="subsec-title" data-nav="Percentages hide the denominator">Percentages are honest about the number and quiet about the denominator</h3>
 <p>A percentage column looks like the least ambiguous thing available. It is a share, shares are simple, and nobody asks a follow-up question about a percentage in a meeting.</p>
 
 <p>The question it never answers on screen is what it is a share of. Inside a breakdown, the percentage is of the parent row. At the top level, it is of the column total. Rearrange the table and the same visual percentage in the same position is suddenly measuring something else, while looking exactly as it did before. That compounds badly with everything in the breakdown section, because the most quotable figure in any table is a percentage sitting inside a breakdown, and that is precisely the one whose denominator is invisible.</p>
@@ -235,7 +235,7 @@ weight: 3
     <div class="warn-hdr">⚠️ A column of Unique Visitors summed by hand will never match the total, and the table is the one that is right</div>
     <p>This is the most common way a spreadsheet disagrees with Adobe Analytics, and the disagreement usually gets blamed on the tool. Deduplicated metrics cannot be reassembled from smaller pieces: monthly uniques are not the sum of the weeks, weekly uniques are not the sum of the days, and the total of a broken-down column is not the sum of its children. If a number has to be added up outside Workspace, use a metric that actually sums, such as Visits or Occurrences, and leave the deduplicated ones to be read where they are calculated.</p>
 </div>
-<h3 class="subsec-title">Follow along: build one table four ways and watch the meaning move</h3>
+<h3 class="subsec-title" data-nav="Follow along: one table, four ways">Follow along: build one table four ways and watch the meaning move</h3>
 <p>This is the exercise that makes the rest of the section permanent, and it takes about five minutes. The numbers are not the point. What you are watching for is how little has to change before a number means something else.</p>
 
 <div class="code-block">

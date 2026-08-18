@@ -10,15 +10,18 @@
    Google reads the served HTML, so an id added on load gives the reader a
    usable jump list and gives search nothing. These ids are also permanent
    URLs once the section is published, so they are cut on a word boundary
-   rather than mid-word, and de-duplicated if two headings ever match. */ -}}
+   rather than mid-word, and de-duplicated if two headings ever match.
+   The opening-tag match must tolerate attributes: 20 headings carry
+   data-nav for the in-page spine, and a literal `<h3 class="subsec-title">`
+   pattern silently skipped every one of them. Same trap as the ref-box
+   doc-note injection. */ -}}
 {{ $seen := slice }}
-{{ range $h := findRE `<h[34] class="subsec-title">(?s).*?</h[34]>` $content }}
+{{ range $h := findRE `<h[34] class="subsec-title"[^>]*>(?s).*?</h[34]>` $content }}
   {{ $id := $h | plainify | htmlUnescape | chomp | urlize }}
   {{ if gt (len $id) 60 }}{{ $id = replaceRE `-[^-]*$` "" (substr $id 0 60) }}{{ end }}
   {{ if in $seen $id }}{{ $id = printf "%s-%d" $id (len $seen) }}{{ end }}
   {{ $seen = $seen | append $id }}
-  {{ $new := replace $h `<h3 class="subsec-title">` (printf `<h3 class="subsec-title" id="%s">` $id) 1 }}
-  {{ $new = replace $new `<h4 class="subsec-title">` (printf `<h4 class="subsec-title" id="%s">` $id) 1 }}
+  {{ $new := replaceRE `^(<h[34] class="subsec-title")` (printf `${1} id="%s"` $id) $h 1 }}
   {{ $content = replace $content $h $new 1 }}
 {{ end }}
 {{ if findRE `<div class="ref-box">(?s).*?(experienceleague\.adobe\.com|adobe\.com/go|://adobe)` $content 1 }}
