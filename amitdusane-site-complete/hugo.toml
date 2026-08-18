@@ -1,6 +1,6 @@
 baseURL = "https://amitdusane.com/"
 languageCode = "en-us"
-title = "Amit G. Dusane"
+title = "Amit G Dusane"
 enableRobotsTXT = true
 disableKinds = ["taxonomy", "term"]
 
@@ -29,7 +29,7 @@ disableKinds = ["taxonomy", "term"]
   home = ["HTML", "JSON"]
 
 [params]
-  author = "Amit G. Dusane"
+  author = "Amit G Dusane"
   jobTitle = "Adobe Experience Platform Architect"
   linkedin = "https://www.linkedin.com/in/amitdusane/"
 

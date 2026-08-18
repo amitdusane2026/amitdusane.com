@@ -211,3 +211,19 @@ body.wf-lock{overflow:hidden}
 /* pocket-map dynamic green arrows */
 .wf-arrows{position:absolute;top:0;left:0;pointer-events:none;z-index:3;overflow:visible}
 .wf-arrows line{stroke:#22c55e;stroke-width:2.2;stroke-linecap:round;display:none;filter:drop-shadow(0 0 3px rgba(34,197,94,.45))}
+
+/* --------------------------------------------------------------------------
+   The About control carries the monogram rather than a stock person glyph.
+   A silhouette is anonymous; "AD" is actually him, which is the whole point
+   of the control. The mark is unaltered, and it uses the two versions it
+   already has: navy ink on a light disc, white ink on a dark one. That is
+   why the disc is a surface colour and not the crimson it used to be, since
+   navy on crimson is unreadable. chrome.css carries no theme tokens and
+   loads on every world, so the two states are written out explicitly here.
+   -------------------------------------------------------------------------- */
+.author-fab{background:#ffffff; color:#1E3A8A; border:1px solid #e2e8f0;
+            box-shadow:0 6px 18px rgba(15,23,42,.18)}
+.author-fab:hover{border-color:#e11d48}
+[data-theme="dark"] .author-fab{background:#1e293b; color:#ffffff; border-color:#334155;
+            box-shadow:0 6px 18px rgba(0,0,0,.42)}
+[data-theme="dark"] .author-fab:hover{border-color:#fb5277}

@@ -20,7 +20,7 @@
   <link rel="icon" href="{{ "favicon.svg" | relURL }}" type="image/svg+xml">
   <link rel="icon" href="{{ "favicon-32.png" | relURL }}" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="{{ "apple-touch-icon.png" | relURL }}">
-  <link rel="stylesheet" href="{{ "chrome.css" | relURL }}">
+  <link rel="stylesheet" href="{{ "chrome.css" | relURL }}?v={{ substr (sha256 (readFile "static/chrome.css")) 0 10 }}">
   {{- $ogtitle := cond (ne (string .Params.seotitle) "") (string .Params.seotitle) (printf "%s · %s" .Title .Site.Title) -}}
   {{- $ogdesc := cond (ne (string .Description) "") (string .Description) (.Summary | plainify | truncate 150) -}}
   <meta property="og:type" content="{{ if .IsHome }}website{{ else }}article{{ end }}">

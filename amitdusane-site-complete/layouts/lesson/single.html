@@ -3,22 +3,33 @@
 {{ $cur := . }}
 <p class="lcrumb"><a href="{{ "/adobe-analytics-learning/" | relURL }}">Adobe Analytics Learning</a> &rsaquo; <a href="{{ $mod.Parent.RelPermalink }}">{{ $mod.Parent.Title }}</a> &rsaquo; <a href="{{ $mod.RelPermalink }}">{{ $mod.Title }}</a></p>
 <h1 class="lsec-title">{{ .Title }}</h1>
-{{- /* EAT-01: the byline. Until now a search lander read three thousand
-   words of technical judgment with no indication of who wrote it, which
-   was the largest credibility gap on the site. The credential line is the
-   part doing the work: "seven of them at Adobe" is the unusual, checkable
-   claim. The name links to /about/ so the assertion can be verified in one
-   click rather than merely asserted. Replaces the bare .lupdated stamp,
-   which is folded in as the date. */ -}}
-<div class="byline">
-  <a class="by-who" href="{{ "/about/" | relURL }}">
-    {{ partial "logo.html" (dict "size" 26 "hidden" true) }}<span>{{ .Site.Params.author }}</span>
-  </a>
+{{- /* The monogram is deliberately NOT here. It sits in the header as the
+   site mark, and repeating it 200px lower as an author avatar read as
+   duplication rather than branding. The credential line and the Person in
+   the structured data are what carry E-E-A-T, not a second copy of the logo.
+
+   Read time is computed ONCE, here, and published on a data attribute so
+   the in-page spine can read it instead of recounting. Two independent
+   counts produced 2,929 words server-side and 3,001 in the browser, which
+   showed the reader 13 minutes in one place and 14 in another. */ -}}
+{{- $mins := math.Round (div (float (countwords .Content)) 220) -}}
+{{- $pub := .Params.published -}}
+{{- $mod := .Lastmod -}}
+{{- $pubStr := "" -}}
+{{- with $pub -}}{{- $pubStr = ((time .).Format "2006-01-02") -}}{{- end -}}
+{{- $sameDay := eq $pubStr ($mod.Format "2006-01-02") -}}
+<div class="byline" data-readmins="{{ $mins }}">
+  <a class="by-who" href="{{ "/about/" | relURL }}">{{ .Site.Params.author }}</a>
   <span class="by-cred">16 years in digital analytics, seven of them at Adobe</span>
   <span class="by-sep" aria-hidden="true">&middot;</span>
-  {{ with .Lastmod }}<time class="by-date" datetime="{{ .Format "2006-01-02" }}">Updated {{ .Format "2 January 2006" }}</time>{{ end }}
+  {{- /* Both dates only when they differ. On launch day every page will
+     carry the same date for both, and "Published 1 Oct, Updated 1 Oct" reads
+     as a mistake rather than as information. */ -}}
+  {{ with $pub }}<time class="by-date" datetime="{{ (time .).Format "2006-01-02" }}">Published {{ (time .).Format "2 Jan 2006" }}</time>{{ end }}
+  {{ if not $sameDay }}<span class="by-sep" aria-hidden="true">&middot;</span>
+  <time class="by-date" datetime="{{ $mod.Format "2006-01-02" }}">Updated {{ $mod.Format "2 Jan 2006" }}</time>{{ end }}
   <span class="by-sep" aria-hidden="true">&middot;</span>
-  <span class="by-read">{{ math.Round (div (float (countwords .Content)) 220) }} min read</span>
+  <span class="by-read">{{ $mins }} min read</span>
 </div>
 {{- /* Auto-insert the "Need implementation steps?" signpost just before the Adobe docs ref-box, but ONLY when that ref-box actually links to Adobe documentation. A ref-box of purely internal links does not get the note. */ -}}
 {{ $content := .Content }}

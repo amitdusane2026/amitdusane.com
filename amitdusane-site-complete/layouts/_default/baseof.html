@@ -69,7 +69,6 @@
       <span class="llogo-icon" aria-hidden="true">{{ partial "logo.html" (dict "size" 58 "hidden" true) }}</span>
       <span>
         <div class="llogo-text">Adobe Analytics Learning</div>
-        <div class="llogo-author">Created by <b>Amit G Dusane</b></div>
       </span>
     </a>
     <button class="lsearch-btn" id="lSearchBtn" type="button" aria-label="Search">
@@ -129,18 +128,18 @@
     <tbody><tr><td><div id="printBody"></div></td></tr></tbody>
   </table>
 {{ else }}
-  <div class="gtop">{{ if .IsHome }}<span class="gbrand">Amit G. Dusane</span>{{ else }}<a class="gbrand gback" href="{{ "/" | relURL }}">&larr; Home</a>{{ end }}</div>
+  <div class="gtop">{{ if .IsHome }}<span class="gbrand">Amit G Dusane</span>{{ else }}<a class="gbrand gback" href="{{ "/" | relURL }}">&larr; Home</a>{{ end }}</div>
   <main class="gmain">{{ block "main" . }}{{ end }}</main>
-  <footer class="gfoot">&copy; {{ now.Year }} <b>Amit G. Dusane</b><span class="sep">&middot;</span>Adobe Experience Platform architect<span class="sep">&middot;</span><a href="{{ .Site.Params.linkedin }}" target="_blank" rel="me noopener">LinkedIn</a></footer>
+  <footer class="gfoot">&copy; {{ now.Year }} <b>Amit G Dusane</b><span class="sep">&middot;</span>Adobe Experience Platform architect<span class="sep">&middot;</span><a href="{{ .Site.Params.linkedin }}" target="_blank" rel="me noopener">LinkedIn</a></footer>
 {{ end }}
 
-  <button class="author-fab" id="authorFab" aria-label="About the author" title="About the author"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></button>
+  <button class="author-fab" id="authorFab" aria-label="About the author" title="About the author">{{ partial "logo.html" (dict "size" 30 "hidden" true) }}</button>
   <div class="about-overlay" id="aboutOverlay" hidden>
-    <div class="about-card" role="dialog" aria-modal="true" aria-label="About Amit G. Dusane">
+    <div class="about-card" role="dialog" aria-modal="true" aria-label="About Amit G Dusane">
       <button class="about-x" id="aboutClose" aria-label="Close">&times;</button>
       <div class="about-head">
         <span class="about-avatar" aria-hidden="true">{{ partial "logo.html" (dict "size" 58 "hidden" true) }}</span>
-        <div><div class="about-name">Amit G. Dusane</div><div class="about-role">Customer Journey Analytics Practitioner &middot; 16+ years</div></div>
+        <div><div class="about-name">Amit G Dusane</div><div class="about-role">Customer Journey Analytics Practitioner &middot; 16+ years</div></div>
       </div>
       <div class="about-body">
         <p>I'm a digital analytics professional with nearly 16 years of experience dedicated to Adobe Analytics and the Adobe Experience Cloud ecosystem. My career spans the platform's full evolution, from Omniture SiteCatalyst to the modern Web SDK and Experience Platform architecture.</p>

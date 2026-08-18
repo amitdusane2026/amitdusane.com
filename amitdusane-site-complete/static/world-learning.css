@@ -367,8 +367,7 @@ body.world-learning .lcontent .byline{
   display:inline-flex; align-items:center; gap:8px;
   font-weight:700; color:var(--text1); text-decoration:none;
 }
-.byline .by-who svg{flex:none; color:var(--logo-ink)}
-.byline .by-who:hover span{text-decoration:underline; text-underline-offset:2px}
+.byline .by-who:hover{text-decoration:underline; text-underline-offset:2px}
 .byline .by-cred{color:var(--text2)}
 .byline .by-sep{color:var(--text3)}
 .byline .by-date,.byline .by-read{color:var(--text2); white-space:nowrap}
@@ -482,6 +481,16 @@ body.world-learning .welcome-btn:hover{background:var(--accent2);text-decoration
     --column:none;
   }
   .wf-rail,.wf-nav-fab,.wf-nav-veil,.wf-tab{display:none !important}
+  /* EAT-01 in print. The running header on every sheet already says who
+     wrote this and where it came from, so the byline must not say it a
+     second time: the name goes, and what stays is what the header does not
+     carry, the credential and the dates. Without these rules the byline
+     inherited the print link colour and rendered the name in crimson. */
+  .byline{border-color:#bbb !important; margin-bottom:14pt !important; padding:6pt 0 !important}
+  .byline .by-who{display:none !important}
+  .byline .by-sep:first-of-type{display:none !important}
+  .byline .by-cred,.byline .by-date,.byline .by-read{color:#4b5563 !important}
+  .byline a[href]{color:#4b5563 !important; text-decoration:none !important}
   html{color-scheme:light !important;background:#fff !important}
   body{background:#fff !important}
   .print-doc tbody td{color:#1c2129}

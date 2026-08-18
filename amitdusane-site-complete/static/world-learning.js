@@ -420,14 +420,13 @@
 
   var rail = document.createElement('aside');
   rail.className = 'wf-rail';
-  rail.setAttribute('aria-label', 'On this page');
-  /* ---- reading weight, first, in real ink ---- */
-  var words = (article.innerText || '').trim().split(/\s+/).length;
-  var meta = document.createElement('p');
-  meta.className = 'wf-meta';
-  meta.innerHTML = Math.max(1, Math.round(words / 220)) + ' min read' +
-                   '<span>' + words.toLocaleString() + ' words</span>';
-  rail.appendChild(meta);
+  /* The read time is NOT recomputed here. It is published by the byline on
+     data-readmins, computed once at build time. Counting it again in the
+     browser gave 3,001 words against Hugo's 2,929 and showed the reader 14
+     minutes in the rail against 13 in the byline, which is exactly the kind
+     of small contradiction that costs a page its authority. Word count is
+     gone with it: the minutes are the useful signal, the raw count is
+     trivia, and the byline already carries the minutes at the top. */
 
   /* ---- the pocket map, promoted out of the floating tab ----
      Kept green and kept loud. It is the device that carries a reader across
