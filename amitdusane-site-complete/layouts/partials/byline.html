@@ -1,0 +1,36 @@
+{{- /* EAT-01: the byline, in one place so it does not become the monogram
+   problem again. Two shapes:
+
+     full=true   sections. Who, credential, dates, read time.
+     full=false  module and phase landings. Who and credential only, because
+                 a landing page is a signpost: it has no publish history
+                 worth stating and no reading time worth measuring, but it
+                 still benefits from saying whose curriculum this is.
+
+   Read time is computed here once and published on data-readmins so the
+   in-page spine reads it rather than recounting. Two independent counts
+   previously showed 13 minutes in one place and 14 in another. */ -}}
+{{- $full := default false .full -}}
+{{- $p := .page -}}
+{{- $mins := 0 -}}
+{{- $pubStr := "" -}}
+{{- if $full -}}
+  {{- $mins = math.Round (div (float (countwords $p.Content)) 220) -}}
+  {{- with $p.Params.published -}}{{- $pubStr = ((time .).Format "2006-01-02") -}}{{- end -}}
+{{- end -}}
+{{- $sameDay := eq $pubStr ($p.Lastmod.Format "2006-01-02") -}}
+<div class="byline{{ if not $full }} byline-lite{{ end }}"{{ if $full }} data-readmins="{{ $mins }}"{{ end }}>
+  <a class="by-who" href="{{ "/about/" | relURL }}">{{ $p.Site.Params.author }}</a>
+  <span class="by-cred">16 years in digital analytics, seven of them at Adobe</span>
+  {{- if $full }}
+  <span class="by-sep" aria-hidden="true">&middot;</span>
+  {{- /* Both dates only when they differ. On launch day every page carries
+     the same date for both, and "Published 1 Oct, Updated 1 Oct" reads as a
+     mistake rather than as information. */ -}}
+  {{ with $p.Params.published }}<time class="by-date" datetime="{{ (time .).Format "2006-01-02" }}">Published {{ (time .).Format "2 Jan 2006" }}</time>{{ end }}
+  {{ if not $sameDay }}<span class="by-sep" aria-hidden="true">&middot;</span>
+  <time class="by-date" datetime="{{ $p.Lastmod.Format "2006-01-02" }}">Updated {{ $p.Lastmod.Format "2 Jan 2006" }}</time>{{ end }}
+  <span class="by-sep" aria-hidden="true">&middot;</span>
+  <span class="by-read">{{ $mins }} min read</span>
+  {{- end }}
+</div>

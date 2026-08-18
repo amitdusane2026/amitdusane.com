@@ -4,6 +4,7 @@
 <div class="lmod-mark" aria-hidden="true">{{ partial "logo.html" (dict "size" 58 "hidden" true) }}</div>
 <p class="lcrumb"><a href="{{ "/adobe-analytics-learning/" | relURL }}">Adobe Analytics Learning</a> &rsaquo; {{ .Title }}</p>
 <h1 class="lmod-title">{{ .Title }}</h1>
+{{ partial "byline.html" (dict "page" . "full" false) }}
 <p>{{ .Description }}</p>
 {{ .Content }}
 <ol class="lsec-list">
