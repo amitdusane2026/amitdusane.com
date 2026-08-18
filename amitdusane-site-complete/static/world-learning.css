@@ -261,9 +261,9 @@ body.world-learning .lcontent > h1.lsec-title{margin-left:calc(var(--title-inden
 .wf-map-btn em{display:block; font-style:normal; font-size:var(--fs-micro); opacity:.85; line-height:1.3}
 .wf-rail-h{
   font-size:var(--fs-micro); font-weight:700; letter-spacing:.1em;
-  text-transform:uppercase; color:var(--text3); margin:0 0 3px;
+  text-transform:uppercase; color:var(--text2); margin:0 0 3px;
 }
-.wf-rail-sub{font-size:var(--fs-micro); color:var(--text3); margin:0 0 9px; line-height:1.4}
+.wf-rail-sub{font-size:var(--fs-micro); color:var(--text2); margin:0 0 9px; line-height:1.4}
 .wf-rail ol{list-style:none; margin:0; padding:0; counter-reset:wf -1}
 .wf-rail li{counter-increment:wf; margin:0}
 .wf-rail a{
@@ -331,8 +331,12 @@ body.world-learning .lcontent > h1.lsec-title{margin-left:calc(var(--title-inden
     display:flex; align-items:center; justify-content:center;
     position:fixed; right:18px; bottom:80px; z-index:940;
     width:48px; height:48px; border-radius:50%; cursor:pointer;
-    color:#fff; background:var(--text1); border:none;
-    box-shadow:0 6px 18px rgba(15,23,42,.34);
+    /* The icon colour follows the GROUND, not white. --text1 flips to
+       near-white in dark mode, so a hardcoded white icon on a --text1
+       disc rendered as a plain white dot with nothing in it. Pairing
+       --bg1 against --text1 keeps the contrast inverted in both themes. */
+    color:var(--bg1); background:var(--text1); border:none;
+    box-shadow:0 6px 18px rgba(0,0,0,.34);
   }
   .wf-nav-fab svg{width:21px;height:21px}
   .wf-rail a{font-size:var(--fs-sm); padding:7px 6px 7px 0}
