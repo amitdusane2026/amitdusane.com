@@ -35,7 +35,7 @@
      --------------------------------------------------------------------- */
   --fs-title:34px; --fs-h3:24px; --fs-body:18px; --fs-sm:15.5px;
   --fs-label:13.5px; --fs-meta:12.5px; --fs-micro:11.5px; --fs-code:14px;
-  --lh-title:1.2; --lh-h3:1.3; --lh-body:1.6;
+  --lh-title:1.2; --lh-h3:1.3; --lh-body:1.7;
 
   /* ---------------------------------------------------------------------
      COLUMN WIDTH (TYP-02)
@@ -56,6 +56,20 @@
      --------------------------------------------------------------------- */
   --column:760px; --title-indent:17px;
   --rail-w:250px; --rail-gap:40px; --pocket:#16a34a; --pocket-dark:#15803d;
+
+  /* ---------------------------------------------------------------------
+     SPACING SCALE (TYP-03, 18 Aug 2026)
+     Headings were carrying the spacing they had when they were 16px: 16px
+     above, against a 12px gap between two paragraphs. So a 24px heading got
+     less air than an ordinary paragraph break and stopped reading as a rest
+     stop on a 14-screen page.
+
+     The ratio is the point. A heading takes --sp-xl above and --sp-sm below,
+     four to one, so it separates from what came before and binds to what
+     follows. Component margins were also drifting between 14, 16, 20, 24
+     and 44px with no reason behind any of them; they now share one step.
+     --------------------------------------------------------------------- */
+  --sp-xs:6px; --sp-sm:12px; --sp-md:18px; --sp-lg:30px; --sp-xl:48px;
 }
 [data-theme="dark"]{
   --bg1:#0f172a; --bg2:#1e293b; --bg3:#334155; --card:#1e293b;
@@ -63,7 +77,7 @@
   --accent:#fb5277; --accent2:#e11d48; --accent-light:rgba(251,82,119,.14); --logo-ink:#ffffff; --tagline-accent:#818cf8;
 }
 
-body.world-learning{margin:0;background:var(--bg1);color:var(--text1);font-family:'IBM Plex Sans',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;line-height:1.6}
+body.world-learning{margin:0;background:var(--bg1);color:var(--text1);font-family:'IBM Plex Sans',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;line-height:var(--lh-body)}
 a{color:var(--accent);text-decoration:none}
 a:hover{text-decoration:underline}
 /* Inline content links (lesson + glossary body): persistent underline so a link reads as a link without relying on color alone. Crimson accent preserved; nav, cards, breadcrumb, prev/next and section lists are outside .section and unaffected. */
@@ -329,9 +343,9 @@ body.world-learning .lcontent > h1.lsec-title{margin-left:calc(var(--title-inden
 body.world-learning .lcontent .lcrumb{font-size:var(--fs-meta);color:var(--text2);margin:0 0 10px}
 .lcrumb a{color:var(--text2)} .lcrumb a:hover{color:var(--accent)}
 .lmod-title{font-size:var(--fs-title);line-height:var(--lh-title);font-weight:700;color:var(--text1);margin:.1em 0 .4em}
-.lsec-title{font-size:var(--fs-title);line-height:var(--lh-title);font-weight:700;color:var(--text1);margin:0 0 16px;padding-left:14px;border-left:3px solid var(--accent)}
+.lsec-title{font-size:var(--fs-title);line-height:var(--lh-title);font-weight:700;color:var(--text1);margin:0 0 var(--sp-sm);padding-left:14px;border-left:3px solid var(--accent)}
 /* Last-updated stamp. Sits under the section title, aligned to the title text (14px padding + 3px rule). Lives inside .lcontent, so lFillPrintDoc carries it into the print document automatically. */
-body.world-learning .lcontent .lupdated{font-size:var(--fs-meta);color:var(--text3);font-weight:400;margin:-6px 0 20px;padding-left:0;letter-spacing:normal}
+body.world-learning .lcontent .lupdated{font-size:var(--fs-meta);color:var(--text3);font-weight:400;margin:-6px 0 var(--sp-lg);padding-left:0;letter-spacing:normal}
 .lupdated time{font-weight:500;color:inherit}
 .lcontent p{color:var(--text2);margin:0 0 1em}
 
@@ -394,13 +408,14 @@ body.world-learning .welcome-btn:hover{background:var(--accent2);text-decoration
     --header-h:52px;
     --fs-title:27px; --fs-h3:20px; --fs-body:16.5px; --fs-sm:14.5px;
     --fs-label:12.5px; --fs-meta:12px; --fs-micro:11px; --fs-code:13px;
+    /* TYP-03: the spacing step scales with the type step, so the heading
+       keeps its four-to-one ratio on a phone instead of collapsing. */
+    --sp-xs:5px; --sp-sm:10px; --sp-md:15px; --sp-lg:24px; --sp-xl:36px;
   }
   .lhead{padding:0 12px;gap:10px}
   .llogo-text{font-size:14px}
   .llogo-author{display:none}
   .llogo-icon{width:48px;height:48px}
-  body.world-learning .lcontent p{margin-bottom:10px}
-  .subsec-title{margin:14px 0 8px}
   .path-box{padding:12px 14px}
   .path-ico{width:26px;height:26px}
   body.world-learning .lcontent .path{padding:2px 7px}
@@ -470,13 +485,14 @@ body.world-learning .welcome-btn:hover{background:var(--accent2);text-decoration
    warning semantic colors) is left as the source intended.
    ========================================================================== */
 .section{margin-bottom:8px}
-.subsec-title{font-size:var(--fs-h3);line-height:var(--lh-h3);font-weight:600;margin:16px 0 10px;color:var(--text1)}
-body.world-learning .lcontent p{margin-bottom:12px;color:var(--text2);font-size:var(--fs-body)}
-body.world-learning .lcontent ul,body.world-learning .lcontent ol{margin:12px 0;padding-left:20px;color:var(--text2);font-size:var(--fs-body)}
-body.world-learning .lcontent li{margin-bottom:6px;font-size:var(--fs-body)}
+/* Four to one: separate from what came before, bind to what follows. */
+.subsec-title{font-size:var(--fs-h3);line-height:var(--lh-h3);font-weight:600;margin:var(--sp-xl) 0 var(--sp-sm);color:var(--text1)}
+body.world-learning .lcontent p{margin-bottom:var(--sp-md);color:var(--text2);font-size:var(--fs-body)}
+body.world-learning .lcontent ul,body.world-learning .lcontent ol{margin:var(--sp-md) 0;padding-left:20px;color:var(--text2);font-size:var(--fs-body)}
+body.world-learning .lcontent li{margin-bottom:var(--sp-xs);font-size:var(--fs-body)}
 body.world-learning .lcontent li strong{color:var(--text1)}
 
-.pro-tip{background:var(--accent-light);border:1px solid rgba(225,29,72,.2);border-radius:6px;padding:14px 16px;margin:16px 0}
+.pro-tip{background:var(--accent-light);border:1px solid rgba(225,29,72,.2);border-radius:6px;padding:14px 16px;margin:var(--sp-lg) 0}
 .pro-tip-hdr{display:flex;align-items:center;gap:6px;font-weight:700;color:var(--accent);margin-bottom:8px;font-size:var(--fs-label)}
 /* Box prose is body-sized. Scoped so the token actually applies: the
    generic .lcontent p rule outranks a bare `.pro-tip p`, so before this
@@ -484,14 +500,14 @@ body.world-learning .lcontent li strong{color:var(--text1)}
    reached the page. A warn-box is often the most important thing on the
    page, so it gets body size rather than a de-emphasised aside size. */
 body.world-learning .lcontent .pro-tip p{margin:0;font-size:var(--fs-body)}
-.info-box{background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.2);border-radius:6px;padding:14px 16px;margin:16px 0}
+.info-box{background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.2);border-radius:6px;padding:14px 16px;margin:var(--sp-lg) 0}
 .info-hdr{display:flex;align-items:center;gap:6px;font-weight:700;color:var(--info);margin-bottom:8px;font-size:var(--fs-label)}
 body.world-learning .lcontent .info-box p{margin:0;font-size:var(--fs-body)}
-.warn-box{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);border-radius:6px;padding:14px 16px;margin:16px 0}
+.warn-box{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);border-radius:6px;padding:14px 16px;margin:var(--sp-lg) 0}
 .warn-hdr{display:flex;align-items:center;gap:6px;font-weight:700;color:var(--warning);margin-bottom:8px;font-size:var(--fs-label)}
 body.world-learning .lcontent .warn-box p{margin:0;font-size:var(--fs-body)}
 
-.code-block{background:#0d1117;border:1px solid var(--border);border-radius:6px;margin:14px 0;overflow:hidden}
+.code-block{background:#0d1117;border:1px solid var(--border);border-radius:6px;margin:var(--sp-lg) 0;overflow:hidden}
 .code-hdr{display:flex;justify-content:space-between;padding:6px 12px;background:#161b22;border-bottom:1px solid var(--border)}
 .code-lang{font-size:var(--fs-micro);color:var(--text3);text-transform:uppercase}
 .code-copy{background:none;border:none;color:rgba(255,255,255,.55);cursor:pointer;font-size:var(--fs-micro)}
@@ -500,14 +516,14 @@ body.world-learning .lcontent .warn-box p{margin:0;font-size:var(--fs-body)}
 .code-body pre{font-family:Consolas,monospace;font-size:var(--fs-code);line-height:1.5;color:#e6edf3;margin:0}
 body.world-learning .lcontent code{font-family:Consolas,monospace;font-size:var(--fs-code);background:var(--bg3);padding:2px 5px;border-radius:3px;color:#fb7185}
 
-.tbl-wrap{overflow-x:auto;margin:14px 0;border:1px solid var(--border);border-radius:6px}
+.tbl-wrap{overflow-x:auto;margin:var(--sp-lg) 0;border:1px solid var(--border);border-radius:6px}
 body.world-learning .lcontent table{width:100%;border-collapse:collapse;font-size:var(--fs-sm)}
 body.world-learning .lcontent th,body.world-learning .lcontent td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--border)}
 body.world-learning .lcontent th{background:var(--bg3);font-weight:600;font-size:var(--fs-meta);color:var(--text3);text-transform:uppercase}
 body.world-learning .lcontent td{color:var(--text2)}
 body.world-learning .lcontent tr:last-child td{border-bottom:none}
 
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:16px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:var(--sp-lg) 0}
 .card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px}
 .card:hover{border-color:var(--accent)}
 a.card{display:block;color:inherit}
@@ -531,14 +547,14 @@ a.card .card-desc{color:var(--text2)}
 .flow-step-sm{background:var(--bg3);padding:6px 12px;border-radius:5px;font-size:11px;font-weight:500}
 .flow-horizontal{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap}
 
-.ref-box{background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2);border-radius:6px;padding:14px 16px;margin:16px 0}
+.ref-box{background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2);border-radius:6px;padding:14px 16px;margin:var(--sp-lg) 0}
 .ref-title{font-weight:700;color:var(--success);margin-bottom:10px;font-size:var(--fs-label)}
 .ref-box ul{margin:0;padding-left:18px}
 body.world-learning .lcontent .ref-box li{margin-bottom:4px;font-size:var(--fs-sm)}
 .ref-box a{color:var(--success);text-decoration:none}
 .ref-box a:hover{text-decoration:underline}
 
-.path-box{background:rgba(167,139,250,.12);border:1px solid rgba(167,139,250,.35);border-radius:8px;padding:16px 18px;margin:20px 0}
+.path-box{background:rgba(167,139,250,.12);border:1px solid rgba(167,139,250,.35);border-radius:8px;padding:16px 18px;margin:var(--sp-lg) 0}
 .path-title{display:flex;align-items:center;gap:10px;font-weight:700;color:#534AB7;margin-bottom:10px;font-size:var(--fs-label)}
 .path-ico{flex:none;width:30px;height:30px;border-radius:7px;background:#534AB7 url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23ffffff%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M9%2011a3%203%200%201%200%206%200a3%203%200%200%200%20-6%200%22%2F%3E%3Cpath%20d%3D%22M17.657%2016.657l-4.243%204.243a2%202%200%200%201%20-2.827%200l-4.244%20-4.243a8%208%200%201%201%2011.314%200z%22%2F%3E%3C%2Fsvg%3E") center/17px no-repeat}
 body.world-learning .lcontent .path-box p{margin:5px 0;font-size:var(--fs-sm)}
@@ -547,7 +563,7 @@ body.world-learning .lcontent .path{background:#CECBF6;padding:3px 9px;border-ra
 [data-theme="dark"] .path-title{color:#CECBF6}
 [data-theme="dark"] body.world-learning .lcontent .path{background:#3C3489;color:#E6E4FB}
 
-.diagram-box{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:24px;margin:24px 0}
+.diagram-box{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:24px;margin:var(--sp-lg) 0}
 .diagram-title{font-weight:700;color:var(--text1);margin-bottom:16px;font-size:var(--fs-label)}
 .diagram-content{display:flex;justify-content:center}
 .hierarchy{text-align:center}
@@ -668,7 +684,7 @@ body.world-learning .lcontent .path{background:#CECBF6;padding:3px 9px;border-ra
 
 
 /* ---------- Documentation signpost (auto-injected before ref-box) ---------- */
-.doc-note{margin:20px 0 8px;padding:3px 0 3px 14px;background:transparent;border:none;border-left:3px solid var(--accent);border-radius:0}
+.doc-note{margin:var(--sp-lg) 0 var(--sp-sm);padding:3px 0 3px 14px;background:transparent;border:none;border-left:3px solid var(--accent);border-radius:0}
 .doc-note-t{font-weight:700;font-style:italic;color:var(--accent) !important;font-size:11.5px !important;letter-spacing:0;text-transform:none;margin-bottom:2px}
 .doc-note p{margin:0;font-size:11.5px !important;font-style:italic !important;color:var(--accent2) !important;line-height:1.45}
 
@@ -841,7 +857,7 @@ body.world-learning .lcontent .path{background:#CECBF6;padding:3px 9px;border-ra
    capture never dominates the page, and a zoom control. The image itself
    is inert. Only the button opens the overlay, and the overlay stays in
    the same tab. */
-.shot-box{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:22px;margin:44px 0}
+.shot-box{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:22px;margin:var(--sp-xl) 0}
 .shot-title{font-weight:700;color:var(--text1);margin-bottom:14px;font-size:var(--fs-label)}
 
 .shot-frame{position:relative;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:16px;display:flex;align-items:center;justify-content:center;min-height:120px}
