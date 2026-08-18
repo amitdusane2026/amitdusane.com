@@ -258,25 +258,43 @@ body.wf-lock{overflow:hidden}
 .author-fab{
   background:none !important; border:none !important; box-shadow:none !important;
   color:#1E3A8A; padding:0; width:88px !important; height:88px !important;
-  --fab-rgb:186,33,66;          /* the site crimson, matching --accent */
-  --fab-rest:.30;               /* halo strength at rest */
+  --fab-rgb:99,102,241;         /* indigo. Crimson fought the navy monogram:
+                                   a red ring behind a blue mark reads as an
+                                   applied ring, not as light coming off the
+                                   mark. The site already carries an indigo
+                                   axis (the tagline accent, the path violet),
+                                   and indigo sits under navy comfortably. */
+  --fab-rest:.20;               /* strength at rest. Halved from .30: the
+                                   halo is meant to be felt, not seen. */
 }
 [data-theme="dark"] .author-fab{
   color:#ffffff;
-  --fab-rgb:242,120,147;        /* the dark-theme crimson: a deeper red would
-                                   sink into the dark ground instead of glowing */
-  --fab-rest:.34;
+  --fab-rgb:129,140,248;        /* the lighter indigo, matching the dark
+                                   tagline accent. A deeper one would sink
+                                   into the dark ground instead of glowing. */
+  --fab-rest:.26;
 }
 .author-fab::before{
   content:""; position:absolute; left:50%; top:50%;
-  width:132%; height:132%; border-radius:50%;
+  /* Wide and weak. A small bright disc looks drawn; a large faint one
+     looks like light. The stops approximate a gaussian falloff and run
+     all the way to 0 at the full radius -- the first version died at
+     78% while still at .18 alpha, and that surviving step is what read
+     as a circle someone had drawn. The blur removes any remaining
+     banding at the outer stops. */
+  width:170%; height:170%; border-radius:50%;
   transform:translate(-50%,-50%) scale(1);
   background:radial-gradient(circle closest-side,
-      rgba(var(--fab-rgb),var(--fab-rest)) 0%,
-      rgba(var(--fab-rgb),calc(var(--fab-rest) * .55)) 42%,
-      rgba(var(--fab-rgb),calc(var(--fab-rest) * .18)) 66%,
-      rgba(var(--fab-rgb),0) 78%);
-  pointer-events:none;          /* the halo is light, not a hit area */
+      rgba(var(--fab-rgb),var(--fab-rest))                 0%,
+      rgba(var(--fab-rgb),calc(var(--fab-rest) * .86))    18%,
+      rgba(var(--fab-rgb),calc(var(--fab-rest) * .62))    34%,
+      rgba(var(--fab-rgb),calc(var(--fab-rest) * .38))    50%,
+      rgba(var(--fab-rgb),calc(var(--fab-rest) * .20))    64%,
+      rgba(var(--fab-rgb),calc(var(--fab-rest) * .09))    76%,
+      rgba(var(--fab-rgb),calc(var(--fab-rest) * .03))    88%,
+      rgba(var(--fab-rgb),0)                             100%);
+  filter:blur(5px);
+  pointer-events:none;
   z-index:0;
   transition:transform .38s cubic-bezier(.2,.8,.3,1), opacity .38s ease;
 }
@@ -330,6 +348,10 @@ body.wf-lock{overflow:hidden}
   .author-fab:hover svg,.author-fab:focus-visible svg{transform:none}
 }
 @media(max-width:560px){
-  .author-fab{width:80px !important; height:80px !important}
-  .author-fab svg{width:80px; height:80px}
+  /* Half the desktop mark. On a phone the monogram was 80px against a
+     390px viewport -- a fifth of the width, for a control that is not
+     what the reader came for. The button keeps 44px so the touch
+     target stays at the accessible minimum even though the mark is 40. */
+  .author-fab{width:44px !important; height:44px !important}
+  .author-fab svg{width:40px; height:40px}
 }
