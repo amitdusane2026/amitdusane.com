@@ -618,6 +618,36 @@ Second working day of the design phase. **COL-01, COL-04, COL-06, TYP-06, CMP-01
 
 **And CMP-12's framing in the plan was simply wrong.** It was written as a mobile problem. At 1280px the three-column shell leaves the article about 574px, so the same arithmetic gave 8.2px on a laptop — worse than the phone once the phone was fixed. It is a narrow-*column* problem. The fix is unconditional rather than sitting in a media query, and print had to invert it, because paper cannot scroll and would have cropped every diagram at the page edge.
 
+## The label voice and the About mark, 19 August 2026 — SIGNED OFF
+
+Amit reviewed the 18 August pass and accepted it with two corrections, then commissioned one new piece of work. **All of it signed off the same day.** Commits `bdab786`, `0b3ca43`, `656679a`, `f7dbe65`.
+
+### The mono label voice was rejected, and the reason is the most useful thing here
+
+The 18 August pass set every box and figure label in mono, uppercase and letter-spaced, following TYP-06 as written. Amit's verdict: **that treatment is a recognisable AI signature.** It appears constantly in LLM-produced HTML, a reader who has seen a few will place it, and a site whose entire claim is sixteen years of practice cannot carry a typographic tell that says otherwise.
+
+His framing is worth keeping verbatim in spirit: he is happy to be transparent that the site is built with AI as a companion, but **AI is not the core engine, and the design must not announce it on his behalf.** The identity has to be the site's own.
+
+What shipped instead: Plex Sans 700, sentence case, `--fs-label` stepped 13.5 → 15px. A label reads as a label through weight and size, not case or tracking — which is how print technical publishing has always done it. Uppercase survives only on table headers and `code-lang`, where it is a convention rather than a style.
+
+**The second correction was that the site had stopped looking crimson**, and he was right. Setting labels to neutral ink had drained the accent off all 124 pro-tip headers. The colour is back, using the `-ink` companions so it is readable rather than merely present.
+
+### The benefit audit, and three changes that failed it
+
+Asked to justify each change against the standing rule — *if something is done without purpose, better it is not done* — three did not survive on their own merits: the mono voice (rejected), the diagram framing (taste, retained), and the accent reduction (a net loss until the colour came back). The rest were genuine legibility defects. **The audit is the pattern worth repeating**, not the outcome: several changes had a stated purpose in `design-plan.html` and still failed, because a stated purpose is not the same as a benefit to the reader.
+
+### IDN-07, a new item: the About mark
+
+Removing the disc in IDN-04 was right but cost the mark its affordance — a bare logo in a corner does not read as a button. It now carries a permanent indigo halo, plus a hover gesture. Two rounds: the first was crimson (fought the navy monogram) and looked like a drawn circle (its gradient died at 78% of the radius while still at .18 alpha, and that surviving step *was* the edge). Recorded in full under IDN-07 in `design-plan.html`.
+
+It also uncovered a real bug: **the hover glow had never fired in dark mode**, because two rules at equal specificity were decided by source order. That is now the second time this session that trap has cost real time.
+
+### Method
+
+**A hidden browser pane freezes transitions and animations**, so hovering an element and reading `getComputedStyle` returns its resting values even when the hover rule matched. It made a working hover look broken three times before the cause was found. To check a hover's *cascade* rather than its *timeline*, neutralise the transition and read again. Added to CLAUDE.md as trap nine, alongside trap eight, which it closely resembles.
+
+---
+
 ## Phase 5 — Small corrections
 
 - Three `description` outliers: `collect/_index.html` (180 chars), `deliver/_index.html` (187), `collect/data-layers/_index.md` (94).

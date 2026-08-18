@@ -111,6 +111,8 @@ A seventh, and it has caught me three times in one session: **`body.world-learni
 
 An eighth, found the same day and worth knowing before any theme work: **flipping `data-theme` on `documentElement` from the console is not a valid way to test dark mode.** The site's own theme script also sets `style.colorScheme`, and several components carry `transition:background,color`, so an attribute flip reports UA-default backgrounds and mid-transition colours. It produced two confident, entirely false AA failures. **Test dark by setting `localStorage['site-theme']` and loading the page**, the way the site itself does it.
 
+A ninth, and it is the twin of the eighth: **a hidden page freezes transitions and animations, so computed styles read back the pre-transition value.** If the browser pane is not displayed, `document.visibilityState` is `hidden`, and hovering an element then reading `getComputedStyle` returns its *resting* transform and filter even though the hover rule matched. On 19 Aug that made a working hover look broken three times over. The tell is an inconsistency: the animation *name* appears while the transform still reads as rest. **To check a hover's cascade rather than its timeline, neutralise the transition** (`transition:none !important`) and read again.
+
 ---
 
 ## Building
@@ -281,6 +283,8 @@ A `path-box` is included only if the subject has an Adobe screen. A data layer d
 
 Full specifications, including when each is earned, are in `content-component-rulebook.html`. Read it. This table exists only so the class names are correct.
 
+**Every box and figure label is one voice: Plex Sans 700, sentence case, `--fs-label` (15px).** That covers `warn-hdr`, `info-hdr`, `pro-tip-hdr`, `ref-title`, `path-title`, `diagram-title` and `shot-title`. A label reads as a label through **weight and size**, never through case or tracking. Uppercase survives in exactly two places, where it is a convention rather than a style: table column headers and `code-lang`. **Do not set a label in mono, uppercase or letter-spaced.** That version was built on 18 Aug and rejected on 19 Aug: mono with caps and tracking is a recognisable generated-page signature, and this site cannot carry a typographic tell that undercuts its own claim. Colour comes from the `-ink` tokens above, never the bare semantic.
+
 | Component | Structure |
 |---|---|
 | `warn-box` | `> .warn-hdr + p`. Icon must be `⚠️` with the U+FE0F variation selector |
@@ -308,7 +312,9 @@ Four things now appear on a section that no author writes. Knowing they exist ma
 | **Heading anchors** | `lesson/single.html` | At build time, so Google sees them. |
 | **Monogram** | `partials/logo.html` | The only copy. It was in six places and every change was six edits. Takes `size`, `hidden`, and `ink` for the print header, which forces the light palette and cannot use `currentColor`. |
 
-**The floating controls have a deliberate order of loudness**, and it should not be disturbed: the green pocket map is the loudest because it carries a reader across 116 sections, the page-nav button is quiet surface-and-border, and the About mark is the monogram alone with no container at all. A utility for moving inside one page must never outweigh the site's identity.
+**The floating controls have a deliberate order of loudness**, and it should not be disturbed: the green pocket map is the loudest because it carries a reader across 116 sections, the page-nav button is quiet surface-and-border, and the About mark is the monogram alone with no container. A utility for moving inside one page must never outweigh the site's identity.
+
+**The About mark carries a permanent indigo halo** (19 Aug 2026), because removing its disc cost it its affordance: a bare logo in a corner does not read as a button. It is permanent rather than hover-only, since a hover-only cue does not exist on a phone. Three things about it are load-bearing. It is a **radial-gradient pseudo-element, never a box-shadow** — a box-shadow spreads from the button's square box and blooms as a rounded square. Its falloff must reach **true zero at the full radius**; the first version stopped at 78% while still at .18 alpha, and that surviving step read as a drawn circle. And it is **indigo, not the crimson accent**, because the monogram is navy and a red halo behind a blue letterform reads as an applied ring rather than as light. It stays indigo on every world, including the blue migration world, because this is the personal-brand mark rather than a per-world control. This deliberately raises the mark above the order of loudness above; Amit asked for it on 19 Aug, and WAY-07 should be decided knowing it.
 
 Never invent a class. If it is not in `static/world-learning.css`, it does not exist.
 
@@ -407,9 +413,9 @@ Run this whenever Amit says to close out, wrap up, or end the session. It is wha
 
 1. **Update `completion-tracker.tsv`.** Mark every section touched this session: `Content created?`, `Content QA'd?`, and the SEO columns. The tracker is the single record of where the project stands; a future session reads it to decide what to do next.
 
-   Tab-delimited, 1 header row plus 192 data rows, 15 columns: Phase, Module, Section #, Page name, Page type, URL, SEO title, SEO title done?, SEO description, SEO desc done?, Title chars, Desc chars, Content created?, Content QA'd?, Final result. Tabs are the delimiter because descriptions are full of commas. Never introduce a tab inside a field. `Final result` is Yes only when SEO title, SEO desc, Content created and Content QA'd are all Yes.
+   Tab-delimited, 1 header row plus 193 data rows, 15 columns: Phase, Module, Section #, Page name, Page type, URL, SEO title, SEO title done?, SEO description, SEO desc done?, Title chars, Desc chars, Content created?, Content QA'd?, Final result. Tabs are the delimiter because descriptions are full of commas. Never introduce a tab inside a field. `Final result` is Yes only when SEO title, SEO desc, Content created and Content QA'd are all Yes.
 
-   **`Page type` splits the file into two kinds of row, and every statistic must filter on it.** Content is `Section` (116), `Module landing` (21), `Category landing` (5), `Home` and `Glossary`. Platform work is `Feature` (48 as of 18 Aug 2026, and it grows with each platform change), added 7 Aug 2026, carrying `Phase = Platform` and grouped by `Module` into navigation, presentation, seo, chrome, infrastructure and tech-debt. For a Feature row the SEO columns do not apply and are set to `NA`, `URL` holds the implementing file path rather than a URL, and `Content created?` means built. **Quoting a total without filtering by `Page type` will mix sections and features and be wrong.**
+   **`Page type` splits the file into two kinds of row, and every statistic must filter on it.** Content is `Section` (116), `Module landing` (21), `Category landing` (5), `Home` and `Glossary`. Platform work is `Feature` (49 as of 19 Aug 2026, and it grows with each platform change), added 7 Aug 2026, carrying `Phase = Platform` and grouped by `Module` into navigation, presentation, seo, chrome, infrastructure and tech-debt. For a Feature row the SEO columns do not apply and are set to `NA`, `URL` holds the implementing file path rather than a URL, and `Content created?` means built. **Quoting a total without filtering by `Page type` will mix sections and features and be wrong.**
 
    Every Feature row is deliberately `Content QA'd? = No` and `Final result = No`. Amit will re-QA the platform himself once the content front is finished, so nothing there should be marked QA'd on my judgment.
 2. **Update `development-plan.md`** if a phase completed, an estimate moved, or the order changed.

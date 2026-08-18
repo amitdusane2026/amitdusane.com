@@ -4,9 +4,12 @@
 <style>
 :root{
   --bg1:#f8fafc; --bg2:#ffffff; --bg3:#f1f5f9; --card:#ffffff;
-  --text1:#0f172a; --text2:#475569; --text3:#94a3b8; --border:#e2e8f0;
-  --accent:#e11d48; --accent2:#be123c; --accent-light:rgba(225,29,72,.10);
+  --text1:#0f172a; --text2:#475569; --text3:#5d6b7e; --border:#e2e8f0;
+  --accent:#ba2142; --accent2:#951833; --accent-light:rgba(186,33,66,.10); --on-accent:#ffffff;
   --success:#10b981; --warning:#f59e0b; --info:#3b82f6;
+  /* -ink = the same semantic, dark enough to carry TEXT at AA. The bare token
+     stays the cross-world constant and keeps doing tints, borders and icons. */
+  --success-ink:#0a6e50; --warning-ink:#8a5700; --info-ink:#1d4ed8; --danger-ink:#a4161a;
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg1);color:var(--text1);
@@ -73,16 +76,16 @@ code{background:var(--bg3);padding:2px 6px;border-radius:4px;font-size:13px;font
 /* ===== COMPONENT CSS, copied verbatim from world-learning.css, scoped to .demo ===== */
 .demo .warn-box{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);border-radius:6px;padding:14px 16px;margin:16px 0}
 .demo .warn-box p{margin:0;font-size:18px}
-.demo .warn-hdr{display:flex;align-items:center;gap:6px;font-weight:700;color:var(--warning);margin-bottom:8px;font-size:13.5px}
-.demo .pro-tip{background:var(--accent-light);border:1px solid rgba(225,29,72,.2);border-radius:6px;padding:14px 16px;margin:16px 0}
+.demo .warn-hdr{display:flex;align-items:center;gap:6px;font-weight:700;color:var(--warning-ink);margin-bottom:8px;font-size:15px}
+.demo .pro-tip{background:var(--accent-light);border:1px solid rgba(186,33,66,.25);border-radius:6px;padding:14px 16px;margin:16px 0}
 .demo .pro-tip p{margin:0;font-size:18px}
-.demo .pro-tip-hdr{display:flex;align-items:center;gap:6px;font-weight:700;color:var(--accent);margin-bottom:8px;font-size:13.5px}
+.demo .pro-tip-hdr{display:flex;align-items:center;gap:6px;font-weight:700;color:var(--accent);margin-bottom:8px;font-size:15px}
 .demo .info-box{background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.2);border-radius:6px;padding:14px 16px;margin:16px 0}
 .demo .info-box p{margin:0;font-size:18px}
-.demo .info-hdr{display:flex;align-items:center;gap:6px;font-weight:700;color:var(--info);margin-bottom:8px;font-size:13.5px}
+.demo .info-hdr{display:flex;align-items:center;gap:6px;font-weight:700;color:var(--info-ink);margin-bottom:8px;font-size:15px}
 .demo .path-box{background:rgba(167,139,250,.12);border:1px solid rgba(167,139,250,.35);border-radius:8px;padding:16px 18px;margin:20px 0}
 .demo .path-box p{margin:5px 0;font-size:15.5px}
-.demo .path-title{display:flex;align-items:center;gap:10px;font-weight:700;color:#534AB7;margin-bottom:10px;font-size:13.5px}
+.demo .path-title{display:flex;align-items:center;gap:10px;font-weight:700;color:#534AB7;margin-bottom:10px;font-size:15px}
 .demo [data-theme="dark"] .path-title{color:#CECBF6}
 .demo .path-ico{flex:none;width:30px;height:30px;border-radius:7px;background:#534AB7 url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23ffffff%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M9%2011a3%203%200%201%200%206%200a3%203%200%200%200%20-6%200%22%2F%3E%3Cpath%20d%3D%22M17.657%2016.657l-4.243%204.243a2%202%200%200%201%20-2.827%200l-4.244%20-4.243a8%208%200%201%201%2011.314%200z%22%2F%3E%3C%2Fsvg%3E") center/17px no-repeat}
 .demo .section .ref-box a{text-decoration:none}
@@ -90,9 +93,9 @@ code{background:var(--bg3);padding:2px 6px;border-radius:4px;font-size:13px;font
 .demo .ref-box{background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2);border-radius:6px;padding:14px 16px;margin:16px 0}
 .demo .ref-box ul{margin:0;padding-left:18px}
 .demo .ref-box li{margin-bottom:4px;font-size:15.5px}
-.demo .ref-box a{color:var(--success);text-decoration:none}
+.demo .ref-box a{color:var(--success-ink);text-decoration:none}
 .demo .ref-box a:hover{text-decoration:underline}
-.demo .ref-title{font-weight:700;color:var(--success);margin-bottom:10px;font-size:13.5px}
+.demo .ref-title{font-weight:700;color:var(--success-ink);margin-bottom:10px;font-size:15px}
 .demo .doc-note{margin:20px 0 8px;padding:3px 0 3px 14px;background:transparent;border:none;border-left:3px solid var(--accent);border-radius:0}
 .demo .doc-note p{margin:0;font-size:11.5px !important;font-style:italic !important;color:var(--accent2) !important;line-height:1.45}
 .demo .doc-note-t{font-weight:700;font-style:italic;color:var(--accent) !important;font-size:11.5px !important;letter-spacing:0;text-transform:none;margin-bottom:2px}
@@ -104,7 +107,7 @@ code{background:var(--bg3);padding:2px 6px;border-radius:4px;font-size:13px;font
 .demo .code-body{padding:12px;overflow-x:auto}
 .demo .code-body pre{font-family:Consolas,monospace;font-size:14px;line-height:1.5;color:#e6edf3;margin:0}
 .demo .diagram-box{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:24px;margin:24px 0}
-.demo .diagram-title{font-weight:700;color:var(--text1);margin-bottom:16px;font-size:13.5px}
+.demo .diagram-title{font-weight:700;color:var(--text1);margin-bottom:18px;padding-bottom:6px;border-bottom:1px solid var(--border);font-size:15px}
 .demo .diagram-content{display:flex;justify-content:center}
 .demo .tbl-wrap{overflow-x:auto;margin:14px 0;border:1px solid var(--border);border-radius:6px}
 .demo .subsec-title{font-size:24px;line-height:1.3;font-weight:600;margin:48px 0 12px;color:var(--text1)}
@@ -654,6 +657,7 @@ aliases:
 
 <h2>Revision history</h2>
 <table class="tok"><thead><tr><th style="width:130px">Date</th><th>Change</th></tr></thead><tbody>
+<tr><td><b>19 August 2026</b></td><td><b>The label voice, the accent, and the readable semantics.</b> Seven components &mdash; <code>warn-hdr</code>, <code>info-hdr</code>, <code>pro-tip-hdr</code>, <code>ref-title</code>, <code>path-title</code>, <code>diagram-title</code>, <code>shot-title</code> &mdash; were all 13.5px/700 Plex Sans, one typographic object told apart only by a colour, and four of those colours could not be read on their own tint: <code>warn-hdr</code> measured <b>1.91:1</b>, <code>ref-title</code> and its links 2.25:1, <code>info-hdr</code> 3.15:1, table headers 2.34:1, and inline <code>&lt;code&gt;</code> 2.46:1. Labels are now <b>15px/700, sentence case</b>, separating from 18px body prose by weight and size. A mono uppercase treatment was built first and <b>rejected</b>: mono with caps and tracking is a recognisable generated-page signature, and a site whose claim is sixteen years of practice cannot carry a typographic tell that says otherwise. <b>Never set small type in a bare semantic token.</b> The <code>-ink</code> companions carry text; <code>--warning</code>, <code>--info</code> and <code>--success</code> are untouched and still do tints, borders and icons, so the porting rule holds. The accent moved off Tailwind's rose-600 to <code>#ba2142</code>, not for taste but because the reading column paints on <code>--bg1</code> rather than white and the old value measured <b>4.49:1</b> there, under AA on every inline link. Added <code>--on-accent</code> (never hardcode <code>#fff</code> on an accent fill; it was 3.19:1 in dark) and <code>--code-chrome-ink</code> (the code header is dark in <em>both</em> themes, so a token used there cannot follow the theme). The <b>diagram is now a plate</b> rather than a card: tighter radius, <code>--sp-xl</code> of air, a ruled caption, distinguished structurally rather than by spending the accent. Inline-SVG figures hold <code>--diagram-min</code> (700px) and the box scrolls at any width &mdash; authored px is now rendered px, so <b>nothing in a diagram should be authored below 11px</b>; print inverts this, because paper cannot scroll and would crop the figure. The About mark gained a permanent indigo halo, because removing its disc had cost it its affordance and a hover-only cue does not exist on a phone.</td></tr>
 <tr><td><b>18 August 2026 (2)</b></td><td><b>The byline, and the end of hand-copied chrome.</b> Every section and every landing now carries an author line, which closes the site's largest credibility gap: a search lander previously read three thousand words of technical judgment with no indication of who wrote it. Sections get name, credential, publish date and read time; landings get "Created by" and the credential only, because a signpost has no publish history worth stating. The name carries by <b>size</b>, a step above the metadata around it, not by being coloured and underlined like a link, which made the byline read as a row of links. <b>Read time is computed once at build time</b> and published on <code>data-readmins</code>; counting words a second time in the browser produced 2,929 against 3,001 and showed the reader 13 minutes in one place and 14 in another, which is exactly the kind of small contradiction that costs a page its authority. Dates are short form, and the Updated date appears only when it differs from Published, so launch day does not render the same date twice on 116 pages. Added <code>TechArticle</code> structured data with <code>datePublished</code> and <code>dateModified</code>; a section previously emitted <code>BreadcrumbList</code> and nothing else. The monogram moved into a single partial after living in six copies, and the About control now carries the mark alone with no disc, at double the previous size. The floating controls have an explicit order of loudness &mdash; pocket map, then page nav, then identity &mdash; and a utility for moving inside one page must never outweigh the site's identity. Standardised the name on <b>Amit G Dusane</b>, no dot, in eleven places that disagreed.</td></tr>
 <tr><td><b>18 August 2026</b></td><td><strong>The v2 reading design, rolled across the learning world.</strong> Added the type and spacing token tables: nothing in a component may hard-code a px any more. Body prose inside a box is now body-sized rather than 15px, because a warn-box is often the most important thing on the page. One column width for prose and figures alike, at 760px; two attempts to give prose its own narrower measure were rejected as looking broken, and the honest consequence is a measure of about 94 characters rather than the ideal 65&ndash;75, traded deliberately to keep the infographics full size. Adopted IBM Plex Sans and Mono, self-hosted, because a system stack renders as a different typeface on every operating system and so cannot carry an identity. Added the in-page spine, which is generated from the h3 stack and never authored, and with it two new obligations on heading wording: the first clause before a comma must stand alone, because the spine cuts there to build its label, and heading text is slugified into a permanent anchor at build time, so rewording a published heading breaks links to it exactly as changing a slug does. The <code>path-box</code> is now linked from the spine as its last entry, so its <code>path-title</code> should read plainly. Recorded a new hard constraint after it took the mobile layout down: a grid item with a pixel <code>max-width</code> does not shrink below its track, and needs <code>max-width:min(&hellip;,100%)</code>.</td></tr>
 <tr><td><b>14 August 2026</b></td><td>Added the <b><code>shot-box</code></b> component for product screenshots, the first images on the site, together with its rules: the image is inert and never linked, the frame caps height so a capture cannot set its own size, every shot earns a note that points rather than describes, crop to the feature because the image area is about 290px on a phone, two per section is plenty, and exposure is controlled at capture rather than by blurring. Added the hard constraint that <b>asset URLs must carry a content hash</b>, after a stale cached stylesheet made a correct build look broken, and the checklist item that follows from it: <b>verify on the delivered page, never on one patched by injection</b>. Corrected the checklist count, which said eighteen and listed twenty.</td></tr>
