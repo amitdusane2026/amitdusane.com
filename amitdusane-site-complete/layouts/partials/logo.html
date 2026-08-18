@@ -1,0 +1,21 @@
+{{- /* IDN-04: the one copy of the monogram.
+   It previously lived in six places, so any change to the mark was six
+   edits and one of them would be missed. The shape and colours are Amit's
+   own design and are not to be altered here: navy #1E3A8A ink via
+   --logo-ink, #C8102E bar.
+
+   Takes a size in px, defaulting to 58. Callers pass the size they need:
+   58 in the world header, 26 in the article byline, 34 in the print header.
+   `aria-hidden` is passed as true wherever the mark sits next to the name
+   in text, so a screen reader hears the name once rather than twice. */ -}}
+{{- $size := default 58 .size -}}
+{{- $hidden := default false .hidden -}}
+{{- /* The print header needs a fixed ink because the print stylesheet forces
+     the light palette and currentColor would inherit the wrong thing. */ -}}
+{{- $ink := default "currentColor" .ink -}}
+<svg viewBox="0 0 64 64" width="{{ $size }}" height="{{ $size }}"
+     {{ if $hidden }}aria-hidden="true"{{ else }}role="img" aria-label="Amit G. Dusane"{{ end }}>
+  <path fill="{{ $ink }}" d="M18 50 L32 18 L46 50 H40 L35 39 H29 L24 50 Z"/>
+  <path fill="{{ $ink }}" d="M34 18 H44 C54 18 58 24 58 32 C58 40 54 46 44 46 H38 L41 40 H44 C49 40 52 37 52 32 C52 27 49 24 44 24 H37 Z"/>
+  <rect x="24" y="44" width="20" height="3.5" rx="1.7" fill="#C8102E"/>
+</svg>

@@ -1,7 +1,7 @@
 {{ define "main" }}
 <div class="welcome">
   <span class="welcome-icon" aria-hidden="true">
-    <svg viewBox="0 0 64 64" width="88" height="88" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Amit Dusane"><path fill="currentColor" d="M18 50 L32 18 L46 50 H40 L35 39 H29 L24 50 Z"/><path fill="currentColor" d="M34 18 H44 C54 18 58 24 58 32 C58 40 54 46 44 46 H38 L41 40 H44 C49 40 52 37 52 32 C52 27 49 24 44 24 H37 Z"/><rect x="24" y="44" width="20" height="3.5" rx="1.7" fill="#C8102E"/></svg>
+    {{ partial "logo.html" (dict "size" 58 "hidden" true) }}
   </span>
   <div class="welcome-text">
     <h1 class="welcome-title">{{ .Title }}</h1>

@@ -3,7 +3,23 @@
 {{ $cur := . }}
 <p class="lcrumb"><a href="{{ "/adobe-analytics-learning/" | relURL }}">Adobe Analytics Learning</a> &rsaquo; <a href="{{ $mod.Parent.RelPermalink }}">{{ $mod.Parent.Title }}</a> &rsaquo; <a href="{{ $mod.RelPermalink }}">{{ $mod.Title }}</a></p>
 <h1 class="lsec-title">{{ .Title }}</h1>
-{{ with .Lastmod }}<p class="lupdated">Last updated: <time datetime="{{ .Format "2006-01-02" }}">{{ .Format "2 January 2006" }}</time></p>{{ end }}
+{{- /* EAT-01: the byline. Until now a search lander read three thousand
+   words of technical judgment with no indication of who wrote it, which
+   was the largest credibility gap on the site. The credential line is the
+   part doing the work: "seven of them at Adobe" is the unusual, checkable
+   claim. The name links to /about/ so the assertion can be verified in one
+   click rather than merely asserted. Replaces the bare .lupdated stamp,
+   which is folded in as the date. */ -}}
+<div class="byline">
+  <a class="by-who" href="{{ "/about/" | relURL }}">
+    {{ partial "logo.html" (dict "size" 26 "hidden" true) }}<span>{{ .Site.Params.author }}</span>
+  </a>
+  <span class="by-cred">16 years in digital analytics, seven of them at Adobe</span>
+  <span class="by-sep" aria-hidden="true">&middot;</span>
+  {{ with .Lastmod }}<time class="by-date" datetime="{{ .Format "2006-01-02" }}">Updated {{ .Format "2 January 2006" }}</time>{{ end }}
+  <span class="by-sep" aria-hidden="true">&middot;</span>
+  <span class="by-read">{{ math.Round (div (float (countwords .Content)) 220) }} min read</span>
+</div>
 {{- /* Auto-insert the "Need implementation steps?" signpost just before the Adobe docs ref-box, but ONLY when that ref-box actually links to Adobe documentation. A ref-box of purely internal links does not get the note. */ -}}
 {{ $content := .Content }}
 {{- /* WAY-02: heading anchors, emitted at BUILD time and not by JavaScript.

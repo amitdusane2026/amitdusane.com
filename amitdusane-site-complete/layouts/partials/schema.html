@@ -34,6 +34,38 @@
   <script type="application/ld+json">{{ $article | jsonify (dict "indent" "  ") | safeJS }}</script>
 {{- end -}}
 
+
+{{- /* EAT-02 / EAT-03: learning-world sections as TechArticle.
+   Until now a section emitted BreadcrumbList and nothing else: no
+   machine-readable statement of what it is, who wrote it, or when. The
+   migration world has had TechArticle since launch, so this brings the
+   two into line rather than inventing anything.
+
+   datePublished comes from the `published` front matter, seeded from each
+   file's lastmod when the field was introduced. dateModified comes from
+   lastmod, which the [frontmatter] block in hugo.toml deliberately keeps
+   decoupled from the date cascade; do not reconnect them, a future date
+   silently drops the page. */ -}}
+{{- if and .IsPage (eq .Type "lesson") -}}
+  {{- $learnURL := (printf "%sadobe-analytics-learning/" $home) -}}
+  {{- $art := dict
+      "@context" "https://schema.org"
+      "@type" "TechArticle"
+      "headline" .Title
+      "description" .Description
+      "url" .Permalink
+      "mainEntityOfPage" (dict "@type" "WebPage" "@id" .Permalink)
+      "inLanguage" "en"
+      "author" $person
+      "publisher" $person
+      "image" (absURL "og-default.jpg")
+      "wordCount" (countwords .Content)
+      "isPartOf" (dict "@type" "CreativeWorkSeries" "name" "Adobe Analytics Learning" "url" $learnURL) -}}
+  {{- with .Parent -}}{{- $art = merge $art (dict "articleSection" .Title) -}}{{- end -}}
+  {{- with .Params.published -}}{{- $art = merge $art (dict "datePublished" ((time .).Format "2006-01-02")) -}}{{- end -}}
+  {{- with .Lastmod -}}{{- $art = merge $art (dict "dateModified" (.Format "2006-01-02")) -}}{{- end -}}
+  <script type="application/ld+json">{{ $art | jsonify (dict "indent" "  ") | safeJS }}</script>
+{{- end -}}
 {{- /* Breadcrumbs on guide pages */ -}}
 {{- if hasPrefix .RelPermalink "/web-sdk-migration" -}}
   {{- $crumbs := slice (dict "name" "Home" "url" $home) (dict "name" "Web SDK Migration" "url" $migURL) -}}

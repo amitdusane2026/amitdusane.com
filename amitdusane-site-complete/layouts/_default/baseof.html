@@ -66,7 +66,7 @@
   <header class="lhead">
     <button class="lmenu-btn" id="lMenuBtn" aria-label="Toggle navigation"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
     <a class="llogo" href="{{ "/adobe-analytics-learning/" | relURL }}">
-      <span class="llogo-icon" aria-hidden="true"><svg viewBox="0 0 64 64" width="58" height="58" role="img" aria-label="Amit Dusane"><path fill="currentColor" d="M18 50 L32 18 L46 50 H40 L35 39 H29 L24 50 Z"/><path fill="currentColor" d="M34 18 H44 C54 18 58 24 58 32 C58 40 54 46 44 46 H38 L41 40 H44 C49 40 52 37 52 32 C52 27 49 24 44 24 H37 Z"/><rect x="24" y="44" width="20" height="3.5" rx="1.7" fill="#C8102E"/></svg></span>
+      <span class="llogo-icon" aria-hidden="true">{{ partial "logo.html" (dict "size" 58 "hidden" true) }}</span>
       <span>
         <div class="llogo-text">Adobe Analytics Learning</div>
         <div class="llogo-author">Created by <b>Amit G Dusane</b></div>
@@ -124,7 +124,7 @@
   <main class="lmain"><div class="lcontent">{{ block "main" . }}{{ end }}</div></main>
   {{ if eq .Type "lesson" }}{{ partial "wherefits.html" . }}{{ end }}
   <table class="print-doc" id="printDoc" aria-hidden="true">
-    <thead><tr><td><div class="ph-row"><span class="ph-brand"><svg viewBox="0 0 64 64" width="36" height="36" style="flex:none"><path fill="#1E3A8A" d="M18 50 L32 18 L46 50 H40 L35 39 H29 L24 50 Z"/><path fill="#1E3A8A" d="M34 18 H44 C54 18 58 24 58 32 C58 40 54 46 44 46 H38 L41 40 H44 C49 40 52 37 52 32 C52 27 49 24 44 24 H37 Z"/><rect x="24" y="44" width="20" height="3.5" rx="1.7" fill="#C8102E"/></svg><span class="ph-title">Adobe Analytics Learning</span></span><span class="ph-ctx" id="printCtx"></span></div><div class="ph-by">Created by Amit G Dusane &#183; amitdusane.com</div></td></tr></thead>
+    <thead><tr><td><div class="ph-row"><span class="ph-brand">{{ partial "logo.html" (dict "size" 36 "hidden" true "ink" "#1E3A8A") }}<span class="ph-title">Adobe Analytics Learning</span></span><span class="ph-ctx" id="printCtx"></span></div><div class="ph-by">Created by Amit G Dusane &#183; amitdusane.com</div></td></tr></thead>
     <tfoot><tr><td><span>amitdusane.com &#183; Adobe Analytics Learning</span></td></tr></tfoot>
     <tbody><tr><td><div id="printBody"></div></td></tr></tbody>
   </table>
@@ -139,7 +139,7 @@
     <div class="about-card" role="dialog" aria-modal="true" aria-label="About Amit G. Dusane">
       <button class="about-x" id="aboutClose" aria-label="Close">&times;</button>
       <div class="about-head">
-        <span class="about-avatar" aria-hidden="true"><svg viewBox="0 0 64 64" width="58" height="58" role="img" aria-label="Amit Dusane"><path fill="currentColor" d="M18 50 L32 18 L46 50 H40 L35 39 H29 L24 50 Z"/><path fill="currentColor" d="M34 18 H44 C54 18 58 24 58 32 C58 40 54 46 44 46 H38 L41 40 H44 C49 40 52 37 52 32 C52 27 49 24 44 24 H37 Z"/><rect x="24" y="44" width="20" height="3.5" rx="1.7" fill="#C8102E"/></svg></span>
+        <span class="about-avatar" aria-hidden="true">{{ partial "logo.html" (dict "size" 58 "hidden" true) }}</span>
         <div><div class="about-name">Amit G. Dusane</div><div class="about-role">Customer Journey Analytics Practitioner &middot; 16+ years</div></div>
       </div>
       <div class="about-body">

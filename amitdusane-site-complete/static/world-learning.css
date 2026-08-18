@@ -349,6 +349,42 @@ body.world-learning .lcontent .lcrumb{font-size:var(--fs-meta);color:var(--text2
 .lmod-title{font-size:var(--fs-title);line-height:var(--lh-title);font-weight:700;color:var(--text1);margin:.1em 0 .4em}
 .lsec-title{font-size:var(--fs-title);line-height:var(--lh-title);font-weight:700;color:var(--text1);margin:0 0 var(--sp-sm);padding-left:14px;border-left:3px solid var(--accent)}
 /* Last-updated stamp. Sits under the section title, aligned to the title text (14px padding + 3px rule). Lives inside .lcontent, so lFillPrintDoc carries it into the print document automatically. */
+
+/* --------------------------------------------------------------------------
+   EAT-01: the byline. One bounded band under the title, carrying who wrote
+   this, what they have done, when it changed and how long it takes. Bounded
+   by two hairlines so it reads as a block of credentials rather than four
+   loose scraps of metadata. The name is a link to /about/, because a claim
+   a reader can check in one click is worth more than one they cannot.
+   -------------------------------------------------------------------------- */
+body.world-learning .lcontent .byline{
+  display:flex; flex-wrap:wrap; align-items:center; gap:5px 11px;
+  margin:0 0 var(--sp-xl); padding:11px 0;
+  border-top:1px solid var(--border); border-bottom:1px solid var(--border);
+  font-size:var(--fs-meta); color:var(--text2); line-height:1.5;
+}
+.byline .by-who{
+  display:inline-flex; align-items:center; gap:8px;
+  font-weight:700; color:var(--text1); text-decoration:none;
+}
+.byline .by-who svg{flex:none; color:var(--logo-ink)}
+.byline .by-who:hover span{text-decoration:underline; text-underline-offset:2px}
+.byline .by-cred{color:var(--text2)}
+.byline .by-sep{color:var(--text3)}
+.byline .by-date,.byline .by-read{color:var(--text2); white-space:nowrap}
+@media(max-width:600px){
+  /* Three deliberate lines on a phone: who, then the credential, then the
+     dates. Left to wrap on its own it produced four ragged lines with a
+     separator stranded at the start of one of them. The separators go and
+     the read time carries its own, so the last line still reads as a pair. */
+  .byline{gap:3px 9px}
+  .byline .by-who{flex:1 0 100%}
+  .byline .by-cred{flex:1 0 100%; order:2}
+  .byline .by-sep{display:none}
+  .byline .by-date{order:3}
+  .byline .by-read{order:4}
+  .byline .by-read::before{content:"\00B7\00A0"; color:var(--text3)}
+}
 body.world-learning .lcontent .lupdated{font-size:var(--fs-meta);color:var(--text3);font-weight:400;margin:-6px 0 var(--sp-lg);padding-left:0;letter-spacing:normal}
 .lupdated time{font-weight:500;color:inherit}
 .lcontent p{color:var(--text2);margin:0 0 1em}
