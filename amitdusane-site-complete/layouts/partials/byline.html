@@ -31,9 +31,9 @@
   {{- /* Both dates only when they differ. On launch day every page carries
      the same date for both, and "Published 1 Oct, Updated 1 Oct" reads as a
      mistake rather than as information. */ -}}
-  {{ with $p.Params.published }}<time class="by-date" datetime="{{ (time .).Format "2006-01-02" }}">Published {{ (time .).Format "2 Jan 2006" }}</time>{{ end }}
+  {{ with $p.Params.published }}<time class="by-date" datetime="{{ (time .).Format "2006-01-02" }}">Published: {{ (time .).Format "2 Jan 2006" }}</time>{{ end }}
   {{ if not $sameDay }}<span class="by-sep" aria-hidden="true">&middot;</span>
-  <time class="by-date" datetime="{{ $p.Lastmod.Format "2006-01-02" }}">Updated {{ $p.Lastmod.Format "2 Jan 2006" }}</time>{{ end }}
+  <time class="by-date" datetime="{{ $p.Lastmod.Format "2006-01-02" }}">Updated: {{ $p.Lastmod.Format "2 Jan 2006" }}</time>{{ end }}
   <span class="by-sep" aria-hidden="true">&middot;</span>
   <span class="by-read">{{ $mins }} min read</span>
   {{- end }}
