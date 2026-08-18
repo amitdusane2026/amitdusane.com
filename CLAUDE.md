@@ -282,6 +282,20 @@ Full specifications, including when each is earned, are in `content-component-ru
 
 **A screenshot is never wrapped in a link and never redacted.** The image carries `pointer-events:none`; only the zoom button opens anything, and it opens an overlay in the same tab that `world-learning.js` builds. Crop to the feature rather than the screen, because the image area is about 290px on a phone. Every shot earns a `shot-note` that points at something, and if none can be written the shot is not earned. Two per section is plenty. Capture from the Adobe training account with a harmless dimension so there is nothing to hide; blur is not redaction. Files are `static/img/aal_module14_section01_ss1.png`, zero-padded, originals archived outside the site folder.
 
+
+### Generated furniture: never authored, never hand-copied
+
+Four things now appear on a section that no author writes. Knowing they exist matters, because editing a section can break them.
+
+| | Built by | Notes |
+|---|---|---|
+| **Byline** | `partials/byline.html` | `full=true` on sections, `full=false` on the 21 module and 5 phase landings, where it is name and credential only. Read time is computed **here, once**, and published on `data-readmins` for the spine to read. Never count words twice: doing so once showed 13 minutes in one place and 14 in another. |
+| **In-page spine** | `world-learning.js` | From the h3 stack, on pages carrying `has-rail`. |
+| **Heading anchors** | `lesson/single.html` | At build time, so Google sees them. |
+| **Monogram** | `partials/logo.html` | The only copy. It was in six places and every change was six edits. Takes `size`, `hidden`, and `ink` for the print header, which forces the light palette and cannot use `currentColor`. |
+
+**The floating controls have a deliberate order of loudness**, and it should not be disturbed: the green pocket map is the loudest because it carries a reader across 116 sections, the page-nav button is quiet surface-and-border, and the About mark is the monogram alone with no container at all. A utility for moving inside one page must never outweigh the site's identity.
+
 Never invent a class. If it is not in `static/world-learning.css`, it does not exist.
 
 Never nest a `code-block` inside a `warn-box`, `pro-tip`, or `info-box`. State the rule in the box, put the code block after it at normal level.
