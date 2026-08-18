@@ -74,6 +74,14 @@ These documents were produced during earlier plain chat sessions. They are close
 
 **Every size comes from a token. Never hard-code a px in a component.** `:root` in `world-learning.css` carries a type scale (`--fs-title` 34, `--fs-h3` 24, `--fs-body` 18, `--fs-sm`, `--fs-label`, `--fs-meta`, `--fs-micro`, `--fs-code`), a spacing scale (`--sp-xs` 6 through `--sp-xl` 48), line-heights, and one column width (`--column` 760px, prose and figures alike). Each has a mobile step in the 880px query and the type scale has a print step in points. Changing a size means changing a token, never a rule. Before this existed the whole reading column was 16px and component margins had drifted across five arbitrary values.
 
+**Colour is tokenised the same way, and three of the tokens exist because a colour cannot be reused across grounds.** The accent is `--accent` (#ba2142, deepened off Tailwind's rose-600 on 18 Aug because the old value measured 4.49:1 on the page ground and failed AA), with `--accent2` as its companion and `--accent-light` as its wash. Alongside them:
+
+- **`--on-accent`** is what goes *on* an accent fill: `#fff` in light, the dark ink in dark. **Never hardcode `#fff` on an accent background** — it measured 3.19:1 in dark before this existed.
+- **`--success-ink` / `--warning-ink` / `--info-ink` / `--danger-ink`** are the semantic colours dark enough to carry *text*. The bare `--success`, `--warning` and `--info` remain the cross-world constants and keep doing tints, borders and icons. **Never set small type in a bare semantic token**: `warn-hdr` on its own amber wash measured 1.91:1. The `-ink` tokens go *lighter* in dark, not darker, exactly as `--accent2` does.
+- **`--code-chrome-ink`** exists because the code header is dark in *both* themes. **A token used on a fixed-dark surface cannot follow the theme** — darkening `--text3` for light-mode legibility would have taken `.code-lang` from 6.75:1 to 3.19:1. Check every consumer of a neutral before you move it.
+
+`--diagram-min` (700px) is the width an inline-SVG figure holds so its text stays legible; see the diagram note below.
+
 **The typeface is IBM Plex Sans and IBM Plex Mono, self-hosted** in `static/fonts/`, 59KB for two woff2 files, preloaded on the learning world only. One variable file covers every weight. The migration world deliberately stays on the system stack. Never add a CDN font link; the site loads no external assets at all.
 
 **A section page is three columns above 1244px**: sidebar, article, and the in-page spine. The spine is built by `world-learning.js` from the h3 stack and is switched on by the `has-rail` body class, which `baseof.html` adds for `type: lesson` only. Below 1244px it becomes a drawer on a floating button. It is generated, never authored.
@@ -98,6 +106,10 @@ A fifth, already fixed and documented in `hugo.toml`: the `[frontmatter]` block 
 A sixth, found 18 Aug 2026 while rolling out the three-column shell: **a CSS grid item with a pixel `max-width` does not shrink below its track.** `min-width:0` is not enough; it needs `max-width:min(760px,100%)`. Without it the article rendered 109px wider than a 390px phone, and because a `position:fixed` header with `left:0;right:0` sizes to the *overflowed* width, the header stretched too and slid away sideways when the reader scrolled. Two symptoms, one cause, and neither looks like a grid problem. **Whenever a container becomes a grid or flex item, check it at 390px before anything else.**
 
 A seventh, and it has caught me three times in one session: **`body.world-learning .lcontent p` and `… li` are specificity (0,2,2) and beat any bare component selector.** A new rule like `.lscale{font-size:var(--fs-meta)}` silently renders at body size instead. It hit the breadcrumb, the five box-prose rules, and the landing-page scale line. **Any new `<p>` or `<li>` inside `.lcontent` needs the scoped form** — `body.world-learning .lcontent p.lscale` — or add an element qualifier to win on specificity. The symptom is always the same: the token is correct, the rule looks right, and the page ignores it.
+
+**The same trap has a second form that is harder to see: equal specificity, decided by source order.** On 18 Aug a new `body.world-learning .lcontent th` rule was written to restyle table headers, and it was ignored — because the existing rule has *identical* specificity (0,2,2) and sits several hundred lines later in the file. Scoping harder does nothing here; you have to edit the existing rule in place, which is the better outcome anyway because it leaves one rule rather than two fighting. **When a new rule does nothing and its specificity already matches, check whether the rule you are trying to beat comes later in the file.**
+
+An eighth, found the same day and worth knowing before any theme work: **flipping `data-theme` on `documentElement` from the console is not a valid way to test dark mode.** The site's own theme script also sets `style.colorScheme`, and several components carry `transition:background,color`, so an attribute flip reports UA-default backgrounds and mid-transition colours. It produced two confident, entirely false AA failures. **Test dark by setting `localStorage['site-theme']` and loading the page**, the way the site itself does it.
 
 ---
 
@@ -309,11 +321,15 @@ Never nest a `code-block` inside a `warn-box`, `pro-tip`, or `info-box`. State t
 ```html
 <svg viewBox="0 0 700 250" style="width:100%;height:auto;display:block"
      role="img" aria-label="Plain-language description of what this shows">
-  <rect style="fill:var(--card, #ffffff);stroke:var(--accent, #e11d48);stroke-width:2"/>
+  <rect style="fill:var(--card, #ffffff);stroke:var(--accent, #ba2142);stroke-width:2"/>
 </svg>
 ```
 
 Every SVG needs `role="img"` and a full-sentence `aria-label`.
+
+**Use a 700-unit `viewBox`, and treat authored px as rendered px.** 61 of the 65 inline SVGs already use 700, and since 18 Aug the figure holds `--diagram-min` (700px) at every width, with the box scrolling when the column is narrower. So a `font-size="11"` now renders at 11px rather than at whatever the column happened to allow. Before that it was a lottery: the same diagram rendered at 4.3px on a phone and 8.2px in the three-column desktop shell, because an inline SVG is one scalable image and its text shrinks with the frame.
+
+**Nothing in a diagram should be authored below 11px.** The corpus still has 141 places at 8 to 10.5px, 16 of which land under the ~9px legibility floor; those are known and listed under CMP-12. An HTML/CSS diagram layout does not have this problem at all — it is real DOM text, so it reflows and keeps its size, which is the strongest argument for reaching for an HTML layout over an SVG when a diagram can be built either way.
 
 ---
 
@@ -391,9 +407,9 @@ Run this whenever Amit says to close out, wrap up, or end the session. It is wha
 
 1. **Update `completion-tracker.tsv`.** Mark every section touched this session: `Content created?`, `Content QA'd?`, and the SEO columns. The tracker is the single record of where the project stands; a future session reads it to decide what to do next.
 
-   Tab-delimited, 1 header row plus 183 data rows, 15 columns: Phase, Module, Section #, Page name, Page type, URL, SEO title, SEO title done?, SEO description, SEO desc done?, Title chars, Desc chars, Content created?, Content QA'd?, Final result. Tabs are the delimiter because descriptions are full of commas. Never introduce a tab inside a field. `Final result` is Yes only when SEO title, SEO desc, Content created and Content QA'd are all Yes.
+   Tab-delimited, 1 header row plus 192 data rows, 15 columns: Phase, Module, Section #, Page name, Page type, URL, SEO title, SEO title done?, SEO description, SEO desc done?, Title chars, Desc chars, Content created?, Content QA'd?, Final result. Tabs are the delimiter because descriptions are full of commas. Never introduce a tab inside a field. `Final result` is Yes only when SEO title, SEO desc, Content created and Content QA'd are all Yes.
 
-   **`Page type` splits the file into two kinds of row, and every statistic must filter on it.** Content is `Section` (116), `Module landing` (21), `Category landing` (5), `Home` and `Glossary`. Platform work is `Feature` (39), added 7 Aug 2026, carrying `Phase = Platform` and grouped by `Module` into navigation, presentation, seo, chrome, infrastructure and tech-debt. For a Feature row the SEO columns do not apply and are set to `NA`, `URL` holds the implementing file path rather than a URL, and `Content created?` means built. **Quoting a total without filtering by `Page type` will mix sections and features and be wrong.**
+   **`Page type` splits the file into two kinds of row, and every statistic must filter on it.** Content is `Section` (116), `Module landing` (21), `Category landing` (5), `Home` and `Glossary`. Platform work is `Feature` (48 as of 18 Aug 2026, and it grows with each platform change), added 7 Aug 2026, carrying `Phase = Platform` and grouped by `Module` into navigation, presentation, seo, chrome, infrastructure and tech-debt. For a Feature row the SEO columns do not apply and are set to `NA`, `URL` holds the implementing file path rather than a URL, and `Content created?` means built. **Quoting a total without filtering by `Page type` will mix sections and features and be wrong.**
 
    Every Feature row is deliberately `Content QA'd? = No` and `Final result = No`. Amit will re-QA the platform himself once the content front is finished, so nothing there should be marked QA'd on my judgment.
 2. **Update `development-plan.md`** if a phase completed, an estimate moved, or the order changed.

@@ -186,5 +186,8 @@ Platform	presentation		Author byline on sections and landings	Feature	layouts/pa
 Platform	presentation		In-page spine (On this page)	Feature	static/world-learning.js	NA	NA	NA	NA	NA	NA	Yes	No	No
 Platform	seo		Heading anchors emitted at build time	Feature	layouts/lesson/single.html	NA	NA	NA	NA	NA	NA	Yes	No	No
 Platform	presentation		Type and spacing token scale	Feature	static/world-learning.css	NA	NA	NA	NA	NA	NA	Yes	No	No
+Platform	presentation		Colour token system (accent, semantic -ink, on-accent)	Feature	static/world-learning.css	NA	NA	NA	NA	NA	NA	Yes	No	No
+Platform	presentation		Mono label voice across box and figure headers	Feature	static/world-learning.css	NA	NA	NA	NA	NA	NA	Yes	No	No
+Platform	presentation		Diagram plate treatment and SVG legibility floor	Feature	static/world-learning.css	NA	NA	NA	NA	NA	NA	Yes	No	No
 Platform	presentation		Self-hosted typeface (IBM Plex)	Feature	static/fonts/	NA	NA	NA	NA	NA	NA	Yes	No	No
 Platform	presentation		Scale line on landings	Feature	layouts/partials/scale.html	NA	NA	NA	NA	NA	NA	Yes	No	No

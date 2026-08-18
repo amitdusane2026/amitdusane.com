@@ -594,8 +594,29 @@ The pattern is identical every time: **I verified against one page, or one condi
 ### Carried forward
 
 - **`EAT-11`, a launch blocker**: on launch day set both `published` and `lastmod` to the launch date across all 116 sections. The dates were seeded from drafting dates, but none of those pages were ever public, and a date Google can contradict from its own crawl history is worse than no date.
-- **`CMP-12`**: 65 inline-SVG diagrams across 35 sections render their text at 4.6px on a phone, against 12.5px for the 76 HTML-based ones. Not a regression, it has always been so, but it means the site's differentiator does not survive the rendering Google indexes.
-- **`COL-06`**: `--text3` on white is 2.56:1 everywhere it appears, not only where it was fixed.
+- **`COL-02`, partial**: the accent's deliberate job list — current position in the spine, the `ref-box` as the handoff, the onward link, focus states, ordered-list markers — is still unwritten. What landed on 18 Aug only *reduced* accent usage rather than redistributing it.
+- **`CMP-12`, partial**: fixed to 10px at every width, but the corpus still authors SVG text at 8 to 10.5px in 141 places, 16 of them under the ~9px legibility floor. That is an authoring standard, not a layout fix.
+- **`CMP-06`**: SVG-*internal* text was outside the contrast audit and has never been checked in either theme.
+
+## The colour and component pass, 18 August 2026
+
+Second working day of the design phase. **COL-01, COL-04, COL-06, TYP-06, CMP-01 and CMP-02 closed; COL-02 and CMP-12 partial.** Commit `23a190f`, one stylesheet and two content files, 219 pages.
+
+**The accent was a framework default and it was also failing.** `#e11d48` is Tailwind's rose-600 verbatim, which was the stated objection — but measuring it found something the plan had not: `.lmain` sets no background, so the reading column paints on `--bg1` (#f8fafc) rather than white, and the accent measured **4.49:1** there. Every inline link in 84 signed-off sections was under AA. It is now `#ba2142`, hue held at 347 so the change reads as a deepening rather than a rebrand, at 5.93:1.
+
+**Then the audit found seven more failures, none of them caused by that change.** `warn-hdr` at 1.91:1 across 103 boxes; `ref-title` and its links at 2.25:1 across 83; `info-hdr` at 3.15:1 across 65; table headers at 2.34:1; inline `<code>` at 2.46:1, still painted in the old rose-400; `--text3` at 2.45:1 wherever it carried text, which includes the visible Last-updated stamp — a trust signal nobody could read; and white on the pocket-map tab at 3.30:1, on all 116 sections. The design plan's COL-06 predicted the box headers specifically and was right.
+
+**The resolution matters more than the numbers, because it collided with a P0/decided item.** COL-03 fixes the semantic colours across every world. Rather than change them, the label voice stopped asking a semantic colour to carry small text at all: the tint, border and icon carry the meaning — they always did, and they are what a skimmer registers — so the label takes primary ink at 14 to 16:1. `--warning`, `--info` and `--success` are untouched. Where a semantic genuinely must carry text there are companion `-ink` tokens, which invert direction in dark for the same reason `--accent2` does.
+
+**Zero AA failures now, across 8 page types × 2 themes**, measured on the delivered page by walking every text-bearing element and compositing the real backdrop.
+
+### Three things this cost, and all three are method
+
+**Testing dark mode by flipping the attribute is invalid, and it produced two confident false failures.** The site's own script also sets `style.colorScheme`, and several components carry colour transitions, so an attribute flip reports UA defaults and mid-transition values. Half an hour went into chasing a white button that was never white. Set `localStorage['site-theme']` and load the page.
+
+**A token cannot be moved without checking every ground it lands on.** Darkening `--text3` for light-mode legibility would have taken `.code-lang` from 6.75:1 to 3.19:1, because the code header is dark in *both* themes. Caught by measuring before shipping, not after — which is the first time this phase that an edge was found ahead of Amit finding it.
+
+**And CMP-12's framing in the plan was simply wrong.** It was written as a mobile problem. At 1280px the three-column shell leaves the article about 574px, so the same arithmetic gave 8.2px on a laptop — worse than the phone once the phone was fixed. It is a narrow-*column* problem. The fix is unconditional rather than sitting in a media query, and print had to invert it, because paper cannot scroll and would have cropped every diagram at the page edge.
 
 ## Phase 5 — Small corrections
 

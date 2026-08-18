@@ -227,13 +227,14 @@ footer.end{border-top:1px solid var(--line);padding-top:18px;font-family:var(--m
     </dl>
   </div>
 
-  <div class="it" data-pri="P1" data-status="open">
+  <div class="it" data-pri="P1" data-status="done">
     <div class="it-h"><span class="id">TYP-06</span><span class="ti">Make mono the label voice</span>
-      <span class="tags"><span class="t p1">P1</span><span class="t eff">M</span><span class="t st">open</span></span></div>
+      <span class="tags"><span class="t p1">P1</span><span class="t eff">M</span><span class="t st done">done 18 Aug</span></span></div>
     <dl class="row">
       <dt>Why</dt><dd>Inherited from the external draft and the strongest cheap idea in it. Setting every eyebrow, box header, table header, figure caption and path label in mono uppercase with letter-spacing is what makes a page read as an engineering field manual rather than a blog. It costs nothing and it is the most efficient identity move available.</dd>
       <dt>What</dt><dd>Apply to <code>warn-hdr</code>, <code>info-hdr</code>, <code>pro-tip-hdr</code>, <code>path-title</code>, <code>ref-title</code>, <code>diagram-title</code>, <code>code-lang</code>, <code>shot-title</code>, table headers and breadcrumb.</dd>
       <dt>Scope</dt><dd class="scope">10 components &times; 116 sections</dd>
+      <dt>Result</dt><dd>Measured first: <code>warn-hdr</code>, <code>info-hdr</code>, <code>pro-tip-hdr</code>, <code>ref-title</code>, <code>path-title</code>, <code>diagram-title</code> and <code>shot-title</code> were <em>all</em> 13.5px / 700 / Plex Sans / letter-spacing normal. Seven components, one typographic object, distinguished only by a colour &mdash; and four of those colours were below AA.<br><br>Now mono, uppercase, tracked via <code>--label-ls</code>, at <strong>weight 400</strong>: the site self-hosts Plex Mono at 400 only, so 700 would be a synthesised fake bold, and tracked uppercase at 400 is the correct field-manual treatment regardless. No font budget spent, so PERF-02 is intact.<br><br>The label is <strong>not coloured</strong>. The tint, border and icon carry the semantic &mdash; they always did, and they are what a skimmer registers &mdash; so the label takes primary ink at 14&ndash;16:1. <code>--warning</code>, <code>--info</code> and <code>--success</code> are untouched, so COL-03 holds literally. Table headers and <code>code-lang</code> joined the voice, keeping their own size and ink.</dd>
     </dl>
   </div>
 
@@ -264,23 +265,25 @@ footer.end{border-top:1px solid var(--line);padding-top:18px;font-family:var(--m
   <div class="cat"><span class="cat-id">COL</span><h2>Colour</h2><span class="n">6 items</span></div>
   <p class="cat-note">Verdict already reached: keep crimson, deepen it, and make it work. A crimson site in a category where every tool is blue is genuinely differentiating.</p>
 
-  <div class="it" data-pri="P1" data-status="open">
+  <div class="it" data-pri="P1" data-status="done">
     <div class="it-h"><span class="id">COL-01</span><span class="ti">Deepen the crimson and move it off a framework default</span>
-      <span class="tags"><span class="t p1">P1</span><span class="t eff">S</span><span class="t st">open</span></span></div>
+      <span class="tags"><span class="t p1">P1</span><span class="t eff">S</span><span class="t st done">done 18 Aug</span></span></div>
     <dl class="row">
       <dt>Why</dt><dd><code>#e11d48</code> is Tailwind's <code>rose-600</code> verbatim, which is the same "unconsidered default" tell as reaching for Inter. It also reads a little bright and consumer-facing against the seriousness the site is aiming at.</dd>
       <dt>What</dt><dd>Nudge deeper and slightly less saturated to a custom value. Do not go as far as the external draft's <code>#96222F</code>, which is dark enough to read brownish as a link colour and loses the clickable signal.</dd>
       <dt>Scope</dt><dd class="scope">Learning world accent token</dd>
+      <dt>Result</dt><dd><code>#e11d48</code> &rarr; <code>#ba2142</code>, hsl(347,70%,43%). Hue held so this is a deepening, not a rebrand of 84 signed-off sections; saturation 77&rarr;70, lightness 50&rarr;43.<br><br>It was not only a framework default, it was <strong>failing</strong>. <code>.lmain</code> sets no background, so the reading column paints on <code>--bg1</code> (#f8fafc) rather than white, and #e11d48 there measures <strong>4.49:1</strong> &mdash; under the 4.5 AA line for normal text, on every inline link in the corpus. Now 5.93:1 on the ground and 6.21:1 on a card, and still well short of the rejected #96222F (7.82:1) that reads brownish.<br><br>Six rules carried <code>rgba(225,29,72,&hellip;)</code> as a literal and would not have followed the token at all; two content files hardcoded the hex. Both swept.</dd>
     </dl>
   </div>
 
-  <div class="it" data-pri="P1" data-status="open">
+  <div class="it" data-pri="P1" data-status="partial">
     <div class="it-h"><span class="id">COL-02</span><span class="ti">Make the accent actually do work on a section page</span>
-      <span class="tags"><span class="t p1">P1</span><span class="t eff">M</span><span class="t st">open</span></span></div>
+      <span class="tags"><span class="t p1">P1</span><span class="t eff">M</span><span class="t st part">partial</span></span></div>
     <dl class="row">
       <dt>Why</dt><dd>On a rendered section the crimson appears as a 3px rule beside the title and as link colour. That is all. Changing a hue that is barely present will not feel like anything, so usage has to be fixed before or alongside COL-01.</dd>
       <dt>What</dt><dd>Decide the accent's job list deliberately: current position in the rail and the in-page spine, the <code>ref-box</code> as the handoff moment, the onward link, focus states, and ordered-list markers in walkthroughs. Then stop. An accent used everywhere is an accent used nowhere.</dd>
       <dt>Scope</dt><dd class="scope">All learning-world pages</dd>
+      <dt>Result</dt><dd>Reduced rather than redistributed, and closed at that for now. The accent came <em>off</em> <code>pro-tip-hdr</code>, which the label voice moved to primary ink, and was deliberately <em>not</em> spent on the diagram in CMP-01, where structure does the work instead. It gained one real job: <code>.tl-a</code>, the learning-world tagline, was a hardcoded #C8102E that never flipped and sat at 3.03:1 in dark.<br><br><strong>Still open:</strong> the deliberate job list itself &mdash; current position in the spine, the <code>ref-box</code> as the handoff moment, the onward link, focus states, ordered-list markers in walkthroughs. Do that before calling this done.</dd>
     </dl>
   </div>
 
@@ -294,13 +297,14 @@ footer.end{border-top:1px solid var(--line);padding-top:18px;font-family:var(--m
     </dl>
   </div>
 
-  <div class="it" data-pri="P1" data-status="open">
+  <div class="it" data-pri="P1" data-status="done">
     <div class="it-h"><span class="id">COL-04</span><span class="ti">Re-derive the dark-mode accent after COL-01</span>
-      <span class="tags"><span class="t p1">P1</span><span class="t eff">S</span><span class="t st">open</span></span></div>
+      <span class="tags"><span class="t p1">P1</span><span class="t eff">S</span><span class="t st done">done 18 Aug</span></span></div>
     <dl class="row">
       <dt>Why</dt><dd>Dark currently lightens crimson to <code>#fb5277</code>. Deepening the light accent changes what the dark counterpart should be, and a naive inversion produces a washed pink.</dd>
       <dt>What</dt><dd>Derive rather than invert. Check the accent against the dark card colour, not only the dark ground.</dd>
       <dt>Scope</dt><dd class="scope">Dark theme tokens</dd>
+      <dt>Result</dt><dd>Derived, not inverted. Dark <code>--accent</code> #fb5277 &rarr; <strong>#f27893</strong>, checked against <code>--card</code> and <code>--bg3</code> rather than only the dark ground.<br><br>The real find was dark <code>--accent2</code>, which was set to <code>#e11d48</code> &mdash; a naive reuse of the light accent &mdash; and measured <strong>3.11:1</strong> on the dark card. It carries <code>.doc-note</code> prose on every section with an Adobe <code>ref-box</code>. In dark the role has to invert, because deeper on a dark ground means less legible: it is now <strong>#f7a1b4</strong>, a lighter step, at 7.46:1.<br><br>Dark <code>--bg3</code> also moved #334155 &rarr; #283340. It was too light a surface for the inks landing on it: 4.04:1 for text, 3.89:1 for the accent. Darkening the surface is safer than lightening ink that is shared with lighter grounds.</dd>
     </dl>
   </div>
 
@@ -314,14 +318,15 @@ footer.end{border-top:1px solid var(--line);padding-top:18px;font-family:var(--m
     </dl>
   </div>
 
-  <div class="it" data-pri="P1" data-status="open" data-seo="1">
+  <div class="it" data-pri="P1" data-status="done" data-seo="1">
     <div class="it-h"><span class="id">COL-06</span><span class="ti">Contrast audit, both themes, after every colour change</span>
-      <span class="tags"><span class="t p1">P1</span><span class="t seo">SEO</span><span class="t eff">S</span><span class="t st">open</span></span></div>
+      <span class="tags"><span class="t p1">P1</span><span class="t seo">SEO</span><span class="t eff">S</span><span class="t st done">done 18 Aug</span></span></div>
     <dl class="row">
       <dt>Why</dt><dd>Body prose currently uses the secondary ink rather than the primary, which is a deliberate softening but leaves less headroom than it looks. Any accent or neutral change can quietly push a component under AA.</dd>
       <dt>What</dt><dd>Check every text-on-surface pairing in light and dark against WCAG AA, including the semantic box headers, which are the most likely to fail.</dd>
       <dt>Scope</dt><dd class="scope">All components, both themes</dd>
       <dt>SEO</dt><dd class="seo-note">Accessibility is a quality signal and a legal exposure; contrast failures also directly damage the mobile reading experience Google indexes.</dd>
+      <dt>Result</dt><dd>Ran as the gate on the colour work, and it found what this item predicted &mdash; the semantic box headers &mdash; plus five things nobody had measured.<br><br><strong>Before:</strong> <code>warn-hdr</code> 1.91:1 (103 boxes) &middot; <code>ref-title</code> and <code>ref-box</code> links 2.25:1 (83) &middot; <code>info-hdr</code> 3.15:1 (65) &middot; table headers 2.34:1 &middot; inline <code>&lt;code&gt;</code> 2.46:1, still on the old rose-400 &middot; <code>--text3</code> 2.45:1 everywhere it carried text, including the Last-updated stamp, which is a trust signal nobody could read &middot; white on the pocket-map tab 3.30:1, on all 116 sections &middot; the activity-map heat scale 2.63&ndash;3.56:1.<br><br><strong>After: zero AA failures across 8 page types &times; 2 themes</strong>, measured on the delivered page by walking every text-bearing element and compositing the real backdrop, through the site's own theme path rather than by flipping the attribute &mdash; flipping reports mid-transition and UA-default values, and it produced two false failures before that was caught.<br><br>Not covered: SVG-internal text, which needs CMP-06.</dd>
     </dl>
   </div>
 </section>
@@ -541,24 +546,26 @@ footer.end{border-top:1px solid var(--line);padding-top:18px;font-family:var(--m
   <div class="cat"><span class="cat-id">CMP</span><h2>Components</h2><span class="n">12 items</span></div>
   <p class="cat-note">The class vocabulary is disciplined and does not need replacing. The work here is elevating what is undersold, and pricing one real maintenance liability.</p>
 
-  <div class="it" data-pri="P1" data-status="open">
+  <div class="it" data-pri="P1" data-status="done">
     <div class="it-h"><span class="id">CMP-01</span><span class="ti">Elevate the diagram component</span>
-      <span class="tags"><span class="t p1">P1</span><span class="t eff">M</span><span class="t st">open</span></span></div>
+      <span class="tags"><span class="t p1">P1</span><span class="t eff">M</span><span class="t st done">done 18 Aug</span></span></div>
     <dl class="row">
       <dt>Why</dt><dd>136 diagram blocks and roughly 40 bespoke layouts are the site's genuine differentiator &mdash; nobody else publishing Adobe Analytics content has this. They currently sit in a plain bordered box under a 16px bold title, presented identically to a warning or a tip. <strong>The thing that makes the site unlike anything else looks like furniture.</strong> This is where the design budget should go.</dd>
       <dt>What</dt><dd>Give the diagram its own visual register: caption treatment, frame, and space. Pairs with IDN-03.</dd>
       <dt>Scope</dt><dd class="scope">136 diagram blocks</dd>
+      <dt>Result</dt><dd>The diagram stops looking like an alert. It was a 1px card at radius 10 under a 13.5px bold title &mdash; the same weight as a <code>warn-box</code>, quieter than a <code>pro-tip</code>.<br><br>It is now a <em>plate</em>: tighter radius, <code>--sp-xl</code> of air above and below so it owns space the way a heading does, and a ruled caption in the label voice. The distinction is deliberately <strong>structural, not coloured</strong>. Every other box on a section is a wash of its semantic colour, so a plain plate with air and a rule is already unlike all of them, it stays unlike them in print and in dark, and it leaves the accent free for COL-02.<br><br><strong>Not done:</strong> letting the figure bleed wider than the prose column on a large screen. That touches the three-column grid, which is where the 18 Aug mobile-overflow bug came from, so it wants its own pass.</dd>
     </dl>
   </div>
 
-  <div class="it" data-pri="P1" data-status="open" data-seo="1">
+  <div class="it" data-pri="P1" data-status="done" data-seo="1">
     <div class="it-h"><span class="id">CMP-02</span><span class="ti">Let diagrams scroll rather than squash on mobile</span>
-      <span class="tags"><span class="t p1">P1</span><span class="t seo">SEO</span><span class="t eff">S</span><span class="t st">open</span></span></div>
+      <span class="tags"><span class="t p1">P1</span><span class="t seo">SEO</span><span class="t eff">S</span><span class="t st done">done 18 Aug</span></span></div>
     <dl class="row">
       <dt>Why</dt><dd>A wide SVG shrunk to a 340px phone is unreadable, and the mobile rendering is the indexed one.</dd>
       <dt>What</dt><dd><code>overflow-x:auto</code> on <code>diagram-content</code>, with the container scrolling rather than the page body. Never allow the page itself to scroll sideways.</dd>
       <dt>Scope</dt><dd class="scope">136 diagram blocks</dd>
       <dt>SEO</dt><dd class="seo-note">Horizontal page overflow is a mobile usability failure Search Console reports directly.</dd>
+      <dt>Result</dt><dd>Delivered inside CMP-12 rather than on its own, and at every width rather than only on mobile. <code>.diagram-content</code>, and any <code>.diagram-box</code> holding a direct-child SVG, scroll horizontally with <code>overscroll-behavior-x:contain</code>. The page itself never scrolls sideways, asserted at 360/390/768/1243/1244/1600 across 8 page types.<br><br>One detail worth keeping: <code>justify-content:center</code> on a flex container <em>clips</em> an overflowing child so it can never be scrolled to. <code>margin-inline:auto</code> centres when there is room and does not clip when there is not.</dd>
     </dl>
   </div>
 
@@ -654,9 +661,9 @@ footer.end{border-top:1px solid var(--line);padding-top:18px;font-family:var(--m
     </dl>
   </div>
 
-  <div class="it" data-pri="P1" data-status="open" data-seo="1">
+  <div class="it" data-pri="P1" data-status="partial" data-seo="1">
     <div class="it-h"><span class="id">CMP-12</span><span class="ti">Inline-SVG diagrams become unreadable on a phone; HTML ones do not</span>
-      <span class="tags"><span class="t p1">P1</span><span class="t seo">SEO</span><span class="t eff">L</span><span class="t st">open</span></span></div>
+      <span class="tags"><span class="t p1">P1</span><span class="t seo">SEO</span><span class="t eff">L</span><span class="t st part">partial</span></span></div>
     <dl class="row">
       <dt>Why</dt><dd>Spotted by Amit, 18 Aug 2026, and measured the same day. <strong>The corpus contains two kinds of diagram that behave in opposite ways at phone width.</strong> An HTML/CSS layout is real DOM text, so it reflows and keeps its font size. An inline SVG is one scalable image, so its text shrinks with the container. Measured at 390px on the same build:
         <div class="tscroll" style="margin:10px 0"><table><thead><tr><th>Diagram type</th><th>Example</th><th class="num">Rendered text</th></tr></thead><tbody>
@@ -668,6 +675,7 @@ footer.end{border-top:1px solid var(--line);padding-top:18px;font-family:var(--m
       <dt>What</dt><dd>Not yet decided, and deliberately not fixed now. The options, roughly in order of cost: give SVG diagrams a minimum rendered scale and let them scroll horizontally inside the box on narrow screens, per CMP-02; author a mobile viewBox or a stacked variant for the worst offenders; or convert the highest-traffic SVGs to the HTML/CSS layout pattern that already survives a phone. The last is what CMP-05 is circling, and this is the strongest argument yet for the HTML approach being the better primitive.</dd>
       <dt>Scope</dt><dd class="scope">65 inline SVGs across 35 sections &middot; 76 HTML layouts unaffected</dd>
       <dt>SEO</dt><dd class="seo-note">Mobile is the indexed rendering. The site's stated differentiator against the official documentation is its diagrams, and on more than half of the sections that carry one, that differentiator currently does not survive a phone. Also an accessibility problem: text below about 9px fails legibility on any handset.</dd>
+      <dt>Result</dt><dd>The cheapest of the three options is in, and it moved the number a long way: authored SVG text at 390px went from <strong>4.3px to 10px</strong>. The figure holds <code>--diagram-min</code> &mdash; 700px, which 61 of the 65 viewBoxes use, so it renders at scale 1.0 and authored px equals rendered px &mdash; and the box scrolls.<br><br><strong>The framing in this item was wrong, and measuring corrected it.</strong> This is not a mobile problem. At 1280px the three-column shell leaves the article about 574px, so the same arithmetic gave <strong>8.2px on a laptop</strong>, worse than the phone once the phone was fixed. It is a narrow-<em>column</em> problem, and the reading column is narrow on a desktop too. The floor is therefore unconditional rather than inside a media query.<br><br>Print had to invert it: paper cannot scroll, so the screen rules would have cropped every diagram at the page edge and silently lost its right-hand side.<br><br><strong>Still open:</strong> the corpus authors SVG text at 8&ndash;10.5px in 141 places (1 at 8, 15 at 9, 113 at 10, 12 at 10.5). At scale 1.0 those render at their authored size, which is still under the ~9px legibility floor in 16 of them. That is an authoring standard for the rulebook, not a layout fix.</dd>
     </dl>
   </div>
 </section>
