@@ -286,7 +286,11 @@ body.world-learning .lcontent > h1.lsec-title{margin-left:calc(var(--title-inden
 
 /* Three columns only: the pocket map lives in the rail, so the floating tab
    would be a duplicate. Everywhere else the tab stays exactly as it was. */
-@media(min-width:1244px){ body.has-rail .wf-tab{display:none} }
+/* Hide the floating tab ONLY where the rail actually exists to carry it.
+   Keyed on :has(.wf-rail) rather than .has-rail: 27 sections have too few
+   headings to build a rail, and hiding the tab on those left them with no
+   pocket map at all, which is the one control that must never disappear. */
+@media(min-width:1244px){ body:has(.wf-rail) .wf-tab{display:none} }
 
 /* ---- drawer below the three-column threshold ---- */
 .wf-nav-fab{display:none}
@@ -422,7 +426,7 @@ body.world-learning .welcome-btn:hover{background:var(--accent2);text-decoration
        column must not apply or every printed line would stop short. */
     --column:none;
   }
-  .wf-rail{display:none !important}
+  .wf-rail,.wf-nav-fab,.wf-nav-veil,.wf-tab{display:none !important}
   html{color-scheme:light !important;background:#fff !important}
   body{background:#fff !important}
   .print-doc tbody td{color:#1c2129}

@@ -371,7 +371,7 @@
       article = document.querySelector('.section'),
       title = document.querySelector('.lsec-title'),
       heads = [].slice.call(document.querySelectorAll('.section > .subsec-title'));
-  if (!main || !content || !article || heads.length < 3) return;
+  if (!main || !content || !article) return;
 
   if (title && !title.id) title.id = 'top';
 
@@ -431,15 +431,10 @@
     rail.appendChild(mapBtn);
   }
 
-  var hd = document.createElement('p');
-  hd.className = 'wf-rail-h';
-  hd.textContent = 'On this page';
-  rail.appendChild(hd);
-  var sub = document.createElement('p');
-  sub.className = 'wf-rail-sub';
-  sub.textContent = 'Jump within this section';
-  rail.appendChild(sub);
-
+  /* Build the list first, then decide whether it has earned a heading. A
+     section with no h3 stack (an unwritten stub, or a very short section)
+     still gets the rail for the read time, the pocket map and the path-box
+     jump. What it must not get is an "On this page" label above nothing. */
   var ol = document.createElement('ol');
   function addItem(href, text, full, cls) {
     var li = document.createElement('li'), a = document.createElement('a');
@@ -451,8 +446,10 @@
     ol.appendChild(li);
     return li;
   }
-  addItem('#' + (title ? title.id : 'top'), 'Introduction', 'Start of the article', 'wf-intro');
-  heads.forEach(function (h) { addItem('#' + h.id, shortLabel(h), h.textContent.trim()); });
+  if (heads.length) {
+    addItem('#' + (title ? title.id : 'top'), 'Introduction', 'Start of the article', 'wf-intro');
+    heads.forEach(function (h) { addItem('#' + h.id, shortLabel(h), h.textContent.trim()); });
+  }
 
   /* The path-box last: somebody who arrived from a search only wanting to
      know where the screen lives should not have to read the section to find
@@ -470,7 +467,18 @@
             pBody ? pBody.textContent.trim().slice(0, 130) : '',
             'wf-path');
   }
-  rail.appendChild(ol);
+
+  if (ol.children.length) {
+    var hd = document.createElement('p');
+    hd.className = 'wf-rail-h';
+    hd.textContent = 'On this page';
+    rail.appendChild(hd);
+    var sub = document.createElement('p');
+    sub.className = 'wf-rail-sub';
+    sub.textContent = heads.length ? 'Jump within this section' : 'Where to find it';
+    rail.appendChild(sub);
+    rail.appendChild(ol);
+  }
 
   main.appendChild(rail);
 
