@@ -348,10 +348,12 @@ body.wf-lock{overflow:hidden}
   .author-fab:hover svg,.author-fab:focus-visible svg{transform:none}
 }
 @media(max-width:560px){
-  /* Half the desktop mark. On a phone the monogram was 80px against a
-     390px viewport -- a fifth of the width, for a control that is not
-     what the reader came for. The button keeps 44px so the touch
-     target stays at the accessible minimum even though the mark is 40. */
-  .author-fab{width:44px !important; height:44px !important}
-  .author-fab svg{width:40px; height:40px}
+  /* Three quarters of the original 80px phone mark. 80px against a 390px
+     viewport was a fifth of the screen width for a control nobody came
+     for; 40px went too far the other way and stopped reading as the
+     site's mark. At 60px the button and the mark are the same size
+     again, as they are on desktop, and the touch target sits well clear
+     of the 44px minimum without needing padding to get there. */
+  .author-fab{width:60px !important; height:60px !important}
+  .author-fab svg{width:60px; height:60px}
 }
