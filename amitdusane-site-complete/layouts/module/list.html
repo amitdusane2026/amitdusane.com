@@ -3,6 +3,7 @@
 <p class="lcrumb"><a href="{{ "/adobe-analytics-learning/" | relURL }}">Adobe Analytics Learning</a> &rsaquo; <a href="{{ .Parent.RelPermalink }}">{{ .Parent.Title }}</a> &rsaquo; {{ .Title }}</p>
 <h1 class="lmod-title">{{ .Title }}</h1>
 {{ partial "byline.html" (dict "page" . "full" false) }}
+{{ partial "scale.html" (dict "page" .) }}
 <p>{{ .Description }}</p>
 <ol class="lsec-list">
   {{ range .Pages.ByWeight }}

@@ -383,7 +383,7 @@ body.world-learning .lcontent .byline{
 }
 .byline .by-who:hover{color:var(--accent); text-decoration:underline;
   text-decoration-thickness:1.5px; text-underline-offset:3px}
-.byline-lite{margin-bottom:var(--sp-lg) !important}
+.byline-lite{margin-bottom:var(--sp-sm) !important}
 .byline .by-cred{color:var(--text2)}
 .byline .by-sep{color:var(--text3)}
 .byline .by-date,.byline .by-read{color:var(--text2); white-space:nowrap}
@@ -973,3 +973,18 @@ body.shot-ov-open{overflow:hidden}
 /* "Created by" prefix, landings only. Sized with the metadata around it so
    the name still steps up out of it. */
 .byline .by-pre{font-size:var(--fs-meta); color:var(--text2)}
+
+/* The scale line on module and phase landings: how big this is before you
+   start. Sits under the byline as a second line of metadata, quiet, and it
+   uses tabular numerals so the figures line up if the eye compares two
+   modules across the curriculum. */
+/* Scoped, because `body.world-learning .lcontent p` is (0,2,2) and a bare
+   .lscale is (0,1,0): unscoped it rendered at body size. Same fault as the
+   breadcrumb and the box prose before it. */
+body.world-learning .lcontent p.lscale{
+  display:flex; flex-wrap:wrap; gap:4px 9px; align-items:baseline;
+  margin:0 0 var(--sp-lg);
+  font-size:var(--fs-meta); color:var(--text2);
+  font-variant-numeric:tabular-nums;
+}
+.lscale .ls-sep{color:var(--text3)}

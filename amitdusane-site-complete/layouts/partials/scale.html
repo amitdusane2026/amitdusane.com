@@ -1,0 +1,38 @@
+{{- /* How big is this, before you start. A landing page's job is to tell a
+   reader where to go; this tells them what it costs to go there, which is
+   the question a learner actually has and which nothing on the site
+   answered. Modules run from 4,882 to 26,691 words and that difference
+   matters to somebody deciding whether to begin.
+
+   Counts WRITTEN sections only, using the `description` publish flag, the
+   same switch that dims an unwritten section in the maps. Counting stubs
+   would report a module of four sections and twenty-four words. A landing
+   whose sections are all unwritten shows nothing at all rather than a zero. */ -}}
+{{- $p := .page -}}
+{{- $pages := where $p.RegularPagesRecursive "Description" "!=" "" -}}
+{{- $n := len $pages -}}
+{{- if gt $n 0 -}}
+  {{- $words := 0 -}}
+  {{- range $pages -}}{{- $words = add $words (countwords .Content) -}}{{- end -}}
+  {{- $mins := int (math.Round (div (float $words) 220)) -}}
+  {{- $time := printf "about %d min" $mins -}}
+  {{- if ge $mins 60 -}}
+    {{- $h := div $mins 60 -}}{{- $m := mod $mins 60 -}}
+    {{- $time = cond (eq $m 0) (printf "about %d hr" $h) (printf "about %d hr %d min" $h $m) -}}
+  {{- end -}}
+  <p class="lscale">
+    {{- if eq $p.Type "category" -}}
+      {{- /* Modules that actually have something to read, not every module in
+         the phase. "7 modules, 19 sections" invited a reader to expect forty
+         sections and find nineteen; both figures now describe what is here. */ -}}
+      {{- $mods := 0 -}}
+      {{- range where $p.Pages "Type" "module" -}}
+        {{- if gt (len (where .RegularPagesRecursive "Description" "!=" "")) 0 -}}{{- $mods = add $mods 1 -}}{{- end -}}
+      {{- end -}}
+      <span>{{ $mods }} module{{ if ne $mods 1 }}s{{ end }}</span><span class="ls-sep" aria-hidden="true">&middot;</span>
+    {{- end -}}
+    <span>{{ $n }} section{{ if ne $n 1 }}s{{ end }}</span><span class="ls-sep" aria-hidden="true">&middot;</span>
+    <span>{{ lang.FormatNumber 0 $words }} words</span><span class="ls-sep" aria-hidden="true">&middot;</span>
+    <span>{{ $time }}</span>
+  </p>
+{{- end -}}
