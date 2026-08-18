@@ -234,17 +234,101 @@ body.wf-lock{overflow:hidden}
    inks it already has.
 
    A drop-shadow filter rather than a box-shadow, because the shadow has to
-   follow the letterforms rather than a box that is no longer there. The
-   button keeps a 54px hit area even though the mark is 44px, so the touch
-   target stays comfortable.
+   follow the letterforms rather than a box that is no longer there.
+
+   THE HALO (19 Aug 2026). Removing the disc cost the mark its affordance:
+   a bare logo in a corner does not read as a button, and nothing invited the
+   click. The halo puts that back without putting the container back -- a soft
+   circle of light with no edge, so the reader sees a target rather than a
+   shape sitting on the page. It is permanent, because an affordance that only
+   appears on hover is no affordance at all on a touch screen, where there is
+   no hover at all.
+
+   It is built as a radial-gradient pseudo-element rather than a box-shadow,
+   because a box-shadow spreads from the button's square box and would give a
+   rounded-square bloom around an 88px button. A gradient gives a true circle
+   and lets the falloff be tuned so there is no visible rim.
+
+   chrome.css carries no theme tokens and loads on every world, so the crimson
+   is written out here as an rgb triplet and swapped explicitly for dark. The
+   glow stays crimson in both, and on every world, because this is the site's
+   personal-brand mark rather than a per-world control -- the migration world's
+   blue accent should not recolour it.
    -------------------------------------------------------------------------- */
-.author-fab{background:none !important; border:none !important; box-shadow:none !important;
-            color:#1E3A8A; padding:0; width:88px !important; height:88px !important}
-.author-fab svg{width:88px; height:88px; filter:drop-shadow(0 2px 6px rgba(15,23,42,.26))}
-.author-fab:hover{transform:scale(1.10)}
-.author-fab:hover svg{filter:drop-shadow(0 3px 8px rgba(225,29,72,.42))}
-[data-theme="dark"] .author-fab{color:#ffffff}
+.author-fab{
+  background:none !important; border:none !important; box-shadow:none !important;
+  color:#1E3A8A; padding:0; width:88px !important; height:88px !important;
+  --fab-rgb:186,33,66;          /* the site crimson, matching --accent */
+  --fab-rest:.30;               /* halo strength at rest */
+}
+[data-theme="dark"] .author-fab{
+  color:#ffffff;
+  --fab-rgb:242,120,147;        /* the dark-theme crimson: a deeper red would
+                                   sink into the dark ground instead of glowing */
+  --fab-rest:.34;
+}
+.author-fab::before{
+  content:""; position:absolute; left:50%; top:50%;
+  width:132%; height:132%; border-radius:50%;
+  transform:translate(-50%,-50%) scale(1);
+  background:radial-gradient(circle closest-side,
+      rgba(var(--fab-rgb),var(--fab-rest)) 0%,
+      rgba(var(--fab-rgb),calc(var(--fab-rest) * .55)) 42%,
+      rgba(var(--fab-rgb),calc(var(--fab-rest) * .18)) 66%,
+      rgba(var(--fab-rgb),0) 78%);
+  pointer-events:none;          /* the halo is light, not a hit area */
+  z-index:0;
+  transition:transform .38s cubic-bezier(.2,.8,.3,1), opacity .38s ease;
+}
+/* The mark paints above its own halo. Both are positioned, so paint order is
+   z-index rather than source order. */
+.author-fab svg{
+  position:relative; z-index:1; width:88px; height:88px;
+  filter:drop-shadow(0 2px 6px rgba(15,23,42,.26));
+  transition:transform .32s cubic-bezier(.2,.8,.3,1), filter .32s ease;
+}
 [data-theme="dark"] .author-fab svg{filter:drop-shadow(0 2px 6px rgba(0,0,0,.6))}
+
+/* Hover: the halo swells once and then breathes, and the mark lifts. The
+   transform lives on the SVG rather than the button, so the mark can rise
+   while the halo stays centred -- scaling the button would drag the halo with
+   it and the two would move as one flat sticker.
+
+   The breathe starts only after the swell has landed (.38s delay, matching
+   the transition), so it reads as one gesture settling rather than two
+   animations fighting. 3.2s is deliberately slower than a heartbeat: fast
+   enough to notice, slow enough that it never nags. */
+.author-fab:hover{transform:none}
+.author-fab:hover::before,.author-fab:focus-visible::before{
+  opacity:1; transform:translate(-50%,-50%) scale(1.16);
+  animation:fabBreathe 3.2s ease-in-out .38s infinite;
+}
+.author-fab:hover svg,.author-fab:focus-visible svg{
+  transform:translateY(-3px) scale(1.04);
+  filter:drop-shadow(0 5px 12px rgba(var(--fab-rgb),.5));
+}
+.author-fab:active svg{transform:translateY(-1px) scale(1.01)}
+/* Placed AFTER the dark resting filter on purpose. The two rules are the same
+   specificity, so before this the dark rule simply won and the hover glow did
+   not appear in dark mode at all. */
+[data-theme="dark"] .author-fab:hover svg,
+[data-theme="dark"] .author-fab:focus-visible svg{
+  filter:drop-shadow(0 5px 12px rgba(var(--fab-rgb),.55));
+}
+.author-fab:focus-visible{outline:none}
+@keyframes fabBreathe{
+  0%,100%{transform:translate(-50%,-50%) scale(1.16); opacity:1}
+  50%    {transform:translate(-50%,-50%) scale(1.27); opacity:.82}
+}
+/* CMP-11. The affordance must survive without the motion: the halo still
+   swells and the mark still lights, they just do it instantly. */
+@media(prefers-reduced-motion:reduce){
+  .author-fab::before,.author-fab svg{transition:none}
+  .author-fab:hover::before,.author-fab:focus-visible::before{
+    animation:none; transform:translate(-50%,-50%) scale(1.16);
+  }
+  .author-fab:hover svg,.author-fab:focus-visible svg{transform:none}
+}
 @media(max-width:560px){
   .author-fab{width:80px !important; height:80px !important}
   .author-fab svg{width:80px; height:80px}
