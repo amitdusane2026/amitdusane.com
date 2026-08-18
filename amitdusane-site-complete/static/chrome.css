@@ -239,10 +239,13 @@ body.wf-lock{overflow:hidden}
    target stays comfortable.
    -------------------------------------------------------------------------- */
 .author-fab{background:none !important; border:none !important; box-shadow:none !important;
-            color:#1E3A8A; padding:0}
-.author-fab svg{width:44px; height:44px; filter:drop-shadow(0 2px 5px rgba(15,23,42,.28))}
+            color:#1E3A8A; padding:0; width:88px !important; height:88px !important}
+.author-fab svg{width:88px; height:88px; filter:drop-shadow(0 2px 6px rgba(15,23,42,.26))}
 .author-fab:hover{transform:scale(1.10)}
 .author-fab:hover svg{filter:drop-shadow(0 3px 8px rgba(225,29,72,.42))}
 [data-theme="dark"] .author-fab{color:#ffffff}
 [data-theme="dark"] .author-fab svg{filter:drop-shadow(0 2px 6px rgba(0,0,0,.6))}
-@media(max-width:560px){ .author-fab svg{width:40px; height:40px} }
+@media(max-width:560px){
+  .author-fab{width:80px !important; height:80px !important}
+  .author-fab svg{width:80px; height:80px}
+}
