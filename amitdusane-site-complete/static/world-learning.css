@@ -108,6 +108,34 @@
      render at scale 1.0 -- authored 11px is 11px. Below the tablet break
      the box scrolls to honour this rather than shrinking the figure to 4px. */
   --diagram-min:700px;
+
+  /* ---------------------------------------------------------------------
+     DIAGRAM PALETTE (19 Aug 2026)
+     Five hues for figures, so a diagram can use colour to mean something
+     without every module inventing its own. Amit's ruling: there is no rule
+     to stick to one colour and no rule to use many -- use colour where it
+     makes a difference, and bright is allowed.
+
+     Each hue comes as three values with one job each:
+       --dia-N        the saturated line. Strokes, arrows, and SOLID fills
+                      on shapes that carry NO text. Free to be vivid.
+       --dia-N-soft   the tint. The fill behind text.
+       --dia-N-ink    the text. Readable on its own soft tint, measured
+                      5.46:1 or better in light and 7.99:1 or better in dark.
+
+     The pattern that keeps this safe: a shape carrying TEXT takes soft fill
+     + line stroke + ink text. A shape carrying NO text can be solid --dia-N
+     at full strength. That is why brightness costs nothing here -- the
+     vivid values never sit behind letters.
+
+     A = crimson (the site accent, and the subject of a figure)
+     B = blue    C = green    D = amber    E = violet
+     --------------------------------------------------------------------- */
+  --dia-a:#ba2142; --dia-a-soft:rgba(186,33,66,.10);  --dia-a-ink:#951833;
+  --dia-b:#2563eb; --dia-b-soft:rgba(37,99,235,.10);  --dia-b-ink:#1d4ed8;
+  --dia-c:#10b981; --dia-c-soft:rgba(16,185,129,.12); --dia-c-ink:#0a6e50;
+  --dia-d:#f59e0b; --dia-d-soft:rgba(245,158,11,.14); --dia-d-ink:#8a5700;
+  --dia-e:#7c3aed; --dia-e-soft:rgba(124,58,237,.10); --dia-e-ink:#5b21b6;
   --rail-w:250px; --rail-gap:40px; /* COL-06: white on the old #16a34a measured 3.30:1 on the pocket-map tab,
      which is the loudest control on every one of the 116 sections. 5.02:1 now. */
   --pocket:#15803d; --pocket-dark:#126b35;
@@ -138,6 +166,13 @@
   --accent:#f27893; --accent2:#f7a1b4; --accent-light:rgba(242,120,147,.10); --on-accent:#0f172a; --logo-ink:#ffffff; --tagline-accent:#818cf8;
   /* -ink flips direction on a dark ground: lighter, not darker. */
   --success-ink:#34d399; --warning-ink:#fbbf24; --info-ink:#60a5fa; --danger-ink:#f98a8a;
+  /* Diagram palette, dark. The lines brighten and the inks go LIGHTER, the
+     same inversion --accent2 and the semantic -ink tokens use. */
+  --dia-a:#f27893; --dia-a-soft:rgba(242,120,147,.14); --dia-a-ink:#f7a1b4;
+  --dia-b:#60a5fa; --dia-b-soft:rgba(96,165,250,.14);  --dia-b-ink:#93c5fd;
+  --dia-c:#34d399; --dia-c-soft:rgba(52,211,153,.14);  --dia-c-ink:#6ee7b7;
+  --dia-d:#fbbf24; --dia-d-soft:rgba(251,191,36,.14);  --dia-d-ink:#fcd34d;
+  --dia-e:#a78bfa; --dia-e-soft:rgba(167,139,250,.14); --dia-e-ink:#c4b5fd;
 }
 
 body.world-learning{margin:0;background:var(--bg1);color:var(--text1);font-family:'IBM Plex Sans',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;line-height:var(--lh-body)}

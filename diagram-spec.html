@@ -185,6 +185,7 @@ footer{border-top:1px solid var(--line);padding-top:16px;font-size:12.5px;color:
   <div class="tw"><table>
     <thead><tr><th style="width:210px">Token</th><th>Role in a diagram</th></tr></thead>
     <tbody>
+      <tr><td><code>--dia-a</code> &hellip; <code>--dia-e</code></td><td><strong>The diagram palette.</strong> Five hues &mdash; crimson, blue, green, amber, violet &mdash; each with a <code>-soft</code> tint and a <code>-ink</code>. Use them to encode categories, stages or levels. The saturated value is for strokes, arrows and solid shapes that carry no text; the <code>-soft</code> plus <code>-ink</code> pair is for anything with a label on it.</td></tr>
       <tr><td><code>--accent</code></td><td>The subject. What the diagram is about, and nothing else.</td></tr>
       <tr><td><code>--accent-light</code></td><td>Fill behind the subject.</td></tr>
       <tr><td><code>--card</code> / <code>--bg3</code></td><td>Neutral node fills.</td></tr>
@@ -196,8 +197,14 @@ footer{border-top:1px solid var(--line);padding-top:16px;font-size:12.5px;color:
     </tbody>
   </table></div>
   <div class="two">
-    <div class="yes"><b>At most two semantic colours in one diagram.</b> The subject in accent, and one judgement colour if the diagram makes a judgement.</div>
-    <div class="no"><b>Never a rainbow.</b> Four semantic colours means the diagram is making four points, which means it is making none.</div>
+    <div class="yes"><b>Colour has to do a job.</b> Encode something real &mdash; a category, a stage, a level, a verdict &mdash; and then a reader can learn it and carry it to the next figure. There is no cap on how many hues a figure uses and no virtue in using one.</div>
+    <div class="no"><b>Colour must not decorate.</b> If two boxes are different colours for no reason a reader could state, they should be the same colour. That is the only restriction, and it is about meaning rather than about count.</div>
+  </div>
+  <div class="card">
+    <h3>Bright is allowed. The constraint is on text, not on colour</h3>
+    <p>Amit's ruling, 19 August 2026: no rule to stick to one colour, no rule to use many, and no restriction to darker colours. Vivid and fluorescent are available.</p>
+    <p>What keeps that safe is a split, and it is the whole trick: <strong>a shape that carries text takes the soft tint as its fill, the saturated line as its stroke, and the ink as its text. A shape that carries no text &mdash; a chip, a dot, a bar, an arrowhead &mdash; can be the saturated colour at full strength.</strong> The vivid values never sit behind letters, so they never have to be dimmed to stay readable.</p>
+    <p>The palette is five hues, fixed in <code>world-learning.css</code>, so twenty-one modules stay recognisable as one system rather than each picking its own. Every ink is measured against its own tint: <strong>5.46:1 or better in light, 7.99:1 or better in dark.</strong></p>
   </div>
 </section>
 
@@ -232,7 +239,7 @@ footer{border-top:1px solid var(--line);padding-top:16px;font-size:12.5px;color:
       <li>Smallest authored font-size is 11 or above.</li>
       <li>Canvas is 700 wide and no taller than 340.</li>
       <li>No hardcoded colour anywhere; every fill and stroke is a token with a fallback.</li>
-      <li>At most two semantic colours.</li>
+      <li>Every colour used encodes something a reader could name. Vivid is fine; text never sits on a saturated fill.</li>
       <li><code>role="img"</code> and a full-sentence <code>aria-label</code> present.</li>
       <li>Marker ids are section-suffixed.</li>
       <li>Rendered check at 390px and 1280px, in <strong>both themes</strong>.</li>
