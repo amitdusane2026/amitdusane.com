@@ -245,6 +245,7 @@ footer{border-top:1px solid var(--line);padding-top:16px;font-size:12.5px;color:
   <div class="card">
     <ol class="chk">
       <li><strong>Does it earn its place at all?</strong> Cover it and read the section. If nothing is lost, remove it rather than redraw it &mdash; see 02.</li>
+    <li>No text overlaps a shape it does not sit inside. <strong>Check every shape, not just <code>&lt;rect&gt;</code></strong> &mdash; a figure drawn with <code>&lt;path&gt;</code> is invisible to a rect-only check, which is how a document outline came to strike through the summary line beneath it.</li>
       <li>Cover the labels. Is the shape still meaningful? If not, it is a box arrangement, not a diagram.</li>
       <li>Read only the title. Does the point survive?</li>
       <li>Count drawn elements. 20&ndash;45.</li>

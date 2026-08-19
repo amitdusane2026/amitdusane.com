@@ -21,32 +21,33 @@ weight: 1
 
 <div class="diagram-box">
     <div class="diagram-title">Two teams, one document, and neither side may change it alone</div>
-    <svg viewBox="0 0 700 236" style="width:100%;height:auto;display:block" role="img"
-         aria-label="An analytics developer on the left and a web developer on the right both point inward at a solution design reference in the middle, drawn as a document. The analytics developer creates the schema; the web developer feeds the values. A line beneath states that either side changing a field name without telling the other is how a data layer quietly stops working.">
+    <svg viewBox="0 0 700 250" style="width:100%;height:auto;display:block" role="img"
+         aria-label="An analytics developer on the left and a web developer on the right both point inward at a solution design reference in the middle, drawn as a document with a folded corner. The analytics developer names the fields and says what each must hold; the web developer puts real values into those exact field names. A line beneath states that renaming a field on one side without telling the other makes the data layer stop working silently.">
       <defs><marker id="dl1a" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" style="fill:var(--dia-a,#ba2142)"/></marker></defs>
 
-      <rect x="20" y="66" width="184" height="72" rx="6" style="fill:var(--dia-b-soft,rgba(37,99,235,.10));stroke:var(--dia-b,#2563eb);stroke-width:1.4"/>
-      <text x="112" y="92" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">Analytics developer</text>
-      <text x="112" y="112" text-anchor="middle" style="fill:var(--dia-b-ink,#1d4ed8);font-size:11px">names the fields and</text>
-      <text x="112" y="126" text-anchor="middle" style="fill:var(--dia-b-ink,#1d4ed8);font-size:11px">says what each must hold</text>
+      <rect x="16" y="74" width="188" height="70" rx="6" style="fill:var(--dia-b-soft,rgba(37,99,235,.10));stroke:var(--dia-b,#2563eb);stroke-width:1.4"/>
+      <text x="110" y="98" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">Analytics developer</text>
+      <text x="110" y="118" text-anchor="middle" style="fill:var(--dia-b-ink,#1d4ed8);font-size:11px">names the fields and</text>
+      <text x="110" y="132" text-anchor="middle" style="fill:var(--dia-b-ink,#1d4ed8);font-size:11px">says what each must hold</text>
 
-      <path d="M286 52 h128 l14 14 v122 h-142 z" style="fill:var(--dia-a-soft,rgba(186,33,66,.10));stroke:var(--dia-a,#ba2142);stroke-width:1.6"/>
-      <path d="M414 52 v14 h14" style="fill:none;stroke:var(--dia-a,#ba2142);stroke-width:1.6"/>
-      <text x="350" y="88" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:12.5px;font-weight:700">The SDR</text>
-      <text x="350" y="108" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:11px">the agreed list of</text>
-      <text x="350" y="122" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:11px">field names and meanings</text>
-      <text x="350" y="150" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:11px;font-weight:700">the contract</text>
+      <path d="M276 52 H422 L438 68 V166 H276 Z" style="fill:var(--dia-a-soft,rgba(186,33,66,.10));stroke:var(--dia-a,#ba2142);stroke-width:1.6"/>
+      <path d="M422 52 V68 H438" style="fill:none;stroke:var(--dia-a,#ba2142);stroke-width:1.6"/>
+      <text x="357" y="82" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:12.5px;font-weight:700">The SDR</text>
+      <text x="357" y="106" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:11px">the agreed list of</text>
+      <text x="357" y="120" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:11px">field names</text>
+      <text x="357" y="134" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:11px">and their meanings</text>
+      <text x="357" y="156" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:11px;font-weight:700">the contract</text>
 
-      <rect x="496" y="66" width="184" height="72" rx="6" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.4"/>
-      <text x="588" y="92" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">Web developer</text>
-      <text x="588" y="112" text-anchor="middle" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px">puts real values into</text>
-      <text x="588" y="126" text-anchor="middle" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px">those exact field names</text>
+      <rect x="496" y="74" width="188" height="70" rx="6" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.4"/>
+      <text x="590" y="98" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">Web developer</text>
+      <text x="590" y="118" text-anchor="middle" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px">puts real values into</text>
+      <text x="590" y="132" text-anchor="middle" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px">those exact field names</text>
 
-      <line x1="210" y1="100" x2="278" y2="100" style="stroke:var(--dia-a,#ba2142);stroke-width:1.4" marker-end="url(#dl1a)"/>
-      <line x1="490" y1="100" x2="422" y2="100" style="stroke:var(--dia-a,#ba2142);stroke-width:1.4" marker-end="url(#dl1a)"/>
+      <line x1="210" y1="109" x2="268" y2="109" style="stroke:var(--dia-a,#ba2142);stroke-width:1.4" marker-end="url(#dl1a)"/>
+      <line x1="490" y1="109" x2="446" y2="109" style="stroke:var(--dia-a,#ba2142);stroke-width:1.4" marker-end="url(#dl1a)"/>
 
-      <text x="350" y="192" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12.5px;font-weight:600">Both sides point at it, and neither side owns it</text>
-      <text x="350" y="216" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">Rename a field on one side without telling the other and the data layer stops working silently</text>
+      <text x="350" y="206" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12.5px;font-weight:600">Both sides point at it, and neither side owns it</text>
+      <text x="350" y="232" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">Rename a field on one side without telling the other and the data layer stops working silently</text>
     </svg>
 </div>
 
