@@ -81,7 +81,7 @@
        --fs-micro  code language, copy button, small badges
        --fs-code   monospace, which runs small at a given px
      --------------------------------------------------------------------- */
-  --fs-title:34px; --fs-h3:24px; --fs-body:18px; --fs-sm:15.5px;
+  --fs-title:34px; --fs-h3:24px; --fs-body:17px; --fs-sm:15.5px;
   --fs-label:15px; --fs-meta:12.5px; --fs-micro:11.5px; --fs-code:14px;
   --lh-title:1.2; --lh-h3:1.3; --lh-body:1.7;
 
