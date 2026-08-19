@@ -48,19 +48,20 @@ weight: 4
 <h3 class="subsec-title">campaign: a reserved slot for marketing</h3>
 <p>One reserved variable deserves its own note. Marketing has always run on campaigns, and the internet only changed their form: instead of billboards and print, modern campaigns run through display ads, paid search, and affiliate links. Knowing which campaign drove traction is how a marketing team optimizes spend and lifts conversion, so Adobe reserves a dedicated variable for it. You capture the campaign's tracking code, usually pulled from the landing URL, into <code>campaign</code>, and it feeds the Tracking Code dimension and the Marketing Channels reports. Because it is really a reserved eVar under the hood, it persists and can be given an expiration, exactly the attribution behavior from the eVar section.</p>
 <p>Reserved names are not limited to variables. The commerce events the last section pointed here also carry fixed meanings you simply use rather than define:</p>
-<div class="diagram-box">
-    <div class="diagram-title">🛒 Reserved commerce events (fixed meanings, you just use them)</div>
-    <div class="diagram-content">
-        <div class="event-grid">
-            <div class="event-item"><code>purchase</code> Orders</div>
-            <div class="event-item"><code>prodView</code> Product Views</div>
-            <div class="event-item"><code>scAdd</code> Cart Additions</div>
-            <div class="event-item"><code>scRemove</code> Cart Removals</div>
-            <div class="event-item"><code>scView</code> Cart Views</div>
-            <div class="event-item"><code>scCheckout</code> Checkouts</div>
-            <div class="event-item"><code>scOpen</code> Cart Opens</div>
-        </div>
-    </div>
+<p><strong>Reserved commerce events, with fixed meanings you do not define.</strong></p>
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>You send</th><th>Adobe reports it as</th></tr></thead>
+        <tbody>
+            <tr><td><code>purchase</code></td><td>Orders</td></tr>
+            <tr><td><code>prodView</code></td><td>Product Views</td></tr>
+            <tr><td><code>scAdd</code></td><td>Cart Additions</td></tr>
+            <tr><td><code>scRemove</code></td><td>Cart Removals</td></tr>
+            <tr><td><code>scView</code></td><td>Cart Views</td></tr>
+            <tr><td><code>scCheckout</code></td><td>Checkouts</td></tr>
+            <tr><td><code>scOpen</code></td><td>Cart Opens</td></tr>
+        </tbody>
+    </table>
 </div>
 <p>Because Adobe knows what these mean, an entire commerce funnel, product views to cart to checkout to order, reports consistently across every Adobe Analytics implementation in the world. You populate them, usually alongside the products variable, and the standard commerce reports appear without any custom setup.</p>
 <h3 class="subsec-title">Family two: dimensions Adobe collects automatically</h3>

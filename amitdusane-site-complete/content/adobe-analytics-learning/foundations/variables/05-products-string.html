@@ -16,20 +16,46 @@ weight: 5
 <h3 class="subsec-title">Anatomy, and the three delimiters that decide everything</h3>
 <p>The string is <strong>positional</strong>: meaning comes from which slot a value sits in, not from any label. Six fields per product, in this fixed order:</p>
 <div class="diagram-box">
-    <div class="diagram-title">📊 Anatomy of s.products (one product)</div>
-    <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:stretch;margin:6px 0;font-family:Consolas,monospace">
-        <div style="flex:1;min-width:90px;background:var(--bg3);border-radius:6px;padding:8px 10px;text-align:center"><div style="font-size:11px;color:var(--accent);font-weight:700;font-family:sans-serif">CATEGORY</div><div style="font-size:13px;color:var(--text1);margin-top:4px">Apparel</div><div style="font-size:10px;color:var(--text3);font-family:sans-serif">optional</div></div>
-        <div style="display:flex;align-items:center;color:var(--text3);font-weight:700">;</div>
-        <div style="flex:1;min-width:90px;background:var(--bg3);border-radius:6px;padding:8px 10px;text-align:center"><div style="font-size:11px;color:var(--accent);font-weight:700;font-family:sans-serif">PRODUCT</div><div style="font-size:13px;color:var(--text1);margin-top:4px">Blue Shirt</div><div style="font-size:10px;color:var(--text3);font-family:sans-serif">required</div></div>
-        <div style="display:flex;align-items:center;color:var(--text3);font-weight:700">;</div>
-        <div style="flex:1;min-width:70px;background:var(--bg3);border-radius:6px;padding:8px 10px;text-align:center"><div style="font-size:11px;color:var(--accent);font-weight:700;font-family:sans-serif">QTY</div><div style="font-size:13px;color:var(--text1);margin-top:4px">2</div><div style="font-size:10px;color:var(--text3);font-family:sans-serif">units</div></div>
-        <div style="display:flex;align-items:center;color:var(--text3);font-weight:700">;</div>
-        <div style="flex:1;min-width:90px;background:var(--bg3);border-radius:6px;padding:8px 10px;text-align:center"><div style="font-size:11px;color:var(--accent);font-weight:700;font-family:sans-serif">PRICE (total)</div><div style="font-size:13px;color:var(--text1);margin-top:4px">59.98</div><div style="font-size:10px;color:var(--text3);font-family:sans-serif">qty × unit</div></div>
-        <div style="display:flex;align-items:center;color:var(--text3);font-weight:700">;</div>
-        <div style="flex:1;min-width:90px;background:var(--bg3);border-radius:6px;padding:8px 10px;text-align:center"><div style="font-size:11px;color:var(--accent);font-weight:700;font-family:sans-serif">EVENTS</div><div style="font-size:13px;color:var(--text1);margin-top:4px">event1=1|event2=5</div><div style="font-size:10px;color:var(--text3);font-family:sans-serif">pipe-delimited</div></div>
-        <div style="display:flex;align-items:center;color:var(--text3);font-weight:700">;</div>
-        <div style="flex:1;min-width:90px;background:var(--bg3);border-radius:6px;padding:8px 10px;text-align:center"><div style="font-size:11px;color:var(--accent);font-weight:700;font-family:sans-serif">MERCH eVARS</div><div style="font-size:13px;color:var(--text1);margin-top:4px">eVar1=blue|eVar2=cotton</div><div style="font-size:10px;color:var(--text3);font-family:sans-serif">pipe-delimited</div></div>
-    </div>
+    <div class="diagram-title">One product, six fields, separated by semicolons &#8212; and the empty ones still count</div>
+    <svg viewBox="0 0 700 250" style="width:100%;height:auto;display:block" role="img"
+         aria-label="The s.products string broken into its six semicolon-separated fields: category, product name, quantity, total price, events, and merchandising eVars. Each field is labelled with its name, whether it is required, and how it is punctuated, with the product name marked required and the rest optional.">
+
+      <text x="24" y="44" style="fill:var(--text2,#475569);font-size:11px">s.products =</text>
+
+      <rect x="24" y="56" width="96" height="46" rx="5" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="72" y="76" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px">Apparel</text>
+      <text x="72" y="92" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">category</text>
+
+      <rect x="126" y="56" width="112" height="46" rx="5" style="fill:var(--dia-a-soft,rgba(186,33,66,.10));stroke:var(--dia-a,#ba2142);stroke-width:1.6"/>
+      <text x="182" y="76" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px">Blue Shirt</text>
+      <text x="182" y="92" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:11px;font-weight:600">the only required one</text>
+
+      <rect x="244" y="56" width="58" height="46" rx="5" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="273" y="76" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px">2</text>
+      <text x="273" y="92" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">qty</text>
+
+      <rect x="308" y="56" width="86" height="46" rx="5" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="351" y="76" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px">59.98</text>
+      <text x="351" y="92" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">qty &#215; unit price</text>
+
+      <rect x="400" y="56" width="128" height="46" rx="5" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="464" y="76" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px">event1=1|event2=5</text>
+      <text x="464" y="92" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">events, pipe-separated</text>
+
+      <rect x="534" y="56" width="142" height="46" rx="5" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="605" y="76" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px">eVar1=blue|eVar2=cotton</text>
+      <text x="605" y="92" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">merchandising eVars</text>
+
+      <text x="123" y="128" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12.5px;font-weight:700">;</text>
+      <text x="241" y="128" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12.5px;font-weight:700">;</text>
+      <text x="305" y="128" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12.5px;font-weight:700">;</text>
+      <text x="397" y="128" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12.5px;font-weight:700">;</text>
+      <text x="531" y="128" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12.5px;font-weight:700">;</text>
+      <text x="350" y="152" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">five semicolons, always &#8212; a field you are not using is left empty, not left out</text>
+
+      <text x="350" y="196" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12.5px;font-weight:600">Only the product name is required. The order of the rest is fixed.</text>
+      <text x="350" y="220" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">Drop a semicolon and every field after it lands in the wrong place</text>
+    </svg>
 </div>
 <p>Three delimiters do all the structural work, and confusing them is the number-one cause of broken commerce data:</p>
 <div class="tbl-wrap">
@@ -44,30 +70,53 @@ weight: 5
 </div>
 <h3 class="subsec-title">What becomes which KPI</h3>
 <p>Three pieces of the string turn directly into the metrics your business lives by:</p>
-<div class="diagram-box">
-    <div class="diagram-title">📊 From string to top-line KPI</div>
-    <div style="display:flex;flex-direction:column;gap:10px;margin:4px 0">
-        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap"><span style="font-family:Consolas,monospace;font-size:13px;background:var(--bg3);color:var(--text1);padding:6px 12px;border-radius:6px">purchase event</span><span style="color:var(--accent);font-weight:700;font-size:18px">→</span><span style="background:var(--accent-light);color:var(--accent);font-weight:700;padding:6px 14px;border-radius:6px;font-size:14px">Orders</span></div>
-        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap"><span style="font-family:Consolas,monospace;font-size:13px;background:var(--bg3);color:var(--text1);padding:6px 12px;border-radius:6px">price field</span><span style="color:var(--accent);font-weight:700;font-size:18px">→</span><span style="background:var(--accent-light);color:var(--accent);font-weight:700;padding:6px 14px;border-radius:6px;font-size:14px">Revenue</span></div>
-        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap"><span style="font-family:Consolas,monospace;font-size:13px;background:var(--bg3);color:var(--text1);padding:6px 12px;border-radius:6px">quantity field</span><span style="color:var(--accent);font-weight:700;font-size:18px">→</span><span style="background:var(--accent-light);color:var(--accent);font-weight:700;padding:6px 14px;border-radius:6px;font-size:14px">Units</span></div>
-    </div>
+<p><strong>Three fields of the string become three of the numbers everyone quotes.</strong></p>
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>Field in <code>s.products</code></th><th>Becomes</th></tr></thead>
+        <tbody>
+            <tr><td>the <code>purchase</code> event</td><td>Orders</td></tr>
+            <tr><td>the price field</td><td>Revenue</td></tr>
+            <tr><td>the quantity field</td><td>Units</td></tr>
+        </tbody>
+    </table>
 </div>
 <p><strong>The catch most people hit at least once:</strong> the purchase event must be explicitly fired in <code>s.events</code> for Orders to register, and quantity and price are only counted on the hit where purchase fires. A products string without the purchase event on the order page means revenue silently goes nowhere.</p>
 <h3 class="subsec-title">It has no memory: set it on every funnel hit</h3>
 <p>Here's the trait that surprises people: the products variable does <strong>not persist</strong>. It's hit-scoped, like a prop (the pencil behavior from <a href="/adobe-analytics-learning/foundations/variables/props-traffic-variables/">props</a>), the value vanishes after the hit it rode in on, even though it carries events and merchandising eVars that behave with attribution like <a href="/adobe-analytics-learning/foundations/variables/evars-conversion-variables/">eVars</a>. So it straddles both worlds: a non-persistent carrier of persistent data. Practically, that means you must re-send <code>s.products</code> on <em>every</em> funnel hit where product context matters, alongside the reserved commerce events from <a href="/adobe-analytics-learning/foundations/variables/default-reserved-variables/">default and reserved variables</a> (<code>prodView</code>, <code>scAdd</code>, <code>scCheckout</code>, <code>purchase</code>).</p>
 <div class="diagram-box">
-    <div class="diagram-title">📊 No carry-over: re-send s.products at each stage</div>
-    <div class="diagram-content">
-        <div class="flow-horizontal">
-            <div class="flow-step">Product View<br><span style="font-size:11px;color:var(--text2);font-family:Consolas,monospace">prodView</span></div>
-            <span class="flow-arrow">→</span>
-            <div class="flow-step">Cart Add<br><span style="font-size:11px;color:var(--text2);font-family:Consolas,monospace">scAdd</span></div>
-            <span class="flow-arrow">→</span>
-            <div class="flow-step">Checkout<br><span style="font-size:11px;color:var(--text2);font-family:Consolas,monospace">scCheckout</span></div>
-            <span class="flow-arrow">→</span>
-            <div class="flow-step highlight">Purchase<br><span style="font-size:11px;color:var(--accent);font-family:Consolas,monospace">purchase</span></div>
-        </div>
-    </div>
+    <div class="diagram-title">The string does not carry forward &#8212; send it again at every step</div>
+    <svg viewBox="0 0 700 208" style="width:100%;height:auto;display:block" role="img"
+         aria-label="Four steps of a purchase funnel, product view, cart add, checkout and purchase. Each step carries its own copy of the s.products string, and a line beneath states that a step which omits it loses the product detail for that step only.">
+      <defs><marker id="v5a" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" style="fill:var(--dia-c,#10b981)"/></marker></defs>
+
+      <rect x="16" y="46" width="150" height="62" rx="6" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.4"/>
+      <text x="91" y="68" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">Product view</text>
+      <text x="91" y="84" text-anchor="middle" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px">prodView</text>
+      <text x="91" y="100" text-anchor="middle" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px">+ s.products</text>
+
+      <rect x="190" y="46" width="150" height="62" rx="6" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.4"/>
+      <text x="265" y="68" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">Cart add</text>
+      <text x="265" y="84" text-anchor="middle" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px">scAdd</text>
+      <text x="265" y="100" text-anchor="middle" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px">+ s.products</text>
+
+      <rect x="364" y="46" width="150" height="62" rx="6" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.4"/>
+      <text x="439" y="68" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">Checkout</text>
+      <text x="439" y="84" text-anchor="middle" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px">scCheckout</text>
+      <text x="439" y="100" text-anchor="middle" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px">+ s.products</text>
+
+      <rect x="538" y="46" width="150" height="62" rx="6" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.4"/>
+      <text x="613" y="68" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">Purchase</text>
+      <text x="613" y="84" text-anchor="middle" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px">purchase</text>
+      <text x="613" y="100" text-anchor="middle" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px">+ s.products</text>
+
+      <line x1="170" y1="77" x2="186" y2="77" style="stroke:var(--dia-c,#10b981);stroke-width:1.4" marker-end="url(#v5a)"/>
+      <line x1="344" y1="77" x2="360" y2="77" style="stroke:var(--dia-c,#10b981);stroke-width:1.4" marker-end="url(#v5a)"/>
+      <line x1="518" y1="77" x2="534" y2="77" style="stroke:var(--dia-c,#10b981);stroke-width:1.4" marker-end="url(#v5a)"/>
+
+      <text x="350" y="150" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12.5px;font-weight:600">Unlike an eVar, the products string is spent on the hit that carries it</text>
+      <text x="350" y="176" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">Omit it at checkout and the checkout simply has no product detail &#8212; the purchase is still fine</text>
+    </svg>
 </div>
 <h3 class="subsec-title">Product-level events (and the caveat that bites)</h3>
 <p>Slot 5 lets you attribute a metric to a single product, give one product an event another doesn't get. Three rules govern it:</p>

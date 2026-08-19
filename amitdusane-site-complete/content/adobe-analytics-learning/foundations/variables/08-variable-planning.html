@@ -16,34 +16,65 @@ weight: 8
 <p>Here is the single most useful planning instinct, and it runs backward from how beginners approach it: <em>visualize the report the business actually wants to see first, then assign variables to produce it.</em> The report dictates the variable, never the reverse.</p>
 <p>Take a real choice. You want to capture product ratings from 1 to 5. Which variable? It depends entirely on the report you are after.</p>
 <div class="diagram-box">
-    <div class="diagram-title">📊 Same ratings, two reports, two different variable choices</div>
-    <div style="display:flex;flex-wrap:wrap;gap:16px;margin:6px 0">
-        <div style="flex:1;min-width:210px;background:var(--bg3,#f1f5f9);border-radius:8px;padding:12px 14px">
-            <div style="font-size:12px;color:var(--accent,#e11d48);font-weight:700;margin-bottom:6px">Report A: average rating per product</div>
-            <div style="font-size:13px;color:var(--text1,#0f172a);line-height:1.7">Red Shoe &nbsp;&nbsp; 4.2<br>Blue Shirt &nbsp; 3.8</div>
-            <div style="font-size:12px;color:var(--text2,#475569);margin-top:8px">Needs a <strong>numeric event</strong> (Adobe sums it), with the average as a calculated metric.</div>
-        </div>
-        <div style="flex:1;min-width:210px;background:var(--bg3,#f1f5f9);border-radius:8px;padding:12px 14px">
-            <div style="font-size:12px;color:var(--accent,#e11d48);font-weight:700;margin-bottom:6px">Report B: how often each rating was given</div>
-            <div style="font-size:13px;color:var(--text1,#0f172a);line-height:1.7">5 stars &nbsp; 1,240<br>4 stars &nbsp;&nbsp; 980<br>3 stars &nbsp;&nbsp; 410</div>
-            <div style="font-size:12px;color:var(--text2,#475569);margin-top:8px">Needs the rating <strong>value in a prop or eVar</strong>, counted by an event.</div>
-        </div>
-    </div>
+    <div class="diagram-title">The same star ratings, two different questions &#8212; and two different variables</div>
+    <svg viewBox="0 0 700 236" style="width:100%;height:auto;display:block" role="img"
+         aria-label="The same rating data supports two different reports. On the left, average rating per product needs the rating stored as a numeric event. On the right, how often each rating was given needs the rating stored as a value in a prop or eVar and counted by an event. The two reports require different variable choices from the same source.">
+
+      <rect x="16" y="40" width="320" height="140" rx="8" style="fill:var(--dia-b-soft,rgba(37,99,235,.10));stroke:var(--dia-b,#2563eb);stroke-width:1.4"/>
+      <text x="36" y="64" style="fill:var(--dia-b-ink,#1d4ed8);font-size:12.5px;font-weight:700">Average rating per product</text>
+      <text x="36" y="90" style="fill:var(--text1,#0f172a);font-size:11px">Red Shoe</text>
+      <text x="196" y="90" text-anchor="end" style="fill:var(--text1,#0f172a);font-size:11px">4.2</text>
+      <text x="36" y="110" style="fill:var(--text1,#0f172a);font-size:11px">Blue Shirt</text>
+      <text x="196" y="110" text-anchor="end" style="fill:var(--text1,#0f172a);font-size:11px">3.8</text>
+      <line x1="36" y1="122" x2="316" y2="122" style="stroke:var(--dia-b,#2563eb);stroke-width:1.2"/>
+      <text x="36" y="144" style="fill:var(--dia-b-ink,#1d4ed8);font-size:11px;font-weight:600">Needs the rating as a numeric event</text>
+      <text x="36" y="162" style="fill:var(--dia-b-ink,#1d4ed8);font-size:11px">so it can be averaged</text>
+
+      <rect x="364" y="40" width="320" height="140" rx="8" style="fill:var(--dia-e-soft,rgba(124,58,237,.10));stroke:var(--dia-e,#7c3aed);stroke-width:1.4"/>
+      <text x="384" y="64" style="fill:var(--dia-e-ink,#5b21b6);font-size:12.5px;font-weight:700">How often each rating was given</text>
+      <text x="384" y="90" style="fill:var(--text1,#0f172a);font-size:11px">5 stars</text>
+      <text x="544" y="90" text-anchor="end" style="fill:var(--text1,#0f172a);font-size:11px">1,240</text>
+      <text x="384" y="110" style="fill:var(--text1,#0f172a);font-size:11px">4 stars</text>
+      <text x="544" y="110" text-anchor="end" style="fill:var(--text1,#0f172a);font-size:11px">980</text>
+      <line x1="384" y1="122" x2="664" y2="122" style="stroke:var(--dia-e,#7c3aed);stroke-width:1.2"/>
+      <text x="384" y="144" style="fill:var(--dia-e-ink,#5b21b6);font-size:11px;font-weight:600">Needs the rating as a value in a prop or eVar</text>
+      <text x="384" y="162" style="fill:var(--dia-e-ink,#5b21b6);font-size:11px">counted by an event</text>
+
+      <text x="350" y="208" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12.5px;font-weight:600">Decide the report first. The variable follows from it, never the other way round.</text>
+    </svg>
 </div>
 <p>If the business wants average rating per product, you need a numeric event to carry the rating (Adobe sums the values), and the average itself is a <a href="/adobe-analytics-learning/analyze/calculated-metrics/">calculated metric</a>, the summed rating divided by the number of ratings (from <a href="/adobe-analytics-learning/foundations/variables/events-success-events/">events</a>). If instead they want to see how often each rating value was chosen, the rating belongs in a prop or eVar as a dimension, counted by a simple event. Same raw input, two completely different variable decisions, and only the end report tells you which is right. Build the habit: picture the finished report, then work backward to the variables and event types that produce it.</p>
 <h3 class="subsec-title">The planning process, step by step</h3>
 <p>Variable planning is not a separate task bolted on at the end; it is entangled with your entire Adobe Analytics configuration. Done well, it follows three steps.</p>
 <div class="diagram-box">
-    <div class="diagram-title">🗺️ The planning loop</div>
-    <div class="diagram-content">
-        <div class="flow-horizontal">
-            <div class="flow-step">1. Discovery<br><span style="font-size:11px;color:var(--text2,#475569)">the reports the business needs</span></div>
-            <span class="flow-arrow">→</span>
-            <div class="flow-step">2. Design the SDR<br><span style="font-size:11px;color:var(--text2,#475569)">reports become variables</span></div>
-            <span class="flow-arrow">→</span>
-            <div class="flow-step highlight">3. Review &amp; trim<br><span style="font-size:11px;color:var(--text2,#475569)">spend the budget wisely</span></div>
-        </div>
-    </div>
+    <div class="diagram-title">Planning is a loop, not a line &#8212; trimming sends you back to the reports</div>
+    <svg viewBox="0 0 700 224" style="width:100%;height:auto;display:block" role="img"
+         aria-label="Three stages arranged as a loop. Discovery establishes the reports the business needs, design turns those reports into variables in the solution design reference, and review trims the list against the budget. A return arrow runs from review back to discovery, showing that trimming forces a fresh conversation about which reports matter.">
+      <defs><marker id="v8a" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" style="fill:var(--dia-e,#7c3aed)"/></marker></defs>
+
+      <rect x="24" y="46" width="188" height="66" rx="6" style="fill:var(--dia-e-soft,rgba(124,58,237,.10));stroke:var(--dia-e,#7c3aed);stroke-width:1.4"/>
+      <text x="118" y="70" text-anchor="middle" style="fill:var(--dia-e-ink,#5b21b6);font-size:12.5px;font-weight:700">1 &#183; Discovery</text>
+      <text x="118" y="88" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px">the reports the business</text>
+      <text x="118" y="102" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px">actually needs</text>
+
+      <rect x="256" y="46" width="188" height="66" rx="6" style="fill:var(--dia-e-soft,rgba(124,58,237,.10));stroke:var(--dia-e,#7c3aed);stroke-width:1.4"/>
+      <text x="350" y="70" text-anchor="middle" style="fill:var(--dia-e-ink,#5b21b6);font-size:12.5px;font-weight:700">2 &#183; Design the SDR</text>
+      <text x="350" y="88" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px">each report becomes</text>
+      <text x="350" y="102" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px">a named variable</text>
+
+      <rect x="488" y="46" width="188" height="66" rx="6" style="fill:var(--dia-e-soft,rgba(124,58,237,.10));stroke:var(--dia-e,#7c3aed);stroke-width:1.4"/>
+      <text x="582" y="70" text-anchor="middle" style="fill:var(--dia-e-ink,#5b21b6);font-size:12.5px;font-weight:700">3 &#183; Review and trim</text>
+      <text x="582" y="88" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px">spend the budget on</text>
+      <text x="582" y="102" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px">what earns its place</text>
+
+      <line x1="216" y1="79" x2="250" y2="79" style="stroke:var(--dia-e,#7c3aed);stroke-width:1.4" marker-end="url(#v8a)"/>
+      <line x1="448" y1="79" x2="482" y2="79" style="stroke:var(--dia-e,#7c3aed);stroke-width:1.4" marker-end="url(#v8a)"/>
+
+      <path d="M582 112 V158 H118 V118" style="fill:none;stroke:var(--dia-e,#7c3aed);stroke-width:1.2;stroke-dasharray:5 4" marker-end="url(#v8a)"/>
+      <text x="350" y="180" text-anchor="middle" style="fill:var(--dia-e-ink,#5b21b6);font-size:11px;font-weight:600">cutting a variable means deciding a report is not worth it &#8212; which is a business conversation</text>
+
+      <text x="350" y="210" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12.5px;font-weight:600">Nobody gets it right in one pass, and the loop is the point</text>
+    </svg>
 </div>
 <p><strong>Step 1: Discovery.</strong> Sit down with the business stakeholders and understand, in detail, what they need to learn from the data. Not "track everything," but the actual questions: which campaigns drive revenue, where people drop out of checkout, what content converts. Every real requirement is, underneath, a report someone wants. Capture those reports, they are your specification.</p>
 <p><strong>Step 2: Design the plan (the SDR).</strong> Now translate each desired report into the variables and events that produce it, and write it all down in a <strong><a href="/adobe-analytics-learning/deliver/solution-design-reference/">Solution Design Reference</a></strong> (SDR), your implementation's single source of truth. It is a living document that says exactly what every variable is, what it holds, and why, and it is what stops the slow rot where, two years in, nobody remembers what <code>eVar37</code> was for. Document each variable with:</p>
@@ -71,15 +102,30 @@ weight: 8
 </div>
 <p><strong>Step 3: Review and trim.</strong> Before anyone writes code, look at the SDR again with fresh eyes and ask two questions of every variable. First, could a cheaper variable do the same job? Don't spend an eVar on a value that only ever describes the current page, a prop is enough; don't burn a list variable on something a list prop handles; don't reach for a numeric event where a counter is all the report needs. Second, can anything be cut or combined? This pass matters because variables are a budget, not a free resource, and some are far scarcer than others:</p>
 <div class="diagram-box">
-    <div class="diagram-title">📊 Your variable budget</div>
-    <div class="diagram-content">
-        <div class="flow-horizontal">
-            <div class="flow-step">75 props</div>
-            <div class="flow-step">250 eVars</div>
-            <div class="flow-step">1000 events</div>
-            <div class="flow-step highlight">only 3 list variables</div>
-        </div>
-    </div>
+    <div class="diagram-title">The budget is not the constraint you think it is &#8212; three of one kind is</div>
+    <svg viewBox="0 0 700 232" style="width:100%;height:auto;display:block" role="img"
+         aria-label="Four bars drawn to scale showing the variable budget: one thousand events, two hundred and fifty eVars, seventy-five props, and only three list variables. The list variable bar is barely visible at this scale, which is the point: everything else is effectively plentiful and the three list variables are the real scarcity.">
+
+      <text x="24" y="46" style="fill:var(--text1,#0f172a);font-size:11px">events</text>
+      <rect x="112" y="34" width="540" height="20" rx="3" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.4"/>
+      <text x="662" y="49" style="fill:var(--dia-c-ink,#0a6e50);font-size:12.5px;font-weight:700">1000</text>
+
+      <text x="24" y="82" style="fill:var(--text1,#0f172a);font-size:11px">eVars</text>
+      <rect x="112" y="70" width="135" height="20" rx="3" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.4"/>
+      <text x="257" y="85" style="fill:var(--dia-c-ink,#0a6e50);font-size:12.5px;font-weight:700">250</text>
+
+      <text x="24" y="118" style="fill:var(--text1,#0f172a);font-size:11px">props</text>
+      <rect x="112" y="106" width="41" height="20" rx="3" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.4"/>
+      <text x="163" y="121" style="fill:var(--dia-c-ink,#0a6e50);font-size:12.5px;font-weight:700">75</text>
+
+      <text x="24" y="154" style="fill:var(--danger-ink,#a4161a);font-size:11px;font-weight:700">list variables</text>
+      <rect x="112" y="142" width="4" height="20" rx="1" style="fill:var(--danger-ink,#a4161a)"/>
+      <text x="126" y="157" style="fill:var(--danger-ink,#a4161a);font-size:12.5px;font-weight:700">3</text>
+      <text x="152" y="157" style="fill:var(--danger-ink,#a4161a);font-size:11px">&#8212; and that bar is drawn to the same scale</text>
+
+      <text x="350" y="196" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12.5px;font-weight:600">Nobody runs out of events. Everybody runs out of list variables.</text>
+      <text x="350" y="218" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">Spend the plentiful ones freely and treat the third list variable as the last one you will ever get</text>
+    </svg>
 </div>
 <p>Allocating every variable on day one leaves nothing for the requests that always come later, and with only three list variables, a careless early choice can leave you stuck (<a href="/adobe-analytics-learning/foundations/variables/list-variables-list-props/">list variables</a>). Spend deliberately, and keep room to grow.</p>
 <div class="warn-box">

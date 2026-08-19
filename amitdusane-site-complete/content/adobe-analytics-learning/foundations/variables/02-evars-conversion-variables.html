@@ -16,16 +16,34 @@ weight: 2
 <p>To feel why persistence matters, follow a real journey. A visitor arrives from an email campaign, and your implementation captured the campaign's ID from the URL into an eVar. But they do not buy on that first page. They browse three or four more pages, maybe leave, and come back two days later to submit a lead form. In a world without persistence, that conversion would be an orphan: the form submission happens on a page that knows nothing about the email that started it all, and the campaign gets no credit. That is the wrong answer, because the email clearly did its job.</p>
 <p>The eVar fixes this. Because you set the campaign eVar to persist, Adobe keeps that campaign ID attached to the visitor, hit after hit, until the conversion happens or the value expires. When the form is finally submitted, the campaign ID is still there to receive the credit. Multiply that across thousands of visitors and your report finally tells the truth: campaign 123 drove 100 form submissions, campaign 456 drove 20. That single capability, carrying a cause forward to meet its effect, is most of why eVars exist.</p>
 <div class="diagram-box">
-    <div class="diagram-title">🏷️ An eVar keeps its value across hits, so a later conversion still credits it</div>
-    <div class="diagram-content">
-        <div class="flow-horizontal">
-            <div class="flow-step highlight">Hit 1<br>eVar = "Campaign 123"</div>
-            <div class="flow-arrow">→</div>
-            <div class="flow-step">Hit 2<br>still "Campaign 123"</div>
-            <div class="flow-arrow">→</div>
-            <div class="flow-step highlight">Hit 3: form submit<br>credited to "Campaign 123"</div>
-        </div>
-    </div>
+    <div class="diagram-title">An eVar stays set, so the conversion three hits later still credits it</div>
+    <svg viewBox="0 0 700 214" style="width:100%;height:auto;display:block" role="img"
+         aria-label="Three hits in sequence. The first sets an eVar to Campaign 123. The second still holds it without being set again. On the third the visitor submits a form, and the conversion is credited to Campaign 123. A bar beneath the three hits shows the value persisting across all of them.">
+      <defs><marker id="v2a" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" style="fill:var(--text3,#5d6b7e)"/></marker></defs>
+
+      <rect x="24" y="42" width="184" height="66" rx="6" style="fill:var(--dia-a-soft,rgba(186,33,66,.10));stroke:var(--dia-a,#ba2142);stroke-width:1.4"/>
+      <text x="116" y="64" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:12.5px;font-weight:700">Hit 1</text>
+      <text x="116" y="86" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">eVar = &#8220;Campaign 123&#8221;</text>
+      <text x="116" y="102" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:11px">set once</text>
+
+      <rect x="258" y="42" width="184" height="66" rx="6" style="fill:var(--dia-a-soft,rgba(186,33,66,.10));stroke:var(--dia-a,#ba2142);stroke-width:1.4"/>
+      <text x="350" y="64" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:12.5px;font-weight:700">Hit 2</text>
+      <text x="350" y="86" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">still &#8220;Campaign 123&#8221;</text>
+      <text x="350" y="102" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:11px">not sent again</text>
+
+      <rect x="492" y="42" width="184" height="66" rx="6" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.4"/>
+      <text x="584" y="64" text-anchor="middle" style="fill:var(--dia-c-ink,#0a6e50);font-size:12.5px;font-weight:700">Hit 3 &#183; form submit</text>
+      <text x="584" y="86" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">credited to Campaign 123</text>
+      <text x="584" y="102" text-anchor="middle" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px">the conversion</text>
+
+      <line x1="212" y1="75" x2="252" y2="75" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#v2a)"/>
+      <line x1="446" y1="75" x2="486" y2="75" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#v2a)"/>
+
+      <rect x="24" y="124" width="652" height="22" rx="4" style="fill:var(--dia-a-soft,rgba(186,33,66,.10));stroke:var(--dia-a,#ba2142);stroke-width:1.2"/>
+      <text x="350" y="139" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:11px;font-weight:600">the value is held for the whole expiry window, across every hit in between</text>
+
+      <text x="350" y="176" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12.5px;font-weight:600">This persistence is the whole difference from a prop</text>
+    </svg>
 </div>
 <h3 class="subsec-title">Capacity, and what the numbers tell you</h3>
 <p>Adobe gives you plenty of room for eVars, and the numbers themselves tell a story. A report suite supports up to <strong>250 eVars</strong> (the exact number depends on your contract), each holding up to <strong>255 bytes</strong>, more than double a prop's 100. Set that against just 75 props and the asymmetry is deliberate: as businesses' data needs grew, Adobe kept raising the eVar allotment while leaving props where they were, because the eVar is the more capable variable and the one worth investing in. The extra length means eVars comfortably hold long values like full URLs or concatenated identifiers. Still, 250 is not infinite, so each one should earn its place, which is exactly what <a href="/adobe-analytics-learning/foundations/variables/variable-planning/">variable planning</a> is about.</p>
@@ -50,7 +68,8 @@ weight: 2
 <p>Allocation decides which value is credited when an eVar is set more than once before a conversion. There are three modes: <strong>Original Value (First Touch)</strong>, <strong>Most Recent (Last Touch)</strong>, and <strong>Linear</strong> (split evenly across all values). One subtlety worth internalizing: every value you send is always stored, regardless of allocation; allocation only governs which stored value gets <em>credit</em> for events. Here is one journey credited three ways:</p>
 <div class="diagram-box">
     <div class="diagram-title">📊 One conversion, three ways to credit it</div>
-    <svg viewBox="0 0 600 130" style="width:100%;height:auto;display:block;margin:4px 0 10px" role="img" aria-label="A visitor touches Email on day 1, Paid Search on day 4, Social on day 6, then converts on day 7">
+    <svg viewBox="0 0 700 130" style="width:100%;height:auto;display:block;margin:4px 0 10px" role="img" aria-label="A visitor touches Email on day 1, Paid Search on day 4, Social on day 6, then converts on day 7">
+      <g transform="translate(50,0)">
         <line x1="55" y1="60" x2="545" y2="60" style="stroke:var(--border,#e2e8f0);stroke-width:2"/>
         <circle cx="110" cy="60" r="9" style="fill:var(--accent,#e11d48)"/>
         <circle cx="270" cy="60" r="9" style="fill:var(--accent,#e11d48)"/>
@@ -64,6 +83,7 @@ weight: 2
         <text x="270" y="88" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">Day 4</text>
         <text x="410" y="88" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">Day 6</text>
         <text x="540" y="88" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">Day 7</text>
+      </g>
     </svg>
     <div style="display:flex;align-items:center;gap:12px;margin:10px 0">
         <span style="flex:none;width:118px;font-size:13px;font-weight:700;color:var(--text1,#0f172a)">First Touch</span>

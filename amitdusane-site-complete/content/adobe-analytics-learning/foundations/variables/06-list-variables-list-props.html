@@ -14,23 +14,47 @@ weight: 6
 <p>You have actually met this problem already. Back in <a href="/adobe-analytics-learning/foundations/variables/props-traffic-variables/">the props section</a>, the survey example, four checkboxes a visitor can tick in any combination, showed up as a reason to use a list prop. Look at the reporting side of it now. If a visitor can select any of four options at once, their raw input becomes a tangle of combinations: option 1 and 2, then option 2 and 4, then option 1 and 3 and 4. A naive report drowns in those permutations. What you actually want is dead simple, four lines: how many times was option 1 chosen, option 2, and so on. A list variable delivers exactly that, because it splits the values apart and credits each one independently.</p>
 <p>That independent, full crediting is the whole point, and it is easiest to see against an eVar. Set one eVar to three values and Linear allocation (from <a href="/adobe-analytics-learning/foundations/variables/evars-conversion-variables/">eVars</a>) splits the conversion across them. Put those same three values in a list variable and every one is credited in full:</p>
 <div class="diagram-box">
-    <div class="diagram-title">📊 Three categories on one hit, two ways to credit them</div>
-    <div style="display:flex;align-items:center;gap:12px;margin:10px 0">
-        <span style="flex:none;width:130px;font-size:13px;font-weight:700;color:var(--text1,#0f172a)">eVar + Linear</span>
-        <div style="flex:1;display:flex;height:28px;border-radius:6px;overflow:hidden;font-size:12px">
-            <div style="flex:1;display:flex;align-items:center;justify-content:center;background:var(--accent,#ba2142);color:var(--on-accent,#fff)">A 33%</div>
-            <div style="flex:1;display:flex;align-items:center;justify-content:center;background:#f43f6a;color:#fff">B 33%</div>
-            <div style="flex:1;display:flex;align-items:center;justify-content:center;background:#fb7185;color:#fff">C 33%</div>
-        </div>
-    </div>
-    <div style="display:flex;align-items:center;gap:12px;margin:10px 0">
-        <span style="flex:none;width:130px;font-size:13px;font-weight:700;color:var(--text1,#0f172a)">List variable</span>
-        <div style="flex:1;display:flex;gap:6px;height:28px;font-size:12px">
-            <div style="flex:1;display:flex;align-items:center;justify-content:center;background:var(--accent,#ba2142);color:var(--on-accent,#fff);border-radius:6px">A 100%</div>
-            <div style="flex:1;display:flex;align-items:center;justify-content:center;background:var(--accent,#ba2142);color:var(--on-accent,#fff);border-radius:6px">B 100%</div>
-            <div style="flex:1;display:flex;align-items:center;justify-content:center;background:var(--accent,#ba2142);color:var(--on-accent,#fff);border-radius:6px">C 100%</div>
-        </div>
-    </div>
+    <div class="diagram-title">Three categories on one hit: an eVar splits the credit, a list variable gives it to each</div>
+    <svg viewBox="0 0 700 244" style="width:100%;height:auto;display:block" role="img"
+         aria-label="One hit carrying three categories, A, B and C. Above, an eVar with linear allocation splits one conversion three ways, giving each category thirty-three per cent. Below, a list variable credits the whole conversion to each of the three, so each shows one hundred per cent.">
+
+      <rect x="24" y="40" width="150" height="40" rx="6" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="99" y="58" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">One hit</text>
+      <text x="99" y="72" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">categories A, B and C</text>
+
+      <text x="212" y="56" style="fill:var(--dia-b-ink,#1d4ed8);font-size:12.5px;font-weight:700">eVar, linear allocation</text>
+      <text x="212" y="72" style="fill:var(--text3,#5d6b7e);font-size:11px">one conversion, divided</text>
+      <rect x="452" y="36" width="70" height="44" rx="5" style="fill:var(--dia-b-soft,rgba(37,99,235,.10));stroke:var(--dia-b,#2563eb);stroke-width:1.4"/>
+      <text x="487" y="55" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px">A</text>
+      <text x="487" y="71" text-anchor="middle" style="fill:var(--dia-b-ink,#1d4ed8);font-size:12.5px;font-weight:700">33%</text>
+      <rect x="528" y="36" width="70" height="44" rx="5" style="fill:var(--dia-b-soft,rgba(37,99,235,.10));stroke:var(--dia-b,#2563eb);stroke-width:1.4"/>
+      <text x="563" y="55" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px">B</text>
+      <text x="563" y="71" text-anchor="middle" style="fill:var(--dia-b-ink,#1d4ed8);font-size:12.5px;font-weight:700">33%</text>
+      <rect x="604" y="36" width="70" height="44" rx="5" style="fill:var(--dia-b-soft,rgba(37,99,235,.10));stroke:var(--dia-b,#2563eb);stroke-width:1.4"/>
+      <text x="639" y="55" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px">C</text>
+      <text x="639" y="71" text-anchor="middle" style="fill:var(--dia-b-ink,#1d4ed8);font-size:12.5px;font-weight:700">33%</text>
+
+      <line x1="24" y1="104" x2="676" y2="104" style="stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
+
+      <rect x="24" y="130" width="150" height="40" rx="6" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="99" y="148" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">The same hit</text>
+      <text x="99" y="162" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">categories A, B and C</text>
+
+      <text x="212" y="146" style="fill:var(--dia-c-ink,#0a6e50);font-size:12.5px;font-weight:700">List variable</text>
+      <text x="212" y="162" style="fill:var(--text3,#5d6b7e);font-size:11px">each one credited in full</text>
+      <rect x="452" y="126" width="70" height="44" rx="5" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.4"/>
+      <text x="487" y="145" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px">A</text>
+      <text x="487" y="161" text-anchor="middle" style="fill:var(--dia-c-ink,#0a6e50);font-size:12.5px;font-weight:700">100%</text>
+      <rect x="528" y="126" width="70" height="44" rx="5" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.4"/>
+      <text x="563" y="145" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px">B</text>
+      <text x="563" y="161" text-anchor="middle" style="fill:var(--dia-c-ink,#0a6e50);font-size:12.5px;font-weight:700">100%</text>
+      <rect x="604" y="126" width="70" height="44" rx="5" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.4"/>
+      <text x="639" y="145" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px">C</text>
+      <text x="639" y="161" text-anchor="middle" style="fill:var(--dia-c-ink,#0a6e50);font-size:12.5px;font-weight:700">100%</text>
+
+      <text x="350" y="204" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12.5px;font-weight:600">The totals will not tie, and that is correct rather than broken</text>
+      <text x="350" y="226" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">A list variable answers &#8220;which categories were involved&#8221;, not &#8220;how do we split the credit&#8221;</text>
+    </svg>
 </div>
 <div class="info-box">
     <div class="info-hdr">ℹ️ The flip side: rows won't add up to the total</div>
@@ -76,18 +100,6 @@ s.prop1 = "shoes,apparel,accessories";</pre></div>
     <li><strong>Activate one at a time,</strong> and only after a deliberate discussion with your team about whether the need is durable.</li>
 </ul>
 <p>The failure mode is switching on all three early, then discovering a genuine list-variable need a year later with nothing left to give. At that point you are stuck: you cannot free one without abandoning the data already collected in it. Spend the last slot as if it were the last.</p>
-<div class="diagram-box">
-    <div class="diagram-title">🪜 Spend your three wisely</div>
-    <div class="diagram-content">
-        <div class="flow-vertical">
-            <div class="flow-step">1. Try a list prop first<br><span style="font-size:11px;color:var(--text2,#475569)">hit-scoped, 100 bytes, any prop</span></div>
-            <span class="flow-arrow-down">↓</span>
-            <div class="flow-step highlight">2. Escalate to a list variable only if it must persist or outgrow 100 bytes<br><span style="font-size:11px;color:var(--text2,#475569)">one at a time, with team discussion</span></div>
-            <span class="flow-arrow-down">↓</span>
-            <div class="flow-step">3. Guard the last slot<br><span style="font-size:11px;color:var(--text2,#475569)">only three exist; a future need can deadlock you</span></div>
-        </div>
-    </div>
-</div>
 <div class="info-box">
     <div class="info-hdr">ℹ️ When to reach for one</div>
     <p>Use a list variable when several values are true at once and each deserves credit: multiple categories viewed, multiple filters applied, multiple interests selected, multiple authors on an article. Use a list prop when you want that multi-value capture for traffic analysis only, with no attribution.</p>
