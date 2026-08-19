@@ -14,32 +14,11 @@
   --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
   --mono:"SFMono-Regular",ui-monospace,Menlo,Consolas,monospace;
 }
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --ground:#0c1119; --surface:#141b26; --surface-2:#1c2531; --surface-3:#26313f;
-    --ink:#eef2f7; --ink-2:#a7b2c1; --ink-3:#6d7a8b;
-    --line:#28323f; --line-2:#3a4757;
-    --crimson:#f4708d; --crimson-soft:rgba(244,112,141,.14);
-    --p0:#f4708d; --p1:#f0b054; --p2:#6fa8e8; --p3:#8a95a5;
-    --p0-soft:rgba(244,112,141,.13); --p1-soft:rgba(240,176,84,.13);
-    --p2-soft:rgba(111,168,232,.13); --p3-soft:rgba(138,149,165,.13);
-    --ok:#3cc78d; --ok-soft:rgba(60,199,141,.13);
-    --seo:#b08bf5; --seo-soft:rgba(176,139,245,.14);
-    --shadow:0 1px 2px rgba(0,0,0,.35);
-  }
-}
-:root[data-theme="dark"]{
-  --ground:#0c1119; --surface:#141b26; --surface-2:#1c2531; --surface-3:#26313f;
-  --ink:#eef2f7; --ink-2:#a7b2c1; --ink-3:#6d7a8b;
-  --line:#28323f; --line-2:#3a4757;
-  --crimson:#f4708d; --crimson-soft:rgba(244,112,141,.14);
-  --p0:#f4708d; --p1:#f0b054; --p2:#6fa8e8; --p3:#8a95a5;
-  --p0-soft:rgba(244,112,141,.13); --p1-soft:rgba(240,176,84,.13);
-  --p2-soft:rgba(111,168,232,.13); --p3-soft:rgba(138,149,165,.13);
-  --ok:#3cc78d; --ok-soft:rgba(60,199,141,.13);
-  --seo:#b08bf5; --seo-soft:rgba(176,139,245,.14);
-  --shadow:0 1px 2px rgba(0,0,0,.35);
-}
+/* Deliberately light only. This document follows no OS preference: Amit
+   reads it in a dark-mode OS and the dark palette was not legible to him.
+   The dark blocks were removed rather than tuned -- a working document does
+   not need two palettes, and a second one is a second thing to keep right. */
+html{color-scheme:light}
 
 *{box-sizing:border-box}
 body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
@@ -590,14 +569,15 @@ footer.end{border-top:1px solid var(--line);padding-top:18px;font-family:var(--m
     </dl>
   </div>
 
-  <div class="it" data-pri="P1" data-status="open" data-seo="1">
+  <div class="it" data-pri="P1" data-status="done" data-seo="1">
     <div class="it-h"><span class="id">CMP-04</span><span class="ti">Re-check <code>shot-box</code> under the new type scale</span>
-      <span class="tags"><span class="t p1">P1</span><span class="t seo">SEO</span><span class="t eff">S</span><span class="t st">open</span></span></div>
+      <span class="tags"><span class="t p1">P1</span><span class="t seo">SEO</span><span class="t eff">S</span><span class="t st done">done 19 Aug</span></span></div>
     <dl class="row">
       <dt>Why</dt><dd>The screenshot component was tuned against the current 16px-everything typography and a 293px mobile image area. Changing the measure and scale changes both. The external draft had no screenshot treatment at all, so nothing can be inherited here.</dd>
       <dt>What</dt><dd>Re-verify frame height caps, the note treatment and the zoom affordance against the new scale, on a real phone width. All 14 existing shots must still read.</dd>
       <dt>Scope</dt><dd class="scope">14 screenshots, M14 only, growing</dd>
       <dt>SEO</dt><dd class="seo-note">Confirm alt text quality and explicit width/height at the same time, per SEO-10.</dd>
+      <dt>Result</dt><dd>Markup was already strong: all 14 files present as <code>.webp</code>, explicit <code>width</code> and <code>height</code>, <code>loading="lazy"</code>, and genuinely descriptive alt text that describes the frame as the rulebook requires. Title and note scale correctly under the new type scale (15px / 13.5px on a phone).<br><br><strong>The re-check found a real defect the item did not anticipate: a 334px layout shift on every screenshot, on first visit.</strong> Measured cold at 1280 &mdash; a lazy image whose used width is <code>auto</code> has no intrinsic size until its bytes arrive, so it occupied 2px and then jumped. The <code>width</code> and <code>height</code> attributes exist precisely to prevent this and could not be used while the width was auto.<br><br>Fixing it took two steps, and the second only surfaced by testing. Making width definite lets the attribute-derived aspect ratio reserve the height &mdash; but a max-<em>height</em> then clamps the box after the ratio has reserved it, trading one shift for an opposite one. So the height cap became a width cap: <code>--shot-cap</code> multiplied by each image's own aspect ratio, with <code>--sw</code> and <code>--sar</code> set inline per image and derived mechanically from the attributes already in the markup.<br><br>Verified cold, with the stylesheet force-refreshed, on a normal image (1500&times;938), a tall one (628&times;1294) and a wide one (1400&times;263), at 1280 and 390: zero shift everywhere, nothing upscales, and the final rendered sizes are identical to what the old max-height produced. This changes what the browser knows in advance, not what the reader sees.</dd>
     </dl>
   </div>
 
@@ -611,13 +591,14 @@ footer.end{border-top:1px solid var(--line);padding-top:18px;font-family:var(--m
     </dl>
   </div>
 
-  <div class="it" data-pri="P1" data-status="open">
+  <div class="it" data-pri="P1" data-status="done">
     <div class="it-h"><span class="id">CMP-06</span><span class="ti">Audit every SVG for hardcoded colour</span>
-      <span class="tags"><span class="t p1">P1</span><span class="t eff">M</span><span class="t st">open</span></span></div>
+      <span class="tags"><span class="t p1">P1</span><span class="t eff">M</span><span class="t st done">done 19 Aug</span></span></div>
     <dl class="row">
       <dt>Why</dt><dd>The rulebook requires <code>var(--token, #fallback)</code> in a <code>style</code> attribute, and the last audit found zero violations. Worth re-running because <strong>the external draft's very first diagram hardcodes <code>#96222F</code>, <code>#4C555C</code> and <code>#C9D0CC</code>, which would be nearly unreadable in its own dark theme.</strong> A capable model produced a design system whose opening figure breaks in dark mode; our constraint caught it. Every token change is a chance to reintroduce that.</dd>
       <dt>What</dt><dd>Re-run after any colour work, and confirm each of the 65 inline SVGs still resolves in both themes on the delivered page.</dd>
       <dt>Scope</dt><dd class="scope">65 inline SVGs</dd>
+      <dt>Result</dt><dd>Re-run after the colour work, and it was owed: the contrast audit of 18 Aug walked every text element on the page <em>except</em> text inside inline SVGs, which is 65 diagrams.<br><br><strong>Structurally clean.</strong> All 65 carry <code>role="img"</code> and an <code>aria-label</code>. Only two presentation-attribute colours existed in the whole corpus.<br><br><strong>Two real failures, both fixed.</strong> Ten <code>&lt;text&gt;</code> elements across six sections had a hardcoded white fill sitting on a <code>var(--accent)</code> rect &mdash; 3.19:1 in dark before this phase and 2.66:1 after, because COL-04 deliberately lightened the dark accent. That is exactly the defect <code>--on-accent</code> exists to solve, in the one place a stylesheet token could not reach. And two labels in <code>report-suites/02</code> were white on a <code>--success</code> fill at 2.54:1 in <em>both</em> themes &mdash; <code>--success</code> is a cross-world constant and identical in light and dark, so nothing about the theme was ever going to rescue them. The fill moved to <code>--success-ink</code> and both labels to <code>--on-accent</code>: 6.25:1 light, 9.29:1 dark. Using tokens rather than a literal mattered here, since introducing a hardcoded colour to close an audit about hardcoded colour would defeat the point.<br><br><strong>The learning corpus now has zero hardcoded fill or stroke colours across all 65 inline SVGs.</strong><br><br><strong>Reported, deliberately not fixed</strong> (Amit's call): 23 text elements across eight M12/M14 sections use custom mid-tones &mdash; <code>#c2690c</code>, <code>#2f8f3f</code>, <code>#9370e0</code>, <code>#3d7fdd</code> &mdash; clearly chosen to survive both grounds, and they do, landing 3.5 to 4.1:1 on light and dark alike. That is deliberate and clever but AA-large only, and SVG text renders at its authored 10 to 14px. Reworking 23 labels across signed-off sections buys little.</dd>
     </dl>
   </div>
 
@@ -642,13 +623,14 @@ footer.end{border-top:1px solid var(--line);padding-top:18px;font-family:var(--m
     </dl>
   </div>
 
-  <div class="it" data-pri="P2" data-status="open">
+  <div class="it" data-pri="P2" data-status="done">
     <div class="it-h"><span class="id">CMP-09</span><span class="ti">Re-check <code>code-block</code> under the new scale</span>
-      <span class="tags"><span class="t p2">P2</span><span class="t eff">S</span><span class="t st">open</span></span></div>
+      <span class="tags"><span class="t p2">P2</span><span class="t eff">S</span><span class="t st done">done 19 Aug</span></span></div>
     <dl class="row">
       <dt>Why</dt><dd>100 instances, and its most valuable use is the numbered UI walkthrough that the anatomy calls the engine of a section, not code. The dark <code>#0d1117</code> body is a fixed colour that will need re-examining beside a new light palette.</dd>
       <dt>What</dt><dd>Verify the ordered-list rendering, the copy button, and the label treatment. Consider whether a walkthrough should look different from a code listing, since they currently do not.</dd>
       <dt>Scope</dt><dd class="scope">100 code blocks</dd>
+      <dt>Result</dt><dd>No defects. The language label is Plex Sans uppercase, correctly reverted from the rejected mono treatment, and sits on the dark code chrome at 6.75:1 via <code>--code-chrome-ink</code> &mdash; the token that exists because that header is dark in <em>both</em> themes, so darkening <code>--text3</code> for light-mode legibility would have taken it to 3.19:1. The body is Plex Mono at the new scale, the copy button is wired, and the block scrolls horizontally at phone width without the page moving. The fixed dark body was unaffected by the palette change.<br><br>Not addressed, and still open as this item originally asked: whether a numbered UI walkthrough should look different from a code listing. They still do not.</dd>
     </dl>
   </div>
 
@@ -662,13 +644,14 @@ footer.end{border-top:1px solid var(--line);padding-top:18px;font-family:var(--m
     </dl>
   </div>
 
-  <div class="it" data-pri="P1" data-status="open">
+  <div class="it" data-pri="P1" data-status="partial">
     <div class="it-h"><span class="id">CMP-11</span><span class="ti">Honour <code>prefers-reduced-motion</code></span>
-      <span class="tags"><span class="t p1">P1</span><span class="t eff">S</span><span class="t st">open</span></span></div>
+      <span class="tags"><span class="t p1">P1</span><span class="t eff">S</span><span class="t st part">partial</span></span></div>
     <dl class="row">
       <dt>Why</dt><dd>Basic accessibility hygiene, and it becomes relevant the moment the in-page spine introduces smooth scrolling and active-state transitions.</dd>
       <dt>What</dt><dd>Disable smooth scroll and transitions under the media query. Cheap now, awkward to retrofit across a design system later.</dd>
       <dt>Scope</dt><dd class="scope">Site-wide</dd>
+      <dt>Result</dt><dd>Two thirds done rather than swept. <code>scroll-behavior</code> is disabled under the media query, and the About mark's halo keeps its whole affordance while dropping only the movement &mdash; it still swells and lights, instantly. What has not happened is a site-wide sweep of every remaining transition and animation, which is what this item actually asks for.</dd>
     </dl>
   </div>
 
@@ -910,25 +893,27 @@ footer.end{border-top:1px solid var(--line);padding-top:18px;font-family:var(--m
     </dl>
   </div>
 
-  <div class="it" data-pri="P1" data-status="open" data-seo="1">
+  <div class="it" data-pri="P1" data-status="partial" data-seo="1">
     <div class="it-h"><span class="id">SEO-09</span><span class="ti">Image alt text, explicit dimensions and lazy loading</span>
-      <span class="tags"><span class="t p1">P1</span><span class="t seo">SEO</span><span class="t eff">S</span><span class="t st">open</span></span></div>
+      <span class="tags"><span class="t p1">P1</span><span class="t seo">SEO</span><span class="t eff">S</span><span class="t st part">partial</span></span></div>
     <dl class="row">
       <dt>Why</dt><dd>14 screenshots today and growing fast as the capture programme runs. Missing width and height causes layout shift; missing or lazy alt text wastes a real ranking surface. The rulebook already says the alt describes the frame and the note points at the thing to look at, which is the right split.</dd>
       <dt>What</dt><dd>Explicit <code>width</code> and <code>height</code>, <code>loading="lazy"</code> below the fold, <code>decoding="async"</code>, and an alt-text quality pass. Fold into CMP-04.</dd>
       <dt>Scope</dt><dd class="scope">14 images, growing</dd>
       <dt>SEO</dt><dd class="seo-note">CLS is a Core Web Vital; alt text is an indexing surface and an accessibility requirement at once.</dd>
+      <dt>Result</dt><dd>Alt text, explicit dimensions and lazy loading all verified across the 14 screenshots, and the CLS half was fixed properly under CMP-04 rather than merely confirmed. Alt text quality is genuinely good &mdash; full sentences describing the frame, per the rulebook's split between alt and <code>shot-note</code>.<br><br>Outstanding: <code>decoding="async"</code> is absent on all 14. Minor, and the only part of this item left.</dd>
     </dl>
   </div>
 
-  <div class="it" data-pri="P1" data-status="open" data-seo="1">
+  <div class="it" data-pri="P1" data-status="done" data-seo="1">
     <div class="it-h"><span class="id">SEO-10</span><span class="ti">Re-verify canonicals, Open Graph and Twitter cards after the redesign</span>
-      <span class="tags"><span class="t p1">P1</span><span class="t seo">SEO</span><span class="t eff">S</span><span class="t st">open</span></span></div>
+      <span class="tags"><span class="t p1">P1</span><span class="t seo">SEO</span><span class="t eff">S</span><span class="t st done">done 19 Aug</span></span></div>
     <dl class="row">
       <dt>Why</dt><dd>All three are built and working. Recorded as a <em>protect</em> item because template surgery is exactly how a correct canonical quietly becomes a wrong one, and nothing in the build would report it.</dd>
       <dt>What</dt><dd>Crawl the built HTML after the redesign and confirm one canonical per page, pointing at itself, with OG and Twitter tags intact.</dd>
       <dt>Scope</dt><dd class="scope">219 pages</dd>
       <dt>SEO</dt><dd class="seo-note">A broken canonical is one of the few SEO faults that can deindex pages outright.</dd>
+      <dt>Result</dt><dd>Clean across 187 pages: exactly one canonical each, self-referencing, with Open Graph and Twitter tags intact. The single flag was an alias stub, correctly canonicalised at its destination rather than at itself. Structured data survived the template surgery &mdash; <code>TechArticle</code> on sections only and not on landings, which is correct, alongside <code>BreadcrumbList</code>, <code>Person</code>, <code>WebPage</code> and <code>CreativeWorkSeries</code>.<br><br><strong>A method trap worth more than the result.</strong> The first crawl reported every canonical broken, pointing at <code>localhost:1313</code>. The cause was the crawl, not the site: a running <code>hugo server</code> writes into <code>public/</code> with <code>baseURL</code> rewritten, so any audit of that directory while a server is up is reading server output rather than build output. Build to a separate destination.</dd>
     </dl>
   </div>
 
@@ -976,14 +961,15 @@ footer.end{border-top:1px solid var(--line);padding-top:18px;font-family:var(--m
     </dl>
   </div>
 
-  <div class="it" data-pri="P2" data-status="open" data-seo="1">
+  <div class="it" data-pri="P2" data-status="done" data-seo="1">
     <div class="it-h"><span class="id">SEO-15</span><span class="ti">Verify sitemap <code>lastmod</code> accuracy</span>
-      <span class="tags"><span class="t p2">P2</span><span class="t seo">SEO</span><span class="t eff">S</span><span class="t st">open</span></span></div>
+      <span class="tags"><span class="t p2">P2</span><span class="t seo">SEO</span><span class="t eff">S</span><span class="t st done">done 19 Aug</span></span></div>
     <dl class="row">
       <dt>Why</dt><dd>Hugo's sitemap is enabled and uses <code>lastmod</code>, which the <code>[frontmatter]</code> block deliberately decouples from the date cascade. Worth confirming the sitemap still reports real dates rather than build dates.</dd>
       <dt>What</dt><dd>Inspect the built <code>sitemap.xml</code> and spot-check against the front matter of a handful of pages.</dd>
       <dt>Scope</dt><dd class="scope">219 URLs</dd>
       <dt>SEO</dt><dd class="seo-note">A sitemap claiming everything changed today teaches Google to ignore the field.</dd>
+      <dt>Result</dt><dd>Verified on a clean build. 186 URLs, and <code>lastmod</code> carries real dates spread across eight distinct days from July and August rather than a single build date, so the <code>[frontmatter]</code> decoupling in <code>hugo.toml</code> is doing its job and the field still means something.</dd>
     </dl>
   </div>
 
@@ -1113,13 +1099,14 @@ footer.end{border-top:1px solid var(--line);padding-top:18px;font-family:var(--m
     </dl>
   </div>
 
-  <div class="it" data-pri="P2" data-status="open">
+  <div class="it" data-pri="P2" data-status="done">
     <div class="it-h"><span class="id">SHL-06</span><span class="ti">Re-verify the print document under the new design</span>
-      <span class="tags"><span class="t p2">P2</span><span class="t eff">M</span><span class="t st">open</span></span></div>
+      <span class="tags"><span class="t p2">P2</span><span class="t eff">M</span><span class="t st done">done 19 Aug</span></span></div>
     <dl class="row">
       <dt>Why</dt><dd>The print builder assembles a branded document from <code>.lcontent</code>. Every typography and component change flows into it, and nothing in the build would report a broken print layout.</dd>
       <dt>What</dt><dd>Print-preview a representative section after the type and component work. Confirm no component splits across a page break, the byline appears, and CMP-10's expanded URLs land correctly.</dd>
       <dt>Scope</dt><dd class="scope">Both worlds</dd>
+      <dt>Result</dt><dd>Structurally sound after the typography, colour and component work. All print scaffolding is present, and everything that must carry into the printed document &mdash; the byline, the title, diagrams, screenshots, <code>ref-box</code>, <code>code-block</code>, <code>path-box</code> &mdash; sits inside <code>.lcontent</code>, which is what <code>lFillPrintDoc</code> clones. The in-page spine correctly sits outside it. The print step of the type scale is expressed in points and is independent of the screen change, so 13.5px &rarr; 15px did not disturb it. CMP-12's print inversion is in place, without which paper would crop every diagram at the page edge.<br><br><strong>One stale fact found:</strong> <code>.lupdated</code> no longer renders on any page &mdash; the byline absorbed the date across all 116 sections when EAT-01 landed. The print stylesheet still carries dead rules for it, and EAT-05 still describes it as a live component to protect.</dd>
     </dl>
   </div>
 </section>
