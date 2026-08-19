@@ -42,17 +42,30 @@ weight: 2
 </div>
 <p>There are two places data can go in a push, and they behave differently. Anything at the top level (like <code>page</code> and <code>user</code> above) gets merged into the persistent state and stays there. Anything inside <code>eventInfo</code> rides along with this one event and is <em>not</em> kept in the state afterward. The product goes in <code>eventInfo</code> on purpose, and the next step shows exactly why that choice matters.</p>
 <div class="diagram-box">
-    <div class="diagram-title">🧩 Every push does two things at once</div>
-    <div class="diagram-content">
-        <div class="flow-vertical">
-            <div class="flow-step highlight">adobeDataLayer.push({ ... })</div>
-            <span class="flow-arrow-down">↓</span>
-            <div class="flow-multi">
-                <div class="flow-step">Appended to the Log<br><span style="font-size:11px;color:var(--text2,#475569)">the running history of events</span></div>
-                <div class="flow-step">Top-level data merged into State<br><span style="font-size:11px;color:var(--text2,#475569)">getState() keeps it; eventInfo does not</span></div>
-            </div>
-        </div>
-    </div>
+    <div class="diagram-title">One push, two destinations &#8212; and only one of them remembers</div>
+    <svg viewBox="0 0 700 258" style="width:100%;height:auto;display:block" role="img"
+         aria-label="A single call to adobeDataLayer.push splits two ways. Everything in the push is appended to the Log, which is the running history of events. Only the top-level data is merged into State, which is what getState returns later. Anything inside eventInfo reaches the Log but never reaches State, so it cannot be read back afterwards.">
+      <defs><marker id="dl2a" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" style="fill:var(--text3,#5d6b7e)"/></marker></defs>
+
+      <rect x="236" y="40" width="228" height="46" rx="6" style="fill:var(--dia-a-soft,rgba(186,33,66,.10));stroke:var(--dia-a,#ba2142);stroke-width:1.6"/>
+      <text x="350" y="60" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:12.5px;font-weight:700">adobeDataLayer.push({ &#8230; })</text>
+      <text x="350" y="76" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:11px">one call</text>
+
+      <path d="M300 90 C300 116 210 116 210 134" style="fill:none;stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#dl2a)"/>
+      <path d="M400 90 C400 116 490 116 490 134" style="fill:none;stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#dl2a)"/>
+
+      <rect x="30" y="142" width="300" height="80" rx="6" style="fill:var(--dia-b-soft,rgba(37,99,235,.10));stroke:var(--dia-b,#2563eb);stroke-width:1.4"/>
+      <text x="180" y="166" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">Appended to the Log</text>
+      <text x="180" y="184" text-anchor="middle" style="fill:var(--dia-b-ink,#1d4ed8);font-size:11px">the running history of every event</text>
+      <text x="180" y="202" text-anchor="middle" style="fill:var(--dia-b-ink,#1d4ed8);font-size:11px;font-weight:700">the whole push, eventInfo included</text>
+
+      <rect x="370" y="142" width="300" height="80" rx="6" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.4"/>
+      <text x="520" y="166" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">Merged into State</text>
+      <text x="520" y="184" text-anchor="middle" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px">what getState() gives you later</text>
+      <text x="520" y="202" text-anchor="middle" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px;font-weight:700">top-level data only &#8212; never eventInfo</text>
+
+      <text x="350" y="248" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12.5px;font-weight:600">Put a value in eventInfo and you can react to it, but you can never read it back</text>
+    </svg>
 </div>
 
 <h3 class="subsec-title">Step 3: see it, in the console</h3>
