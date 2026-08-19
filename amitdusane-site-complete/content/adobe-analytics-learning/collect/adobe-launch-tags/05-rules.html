@@ -18,16 +18,42 @@ weight: 5
 <p>There are two layers to keep straight. A rule builds a server call; and three parts build the rule. Those three parts, in the order you configure them, are <strong>events</strong>, <strong>conditions</strong>, and <strong>actions</strong>, and each answers a different question.</p>
 
 <div class="diagram-box">
-    <div class="diagram-title">The three parts of every rule</div>
-    <div class="diagram-content">
-        <div class="flow-horizontal">
-            <div class="flow-step">Event<br><span style="font-weight:400;color:var(--text2)">when?</span></div>
-            <span class="flow-arrow">&rarr;</span>
-            <div class="flow-step">Condition<br><span style="font-weight:400;color:var(--text2)">whether?</span></div>
-            <span class="flow-arrow">&rarr;</span>
-            <div class="flow-step highlight">Action<br><span style="font-weight:400;color:var(--text2)">what?</span></div>
-        </div>
-    </div>
+    <div class="diagram-title">The middle part is a gate, and a rule that never gets through it fails in total silence</div>
+    <svg viewBox="0 0 700 220" style="width:100%;height:auto;display:block" role="img"
+         aria-label="Three numbered boxes read left to right: the event, which decides when the rule wakes up; the condition, which decides whether it may proceed; and the action, which decides what it does. An arrow marked passes leads from the condition to the action. A second dashed arrow drops downward from the condition marked fails, ending in a note that the rule stops there with no beacon, no error and nothing written to the log.">
+      <defs>
+        <marker id="lt5a" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" style="fill:var(--text3,#5d6b7e)"/></marker>
+      </defs>
+
+      <circle cx="109" cy="46" r="11" style="fill:var(--dia-b-soft,rgba(37,99,235,.10));stroke:var(--dia-b,#2563eb);stroke-width:1.2"/>
+      <text x="109" y="50" text-anchor="middle" style="fill:var(--dia-b-ink,#1d4ed8);font-size:11px;font-weight:700">1</text>
+      <circle cx="327" cy="46" r="11" style="fill:var(--dia-d-soft,rgba(245,158,11,.14));stroke:var(--dia-d,#f59e0b);stroke-width:1.2"/>
+      <text x="327" y="50" text-anchor="middle" style="fill:var(--dia-d-ink,#8a5700);font-size:11px;font-weight:700">2</text>
+      <circle cx="545" cy="46" r="11" style="fill:var(--dia-a-soft,rgba(186,33,66,.10));stroke:var(--dia-a,#ba2142);stroke-width:1.2"/>
+      <text x="545" y="50" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:11px;font-weight:700">3</text>
+
+      <rect x="24" y="76" width="170" height="60" rx="6" style="fill:var(--dia-b-soft,rgba(37,99,235,.10));stroke:var(--dia-b,#2563eb);stroke-width:1.4"/>
+      <text x="109" y="102" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:700">Event</text>
+      <text x="109" y="121" text-anchor="middle" style="fill:var(--dia-b-ink,#1d4ed8);font-size:11px">when does it wake up?</text>
+
+      <rect x="242" y="76" width="170" height="60" rx="6" style="fill:var(--dia-d-soft,rgba(245,158,11,.14));stroke:var(--dia-d,#f59e0b);stroke-width:1.6"/>
+      <text x="327" y="102" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:700">Condition</text>
+      <text x="327" y="121" text-anchor="middle" style="fill:var(--dia-d-ink,#8a5700);font-size:11px">is it allowed to go on?</text>
+
+      <rect x="460" y="76" width="170" height="60" rx="6" style="fill:var(--dia-a-soft,rgba(186,33,66,.10));stroke:var(--dia-a,#ba2142);stroke-width:1.4"/>
+      <text x="545" y="102" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:700">Action</text>
+      <text x="545" y="121" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:11px">what does it actually do?</text>
+
+      <line x1="200" y1="106" x2="236" y2="106" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#lt5a)"/>
+      <text x="436" y="98" text-anchor="middle" style="fill:var(--dia-d-ink,#8a5700);font-size:11px;font-weight:600">passes</text>
+      <line x1="418" y1="106" x2="454" y2="106" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#lt5a)"/>
+
+      <text x="340" y="158" style="fill:var(--dia-d-ink,#8a5700);font-size:11px;font-weight:600">fails</text>
+      <line x1="327" y1="142" x2="327" y2="168" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4;stroke-dasharray:5 4" marker-end="url(#lt5a)"/>
+
+      <text x="327" y="192" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12.5px;font-weight:600">The rule stops here</text>
+      <text x="327" y="210" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">No beacon, no error, and nothing written to the log to tell you</text>
+    </svg>
 </div>
 
 <p>The event decides <strong>when</strong> the rule wakes up. The condition decides <strong>whether</strong> it is allowed to proceed. The action decides <strong>what</strong> it actually does. Those are the same event, condition, and action delegates that <a href="/adobe-analytics-learning/collect/adobe-launch-tags/extensions/">Extensions</a> supplied; the rule is where you assemble them. Take the three in order.</p>
@@ -38,18 +64,44 @@ weight: 5
 <p>There are four page-load events, and they always fire in a fixed order regardless of how fast the library loads:</p>
 
 <div class="diagram-box">
-    <div class="diagram-title">Page-load events, in their fixed firing order</div>
-    <div class="diagram-content">
-        <div class="flow-horizontal">
-            <div class="flow-step">Library Loaded<br><span style="font-weight:400;color:var(--text2)">Page Top</span></div>
-            <span class="flow-arrow">&rarr;</span>
-            <div class="flow-step">Page Bottom</div>
-            <span class="flow-arrow">&rarr;</span>
-            <div class="flow-step">DOM Ready</div>
-            <span class="flow-arrow">&rarr;</span>
-            <div class="flow-step">Window Loaded</div>
-        </div>
-    </div>
+    <div class="diagram-title">Four triggers on one page load, and only two of them are a real choice</div>
+    <svg viewBox="0 0 700 250" style="width:100%;height:auto;display:block" role="img"
+         aria-label="A left-to-right time axis for a single page load carries four markers in their fixed firing order: Library Loaded, also called Page Top; Page Bottom, marked in crimson as legacy because it never fires on an asynchronous embed; DOM Ready, when the page structure is parsed; and Window Loaded, when every asset has finished. DOM Ready and Window Loaded are highlighted in green as the two genuine choices for a page-load beacon.">
+      <defs>
+        <marker id="lt5b" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" style="fill:var(--text3,#5d6b7e)"/></marker>
+      </defs>
+
+      <rect x="30" y="64" width="140" height="60" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="100" y="88" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">Library Loaded</text>
+      <text x="100" y="107" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">also called Page Top</text>
+
+      <rect x="180" y="64" width="140" height="60" rx="6" style="fill:var(--dia-a-soft,rgba(186,33,66,.10));stroke:var(--dia-a,#ba2142);stroke-width:1.4"/>
+      <text x="250" y="88" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">Page Bottom</text>
+      <text x="250" y="107" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:11px">legacy, and usually dead</text>
+
+      <rect x="350" y="64" width="140" height="60" rx="6" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.6"/>
+      <text x="420" y="88" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">DOM Ready</text>
+      <text x="420" y="107" text-anchor="middle" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px">structure parsed</text>
+
+      <rect x="520" y="64" width="140" height="60" rx="6" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.6"/>
+      <text x="590" y="88" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">Window Loaded</text>
+      <text x="590" y="107" text-anchor="middle" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px">every asset finished</text>
+
+      <line x1="100" y1="124" x2="100" y2="144" style="stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
+      <line x1="250" y1="124" x2="250" y2="144" style="stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
+      <line x1="420" y1="124" x2="420" y2="144" style="stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
+      <line x1="590" y1="124" x2="590" y2="144" style="stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
+
+      <line x1="30" y1="150" x2="668" y2="150" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#lt5b)"/>
+      <circle cx="100" cy="150" r="5" style="fill:var(--text3,#5d6b7e)"/>
+      <circle cx="250" cy="150" r="5" style="fill:var(--dia-a,#ba2142)"/>
+      <circle cx="420" cy="150" r="5" style="fill:var(--dia-c,#10b981)"/>
+      <circle cx="590" cy="150" r="5" style="fill:var(--dia-c,#10b981)"/>
+      <text x="30" y="172" style="fill:var(--text3,#5d6b7e);font-size:11px">one page loading</text>
+
+      <text x="350" y="208" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12.5px;font-weight:600">Choose between the two green ones by asking when your data layer is finished</text>
+      <text x="350" y="230" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">Page Bottom waits for a pageBottom call in the page source, and an async embed never makes one</text>
+    </svg>
 </div>
 
 <p>For most implementations you only need one page-load call, and it fires on every page. That single call is what gathers the dimensions every analyst leans on: page name, channel, page type, URL, referrer, previous page, tracking code, domain, server, and more. It is also the call that your baseline metrics depend on, page views (hits), visits (sessions), and unique visitors (users), and even metrics that never appear in a rule, like bounce rate, exit rate, and average time spent, are shaped largely by it.</p>
@@ -161,16 +213,44 @@ and then set the variables into the void.</pre></div>
 <p>The clean solution rests on one fact, which can now be stated plainly: there is a single Analytics tracker, the <code>s</code> object, that persists across all the rules firing on a given page. Variables set by one rule stay on it and accumulate, until something clears them or the page unloads. So you do not need two beacons. You let several rules set variables onto that one shared object, and let only the last rule actually send it. Practitioners call this stacking the <strong>Rule Sandwich</strong>.</p>
 
 <div class="diagram-box">
-    <div class="diagram-title">A Rule Sandwich: many rules, one beacon</div>
-    <div class="diagram-content">
-        <div class="flow-vertical">
-            <div class="flow-step">Order 1 &middot; Set global variables<br><span style="font-weight:400;color:var(--text2)">no beacon</span></div>
-            <span class="flow-arrow-down">&darr;</span>
-            <div class="flow-step">Order 50 &middot; Set page-specific variables<br><span style="font-weight:400;color:var(--text2)">no beacon</span></div>
-            <span class="flow-arrow-down">&darr;</span>
-            <div class="flow-step highlight">Order 100 &middot; Send beacon, then clear<br><span style="font-weight:400;color:var(--text2)">one page view, carrying everything above</span></div>
-        </div>
-    </div>
+    <div class="diagram-title">Three rules, one tracker, and only the last one is allowed to send</div>
+    <svg viewBox="0 0 700 262" style="width:100%;height:auto;display:block" role="img"
+         aria-label="Three rules sit in a row above a single long outlined band representing the shared s object. The first rule sets global variables and sends nothing, the second adds page-specific variables and sends nothing, and the third sends the beacon and then clears. Arrows drop from each rule into the band, where the contents accumulate from left to right, and one hit leaves at the end carrying everything the three rules contributed.">
+      <defs>
+        <marker id="lt5c" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" style="fill:var(--text3,#5d6b7e)"/></marker>
+      </defs>
+
+      <rect x="30" y="52" width="180" height="76" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="120" y="76" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:700">Order 1</text>
+      <text x="120" y="95" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">set global variables</text>
+      <text x="120" y="112" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">no beacon</text>
+
+      <rect x="250" y="52" width="180" height="76" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="340" y="76" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:700">Order 50</text>
+      <text x="340" y="95" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">set page-specific variables</text>
+      <text x="340" y="112" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">no beacon</text>
+
+      <rect x="470" y="52" width="180" height="76" rx="6" style="fill:var(--dia-a-soft,rgba(186,33,66,.10));stroke:var(--dia-a,#ba2142);stroke-width:1.6"/>
+      <text x="560" y="76" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:700">Order 100</text>
+      <text x="560" y="95" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:11px">send the beacon, then clear</text>
+      <text x="560" y="112" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:11px">one hit leaves</text>
+
+      <line x1="120" y1="134" x2="120" y2="164" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#lt5c)"/>
+      <line x1="340" y1="134" x2="340" y2="164" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#lt5c)"/>
+      <line x1="560" y1="134" x2="560" y2="164" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#lt5c)"/>
+
+      <rect x="24" y="168" width="652" height="58" rx="6" style="fill:none;stroke:var(--dia-e,#7c3aed);stroke-width:1.6"/>
+      <text x="40" y="186" style="fill:var(--dia-e-ink,#5b21b6);font-size:11px;font-weight:600">One tracker, the s object, alive for the whole page</text>
+
+      <rect x="40" y="194" width="160" height="26" rx="3" style="fill:var(--dia-e-soft,rgba(124,58,237,.10));stroke:var(--dia-e,#7c3aed);stroke-width:1.2"/>
+      <text x="120" y="211" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px">pageName, channel</text>
+      <rect x="260" y="194" width="160" height="26" rx="3" style="fill:var(--dia-e-soft,rgba(124,58,237,.10));stroke:var(--dia-e,#7c3aed);stroke-width:1.2"/>
+      <text x="340" y="211" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px">plus product, category</text>
+      <rect x="480" y="194" width="160" height="26" rx="3" style="fill:var(--dia-a-soft,rgba(186,33,66,.10));stroke:var(--dia-a,#ba2142);stroke-width:1.2"/>
+      <text x="560" y="211" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px">all of it, in one hit</text>
+
+      <text x="350" y="246" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">Clear before you send and the beacon leaves nearly empty, which is the classic way this comes apart</text>
+    </svg>
 </div>
 
 <p>The low-order rule sets variables and stops, no beacon. The next rule adds its own variables and stops. The final, highest-order rule sends the beacon, which carries everything accumulated on the shared tracker, then clears. The result is exactly one page view that contains variables contributed by several rules, each scoped to its own concern. This is how a scalable implementation avoids repeating itself, set a variable in one place, let it ride into the right beacon.</p>

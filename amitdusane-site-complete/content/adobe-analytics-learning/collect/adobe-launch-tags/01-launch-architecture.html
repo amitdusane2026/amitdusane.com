@@ -26,16 +26,43 @@ weight: 1
 <p>Then came a quieter shift. Adobe did not announce this one with the same volume, but the product was folded into a larger home called Data Collection, and the client-side tag manager you knew as Launch was renamed Tags. Data Collection kept growing past tag management. It now also covers things like event forwarding, datastreams, and the secure storage of credentials, so it is fair to say Data Collection is no longer "a tag management system" so much as the hub through which data is collected and routed in every direction. The piece of it that you build your implementation in, the part everyone still calls Launch out of habit, is Tags.</p>
 
 <div class="diagram-box">
-    <div class="diagram-title">The same product, three names</div>
-    <div class="diagram-content">
-        <div class="flow-horizontal">
-            <div class="flow-step">DTM (2013)</div>
-            <span class="flow-arrow">&rarr;</span>
-            <div class="flow-step">Launch (2018)</div>
-            <span class="flow-arrow">&rarr;</span>
-            <div class="flow-step highlight">Tags, inside Data Collection (2021)</div>
-        </div>
-    </div>
+    <div class="diagram-title">Only one of these two steps was real work &mdash; the other changed the sign on the door</div>
+    <svg viewBox="0 0 700 206" style="width:100%;height:auto;display:block" role="img"
+         aria-label="Three products on one left-to-right timeline. DTM, acquired in 2013, is drawn in neutral grey because it has been retired. A solid arrow marked rebuild leads to Launch in 2018, which was a ground-up rebuild on a new platform and required a real migration. A dashed arrow marked rename leads to Tags in 2021, the same product under a new name inside Data Collection.">
+      <defs>
+        <marker id="lt1a" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" style="fill:var(--dia-b,#2563eb)"/></marker>
+        <marker id="lt1b" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" style="fill:var(--dia-a,#ba2142)"/></marker>
+      </defs>
+
+      <text x="230" y="54" text-anchor="middle" style="fill:var(--dia-b-ink,#1d4ed8);font-size:11px;font-weight:600">Rebuild</text>
+      <text x="468" y="54" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:11px;font-weight:600">Rename</text>
+
+      <rect x="24" y="64" width="176" height="70" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="112" y="90" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12.5px;font-weight:700">DTM</text>
+      <text x="112" y="107" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">2013, bought as Satellite</text>
+      <text x="112" y="122" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">retired</text>
+
+      <rect x="262" y="64" width="176" height="70" rx="6" style="fill:var(--dia-b-soft,rgba(37,99,235,.10));stroke:var(--dia-b,#2563eb);stroke-width:1.4"/>
+      <text x="350" y="90" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:700">Launch</text>
+      <text x="350" y="107" text-anchor="middle" style="fill:var(--dia-b-ink,#1d4ed8);font-size:11px">2018, a new platform</text>
+      <text x="350" y="122" text-anchor="middle" style="fill:var(--dia-b-ink,#1d4ed8);font-size:11px">built from zero</text>
+
+      <rect x="500" y="64" width="176" height="70" rx="6" style="fill:var(--dia-a-soft,rgba(186,33,66,.10));stroke:var(--dia-a,#ba2142);stroke-width:1.6"/>
+      <text x="588" y="90" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:700">Tags</text>
+      <text x="588" y="107" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:11px">2021, inside Data Collection</text>
+      <text x="588" y="122" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:11px">what you open today</text>
+
+      <line x1="206" y1="96" x2="254" y2="96" style="stroke:var(--dia-b,#2563eb);stroke-width:1.6" marker-end="url(#lt1a)"/>
+      <line x1="444" y1="96" x2="492" y2="96" style="stroke:var(--dia-a,#ba2142);stroke-width:1.4;stroke-dasharray:5 4" marker-end="url(#lt1b)"/>
+
+      <line x1="24" y1="142" x2="676" y2="142" style="stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
+      <circle cx="112" cy="142" r="4" style="fill:var(--text3,#5d6b7e)"/>
+      <circle cx="350" cy="142" r="4" style="fill:var(--dia-b,#2563eb)"/>
+      <circle cx="588" cy="142" r="4" style="fill:var(--dia-a,#ba2142)"/>
+
+      <text x="350" y="172" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12.5px;font-weight:600">The solid arrow cost enterprises a migration project. The dashed one cost nobody anything.</text>
+      <text x="350" y="194" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">Which is why everyone still says Launch, and why nobody had to relearn it when the name changed.</text>
+    </svg>
 </div>
 
 <p>Throughout this module, Launch means Tags inside Adobe Experience Platform Data Collection. The habit name and the current name point at the same screen.</p>
@@ -54,29 +81,57 @@ weight: 1
 
 <h3 class="subsec-title">How Launch is organized</h3>
 <div class="diagram-box">
-    <div class="diagram-title">How a Launch implementation is structured</div>
-    <div class="diagram-content">
-        <div class="launch-arch">
-            <div class="launch-layer">
-                <div class="launch-title">Property</div>
-                <div class="launch-components">
-                    <div class="launch-comp">Extensions</div>
-                    <div class="launch-comp">Data Elements</div>
-                    <div class="launch-comp">Rules</div>
-                </div>
-            </div>
-            <div class="h-arrow">&darr; built into</div>
-            <div class="launch-layer">
-                <div class="launch-title">Library</div>
-            </div>
-            <div class="h-arrow">&darr; deployed to</div>
-            <div class="launch-envs">
-                <div class="launch-env dev">Development</div>
-                <div class="launch-env stage">Staging</div>
-                <div class="launch-env prod">Production</div>
-            </div>
-        </div>
-    </div>
+    <div class="diagram-title">Nothing you build reaches a visitor until it is bundled and pushed</div>
+    <svg viewBox="0 0 700 290" style="width:100%;height:auto;display:block" role="img"
+         aria-label="A property on the left is drawn as an outlined container holding three filled boxes: extensions, data elements and rules. An arrow marked built into leads to a library, the bundle of changes. A second arrow marked deployed to fans out into three environments stacked vertically: development, staging, and production, with production marked as the only one real visitors ever see.">
+      <defs>
+        <marker id="lt1c" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" style="fill:var(--text3,#5d6b7e)"/></marker>
+      </defs>
+
+      <rect x="20" y="54" width="250" height="196" rx="6" style="fill:none;stroke:var(--border,#e2e8f0);stroke-width:1.6"/>
+      <text x="36" y="76" style="fill:var(--text1,#0f172a);font-size:14px;font-weight:700">Property</text>
+      <text x="36" y="92" style="fill:var(--text3,#5d6b7e);font-size:11px">one site or app, and everything it needs</text>
+
+      <rect x="38" y="102" width="214" height="42" rx="6" style="fill:var(--dia-b-soft,rgba(37,99,235,.10));stroke:var(--dia-b,#2563eb);stroke-width:1.4"/>
+      <text x="145" y="121" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">Extensions</text>
+      <text x="145" y="136" text-anchor="middle" style="fill:var(--dia-b-ink,#1d4ed8);font-size:11px">the building blocks, from a catalog</text>
+
+      <rect x="38" y="152" width="214" height="42" rx="6" style="fill:var(--dia-b-soft,rgba(37,99,235,.10));stroke:var(--dia-b,#2563eb);stroke-width:1.4"/>
+      <text x="145" y="171" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">Data elements</text>
+      <text x="145" y="186" text-anchor="middle" style="fill:var(--dia-b-ink,#1d4ed8);font-size:11px">named values you can reshape</text>
+
+      <rect x="38" y="202" width="214" height="42" rx="6" style="fill:var(--dia-b-soft,rgba(37,99,235,.10));stroke:var(--dia-b,#2563eb);stroke-width:1.4"/>
+      <text x="145" y="221" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">Rules</text>
+      <text x="145" y="236" text-anchor="middle" style="fill:var(--dia-b-ink,#1d4ed8);font-size:11px">when this happens, collect that</text>
+
+      <text x="298" y="140" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">built into</text>
+      <line x1="276" y1="152" x2="320" y2="152" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#lt1c)"/>
+
+      <rect x="326" y="120" width="140" height="64" rx="6" style="fill:var(--dia-d-soft,rgba(245,158,11,.14));stroke:var(--dia-d,#f59e0b);stroke-width:1.4"/>
+      <text x="396" y="146" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:700">Library</text>
+      <text x="396" y="164" text-anchor="middle" style="fill:var(--dia-d-ink,#8a5700);font-size:11px">one bundle of changes</text>
+
+      <text x="492" y="90" text-anchor="end" style="fill:var(--text3,#5d6b7e);font-size:11px">deployed to</text>
+      <line x1="472" y1="152" x2="496" y2="152" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4"/>
+      <line x1="496" y1="98" x2="496" y2="206" style="stroke:var(--text3,#5d6b7e);stroke-width:1.2"/>
+      <line x1="496" y1="98" x2="510" y2="98" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#lt1c)"/>
+      <line x1="496" y1="152" x2="510" y2="152" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#lt1c)"/>
+      <line x1="496" y1="206" x2="510" y2="206" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#lt1c)"/>
+
+      <rect x="516" y="77" width="160" height="42" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="596" y="96" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">Development</text>
+      <text x="596" y="111" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">you, testing</text>
+
+      <rect x="516" y="131" width="160" height="42" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="596" y="150" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">Staging</text>
+      <text x="596" y="165" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">someone signing it off</text>
+
+      <rect x="516" y="185" width="160" height="42" rx="6" style="fill:var(--dia-a-soft,rgba(186,33,66,.10));stroke:var(--dia-a,#ba2142);stroke-width:1.6"/>
+      <text x="596" y="204" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">Production</text>
+      <text x="596" y="219" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:11px">real visitors, real data</text>
+
+      <text x="350" y="274" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">Only the bottom box is the live site. The other two exist so that a mistake never gets that far.</text>
+    </svg>
 </div>
 
 <p>Start at the top, with the <strong>property</strong>. A company may run one website or many. <a href="/adobe-analytics-learning/foundations/report-suites/">Report Suites</a> met the same reality: one global suite, or several, or virtual views carved from a parent, depending on how the business needs to see its data. Launch answers the same kind of question on the implementation side: a single Launch account can hold multiple properties, and a property is the container that takes care of a given site or app.</p>
