@@ -1107,9 +1107,20 @@ body.world-learning .lcontent .diagram-title{
 .shot-title{font-weight:700;color:var(--text1);margin-bottom:14px;font-size:var(--fs-label)}
 
 .shot-frame{position:relative;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:16px;display:flex;align-items:center;justify-content:center;min-height:120px}
-.shot-frame img{display:block;max-width:100%;max-height:360px;width:auto;height:auto;border:1px solid var(--border);border-radius:4px;background:#fff;pointer-events:none}
+/* CMP-04 / SEO-09: the box is driven by WIDTH alone.
+   A lazy image with width:auto has no intrinsic size until its bytes arrive,
+   so it occupied 2px and then jumped to 336px -- a 334px shift on first
+   visit, measured cold at 1280. The width/height attributes cannot help while
+   the used width is auto, so width is now definite and the attribute-derived
+   aspect ratio reserves the height.
+   A max-HEIGHT would fight that, clamping the box after the ratio had already
+   reserved it and shifting the other way, so the height cap is expressed as a
+   width cap instead: --shot-cap x the image aspect ratio. --sw and --sar are
+   set inline per image and derived from the width and height attributes that
+   were already there. */
+.shot-frame img{display:block;max-width:min(var(--sw,100%),calc(var(--shot-cap,360px) * var(--sar,1)));width:100%;height:auto;border:1px solid var(--border);border-radius:4px;background:#fff;pointer-events:none}
 /* Portrait captures lose their text under the landscape cap. Taller ceiling. */
-.shot-box.shot-tall .shot-frame img{max-height:470px}
+.shot-box.shot-tall .shot-frame img{--shot-cap:470px}
 
 .shot-zoom-btn{position:absolute;top:8px;right:8px;width:30px;height:30px;display:flex;align-items:center;justify-content:center;padding:0;font-size:15px;line-height:1;border:1px solid var(--border);border-radius:6px;background:var(--card);color:var(--text2);cursor:pointer}
 .shot-zoom-btn:hover{background:var(--accent,#ba2142);border-color:var(--accent,#ba2142);color:var(--on-accent,#fff)}
@@ -1129,8 +1140,8 @@ body.shot-ov-open{overflow:hidden}
 @media (max-width:768px){
   .shot-box{padding:16px;margin:32px 0}
   .shot-frame{padding:10px}
-  .shot-frame img{max-height:260px}
-  .shot-box.shot-tall .shot-frame img{max-height:340px}
+  .shot-frame img{--shot-cap:260px}
+  .shot-box.shot-tall .shot-frame img{--shot-cap:340px}
 }
 @media print{
   .shot-zoom-btn{display:none !important}
