@@ -212,6 +212,12 @@ footer{border-top:1px solid var(--line);padding-top:16px;font-size:12.5px;color:
     <p><strong>1. Leave neutral ground.</strong> Colour marks something only when something else is unmarked. The figure that worked kept two of its five boxes neutral and coloured the three that formed the point; the two that failed had no uncoloured surface at all, so nothing stood out and the eye had nowhere to rest. A useful check: <strong>if more than about a third of the text in a figure is coloured, the colour has stopped meaning anything.</strong> The two failures were near 100%; they are now 21 and 29 per cent.</p>
     <p><strong>2. Never nest a tinted fill inside another tinted fill.</strong> A tint is translucent, so an inner fill composites over the outer one and loses its hue &mdash; a 10% blue over a 10% crimson wash renders lavender, not blue, and the reader cannot tell the level apart from the container. <strong>A container that holds other shapes takes a stroke and no fill.</strong> Tints are for shapes that sit directly on the figure's own ground, where they render true.</p>
   </div>
+  <div class="card">
+    <h3>Content boxes are filled. Containers are not</h3>
+    <p>Corrected on 19 August after an overcorrection of my own. Told that a figure was cluttered, I removed the fills entirely and produced figures that were clean, legible, and <em>not this site</em> &mdash; Amit's verdict was that they had changed the theme of the website. He was right: filled boxes are the established look, and the existing figures he pointed at as balanced all use them.</p>
+    <p>The genuine fault was never the fills. It was <strong>nesting</strong> them. So the rule is narrow: <strong>a box that holds content takes a soft tint fill; a box that holds other boxes takes a stroke and no fill.</strong> Tints then always sit directly on the figure's ground and always render true, and the site keeps the look it already had.</p>
+    <p>One consequence worth knowing: <strong>inside a tinted box, a sub-label uses the primary ink or the tint's own ink, never <code>--text3</code>.</strong> The muted inks are tuned against the page ground, and on a tint in dark they land at 4.1 to 4.5:1. Three figures failed exactly that way and none of it was visible in the source.</p>
+  </div>
 </section>
 
 <section>
