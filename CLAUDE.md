@@ -113,6 +113,16 @@ An eighth, found the same day and worth knowing before any theme work: **flippin
 
 A ninth, and it is the twin of the eighth: **a hidden page freezes transitions and animations, so computed styles read back the pre-transition value.** If the browser pane is not displayed, `document.visibilityState` is `hidden`, and hovering an element then reading `getComputedStyle` returns its *resting* transform and filter even though the hover rule matched. On 19 Aug that made a working hover look broken three times over. The tell is an inconsistency: the animation *name* appears while the transform still reads as rest. **To check a hover's cascade rather than its timeline, neutralise the transition** (`transition:none !important`) and read again.
 
+
+**A tenth trap, and it is the worst kind because the build reports success.** Removing a component from a content file by script can eat a closing `</div>` that belonged to something else. On 19 Aug an unwrap that took two figures out of M03 §3 left two divs unclosed, and the `code-block` that followed never closed — so the rest of the section rendered *inside* it, white prose on the code block's near-black ground, for the whole page. Hugo built 219 pages and said nothing, because unbalanced divs are valid enough to parse.
+
+**Check div balance after any scripted edit to content**, and never trust a page you have not looked at:
+
+```bash
+for f in $(find amitdusane-site-complete/content -name '*.html'); do o=$(grep -o '<div' "$f" | wc -l); c=$(grep -o '</div>' "$f" | wc -l); [ "$o" -ne "$c" ] && echo "UNBALANCED $f  open $o close $c"; done
+```
+
+Depth counting has to count *every* `<div` and `</div>` on a line, not line-anchored patterns: inner tags are indented, outer ones are not, and a pattern like `/^<\/div>$/` closes the block at the first outer-looking tag it meets, which may not be the right one.
 ---
 
 ## Building

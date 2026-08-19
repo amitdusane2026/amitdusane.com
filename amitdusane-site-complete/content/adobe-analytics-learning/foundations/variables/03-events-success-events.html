@@ -48,6 +48,7 @@ weight: 3
             <tr><td><strong>Currency</strong></td><td>Money, converted to the suite's base currency, then summed</td><td><code>s.events="event3=149.99"</code></td><td>Revenue, shipping, tax, discounts</td></tr>
         </tbody>
     </table>
+</div>
 <p>A <strong>counter</strong> is the default and by far the most common: it tallies occurrences. If a download button is clicked five times, the counter reports 5. Each firing adds 1 by default, though you can pass a whole number to add several at once (<code>event1=5</code> adds five).</p>
 <p>A <strong>numeric</strong> event stores a number you pass in and <em>sums</em> it. Say visitors rate a product from 1 to 5, and you send the chosen rating into a numeric event. Adobe adds up every rating it receives. To turn that running sum into the average rating you actually want (product A: 3.5, product B: 4.1), you divide the numeric event by a counter that tallies how many ratings came in, a <a href="/adobe-analytics-learning/analyze/calculated-metrics/">calculated metric</a>. The event holds the sum; the average is one step you build on top.</p>
 <p>A <strong>currency</strong> event is a numeric event for money: it converts the value from the page's currency to the report suite's base currency, then sums it, which is how revenue, tax, and shipping are tracked.</p>
@@ -71,6 +72,7 @@ s.events = "purchase,event20=149.99";
 
 // Serialized with an event ID, so a refresh cannot double-count
 s.events = "event1:ORD-5582";</pre></div>
+</div>
 <h3 class="subsec-title">Serialization: stopping the double-count</h3>
 <p>Here is a problem that silently inflates KPIs: a visitor lands on the order-confirmation page, the purchase event fires, then they hit refresh, and it fires again. Now you have recorded two orders for one sale. <strong>Serialization</strong> is Adobe's built-in fix. Each event's "Unique Event Recording" setting offers three modes: <strong>always record</strong> (the default, every occurrence counts), <strong>record once per visit</strong>, and <strong>use event ID</strong> (true serialization).</p>
 <div class="diagram-box">
@@ -100,4 +102,29 @@ s.events = "event1:ORD-5582";</pre></div>
 
       <text x="350" y="222" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12.5px;font-weight:600">The ID is what lets Adobe recognise a repeat and throw it away</text>
     </svg>
+</div>
+<p>Event IDs are powerful and unforgiving: de-duplication is <strong>global across every visitor and never expires</strong>, so the same ID seen two years later is still ignored, which means your IDs must be genuinely unique (use the order number, not a constant). IDs are alphanumeric up to 20 bytes. One special case worth memorizing: do not serialize the purchase event with an event ID, use the dedicated <code>s.purchaseID</code> variable instead, which de-duplicates the whole purchase.</p>
+<p>These commerce events are reserved by Adobe with fixed meanings, you do not define them, you just use them. They get their full treatment alongside the other built-ins, in default and reserved variables.</p>
+<h3 class="subsec-title">Why a thousand events, and one setting to know</h3>
+<p>You get up to <strong>1000 custom events</strong> (event1 to event1000, depending on your contract), which sounds extravagant next to 250 eVars until you think about scale. A modern site is not just pages to read; a transactional site has a huge number of <em>actions</em>: add to cart, apply a coupon, start checkout, submit each form, rate, share. Every action you want to count needs an event. It is normal to have far more events than dimensions, because there are simply more things to <em>count</em> than there are ways to <em>label</em>.</p>
+<p>One per-event setting worth knowing is <strong>polarity</strong>: you can flag whether an upward trend for a metric is good or bad, because for some events, error counts or refunds, a rising number is bad news. It mattered more in classic reporting, where it shaped default sorting and coloring. In Analysis Workspace, where you sort and conditionally format however you like, it matters far less, but it is still there.</p>
+<div class="pro-tip">
+    <div class="pro-tip-hdr">💡 The failure mode is not running out of events. It is sprawl.</div>
+    <p>With so many events available, the failure mode is not running out, it is sprawl. Name and document every event in a <a href="/adobe-analytics-learning/foundations/variables/variable-planning/">solution design document</a> the moment you enable it. An unnamed <code>event47</code> that nobody remembers the purpose of is how a measurement plan quietly rots.</p>
+
+</div>
+
+<p>Props, eVars, and events are the three you choose. But Adobe has already chosen a handful for you, filled them in without asking, and given several of them names that sound interchangeable and are not. <a href="/adobe-analytics-learning/foundations/variables/default-reserved-variables/">Default and Reserved Variables</a> is where the ones you did not pick get sorted out.</p>
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to Find in Adobe Analytics</div>
+    <p>Configure Events: <span class="path">Admin → Report Suites → Edit Settings → Conversion → Success Events</span></p>
+    <p>Enable Serialization: <span class="path">Success Events → Edit → Unique Event Recording → Use Event ID</span></p>
+</div>
+<div class="ref-box">
+    <div class="ref-title">📚 Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/implementation/vars/page-vars/events/events-overview" target="_blank">Adobe Docs: Events Overview</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/metrics/custom-events" target="_blank">Adobe Docs: Custom Events (Types)</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/admin/admin-tools/manage-report-suites/edit-report-suite/conversion-variables/success-event" target="_blank">Adobe Docs: Success Events Admin</a></li>
+    </ul>
 </div>
