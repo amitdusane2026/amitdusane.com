@@ -108,20 +108,13 @@ s.t();</pre></div>
 
 <h3 class="subsec-title">The lifecycle of a single hit</h3>
 <p>Strip away the tooling and every AppMeasurement hit follows the same four beats.</p>
-<div class="diagram-box">
-    <div class="diagram-title">From action to beacon</div>
-    <div class="diagram-content">
-        <div class="flow-vertical">
-            <div class="flow-step"><strong>1. The tracker exists.</strong> The <code>s</code> object is created once when the library loads. In a tag manager, this is done for you.</div>
-            <span class="flow-arrow-down">↓</span>
-            <div class="flow-step"><strong>2. You set variables.</strong> Assign the values this hit should carry: <code>s.pageName</code>, eVars, <code>s.events</code>, <code>s.products</code>.</div>
-            <span class="flow-arrow-down">↓</span>
-            <div class="flow-step highlight"><strong>3. You fire a tracking call.</strong> <code>s.t()</code> for a page view, <code>s.tl()</code> for anything that is not a page view.</div>
-            <span class="flow-arrow-down">↓</span>
-            <div class="flow-step"><strong>4. The beacon leaves.</strong> AppMeasurement assembles the image request and sends it to Adobe's collection servers.</div>
-        </div>
-    </div>
-</div>
+<p><strong>From action to beacon, in four steps.</strong></p>
+<ol>
+    <li><strong>The tracker exists.</strong> The <code>s</code> object is created once when the library loads. In a tag manager, this is done for you.</li>
+    <li><strong>You set variables.</strong> Assign the values this hit should carry: <code>s.pageName</code>, eVars, <code>s.events</code>, <code>s.products</code>.</li>
+    <li><strong>You fire a tracking call.</strong> <code>s.t()</code> for a page view, <code>s.tl()</code> for anything that is not a page view.</li>
+    <li><strong>The beacon leaves.</strong> AppMeasurement assembles the image request and sends it to Adobe's collection servers.</li>
+</ol>
 
 <h3 class="subsec-title">s.t() versus s.tl(): the distinction everything hinges on</h3>
 <p>There are two tracking calls, and confusing them is behind a surprising share of "my data is missing" tickets. Each has a section of its own, <a href="/adobe-analytics-learning/collect/tracking-calls/page-view-tracking/">Page View Tracking</a> and <a href="/adobe-analytics-learning/collect/tracking-calls/link-tracking/">Link Tracking</a>; what matters here is the difference between them.</p>

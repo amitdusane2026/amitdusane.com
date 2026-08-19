@@ -19,28 +19,48 @@ weight: 4
 <p>Strip away every feature and the single thing a TMS buys you is this: it decouples the pace of the business from the release cycle of engineering. Measurement decisions move out of the deploy queue and into the hands of the people who actually need them, marketers and analysts, and they become driven by business strategy rather than gated by the website's technical calendar. Everything else, the versioning, the access control, the prebuilt integrations, is valuable but secondary to that one structural shift. Change stops being a code event and becomes a publish event.</p>
 <p>A concrete example shows the difference. Say a marketer wants the form-name eVar to persist for 30 days (the eVar expiration set in <a href="/adobe-analytics-learning/foundations/variables/evars-conversion-variables/">eVars</a>) so they can see what people do in the month after filling out a form, plus a couple of new events on submission. Done the direct way, that is a ticket, a build, QA, and a wait for the next release. Done through the TMS, it is a few minutes of work: make the change, test it in a lower environment, publish to production. No website code changes, and no measurable hit to the site's performance or functionality. The web developer is happier, the burden of babysitting analytics code is gone and they can focus on the product, and the analyst is happier, the dependency is gone and the loop from idea to live data to decision shrinks from months to hours.</p>
 <div class="diagram-box">
-    <div class="diagram-title">⏱️ Same change, two very different timelines</div>
-    <div class="diagram-content" style="flex-direction:column;align-items:stretch;gap:16px">
-        <div style="width:100%">
-            <div style="font-size:13px;font-weight:700;color:var(--text1,#0f172a);margin-bottom:6px">Direct on the page</div>
-            <div class="flow-horizontal">
-                <div class="flow-step-sm">Request</div><span class="flow-arrow">→</span>
-                <div class="flow-step-sm">Dev ticket</div><span class="flow-arrow">→</span>
-                <div class="flow-step-sm">Build</div><span class="flow-arrow">→</span>
-                <div class="flow-step-sm">QA</div><span class="flow-arrow">→</span>
-                <div class="flow-step-sm">Release deploy</div>
-            </div>
-            <div style="font-size:12px;color:var(--accent,#e11d48);font-weight:700;margin-top:6px">Live in weeks to months</div>
-        </div>
-        <div style="width:100%">
-            <div style="font-size:13px;font-weight:700;color:var(--text1,#0f172a);margin-bottom:6px">Tag management system</div>
-            <div class="flow-horizontal">
-                <div class="flow-step-sm highlight">Change in UI</div><span class="flow-arrow">→</span>
-                <div class="flow-step-sm highlight">Publish</div>
-            </div>
-            <div style="font-size:12px;color:#10b981;font-weight:700;margin-top:6px">Live in minutes to hours</div>
-        </div>
-    </div>
+    <div class="diagram-title">The same change, and the difference is how many people have to touch it</div>
+    <svg viewBox="0 0 700 254" style="width:100%;height:auto;display:block" role="img"
+         aria-label="Two timelines drawn to the same scale. Changing tracking directly on the page runs through five stages, request, dev ticket, build, QA and release, and goes live in weeks to months. The same change through a tag management system runs through two stages, a change in the interface and publish, and goes live in minutes to hours. The second row is visibly shorter because the other three stages never happen.">
+      <defs><marker id="dc4a" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" style="fill:var(--text3,#5d6b7e)"/></marker></defs>
+
+      <text x="24" y="46" style="fill:var(--danger-ink,#a4161a);font-size:12.5px;font-weight:700">Direct on the page</text>
+
+      <rect x="24" y="58" width="92" height="34" rx="5" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="70" y="79" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px">Request</text>
+      <rect x="130" y="58" width="92" height="34" rx="5" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="176" y="79" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px">Dev ticket</text>
+      <rect x="236" y="58" width="92" height="34" rx="5" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="282" y="79" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px">Build</text>
+      <rect x="342" y="58" width="92" height="34" rx="5" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="388" y="79" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px">QA</text>
+      <rect x="448" y="58" width="92" height="34" rx="5" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="494" y="79" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px">Release</text>
+      <line x1="120" y1="75" x2="126" y2="75" style="stroke:var(--text3,#5d6b7e);stroke-width:1.2" marker-end="url(#dc4a)"/>
+      <line x1="226" y1="75" x2="232" y2="75" style="stroke:var(--text3,#5d6b7e);stroke-width:1.2" marker-end="url(#dc4a)"/>
+      <line x1="332" y1="75" x2="338" y2="75" style="stroke:var(--text3,#5d6b7e);stroke-width:1.2" marker-end="url(#dc4a)"/>
+      <line x1="438" y1="75" x2="444" y2="75" style="stroke:var(--text3,#5d6b7e);stroke-width:1.2" marker-end="url(#dc4a)"/>
+      <rect x="556" y="58" width="120" height="34" rx="5" style="fill:var(--danger-soft,rgba(164,22,26,.10));stroke:var(--danger-ink,#a4161a);stroke-width:1.4"/>
+      <text x="616" y="79" text-anchor="middle" style="fill:var(--danger-ink,#a4161a);font-size:11px;font-weight:700">weeks to months</text>
+      <line x1="546" y1="75" x2="552" y2="75" style="stroke:var(--text3,#5d6b7e);stroke-width:1.2" marker-end="url(#dc4a)"/>
+
+      <line x1="24" y1="118" x2="676" y2="118" style="stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
+
+      <text x="24" y="150" style="fill:var(--dia-c-ink,#0a6e50);font-size:12.5px;font-weight:700">Through a tag management system</text>
+
+      <rect x="24" y="162" width="92" height="34" rx="5" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.4"/>
+      <text x="70" y="183" text-anchor="middle" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px">Change it</text>
+      <rect x="130" y="162" width="92" height="34" rx="5" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.4"/>
+      <text x="176" y="183" text-anchor="middle" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px">Publish</text>
+      <line x1="120" y1="179" x2="126" y2="179" style="stroke:var(--text3,#5d6b7e);stroke-width:1.2" marker-end="url(#dc4a)"/>
+      <rect x="238" y="162" width="120" height="34" rx="5" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.4"/>
+      <text x="298" y="183" text-anchor="middle" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px;font-weight:700">minutes to hours</text>
+      <line x1="228" y1="179" x2="234" y2="179" style="stroke:var(--text3,#5d6b7e);stroke-width:1.2" marker-end="url(#dc4a)"/>
+
+      <text x="380" y="183" style="fill:var(--text3,#5d6b7e);font-size:11px">the other three stages simply never happen</text>
+
+      <text x="350" y="234" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12.5px;font-weight:600">The tag manager does not make the work faster. It removes people from the path.</text>
+    </svg>
 </div>
 <p>One honest note on speed: publishing is not literally instant. A TMS runs a lightweight workflow, development, then staging, then production, with an approval step, so changes still pass a quality gate. But that gate is measured in minutes to hours, not the weeks-to-months of an engineering release, and it needs no developer time. In practice that one loader manages many tags from a central place. Logic called rules decides when each tag fires, and small named references called data elements read the values off your page. That machinery, how Adobe's rules, extensions, and data elements actually work, is the entire subject of <a href="/adobe-analytics-learning/collect/adobe-launch-tags/">Adobe Experience Platform Tags</a>, so it stays closed here. For now, the only thing that matters is the shape: one script on the page, everything else managed outside it.</p>
 <div class="comparison-grid">

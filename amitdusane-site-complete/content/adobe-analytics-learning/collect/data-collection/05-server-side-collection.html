@@ -35,16 +35,43 @@ weight: 5
 <p>This is the heart of server-side collection, and it is worth slowing down for. A browser hit gets its identity for free. The cookie is right there, so Adobe knows this hit belongs to the same visitor as the last one. A server-side hit has none of that. It arrives with no idea whose action it represents, unless you tell it.</p>
 <p>So you have to supply the visitor identity yourself, the ECID (the Marketing Cloud ID) or a custom visitor ID, captured earlier when the person was in a browser and then carried through your systems so it can be attached to the offline event later. Get this right and the refund processed overnight attaches to the very same person who browsed your pricing page last week. The online and offline halves of one human being finally join up.</p>
 <div class="diagram-box">
-    <div class="diagram-title">🔗 The identity handoff: one ID, carried across the gap</div>
-    <div class="diagram-content">
-        <div class="flow-horizontal">
-            <div class="flow-step">Browser<br><span style="font-size:11px;color:var(--text2,#475569)">ECID captured</span></div>
-            <span class="flow-arrow">→</span>
-            <div class="flow-step">Your systems<br><span style="font-size:11px;color:var(--text2,#475569)">ID stored with the order</span></div>
-            <span class="flow-arrow">→</span>
-            <div class="flow-step highlight">Offline event<br><span style="font-size:11px;color:var(--text2,#475569)">same ID reattached</span></div>
-        </div>
-    </div>
+    <div class="diagram-title">The same identifier, carried by hand across a gap Adobe cannot see</div>
+    <svg viewBox="0 0 700 246" style="width:100%;height:auto;display:block" role="img"
+         aria-label="An identifier captured in the browser is stored alongside the order in your own systems, and later reattached to an offline event such as a phone cancellation. The same identifier token appears in all three places. A dashed boundary marks the gap between what Adobe can see and what only you can see, and a line beneath notes that if the identifier is not stored at the moment of the order it cannot be recovered afterwards.">
+      <defs><marker id="dc5a" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" style="fill:var(--text3,#5d6b7e)"/></marker></defs>
+
+      <text x="130" y="44" text-anchor="middle" style="fill:var(--dia-b-ink,#1d4ed8);font-size:12.5px;font-weight:700">Adobe can see this</text>
+      <line x1="20" y1="52" x2="240" y2="52" style="stroke:var(--dia-b,#2563eb);stroke-width:1.6"/>
+      <text x="470" y="44" text-anchor="middle" style="fill:var(--dia-e-ink,#5b21b6);font-size:12.5px;font-weight:700">Only you can see this</text>
+      <line x1="300" y1="52" x2="676" y2="52" style="stroke:var(--dia-e,#7c3aed);stroke-width:1.6"/>
+
+      <rect x="20" y="70" width="220" height="76" rx="6" style="fill:var(--dia-b-soft,rgba(37,99,235,.10));stroke:var(--dia-b,#2563eb);stroke-width:1.4"/>
+      <text x="130" y="94" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">In the browser</text>
+      <text x="130" y="110" text-anchor="middle" style="fill:var(--dia-b-ink,#1d4ed8);font-size:11px">the order is placed</text>
+      <rect x="54" y="118" width="152" height="20" rx="4" style="fill:var(--dia-a-soft,rgba(186,33,66,.10));stroke:var(--dia-a,#ba2142);stroke-width:1.4"/>
+      <text x="130" y="132" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:11px;font-weight:700">ECID 0729a1&#8230;</text>
+
+      <line x1="270" y1="34" x2="270" y2="200" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4;stroke-dasharray:5 4"/>
+      <text x="270" y="220" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">the gap</text>
+
+      <rect x="300" y="70" width="176" height="76" rx="6" style="fill:var(--dia-e-soft,rgba(124,58,237,.10));stroke:var(--dia-e,#7c3aed);stroke-width:1.4"/>
+      <text x="388" y="94" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">Your systems</text>
+      <text x="388" y="110" text-anchor="middle" style="fill:var(--dia-e-ink,#5b21b6);font-size:11px">stored with the order</text>
+      <rect x="312" y="118" width="152" height="20" rx="4" style="fill:var(--dia-a-soft,rgba(186,33,66,.10));stroke:var(--dia-a,#ba2142);stroke-width:1.4"/>
+      <text x="388" y="132" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:11px;font-weight:700">ECID 0729a1&#8230;</text>
+
+      <rect x="500" y="70" width="176" height="76" rx="6" style="fill:var(--dia-e-soft,rgba(124,58,237,.10));stroke:var(--dia-e,#7c3aed);stroke-width:1.4"/>
+      <text x="588" y="94" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">Offline event</text>
+      <text x="588" y="110" text-anchor="middle" style="fill:var(--dia-e-ink,#5b21b6);font-size:11px">cancelled on the phone</text>
+      <rect x="512" y="118" width="152" height="20" rx="4" style="fill:var(--dia-a-soft,rgba(186,33,66,.10));stroke:var(--dia-a,#ba2142);stroke-width:1.4"/>
+      <text x="588" y="132" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:11px;font-weight:700">ECID 0729a1&#8230;</text>
+
+      <line x1="244" y1="108" x2="264" y2="108" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#dc5a)"/>
+      <line x1="480" y1="108" x2="496" y2="108" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#dc5a)"/>
+
+      <text x="350" y="196" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12.5px;font-weight:600">The same token in all three places is the only thing joining them up</text>
+      <text x="350" y="238" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">Fail to store it at the moment of the order and there is nothing to reattach later</text>
+    </svg>
 </div>
 <p>Get it wrong and the data is quietly useless in one of two ways. Send no usable identity, and every server hit becomes a brand-new stranger, inflating your visitor counts and attaching to no real journey. Reuse a single ID for everyone, and the opposite happens: every visitor collapses into one, and your eVar and event allocation goes haywire. Remember from <a href="/adobe-analytics-learning/collect/data-collection/appmeasurement-library/">the AppMeasurement section</a> that Visitors is not a stored number, it is counted from the identity on each hit at report time. Server-side is where that truth gets sharp, because here the identity is entirely in your hands.</p>
 <div class="warn-box">

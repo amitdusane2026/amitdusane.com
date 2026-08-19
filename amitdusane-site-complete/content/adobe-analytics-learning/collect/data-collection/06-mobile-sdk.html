@@ -105,18 +105,42 @@ Rule 2: Count a Download
 </div>
 <p>A useful rule of thumb when you inherit an app's context data: a key whose value looks like a label (<code>app.pageType = "Landing"</code>) usually belongs in an eVar or prop, while a key that is really just a flag (<code>app.download = "1"</code>) usually belongs on an event. One built-in exception is worth knowing: the <strong>products</strong> string is sent directly by the SDK (via a special <code>&amp;&amp;products</code> key) and does <em>not</em> need a processing rule. Everything else does. The full Processing Rules toolkit, conditions, ordering, the authorization it requires, is the entire subject of <a href="/adobe-analytics-learning/shape/processing-rules/">Processing Rules</a>; here you only need the shape of it.</p>
 <div class="diagram-box">
-    <div class="diagram-title">🔀 How one app action becomes an Adobe Analytics variable</div>
-    <div class="diagram-content">
-        <div class="flow-horizontal">
-            <div class="flow-step">App code<br><span style="font-size:11px;color:var(--text2,#475569)">trackAction sends app.documentName</span></div>
-            <span class="flow-arrow">→</span>
-            <div class="flow-step">Context data<br><span style="font-size:11px;color:var(--text2,#475569)">arrives at Adobe, inert</span></div>
-            <span class="flow-arrow">→</span>
-            <div class="flow-step">Processing Rule<br><span style="font-size:11px;color:var(--text2,#475569)">if app.documentName, set eVar4</span></div>
-            <span class="flow-arrow">→</span>
-            <div class="flow-step highlight">Report<br><span style="font-size:11px;color:var(--text2,#475569)">eVar4 = "Pricing Guide.pdf"</span></div>
-        </div>
-    </div>
+    <div class="diagram-title">The app sends a name, not a variable &#8212; you choose the variable afterwards</div>
+    <svg viewBox="0 0 700 232" style="width:100%;height:auto;display:block" role="img"
+         aria-label="An app calls trackAction and sends a named value, app.documentName. It arrives at Adobe as context data and sits inert. A processing rule then maps that name to eVar4, and the report shows eVar4 equal to Pricing Guide dot p d f. A line beneath notes this is the same mechanism as context data on the web, so changing the destination needs no app release.">
+      <defs><marker id="dc6a" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" style="fill:var(--text3,#5d6b7e)"/></marker></defs>
+
+      <rect x="14" y="52" width="150" height="62" rx="6" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="89" y="76" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">App code</text>
+      <text x="89" y="93" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">trackAction sends</text>
+      <text x="89" y="107" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">app.documentName</text>
+
+      <rect x="196" y="52" width="150" height="62" rx="6" style="fill:var(--dia-b-soft,rgba(37,99,235,.10));stroke:var(--dia-b,#2563eb);stroke-width:1.4"/>
+      <text x="271" y="76" text-anchor="middle" style="fill:var(--dia-b-ink,#1d4ed8);font-size:12.5px;font-weight:600">Context data</text>
+      <text x="271" y="93" text-anchor="middle" style="fill:var(--dia-b-ink,#1d4ed8);font-size:11px">arrives at Adobe</text>
+      <text x="271" y="107" text-anchor="middle" style="fill:var(--dia-b-ink,#1d4ed8);font-size:11px">and sits inert</text>
+
+      <rect x="378" y="52" width="150" height="62" rx="6" style="fill:var(--dia-e-soft,rgba(124,58,237,.10));stroke:var(--dia-e,#7c3aed);stroke-width:1.4"/>
+      <text x="453" y="76" text-anchor="middle" style="fill:var(--dia-e-ink,#5b21b6);font-size:12.5px;font-weight:600">Processing rule</text>
+      <text x="453" y="93" text-anchor="middle" style="fill:var(--dia-e-ink,#5b21b6);font-size:11px">you map the name</text>
+      <text x="453" y="107" text-anchor="middle" style="fill:var(--dia-e-ink,#5b21b6);font-size:11px">to eVar4</text>
+
+      <rect x="560" y="52" width="126" height="62" rx="6" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.4"/>
+      <text x="623" y="76" text-anchor="middle" style="fill:var(--dia-c-ink,#0a6e50);font-size:12.5px;font-weight:600">Report</text>
+      <text x="623" y="93" text-anchor="middle" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px">eVar4 =</text>
+      <text x="623" y="107" text-anchor="middle" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px">Pricing Guide.pdf</text>
+
+      <line x1="168" y1="83" x2="190" y2="83" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#dc6a)"/>
+      <line x1="350" y1="83" x2="372" y2="83" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#dc6a)"/>
+      <line x1="532" y1="83" x2="554" y2="83" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#dc6a)"/>
+
+      <path d="M14 136 v10 H346 v-10" style="fill:none;stroke:var(--text3,#5d6b7e);stroke-width:1.2"/>
+      <text x="180" y="166" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">shipped in the app, and frozen until the next release</text>
+      <path d="M378 136 v10 H686 v-10" style="fill:none;stroke:var(--dia-e,#7c3aed);stroke-width:1.2"/>
+      <text x="532" y="166" text-anchor="middle" style="fill:var(--dia-e-ink,#5b21b6);font-size:11px">changeable this afternoon, in the interface</text>
+
+      <text x="350" y="206" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12.5px;font-weight:600">Same mechanism as context data on the web, and it matters more here</text>
+    </svg>
 </div>
 <h3 class="subsec-title">Offline is the normal case, not the exception</h3>
 <p>Phones lose connectivity constantly: tunnels, elevators, planes, dead zones. A browser hit assumes a live connection; an app cannot. So the SDK queues hits on the device and sends them later, stamped with when the action actually happened rather than when it finally reached Adobe. If that sounds familiar, it should, it is exactly the timestamped-data situation from <a href="/adobe-analytics-learning/collect/data-collection/server-side-collection/">Server-Side Collection</a>, which is why mobile data so often lives in a timestamp-enabled report suite. The timestamp decision, framed there as a server-side concern, turns out to be baked into mobile collection by its very nature.</p>

@@ -30,23 +30,44 @@ weight: 3
 <p>Now the Web SDK has a clean job to do, and a single library to do it with: alloy.js. It is the modern, lightweight engine that lives on your website, and what it does is take the customer's on-site behavior and express it as XDM. Just key-value pairs that you, the analytics developer, decide on. It does not process the data, it does not touch or reshape it, it does not make decisions about it. It collects it in XDM form and sends it straight to one place: the <a href="/web-sdk-migration/kb/edge/">Edge Network</a>, Adobe's collection layer.</p>
 <p>From the Edge, a thing called a datastream decides where that single stream of data goes. This is the part that pays off everything above. One format leaves the browser, and the Edge fans it out, server-side, to whichever Adobe products you have switched on: Analytics, Target, <a href="/adobe-analytics-learning/deliver/adobe-analytics-cja/">Customer Journey Analytics</a>, Journey Optimizer. Want to light up Target next quarter? You do not touch the website. You flip it on in the datastream. Remember the network tab from <a href="/adobe-analytics-learning/collect/data-collection/appmeasurement-library/">AppMeasurement Library</a>, the separate pixel firing per tool? Here you see essentially one request leaving the page, to <code>adobedc.net</code>, and the routing happens after it lands.</p>
 <div class="diagram-box">
-    <div class="diagram-title">One call out, many tools lit up</div>
-    <div class="diagram-content">
-        <div class="flow-horizontal">
-            <div class="flow-step">On-site behavior</div>
-            <span class="flow-arrow">→</span>
-            <div class="flow-step highlight">alloy.js builds XDM</div>
-            <span class="flow-arrow">→</span>
-            <div class="flow-step">Edge Network</div>
-            <span class="flow-arrow">→</span>
-            <div class="flow-multi">
-                <div class="flow-dest">Analytics</div>
-                <div class="flow-dest">Target</div>
-                <div class="flow-dest">CJA</div>
-                <div class="flow-dest">Journey Optimizer</div>
-            </div>
-        </div>
-    </div>
+    <div class="diagram-title">One call leaves the page, and the Edge decides who hears about it</div>
+    <svg viewBox="0 0 700 250" style="width:100%;height:auto;display:block" role="img"
+         aria-label="On-site behaviour is turned into an XDM payload by alloy.js and sent as a single call to the Edge Network. The Edge then distributes it to Analytics, Target, Customer Journey Analytics and Journey Optimizer. A line beneath notes that adding a fifth destination costs another call in the old model and nothing here.">
+      <defs><marker id="dc3a" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" style="fill:var(--text3,#5d6b7e)"/></marker></defs>
+
+      <rect x="16" y="88" width="128" height="56" rx="6" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="80" y="112" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">On-site</text>
+      <text x="80" y="128" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">behaviour</text>
+
+      <rect x="180" y="88" width="140" height="56" rx="6" style="fill:var(--dia-b-soft,rgba(37,99,235,.10));stroke:var(--dia-b,#2563eb);stroke-width:1.4"/>
+      <text x="250" y="112" text-anchor="middle" style="fill:var(--dia-b-ink,#1d4ed8);font-size:12.5px;font-weight:600">alloy.js</text>
+      <text x="250" y="128" text-anchor="middle" style="fill:var(--dia-b-ink,#1d4ed8);font-size:11px">builds one XDM payload</text>
+
+      <rect x="356" y="80" width="132" height="72" rx="6" style="fill:var(--dia-a-soft,rgba(186,33,66,.10));stroke:var(--dia-a,#ba2142);stroke-width:1.6"/>
+      <text x="422" y="106" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:12.5px;font-weight:700">Edge Network</text>
+      <text x="422" y="124" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:11px">one call arrives</text>
+      <text x="422" y="140" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:11px">here, and only one</text>
+
+      <line x1="148" y1="116" x2="174" y2="116" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#dc3a)"/>
+      <line x1="324" y1="116" x2="350" y2="116" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#dc3a)"/>
+
+      <rect x="558" y="44" width="128" height="30" rx="5" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.4"/>
+      <text x="622" y="63" text-anchor="middle" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px;font-weight:600">Analytics</text>
+      <rect x="558" y="82" width="128" height="30" rx="5" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.4"/>
+      <text x="622" y="101" text-anchor="middle" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px;font-weight:600">Target</text>
+      <rect x="558" y="120" width="128" height="30" rx="5" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.4"/>
+      <text x="622" y="139" text-anchor="middle" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px;font-weight:600">CJA</text>
+      <rect x="558" y="158" width="128" height="30" rx="5" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.4"/>
+      <text x="622" y="177" text-anchor="middle" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px;font-weight:600">Journey Optimizer</text>
+
+      <path d="M492 116 C522 116 524 59 552 59" style="fill:none;stroke:var(--dia-c,#10b981);stroke-width:1.2" marker-end="url(#dc3a)"/>
+      <path d="M492 116 C522 116 524 97 552 97" style="fill:none;stroke:var(--dia-c,#10b981);stroke-width:1.2" marker-end="url(#dc3a)"/>
+      <path d="M492 116 C522 116 524 135 552 135" style="fill:none;stroke:var(--dia-c,#10b981);stroke-width:1.2" marker-end="url(#dc3a)"/>
+      <path d="M492 116 C522 116 524 173 552 173" style="fill:none;stroke:var(--dia-c,#10b981);stroke-width:1.2" marker-end="url(#dc3a)"/>
+
+      <text x="350" y="216" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12.5px;font-weight:600">The page pays for one call no matter how many tools are listening</text>
+      <text x="350" y="238" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">Turning on a fifth destination is a setting on the Edge, not another script on the page</text>
+    </svg>
 </div>
 
 <h3 class="subsec-title">The honest catch: Analytics is still frozen</h3>
