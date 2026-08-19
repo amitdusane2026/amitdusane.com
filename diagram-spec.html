@@ -63,7 +63,8 @@ footer{border-top:1px solid var(--line);padding-top:16px;font-size:12.5px;color:
   <div class="kick">amitdusane.com &middot; drawing standard</div>
   <h1>Diagram Specification</h1>
   <p>Every diagram on the learning world is drawn to this. It exists because the corpus currently contains two visible generations &mdash; 76 diagrams built as CSS boxes and 65 drawn as SVG &mdash; and because without a written standard the next seven modules would add a third.</p>
-  <div class="meta">Written 19 August 2026 &middot; governs the redraw programme and all new modules &middot; derived from the migration world's diagrams, which are the quality bar</div>
+  <p><strong>The design system here is this site&rsquo;s own, and it is already settled.</strong> The type scale, the spacing scale, the colour tokens, the <code>diagram-box</code> component and the 700px figure width are all decided and in use across 116 sections. This document does not import a look from anywhere; it says how to draw <em>inside</em> that system. Where the migration guide is mentioned it is as evidence that a standard of figure is achievable, never as a template to match &mdash; it is a different world with a different accent, a different shell and a different type scale, and nothing about it should be fitted onto this one.</p>
+  <div class="meta">Written 19 August 2026 &middot; governs the redraw programme and all new modules &middot; the system is this site&rsquo;s own; the migration guide supplied ideas, not values</div>
 </header>
 
 <section>
@@ -75,7 +76,7 @@ footer{border-top:1px solid var(--line);padding-top:16px;font-size:12.5px;color:
       <li><strong>Does it land in two seconds?</strong> A reader should understand the shape of the idea before reading a single label. If they have to study it, it has failed.</li>
       <li><strong>Does it render well on a phone and on a desktop?</strong> Both. Not one.</li>
       <li><strong>Is it attractive?</strong> Would you be happy for it to be the first thing someone sees on the site.</li>
-      <li><strong>Is it as good as the migration world's?</strong> That is the bar. It is already met on this site, so it is not a hypothetical.</li>
+      <li><strong>Does it teach as immediately as the migration guide&rsquo;s diagrams do?</strong> Not <em>look like</em> them &mdash; that guide is a different world with a different palette and a different shell. The bar is the <em>effect</em>: a reader gets the mental model before they get the detail. It is worth knowing that bar has already been cleared on this site, so it is not a hypothetical.</li>
     </ol>
   </div>
   <div class="no"><b>The two-second test is the one that fails most often.</b> A diagram with nine boxes and eleven arrows may be accurate and still fail, because the reader cannot see the shape before they start reading. Accuracy is not the constraint. Comprehension is.</div>
@@ -83,7 +84,7 @@ footer{border-top:1px solid var(--line);padding-top:16px;font-size:12.5px;color:
 
 <section>
   <div class="cat"><span class="cat-id">01</span><h2>The four rules that make the difference</h2></div>
-  <p>These came out of reading the migration world's diagrams against the learning world's. They are what separate a drawing that teaches from a labelled box arrangement.</p>
+  <p>These are what separate a drawing that teaches from a labelled box arrangement. They are about how to <em>think</em> about a figure. Everything after them &mdash; size, colour, spacing, weight &mdash; comes from this site&rsquo;s own design system and is stated in its own tokens.</p>
 
   <div class="rule"><div class="n">RULE 1</div>
     <h3>Draw the metaphor. Do not label it.</h3>
@@ -94,7 +95,7 @@ footer{border-top:1px solid var(--line);padding-top:16px;font-size:12.5px;color:
   <div class="rule"><div class="n">RULE 2</div>
     <h3>Two panels: the idea, then the reality.</h3>
     <p>Metaphor on the left, the actual thing on the right, joined by a single dashed connector. Or before and after. Or wrong and right. The eye travels left to right once, and the arrow tells it that the two sides are the same thing said twice.</p>
-    <p>This structure carries the majority of the migration world's diagrams and it is the most reliable way to hit the two-second test.</p>
+    <p>It is the most reliable way to hit the two-second test, and it is a general information-design pattern rather than a house style. It is not the only permitted shape: the real rule is <strong>one movement for the eye</strong>. A figure the eye has to traverse twice has two ideas in it and should be two figures.</p>
   </div>
 
   <div class="rule"><div class="n">RULE 3</div>
@@ -124,13 +125,14 @@ footer{border-top:1px solid var(--line);padding-top:16px;font-size:12.5px;color:
   <div class="no"><b>Nothing below 11.</b> The corpus currently has 141 places at 8 to 10.5px, 16 of them under the legibility floor for any handset. They are known and they are not a precedent.</div>
   <div class="card">
     <h3>Sentence case, not capitals</h3>
-    <p>Panel headings are <strong>sentence case bold</strong>, not uppercase with letter-spacing. This is a deliberate departure from the migration world, which uses small caps eyebrows. Capitals plus tracking is half of a recognisable generated-page signature and the site has already rejected it once, in the label voice. One voice across the page is worth more than one flourish inside a figure.</p>
+    <p>Panel headings are <strong>sentence case bold</strong>, matching the label voice used by every box on the page. Capitals plus tracking is half of a recognisable generated-page signature, and this site has already rejected it once. A figure is part of the page, not a separate object with its own typography.</p>
     <p>Never mono inside a diagram, except where the text <em>is</em> code or a field path.</p>
   </div>
 </section>
 
 <section>
   <div class="cat"><span class="cat-id">03</span><h2>Line, shape and colour</h2></div>
+  <p>These are stated against this site&rsquo;s own canvas and components. The stroke ladder is set relative to the 1px borders the page&rsquo;s boxes already use: at the pinned 700px figure width a 1.4 stroke reads as the same weight of line as a component border, so a figure sits on the page rather than on top of it.</p>
   <div class="tw"><table>
     <thead><tr><th style="width:150px">Property</th><th style="width:160px">Value</th><th>When</th></tr></thead>
     <tbody>
@@ -170,7 +172,7 @@ footer{border-top:1px solid var(--line);padding-top:16px;font-size:12.5px;color:
   <div class="tw"><table>
     <thead><tr><th style="width:230px">Constraint</th><th>Value</th></tr></thead>
     <tbody>
-      <tr><td>Drawn elements per diagram</td><td><strong>20&ndash;45.</strong> The migration world averages 22&ndash;36. Above 60 the two-second test fails.</td></tr>
+      <tr><td>Drawn elements per diagram</td><td><strong>20&ndash;45.</strong> Below 20 a figure is usually a sentence; above 60 the two-second test fails. This site&rsquo;s strongest existing figures sit in that band.</td></tr>
       <tr><td>Diagrams per section</td><td>1&ndash;3. Three is a lot.</td></tr>
       <tr><td>Canvas</td><td><code>viewBox="0 0 700 H"</code>, H = 180&ndash;340</td></tr>
       <tr><td>Root attributes</td><td><code>role="img"</code> and a full-sentence <code>aria-label</code>, always</td></tr>
@@ -180,7 +182,7 @@ footer{border-top:1px solid var(--line);padding-top:16px;font-size:12.5px;color:
   </table></div>
   <div class="card">
     <h3>The id collision trap</h3>
-    <p>Marker and gradient ids are global to the page. Two diagrams in one section both defining <code>#arrow</code> means the second silently uses the first's. Suffix every id with the section number, as the migration world does: <code>as3</code>, <code>ms3</code>, <code>os3</code>.</p>
+    <p>Marker and gradient ids are global to the page. Two diagrams in one section both defining <code>#arrow</code> means the second silently uses the first's. Suffix every id with the section number: <code>as3</code>, <code>ms3</code>, <code>os3</code>.</p>
   </div>
 </section>
 
@@ -231,7 +233,7 @@ footer{border-top:1px solid var(--line);padding-top:16px;font-size:12.5px;color:
 
 <footer>
   amitdusane.com &middot; diagram specification &middot; written 19 August 2026<br>
-  Derived from the migration world's diagrams. Where this document and the built site disagree, the site wins and this document is corrected.
+  The values here are this site&rsquo;s own. Where this document and the built site disagree, the site wins and this document is corrected.
 </footer>
 
 </div></body></html>
