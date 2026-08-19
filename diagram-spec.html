@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Diagram Specification</title>
+<style>
+/* Light only, deliberately. This is a working document read on a dark-mode
+   machine, and a second palette is only a second thing to keep right. */
+html{color-scheme:light}
+:root{
+  --ground:#f7f8fa; --surface:#ffffff; --surface-2:#eef1f5;
+  --ink:#0f172a; --ink-2:#4a5568; --ink-3:#7c8798;
+  --line:#dfe4ea; --line-2:#c4ccd8;
+  --accent:#ba2142; --accent-soft:rgba(186,33,66,.09);
+  --ok:#0a6e50; --ok-soft:rgba(10,110,80,.09);
+  --warn:#8a5700; --danger:#a4161a; --info:#1d4ed8;
+  --sans:'IBM Plex Sans',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  --mono:ui-monospace,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.65}
+.wrap{max-width:1000px;margin:0 auto;padding:40px 22px 90px;display:flex;flex-direction:column;gap:34px}
+h1{margin:0;font-size:clamp(1.8rem,4vw,2.4rem);font-weight:800;letter-spacing:-.025em;line-height:1.12}
+h2{margin:0;font-size:1.22rem;font-weight:750;letter-spacing:-.015em}
+h3{margin:0 0 4px;font-size:1rem;font-weight:700}
+p{margin:0 0 11px;color:var(--ink-2);max-width:76ch}
+p:last-child{margin-bottom:0}
+strong{color:var(--ink);font-weight:650}
+code{font-family:var(--mono);font-size:.85em;background:var(--surface-2);padding:.1em .36em;border-radius:3px}
+.mast{border-bottom:3px solid var(--ink);padding-bottom:20px;display:flex;flex-direction:column;gap:12px}
+.kick{font-size:12px;font-weight:700;letter-spacing:.02em;color:var(--accent)}
+.meta{font-size:12.5px;color:var(--ink-3)}
+section{display:flex;flex-direction:column;gap:14px}
+.cat{display:flex;align-items:baseline;gap:12px;border-bottom:2px solid var(--ink);padding-bottom:6px}
+.cat-id{font-size:12px;font-weight:700;letter-spacing:.04em;color:var(--accent)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px 18px;
+      box-shadow:0 1px 2px rgba(15,23,42,.05)}
+.card+.card{margin-top:-4px}
+/* Tables scroll inside their own box; the page never does. The blanket
+   nowrap on cell code was what pushed this document 53px wide. */
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:4px 0 2px}
+table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:520px}
+th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:13px;font-weight:700;color:var(--ink-3);background:var(--surface-2)}
+td code{white-space:normal;overflow-wrap:anywhere}
+.rule{border-left:4px solid var(--accent);background:var(--surface);border:1px solid var(--line);
+      border-left:4px solid var(--accent);border-radius:6px;padding:14px 16px}
+.rule .n{font-size:12px;font-weight:700;color:var(--accent);letter-spacing:.03em;margin-bottom:5px}
+.yes,.no{border-radius:6px;padding:12px 14px;font-size:14.5px;border:1px solid}
+.yes{background:var(--ok-soft);border-color:rgba(10,110,80,.25)}
+.no{background:rgba(164,22,26,.07);border-color:rgba(164,22,26,.22)}
+.yes b{color:var(--ok)} .no b{color:var(--danger)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:720px){.two{grid-template-columns:1fr}}
+.spec{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:18px}
+.spec figcaption{font-size:14px;color:var(--ink-2);margin-top:10px;padding-top:9px;border-top:1px solid var(--line)}
+.chk{margin:0;padding-left:20px;color:var(--ink-2);font-size:15px}
+.chk li{margin-bottom:7px}
+.chk li:last-child{margin-bottom:0}
+footer{border-top:1px solid var(--line);padding-top:16px;font-size:12.5px;color:var(--ink-3);line-height:1.8}
+</style></head><body><div class="wrap">
+
+<header class="mast">
+  <div class="kick">amitdusane.com &middot; drawing standard</div>
+  <h1>Diagram Specification</h1>
+  <p>Every diagram on the learning world is drawn to this. It exists because the corpus currently contains two visible generations &mdash; 76 diagrams built as CSS boxes and 65 drawn as SVG &mdash; and because without a written standard the next seven modules would add a third.</p>
+  <div class="meta">Written 19 August 2026 &middot; governs the redraw programme and all new modules &middot; derived from the migration world's diagrams, which are the quality bar</div>
+</header>
+
+<section>
+  <div class="cat"><span class="cat-id">00</span><h2>The reader's test, which outranks everything below</h2></div>
+  <p>Amit's criteria, and they are the acceptance test. A diagram that fails any of these is not finished, however well it follows the mechanics in the rest of this document.</p>
+  <div class="card">
+    <ol class="chk">
+      <li><strong>Does it communicate the story?</strong> Not the components &mdash; the story. If the caption and the drawing say the same thing, the drawing is redundant.</li>
+      <li><strong>Does it land in two seconds?</strong> A reader should understand the shape of the idea before reading a single label. If they have to study it, it has failed.</li>
+      <li><strong>Does it render well on a phone and on a desktop?</strong> Both. Not one.</li>
+      <li><strong>Is it attractive?</strong> Would you be happy for it to be the first thing someone sees on the site.</li>
+      <li><strong>Is it as good as the migration world's?</strong> That is the bar. It is already met on this site, so it is not a hypothetical.</li>
+    </ol>
+  </div>
+  <div class="no"><b>The two-second test is the one that fails most often.</b> A diagram with nine boxes and eleven arrows may be accurate and still fail, because the reader cannot see the shape before they start reading. Accuracy is not the constraint. Comprehension is.</div>
+</section>
+
+<section>
+  <div class="cat"><span class="cat-id">01</span><h2>The four rules that make the difference</h2></div>
+  <p>These came out of reading the migration world's diagrams against the learning world's. They are what separate a drawing that teaches from a labelled box arrangement.</p>
+
+  <div class="rule"><div class="n">RULE 1</div>
+    <h3>Draw the metaphor. Do not label it.</h3>
+    <p>The strongest diagram on the whole site draws a <em>house</em> &mdash; roof, walls, interior walls, a padlock on one room &mdash; to explain an XDM schema. It does not draw a box with the word "blueprint" in it. The reader understands rooms and doors before they have read anything, and the technical structure beside it inherits that understanding.</p>
+    <p>If the section carries an extended analogy in its prose, the diagram is where that analogy becomes visible. If it does not, ask whether it needs one.</p>
+  </div>
+
+  <div class="rule"><div class="n">RULE 2</div>
+    <h3>Two panels: the idea, then the reality.</h3>
+    <p>Metaphor on the left, the actual thing on the right, joined by a single dashed connector. Or before and after. Or wrong and right. The eye travels left to right once, and the arrow tells it that the two sides are the same thing said twice.</p>
+    <p>This structure carries the majority of the migration world's diagrams and it is the most reliable way to hit the two-second test.</p>
+  </div>
+
+  <div class="rule"><div class="n">RULE 3</div>
+    <h3>Wide and short, never tall.</h3>
+    <p>Every canvas is <code>viewBox="0 0 700 H"</code> with <strong>H between 180 and 340</strong>. A tall diagram is a diagram that has to be scrolled past rather than seen, and on a phone it is the difference between a glance and a chore.</p>
+    <p>If the content will not fit in 340, it is two diagrams, or it is a table.</p>
+  </div>
+
+  <div class="rule"><div class="n">RULE 4</div>
+    <h3>The title states the takeaway.</h3>
+    <p>The <code>diagram-title</code> is not a label. "Schema structure" is a label. "The schema decides where every value lives, like a house plan &mdash; and once Profile is on, the structure locks" is a takeaway. A reader who reads only the title and glances at the drawing should still leave with the point.</p>
+  </div>
+</section>
+
+<section>
+  <div class="cat"><span class="cat-id">02</span><h2>Type</h2></div>
+  <p>Since the figure now holds <code>--diagram-min</code> (700px) at every width, <strong>authored px is rendered px</strong>. A <code>font-size="12"</code> is 12px on the reader's screen. That was not true before August and it is why the old sizes cannot simply be copied.</p>
+  <div class="tw"><table>
+    <thead><tr><th style="width:78px">Size</th><th style="width:120px">Weight</th><th>Job</th></tr></thead>
+    <tbody>
+      <tr><td><code>16</code></td><td>700</td><td>The one thing the diagram is about. At most one per diagram, often none.</td></tr>
+      <tr><td><code>14</code></td><td>700</td><td>Panel headings &mdash; the name of each side of a two-panel figure.</td></tr>
+      <tr><td><code>12.5</code></td><td>600</td><td>Node labels. The workhorse; most text is this.</td></tr>
+      <tr><td><code>11</code></td><td>400</td><td>Annotations, leaf labels, units, asides. <strong>The floor.</strong></td></tr>
+    </tbody>
+  </table></div>
+  <div class="no"><b>Nothing below 11.</b> The corpus currently has 141 places at 8 to 10.5px, 16 of them under the legibility floor for any handset. They are known and they are not a precedent.</div>
+  <div class="card">
+    <h3>Sentence case, not capitals</h3>
+    <p>Panel headings are <strong>sentence case bold</strong>, not uppercase with letter-spacing. This is a deliberate departure from the migration world, which uses small caps eyebrows. Capitals plus tracking is half of a recognisable generated-page signature and the site has already rejected it once, in the label voice. One voice across the page is worth more than one flourish inside a figure.</p>
+    <p>Never mono inside a diagram, except where the text <em>is</em> code or a field path.</p>
+  </div>
+</section>
+
+<section>
+  <div class="cat"><span class="cat-id">03</span><h2>Line, shape and colour</h2></div>
+  <div class="tw"><table>
+    <thead><tr><th style="width:150px">Property</th><th style="width:160px">Value</th><th>When</th></tr></thead>
+    <tbody>
+      <tr><td rowspan="3">Stroke width</td><td><code>1.6</code></td><td>The subject's own outline &mdash; the metaphor, the primary structure</td></tr>
+      <tr><td><code>1.4</code></td><td>Secondary nodes, boxes, arrowheads</td></tr>
+      <tr><td><code>1.2</code></td><td>Interior divisions, tree connectors, rules</td></tr>
+      <tr><td rowspan="2">Corner radius</td><td><code>rx="6"</code></td><td>Nodes and panels</td></tr>
+      <tr><td><code>rx="3"</code></td><td>Small chips and badges</td></tr>
+      <tr><td rowspan="2">Connector</td><td>solid</td><td>A real flow: data moving, a sequence happening</td></tr>
+      <tr><td><code>stroke-dasharray="5 4"</code></td><td>A conceptual mapping: "this <em>is</em> that"</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3 style="margin-top:6px">Colour roles</h3>
+  <p>All colour comes from tokens, in a <code>style</code> attribute with a hex fallback. A presentation attribute like <code>fill="var(--accent)"</code> does not resolve reliably.</p>
+  <div class="tw"><table>
+    <thead><tr><th style="width:210px">Token</th><th>Role in a diagram</th></tr></thead>
+    <tbody>
+      <tr><td><code>--accent</code></td><td>The subject. What the diagram is about, and nothing else.</td></tr>
+      <tr><td><code>--accent-light</code></td><td>Fill behind the subject.</td></tr>
+      <tr><td><code>--card</code> / <code>--bg3</code></td><td>Neutral node fills.</td></tr>
+      <tr><td><code>--border</code></td><td>Neutral node strokes and structural lines.</td></tr>
+      <tr><td><code>--text1</code> / <code>--text2</code></td><td>Node labels.</td></tr>
+      <tr><td><code>--text3</code></td><td>Annotations and asides.</td></tr>
+      <tr><td><code>--danger-ink</code> / <code>--warning-ink</code> / <code>--success-ink</code> / <code>--info-ink</code></td><td>A judgement: this is wrong, risky, correct, or worth knowing. <strong>The <code>-ink</code> forms, never the bare semantic</strong> &mdash; the bare ones cannot carry text.</td></tr>
+      <tr><td><code>--on-accent</code></td><td>Any text sitting <em>on</em> an accent or <code>-ink</code> fill. Never a hardcoded <code>#ffffff</code>.</td></tr>
+    </tbody>
+  </table></div>
+  <div class="two">
+    <div class="yes"><b>At most two semantic colours in one diagram.</b> The subject in accent, and one judgement colour if the diagram makes a judgement.</div>
+    <div class="no"><b>Never a rainbow.</b> Four semantic colours means the diagram is making four points, which means it is making none.</div>
+  </div>
+</section>
+
+<section>
+  <div class="cat"><span class="cat-id">04</span><h2>Budget and mechanics</h2></div>
+  <div class="tw"><table>
+    <thead><tr><th style="width:230px">Constraint</th><th>Value</th></tr></thead>
+    <tbody>
+      <tr><td>Drawn elements per diagram</td><td><strong>20&ndash;45.</strong> The migration world averages 22&ndash;36. Above 60 the two-second test fails.</td></tr>
+      <tr><td>Diagrams per section</td><td>1&ndash;3. Three is a lot.</td></tr>
+      <tr><td>Canvas</td><td><code>viewBox="0 0 700 H"</code>, H = 180&ndash;340</td></tr>
+      <tr><td>Root attributes</td><td><code>role="img"</code> and a full-sentence <code>aria-label</code>, always</td></tr>
+      <tr><td>Arrowheads</td><td><code>&lt;marker&gt;</code> in <code>&lt;defs&gt;</code>, ids suffixed per section so two diagrams on one page cannot collide</td></tr>
+      <tr><td>Root style</td><td><code>style="width:100%;height:auto;display:block"</code></td></tr>
+    </tbody>
+  </table></div>
+  <div class="card">
+    <h3>The id collision trap</h3>
+    <p>Marker and gradient ids are global to the page. Two diagrams in one section both defining <code>#arrow</code> means the second silently uses the first's. Suffix every id with the section number, as the migration world does: <code>as3</code>, <code>ms3</code>, <code>os3</code>.</p>
+  </div>
+</section>
+
+<section>
+  <div class="cat"><span class="cat-id">05</span><h2>The pass, per diagram</h2></div>
+  <p>Run this before calling any diagram done, whether it was redrawn or inherited.</p>
+  <div class="card">
+    <ol class="chk">
+      <li>Cover the labels. Is the shape still meaningful? If not, it is a box arrangement, not a diagram.</li>
+      <li>Read only the title. Does the point survive?</li>
+      <li>Count drawn elements. 20&ndash;45.</li>
+      <li>Smallest authored font-size is 11 or above.</li>
+      <li>Canvas is 700 wide and no taller than 340.</li>
+      <li>No hardcoded colour anywhere; every fill and stroke is a token with a fallback.</li>
+      <li>At most two semantic colours.</li>
+      <li><code>role="img"</code> and a full-sentence <code>aria-label</code> present.</li>
+      <li>Marker ids are section-suffixed.</li>
+      <li>Rendered check at 390px and 1280px, in <strong>both themes</strong>.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <div class="cat"><span class="cat-id">06</span><h2>The programme</h2></div>
+  <p>Serial, module 1 through module 21. Each module is one cycle. Within a cycle, old diagrams are redrawn from zero and existing SVGs get a verification pass against section 05 &mdash; they are not assumed correct simply because they are recent.</p>
+  <div class="tw"><table>
+    <thead><tr><th>Module</th><th style="width:90px">Redraw</th><th style="width:90px">Verify</th></tr></thead>
+    <tbody>
+      <tr><td>Adobe Analytics Fundamentals</td><td>2</td><td>1</td></tr>
+      <tr><td>Report Suites</td><td>6</td><td>6</td></tr>
+      <tr><td>Variables</td><td>16</td><td>1</td></tr>
+      <tr><td>Data Collection</td><td>6</td><td>1</td></tr>
+      <tr><td>Data Layers</td><td>4</td><td>2</td></tr>
+      <tr><td>Adobe Launch (Tags)</td><td>6</td><td>3</td></tr>
+      <tr><td>Tracking Calls</td><td>5</td><td>3</td></tr>
+      <tr><td>Processing Rules</td><td>2</td><td>0</td></tr>
+      <tr><td>VISTA Rules</td><td>3</td><td>0</td></tr>
+      <tr><td>Classifications</td><td>5</td><td>8</td></tr>
+      <tr><td>Marketing Channels</td><td>14</td><td>0</td></tr>
+      <tr><td>Calculated Metrics</td><td>1</td><td>8</td></tr>
+      <tr><td>Segments</td><td>1</td><td>14</td></tr>
+      <tr><td>Analysis Workspace</td><td>0</td><td>18</td></tr>
+      <tr><th>Total</th><th>76</th><th>65</th></tr>
+    </tbody>
+  </table></div>
+  <p><strong>Variables and Marketing Channels carry 30 of the 76 redraws between them</strong> and will each need more than one sitting. Everything else is a single cycle.</p>
+</section>
+
+<footer>
+  amitdusane.com &middot; diagram specification &middot; written 19 August 2026<br>
+  Derived from the migration world's diagrams. Where this document and the built site disagree, the site wins and this document is corrected.
+</footer>
+
+</div></body></html>
