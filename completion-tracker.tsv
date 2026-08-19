@@ -190,5 +190,8 @@ Platform	presentation		Colour token system (accent, semantic -ink, on-accent)	Fe
 Platform	presentation		Label voice: bold sans, sentence case, readable semantics	Feature	static/world-learning.css	NA	NA	NA	NA	NA	NA	Yes	No	No
 Platform	presentation		Diagram plate treatment and SVG legibility floor	Feature	static/world-learning.css	NA	NA	NA	NA	NA	NA	Yes	No	No
 Platform	presentation		About mark halo and hover affordance	Feature	static/chrome.css	NA	NA	NA	NA	NA	NA	Yes	No	No
+Platform	presentation		Diagram specification (drawing standard)	Feature	diagram-spec.html	NA	NA	NA	NA	NA	NA	Yes	No	No
+Platform	presentation		Diagram palette tokens (--dia-a..e)	Feature	static/world-learning.css	NA	NA	NA	NA	NA	NA	Yes	No	No
+Platform	presentation		Diagram redraw programme (5 of 14 modules)	Feature	content/adobe-analytics-learning/	NA	NA	NA	NA	NA	NA	No	No	No
 Platform	presentation		Self-hosted typeface (IBM Plex)	Feature	static/fonts/	NA	NA	NA	NA	NA	NA	Yes	No	No
 Platform	presentation		Scale line on landings	Feature	layouts/partials/scale.html	NA	NA	NA	NA	NA	NA	Yes	No	No

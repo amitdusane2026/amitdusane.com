@@ -262,29 +262,32 @@ footer{border-top:1px solid var(--line);padding-top:16px;font-size:12.5px;color:
 
 <section>
   <div class="cat"><span class="cat-id">07</span><h2>The programme</h2></div>
-  <p>Serial, module 1 through module 21. Each module is one cycle. Within a cycle, old diagrams are redrawn from zero and existing SVGs get a verification pass against section 06 &mdash; they are not assumed correct simply because they are recent.</p>
-  <p><strong>The numbers below are what exists today, not what should exist.</strong> They are the workload estimate and the consistency baseline; per section 02 a cycle may add or drop a figure with the reason recorded. Expect the total to move by a little and not by a lot.</p>
-  <div class="tw"><table>
-    <thead><tr><th>Module</th><th style="width:90px">Redraw</th><th style="width:90px">Verify</th></tr></thead>
+  <p>Serial, module 1 through module 21. Each module is one cycle. Within a cycle, old diagrams are redrawn from zero and existing SVGs get a verification pass against section 06 &mdash; they are not assumed correct simply because they are recent. <strong>Six of the eleven verified so far have failed</strong>, most often on bare semantic tokens used for text, text authored below 11px, or an off-spec canvas.</p>
+  <p><strong>The numbers below are what exists today, not what should exist.</strong> Per section 02 a cycle may add or drop a figure with the reason recorded. The corpus started at 141 figures and is at 126: nothing was cut for being ugly, and every cut either duplicated something on the same page or was never a figure.</p>
+  <div class="tw">
+  <table>
+    <thead><tr><th>Module</th><th style="width:78px">Figures</th><th style="width:96px">Still HTML</th><th style="width:92px">Status</th></tr></thead>
     <tbody>
-      <tr><td>Adobe Analytics Fundamentals</td><td>2</td><td>1</td></tr>
-      <tr><td>Report Suites</td><td>6</td><td>6</td></tr>
-      <tr><td>Variables</td><td>16</td><td>1</td></tr>
-      <tr><td>Data Collection</td><td>6</td><td>1</td></tr>
-      <tr><td>Data Layers</td><td>4</td><td>2</td></tr>
-      <tr><td>Adobe Launch (Tags)</td><td>6</td><td>3</td></tr>
-      <tr><td>Tracking Calls</td><td>5</td><td>3</td></tr>
-      <tr><td>Processing Rules</td><td>2</td><td>0</td></tr>
-      <tr><td>VISTA Rules</td><td>3</td><td>0</td></tr>
-      <tr><td>Classifications</td><td>5</td><td>8</td></tr>
-      <tr><td>Marketing Channels</td><td>14</td><td>0</td></tr>
-      <tr><td>Calculated Metrics</td><td>1</td><td>8</td></tr>
-      <tr><td>Segments</td><td>1</td><td>14</td></tr>
-      <tr><td>Analysis Workspace</td><td>0</td><td>18</td></tr>
-      <tr><th>Total</th><th>76</th><th>65</th></tr>
+      <tr><td>01 Adobe Analytics Fundamentals</td><td>3</td><td>0</td><td><b>done</b></td></tr>
+      <tr><td>02 Report Suites</td><td>10</td><td>0</td><td><b>done</b></td></tr>
+      <tr><td>03 Variables</td><td>11</td><td>0</td><td><b>done</b></td></tr>
+      <tr><td>04 Data Collection</td><td>6</td><td>0</td><td><b>done</b></td></tr>
+      <tr><td>05 Data Layers</td><td>5</td><td>0</td><td><b>done</b></td></tr>
+      <tr><td>06 Adobe Launch (Tags)</td><td>9</td><td>6</td><td>next</td></tr>
+      <tr><td>07 Tracking Calls</td><td>8</td><td>5</td><td></td></tr>
+      <tr><td>08 Processing Rules</td><td>2</td><td>2</td><td></td></tr>
+      <tr><td>09 VISTA Rules</td><td>3</td><td>3</td><td></td></tr>
+      <tr><td>10 Classifications</td><td>13</td><td>5</td><td></td></tr>
+      <tr><td>11 Marketing Channels</td><td>14</td><td>14</td><td>heaviest</td></tr>
+      <tr><td>12 Calculated Metrics</td><td>9</td><td>1</td><td></td></tr>
+      <tr><td>13 Segments</td><td>15</td><td>1</td><td></td></tr>
+      <tr><td>14 Analysis Workspace</td><td>18</td><td>0</td><td>verify only</td></tr>
+      <tr><th>Total</th><th>126</th><th>37</th><th>5 of 14</th></tr>
     </tbody>
-  </table></div>
-  <p><strong>Variables and Marketing Channels carry 30 of the 76 redraws between them</strong> and will each need more than one sitting. Everything else is a single cycle.</p>
+  </table>
+  </div>
+  <p><strong>Marketing Channels carries 14 of the 37 remaining redraws</strong> and will need more than one sitting. Analysis Workspace needs no redraw at all, only the verification pass over its 18 figures.</p>
+  <p>A by-product worth tracking, because it is CMP-05 arriving for free: eight one-off diagram classes are already unused corpus-wide &mdash; <code>human-priority</code>, <code>hp-node</code>, <code>hp-face</code>, <code>hp-badge</code>, <code>tri-box</code>, <code>tri-h</code>, <code>tri-arrow</code>, <code>scene-split</code>. The remaining HTML figures still lean on <code>flow-step</code> and <code>flow-arrow</code> (22 files each), <code>comp-vs</code> and <code>comp-item</code> (14 each), and <code>flow-horizontal</code> (15).</p>
 </section>
 
 <footer>

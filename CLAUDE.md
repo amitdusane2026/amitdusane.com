@@ -10,6 +10,8 @@ Adobe Analytics/                     <- working directory, supporting docs live 
 ├── content-component-rulebook.html  <- formatting and voice authority
 ├── QA_Rulebook.html                 <- delivery gate
 ├── completion-tracker.tsv          <- per-page status
+├── design-plan.html                 <- the design and SEO work plan, 106 items
+├── diagram-spec.html                <- the drawing standard, and the redraw programme
 └── amitdusane-site-complete/        <- the Hugo site, website files ONLY
 ```
 
@@ -49,6 +51,8 @@ So whenever something written here is made wrong, narrower, or redundant by a la
 | Document | Authority over | Read it before |
 |---|---|---|
 | `structure-map.html` | Titles, seotitles, slugs, module and section numbering, the curriculum arc | Creating any page, or naming anything |
+| `diagram-spec.html` | Every figure: the reader's test, when to draw at all, type, colour, the canvas, the per-figure pass | Drawing, redrawing or removing any diagram |
+| `design-plan.html` | The 106 design and SEO items, their priority and status | Picking up design work |
 | `content-component-rulebook.html` | Every component, its tier, when it is earned, prose rules, the 20-item checklist | Writing any section body |
 | `QA_Rulebook.html` | The 13-point delivery gate, binary PASS/FAILED | Declaring anything done |
 | `completion-tracker.tsv` | Which pages are written, QA'd, SEO-complete | Deciding what to work on |

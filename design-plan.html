@@ -581,13 +581,14 @@ footer.end{border-top:1px solid var(--line);padding-top:18px;font-family:var(--m
     </dl>
   </div>
 
-  <div class="it" data-pri="P2" data-status="open">
+  <div class="it" data-pri="P2" data-status="partial">
     <div class="it-h"><span class="id">CMP-05</span><span class="ti">Stop adding one-off diagram layouts; converge on primitives</span>
-      <span class="tags"><span class="t p2">P2</span><span class="t eff">L</span><span class="t st">open</span></span></div>
+      <span class="tags"><span class="t p2">P2</span><span class="t eff">L</span><span class="t st part">partial</span></span></div>
     <dl class="row">
       <dt>Why</dt><dd>Roughly 40 bespoke layouts each built for a single idea &mdash; <code>flow</code>, <code>hierarchy-tree</code>, <code>decision-tree</code>, <code>comparison-grid</code>, <code>launch-arch</code>, <code>publish-flow</code>, <code>cookie-compare</code> and the rest. This is the real maintenance liability, not the ten content components, and it is worth pricing now rather than at module thirty.</dd>
       <dt>What</dt><dd>Remove nothing. Stop adding new one-offs, and as the remaining 32 sections are written, reach for an existing primitive first. Revisit consolidation once the curriculum is complete.</dd>
       <dt>Scope</dt><dd class="scope">~40 layouts &middot; ongoing discipline</dd>
+      <dt>Result</dt><dd><strong>Superseded in practice by the diagram programme, and progressing faster than "stop adding" would have managed.</strong> Amit's decision on 19 Aug was to redraw every figure in SVG module by module rather than freeze the one-off layouts in place, so the bespoke classes are retiring as a by-product rather than needing a consolidation pass of their own.<br><br>Eight are already unused across the whole corpus &mdash; <code>human-priority</code>, <code>hp-node</code>, <code>hp-face</code>, <code>hp-badge</code>, <code>tri-box</code>, <code>tri-h</code>, <code>tri-arrow</code>, <code>scene-split</code>. The survivors are the two families that were always doing the real work: <code>flow-*</code> and <code>comp-*</code>, still in 22 and 14 files respectively, all of them in the nine modules not yet redrawn.<br><br>The consolidation this item asks for should therefore be judged when the programme finishes, not before: on current trajectory there will be nothing left to consolidate. Governed by <code>diagram-spec.html</code>.</dd>
     </dl>
   </div>
 

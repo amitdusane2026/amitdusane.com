@@ -648,6 +648,43 @@ It also uncovered a real bug: **the hover glow had never fired in dark mode**, b
 
 ---
 
+## The diagram programme, 19 August 2026 onward — IN PROGRESS, 5 of 14
+
+Amit's call, and it came out of a single observation: the corpus contained **two visible generations of infographic**. Measured, the split was real — July was 76% HTML/CSS box diagrams, August was 66% hand-drawn SVG — and the two were mixed *within* modules, which is why it read as inconsistency rather than progress.
+
+**The cause was not that the old ones were worse. They were quarantined.** Every design pass this phase excluded the diagram internals: of the 64 CSS rules styling HTML diagrams, **none used the type scale**, all 23 font sizes were hardcoded from 10 to 22px, and 45 spacing values were hardcoded. CLAUDE.md records the exclusion in TYP-01's own result. So the gap widened with every improvement elsewhere and would have kept widening.
+
+Amit's decision: **redraw everything in SVG rather than lift the HTML**, accepting that HTML reflows better on a phone, because the diagrams are the differentiator and quality wins. Serial, module 1 through 21, one cycle each.
+
+### `diagram-spec.html` — written first, deliberately
+
+Rules before drawing, so fourteen cycles produce one system rather than fourteen micro-generations. Amit's four reader criteria lead it and outrank every mechanic: does it communicate the story, does it land in two seconds, does it work on phone and desktop, is it attractive. **The two-second test is the one that fails most often** — a figure can be entirely accurate and still fail it.
+
+The four rules that carry the difference: **draw the metaphor rather than label it**; one movement for the eye; wide and short, never tall; the title states the takeaway.
+
+Two corrections from Amit shaped the colour rules, and both are recorded there:
+
+- **No cap on hue count.** The constraint is text, not colour. A shape carrying text takes a soft tint, a saturated stroke and an ink; a shape carrying no text can be fully saturated. Five palette hues (`--dia-a` … `--dia-e`) are fixed in the stylesheet so 21 modules stay one system.
+- **Content boxes are filled; containers are not.** Stripping fills entirely "changed the theme of the website". The genuine fault was only ever *nesting* tints — a 10% blue on a 10% crimson wash renders lavender.
+
+### Where it stands
+
+126 figures, down from 141. 89 SVG, 37 still HTML. Modules 1–5 complete.
+
+**Six of the eleven inherited SVGs verified so far have failed** — bare semantic tokens used for text, text authored below 11px, off-spec canvases, one hardcoded system font stack. The verify pass is earning its place more than expected.
+
+**Fifteen figures were removed or converted**, none for being ugly: two were `<table>` elements wrapped in a diagram box, one was an exact duplicate across two sections, several were numbered lists wearing boxes, and one was two emoji sitting under a sentence reading "technology is not adopted by diagrams".
+
+Marketing Channels carries 14 of the 37 remaining redraws and needs more than one sitting. Analysis Workspace needs verification only.
+
+### The method lesson, which is the durable part
+
+**Amit caught three faults that every automated check passed**: colour clutter, a section rendering inside an unclosed code block, and a shape striking through the line beneath it. Each time the checks were extended afterwards — element opacity in contrast maths, div balance after scripted edits, text-versus-*every-shape* collision rather than text-versus-rect.
+
+The pattern is not that the checks are bad. It is that **a check can only find what it was built to look for, and a rendered page is the only thing that shows what a reader sees.** Screenshots at the end of each cycle are part of the loop now, not a courtesy.
+
+---
+
 ## Phase 5 — Small corrections
 
 - Three `description` outliers: `collect/_index.html` (180 chars), `deliver/_index.html` (187), `collect/data-layers/_index.md` (94).
