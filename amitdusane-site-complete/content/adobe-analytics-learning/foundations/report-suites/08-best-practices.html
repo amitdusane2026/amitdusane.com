@@ -16,23 +16,35 @@ weight: 8
 <h3 class="subsec-title" data-nav="2. Production and non-production as mirrors">2. Create production and non-production suites together, as mirrors</h3>
 <p>Here is a question that catches almost everyone. You are running three websites, one suite each. How many report suites do you create? The obvious answer is three. The right answer is six. Every production suite needs a non-production twin, a dev or stage suite where the implementation is built and tested before anything touches live data. Production stays clean; the dev suite is the playground.</p>
 <div class="diagram-box">
-    <div class="diagram-title">🪞 Three properties, six report suites</div>
-    <div class="diagram-content">
-        <div class="strategy-diagram">
-            <div class="strategy-col">
-                <div class="strategy-header global-hdr">Production</div>
-                <div class="strategy-item">acme-store-prod</div>
-                <div class="strategy-item">acme-blog-prod</div>
-                <div class="strategy-item">acme-help-prod</div>
-            </div>
-            <div class="strategy-col">
-                <div class="strategy-header individual-hdr">Non-production</div>
-                <div class="strategy-item">acme-store-dev</div>
-                <div class="strategy-item">acme-blog-dev</div>
-                <div class="strategy-item">acme-help-dev</div>
-            </div>
-        </div>
-    </div>
+    <div class="diagram-title">Every production suite gets a twin, created at the same time and named the same way</div>
+    <svg viewBox="0 0 700 254" style="width:100%;height:auto;display:block" role="img"
+         aria-label="Three rows, one per property. Each row pairs a production report suite on the left with its non-production twin on the right, joined by a dashed line, so acme-store-prod pairs with acme-store-dev, acme-blog-prod with acme-blog-dev, and acme-help-prod with acme-help-dev. Only the suffix differs.">
+
+      <text x="176" y="60" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:12.5px;font-weight:700">Production</text>
+      <line x1="96" y1="68" x2="256" y2="68" style="stroke:var(--dia-a,#ba2142);stroke-width:1.6"/>
+      <text x="524" y="60" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12.5px;font-weight:700">Non-production</text>
+      <line x1="444" y1="68" x2="604" y2="68" style="stroke:var(--text3,#5d6b7e);stroke-width:1.6"/>
+
+      <rect x="60" y="84" width="232" height="38" rx="6" style="fill:var(--card,#ffffff);stroke:var(--dia-a,#ba2142);stroke-width:1.4"/>
+      <text x="176" y="108" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">acme-store-prod</text>
+      <line x1="300" y1="103" x2="400" y2="103" style="stroke:var(--text3,#5d6b7e);stroke-width:1.2;stroke-dasharray:4 4"/>
+      <rect x="408" y="84" width="232" height="38" rx="6" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="524" y="108" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12.5px;font-weight:600">acme-store-dev</text>
+
+      <rect x="60" y="132" width="232" height="38" rx="6" style="fill:var(--card,#ffffff);stroke:var(--dia-a,#ba2142);stroke-width:1.4"/>
+      <text x="176" y="156" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">acme-blog-prod</text>
+      <line x1="300" y1="151" x2="400" y2="151" style="stroke:var(--text3,#5d6b7e);stroke-width:1.2;stroke-dasharray:4 4"/>
+      <rect x="408" y="132" width="232" height="38" rx="6" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="524" y="156" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12.5px;font-weight:600">acme-blog-dev</text>
+
+      <rect x="60" y="180" width="232" height="38" rx="6" style="fill:var(--card,#ffffff);stroke:var(--dia-a,#ba2142);stroke-width:1.4"/>
+      <text x="176" y="204" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">acme-help-prod</text>
+      <line x1="300" y1="199" x2="400" y2="199" style="stroke:var(--text3,#5d6b7e);stroke-width:1.2;stroke-dasharray:4 4"/>
+      <rect x="408" y="180" width="232" height="38" rx="6" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="524" y="204" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12.5px;font-weight:600">acme-help-dev</text>
+
+      <text x="350" y="240" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12.5px;font-weight:600">Three properties, six suites, one naming rule &#8212; only the suffix moves</text>
+    </svg>
 </div>
 <p>Create the pair at the same time, with identical settings. Currency, time zone, variables, processing rules, all the same, so the dev suite is a true mirror of production. The only field that legitimately differs is the expected page views per day, which is naturally far lower for a dev suite and worth setting accurately, because the estimate affects how smoothly Adobe provisions and processes the suite. From then on, treat them as a pair: any setting you change in production, change in dev in the same breath, or the mirror cracks and your testing stops predicting reality.</p>
 <p>One clarification, because it trips people up: Adobe Launch (Tags) gives you three environments, development, staging, and production, but that does not mean three report suites. Two suites, one production and one non-production, are enough; your development and staging Tags environments can both point at the single non-production suite.</p>

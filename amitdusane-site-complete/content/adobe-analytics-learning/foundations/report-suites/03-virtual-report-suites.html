@@ -18,20 +18,41 @@ weight: 3
 <h3 class="subsec-title">One suite, one differentiator, many views</h3>
 <p>The practical move is the opposite of what instinct suggests. Instead of spinning up a separate report suite per website, you run one global suite across all of them, plus anything you add later, and you capture one <strong>differentiator variable</strong> on every hit: a "site" or "brand" dimension carrying values like commercial-vehicles, consumer-vehicles, heavy-vehicles. That single dimension is the seam. Each VRS is just the global suite segmented to one value of it. Notice the wording: you are creating <em>views</em> of the data, not new report suites. That distinction is the whole point.</p>
 <div class="diagram-box">
-    <div class="diagram-title">📊 One global suite, one differentiator, many focused views</div>
-    <div class="diagram-content">
-        <div class="flow-vertical">
-            <div class="flow-step highlight">Global report suite: one set of data, one schema</div>
-            <span class="flow-arrow-down">↓</span>
-            <div class="flow-step">Differentiator variable captured on every hit (site / brand)</div>
-            <span class="flow-arrow-down">↓</span>
-            <div class="flow-multi">
-                <div class="flow-step">VRS: Commercial vehicles</div>
-                <div class="flow-step">VRS: Consumer vehicles</div>
-                <div class="flow-step">VRS: Heavy vehicles</div>
-            </div>
-        </div>
-    </div>
+    <div class="diagram-title">One suite holds the data once; each view is a standing filter on it</div>
+    <svg viewBox="0 0 700 262" style="width:100%;height:auto;display:block" role="img"
+         aria-label="On the left, one global report suite holding a single set of data. Every hit carries a differentiator variable naming its brand. On the right, three virtual report suites for commercial, consumer and heavy vehicles, each drawn as a standing filter on the same data rather than as a separate copy of it.">
+      <defs>
+        <marker id="rs3a" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" style="fill:var(--dia-b,#2563eb)"/></marker>
+      </defs>
+
+      <rect x="20" y="52" width="196" height="158" rx="8" style="fill:none;stroke:var(--dia-a,#ba2142);stroke-width:1.6"/>
+      <text x="118" y="78" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:12.5px;font-weight:700">Global report suite</text>
+      <text x="118" y="96" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">one set of data, one schema</text>
+      <rect x="40" y="112" width="156" height="20" rx="3" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="118" y="126" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">hit &#183; brand = commercial</text>
+      <rect x="40" y="138" width="156" height="20" rx="3" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="118" y="152" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">hit &#183; brand = consumer</text>
+      <rect x="40" y="164" width="156" height="20" rx="3" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="118" y="178" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">hit &#183; brand = heavy</text>
+
+      <text x="286" y="118" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">one variable</text>
+      <text x="286" y="134" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">on every hit</text>
+      <line x1="222" y1="150" x2="350" y2="150" style="stroke:var(--dia-b,#2563eb);stroke-width:1.4" stroke-dasharray="5 4" marker-end="url(#rs3a)"/>
+
+      <rect x="364" y="52" width="312" height="48" rx="6" style="fill:var(--card,#ffffff);stroke:var(--dia-b,#2563eb);stroke-width:1.4"/>
+      <text x="384" y="72" style="fill:var(--dia-b-ink,#1d4ed8);font-size:12.5px;font-weight:600">Commercial vehicles</text>
+      <text x="384" y="90" style="fill:var(--text3,#5d6b7e);font-size:11px">shows only where brand = commercial</text>
+
+      <rect x="364" y="108" width="312" height="48" rx="6" style="fill:var(--card,#ffffff);stroke:var(--dia-b,#2563eb);stroke-width:1.4"/>
+      <text x="384" y="128" style="fill:var(--dia-b-ink,#1d4ed8);font-size:12.5px;font-weight:600">Consumer vehicles</text>
+      <text x="384" y="146" style="fill:var(--text3,#5d6b7e);font-size:11px">shows only where brand = consumer</text>
+
+      <rect x="364" y="164" width="312" height="48" rx="6" style="fill:var(--card,#ffffff);stroke:var(--dia-b,#2563eb);stroke-width:1.4"/>
+      <text x="384" y="184" style="fill:var(--dia-b-ink,#1d4ed8);font-size:12.5px;font-weight:600">Heavy vehicles</text>
+      <text x="384" y="202" style="fill:var(--text3,#5d6b7e);font-size:11px">shows only where brand = heavy</text>
+
+      <text x="350" y="240" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12.5px;font-weight:600">No data is copied. Each view is a question asked of the same rows.</text>
+    </svg>
 </div>
 <h3 class="subsec-title">What a VRS lets you do</h3>
 <ul>
@@ -42,26 +63,16 @@ weight: 3
     <li><strong>Inherit history instantly:</strong> the moment you create a VRS it already contains all of the parent's past data. A brand-new individual report suite collects only forward from its creation date; a VRS starts complete.</li>
 </ul>
 <p>In practice that covers most "give this group their own view" needs: regional views, per-brand views, website-versus-app views, or simply a stripped-down view for executives who want five numbers, not five hundred. Some of what a VRS shows is inherited wholesale from the parent and can only be changed there; a smaller set of settings the VRS is free to override on its own.</p>
-<div class="diagram-box">
-    <div class="diagram-title">🧬 What a VRS inherits, and what it can change</div>
-    <div class="diagram-content">
-        <div class="strategy-diagram">
-            <div class="strategy-col">
-                <div class="strategy-header global-hdr">Inherited from parent</div>
-                <div class="strategy-item">eVars &amp; props</div>
-                <div class="strategy-item">Processing rules</div>
-                <div class="strategy-item">Classifications</div>
-                <div class="strategy-item">Currency</div>
-            </div>
-            <div class="strategy-col">
-                <div class="strategy-header individual-hdr">VRS can override</div>
-                <div class="strategy-item">Time zone</div>
-                <div class="strategy-item">Visit definition</div>
-                <div class="strategy-item">Component curation</div>
-                <div class="strategy-item">Display names</div>
-            </div>
-        </div>
-    </div>
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>Inherited from the parent suite, and not changeable</th><th>The virtual suite sets for itself</th></tr></thead>
+        <tbody>
+            <tr><td>eVars and props</td><td>Time zone</td></tr>
+            <tr><td>Processing rules</td><td>Visit definition</td></tr>
+            <tr><td>Classifications</td><td>Component curation</td></tr>
+            <tr><td>Currency</td><td>Display names</td></tr>
+        </tbody>
+    </table>
 </div>
 <p>This is why the VRS changed how analytics architects design. For the price of a single global implementation you get the per-team separation that used to require multiple suites and the server calls that came with them. It is the rare upgrade with no surcharge, business-class seating at the economy fare. Adobe has offered it for roughly a decade, and it quietly rewrote the default: collect once, view many ways.</p>
 <div class="pro-tip">

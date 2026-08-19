@@ -17,28 +17,41 @@ weight: 1
 <p>A useful way to think about it: when you move house, you do not throw everything into one box. You separate the kitchen from the living room from the clothes from the crockery, and pack them into labeled boxes so you can find things later. Report suites are exactly that, boxes for your data, and you decide how to divide what goes where.</p>
 <p>But here is where the analogy breaks, and the break is the single most important fact in this module. Moving boxes can be unpacked and their contents mixed back together, because it all belongs to one household, yours. Report-suite boxes are <strong>sealed</strong>. Once a hit lands in a suite, it stays there. You cannot pour data from one report suite into another, and you can never combine two suites' data in a single report. This is <strong>data isolation</strong>, and it is the line worth memorizing early because it shapes everything that follows: <em>the boundary of a report suite is the boundary of every question you can ask.</em> Draw the boundaries well and analysis is effortless. Draw them carelessly and you spend years unable to compare numbers that should have lived together.</p>
 <div class="diagram-box">
-    <div class="diagram-title">📦 Each source lands in its own sealed box, and nothing crosses between them</div>
-    <div class="diagram-content">
-        <div class="flow-horizontal">
-            <div class="flow-vertical">
-                <div class="flow-step">Marketing site</div>
-                <div class="flow-arrow-down">↓</div>
-                <div class="flow-step highlight">Report Suite A</div>
-            </div>
-            <div class="flow-arrow">✕</div>
-            <div class="flow-vertical">
-                <div class="flow-step">Online store</div>
-                <div class="flow-arrow-down">↓</div>
-                <div class="flow-step highlight">Report Suite B</div>
-            </div>
-            <div class="flow-arrow">✕</div>
-            <div class="flow-vertical">
-                <div class="flow-step">Mobile app</div>
-                <div class="flow-arrow-down">↓</div>
-                <div class="flow-step highlight">Report Suite C</div>
-            </div>
-        </div>
-    </div>
+    <div class="diagram-title">Each source lands in its own sealed box, and nothing crosses between them</div>
+    <svg viewBox="0 0 700 258" style="width:100%;height:auto;display:block" role="img"
+         aria-label="Three columns, each showing a source feeding down into its own report suite: a marketing site into suite A, an online store into suite B, and a mobile app into suite C. Solid walls stand between the columns, marked no data crosses, and a line beneath states that inside one suite the other two do not exist.">
+      <defs>
+        <marker id="rs1a" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" style="fill:var(--text3,#5d6b7e)"/></marker>
+      </defs>
+
+      <rect x="24" y="44" width="180" height="42" rx="6" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="114" y="70" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">Marketing site</text>
+      <line x1="114" y1="88" x2="114" y2="112" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#rs1a)"/>
+      <rect x="24" y="120" width="180" height="52" rx="6" style="fill:none;stroke:var(--dia-a,#ba2142);stroke-width:1.6"/>
+      <text x="114" y="145" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:12.5px;font-weight:700">Report Suite A</text>
+      <text x="114" y="162" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">its own visitors, its own totals</text>
+
+      <rect x="260" y="44" width="180" height="42" rx="6" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="350" y="70" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">Online store</text>
+      <line x1="350" y1="88" x2="350" y2="112" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#rs1a)"/>
+      <rect x="260" y="120" width="180" height="52" rx="6" style="fill:none;stroke:var(--dia-a,#ba2142);stroke-width:1.6"/>
+      <text x="350" y="145" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:12.5px;font-weight:700">Report Suite B</text>
+      <text x="350" y="162" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">its own visitors, its own totals</text>
+
+      <rect x="496" y="44" width="180" height="42" rx="6" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="586" y="70" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">Mobile app</text>
+      <line x1="586" y1="88" x2="586" y2="112" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#rs1a)"/>
+      <rect x="496" y="120" width="180" height="52" rx="6" style="fill:none;stroke:var(--dia-a,#ba2142);stroke-width:1.6"/>
+      <text x="586" y="145" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:12.5px;font-weight:700">Report Suite C</text>
+      <text x="586" y="162" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">its own visitors, its own totals</text>
+
+      <line x1="232" y1="38" x2="232" y2="186" style="stroke:var(--text2,#475569);stroke-width:2"/>
+      <line x1="468" y1="38" x2="468" y2="186" style="stroke:var(--text2,#475569);stroke-width:2"/>
+      <text x="232" y="204" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">no data crosses</text>
+      <text x="468" y="204" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">no data crosses</text>
+
+      <text x="350" y="238" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12.5px;font-weight:600">Standing inside one suite, the other two do not exist</text>
+    </svg>
 </div>
 <p>Adobe does offer a couple of <em>derived</em> report-suite types that soften strict isolation, and it is worth knowing they exist before the sealed-box rule feels like a trap. A <strong><a href="/adobe-analytics-learning/foundations/report-suites/virtual-report-suites/">virtual report suite</a></strong> lets you carve a focused, segmented view out of a single suite, handy for giving a regional team just their slice of the data. But note the direction: it works <em>within</em> one suite, it does not stitch two suites together. A <strong>rollup report suite</strong> goes the other way and combines several suites, with an important catch.</p>
 <div class="info-box">

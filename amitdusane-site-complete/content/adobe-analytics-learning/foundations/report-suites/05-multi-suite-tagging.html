@@ -42,19 +42,34 @@ else if (pageRegion === "uk") rsids += ",ukrsid";
 s.account = rsids;</pre></div>
 </div>
 <div class="diagram-box">
-    <div class="diagram-title">📊 One interaction, copied to every suite</div>
-    <div class="diagram-content">
-        <div class="flow-vertical">
-            <div class="flow-step highlight">Single page view</div>
-            <div class="h-arrow">↓ sends to</div>
-            <div class="flow-multi">
-                <div class="flow-step-sm">Global RS</div>
-                <div class="flow-step-sm">Region RS</div>
-                <div class="flow-step-sm">Brand RS</div>
-            </div>
-            <div class="h-arrow">= 3 server calls</div>
-        </div>
-    </div>
+    <div class="diagram-title">One page view, three suites, three server calls &#8212; and you are billed for all three</div>
+    <svg viewBox="0 0 700 236" style="width:100%;height:auto;display:block" role="img"
+         aria-label="A single page view on the left fans out to three report suites on the right: global, region and brand. Each arrow is marked as one server call, and a panel underneath states that the reader did one thing while the account was charged three times.">
+      <defs>
+        <marker id="rs5a" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" style="fill:var(--dia-d,#f59e0b)"/></marker>
+      </defs>
+
+      <rect x="24" y="86" width="164" height="52" rx="6" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="106" y="110" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">One page view</text>
+      <text x="106" y="128" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">the reader did one thing</text>
+
+      <line x1="192" y1="112" x2="404" y2="62" style="stroke:var(--dia-d,#f59e0b);stroke-width:1.4" marker-end="url(#rs5a)"/>
+      <line x1="192" y1="112" x2="404" y2="112" style="stroke:var(--dia-d,#f59e0b);stroke-width:1.4" marker-end="url(#rs5a)"/>
+      <line x1="192" y1="112" x2="404" y2="162" style="stroke:var(--dia-d,#f59e0b);stroke-width:1.4" marker-end="url(#rs5a)"/>
+
+      <text x="304" y="46" text-anchor="middle" style="fill:var(--dia-d-ink,#8a5700);font-size:11px;font-weight:600">1 server call</text>
+      <text x="304" y="106" text-anchor="middle" style="fill:var(--dia-d-ink,#8a5700);font-size:11px;font-weight:600">1 server call</text>
+      <text x="304" y="176" text-anchor="middle" style="fill:var(--dia-d-ink,#8a5700);font-size:11px;font-weight:600">1 server call</text>
+
+      <rect x="412" y="40" width="180" height="44" rx="6" style="fill:none;stroke:var(--dia-a,#ba2142);stroke-width:1.6"/>
+      <text x="502" y="67" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:12.5px;font-weight:600">Global suite</text>
+      <rect x="412" y="90" width="180" height="44" rx="6" style="fill:none;stroke:var(--dia-a,#ba2142);stroke-width:1.6"/>
+      <text x="502" y="117" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:12.5px;font-weight:600">Region suite</text>
+      <rect x="412" y="140" width="180" height="44" rx="6" style="fill:none;stroke:var(--dia-a,#ba2142);stroke-width:1.6"/>
+      <text x="502" y="167" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:12.5px;font-weight:600">Brand suite</text>
+
+      <text x="350" y="216" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12.5px;font-weight:600">One interaction. Three times the bill, and three places to keep in step.</text>
+    </svg>
 </div>
 <p>In practice you will rarely type that by hand. In an Adobe Launch (Tags) implementation, which is almost certainly how you will deploy, you choose the destination suites in the interface: in the Adobe Analytics extension for a library setup, or on the datastream for a Web SDK setup. There is no page code to maintain. The full deployment story is the <a href="/adobe-analytics-learning/collect/data-collection/">data collection module</a>, so for now you can relax: the concept matters here, the clicking comes later.</p>
 <div class="warn-box">
