@@ -25,37 +25,38 @@ s.contextData["page.type"]   = "product";
 </div>
 <div class="diagram-box">
     <div class="diagram-title">Developers send meaning; you decide afterwards which variable it lands in</div>
-    <svg viewBox="0 0 700 226" style="width:100%;height:auto;display:block" role="img"
-         aria-label="A pipeline in three stages. The data layer supplies values, which are sent as named context data pairs rather than variable numbers. Processing rules then map each name to a prop, an eVar or an event. A line beneath notes that changing the destination is a rules change, not a code release.">
+    <svg viewBox="0 0 700 232" style="width:100%;height:auto;display:block" role="img"
+         aria-label="A pipeline in three stages. The data layer states a fact, which is sent as named context data pairs rather than variable numbers. Processing rules then fan it out to one of three destinations: a prop, an eVar or an event. A line beneath notes that changing the destination is a rules change in the interface, not a code release.">
       <defs><marker id="v7a" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" style="fill:var(--text3,#5d6b7e)"/></marker></defs>
 
-      <rect x="16" y="52" width="152" height="58" rx="6" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
-      <text x="92" y="76" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">Data layer</text>
-      <text x="92" y="94" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">the page states a fact</text>
+      <rect x="14" y="52" width="150" height="58" rx="6" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="89" y="76" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">Data layer</text>
+      <text x="89" y="94" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">the page states a fact</text>
 
-      <rect x="212" y="52" width="180" height="58" rx="6" style="fill:var(--dia-b-soft,rgba(37,99,235,.10));stroke:var(--dia-b,#2563eb);stroke-width:1.4"/>
-      <text x="302" y="76" text-anchor="middle" style="fill:var(--dia-b-ink,#1d4ed8);font-size:12.5px;font-weight:600">Context data</text>
-      <text x="302" y="94" text-anchor="middle" style="fill:var(--dia-b-ink,#1d4ed8);font-size:11px">named pairs, no variable numbers</text>
+      <rect x="196" y="52" width="150" height="58" rx="6" style="fill:var(--dia-b-soft,rgba(37,99,235,.10));stroke:var(--dia-b,#2563eb);stroke-width:1.4"/>
+      <text x="271" y="76" text-anchor="middle" style="fill:var(--dia-b-ink,#1d4ed8);font-size:12.5px;font-weight:600">Context data</text>
+      <text x="271" y="94" text-anchor="middle" style="fill:var(--dia-b-ink,#1d4ed8);font-size:11px">named pairs, no numbers</text>
 
-      <rect x="436" y="52" width="152" height="58" rx="6" style="fill:var(--dia-e-soft,rgba(124,58,237,.10));stroke:var(--dia-e,#7c3aed);stroke-width:1.4"/>
-      <text x="512" y="76" text-anchor="middle" style="fill:var(--dia-e-ink,#5b21b6);font-size:12.5px;font-weight:600">Processing rules</text>
-      <text x="512" y="94" text-anchor="middle" style="fill:var(--dia-e-ink,#5b21b6);font-size:11px">you map it, in the interface</text>
+      <rect x="378" y="52" width="150" height="58" rx="6" style="fill:var(--dia-e-soft,rgba(124,58,237,.10));stroke:var(--dia-e,#7c3aed);stroke-width:1.4"/>
+      <text x="453" y="76" text-anchor="middle" style="fill:var(--dia-e-ink,#5b21b6);font-size:12.5px;font-weight:600">Processing rules</text>
+      <text x="453" y="94" text-anchor="middle" style="fill:var(--dia-e-ink,#5b21b6);font-size:11px">you decide the mapping</text>
 
-      <line x1="172" y1="81" x2="206" y2="81" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#v7a)"/>
-      <line x1="396" y1="81" x2="430" y2="81" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#v7a)"/>
+      <line x1="168" y1="81" x2="190" y2="81" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#v7a)"/>
+      <line x1="350" y1="81" x2="372" y2="81" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#v7a)"/>
 
-      <rect x="608" y="46" width="76" height="22" rx="4" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
-      <text x="646" y="61" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">a prop</text>
-      <rect x="608" y="74" width="76" height="22" rx="4" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
-      <text x="646" y="89" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">an eVar</text>
-      <rect x="608" y="102" width="76" height="22" rx="4" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
-      <text x="646" y="117" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">an event</text>
-      <line x1="592" y1="81" x2="604" y2="57" style="stroke:var(--text3,#5d6b7e);stroke-width:1.2" marker-end="url(#v7a)"/>
-      <line x1="592" y1="81" x2="604" y2="85" style="stroke:var(--text3,#5d6b7e);stroke-width:1.2" marker-end="url(#v7a)"/>
-      <line x1="592" y1="81" x2="604" y2="113" style="stroke:var(--text3,#5d6b7e);stroke-width:1.2" marker-end="url(#v7a)"/>
+      <rect x="574" y="42" width="112" height="26" rx="4" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="630" y="59" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">a prop</text>
+      <rect x="574" y="76" width="112" height="26" rx="4" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="630" y="93" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">an eVar</text>
+      <rect x="574" y="110" width="112" height="26" rx="4" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="630" y="127" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">an event</text>
 
-      <text x="350" y="166" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12.5px;font-weight:600">The developer never has to know which eVar it ends up in</text>
-      <text x="350" y="192" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">Change your mind later and it is a rules change in the interface, not a code release</text>
+      <path d="M532 81 C548 81 552 55 568 55" style="fill:none;stroke:var(--text3,#5d6b7e);stroke-width:1.2" marker-end="url(#v7a)"/>
+      <line x1="532" y1="81" x2="568" y2="89" style="stroke:var(--text3,#5d6b7e);stroke-width:1.2" marker-end="url(#v7a)"/>
+      <path d="M532 81 C548 81 552 123 568 123" style="fill:none;stroke:var(--text3,#5d6b7e);stroke-width:1.2" marker-end="url(#v7a)"/>
+
+      <text x="350" y="176" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12.5px;font-weight:600">The developer never has to know which eVar it ends up in</text>
+      <text x="350" y="200" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">Change your mind later and it is a rules change in the interface, not a code release</text>
     </svg>
 </div>
 <h3 class="subsec-title">What it buys you</h3>
