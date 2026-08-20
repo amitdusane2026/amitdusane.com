@@ -67,7 +67,7 @@
   <script type="application/ld+json">{{ $art | jsonify (dict "indent" "  ") | safeJS }}</script>
 {{- end -}}
 {{- /* Breadcrumbs on guide pages */ -}}
-{{- if hasPrefix .RelPermalink "/web-sdk-migration" -}}
+{{- if eq .Section "web-sdk-migration" -}}
   {{- $crumbs := slice (dict "name" "Home" "url" $home) (dict "name" "Web SDK Migration" "url" $migURL) -}}
   {{- if eq .Type "kb" -}}{{- $crumbs = $crumbs | append (dict "name" "Knowledge Base" "url" (printf "%skb/" $migURL)) -}}{{- end -}}
   {{- if not (eq .RelPermalink "/web-sdk-migration/") -}}{{- $crumbs = $crumbs | append (dict "name" .Title "url" .Permalink) -}}{{- end -}}
@@ -80,7 +80,7 @@
 {{- end -}}
 
 {{- /* Breadcrumbs on learning pages (Home > Learning > Category > Module > Section) */ -}}
-{{- if hasPrefix .RelPermalink "/adobe-analytics-learning" -}}
+{{- if eq .Section "adobe-analytics-learning" -}}
   {{- $learnURL := (printf "%sadobe-analytics-learning/" $home) -}}
   {{- $crumbs := slice (dict "name" "Home" "url" $home) (dict "name" "Adobe Analytics Learning" "url" $learnURL) -}}
   {{- if eq .Type "lesson" -}}

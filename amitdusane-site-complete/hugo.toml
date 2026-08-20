@@ -55,33 +55,58 @@ disableKinds = ["taxonomy", "term"]
     weight = 3
 
 # ---------------------------------------------------------------------------
-# Learning Hub phases. Editorial grouping for the "See where this fits" map
-# and the home page. Hugo knows a module exists; it does not know which phase
-# it belongs to. That judgment lives here. To add a module later, add its
-# modulenum to the right phase. Order of phases here is the order shown.
+# WORLD REGISTRY (INF-05, INF-06)
+#
+# A "world" is a self-contained sub-site: its own stylesheet, script, shell and
+# print document. It used to be identified by an if/else chain on the URL
+# prefix in two templates, and its phases lived in a single global
+# [params.phases] that any world using the shared partials would inherit.
+# Both would have broken on the third world -- CJA -- and the fix is far
+# cheaper before that exists than after.
+#
+# The key is the page's top-level .Section, so adding a world is a block here
+# rather than another branch in a template.
+#   css   stylesheet in static/, loaded only on that world
+#   js    script in static/, loaded only on that world
+#   root  the world's home page, for partials that need to link back to it
+#   phases  editorial grouping of modules. Hugo knows a module exists; it does
+#           not know which phase it belongs to. That judgment lives here. To
+#           add a module, add its modulenum to the right phase. Order here is
+#           the order shown.
 # ---------------------------------------------------------------------------
-[params.phases]
-  [params.phases.foundations]
+[params.worlds]
+  [params.worlds.web-sdk-migration]
+    css  = "world-shell.css"
+    js   = "world-migration.js"
+    root = "/web-sdk-migration"
+
+  [params.worlds.adobe-analytics-learning]
+    css  = "world-learning.css"
+    js   = "world-learning.js"
+    root = "/adobe-analytics-learning"
+
+[params.worlds.adobe-analytics-learning.phases]
+  [params.worlds.adobe-analytics-learning.phases.foundations]
     order = 1
     name = "Start with the foundations"
     blurb = "What the tool is, and what everything rests on."
     modules = [1, 2, 3]
-  [params.phases.collect]
+  [params.worlds.adobe-analytics-learning.phases.collect]
     order = 2
     name = "Collect the data"
     blurb = "How data gets from a page or an app into Adobe."
     modules = [4, 5, 6, 7]
-  [params.phases.shape]
+  [params.worlds.adobe-analytics-learning.phases.shape]
     order = 3
     name = "Shape the data"
     blurb = "Make the raw data mean something before anyone reads it."
     modules = [8, 9, 10, 11]
-  [params.phases.analyze]
+  [params.worlds.adobe-analytics-learning.phases.analyze]
     order = 4
     name = "Analyze the data"
     blurb = "Ask questions of the data and find the answers."
     modules = [12, 13, 14, 15, 16, 17, 18]
-  [params.phases.deliver]
+  [params.worlds.adobe-analytics-learning.phases.deliver]
     order = 5
     name = "Deliver and maintain"
     blurb = "Design it before it is built, prove it works, and know where it goes next."

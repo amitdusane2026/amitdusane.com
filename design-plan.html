@@ -1198,23 +1198,25 @@ footer.end{border-top:1px solid var(--line);padding-top:18px;font-family:var(--m
     </dl>
   </div>
 
-  <div class="it" data-pri="P2" data-status="open">
+  <div class="it" data-pri="P2" data-status="done">
     <div class="it-h"><span class="id">INF-05</span><span class="ti">Scope <code>params.phases</code> per world</span>
-      <span class="tags"><span class="t p2">P2</span><span class="t eff">M</span><span class="t st">open</span></span></div>
+      <span class="tags"><span class="t p2">P2</span><span class="t eff">M</span><span class="t st">done</span></span></div>
     <dl class="row">
       <dt>Why</dt><dd><code>wherefits.html:12</code> and <code>homemap.html:10</code> read <code>.Site.Params.phases</code> globally and unscoped, so a second world using those partials would inherit Adobe Analytics' phases. Cheap now, expensive once a third world exists.</dd>
       <dt>What</dt><dd>Make phases per-world and have the partials take a world argument. Worth doing alongside any wayfinding work that touches those partials anyway.</dd>
       <dt>Scope</dt><dd class="scope">2 partials &middot; blocks the CJA world</dd>
+      <dt>Result</dt><dd>Done 20 Aug 2026, together with INF-06 as the item advised. Phases moved from a global [params.phases] into [params.worlds.&lt;section&gt;.phases]; wherefits and homemap now read the phases and the world root from the world the page belongs to. Verified the migration world inherits none of the learning phases.</dd>
     </dl>
   </div>
 
-  <div class="it" data-pri="P2" data-status="open">
+  <div class="it" data-pri="P2" data-status="done">
     <div class="it-h"><span class="id">INF-06</span><span class="ti">Key the world switch off <code>.Section</code> rather than a prefix chain</span>
-      <span class="tags"><span class="t p2">P2</span><span class="t eff">M</span><span class="t st">open</span></span></div>
+      <span class="tags"><span class="t p2">P2</span><span class="t eff">M</span><span class="t st">done</span></span></div>
     <dl class="row">
       <dt>Why</dt><dd>The world switch is an if/else chain on URL prefix in <code>head.html:37</code> and <code>baseof.html:4-6</code>. With CJA, RTCDP, AJO, AEP and certification prep on the roadmap it would be eight branches deep across two files.</dd>
       <dt>What</dt><dd>Restructure before the third world, not after. Same argument as INF-05 and worth doing together.</dd>
       <dt>Scope</dt><dd class="scope">2 templates</dd>
+      <dt>Result</dt><dd>Done 20 Aug 2026. The prefix chain is gone from baseof, head and schema; the world is now looked up by the page&rsquo;s .Section in [params.worlds], which also carries each world&rsquo;s stylesheet, script and root. Adding CJA is a config block rather than a new branch in three templates.</dd>
     </dl>
   </div>
 

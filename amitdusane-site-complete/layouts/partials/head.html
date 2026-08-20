@@ -42,11 +42,13 @@
        the only world that uses them. The migration world keeps the system stack
        and never fetches them. `crossorigin` is required on font preloads even
        same-origin, or the browser fetches the file a second time. */}}
-  {{ if hasPrefix .RelPermalink "/adobe-analytics-learning" }}
+  {{ if eq .Section "adobe-analytics-learning" }}
   <link rel="preload" href="{{ "fonts/ibm-plex-sans-latin-wght-normal.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="{{ "fonts/ibm-plex-mono-latin-400-normal.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
   {{ end }}
-  {{ if hasPrefix .RelPermalink "/web-sdk-migration" }}<link rel="stylesheet" href="{{ "world-shell.css" | relURL }}?v={{ substr (sha256 (readFile "static/world-shell.css")) 0 10 }}">{{ else if hasPrefix .RelPermalink "/adobe-analytics-learning" }}<link rel="stylesheet" href="{{ "world-learning.css" | relURL }}?v={{ substr (sha256 (readFile "static/world-learning.css")) 0 10 }}">{{ else }}
+  {{/* INF-06. One lookup instead of a branch per world. The cache-busting hash
+       is still computed per file, from whichever stylesheet the world names. */}}
+  {{ with index .Site.Params.worlds .Section }}<link rel="stylesheet" href="{{ .css | relURL }}?v={{ substr (sha256 (readFile (printf "static/%s" .css))) 0 10 }}">{{ else }}
   <style>
   :root{
     --ink:#1c1f24; --ink-soft:#3b4048; --muted:#6b7280; --faint:#9aa1ab;

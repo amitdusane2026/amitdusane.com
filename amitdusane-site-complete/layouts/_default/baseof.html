@@ -1,8 +1,13 @@
 <!DOCTYPE html>
 <html lang="{{ .Site.LanguageCode }}">
 {{ partial "head.html" . }}
-{{ $mig := hasPrefix .RelPermalink "/web-sdk-migration" }}
-{{ $learn := hasPrefix .RelPermalink "/adobe-analytics-learning" }}
+{{/* INF-06. The world is keyed off the page's top-level .Section and looked up
+       in [params.worlds], so a new world is a config block rather than another
+       branch here. $mig and $learn stay as booleans because forty-odd lines
+       below still read them; what changed is how they are derived. */}}
+{{ $world := index .Site.Params.worlds .Section }}
+{{ $mig := eq .Section "web-sdk-migration" }}
+{{ $learn := eq .Section "adobe-analytics-learning" }}
 {{/* A section page gets `has-rail`, which turns on the three-column shell and
      tells world-learning.js to build the in-page spine. Landing pages and the
      glossary have no h3 stack worth indexing, so they stay two-column. Decided
@@ -59,7 +64,7 @@
   {{ $curModule := "" }}
   {{ if eq .Type "lesson" }}{{ $curModule = .Parent }}{{ else if eq .Type "module" }}{{ $curModule = . }}{{ end }}
   {{ $phases := slice }}
-  {{ range $k, $v := .Site.Params.phases }}{{ $phases = $phases | append $v }}{{ end }}
+  {{ range $k, $v := $world.phases }}{{ $phases = $phases | append $v }}{{ end }}
   {{ $phases = sort $phases "order" }}
   {{ $curModNum := 0 }}
   {{ if $curModule }}{{ $curModNum = $curModule.Params.modulenum }}{{ end }}

@@ -6,10 +6,14 @@
 {{ $cur := . }}
 {{ $curMod := .Parent }}
 {{ $curModNum := $curMod.Params.modulenum }}
-{{ $learnRoot := .Site.GetPage "/adobe-analytics-learning" }}
+{{/* INF-05. Phases and the world root come from [params.worlds] keyed on the
+       page's section, not from a global [params.phases] that a second world
+       would silently inherit. */}}
+{{ $w := index .Site.Params.worlds .Section }}
+{{ $learnRoot := .Site.GetPage $w.root }}
 {{ $allMods := sort (where .Site.Pages "Type" "module") "Params.modulenum" }}
 {{ $phases := slice }}
-{{ range $k, $v := .Site.Params.phases }}{{ $phases = $phases | append $v }}{{ end }}
+{{ range $k, $v := $w.phases }}{{ $phases = $phases | append $v }}{{ end }}
 {{ $phases = sort $phases "order" }}
 {{ $curPhaseKey := "" }}
 {{ range $phases }}{{ if in .modules $curModNum }}{{ $curPhaseKey = .order }}{{ end }}{{ end }}

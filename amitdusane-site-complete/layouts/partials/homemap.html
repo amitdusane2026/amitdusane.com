@@ -4,10 +4,12 @@
   page is an explorer, so glow cascades as the reader selects. Foundations
   is pre-selected on load so the page shows a complete example, not a bare row.
 */}}
-{{ $learnRoot := .Site.GetPage "/adobe-analytics-learning" }}
+{{/* INF-05. Same as wherefits: the world supplies its own phases and root. */}}
+{{ $w := index .Site.Params.worlds .Section }}
+{{ $learnRoot := .Site.GetPage $w.root }}
 {{ $allMods := sort (where .Site.Pages "Type" "module") "Params.modulenum" }}
 {{ $phases := slice }}
-{{ range $k, $v := .Site.Params.phases }}{{ $phases = $phases | append $v }}{{ end }}
+{{ range $k, $v := $w.phases }}{{ $phases = $phases | append $v }}{{ end }}
 {{ $phases = sort $phases "order" }}
 {{ $firstOrder := (index $phases 0).order }}
 {{ $firstMods := slice }}
