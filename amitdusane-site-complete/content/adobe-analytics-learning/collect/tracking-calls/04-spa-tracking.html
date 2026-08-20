@@ -55,20 +55,45 @@ weight: 4
 <p>Now the second problem. Because the <code>s</code> object survives between virtual views, you have to clear it yourself. The rule is an ordering rule: set the variables for this view, send the beacon, then clear the variables so nothing carries into the next view. In Launch this is simply the Clear Variables action placed after Send Beacon, calling <code>s.clearVars()</code> under the hood. The sequence matters more than any single piece of it.</p>
 
 <div class="diagram-box">
-    <div class="diagram-title">A virtual page view, in order</div>
-    <div class="diagram-content">
-        <div class="flow-horizontal">
-            <div class="flow-step">Screen change<br><span style="font-weight:400;color:var(--text2)">router signals a new view</span></div>
-            <span class="flow-arrow">&rarr;</span>
-            <div class="flow-step">Data layer updates<br><span style="font-weight:400;color:var(--text2)">new screen's context</span></div>
-            <span class="flow-arrow">&rarr;</span>
-            <div class="flow-step">Set variables</div>
-            <span class="flow-arrow">&rarr;</span>
-            <div class="flow-step highlight">Send beacon<br><span style="font-weight:400;color:var(--text2)">s.t()</span></div>
-            <span class="flow-arrow">&rarr;</span>
-            <div class="flow-step">Clear variables<br><span style="font-weight:400;color:var(--text2)">s.clearVars()</span></div>
-        </div>
-    </div>
+    <div class="diagram-title">Clear the variables, or the next screen ships with the last screen&rsquo;s data</div>
+    <svg viewBox="0 0 700 240" style="width:100%;height:auto;display:block" role="img"
+         aria-label="Two rows compare the same two virtual page views. In the top row clearVars runs after the beacon, the s object is wiped, and the second screen's hit carries only its own data. In the bottom row nothing clears it, the values stay on the s object, and the second screen's hit carries the booking data plus the leftover search data from the first screen.">
+      <defs>
+        <marker id="tc4a" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" style="fill:var(--text3,#5d6b7e)"/></marker>
+      </defs>
+
+      <text x="350" y="26" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">The page never reloads, so the s object is never destroyed between screens</text>
+
+      <text x="120" y="46" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px;font-weight:600">With clearVars() after the beacon</text>
+      <rect x="120" y="52" width="165" height="52" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="202" y="74" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-weight:600">Screen 1 hit</text>
+      <text x="202" y="92" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">search, 3 filters</text>
+      <line x1="289" y1="78" x2="313" y2="78" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#tc4a)"/>
+      <rect x="317" y="52" width="165" height="52" rx="6" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.4"/>
+      <text x="399" y="74" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-weight:600">clearVars()</text>
+      <text x="399" y="92" text-anchor="middle" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px">the s object is wiped</text>
+      <line x1="486" y1="78" x2="510" y2="78" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#tc4a)"/>
+      <rect x="514" y="52" width="165" height="52" rx="6" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.6"/>
+      <text x="596" y="74" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-weight:600">Screen 2 hit</text>
+      <text x="596" y="92" text-anchor="middle" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px">booking only</text>
+
+      <line x1="20" y1="122" x2="680" y2="122" style="stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
+
+      <text x="120" y="140" style="fill:var(--dia-a-ink,#951833);font-size:11px;font-weight:600">Without it</text>
+      <rect x="120" y="146" width="165" height="52" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="202" y="168" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-weight:600">Screen 1 hit</text>
+      <text x="202" y="186" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">search, 3 filters</text>
+      <line x1="289" y1="172" x2="313" y2="172" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#tc4a)"/>
+      <rect x="317" y="146" width="165" height="52" rx="6" style="fill:var(--dia-d-soft,rgba(245,158,11,.14));stroke:var(--dia-d,#f59e0b);stroke-width:1.4"/>
+      <text x="399" y="168" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-weight:600">nothing clears it</text>
+      <text x="399" y="186" text-anchor="middle" style="fill:var(--dia-d-ink,#8a5700);font-size:11px">the values stay on s</text>
+      <line x1="486" y1="172" x2="510" y2="172" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#tc4a)"/>
+      <rect x="514" y="146" width="165" height="52" rx="6" style="fill:var(--dia-a-soft,rgba(186,33,66,.10));stroke:var(--dia-a,#ba2142);stroke-width:1.6"/>
+      <text x="596" y="168" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-weight:600">Screen 2 hit</text>
+      <text x="596" y="186" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:11px">booking + search + filters</text>
+
+      <text x="350" y="226" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">Nothing errors in the bottom row. The booking screen simply reports search terms it never saw.</text>
+    </svg>
 </div>
 
 <div class="code-block">

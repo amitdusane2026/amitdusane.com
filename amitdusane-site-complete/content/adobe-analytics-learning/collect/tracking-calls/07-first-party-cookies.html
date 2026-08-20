@@ -46,20 +46,38 @@ weight: 7
 <p>The shape of it is straightforward. Your own server generates a random UUID, sets it as a genuinely server-written first-party cookie with a long lifetime, and your Web SDK implementation hands that value to the Edge Network. The Edge Network then uses the FPID as a seed to generate the ECID, deterministically, so the same FPID always produces the same ECID. Because the cookie was written by your server rather than by JavaScript, it is exempt from the seven-day cap and can live for its full lifetime. You have moved identity off the browser's fragile ground and onto infrastructure you control.</p>
 
 <div class="diagram-box">
-    <div class="diagram-title">How a first-party device ID keeps identity durable</div>
-    <div class="diagram-content">
-        <div class="flow-horizontal">
-            <div class="flow-step">Your server<br><span style="font-weight:400;color:var(--text2)">generates a UUID</span></div>
-            <span class="flow-arrow">&rarr;</span>
-            <div class="flow-step">Set as a server-side<br>first-party cookie<br><span style="font-weight:400;color:var(--text2)">full lifetime, no 7-day cap</span></div>
-            <span class="flow-arrow">&rarr;</span>
-            <div class="flow-step">Sent to the<br>Edge Network</div>
-            <span class="flow-arrow">&rarr;</span>
-            <div class="flow-step">Edge seeds the ECID<br><span style="font-weight:400;color:var(--text2)">same FPID, same ECID</span></div>
-            <span class="flow-arrow">&rarr;</span>
-            <div class="flow-step highlight">Durable returning<br>visitor identity</div>
-        </div>
-    </div>
+    <div class="diagram-title">Who writes the cookie decides whether the visitor is still the same person on day eight</div>
+    <svg viewBox="0 0 700 250" style="width:100%;height:auto;display:block" role="img"
+         aria-label="Two rows compare cookie lifetimes. A cookie written by JavaScript through document.cookie survives seven days on Safari and then is gone, so a returning visitor on day eight is a stranger with a new ECID. A cookie written by your own server through a Set-Cookie header lives its full lifetime, so the same FPID seeds the same ECID and the visitor is recognised.">
+      <text x="102" y="44" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px;font-weight:600">Who writes it</text>
+      <text x="345" y="44" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px;font-weight:600">How long it survives</text>
+      <text x="592" y="44" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px;font-weight:600">They return on day 8</text>
+
+      <rect x="20" y="56" width="165" height="52" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="102" y="78" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-weight:600">JavaScript</text>
+      <text x="102" y="96" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">document.cookie</text>
+      <rect x="205" y="56" width="280" height="52" rx="6" style="fill:none;stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
+      <rect x="209" y="60" width="88" height="44" rx="3" style="fill:var(--dia-a-soft,rgba(186,33,66,.10));stroke:var(--dia-a,#ba2142);stroke-width:1.4"/>
+      <text x="253" y="87" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-weight:600">7 days</text>
+      <text x="392" y="87" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">then gone, on Safari</text>
+      <rect x="505" y="56" width="175" height="52" rx="6" style="fill:var(--dia-a-soft,rgba(186,33,66,.10));stroke:var(--dia-a,#ba2142);stroke-width:1.6"/>
+      <text x="592" y="78" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-weight:600">A stranger</text>
+      <text x="592" y="96" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:11px">new cookie, new ECID</text>
+
+      <line x1="20" y1="128" x2="680" y2="128" style="stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
+
+      <rect x="20" y="150" width="165" height="52" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="102" y="172" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-weight:600">Your own server</text>
+      <text x="102" y="190" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">a Set-Cookie header</text>
+      <rect x="205" y="150" width="280" height="52" rx="6" style="fill:none;stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
+      <rect x="209" y="154" width="272" height="44" rx="3" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.4"/>
+      <text x="345" y="181" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-weight:600">its full lifetime, exempt from the cap</text>
+      <rect x="505" y="150" width="175" height="52" rx="6" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.6"/>
+      <text x="592" y="172" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-weight:600">The same person</text>
+      <text x="592" y="190" text-anchor="middle" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px">same FPID, same ECID</text>
+
+      <text x="350" y="232" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">The bar is the whole argument. Nothing about the data changed &mdash; only which machine wrote the cookie.</text>
+    </svg>
 </div>
 
 <div class="code-block">

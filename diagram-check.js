@@ -116,9 +116,15 @@ window.DGC = function () {
     if (smallest < 11) bad.push('text at ' + smallest + 'px, floor is 11');
 
     if (/letter-spacing/.test(raw)) bad.push('letter-spacing present — rejected 19 Aug as a generated-page tell');
+    // An uppercase LABEL is the rejected treatment. An acronym is not — ECID,
+    // AMCV, FPID and CNAME are how those things are written. A single word of
+    // six characters or fewer is read as an acronym and left alone.
     texts.forEach(t => {
       const s = t.textContent.trim();
-      if (s.length > 3 && s === s.toUpperCase() && /[A-Z]{4}/.test(s)) bad.push('uppercase label "' + s.slice(0, 20) + '"');
+      const isAcronym = !/\s/.test(s) && s.length <= 6;
+      if (s.length > 3 && s === s.toUpperCase() && /[A-Z]{4}/.test(s) && !isAcronym) {
+        bad.push('uppercase label "' + s.slice(0, 20) + '"');
+      }
     });
 
     // --- stale and hardcoded colour --------------------------------------
