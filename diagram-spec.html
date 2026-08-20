@@ -295,8 +295,8 @@ footer{border-top:1px solid var(--line);padding-top:16px;font-size:12.5px;color:
       <tr><td>11 Classifications</td><td>13</td><td>0</td><td><b>done</b></td></tr>
       <tr><td>12 Calculated Metrics</td><td>9</td><td>0</td><td><b>done</b></td></tr>
       <tr><td>13 Segments</td><td>15</td><td>0</td><td><b>done</b></td></tr>
-      <tr><td>14 Analysis Workspace</td><td>18</td><td>0</td><td>next, verify only</td></tr>
-      <tr><th>Total</th><th>125</th><th>0</th><th>13 of 14</th></tr>
+      <tr><td>14 Analysis Workspace</td><td>18</td><td>0</td><td><b>done</b></td></tr>
+      <tr><th>Total</th><th>125</th><th>0</th><th><b>14 of 14</b></th></tr>
     </tbody>
   </table>
   </div>
@@ -308,6 +308,15 @@ footer{border-top:1px solid var(--line);padding-top:16px;font-size:12.5px;color:
 <section>
   <div class="cat"><span class="cat-id">08</span><h2>Revision history</h2></div>
   <div class="card">
+    <h3>20 August 2026 &mdash; after cycle 14, the last</h3>
+    <ul class="chk">
+      <li><strong>"Verify only" was the most misleading line in this table.</strong> Analysis Workspace carried no HTML figures, so it was scheduled as a verification pass. It turned out to be the heaviest module in the programme: 296 hardcoded font-family, 55 texts below 11px including one at 8 and fifteen at 9, 97 stale accent fallbacks, 111 uses of the dark <code>--text3</code> as a light one, 26 letter-spaced labels, and 50 raw hex colours bypassing the token system entirely. Absence of HTML is not evidence of conformance.</li>
+      <li><strong>The module already had a colour system; it was just hardcoded.</strong> Those 50 hex values were <code>#c2690c</code>, <code>#2f8f3f</code>, <code>#3d7fdd</code> and <code>#9370e0</code> &mdash; Workspace&rsquo;s own component coding for Dimensions, Metrics, Segments and Date ranges. Mapping them onto <code>--dia-d</code>, <code>--dia-c</code>, <code>--dia-b</code> and <code>--dia-e</code> fixed the theme bug and established the module&rsquo;s encoding in one move. <strong>Where the product already colour-codes something, borrow it</strong> &mdash; the reader has met it before.</li>
+      <li><strong>A screen schematic is a stated exception to the canvas and element ceilings.</strong> §1&rsquo;s Workspace mock is 700&times;444 with 71 elements against limits of 340 and 45. It is a picture of a screen rather than a composed diagram, and compressing it to fit would cramp a figure whose whole job is orientation. Recorded rather than mangled. It is the only one in the corpus.</li>
+      <li><strong>A thick unfilled ring is a surface, not an obstacle.</strong> A donut drawn as a stroked circle has its geometric bbox at the path radius while the visible band extends half the stroke either side, so labels sitting correctly on the band were reported as collisions. <code>diagram-check.js</code> now skips the overlap test for a shape with no fill and a stroke wider than 6.</li>
+    </ul>
+  </div>
+    <div class="card">
     <h3>20 August 2026 &mdash; after cycle 13</h3>
     <ul class="chk">
       <li><strong>The 20-element floor is a heuristic, not a gate, and Segments is where that had to be said.</strong> Eight of its fifteen figures sit between 13 and 19 elements. The floor exists to catch a figure that is really a sentence; a two-circle Venn, a three-level container nest and a five-step sequence are none of them, and padding them to reach a number would be adding without purpose &mdash; the exact drift section 02 exists to prevent. They were left alone, deliberately. Treat a low count as a prompt to ask whether the figure is carrying anything, not as a defect in itself.</li>

@@ -26,49 +26,49 @@ weight: 5
 <p>That single change is what makes a slow loss visible, and it is worth understanding why. A total is a snapshot, so arrivals and departures cancel each other out inside it and the result looks like stability. Follow one fixed group forward and there are no arrivals to hide behind. Whatever is left in week eight is what is left, and if that number is small then the number is small.</p>
 
 <div class="diagram-box">
-    <div class="diagram-title">📊 One event puts you in the group. A different event proves you stayed.</div>
-    <svg viewBox="0 0 700 300" style="width:100%;height:auto;display:block;margin:4px 0 8px"
+    <div class="diagram-title">One event puts you in the group. A different event proves you stayed.</div>
+    <svg viewBox="0 0 700 300" style="width:100%;height:auto;display:block"
          role="img" aria-label="A cohort grid. Down the left, three cohorts labelled by the week people first purchased. Across the top, weeks after inclusion, from week zero to week three. Week zero is always one hundred percent because everybody in the cohort qualified by definition. The percentages fall across each row as fewer people return. The inclusion criteria decides who enters and when their clock starts, and the return criteria decides what counts as coming back.">
-        <rect x="16" y="24" width="300" height="52" rx="6" style="fill:var(--card,#ffffff);stroke:#3d7fdd;stroke-width:2"/>
-        <text x="30" y="44" style="fill:#3d7fdd;font-size:11px;font-weight:700;font-family:sans-serif">INCLUSION CRITERIA</text>
-        <text x="30" y="64" style="fill:var(--text2,#475569);font-size:12px;font-family:sans-serif">first purchase. Starts their clock.</text>
+        <rect x="16" y="24" width="300" height="52" rx="6" style="fill:var(--card,#ffffff);stroke:var(--dia-b,#2563eb);stroke-width:1.6"/>
+        <text x="30" y="44" style="fill:var(--dia-b-ink,#1d4ed8);font-size:11px;font-weight:700">Inclusion criteria</text>
+        <text x="30" y="64" style="fill:var(--text2,#475569);font-size:12px">first purchase. Starts their clock.</text>
 
-        <rect x="360" y="24" width="324" height="52" rx="6" style="fill:var(--card,#ffffff);stroke:#2f8f3f;stroke-width:2"/>
-        <text x="374" y="44" style="fill:#2f8f3f;font-size:11px;font-weight:700;font-family:sans-serif">RETURN CRITERIA</text>
-        <text x="374" y="64" style="fill:var(--text2,#475569);font-size:12px;font-family:sans-serif">any visit. Proves they came back.</text>
+        <rect x="360" y="24" width="324" height="52" rx="6" style="fill:var(--card,#ffffff);stroke:var(--dia-c,#10b981);stroke-width:1.6"/>
+        <text x="374" y="44" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px;font-weight:700">Return criteria</text>
+        <text x="374" y="64" style="fill:var(--text2,#475569);font-size:12px">any visit. Proves they came back.</text>
 
-        <text x="16" y="106" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif;letter-spacing:1px">WEEKS AFTER INCLUSION</text>
-        <text x="200" y="128" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-weight:700;font-family:sans-serif">Week 0</text>
-        <text x="330" y="128" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-weight:700;font-family:sans-serif">Week 1</text>
-        <text x="460" y="128" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-weight:700;font-family:sans-serif">Week 2</text>
-        <text x="590" y="128" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-weight:700;font-family:sans-serif">Week 3</text>
+        <text x="16" y="106" style="fill:var(--text3,#5d6b7e);font-size:11px">Weeks after inclusion</text>
+        <text x="200" y="128" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-weight:700">Week 0</text>
+        <text x="330" y="128" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-weight:700">Week 1</text>
+        <text x="460" y="128" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-weight:700">Week 2</text>
+        <text x="590" y="128" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-weight:700">Week 3</text>
 
-        <text x="16" y="160" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">Joined wk 1</text>
-        <rect x="140" y="144" width="120" height="24" rx="3" style="fill:var(--accent,#e11d48)"/>
-        <text x="200" y="161" text-anchor="middle" style="fill:var(--on-accent,#ffffff);font-size:11px;font-weight:700;font-family:sans-serif">100%</text>
-        <rect x="270" y="144" width="120" height="24" rx="3" style="fill:var(--accent,#e11d48);opacity:0.55"/>
-        <text x="330" y="161" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-family:sans-serif">41%</text>
-        <rect x="400" y="144" width="120" height="24" rx="3" style="fill:var(--accent,#e11d48);opacity:0.3"/>
-        <text x="460" y="161" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-family:sans-serif">22%</text>
-        <rect x="530" y="144" width="120" height="24" rx="3" style="fill:var(--accent,#e11d48);opacity:0.16"/>
-        <text x="590" y="161" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-family:sans-serif">14%</text>
+        <text x="16" y="160" style="fill:var(--text2,#475569);font-size:11px">Joined wk 1</text>
+        <rect x="140" y="144" width="120" height="24" rx="3" style="fill:var(--accent,#ba2142)"/>
+        <text x="200" y="161" text-anchor="middle" style="fill:var(--on-accent,#ffffff);font-size:11px;font-weight:700">100%</text>
+        <rect x="270" y="144" width="120" height="24" rx="3" style="fill:var(--accent,#ba2142);opacity:0.55"/>
+        <text x="330" y="161" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px">41%</text>
+        <rect x="400" y="144" width="120" height="24" rx="3" style="fill:var(--accent,#ba2142);opacity:0.3"/>
+        <text x="460" y="161" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px">22%</text>
+        <rect x="530" y="144" width="120" height="24" rx="3" style="fill:var(--accent,#ba2142);opacity:0.16"/>
+        <text x="590" y="161" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px">14%</text>
 
-        <text x="16" y="196" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">Joined wk 2</text>
-        <rect x="140" y="180" width="120" height="24" rx="3" style="fill:var(--accent,#e11d48)"/>
-        <text x="200" y="197" text-anchor="middle" style="fill:var(--on-accent,#ffffff);font-size:11px;font-weight:700;font-family:sans-serif">100%</text>
-        <rect x="270" y="180" width="120" height="24" rx="3" style="fill:var(--accent,#e11d48);opacity:0.5"/>
-        <text x="330" y="197" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-family:sans-serif">37%</text>
-        <rect x="400" y="180" width="120" height="24" rx="3" style="fill:var(--accent,#e11d48);opacity:0.26"/>
-        <text x="460" y="197" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-family:sans-serif">19%</text>
+        <text x="16" y="196" style="fill:var(--text2,#475569);font-size:11px">Joined wk 2</text>
+        <rect x="140" y="180" width="120" height="24" rx="3" style="fill:var(--accent,#ba2142)"/>
+        <text x="200" y="197" text-anchor="middle" style="fill:var(--on-accent,#ffffff);font-size:11px;font-weight:700">100%</text>
+        <rect x="270" y="180" width="120" height="24" rx="3" style="fill:var(--accent,#ba2142);opacity:0.5"/>
+        <text x="330" y="197" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px">37%</text>
+        <rect x="400" y="180" width="120" height="24" rx="3" style="fill:var(--accent,#ba2142);opacity:0.26"/>
+        <text x="460" y="197" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px">19%</text>
 
-        <text x="16" y="232" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">Joined wk 3</text>
-        <rect x="140" y="216" width="120" height="24" rx="3" style="fill:var(--accent,#e11d48)"/>
-        <text x="200" y="233" text-anchor="middle" style="fill:var(--on-accent,#ffffff);font-size:11px;font-weight:700;font-family:sans-serif">100%</text>
-        <rect x="270" y="216" width="120" height="24" rx="3" style="fill:var(--accent,#e11d48);opacity:0.42"/>
-        <text x="330" y="233" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-family:sans-serif">31%</text>
+        <text x="16" y="232" style="fill:var(--text2,#475569);font-size:11px">Joined wk 3</text>
+        <rect x="140" y="216" width="120" height="24" rx="3" style="fill:var(--accent,#ba2142)"/>
+        <text x="200" y="233" text-anchor="middle" style="fill:var(--on-accent,#ffffff);font-size:11px;font-weight:700">100%</text>
+        <rect x="270" y="216" width="120" height="24" rx="3" style="fill:var(--accent,#ba2142);opacity:0.42"/>
+        <text x="330" y="233" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px">31%</text>
 
-        <text x="16" y="266" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">Week 0 is always 100%. Everybody in the row qualified by definition, so that column proves nothing.</text>
-        <text x="16" y="286" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">The triangle is the point: later cohorts have had less time, not worse retention.</text>
+        <text x="16" y="266" style="fill:var(--text3,#5d6b7e);font-size:11px">Week 0 is always 100%. Everybody in the row qualified by definition, so that column proves nothing.</text>
+        <text x="16" y="286" style="fill:var(--text3,#5d6b7e);font-size:11px">The triangle is the point: later cohorts have had less time, not worse retention.</text>
     </svg>
 </div>
 
@@ -103,34 +103,34 @@ weight: 5
 <p>The second is almost always the higher number, because it quietly forgives everybody who already left.</p>
 
 <div class="diagram-box">
-    <div class="diagram-title">📊 Identical people, identical weeks, and the percentages climb</div>
-    <svg viewBox="0 0 700 250" style="width:100%;height:auto;display:block;margin:4px 0 8px"
+    <div class="diagram-title">Identical people, identical weeks, and the percentages climb</div>
+    <svg viewBox="0 0 700 250" style="width:100%;height:auto;display:block"
          role="img" aria-label="One cohort of a thousand people followed for three weeks. The actual headcount falls from a thousand to four hundred and ten, then two hundred and twenty, then one hundred and forty. Measured against the original cohort the percentages fall from forty-one to twenty-two to fourteen percent. Measured against the previous period under rolling calculation, the same headcounts read forty-one, fifty-four and sixty-four percent, rising across the row even though the population is collapsing.">
-        <text x="16" y="20" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif;letter-spacing:1px">ONE COHORT, ACTUAL PEOPLE REMAINING</text>
-        <text x="140" y="46" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:13px;font-weight:700;font-family:sans-serif">1,000</text>
-        <text x="300" y="46" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:13px;font-weight:700;font-family:sans-serif">410</text>
-        <text x="460" y="46" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:13px;font-weight:700;font-family:sans-serif">220</text>
-        <text x="620" y="46" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:13px;font-weight:700;font-family:sans-serif">140</text>
-        <text x="140" y="64" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:10px;font-family:sans-serif">week 0</text>
-        <text x="300" y="64" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:10px;font-family:sans-serif">week 1</text>
-        <text x="460" y="64" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:10px;font-family:sans-serif">week 2</text>
-        <text x="620" y="64" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:10px;font-family:sans-serif">week 3</text>
+        <text x="16" y="20" style="fill:var(--text3,#5d6b7e);font-size:11px">One cohort, actual people remaining</text>
+        <text x="140" y="46" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:13px;font-weight:700">1,000</text>
+        <text x="300" y="46" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:13px;font-weight:700">410</text>
+        <text x="460" y="46" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:13px;font-weight:700">220</text>
+        <text x="620" y="46" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:13px;font-weight:700">140</text>
+        <text x="140" y="64" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">week 0</text>
+        <text x="300" y="64" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">week 1</text>
+        <text x="460" y="64" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">week 2</text>
+        <text x="620" y="64" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">week 3</text>
 
-        <rect x="16" y="82" width="668" height="62" rx="6" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
-        <text x="30" y="102" style="fill:var(--text2,#475569);font-size:11px;font-weight:700;font-family:sans-serif;letter-spacing:1px">AGAINST THE ORIGINAL COHORT</text>
-        <text x="300" y="130" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:15px;font-weight:700;font-family:sans-serif">41%</text>
-        <text x="460" y="130" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:15px;font-weight:700;font-family:sans-serif">22%</text>
-        <text x="620" y="130" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:15px;font-weight:700;font-family:sans-serif">14%</text>
-        <text x="30" y="130" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">falling, as it should</text>
+        <rect x="16" y="82" width="668" height="62" rx="6" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+        <text x="30" y="102" style="fill:var(--text2,#475569);font-size:11px;font-weight:700">Against the original cohort</text>
+        <text x="300" y="130" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:15px;font-weight:700">41%</text>
+        <text x="460" y="130" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:15px;font-weight:700">22%</text>
+        <text x="620" y="130" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:15px;font-weight:700">14%</text>
+        <text x="30" y="130" style="fill:var(--text3,#5d6b7e);font-size:11px">falling, as it should</text>
 
-        <rect x="16" y="156" width="668" height="62" rx="6" style="fill:var(--card,#ffffff);stroke:var(--accent,#e11d48);stroke-width:2"/>
-        <text x="30" y="176" style="fill:var(--accent,#e11d48);font-size:11px;font-weight:700;font-family:sans-serif;letter-spacing:1px">ROLLING, AGAINST THE PREVIOUS PERIOD</text>
-        <text x="300" y="204" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:15px;font-weight:700;font-family:sans-serif">41%</text>
-        <text x="460" y="204" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:15px;font-weight:700;font-family:sans-serif">54%</text>
-        <text x="620" y="204" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:15px;font-weight:700;font-family:sans-serif">64%</text>
-        <text x="30" y="204" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">rising, on a collapse</text>
+        <rect x="16" y="156" width="668" height="62" rx="6" style="fill:var(--card,#ffffff);stroke:var(--accent,#ba2142);stroke-width:1.6"/>
+        <text x="30" y="176" style="fill:var(--accent,#ba2142);font-size:11px;font-weight:700">Rolling, against the previous period</text>
+        <text x="300" y="204" text-anchor="middle" style="fill:var(--accent,#ba2142);font-size:15px;font-weight:700">41%</text>
+        <text x="460" y="204" text-anchor="middle" style="fill:var(--accent,#ba2142);font-size:15px;font-weight:700">54%</text>
+        <text x="620" y="204" text-anchor="middle" style="fill:var(--accent,#ba2142);font-size:15px;font-weight:700">64%</text>
+        <text x="30" y="204" style="fill:var(--text3,#5d6b7e);font-size:11px">rising, on a collapse</text>
 
-        <text x="16" y="240" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">860 of the original 1,000 are gone. One of these rows makes that look like an improving trend.</text>
+        <text x="16" y="240" style="fill:var(--text3,#5d6b7e);font-size:11px">860 of the original 1,000 are gone. One of these rows makes that look like an improving trend.</text>
     </svg>
 </div>
 

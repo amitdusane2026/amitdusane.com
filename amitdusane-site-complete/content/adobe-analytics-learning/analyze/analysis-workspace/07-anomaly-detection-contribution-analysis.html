@@ -26,26 +26,26 @@ weight: 7
 <p>The training window varies with the granularity you are looking at, and the differences matter more than they sound. A daily view learns from roughly the last thirty-five days plus the same period a year ago, so it knows about last month and about last Christmas. A weekly view learns from about fifteen weeks plus the same range last year, and a monthly view from about fifteen months on the same basis. Hourly works from the last few hundred hours. The technique underneath changes too: daily granularity uses a time-series model that accounts for error, trend and seasonality, while weekly and monthly switch to an outlier test that asks how extreme a value is against the spread of the others rather than trying to forecast it.</p>
 
 <div class="diagram-box">
-    <div class="diagram-title">📊 The band is a forecast. The dot is a point that ignored it.</div>
-    <svg viewBox="0 0 700 260" style="width:100%;height:auto;display:block;margin:4px 0 8px"
+    <div class="diagram-title">The band is a forecast. The dot is a point that ignored it.</div>
+    <svg viewBox="0 0 700 260" style="width:100%;height:auto;display:block"
          role="img" aria-label="A line chart of a metric over time. A shaded band runs along the line showing the range the model expected, widening slightly as it projects forward. Most points sit inside the band. One point sits well below it and is marked as an anomaly. The band is built from a training window of past data including the same period a year earlier, so it already accounts for weekly rhythm and trend.">
-        <text x="16" y="20" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif;letter-spacing:1px">TRAINING WINDOW</text>
-        <text x="470" y="20" style="fill:var(--accent,#e11d48);font-size:11px;font-weight:700;font-family:sans-serif;letter-spacing:1px">WHAT HAPPENED NEXT</text>
-        <line x1="452" y1="28" x2="452" y2="212" style="stroke:var(--border,#e2e8f0);stroke-width:1.5;stroke-dasharray:4 4"/>
+        <text x="16" y="20" style="fill:var(--text3,#5d6b7e);font-size:11px">Training window</text>
+        <text x="470" y="20" style="fill:var(--accent,#ba2142);font-size:11px;font-weight:700">What happened next</text>
+        <line x1="452" y1="28" x2="452" y2="212" style="stroke:var(--border,#e2e8f0);stroke-width:1.4;stroke-dasharray:4 4"/>
 
         <path d="M30 96 L92 84 L154 104 L216 78 L278 92 L340 74 L402 88 L452 78 L514 72 L576 84 L638 70 L668 78
                  L668 128 L638 122 L576 136 L514 124 L452 130 L402 140 L340 126 L278 144 L216 130 L154 156 L92 136 L30 148 Z"
-              style="fill:var(--accent,#e11d48);opacity:0.13"/>
+              style="fill:var(--accent,#ba2142);opacity:0.13"/>
 
         <polyline points="30,122 92,110 154,130 216,104 278,118 340,100 402,114 452,104 514,98 576,196 638,96 668,102"
                   style="fill:none;stroke:var(--text2,#475569);stroke-width:2.5"/>
 
-        <circle cx="576" cy="196" r="8" style="fill:var(--accent,#e11d48)"/>
-        <circle cx="576" cy="196" r="14" style="fill:none;stroke:var(--accent,#e11d48);stroke-width:2"/>
-        <text x="576" y="230" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:12px;font-weight:700;font-family:sans-serif">outside the expected range</text>
+        <circle cx="576" cy="196" r="8" style="fill:var(--accent,#ba2142)"/>
+        <circle cx="576" cy="196" r="14" style="fill:none;stroke:var(--accent,#ba2142);stroke-width:1.6"/>
+        <text x="576" y="230" text-anchor="middle" style="fill:var(--accent,#ba2142);font-size:12px;font-weight:700">outside the expected range</text>
 
-        <line x1="16" y1="212" x2="684" y2="212" style="stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
-        <text x="16" y="252" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">The band already knows about weekends, seasonality and trend. It knows nothing about your release calendar.</text>
+        <line x1="16" y1="212" x2="684" y2="212" style="stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+        <text x="16" y="252" style="fill:var(--text3,#5d6b7e);font-size:11px">The band already knows about weekends, seasonality and trend. It knows nothing about your release calendar.</text>
     </svg>
 </div>
 

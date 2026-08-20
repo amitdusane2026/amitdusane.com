@@ -156,6 +156,14 @@ window.DGC = function () {
     texts.forEach(t => {
       const tb = t.getBBox();
       shapes.forEach(sh => {
+        // A thick unfilled ring is a surface, not an obstacle. A donut drawn as
+        // a stroked circle has a geometric bbox at the path radius while the
+        // visible band extends half the stroke either side, so labels sitting
+        // ON the band read as collisions against a box they are legitimately
+        // outside. Only a shape with an actual fill can hide text behind it.
+        const cs = getComputedStyle(sh);
+        const unfilledBand = cs.fill === 'none' && parseFloat(cs.strokeWidth) > 6;
+        if (unfilledBand) return;
         const sb = sh.getBBox();
         if (overlaps(tb, sb) && !contains(tb, sb)) {
           bad.push('"' + t.textContent.slice(0, 18) + '" overlaps a ' + sh.tagName);
