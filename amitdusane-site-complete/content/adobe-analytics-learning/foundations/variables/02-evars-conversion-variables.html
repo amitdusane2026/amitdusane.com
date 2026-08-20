@@ -67,22 +67,22 @@ weight: 2
 <h3 class="subsec-title">Allocation: who gets the credit</h3>
 <p>Allocation decides which value is credited when an eVar is set more than once before a conversion. There are three modes: <strong>Original Value (First Touch)</strong>, <strong>Most Recent (Last Touch)</strong>, and <strong>Linear</strong> (split evenly across all values). One subtlety worth internalizing: every value you send is always stored, regardless of allocation; allocation only governs which stored value gets <em>credit</em> for events. Here is one journey credited three ways:</p>
 <div class="diagram-box">
-    <div class="diagram-title">📊 One conversion, three ways to credit it</div>
+    <div class="diagram-title">One conversion, three ways to credit it</div>
     <svg viewBox="0 0 700 130" style="width:100%;height:auto;display:block;margin:4px 0 10px" role="img" aria-label="A visitor touches Email on day 1, Paid Search on day 4, Social on day 6, then converts on day 7">
       <g transform="translate(50,0)">
-        <line x1="55" y1="60" x2="545" y2="60" style="stroke:var(--border,#e2e8f0);stroke-width:2"/>
-        <circle cx="110" cy="60" r="9" style="fill:var(--accent,#e11d48)"/>
-        <circle cx="270" cy="60" r="9" style="fill:var(--accent,#e11d48)"/>
-        <circle cx="410" cy="60" r="9" style="fill:var(--accent,#e11d48)"/>
-        <circle cx="540" cy="60" r="12" style="fill:var(--accent,#e11d48)"/>
-        <text x="110" y="38" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:13px;font-weight:700;font-family:sans-serif">Email</text>
-        <text x="270" y="38" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:13px;font-weight:700;font-family:sans-serif">Paid Search</text>
-        <text x="410" y="38" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:13px;font-weight:700;font-family:sans-serif">Social</text>
-        <text x="540" y="34" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:13px;font-weight:700;font-family:sans-serif">Convert</text>
-        <text x="110" y="88" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">Day 1</text>
-        <text x="270" y="88" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">Day 4</text>
-        <text x="410" y="88" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">Day 6</text>
-        <text x="540" y="88" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">Day 7</text>
+        <line x1="55" y1="60" x2="545" y2="60" style="stroke:var(--border,#e2e8f0);stroke-width:1.6"/>
+        <circle cx="110" cy="60" r="9" style="fill:var(--accent,#ba2142)"/>
+        <circle cx="270" cy="60" r="9" style="fill:var(--accent,#ba2142)"/>
+        <circle cx="410" cy="60" r="9" style="fill:var(--accent,#ba2142)"/>
+        <circle cx="540" cy="60" r="12" style="fill:var(--accent,#ba2142)"/>
+        <text x="110" y="38" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:13px;font-weight:700">Email</text>
+        <text x="270" y="38" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:13px;font-weight:700">Paid Search</text>
+        <text x="410" y="38" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:13px;font-weight:700">Social</text>
+        <text x="540" y="34" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:13px;font-weight:700">Convert</text>
+        <text x="110" y="88" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">Day 1</text>
+        <text x="270" y="88" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">Day 4</text>
+        <text x="410" y="88" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">Day 6</text>
+        <text x="540" y="88" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">Day 7</text>
       </g>
     </svg>
     <div style="display:flex;align-items:center;gap:12px;margin:10px 0">

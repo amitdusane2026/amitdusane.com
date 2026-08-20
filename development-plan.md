@@ -648,7 +648,7 @@ It also uncovered a real bug: **the hover glow had never fired in dark mode**, b
 
 ---
 
-## The diagram programme, 19 August 2026 onward — IN PROGRESS, 5 of 14
+## The diagram programme, 19-20 August 2026 — COMPLETE, 14 of 14
 
 Amit's call, and it came out of a single observation: the corpus contained **two visible generations of infographic**. Measured, the split was real — July was 76% HTML/CSS box diagrams, August was 66% hand-drawn SVG — and the two were mixed *within* modules, which is why it read as inconsistency rather than progress.
 
@@ -667,17 +667,21 @@ Two corrections from Amit shaped the colour rules, and both are recorded there:
 - **No cap on hue count.** The constraint is text, not colour. A shape carrying text takes a soft tint, a saturated stroke and an ink; a shape carrying no text can be fully saturated. Five palette hues (`--dia-a` … `--dia-e`) are fixed in the stylesheet so 21 modules stay one system.
 - **Content boxes are filled; containers are not.** Stripping fills entirely "changed the theme of the website". The genuine fault was only ever *nesting* tints — a 10% blue on a 10% crimson wash renders lavender.
 
-### Where it stands
+### Where it ended
 
-126 figures, down from 141. 89 SVG, 37 still HTML. Modules 1–5 complete.
+**All fourteen modules are done.** 130 figures in the corpus, down from 141. **125 are SVG and fully conformant; 5 remain HTML, all of them outside the fourteen-module table** in modules 15 to 21.
 
-**Six of the eleven inherited SVGs verified so far have failed** — bare semantic tokens used for text, text authored below 11px, off-spec canvases, one hardcoded system font stack. The verify pass is earning its place more than expected.
+**Sixteen figures were removed or converted**, none for being ugly. Two were `<table>` elements wrapped in a diagram box, one was an exact duplicate across two sections, several were numbered lists wearing boxes, one was two emoji sitting under a sentence reading "technology is not adopted by diagrams", and the last was a six-row reference table in Marketing Channels §5 that a plain table renders better.
 
-**Fifteen figures were removed or converted**, none for being ugly: two were `<table>` elements wrapped in a diagram box, one was an exact duplicate across two sections, several were numbered lists wearing boxes, and one was two emoji sitting under a sentence reading "technology is not adopted by diagrams".
+**The verify pass failed 41 of the 46 inherited SVGs it examined**, and the failure was the same one nearly every time: a pre-August generation that hardcoded what the token system now owns. Across the corpus the programme removed 414 hardcoded font stacks, 268 stale accent fallbacks, 200 uses of the dark `--text3` as a light one, 50 raw hex colours, 96 texts below the 11px floor, and 49 uppercase letter-spaced labels.
 
-Marketing Channels carries 14 of the 37 remaining redraws and needs more than one sitting. Analysis Workspace needs verification only.
+**The table said Analysis Workspace needed "verification only". It was the heaviest module of the fourteen.** Absence of HTML figures is not evidence of conformance, and a future programme should not read it that way.
+
+**Modules 1 to 5 were completed before `diagram-check.js` existed, and their verification was weaker for it.** A census after cycle 14 found 118 hardcoded font stacks still inside their figures, 106 of them plain `sans-serif`, so those figures were not rendering in Plex at all. They were swept to the current standard at close-out. The lesson is not that those cycles were careless; it is that a written check finds what an eye does not, and everything before it needs re-running once it exists.
 
 ### The method lesson, which is the durable part
+
+**A colour sweep is not a colour decision, and this is the sharpest lesson of the programme.** A find-and-replace mapping every legacy `--accent` onto `--dia-a` leaves a module conformant and monochrome. Segments came out 70 per cent one hue with two of five unused; Amit caught it on sight. The repair was not to spread colour around but to find what the module was already about — scope in Segments, the component rail in Workspace — and let the hues encode that. **Where the product already colour-codes something, borrow it.** Workspace had done exactly that in hardcoded hex, which is how the module turned out to hold its own answer.
 
 **Amit caught three faults that every automated check passed**: colour clutter, a section rendering inside an unclosed code block, and a shape striking through the line beneath it. Each time the checks were extended afterwards — element opacity in contrast maths, div balance after scripted edits, text-versus-*every-shape* collision rather than text-versus-rect.
 
