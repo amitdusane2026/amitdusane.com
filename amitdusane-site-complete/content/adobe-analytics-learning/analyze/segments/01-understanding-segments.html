@@ -25,29 +25,29 @@ weight: 1
 <p>Picture a spreadsheet, forty columns wide and tens of thousands of rows deep. To make sense of it you apply a filter, and every row that does not match is hidden from view. It works. But look closely at what you are holding. That filter lives in that one sheet. It hides rows; it never creates anything. Close the file and it is gone. You cannot hand it to a colleague, cannot drop it onto a different report, cannot reuse it next month without building it from scratch again. A filter is an action you perform on data, and when it is finished it leaves nothing behind.</p>
 
 <div class="diagram-box">
-    <div class="diagram-title">📊 A filter hides rows. A segment is a thing you keep.</div>
-    <svg viewBox="0 0 700 262" style="width:100%;height:auto;display:block;margin:4px 0 8px" role="img" aria-label="A spreadsheet filter hides rows inside one sheet, cannot be moved or reused, and disappears when the file closes. An Adobe segment is a named saved object that applies to any report, can be shared and reused, and carries a scope that can return more data than the matching hits.">
-        <rect x="14" y="46" width="312" height="200" rx="8" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
-        <rect x="374" y="46" width="312" height="200" rx="8" style="fill:var(--card,#ffffff);stroke:var(--accent,#e11d48);stroke-width:2"/>
+    <div class="diagram-title">A filter hides rows. A segment is a thing you keep.</div>
+    <svg viewBox="0 0 700 262" style="width:100%;height:auto;display:block" role="img" aria-label="A spreadsheet filter hides rows inside one sheet, cannot be moved or reused, and disappears when the file closes. An Adobe segment is a named saved object that applies to any report, can be shared and reused, and carries a scope that can return more data than the matching hits.">
+        <rect x="14" y="46" width="312" height="200" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+        <rect x="374" y="46" width="312" height="200" rx="6" style="fill:var(--card,#ffffff);stroke:var(--dia-a,#ba2142);stroke-width:1.6"/>
 
-        <text x="34" y="78" style="fill:var(--text2,#475569);font-size:14px;font-weight:700;font-family:sans-serif">Spreadsheet filter</text>
-        <text x="34" y="96" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">something you do</text>
+        <text x="34" y="78" style="fill:var(--text2,#475569);font-size:14px;font-weight:700">Spreadsheet filter</text>
+        <text x="34" y="96" style="fill:var(--text3,#5d6b7e);font-size:11px">something you do</text>
 
-        <text x="394" y="78" style="fill:var(--accent,#e11d48);font-size:14px;font-weight:700;font-family:sans-serif">Adobe segment</text>
-        <text x="394" y="96" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">something that exists</text>
+        <text x="394" y="78" style="fill:var(--dia-a-ink,#951833);font-size:14px;font-weight:700">Adobe segment</text>
+        <text x="394" y="96" style="fill:var(--text3,#5d6b7e);font-size:11px">something that exists</text>
 
-        <text x="34" y="132" style="fill:var(--text2,#475569);font-size:12px;font-family:sans-serif">•  Hides rows in one sheet</text>
-        <text x="34" y="160" style="fill:var(--text2,#475569);font-size:12px;font-family:sans-serif">•  Cannot leave that sheet</text>
-        <text x="34" y="188" style="fill:var(--text2,#475569);font-size:12px;font-family:sans-serif">•  Gone when you close it</text>
-        <text x="34" y="216" style="fill:var(--text2,#475569);font-size:12px;font-family:sans-serif">•  Only ever shows you less</text>
+        <text x="34" y="132" style="fill:var(--text2,#475569);font-size:12px">•  Hides rows in one sheet</text>
+        <text x="34" y="160" style="fill:var(--text2,#475569);font-size:12px">•  Cannot leave that sheet</text>
+        <text x="34" y="188" style="fill:var(--text2,#475569);font-size:12px">•  Gone when you close it</text>
+        <text x="34" y="216" style="fill:var(--text2,#475569);font-size:12px">•  Only ever shows you less</text>
 
-        <text x="394" y="132" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">•  A named, saved object</text>
-        <text x="394" y="160" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">•  Applies to any report you own</text>
-        <text x="394" y="188" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">•  Reusable, stackable, shareable</text>
-        <text x="394" y="216" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">•  Carries a scope, can pull in more</text>
+        <text x="394" y="132" style="fill:var(--text1,#0f172a);font-size:12px">•  A named, saved object</text>
+        <text x="394" y="160" style="fill:var(--text1,#0f172a);font-size:12px">•  Applies to any report you own</text>
+        <text x="394" y="188" style="fill:var(--text1,#0f172a);font-size:12px">•  Reusable, stackable, shareable</text>
+        <text x="394" y="216" style="fill:var(--text1,#0f172a);font-size:12px">•  Carries a scope, can pull in more</text>
 
-        <circle cx="350" cy="146" r="21" style="fill:var(--card,#ffffff);stroke:var(--accent,#e11d48);stroke-width:2"/>
-        <text x="350" y="151" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:13px;font-weight:700;font-family:sans-serif">vs</text>
+        <circle cx="350" cy="146" r="21" style="fill:var(--card,#ffffff);stroke:var(--dia-a,#ba2142);stroke-width:1.6"/>
+        <text x="350" y="151" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:13px;font-weight:700">vs</text>
     </svg>
 </div>
 
@@ -57,34 +57,34 @@ weight: 1
 <p>An Adobe segment is a saved object. It has a name. It carries its own definition. You build it once and then apply it to any report you own, hand it to a colleague, stack it on top of another segment, and come back to it in six months without rebuilding a thing. Where a spreadsheet filter hides rows and then evaporates, a segment defines a slice and stays. That shift, from an action into an object, is what turns segmentation into an engineering tool rather than a convenience, and it is why the people who live in reporting spend a real part of every week building, sharing, and refining them.</p>
 
 <div class="diagram-box">
-    <div class="diagram-title">📊 Build it once, apply it everywhere</div>
-    <svg viewBox="0 0 700 250" style="width:100%;height:auto;display:block;margin:4px 0 8px" role="img" aria-label="A single segment named North America visitors feeds a downloads report, a revenue panel, and a fallout visualization, and can be shared with a colleague. One definition applies everywhere.">
-        <rect x="24" y="90" width="176" height="66" rx="10" style="fill:var(--card,#ffffff);stroke:var(--accent,#e11d48);stroke-width:2.5"/>
-        <text x="112" y="116" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:10px;font-weight:700;font-family:sans-serif;letter-spacing:1px">ONE SEGMENT</text>
-        <text x="112" y="138" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:13px;font-weight:700;font-family:sans-serif">North America visitors</text>
+    <div class="diagram-title">Build it once, apply it everywhere</div>
+    <svg viewBox="0 0 700 250" style="width:100%;height:auto;display:block" role="img" aria-label="A single segment named North America visitors feeds a downloads report, a revenue panel, and a fallout visualization, and can be shared with a colleague. One definition applies everywhere.">
+        <rect x="24" y="90" width="176" height="66" rx="10" style="fill:var(--card,#ffffff);stroke:var(--dia-a,#ba2142);stroke-width:1.6"/>
+        <text x="112" y="116" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px;font-weight:700">One segment</text>
+        <text x="112" y="138" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:13px;font-weight:700">North America visitors</text>
 
-        <line x1="200" y1="123" x2="424" y2="45" style="stroke:var(--accent,#e11d48);stroke-width:1.5"/>
-        <line x1="200" y1="123" x2="424" y2="97" style="stroke:var(--accent,#e11d48);stroke-width:1.5"/>
-        <line x1="200" y1="123" x2="424" y2="149" style="stroke:var(--accent,#e11d48);stroke-width:1.5"/>
-        <line x1="200" y1="123" x2="424" y2="201" style="stroke:var(--accent,#e11d48);stroke-width:1.5"/>
-        <polygon points="430,45 419,40 419,50" style="fill:var(--accent,#e11d48)"/>
-        <polygon points="430,97 419,92 419,102" style="fill:var(--accent,#e11d48)"/>
-        <polygon points="430,149 419,144 419,154" style="fill:var(--accent,#e11d48)"/>
-        <polygon points="430,201 419,196 419,206" style="fill:var(--accent,#e11d48)"/>
+        <line x1="200" y1="123" x2="424" y2="45" style="stroke:var(--dia-a,#ba2142);stroke-width:1.4"/>
+        <line x1="200" y1="123" x2="424" y2="97" style="stroke:var(--dia-a,#ba2142);stroke-width:1.4"/>
+        <line x1="200" y1="123" x2="424" y2="149" style="stroke:var(--dia-a,#ba2142);stroke-width:1.4"/>
+        <line x1="200" y1="123" x2="424" y2="201" style="stroke:var(--dia-a,#ba2142);stroke-width:1.4"/>
+        <polygon points="430,45 419,40 419,50" style="fill:var(--dia-a,#ba2142)"/>
+        <polygon points="430,97 419,92 419,102" style="fill:var(--dia-a,#ba2142)"/>
+        <polygon points="430,149 419,144 419,154" style="fill:var(--dia-a,#ba2142)"/>
+        <polygon points="430,201 419,196 419,206" style="fill:var(--dia-a,#ba2142)"/>
 
-        <rect x="432" y="26" width="252" height="40" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
-        <text x="448" y="51" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">A Downloads report</text>
+        <rect x="432" y="26" width="252" height="40" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+        <text x="448" y="51" style="fill:var(--text1,#0f172a);font-size:12px">A Downloads report</text>
 
-        <rect x="432" y="78" width="252" height="40" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
-        <text x="448" y="103" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">A revenue-by-channel panel</text>
+        <rect x="432" y="78" width="252" height="40" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+        <text x="448" y="103" style="fill:var(--text1,#0f172a);font-size:12px">A revenue-by-channel panel</text>
 
-        <rect x="432" y="130" width="252" height="40" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
-        <text x="448" y="155" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">A Fallout visualization</text>
+        <rect x="432" y="130" width="252" height="40" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+        <text x="448" y="155" style="fill:var(--text1,#0f172a);font-size:12px">A Fallout visualization</text>
 
-        <rect x="432" y="182" width="252" height="40" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
-        <text x="448" y="207" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">A colleague you shared it with</text>
+        <rect x="432" y="182" width="252" height="40" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+        <text x="448" y="207" style="fill:var(--text1,#0f172a);font-size:12px">A colleague you shared it with</text>
 
-        <text x="24" y="242" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">One definition. Every surface it touches asks the exact same question.</text>
+        <text x="24" y="242" style="fill:var(--text3,#5d6b7e);font-size:11px">One definition. Every surface it touches asks the exact same question.</text>
     </svg>
 </div>
 

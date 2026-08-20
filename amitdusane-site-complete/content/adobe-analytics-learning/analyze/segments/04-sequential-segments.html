@@ -20,29 +20,31 @@ weight: 4
 <p>Two details matter from the outset. A sequence needs at least two checkpoints, since a single event has nothing to follow. And the first checkpoint is part of the result, not merely a trigger. Page A <code>THEN</code> Page B does not return only the Page B moment; it returns the matched journey that began at Page A.</p>
 
 <div class="diagram-box">
-    <div class="diagram-title">📊 AND ignores order, THEN enforces it</div>
-    <svg viewBox="0 0 700 176" style="width:100%;height:auto;display:block;margin:4px 0 8px" role="img" aria-label="On the left, AND: both A-then-B and B-then-A qualify, because order is ignored. On the right, THEN: only A-then-B qualifies and B-then-A does not, because order is enforced.">
-        <text x="30" y="26" style="fill:var(--accent,#e11d48);font-size:14px;font-weight:700;font-family:sans-serif">AND: both happened</text>
-        <rect x="30" y="42" width="30" height="24" rx="4" style="fill:var(--card,#ffffff);stroke:var(--text2,#475569);stroke-width:1.5"/><text x="45" y="59" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">A</text>
-        <rect x="70" y="42" width="30" height="24" rx="4" style="fill:var(--card,#ffffff);stroke:var(--text2,#475569);stroke-width:1.5"/><text x="85" y="59" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">B</text>
-        <text x="120" y="59" style="fill:var(--success,#10b981);font-size:15px;font-weight:700;font-family:sans-serif">&#10003;</text>
-        <rect x="30" y="78" width="30" height="24" rx="4" style="fill:var(--card,#ffffff);stroke:var(--text2,#475569);stroke-width:1.5"/><text x="45" y="95" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">B</text>
-        <rect x="70" y="78" width="30" height="24" rx="4" style="fill:var(--card,#ffffff);stroke:var(--text2,#475569);stroke-width:1.5"/><text x="85" y="95" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">A</text>
-        <text x="120" y="95" style="fill:var(--success,#10b981);font-size:15px;font-weight:700;font-family:sans-serif">&#10003;</text>
-        <text x="30" y="134" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">Order ignored. Both orderings qualify.</text>
+    <div class="diagram-title">AND ignores order, THEN enforces it</div>
+    <svg viewBox="0 0 700 196" style="width:100%;height:auto;display:block" role="img" aria-label="On the left, AND: both A-then-B and B-then-A qualify, because order is ignored. On the right, THEN: only A-then-B qualifies and B-then-A does not, because order is enforced.">
+        <text x="30" y="26" style="fill:var(--dia-a-ink,#951833);font-size:14px;font-weight:700">AND: both happened</text>
+        <rect x="30" y="42" width="30" height="24" rx="3" style="fill:var(--card,#ffffff);stroke:var(--text2,#475569);stroke-width:1.4"/><text x="45" y="59" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700">A</text>
+        <rect x="70" y="42" width="30" height="24" rx="3" style="fill:var(--card,#ffffff);stroke:var(--text2,#475569);stroke-width:1.4"/><text x="85" y="59" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700">B</text>
+        <text x="120" y="59" style="fill:var(--dia-c-ink,#0a6e50);font-size:15px;font-weight:700">&#10003;</text>
+        <rect x="30" y="78" width="30" height="24" rx="3" style="fill:var(--card,#ffffff);stroke:var(--text2,#475569);stroke-width:1.4"/><text x="45" y="95" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700">B</text>
+        <rect x="70" y="78" width="30" height="24" rx="3" style="fill:var(--card,#ffffff);stroke:var(--text2,#475569);stroke-width:1.4"/><text x="85" y="95" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700">A</text>
+        <text x="120" y="95" style="fill:var(--dia-c-ink,#0a6e50);font-size:15px;font-weight:700">&#10003;</text>
+        <text x="30" y="134" style="fill:var(--text3,#5d6b7e);font-size:11px">Order ignored. Both orderings qualify.</text>
 
-        <line x1="350" y1="20" x2="350" y2="150" style="stroke:var(--border,#e2e8f0);stroke-width:1"/>
+        <line x1="350" y1="20" x2="350" y2="150" style="stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
 
-        <text x="384" y="26" style="fill:var(--accent,#e11d48);font-size:14px;font-weight:700;font-family:sans-serif">THEN: A before B</text>
-        <rect x="384" y="42" width="30" height="24" rx="4" style="fill:var(--card,#ffffff);stroke:var(--accent,#e11d48);stroke-width:1.5"/><text x="399" y="59" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">A</text>
-        <text x="420" y="59" style="fill:var(--accent,#e11d48);font-size:13px;font-family:sans-serif">&#8594;</text>
-        <rect x="436" y="42" width="30" height="24" rx="4" style="fill:var(--card,#ffffff);stroke:var(--accent,#e11d48);stroke-width:1.5"/><text x="451" y="59" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">B</text>
-        <text x="486" y="59" style="fill:var(--success,#10b981);font-size:15px;font-weight:700;font-family:sans-serif">&#10003;</text>
-        <rect x="384" y="78" width="30" height="24" rx="4" style="fill:var(--card,#ffffff);stroke:var(--text2,#475569);stroke-width:1.5"/><text x="399" y="95" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12px;font-weight:700;font-family:sans-serif">B</text>
-        <text x="420" y="95" style="fill:var(--text3,#94a3b8);font-size:13px;font-family:sans-serif">&#8594;</text>
-        <rect x="436" y="78" width="30" height="24" rx="4" style="fill:var(--card,#ffffff);stroke:var(--text2,#475569);stroke-width:1.5"/><text x="451" y="95" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12px;font-weight:700;font-family:sans-serif">A</text>
-        <text x="486" y="95" style="fill:var(--text3,#94a3b8);font-size:15px;font-weight:700;font-family:sans-serif">&#10007;</text>
-        <text x="384" y="134" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">Order enforced. Only the first qualifies.</text>
+        <text x="384" y="26" style="fill:var(--dia-a-ink,#951833);font-size:14px;font-weight:700">THEN: A before B</text>
+        <rect x="384" y="42" width="30" height="24" rx="3" style="fill:var(--card,#ffffff);stroke:var(--dia-a,#ba2142);stroke-width:1.4"/><text x="399" y="59" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700">A</text>
+        <text x="420" y="59" style="fill:var(--dia-a-ink,#951833);font-size:13px">&#8594;</text>
+        <rect x="436" y="42" width="30" height="24" rx="3" style="fill:var(--card,#ffffff);stroke:var(--dia-a,#ba2142);stroke-width:1.4"/><text x="451" y="59" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700">B</text>
+        <text x="486" y="59" style="fill:var(--dia-c-ink,#0a6e50);font-size:15px;font-weight:700">&#10003;</text>
+        <rect x="384" y="78" width="30" height="24" rx="3" style="fill:var(--card,#ffffff);stroke:var(--text2,#475569);stroke-width:1.4"/><text x="399" y="95" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12px;font-weight:700">B</text>
+        <text x="420" y="95" style="fill:var(--text3,#5d6b7e);font-size:13px">&#8594;</text>
+        <rect x="436" y="78" width="30" height="24" rx="3" style="fill:var(--card,#ffffff);stroke:var(--text2,#475569);stroke-width:1.4"/><text x="451" y="95" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12px;font-weight:700">A</text>
+        <text x="486" y="95" style="fill:var(--text3,#5d6b7e);font-size:15px;font-weight:700">&#10007;</text>
+        <text x="384" y="134" style="fill:var(--text3,#5d6b7e);font-size:11px">Order enforced. Only the first qualifies.</text>
+
+        <text x="350" y="176" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">Same two steps, same two events. The only difference is whether the order was part of the question.</text>
     </svg>
 </div>
 
@@ -55,31 +57,31 @@ weight: 4
 <p>Two options carve it down. "Only Before Sequence" keeps the sequence and everything leading up to it, the run-up. "Only After Sequence" keeps the sequence and everything that followed, the aftermath. Both include the matched sequence itself; they differ only in which side of it they keep. To learn what visitors did on their way to starting a trial, use Only Before. To learn what they did once they converted, use Only After.</p>
 
 <div class="diagram-box">
-    <div class="diagram-title">📊 What each sequence option returns from one matched journey</div>
-    <svg viewBox="0 0 700 224" style="width:100%;height:auto;display:block;margin:4px 0 8px" role="img" aria-label="A timeline of one visitor's hits with checkpoint A and checkpoint B marked. Include Everyone returns the whole timeline. Only Before returns from the start through B. Only After returns from A through the end. All three include the sequence A to B.">
-        <line x1="180" y1="40" x2="620" y2="40" style="stroke:var(--border,#e2e8f0);stroke-width:2"/>
-        <circle cx="180" cy="40" r="5" style="fill:var(--text3,#94a3b8)"/>
-        <circle cx="250" cy="40" r="7" style="fill:var(--accent,#e11d48)"/>
-        <circle cx="340" cy="40" r="5" style="fill:var(--text3,#94a3b8)"/>
-        <circle cx="430" cy="40" r="7" style="fill:var(--accent,#e11d48)"/>
-        <circle cx="520" cy="40" r="5" style="fill:var(--text3,#94a3b8)"/>
-        <circle cx="610" cy="40" r="5" style="fill:var(--text3,#94a3b8)"/>
-        <text x="250" y="24" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:12px;font-weight:700;font-family:sans-serif">A</text>
-        <text x="430" y="24" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:12px;font-weight:700;font-family:sans-serif">B</text>
+    <div class="diagram-title">What each sequence option returns from one matched journey</div>
+    <svg viewBox="0 0 700 224" style="width:100%;height:auto;display:block" role="img" aria-label="A timeline of one visitor's hits with checkpoint A and checkpoint B marked. Include Everyone returns the whole timeline. Only Before returns from the start through B. Only After returns from A through the end. All three include the sequence A to B.">
+        <line x1="180" y1="40" x2="620" y2="40" style="stroke:var(--border,#e2e8f0);stroke-width:1.6"/>
+        <circle cx="180" cy="40" r="5" style="fill:var(--text3,#5d6b7e)"/>
+        <circle cx="250" cy="40" r="7" style="fill:var(--dia-a,#ba2142)"/>
+        <circle cx="340" cy="40" r="5" style="fill:var(--text3,#5d6b7e)"/>
+        <circle cx="430" cy="40" r="7" style="fill:var(--dia-a,#ba2142)"/>
+        <circle cx="520" cy="40" r="5" style="fill:var(--text3,#5d6b7e)"/>
+        <circle cx="610" cy="40" r="5" style="fill:var(--text3,#5d6b7e)"/>
+        <text x="250" y="24" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:12px;font-weight:700">A</text>
+        <text x="430" y="24" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:12px;font-weight:700">B</text>
 
-        <text x="16" y="86" style="fill:var(--text2,#475569);font-size:11px;font-weight:600;font-family:sans-serif">Include Everyone</text>
-        <rect x="180" y="74" width="430" height="22" rx="4" style="fill:var(--accent,#e11d48);opacity:.16"/>
-        <rect x="180" y="74" width="430" height="22" rx="4" style="fill:none;stroke:var(--accent,#e11d48);stroke-width:1.2"/>
+        <text x="16" y="86" style="fill:var(--text2,#475569);font-size:11px;font-weight:600">Include Everyone</text>
+        <rect x="180" y="74" width="430" height="22" rx="3" style="fill:var(--dia-a,#ba2142);opacity:.16"/>
+        <rect x="180" y="74" width="430" height="22" rx="3" style="fill:none;stroke:var(--dia-a,#ba2142);stroke-width:1.2"/>
 
-        <text x="16" y="128" style="fill:var(--text2,#475569);font-size:11px;font-weight:600;font-family:sans-serif">Only Before</text>
-        <rect x="180" y="116" width="250" height="22" rx="4" style="fill:var(--info,#3b82f6);opacity:.16"/>
-        <rect x="180" y="116" width="250" height="22" rx="4" style="fill:none;stroke:var(--info,#3b82f6);stroke-width:1.2"/>
+        <text x="16" y="128" style="fill:var(--text2,#475569);font-size:11px;font-weight:600">Only Before</text>
+        <rect x="180" y="116" width="250" height="22" rx="3" style="fill:var(--dia-b,#2563eb);opacity:.16"/>
+        <rect x="180" y="116" width="250" height="22" rx="3" style="fill:none;stroke:var(--dia-b,#2563eb);stroke-width:1.2"/>
 
-        <text x="16" y="170" style="fill:var(--text2,#475569);font-size:11px;font-weight:600;font-family:sans-serif">Only After</text>
-        <rect x="250" y="158" width="360" height="22" rx="4" style="fill:var(--success,#10b981);opacity:.16"/>
-        <rect x="250" y="158" width="360" height="22" rx="4" style="fill:none;stroke:var(--success,#10b981);stroke-width:1.2"/>
+        <text x="16" y="170" style="fill:var(--text2,#475569);font-size:11px;font-weight:600">Only After</text>
+        <rect x="250" y="158" width="360" height="22" rx="3" style="fill:var(--dia-c,#10b981);opacity:.16"/>
+        <rect x="250" y="158" width="360" height="22" rx="3" style="fill:none;stroke:var(--dia-c,#10b981);stroke-width:1.2"/>
 
-        <text x="16" y="206" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">All three include the sequence itself (A to B). They differ in which side they keep.</text>
+        <text x="16" y="206" style="fill:var(--text3,#5d6b7e);font-size:11px">All three include the sequence itself (A to B). They differ in which side they keep.</text>
     </svg>
 </div>
 
@@ -150,34 +152,34 @@ Save</pre></div>
 <p>Real journeys are not always strictly ordered end to end. Often part of a path is fixed and part is loose: a visitor must arrive from a campaign first and reach the order page last, but the two things they do in between, viewing a demo and viewing a coupon, can happen in either order. Expressing that needs a way to say "these steps, in any order, but as a group in this position." That is the Logic Group container, and it is the reason it was held back from the earlier sections: it exists only inside a sequence.</p>
 
 <div class="diagram-box">
-    <div class="diagram-title">📊 A Logic Group holds unordered steps inside an ordered sequence</div>
-    <svg viewBox="0 0 700 214" style="width:100%;height:auto;display:block;margin:4px 0 8px" role="img" aria-label="An ordered sequence. First, arrived from campaign. THEN a Logic Group holding viewed demo and viewed coupon, which may happen in any order. THEN reached confirmation. The group as a whole must fall between the arrival and the confirmation.">
-        <rect x="14" y="72" width="150" height="60" rx="8" style="fill:var(--card,#ffffff);stroke:var(--text2,#475569);stroke-width:1.5"/>
-        <text x="89" y="98" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">Arrived from</text>
-        <text x="89" y="114" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">a campaign</text>
+    <div class="diagram-title">A Logic Group holds unordered steps inside an ordered sequence</div>
+    <svg viewBox="0 0 700 214" style="width:100%;height:auto;display:block" role="img" aria-label="An ordered sequence. First, arrived from campaign. THEN a Logic Group holding viewed demo and viewed coupon, which may happen in any order. THEN reached confirmation. The group as a whole must fall between the arrival and the confirmation.">
+        <rect x="14" y="72" width="150" height="60" rx="6" style="fill:var(--card,#ffffff);stroke:var(--text2,#475569);stroke-width:1.4"/>
+        <text x="89" y="98" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px">Arrived from</text>
+        <text x="89" y="114" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px">a campaign</text>
 
-        <text x="190" y="92" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:11px;font-weight:700;font-family:sans-serif">THEN</text>
-        <line x1="166" y1="102" x2="212" y2="102" style="stroke:var(--accent,#e11d48);stroke-width:1.5"/>
-        <polygon points="218,102 207,97 207,107" style="fill:var(--accent,#e11d48)"/>
+        <text x="190" y="92" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:11px;font-weight:700">THEN</text>
+        <line x1="166" y1="102" x2="212" y2="102" style="stroke:var(--dia-a,#ba2142);stroke-width:1.4"/>
+        <polygon points="218,102 207,97 207,107" style="fill:var(--dia-a,#ba2142)"/>
 
-        <rect x="222" y="46" width="230" height="112" rx="8" style="fill:var(--accent,#e11d48);opacity:.06"/>
-        <rect x="222" y="46" width="230" height="112" rx="8" style="fill:none;stroke:var(--accent,#e11d48);stroke-width:2.5"/>
-        <text x="238" y="66" style="fill:var(--accent,#e11d48);font-size:10px;font-weight:700;font-family:sans-serif;letter-spacing:.5px">LOGIC GROUP, ANY ORDER</text>
-        <rect x="238" y="76" width="198" height="26" rx="4" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1"/>
-        <text x="252" y="93" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">Viewed the demo page</text>
-        <text x="337" y="120" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:10px;font-style:italic;font-family:sans-serif">and, in either order</text>
-        <rect x="238" y="126" width="198" height="26" rx="4" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1"/>
-        <text x="252" y="143" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">Viewed the coupon page</text>
+        <rect x="222" y="46" width="230" height="112" rx="6" style="fill:var(--dia-a,#ba2142);opacity:.06"/>
+        <rect x="222" y="46" width="230" height="112" rx="6" style="fill:none;stroke:var(--dia-a,#ba2142);stroke-width:1.6"/>
+        <text x="238" y="66" style="fill:var(--dia-a-ink,#951833);font-size:11px;font-weight:700">Logic group, any order</text>
+        <rect x="238" y="76" width="198" height="26" rx="3" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
+        <text x="252" y="93" style="fill:var(--text1,#0f172a);font-size:12px">Viewed the demo page</text>
+        <text x="337" y="120" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">and, in either order</text>
+        <rect x="238" y="126" width="198" height="26" rx="3" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
+        <text x="252" y="143" style="fill:var(--text1,#0f172a);font-size:12px">Viewed the coupon page</text>
 
-        <text x="478" y="92" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:11px;font-weight:700;font-family:sans-serif">THEN</text>
-        <line x1="454" y1="102" x2="500" y2="102" style="stroke:var(--accent,#e11d48);stroke-width:1.5"/>
-        <polygon points="506,102 495,97 495,107" style="fill:var(--accent,#e11d48)"/>
+        <text x="478" y="92" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:11px;font-weight:700">THEN</text>
+        <line x1="454" y1="102" x2="500" y2="102" style="stroke:var(--dia-a,#ba2142);stroke-width:1.4"/>
+        <polygon points="506,102 495,97 495,107" style="fill:var(--dia-a,#ba2142)"/>
 
-        <rect x="510" y="72" width="176" height="60" rx="8" style="fill:var(--card,#ffffff);stroke:var(--text2,#475569);stroke-width:1.5"/>
-        <text x="598" y="98" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">Reached order</text>
-        <text x="598" y="114" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">confirmation</text>
+        <rect x="510" y="72" width="176" height="60" rx="6" style="fill:var(--card,#ffffff);stroke:var(--text2,#475569);stroke-width:1.4"/>
+        <text x="598" y="98" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px">Reached order</text>
+        <text x="598" y="114" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px">confirmation</text>
 
-        <text x="14" y="188" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">The two middle steps may occur in either order, but the group must fall between arrival and confirmation.</text>
+        <text x="14" y="188" style="fill:var(--text3,#5d6b7e);font-size:11px">The two middle steps may occur in either order, but the group must fall between arrival and confirmation.</text>
     </svg>
 </div>
 

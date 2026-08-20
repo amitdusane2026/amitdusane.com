@@ -53,29 +53,29 @@ weight: 3
 <p>Two conditions can relate in two basic ways. <code>And</code> requires both to be true, which narrows the result to where they overlap. <code>Or</code> requires only one, which widens the result to everything in either. The names say exactly what they do, and that simplicity becomes a trap only when a segment grows and the basics slip out of mind.</p>
 
 <div class="diagram-box">
-    <div class="diagram-title">📊 And narrows to the overlap, Or widens to either</div>
-    <svg viewBox="0 0 700 250" style="width:100%;height:auto;display:block;margin:4px 0 8px" role="img" aria-label="Two set diagrams. On the left, And highlights only the overlap where both conditions are true, a smaller group. On the right, Or highlights both full circles, everything in either condition, a larger group.">
-        <defs><clipPath id="andLens"><circle cx="150" cy="120" r="58"/></clipPath></defs>
-        <text x="180" y="34" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:15px;font-weight:700;font-family:sans-serif">AND</text>
-        <circle cx="150" cy="120" r="58" style="fill:none;stroke:var(--text2,#475569);stroke-width:1.5"/>
-        <circle cx="222" cy="120" r="58" style="fill:none;stroke:var(--text2,#475569);stroke-width:1.5"/>
-        <circle cx="222" cy="120" r="58" style="fill:var(--accent,#e11d48);opacity:.34" clip-path="url(#andLens)"/>
-        <text x="118" y="124" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">Mobile</text>
-        <text x="254" y="124" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">Bought</text>
-        <text x="180" y="208" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:600;font-family:sans-serif">Both true: the overlap only</text>
-        <text x="180" y="226" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">a smaller group than either alone</text>
+    <div class="diagram-title">And narrows to the overlap, Or widens to either</div>
+    <svg viewBox="0 0 700 250" style="width:100%;height:auto;display:block" role="img" aria-label="Two set diagrams. On the left, And highlights only the overlap where both conditions are true, a smaller group. On the right, Or highlights both full circles, everything in either condition, a larger group.">
+        <defs><clipPath id="andLens3"><circle cx="150" cy="120" r="58"/></clipPath></defs>
+        <text x="180" y="34" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:15px;font-weight:700">AND</text>
+        <circle cx="150" cy="120" r="58" style="fill:none;stroke:var(--text2,#475569);stroke-width:1.4"/>
+        <circle cx="222" cy="120" r="58" style="fill:none;stroke:var(--text2,#475569);stroke-width:1.4"/>
+        <circle cx="222" cy="120" r="58" style="fill:var(--dia-a,#ba2142);opacity:.34" clip-path="url(#andLens3)"/>
+        <text x="118" y="124" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px">Mobile</text>
+        <text x="254" y="124" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px">Bought</text>
+        <text x="180" y="208" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:600">Both true: the overlap only</text>
+        <text x="180" y="226" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">a smaller group than either alone</text>
 
-        <line x1="350" y1="40" x2="350" y2="200" style="stroke:var(--border,#e2e8f0);stroke-width:1"/>
+        <line x1="350" y1="40" x2="350" y2="200" style="stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
 
-        <text x="520" y="34" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:15px;font-weight:700;font-family:sans-serif">OR</text>
-        <circle cx="490" cy="120" r="58" style="fill:var(--accent,#e11d48);opacity:.20"/>
-        <circle cx="562" cy="120" r="58" style="fill:var(--accent,#e11d48);opacity:.20"/>
-        <circle cx="490" cy="120" r="58" style="fill:none;stroke:var(--text2,#475569);stroke-width:1.5"/>
-        <circle cx="562" cy="120" r="58" style="fill:none;stroke:var(--text2,#475569);stroke-width:1.5"/>
-        <text x="458" y="124" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">iOS</text>
-        <text x="594" y="124" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">Android</text>
-        <text x="520" y="208" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:600;font-family:sans-serif">Either true: everything in both</text>
-        <text x="520" y="226" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">a larger group than either alone</text>
+        <text x="520" y="34" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:15px;font-weight:700">OR</text>
+        <circle cx="490" cy="120" r="58" style="fill:var(--dia-a,#ba2142);opacity:.20"/>
+        <circle cx="562" cy="120" r="58" style="fill:var(--dia-a,#ba2142);opacity:.20"/>
+        <circle cx="490" cy="120" r="58" style="fill:none;stroke:var(--text2,#475569);stroke-width:1.4"/>
+        <circle cx="562" cy="120" r="58" style="fill:none;stroke:var(--text2,#475569);stroke-width:1.4"/>
+        <text x="458" y="124" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px">iOS</text>
+        <text x="594" y="124" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px">Android</text>
+        <text x="520" y="208" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:600">Either true: everything in both</text>
+        <text x="520" y="226" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">a larger group than either alone</text>
     </svg>
 </div>
 
@@ -87,25 +87,25 @@ weight: 3
 <p>But real questions mix them constantly. Take this one: a visit in which the customer saw page ABC and played a video, or, separately, simply saw page XYZ. That is an <code>And</code> pair sitting inside an <code>Or</code>. The way to express it is the nesting from <a href="/adobe-analytics-learning/analyze/segments/segment-containers/">Segment Containers</a>, where a container holds another container: group the <code>And</code> pair inside its own nested container, then join that container to the remaining condition with <code>Or</code>.</p>
 
 <div class="diagram-box">
-    <div class="diagram-title">📊 (Page ABC AND a video) OR Page XYZ</div>
-    <svg viewBox="0 0 700 232" style="width:100%;height:auto;display:block;margin:4px 0 8px" role="img" aria-label="The mixed condition drawn as structure. A nested container at Visit scope holds Page equals ABC joined by AND to Video Play exists. That whole container is joined by OR to a separate condition, Page equals XYZ.">
-        <rect x="18" y="40" width="306" height="150" rx="8" style="fill:var(--accent,#e11d48);opacity:.06"/>
-        <rect x="18" y="40" width="306" height="150" rx="8" style="fill:none;stroke:var(--accent,#e11d48);stroke-width:2.5"/>
-        <text x="34" y="64" style="fill:var(--accent,#e11d48);font-size:10px;font-weight:700;font-family:sans-serif;letter-spacing:.5px">NESTED CONTAINER, VISIT SCOPE</text>
-        <rect x="34" y="78" width="274" height="30" rx="4" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1"/>
-        <text x="48" y="98" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">Page&nbsp;&nbsp;equals&nbsp;&nbsp;ABC</text>
-        <rect x="150" y="114" width="42" height="20" rx="10" style="fill:var(--accent,#e11d48);opacity:.14"/>
-        <text x="171" y="128" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:11px;font-weight:700;font-family:sans-serif">AND</text>
-        <rect x="34" y="140" width="274" height="30" rx="4" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1"/>
-        <text x="48" y="160" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">Video Play&nbsp;&nbsp;exists</text>
+    <div class="diagram-title">(Page ABC AND a video) OR Page XYZ</div>
+    <svg viewBox="0 0 700 232" style="width:100%;height:auto;display:block" role="img" aria-label="The mixed condition drawn as structure. A nested container at Visit scope holds Page equals ABC joined by AND to Video Play exists. That whole container is joined by OR to a separate condition, Page equals XYZ.">
+        <rect x="18" y="40" width="306" height="150" rx="6" style="fill:var(--dia-a,#ba2142);opacity:.06"/>
+        <rect x="18" y="40" width="306" height="150" rx="6" style="fill:none;stroke:var(--dia-a,#ba2142);stroke-width:1.6"/>
+        <text x="34" y="64" style="fill:var(--dia-a-ink,#951833);font-size:11px;font-weight:700">Nested container, visit scope</text>
+        <rect x="34" y="78" width="274" height="30" rx="3" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
+        <text x="48" y="98" style="fill:var(--text1,#0f172a);font-size:12px">Page&nbsp;&nbsp;equals&nbsp;&nbsp;ABC</text>
+        <rect x="150" y="111" width="42" height="26" rx="10" style="fill:var(--dia-a,#ba2142);opacity:.14"/>
+        <text x="171" y="128" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:11px;font-weight:700">AND</text>
+        <rect x="34" y="140" width="274" height="30" rx="3" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
+        <text x="48" y="160" style="fill:var(--text1,#0f172a);font-size:12px">Video Play&nbsp;&nbsp;exists</text>
 
-        <circle cx="352" cy="115" r="24" style="fill:var(--card,#ffffff);stroke:var(--accent,#e11d48);stroke-width:2.5"/>
-        <text x="352" y="120" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:13px;font-weight:700;font-family:sans-serif">OR</text>
+        <circle cx="352" cy="115" r="24" style="fill:var(--card,#ffffff);stroke:var(--dia-a,#ba2142);stroke-width:1.6"/>
+        <text x="352" y="120" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:13px;font-weight:700">OR</text>
 
-        <rect x="382" y="88" width="300" height="54" rx="8" style="fill:var(--card,#ffffff);stroke:var(--text2,#475569);stroke-width:1.5"/>
-        <text x="402" y="120" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">Page&nbsp;&nbsp;equals&nbsp;&nbsp;XYZ</text>
+        <rect x="382" y="88" width="300" height="54" rx="6" style="fill:var(--card,#ffffff);stroke:var(--text2,#475569);stroke-width:1.4"/>
+        <text x="402" y="120" style="fill:var(--text1,#0f172a);font-size:12px">Page&nbsp;&nbsp;equals&nbsp;&nbsp;XYZ</text>
 
-        <text x="18" y="214" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">Group the AND pair in its own container, then join it to the rest with OR.</text>
+        <text x="18" y="214" style="fill:var(--text3,#5d6b7e);font-size:11px">Group the AND pair in its own container, then join it to the rest with OR.</text>
     </svg>
 </div>
 

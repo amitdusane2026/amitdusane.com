@@ -199,7 +199,16 @@ window.DGC = function () {
       let backdrop = ground, area = Infinity;
       boxes.forEach(sh => {
         const sb = sh.getBBox();
-        const fill = parse(getComputedStyle(sh).fill);
+        const cs = getComputedStyle(sh);
+        const fill = parse(cs.fill);
+        // The element's own opacity is part of the backdrop. Reading only the
+        // fill treats a rect at opacity .16 as though it were solid, which is
+        // a completely different colour to composite against. CLAUDE.md records
+        // this being added to the hand-rolled checks on 19 Aug; it was lost
+        // when they were consolidated into this file, and Segments is full of
+        // tints expressed this way.
+        const op = parseFloat(cs.opacity);
+        if (fill && Number.isFinite(op)) fill[3] *= op;
         if (contains(tb, sb) && fill && fill[3] > 0 && sb.width * sb.height < area) {
           area = sb.width * sb.height;
           backdrop = composite(fill, ground);

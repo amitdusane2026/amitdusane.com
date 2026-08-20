@@ -294,9 +294,9 @@ footer{border-top:1px solid var(--line);padding-top:16px;font-size:12.5px;color:
       <tr><td>10 Marketing Channels</td><td>13</td><td>0</td><td><b>done</b></td></tr>
       <tr><td>11 Classifications</td><td>13</td><td>0</td><td><b>done</b></td></tr>
       <tr><td>12 Calculated Metrics</td><td>9</td><td>0</td><td><b>done</b></td></tr>
-      <tr><td>13 Segments</td><td>15</td><td>1</td><td>next</td></tr>
-      <tr><td>14 Analysis Workspace</td><td>18</td><td>0</td><td>verify only</td></tr>
-      <tr><th>Total</th><th>125</th><th>1</th><th>12 of 14</th></tr>
+      <tr><td>13 Segments</td><td>15</td><td>0</td><td><b>done</b></td></tr>
+      <tr><td>14 Analysis Workspace</td><td>18</td><td>0</td><td>next, verify only</td></tr>
+      <tr><th>Total</th><th>125</th><th>0</th><th>13 of 14</th></tr>
     </tbody>
   </table>
   </div>
@@ -308,6 +308,14 @@ footer{border-top:1px solid var(--line);padding-top:16px;font-size:12.5px;color:
 <section>
   <div class="cat"><span class="cat-id">08</span><h2>Revision history</h2></div>
   <div class="card">
+    <h3>20 August 2026 &mdash; after cycle 13</h3>
+    <ul class="chk">
+      <li><strong>The 20-element floor is a heuristic, not a gate, and Segments is where that had to be said.</strong> Eight of its fifteen figures sit between 13 and 19 elements. The floor exists to catch a figure that is really a sentence; a two-circle Venn, a three-level container nest and a five-step sequence are none of them, and padding them to reach a number would be adding without purpose &mdash; the exact drift section 02 exists to prevent. They were left alone, deliberately. Treat a low count as a prompt to ask whether the figure is carrying anything, not as a defect in itself.</li>
+      <li><strong>Element opacity was missing from the contrast maths in <code>diagram-check.js</code>.</strong> <code>CLAUDE.md</code> records it being added to the hand-rolled checks on 19 August; it was lost when they were consolidated into the file. A rect at <code>opacity:.16</code> was being measured as though it were solid, which is a different colour entirely. Segments is full of tints expressed that way, and with the fix in place it immediately found three real failures: Bought at 4.21:1 in the AND lens, and iOS and Android at 4.17:1 in dark on the OR circles.</li>
+      <li><strong>A tint can be written two ways, and only one of them is tuned.</strong> <code>fill:var(--dia-a);opacity:.16</code> and <code>var(--dia-a-soft)</code> both give a wash and both follow the theme, but the <code>-soft</code> tokens carry separately measured alphas for light and dark. Segments is the only module using the opacity form; it was left where the translucency is doing real work &mdash; overlapping Venn circles, and four stacked bars whose rising opacity encodes widening scope.</li>
+    </ul>
+  </div>
+    <div class="card">
     <h3>20 August 2026 &mdash; after cycle 11</h3>
     <ul class="chk">
       <li><strong>The bar-chart emoji on <code>diagram-title</code> is not the label voice, and the programme has been quietly removing it for eleven cycles.</strong> 55 of the corpus&rsquo;s 130 figure titles carried a leading emoji. None of the figures redrawn in cycles 1 to 10 do, because each redraw wrote a fresh title. The eight in Classifications went with this cycle. <strong>46 remain</strong>, all in modules 12 to 21, plus one stray in Variables §2 inside a module already marked done. The established emoji convention covers <code>warn-hdr</code>, <code>info-hdr</code>, <code>pro-tip-hdr</code> and <code>ref-title</code>, where the glyph carries a meaning; a figure title has no equivalent job.</li>
