@@ -60,25 +60,42 @@ weight: 3
 <p>Every marketing channel rule has the same shape. Conditions on the left, two assignments on the right.</p>
 
 <div class="diagram-box">
-    <div class="diagram-title">The shape of every marketing channel rule</div>
-    <div class="diagram-content">
-        <div class="rule-structure">
-            <div class="rule-part">
-                <div class="rule-part-title">IF conditions match</div>
-                <div class="rule-part-desc">any / all of them</div>
-            </div>
-            <span class="rule-connector">&rarr;</span>
-            <div class="rule-part">
-                <div class="rule-part-title">Identify the channel as</div>
-                <div class="rule-part-desc">sets Marketing Channel</div>
-            </div>
-            <span class="rule-connector">+</span>
-            <div class="rule-part">
-                <div class="rule-part-title">Set the channel's value</div>
-                <div class="rule-part-desc">sets Marketing Channel Detail</div>
-            </div>
-        </div>
-    </div>
+    <div class="diagram-title">Two assignments, and the second one is half the rule rather than polish on it</div>
+    <svg viewBox="0 0 700 240" style="width:100%;height:auto;display:block" role="img"
+         aria-label="A marketing channel rule has conditions on the left and two assignments on the right, bracketed together as both required: identify the channel, which sets Marketing Channel, and set the channel's value, which sets Marketing Channel Detail. Together they produce a report line reading Paid Search with brand-kw-2026 beneath it.">
+      <defs>
+        <marker id="mc3a" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" style="fill:var(--text3,#5d6b7e)"/></marker>
+      </defs>
+
+      <rect x="20" y="84" width="180" height="72" rx="6" style="fill:var(--dia-b-soft,rgba(37,99,235,.10));stroke:var(--dia-b,#2563eb);stroke-width:1.6"/>
+      <text x="110" y="112" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:700">IF conditions match</text>
+      <text x="110" y="132" text-anchor="middle" style="fill:var(--dia-b-ink,#1d4ed8);font-size:11px">any or all of them</text>
+
+      <line x1="204" y1="120" x2="224" y2="120" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#mc3a)"/>
+
+      <rect x="232" y="68" width="230" height="44" rx="6" style="fill:var(--dia-a-soft,rgba(186,33,66,.10));stroke:var(--dia-a,#ba2142);stroke-width:1.4"/>
+      <text x="347" y="88" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-weight:600">Identify the channel as</text>
+      <text x="347" y="104" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:11px">sets Marketing Channel</text>
+
+      <text x="347" y="128" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12.5px;font-weight:700">+</text>
+
+      <rect x="232" y="136" width="230" height="44" rx="6" style="fill:var(--dia-a-soft,rgba(186,33,66,.10));stroke:var(--dia-a,#ba2142);stroke-width:1.4"/>
+      <text x="347" y="156" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-weight:600">Set the channel&rsquo;s value</text>
+      <text x="347" y="172" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:11px">sets Marketing Channel Detail</text>
+
+      <line x1="470" y1="68" x2="470" y2="180" style="stroke:var(--text3,#5d6b7e);stroke-width:1.2"/>
+      <line x1="462" y1="68" x2="470" y2="68" style="stroke:var(--text3,#5d6b7e);stroke-width:1.2"/>
+      <line x1="462" y1="180" x2="470" y2="180" style="stroke:var(--text3,#5d6b7e);stroke-width:1.2"/>
+      <line x1="474" y1="124" x2="494" y2="124" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#mc3a)"/>
+
+      <rect x="498" y="80" width="182" height="88" rx="6" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.6"/>
+      <text x="589" y="106" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:700">In the report</text>
+      <text x="589" y="126" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-weight:600">Paid Search</text>
+      <text x="589" y="144" text-anchor="middle" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px">brand-kw-2026</text>
+
+      <text x="350" y="206" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12.5px;font-weight:600">Forget the second and you get a Paid Search line with nothing underneath it</text>
+      <text x="350" y="228" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">No way left to ask which campaign, or which keyword, actually did the work.</text>
+    </svg>
 </div>
 
 <p>Two assignments, not one. The channel is the bucket, and the detail is the label inside the bucket. A rule that sets a channel but forgets the detail produces a Paid Search line in the report with nothing underneath it, and no way to ask which campaign or keyword did the work. Setting the detail is not optional polish. It is half the rule.</p>
@@ -107,20 +124,48 @@ weight: 3
 <p>Rules are evaluated from the top down. Adobe tests the hit against rule one, then rule two, and so on. <strong>The moment a rule matches, that channel is assigned and processing stops.</strong> Every rule below the match is never evaluated at all. It is a waterfall, and each rule gets to catch only what the rules above it let fall through.</p>
 
 <div class="diagram-box">
-    <div class="diagram-title">First match wins, and the rest never run</div>
-    <div class="diagram-content">
-        <div class="flow-vertical">
-            <div class="flow-step">Hit arrives</div>
-            <span class="flow-arrow-down">&darr;</span>
-            <div class="flow-step">Rule 1: Paid Search? &nbsp;<span style="font-weight:400;color:var(--text2)">no match, fall through</span></div>
-            <span class="flow-arrow-down">&darr;</span>
-            <div class="flow-step">Rule 2: Natural Search? &nbsp;<span style="font-weight:400;color:var(--text2)">no match, fall through</span></div>
-            <span class="flow-arrow-down">&darr;</span>
-            <div class="flow-step highlight">Rule 3: Email? &nbsp;MATCH. Channel assigned. Processing stops.</div>
-            <span class="flow-arrow-down">&darr;</span>
-            <div class="flow-step"><span style="font-weight:400;color:var(--text3)">Rules 4 through 10 are never evaluated for this hit</span></div>
-        </div>
-    </div>
+    <div class="diagram-title">The first rule that matches ends it, and everything below never runs at all</div>
+    <svg viewBox="0 0 700 256" style="width:100%;height:auto;display:block" role="img"
+         aria-label="A hit is tested against rules in order. Rule one asks whether it is Paid Search and does not match, so it falls through. Rule two asks whether it is Natural Search and does not match. Rule three asks whether it is Email and matches, so the channel is assigned and processing stops. The connector onward to rules four through ten is crossed out, and that block is drawn in a dashed outline because it is never evaluated.">
+      <defs>
+        <marker id="mc3b" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" style="fill:var(--text3,#5d6b7e)"/></marker>
+        <marker id="mc3c" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" style="fill:var(--dia-c,#10b981)"/></marker>
+      </defs>
+
+      <rect x="20" y="90" width="150" height="76" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="95" y="116" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:700">Rule 1</text>
+      <text x="95" y="134" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">Paid Search?</text>
+      <text x="95" y="150" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">no match, falls through</text>
+
+      <line x1="174" y1="128" x2="186" y2="128" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#mc3b)"/>
+
+      <rect x="190" y="90" width="150" height="76" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="265" y="116" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:700">Rule 2</text>
+      <text x="265" y="134" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">Natural Search?</text>
+      <text x="265" y="150" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">no match, falls through</text>
+
+      <line x1="344" y1="128" x2="356" y2="128" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#mc3b)"/>
+
+      <rect x="360" y="90" width="150" height="76" rx="6" style="fill:var(--dia-a-soft,rgba(186,33,66,.10));stroke:var(--dia-a,#ba2142);stroke-width:1.6"/>
+      <text x="435" y="116" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:700">Rule 3</text>
+      <text x="435" y="134" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-weight:600">Email?</text>
+      <text x="435" y="150" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:11px">matched</text>
+
+      <line x1="514" y1="128" x2="536" y2="128" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4;stroke-dasharray:5 4"/>
+      <line x1="538" y1="120" x2="550" y2="136" style="stroke:var(--dia-a,#ba2142);stroke-width:1.6"/>
+      <line x1="550" y1="120" x2="538" y2="136" style="stroke:var(--dia-a,#ba2142);stroke-width:1.6"/>
+
+      <rect x="556" y="90" width="124" height="76" rx="6" style="fill:none;stroke:var(--text3,#5d6b7e);stroke-width:1.4;stroke-dasharray:5 4"/>
+      <text x="618" y="116" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12.5px;font-weight:700">Rules 4 to 10</text>
+      <text x="618" y="134" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">never evaluated</text>
+      <text x="618" y="150" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">for this hit</text>
+
+      <line x1="435" y1="170" x2="435" y2="192" style="stroke:var(--dia-c,#10b981);stroke-width:1.4" marker-end="url(#mc3c)"/>
+      <rect x="340" y="196" width="190" height="36" rx="6" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.6"/>
+      <text x="435" y="219" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-weight:600">Channel assigned, and it stops</text>
+
+      <text x="350" y="250" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">Each rule only ever catches what the rules above it let fall through, so the order is the design.</text>
+    </svg>
 </div>
 
 <p>This is why Adobe's guidance on ordering is not a style preference. <strong>Place the paid and managed channels first, and the organic and absorbent channels last.</strong> Paid Search sits above Natural Search because a click on a paid search ad also arrives carrying a search engine referrer. Put Natural Search first and every paid click is silently recorded as organic, and the campaign you are paying for shows nothing.</p>

@@ -67,30 +67,48 @@ weight: 4
 <p>Take that laptop purchase and run it through different models. Nothing about the data changes. Only the rule for dividing credit changes, and the winner changes with it.</p>
 
 <div class="diagram-box">
-    <div class="diagram-title">One purchase. Four models. Four different answers.</div>
-    <div class="diagram-content">
-        <div class="flow-horizontal">
-            <div class="flow-step">Paid Search<br><span style="font-weight:400;color:var(--text2)">day 1</span></div>
-            <span class="flow-arrow">&rarr;</span>
-            <div class="flow-step">Email<br><span style="font-weight:400;color:var(--text2)">day 9</span></div>
-            <span class="flow-arrow">&rarr;</span>
-            <div class="flow-step">Social<br><span style="font-weight:400;color:var(--text2)">day 20</span></div>
-            <span class="flow-arrow">&rarr;</span>
-            <div class="flow-step highlight">Display<br><span style="font-weight:400;color:var(--text2)">day 30, buys</span></div>
-        </div>
-        <div class="tbl-wrap" style="margin-top:16px">
-            <table>
-                <thead><tr><th>Model</th><th>Paid Search</th><th>Email</th><th>Social</th><th>Display</th></tr></thead>
-                <tbody>
-                    <tr><td><strong>Last Touch</strong></td><td>0%</td><td>0%</td><td>0%</td><td>100%</td></tr>
-                    <tr><td><strong>First Touch</strong></td><td>100%</td><td>0%</td><td>0%</td><td>0%</td></tr>
-                    <tr><td><strong>Linear</strong></td><td>25%</td><td>25%</td><td>25%</td><td>25%</td></tr>
-                    <tr><td><strong>U-Shaped</strong></td><td>40%</td><td>10%</td><td>10%</td><td>40%</td></tr>
-                </tbody>
-            </table>
-        </div>
-        <p style="text-align:center;margin-top:12px;font-size:13px;color:var(--text3)">Same visitor. Same purchase. The report changes entirely.</p>
-    </div>
+    <div class="diagram-title">Same visitor, same purchase, and four defensible answers</div>
+    <svg viewBox="0 0 700 310" style="width:100%;height:auto;display:block" role="img"
+         aria-label="One journey touched four channels: Paid Search on day one, Email on day nine, Social on day twenty, and Display on day thirty when the purchase happened. Four bars below divide the credit. Last Touch gives Display one hundred per cent. First Touch gives Paid Search one hundred per cent. Linear splits it twenty-five per cent each way. U-Shaped gives forty per cent to Paid Search, ten to Email, ten to Social and forty to Display.">
+      <rect x="20" y="46" width="14" height="14" rx="3" style="fill:var(--dia-b,#2563eb)"/>
+      <text x="40" y="58" style="fill:var(--text2,#475569);font-size:11px">Paid Search &middot; day 1</text>
+      <rect x="190" y="46" width="14" height="14" rx="3" style="fill:var(--dia-d,#f59e0b)"/>
+      <text x="210" y="58" style="fill:var(--text2,#475569);font-size:11px">Email &middot; day 9</text>
+      <rect x="360" y="46" width="14" height="14" rx="3" style="fill:var(--dia-e,#7c3aed)"/>
+      <text x="380" y="58" style="fill:var(--text2,#475569);font-size:11px">Social &middot; day 20</text>
+      <rect x="530" y="46" width="14" height="14" rx="3" style="fill:var(--dia-a,#ba2142)"/>
+      <text x="550" y="58" style="fill:var(--text2,#475569);font-size:11px">Display &middot; day 30, buys</text>
+
+      <text x="20" y="112" style="fill:var(--text1,#0f172a);font-size:11px;font-weight:700">Last Touch</text>
+      <rect x="120" y="90" width="560" height="34" rx="3" style="fill:var(--dia-a-soft,rgba(186,33,66,.10));stroke:var(--dia-a,#ba2142);stroke-width:1.4"/>
+      <text x="400" y="112" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-weight:600">Display takes all of it</text>
+
+      <text x="20" y="162" style="fill:var(--text1,#0f172a);font-size:11px;font-weight:700">First Touch</text>
+      <rect x="120" y="140" width="560" height="34" rx="3" style="fill:var(--dia-b-soft,rgba(37,99,235,.10));stroke:var(--dia-b,#2563eb);stroke-width:1.4"/>
+      <text x="400" y="162" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-weight:600">Paid Search takes all of it</text>
+
+      <text x="20" y="212" style="fill:var(--text1,#0f172a);font-size:11px;font-weight:700">Linear</text>
+      <rect x="120" y="190" width="140" height="34" rx="3" style="fill:var(--dia-b-soft,rgba(37,99,235,.10));stroke:var(--dia-b,#2563eb);stroke-width:1.4"/>
+      <text x="190" y="212" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px">25%</text>
+      <rect x="260" y="190" width="140" height="34" rx="3" style="fill:var(--dia-d-soft,rgba(245,158,11,.14));stroke:var(--dia-d,#f59e0b);stroke-width:1.4"/>
+      <text x="330" y="212" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px">25%</text>
+      <rect x="400" y="190" width="140" height="34" rx="3" style="fill:var(--dia-e-soft,rgba(124,58,237,.10));stroke:var(--dia-e,#7c3aed);stroke-width:1.4"/>
+      <text x="470" y="212" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px">25%</text>
+      <rect x="540" y="190" width="140" height="34" rx="3" style="fill:var(--dia-a-soft,rgba(186,33,66,.10));stroke:var(--dia-a,#ba2142);stroke-width:1.4"/>
+      <text x="610" y="212" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px">25%</text>
+
+      <text x="20" y="262" style="fill:var(--text1,#0f172a);font-size:11px;font-weight:700">U-Shaped</text>
+      <rect x="120" y="240" width="224" height="34" rx="3" style="fill:var(--dia-b-soft,rgba(37,99,235,.10));stroke:var(--dia-b,#2563eb);stroke-width:1.4"/>
+      <text x="232" y="262" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px">40%</text>
+      <rect x="344" y="240" width="56" height="34" rx="3" style="fill:var(--dia-d-soft,rgba(245,158,11,.14));stroke:var(--dia-d,#f59e0b);stroke-width:1.4"/>
+      <text x="372" y="262" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px">10%</text>
+      <rect x="400" y="240" width="56" height="34" rx="3" style="fill:var(--dia-e-soft,rgba(124,58,237,.10));stroke:var(--dia-e,#7c3aed);stroke-width:1.4"/>
+      <text x="428" y="262" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px">10%</text>
+      <rect x="456" y="240" width="224" height="34" rx="3" style="fill:var(--dia-a-soft,rgba(186,33,66,.10));stroke:var(--dia-a,#ba2142);stroke-width:1.4"/>
+      <text x="568" y="262" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px">40%</text>
+
+      <text x="350" y="300" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">Nothing about the data changed. Only the rule for dividing the credit, and the winner changed with it.</text>
+    </svg>
 </div>
 
 <p>Look at Paid Search across those four rows: zero percent, one hundred percent, twenty-five percent, forty percent. Nothing about the visitor changed. The model is not reading a fact out of the data. <strong>The model is an opinion about what deserves credit</strong>, and choosing one is a business judgment, not a technical default.</p>
@@ -141,20 +159,42 @@ weight: 4
 <p>Attribution models in Analysis Workspace are applied at <em>report time</em>, not collection time. Nothing is written into the data. Nothing is baked in. You can apply a model you never considered to data collected two years ago, compare five models side by side in a single table, change your mind tomorrow, and the underlying data never moves.</p>
 
 <div class="diagram-box">
-    <div class="diagram-title">Collection time versus report time</div>
-    <div class="diagram-content">
-        <div class="comparison-grid">
-            <div class="comp-item">
-                <div class="comp-label">Collection time: permanent</div>
-                <div class="comp-desc">Channel definitions. Marketing channel processing rules. eVar allocation settings. Written into the hit as it arrives. Not retroactive. A mistake is permanent.</div>
-            </div>
-            <span class="comp-vs">vs</span>
-            <div class="comp-item">
-                <div class="comp-label">Report time: reversible</div>
-                <div class="comp-desc">Attribution models. Applied when the report runs. Non-destructive and fully retroactive. Change your mind freely. The data never moves.</div>
-            </div>
-        </div>
-    </div>
+    <div class="diagram-title">Everything else in this module is permanent. This one is not.</div>
+    <svg viewBox="0 0 700 262" style="width:100%;height:auto;display:block" role="img"
+         aria-label="Two panels compared. Collection time is permanent and holds channel definitions, marketing channel processing rules and eVar allocation settings, with a one-way arrow ending at a stop. Report time is reversible and holds attribution models applied when the report runs, with a double-headed arrow showing you can change your mind freely.">
+      <defs>
+        <marker id="mc4a" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" style="fill:var(--dia-a,#ba2142)"/></marker>
+        <marker id="mc4b" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" style="fill:var(--dia-c,#10b981)"/></marker>
+        <marker id="mc4c" markerWidth="9" markerHeight="9" refX="2" refY="4.5" orient="auto"><path d="M9 0 L0 4.5 L9 9 Z" style="fill:var(--dia-c,#10b981)"/></marker>
+      </defs>
+
+      <rect x="20" y="52" width="310" height="148" rx="6" style="fill:none;stroke:var(--dia-a,#ba2142);stroke-width:1.6"/>
+      <text x="34" y="76" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:700">Collection time</text>
+      <text x="34" y="92" style="fill:var(--dia-a-ink,#951833);font-size:11px;font-weight:600">permanent</text>
+      <rect x="34" y="102" width="282" height="26" rx="3" style="fill:var(--dia-a-soft,rgba(186,33,66,.10));stroke:var(--dia-a,#ba2142);stroke-width:1.2"/>
+      <text x="175" y="120" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px">Channel definitions</text>
+      <rect x="34" y="132" width="282" height="26" rx="3" style="fill:var(--dia-a-soft,rgba(186,33,66,.10));stroke:var(--dia-a,#ba2142);stroke-width:1.2"/>
+      <text x="175" y="150" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px">Marketing channel processing rules</text>
+      <rect x="34" y="162" width="282" height="26" rx="3" style="fill:var(--dia-a-soft,rgba(186,33,66,.10));stroke:var(--dia-a,#ba2142);stroke-width:1.2"/>
+      <text x="175" y="180" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px">eVar allocation settings</text>
+
+      <rect x="370" y="52" width="310" height="148" rx="6" style="fill:none;stroke:var(--dia-c,#10b981);stroke-width:1.6"/>
+      <text x="384" y="76" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:700">Report time</text>
+      <text x="384" y="92" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px;font-weight:600">reversible</text>
+      <rect x="384" y="102" width="282" height="26" rx="3" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.2"/>
+      <text x="525" y="120" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px">Attribution models</text>
+      <rect x="384" y="132" width="282" height="26" rx="3" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.2"/>
+      <text x="525" y="150" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px">Applied when the report runs</text>
+      <rect x="384" y="162" width="282" height="26" rx="3" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.2"/>
+      <text x="525" y="180" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px">The data never moves</text>
+
+      <line x1="34" y1="220" x2="300" y2="220" style="stroke:var(--dia-a,#ba2142);stroke-width:1.6" marker-end="url(#mc4a)"/>
+      <line x1="312" y1="208" x2="312" y2="232" style="stroke:var(--dia-a,#ba2142);stroke-width:1.6"/>
+      <text x="175" y="252" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:11px;font-weight:600">one direction, and it ends there</text>
+
+      <line x1="404" y1="220" x2="646" y2="220" style="stroke:var(--dia-c,#10b981);stroke-width:1.6" marker-end="url(#mc4b)" marker-start="url(#mc4c)"/>
+      <text x="525" y="252" text-anchor="middle" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px;font-weight:600">change your mind as often as you like</text>
+    </svg>
 </div>
 
 <p>Report-time attribution reaches you in three places:</p>
