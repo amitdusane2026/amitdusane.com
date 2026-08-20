@@ -192,6 +192,13 @@ Platform	presentation		Diagram plate treatment and SVG legibility floor	Feature	
 Platform	presentation		About mark halo and hover affordance	Feature	static/chrome.css	NA	NA	NA	NA	NA	NA	Yes	No	No
 Platform	presentation		Diagram specification (drawing standard)	Feature	diagram-spec.html	NA	NA	NA	NA	NA	NA	Yes	No	No
 Platform	presentation		Diagram palette tokens (--dia-a..e)	Feature	static/world-learning.css	NA	NA	NA	NA	NA	NA	Yes	No	No
-Platform	presentation		Diagram redraw programme (5 of 14 modules)	Feature	content/adobe-analytics-learning/	NA	NA	NA	NA	NA	NA	No	No	No
+Platform	presentation		Diagram redraw programme (14 of 14 modules, 125 figures SVG)	Feature	content/adobe-analytics-learning/	NA	NA	NA	NA	NA	NA	Yes	No	No
 Platform	presentation		Self-hosted typeface (IBM Plex)	Feature	static/fonts/	NA	NA	NA	NA	NA	NA	Yes	No	No
 Platform	presentation		Scale line on landings	Feature	layouts/partials/scale.html	NA	NA	NA	NA	NA	NA	Yes	No	No
+Platform	presentation		Automated per-figure diagram check	Feature	diagram-check.js	NA	NA	NA	NA	NA	NA	Yes	No	No
+Platform	presentation		Print forces the light diagram palette	Feature	static/world-learning.css	NA	NA	NA	NA	NA	NA	Yes	No	No
+Platform	presentation		Body prose 18px to 17px	Feature	static/world-learning.css	NA	NA	NA	NA	NA	NA	Yes	No	No
+Platform	presentation		prefers-reduced-motion honoured site-wide (CMP-11)	Feature	static/	NA	NA	NA	NA	NA	NA	Yes	No	No
+Platform	presentation		ref-box URLs expanded in print (CMP-10)	Feature	static/world-learning.css	NA	NA	NA	NA	NA	NA	Yes	No	No
+Platform	tech-debt		Dead diagram CSS and four dead files removed (CMP-05, INF-07)	Feature	static/	NA	NA	NA	NA	NA	NA	Yes	No	No
+Platform	infrastructure		World registry keyed on .Section, per-world phases (INF-05, INF-06)	Feature	hugo.toml	NA	NA	NA	NA	NA	NA	Yes	No	No

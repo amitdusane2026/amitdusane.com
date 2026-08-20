@@ -709,6 +709,31 @@ The pattern is not that the checks are bad. It is that **a check can only find w
 
 ---
 
+## Back to the design plan, 20 August 2026 — five items, and two finds worth more
+
+With the diagram programme closed, five design items were picked deliberately against a filter Amit set out and which is worth keeping: **no last-leg work, nothing blocked on all sections being written, and no churn to improve today's view.** Four of my first five suggestions failed it — hiding the search button, the landing pages, the journey-phrase sweep, the second home card — and he was right about all four. The rule that survives: pull work forward only when deferring it costs more than doing it.
+
+**CMP-05 and INF-07, dead code.** 80 lines of diagram CSS orphaned by the redraw programme, plus four dead files including a 16KB `guide.css`.
+
+**The useful part was what nearly went with it.** A naive "class appears nowhere" scan returns 68 hits, and among them are `lmod-card`, `lmod-grid`, `welcome-stats`, `stat-val` and `cat-page` — the *landing page* components. They read as dead only because all 26 landing pages are empty. `shot-pending` is the same trap: a documented workflow attribute, unused by design. **Unused and not-yet-used look identical to a grep.** Any dead-code scan on this site has to know which components are waiting for content.
+
+**CMP-11 and CMP-10.** Reduced motion was marked partial because two cases had been handled piecemeal and thirteen transitions plus the home-map keyframe had not. A universal block now covers all three stylesheets, set to `.01ms` rather than `none` so `animationend` still fires and nothing waiting on one hangs. `ref-box` hrefs are expanded in print, where the handoff to Experience League otherwise points nowhere.
+
+**SEO-08, the ledger check, and it found the second orphan it predicted.** Recorded in full above.
+
+**INF-05 and INF-06, done together as both items advised.** Six `hasPrefix` branches across three templates became one `[params.worlds]` lookup keyed on `.Section`, carrying each world's css, js and root; phases moved out of the global namespace a second world would have inherited. Adding CJA is now a config block. Verified hard, because it touches the shell of every page.
+
+### The two finds
+
+**The 18 August accent deepening was applied to one file, not to the site.** `chrome.css` still carried twelve hardcoded `#e11d48` — the rose replaced precisely because it measured 4.49:1 and failed AA — and that file styles the author fab and the About overlay, live on all 116 learning sections. Now `#ba2142`, and the overlay measures 6.21:1.
+
+**It is wider still and deliberately untouched**: `world-shell.css` carries about twenty, `head.html` defines `--crimson:#e11d48` as the global token, and `hugo.toml` still has `brandColor = "#e11d48"` — mis-nested under `[services]` so it does not resolve at all. Those reach the published migration world, so recolouring them is a decision rather than a cleanup.
+
+**The generalisable half:** a sweep that changes a value is only as complete as its file list, and nobody records the file list. This is the third time in two days the same shape has appeared — the print block that reset every token except the diagram palette, the modules verified before `diagram-check.js` existed, and now an accent change that stopped at one stylesheet.
+
+
+---
+
 ## Phase 5 — Small corrections
 
 - Three `description` outliers: `collect/_index.html` (180 chars), `deliver/_index.html` (187), `collect/data-layers/_index.md` (94).
