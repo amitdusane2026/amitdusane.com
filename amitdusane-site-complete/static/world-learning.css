@@ -647,6 +647,24 @@ body.world-learning .welcome-btn:hover{background:var(--accent2);text-decoration
     --accent:#ba2142; --accent2:#951833; --accent-light:rgba(186,33,66,.10); --on-accent:#ffffff;
     --success:#10b981; --warning:#f59e0b; --info:#3b82f6;
     --success-ink:#0a6e50; --warning-ink:#8a5700; --info-ink:#1d4ed8; --danger-ink:#a4161a;
+    /* The diagram palette has to be reset here too, and forgetting it was a
+       real defect: every other token above was already being forced back to
+       light, so a page printed from dark mode came out correct EXCEPT for
+       its figures, which kept the dark palette. Dark inks are deliberately
+       LIGHTER than their light counterparts, so on white paper they washed
+       out to near-invisible while every box around them printed normally.
+       Fifteen tokens, and all fifteen must be here. */
+    --dia-a:#ba2142; --dia-a-soft:rgba(186,33,66,.10);  --dia-a-ink:#951833;
+    --dia-b:#2563eb; --dia-b-soft:rgba(37,99,235,.10);  --dia-b-ink:#1d4ed8;
+    --dia-c:#10b981; --dia-c-soft:rgba(16,185,129,.12); --dia-c-ink:#0a6e50;
+    --dia-d:#f59e0b; --dia-d-soft:rgba(245,158,11,.14); --dia-d-ink:#8a5700;
+    --dia-e:#7c3aed; --dia-e-soft:rgba(124,58,237,.10); --dia-e-ink:#5b21b6;
+    /* The last two the dark theme touches. .lhead and .lmain are hidden in
+       print, but the home map is not, and .hm-brand and .hm-tagline .tl-b
+       read from these. Printed from dark, the monogram went white on white
+       paper. The rule is now complete: every token the dark theme overrides
+       is reset here, so nothing about the active theme can reach paper. */
+    --logo-ink:#1E3A8A; --tagline-accent:#1E3A8A;
     /* TYP-01: the print step of the scale, in points. Without this the
        print document inherits the 30px screen title. Paper wants a tighter
        scale than a screen, but it still needs the hierarchy: before this,
