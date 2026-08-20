@@ -47,20 +47,34 @@ weight: 5
 <p>The marketing channel engagement period is a membership that renews on use. It only lapses through neglect.</p>
 
 <div class="diagram-box">
-    <div class="diagram-title">Same 30 days, two completely different clocks</div>
-    <div class="diagram-content">
-        <div class="comparison-grid">
-            <div class="comp-item">
-                <div class="comp-label">eVar expiration: fixed</div>
-                <div class="comp-desc">Value set on day 1, expiring after 30 days. Visitor returns on day 20. The eVar still expires on day 30, exactly as originally stamped. Returning changed nothing.</div>
-            </div>
-            <span class="comp-vs">vs</span>
-            <div class="comp-item">
-                <div class="comp-label">Engagement period: rolling</div>
-                <div class="comp-desc">Channel set on day 1, engagement period 30 days. Visitor returns on day 20. The clock resets, and the channel now survives until day 50. Returning bought another 30 days.</div>
-            </div>
-        </div>
-    </div>
+    <div class="diagram-title">One had its date printed at the factory. The other renews every time it is used.</div>
+    <svg viewBox="0 0 700 278" style="width:100%;height:auto;display:block" role="img"
+         aria-label="Two timelines share the same days. An eVar set on day one with a thirty day expiration is drawn as a bar ending on day thirty, and the visitor returning on day twenty changes nothing. A marketing channel with a thirty day engagement period is drawn as a bar that runs on to day fifty, because the return on day twenty reset its clock and bought another thirty days.">
+      <text x="20" y="96" style="fill:var(--text1,#0f172a);font-size:11px;font-weight:700">eVar</text>
+      <text x="20" y="112" style="fill:var(--text2,#475569);font-size:11px">fixed</text>
+      <rect x="130" y="86" width="284" height="30" rx="3" style="fill:var(--dia-b-soft,rgba(37,99,235,.10));stroke:var(--dia-b,#2563eb);stroke-width:1.4"/>
+      <text x="220" y="105" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px">alive</text>
+      <line x1="414" y1="78" x2="414" y2="124" style="stroke:var(--dia-b,#2563eb);stroke-width:1.6"/>
+      <text x="422" y="105" style="fill:var(--dia-b-ink,#1d4ed8);font-size:11px;font-weight:600">gone on day 30</text>
+
+      <text x="20" y="176" style="fill:var(--text1,#0f172a);font-size:11px;font-weight:700">Channel</text>
+      <text x="20" y="192" style="fill:var(--text2,#475569);font-size:11px">rolling</text>
+      <rect x="130" y="166" width="480" height="30" rx="3" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.4"/>
+      <text x="470" y="185" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px">still alive, and still renewing</text>
+      <line x1="610" y1="158" x2="610" y2="204" style="stroke:var(--dia-c,#10b981);stroke-width:1.6"/>
+      <text x="604" y="152" text-anchor="end" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px;font-weight:600">gone on day 50</text>
+
+      <text x="316" y="62" text-anchor="middle" style="fill:var(--dia-d-ink,#8a5700);font-size:11px;font-weight:600">visitor returns, day 20</text>
+      <line x1="316" y1="70" x2="316" y2="210" style="stroke:var(--dia-d,#f59e0b);stroke-width:1.4;stroke-dasharray:5 4"/>
+
+      <line x1="120" y1="216" x2="660" y2="216" style="stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
+      <text x="130" y="232" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">day 1</text>
+      <text x="316" y="232" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">day 20</text>
+      <text x="414" y="232" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">day 30</text>
+      <text x="610" y="232" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">day 50</text>
+
+      <text x="350" y="262" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">Carry the eVar model into this setting and you will expect channels to expire far earlier than they do.</text>
+    </svg>
 </div>
 
 <p>Carry the eVar mental model into this setting and every prediction you make will be wrong, always in the same direction: you will consistently expect channels to expire far earlier than they actually do. A first touch channel report will show acquisition sources that feel impossibly old, and the setup will look broken when it is behaving exactly as designed.</p>
@@ -122,25 +136,21 @@ weight: 5
 <h3 class="subsec-title">Two clocks that are constantly confused</h3>
 <p><a href="/adobe-analytics-learning/shape/marketing-channels/channel-attribution/">Channel Attribution</a> introduced the attribution lookback window, also often set to thirty days. This section introduces the engagement period, also thirty days by default. They are different clocks, running in different places, doing different jobs, and conflating them is one of the most common errors in this whole subject.</p>
 
-<div class="diagram-box">
-    <div class="diagram-title">Engagement period vs attribution lookback window</div>
-    <div class="diagram-content">
-        <div class="tbl-wrap">
-            <table>
-                <thead><tr><th></th><th>Engagement period</th><th>Attribution lookback window</th></tr></thead>
-                <tbody>
-                    <tr><td><strong>Where it runs</strong></td><td>Collection time, as the hit arrives</td><td>Report time, when the report is run</td></tr>
-                    <tr><td><strong>Where it is set</strong></td><td>Admin, in report suite settings</td><td>Analysis Workspace, per column or panel</td></tr>
-                    <tr><td><strong>What it controls</strong></td><td>How long a channel persists on the visitor</td><td>How far back a model may reach for touch points</td></tr>
-                    <tr><td><strong>Stored where</strong></td><td>In a cookie, per browser</td><td>Nowhere. Calculated on the fly.</td></tr>
-                    <tr><td><strong>Changing it</strong></td><td>Affects future data only</td><td>Fully retroactive, change it freely</td></tr>
-                    <tr><td><strong>Maximum</strong></td><td>Unlimited, including Never</td><td>90 days</td></tr>
-                </tbody>
-            </table>
-        </div>
-        <p style="text-align:center;margin-top:12px;font-size:13px;color:var(--text3)">Both default to 30 days. That is the only thing they have in common.</p>
-    </div>
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th></th><th>Engagement period</th><th>Attribution lookback window</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Where it runs</strong></td><td>Collection time, as the hit arrives</td><td>Report time, when the report is run</td></tr>
+            <tr><td><strong>Where it is set</strong></td><td>Admin, in report suite settings</td><td>Analysis Workspace, per column or panel</td></tr>
+            <tr><td><strong>What it controls</strong></td><td>How long a channel persists on the visitor</td><td>How far back a model may reach for touch points</td></tr>
+            <tr><td><strong>Stored where</strong></td><td>In a cookie, per browser</td><td>Nowhere. Calculated on the fly.</td></tr>
+            <tr><td><strong>Changing it</strong></td><td>Affects future data only</td><td>Fully retroactive, change it freely</td></tr>
+            <tr><td><strong>Maximum</strong></td><td>Unlimited, including Never</td><td>90 days</td></tr>
+        </tbody>
+    </table>
 </div>
+
+<p>Both default to 30 days, and that is the only thing they have in common.</p>
 
 <p>They also interfere with each other, and this is genuinely subtle. Report-time attribution awards credit based on channel <strong>instances</strong>, meaning the moments a channel was actually <em>set</em> on a hit, not the long stretches where it merely <em>persisted</em>. If a channel was set outside your reporting window and only its persisted value survives inside that window, a participation model will hand the credit to <strong>None</strong> rather than to the channel.</p>
 

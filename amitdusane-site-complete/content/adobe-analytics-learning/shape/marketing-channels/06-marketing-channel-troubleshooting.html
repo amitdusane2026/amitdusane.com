@@ -98,20 +98,41 @@ weight: 6
 <p>Reports in this area produce two different empty-looking values, and confusing them sends investigations in completely the wrong direction.</p>
 
 <div class="diagram-box">
-    <div class="diagram-title">"No Channel Identified" is not "None"</div>
-    <div class="diagram-content">
-        <div class="comparison-grid">
-            <div class="comp-item">
-                <div class="comp-label">No Channel Identified</div>
-                <div class="comp-desc">The hit reached the bottom of the waterfall and matched no rule at all. A gap in your rule set. Fix it with a catch-all.</div>
-            </div>
-            <span class="comp-vs">vs</span>
-            <div class="comp-item">
-                <div class="comp-label">None</div>
-                <div class="comp-desc">The channel exists but had no instance inside the reporting window. It only persisted. Common with participation attribution. Not a rule problem at all.</div>
-            </div>
-        </div>
-    </div>
+    <div class="diagram-title">One is a hole in your rules. The other is not a rule problem at all.</div>
+    <svg viewBox="0 0 700 268" style="width:100%;height:auto;display:block" role="img"
+         aria-label="On the left, No Channel Identified is drawn as a hit falling past every rule in the waterfall and out of the bottom, a gap in the rule set that a catch-all fixes. On the right, None is drawn as a timeline where the channel was set before the reporting window opened, so only its persisted value survives inside the window and no instance falls within it.">
+      <defs>
+        <marker id="mc6a" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" style="fill:var(--dia-a,#ba2142)"/></marker>
+      </defs>
+
+      <rect x="20" y="64" width="310" height="160" rx="6" style="fill:none;stroke:var(--dia-a,#ba2142);stroke-width:1.6"/>
+      <text x="34" y="88" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:700">No Channel Identified</text>
+      <text x="34" y="104" style="fill:var(--dia-a-ink,#951833);font-size:11px">a gap in your rule set</text>
+      <rect x="34" y="116" width="190" height="24" rx="3" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
+      <text x="129" y="133" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">Rule 1</text>
+      <rect x="34" y="146" width="190" height="24" rx="3" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
+      <text x="129" y="163" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">Rule 2</text>
+      <rect x="34" y="176" width="190" height="24" rx="3" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
+      <text x="129" y="193" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">Rule 3</text>
+      <line x1="248" y1="116" x2="248" y2="204" style="stroke:var(--dia-a,#ba2142);stroke-width:1.4;stroke-dasharray:5 4" marker-end="url(#mc6a)"/>
+      <text x="258" y="150" style="fill:var(--dia-a-ink,#951833);font-size:11px">falls past</text>
+      <text x="258" y="166" style="fill:var(--dia-a-ink,#951833);font-size:11px">every one</text>
+      <text x="34" y="216" style="fill:var(--text3,#5d6b7e);font-size:11px">fix it with a catch-all at the bottom</text>
+
+      <rect x="370" y="64" width="310" height="160" rx="6" style="fill:none;stroke:var(--dia-d,#f59e0b);stroke-width:1.6"/>
+      <text x="384" y="88" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:700">None</text>
+      <text x="384" y="104" style="fill:var(--dia-d-ink,#8a5700);font-size:11px">the channel exists, but set no instance here</text>
+
+      <text x="430" y="132" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">channel set</text>
+      <rect x="500" y="140" width="166" height="32" rx="3" style="fill:var(--dia-d-soft,rgba(245,158,11,.14));stroke:var(--dia-d,#f59e0b);stroke-width:1.4"/>
+      <text x="583" y="160" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px">the reporting window</text>
+      <line x1="384" y1="182" x2="666" y2="182" style="stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
+      <circle cx="430" cy="182" r="5" style="fill:var(--dia-d,#f59e0b)"/>
+      <line x1="430" y1="196" x2="666" y2="196" style="stroke:var(--dia-d,#f59e0b);stroke-width:1.4;stroke-dasharray:5 4"/>
+      <text x="548" y="216" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">only the persisted value reaches inside</text>
+
+      <text x="350" y="256" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">The first sends you to the rule builder. The second means the window and the engagement period disagree.</text>
+    </svg>
 </div>
 
 <p>The second one deserves care, because it looks alarming and usually is not. Attribution models award credit on channel <strong>instances</strong>, meaning the moments a channel was actually set on a hit. If a channel was set before your reporting window opened and only its persisted value survives inside the window, a participation model hands the credit to None rather than to the channel. The configuration is fine. The reporting window and the engagement period are simply disagreeing, and a non-participation model will show the persisted value normally.</p>
@@ -142,20 +163,44 @@ weight: 6
 <p>When a marketer says the numbers look wrong, resist the urge to open the rule builder and start editing. Work down this order instead, because it moves from the cheapest checks to the most expensive, and most investigations end in the first three steps.</p>
 
 <div class="diagram-box">
-    <div class="diagram-title">Triage, cheapest first</div>
-    <div class="diagram-content">
-        <div class="flow-vertical">
-            <div class="flow-step">1. Is it actually broken?<br><span style="font-weight:400;color:var(--text2)">Direct looking small, or Marketing Channels disagreeing with campaign reports, is usually correct behavior being misread.</span></div>
-            <span class="flow-arrow-down">&darr;</span>
-            <div class="flow-step">2. Check the rule order<br><span style="font-weight:400;color:var(--text2)">Look at the absorbent channels first. Referring Domains too high explains most channels that have gone quiet.</span></div>
-            <span class="flow-arrow-down">&darr;</span>
-            <div class="flow-step">3. Check instances against visits<br><span style="font-weight:400;color:var(--text2)">This separates a persistence effect from a rule that has stopped firing entirely.</span></div>
-            <span class="flow-arrow-down">&darr;</span>
-            <div class="flow-step">4. Inspect a real hit in the debugger<br><span style="font-weight:400;color:var(--text2)">Referrer and query parameters, exactly as they arrive. Parameters get renamed without anyone telling you.</span></div>
-            <span class="flow-arrow-down">&darr;</span>
-            <div class="flow-step highlight">5. Only now change a rule, in a test suite<br><span style="font-weight:400;color:var(--text2)">Then Expire All. Remember the fix is not retroactive, so the damage already done is permanent.</span></div>
-        </div>
-    </div>
+    <div class="diagram-title">Most investigations end in the first three, and only the last one changes anything</div>
+    <svg viewBox="0 0 700 256" style="width:100%;height:auto;display:block" role="img"
+         aria-label="Five triage steps in order of cost. One, is it actually broken, usually not. Two, check the rule order, looking at the absorbent channels. Three, compare instances against visits. Four, inspect a real hit in the debugger. Five, change a rule in a test suite. A bracket over the first three marks them as where most investigations end, and the fifth is marked as the only step that changes anything.">
+      <text x="217" y="58" text-anchor="middle" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px;font-weight:600">most investigations end here</text>
+      <line x1="22" y1="70" x2="412" y2="70" style="stroke:var(--dia-c,#10b981);stroke-width:1.4"/>
+      <line x1="22" y1="70" x2="22" y2="78" style="stroke:var(--dia-c,#10b981);stroke-width:1.4"/>
+      <line x1="412" y1="70" x2="412" y2="78" style="stroke:var(--dia-c,#10b981);stroke-width:1.4"/>
+
+      <rect x="22" y="90" width="122" height="76" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="83" y="112" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-weight:700">1</text>
+      <text x="83" y="134" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-weight:600">Is it actually broken?</text>
+      <text x="83" y="152" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">usually not</text>
+
+      <rect x="156" y="90" width="122" height="76" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="217" y="112" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-weight:700">2</text>
+      <text x="217" y="134" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-weight:600">Check the rule order</text>
+      <text x="217" y="152" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">the absorbent ones</text>
+
+      <rect x="290" y="90" width="122" height="76" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="351" y="112" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-weight:700">3</text>
+      <text x="351" y="134" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-weight:600">Instances vs visits</text>
+      <text x="351" y="152" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">persistence, or dead?</text>
+
+      <rect x="424" y="90" width="122" height="76" rx="6" style="fill:var(--dia-d-soft,rgba(245,158,11,.14));stroke:var(--dia-d,#f59e0b);stroke-width:1.4"/>
+      <text x="485" y="112" text-anchor="middle" style="fill:var(--dia-d-ink,#8a5700);font-size:11px;font-weight:700">4</text>
+      <text x="485" y="134" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-weight:600">Inspect a real hit</text>
+      <text x="485" y="152" text-anchor="middle" style="fill:var(--dia-d-ink,#8a5700);font-size:11px">referrer, parameters</text>
+
+      <rect x="558" y="90" width="122" height="76" rx="6" style="fill:var(--dia-a-soft,rgba(186,33,66,.10));stroke:var(--dia-a,#ba2142);stroke-width:1.6"/>
+      <text x="619" y="112" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:11px;font-weight:700">5</text>
+      <text x="619" y="134" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-weight:600">Change a rule</text>
+      <text x="619" y="152" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:11px">in a test suite</text>
+
+      <text x="676" y="186" text-anchor="end" style="fill:var(--dia-a-ink,#951833);font-size:11px;font-weight:600">the only step that changes anything</text>
+
+      <text x="350" y="220" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12.5px;font-weight:600">Every hour it runs is data you cannot get back</text>
+      <text x="350" y="242" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">There is no reprocessing and no backfill, so the real skill is auditing often enough to catch it early.</text>
+    </svg>
 </div>
 
 <div class="warn-box">

@@ -291,22 +291,33 @@ footer{border-top:1px solid var(--line);padding-top:16px;font-size:12.5px;color:
       <tr><td>07 Tracking Calls</td><td>8</td><td>0</td><td><b>done</b></td></tr>
       <tr><td>08 Processing Rules</td><td>2</td><td>0</td><td><b>done</b></td></tr>
       <tr><td>09 VISTA Rules</td><td>3</td><td>0</td><td><b>done</b></td></tr>
-      <tr><td>10 Marketing Channels</td><td>14</td><td>14</td><td>next, heaviest</td></tr>
-      <tr><td>11 Classifications</td><td>13</td><td>5</td><td></td></tr>
+      <tr><td>10 Marketing Channels</td><td>13</td><td>0</td><td><b>done</b></td></tr>
+      <tr><td>11 Classifications</td><td>13</td><td>5</td><td>next</td></tr>
       <tr><td>12 Calculated Metrics</td><td>9</td><td>1</td><td></td></tr>
       <tr><td>13 Segments</td><td>15</td><td>1</td><td></td></tr>
       <tr><td>14 Analysis Workspace</td><td>18</td><td>0</td><td>verify only</td></tr>
-      <tr><th>Total</th><th>126</th><th>21</th><th>9 of 14</th></tr>
+      <tr><th>Total</th><th>125</th><th>7</th><th>10 of 14</th></tr>
     </tbody>
   </table>
   </div>
-  <p><strong>Marketing Channels carries 14 of the 21 remaining redraws</strong> and will need more than one sitting. Analysis Workspace needs no redraw at all, only the verification pass over its 18 figures.</p>
-  <p>A by-product worth tracking, because it is CMP-05 arriving for free: eight one-off diagram classes are already unused corpus-wide &mdash; <code>human-priority</code>, <code>hp-node</code>, <code>hp-face</code>, <code>hp-badge</code>, <code>tri-box</code>, <code>tri-h</code>, <code>tri-arrow</code>, <code>scene-split</code>, and since cycle 7 the four <code>calc-*</code> classes. The remaining HTML figures still lean on <code>flow-step</code> and <code>flow-arrow</code> (22 files each), <code>comp-vs</code> and <code>comp-item</code> (14 each), and <code>flow-horizontal</code> (15).</p>
+  <p>Analysis Workspace needs no redraw at all, only the verification pass over its 18 figures. Marketing Channels, which carried the largest single load, is done.</p>
+  <div class="no"><b>The table above is not the whole corpus.</b> It covers modules 1 to 14. Modules 15 to 21 hold <strong>five more figures, all still HTML</strong> &mdash; one each in Data Warehouse, Data Feeds, Activity Map, Testing and Debugging, and Adobe Analytics and CJA. Four of those five modules have no unwritten sections, so those figures are live content, not placeholders. Found during cycle 10 by counting the corpus rather than reading this table. They need a decision: fold them into the programme as a fifteenth cycle, or draw them when their modules are finished.</div>
+  <p>A by-product worth tracking, because it is CMP-05 arriving for free: eight one-off diagram classes are already unused corpus-wide &mdash; <code>human-priority</code>, <code>hp-node</code>, <code>hp-face</code>, <code>hp-badge</code>, <code>tri-box</code>, <code>tri-h</code>, <code>tri-arrow</code>, <code>scene-split</code>, the four <code>calc-*</code> classes since cycle 7, and <code>rule-structure</code>, <code>rule-part</code>, <code>rule-part-title</code>, <code>rule-part-desc</code> and <code>rule-connector</code> since cycle 10. The remaining HTML figures still lean on <code>flow-step</code> and <code>flow-arrow</code> (22 files each), <code>comp-vs</code> and <code>comp-item</code> (14 each), and <code>flow-horizontal</code> (15).</p>
 </section>
 
 <section>
   <div class="cat"><span class="cat-id">08</span><h2>Revision history</h2></div>
   <div class="card">
+    <h3>20 August 2026 &mdash; after cycle 10</h3>
+    <ul class="chk">
+      <li><strong>The programme table was never the whole corpus.</strong> It covers modules 1 to 14. Counting the content files found five more figures in modules 15 to 21, all still HTML, and four of those five modules have no unwritten sections. Recorded in section 07 as an open decision.</li>
+      <li><strong>One figure removed, and the count is now 125.</strong> Marketing Channels §5 held a six-row reference table inside a diagram box. It is tabular data rather than anything spatial, and the module already carries a collection-time versus report-time figure one section earlier, so it was unwrapped to a plain <code>tbl-wrap</code> table and the figure dropped.</li>
+      <li><strong>A stray <code>diagram-content</code> wrapper</strong> around an inline SVG in Report Suites §2 was removed. It was the last one in a completed module.</li>
+      <li><strong>Git checkout restores files as CRLF in this tree</strong>, so a script matching on <code>
+</code> silently finds nothing after a revert. It reads as a missing anchor, not as an encoding problem. Normalise line endings before editing.</li>
+    </ul>
+  </div>
+    <div class="card">
     <h3>20 August 2026 &mdash; after cycle 6</h3>
     <ul class="chk">
       <li><strong>Two module numbers in the programme table were wrong.</strong> The table listed Classifications as 10 and Marketing Channels as 11; the front matter says the opposite, and the front matter is the code. Corrected, and it moves the heaviest cycle one place earlier than the table implied. The figure counts were attached to the right module <em>names</em> throughout, so nothing was mis-estimated.</li>
