@@ -24,44 +24,44 @@ weight: 3
 <p>Adobe is not wrong. The rows and the total are answering different questions, and the difference is deduplication.</p>
 
 <div class="diagram-box">
-    <div class="diagram-title">📊 One visit, three rows, counted once at the bottom</div>
-    <svg viewBox="0 0 700 250" style="width:100%;height:auto;display:block;margin:4px 0 8px"
+    <div class="diagram-title">One visit, three rows, counted once at the bottom</div>
+    <svg viewBox="0 0 700 250" style="width:100%;height:auto;display:block"
          role="img" aria-label="A table of three pages each showing visits and orders. Adding the visits column by hand gives two hundred and forty, but the reported total is one hundred and ninety, because a single visit that touched all three pages is counted in each row and only once in the deduplicated total. The conversion rate total is therefore computed from the deduplicated totals rather than by averaging the three row rates.">
-        <rect x="20" y="20" width="660" height="34" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
-        <text x="36" y="42" style="fill:var(--text2,#475569);font-size:12px;font-weight:700;font-family:sans-serif">Page</text>
-        <text x="330" y="42" style="fill:var(--text2,#475569);font-size:12px;font-weight:700;font-family:sans-serif">Visits</text>
-        <text x="450" y="42" style="fill:var(--text2,#475569);font-size:12px;font-weight:700;font-family:sans-serif">Orders</text>
-        <text x="570" y="42" style="fill:var(--text2,#475569);font-size:12px;font-weight:700;font-family:sans-serif">Conv. rate</text>
+        <rect x="20" y="20" width="660" height="34" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+        <text x="36" y="42" style="fill:var(--text2,#475569);font-size:12px;font-weight:700">Page</text>
+        <text x="330" y="42" style="fill:var(--text2,#475569);font-size:12px;font-weight:700">Visits</text>
+        <text x="450" y="42" style="fill:var(--text2,#475569);font-size:12px;font-weight:700">Orders</text>
+        <text x="570" y="42" style="fill:var(--text2,#475569);font-size:12px;font-weight:700">Conv. rate</text>
 
-        <text x="36" y="80" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">/home</text>
-        <text x="330" y="80" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">100</text>
-        <text x="450" y="80" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">4</text>
-        <text x="570" y="80" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">4.0%</text>
+        <text x="36" y="80" style="fill:var(--text1,#0f172a);font-size:12px">/home</text>
+        <text x="330" y="80" style="fill:var(--text1,#0f172a);font-size:12px">100</text>
+        <text x="450" y="80" style="fill:var(--text1,#0f172a);font-size:12px">4</text>
+        <text x="570" y="80" style="fill:var(--text1,#0f172a);font-size:12px">4.0%</text>
 
-        <text x="36" y="110" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">/search</text>
-        <text x="330" y="110" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">80</text>
-        <text x="450" y="110" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">3</text>
-        <text x="570" y="110" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">3.8%</text>
+        <text x="36" y="110" style="fill:var(--text1,#0f172a);font-size:12px">/search</text>
+        <text x="330" y="110" style="fill:var(--text1,#0f172a);font-size:12px">80</text>
+        <text x="450" y="110" style="fill:var(--text1,#0f172a);font-size:12px">3</text>
+        <text x="570" y="110" style="fill:var(--text1,#0f172a);font-size:12px">3.8%</text>
 
-        <text x="36" y="140" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">/cart</text>
-        <text x="330" y="140" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">60</text>
-        <text x="450" y="140" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">5</text>
-        <text x="570" y="140" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">8.3%</text>
+        <text x="36" y="140" style="fill:var(--text1,#0f172a);font-size:12px">/cart</text>
+        <text x="330" y="140" style="fill:var(--text1,#0f172a);font-size:12px">60</text>
+        <text x="450" y="140" style="fill:var(--text1,#0f172a);font-size:12px">5</text>
+        <text x="570" y="140" style="fill:var(--text1,#0f172a);font-size:12px">8.3%</text>
 
-        <line x1="20" y1="158" x2="680" y2="158" style="stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <line x1="20" y1="158" x2="680" y2="158" style="stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
 
-        <text x="36" y="182" style="fill:var(--text3,#94a3b8);font-size:12px;font-family:sans-serif">added up by hand</text>
-        <text x="330" y="182" style="fill:var(--text3,#94a3b8);font-size:12px;font-family:sans-serif">240</text>
-        <text x="450" y="182" style="fill:var(--text3,#94a3b8);font-size:12px;font-family:sans-serif">12</text>
-        <text x="570" y="182" style="fill:var(--text3,#94a3b8);font-size:12px;font-family:sans-serif">5.4%</text>
+        <text x="36" y="182" style="fill:var(--text3,#5d6b7e);font-size:12px">added up by hand</text>
+        <text x="330" y="182" style="fill:var(--text3,#5d6b7e);font-size:12px">240</text>
+        <text x="450" y="182" style="fill:var(--text3,#5d6b7e);font-size:12px">12</text>
+        <text x="570" y="182" style="fill:var(--text3,#5d6b7e);font-size:12px">5.4%</text>
 
-        <rect x="20" y="194" width="660" height="34" rx="6" style="fill:var(--accent-light,rgba(225,29,72,.10));stroke:var(--accent,#e11d48);stroke-width:1.5"/>
-        <text x="36" y="216" style="fill:var(--accent,#e11d48);font-size:12px;font-weight:700;font-family:sans-serif">what the total row reports</text>
-        <text x="330" y="216" style="fill:var(--accent,#e11d48);font-size:12px;font-weight:700;font-family:sans-serif">190</text>
-        <text x="450" y="216" style="fill:var(--accent,#e11d48);font-size:12px;font-weight:700;font-family:sans-serif">12</text>
-        <text x="570" y="216" style="fill:var(--accent,#e11d48);font-size:12px;font-weight:700;font-family:sans-serif">6.3%</text>
+        <rect x="20" y="194" width="660" height="34" rx="6" style="fill:var(--dia-a-soft,rgba(186,33,66,.10));stroke:var(--dia-a,#ba2142);stroke-width:1.4"/>
+        <text x="36" y="216" style="fill:var(--dia-a-ink,#951833);font-size:12px;font-weight:700">what the total row reports</text>
+        <text x="330" y="216" style="fill:var(--dia-a-ink,#951833);font-size:12px;font-weight:700">190</text>
+        <text x="450" y="216" style="fill:var(--dia-a-ink,#951833);font-size:12px;font-weight:700">12</text>
+        <text x="570" y="216" style="fill:var(--dia-a-ink,#951833);font-size:12px;font-weight:700">6.3%</text>
 
-        <text x="20" y="246" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">A visit that touched all three pages appears in all three rows and once in the total. Both numbers are right.</text>
+        <text x="20" y="246" style="fill:var(--text3,#5d6b7e);font-size:11px">A visit that touched all three pages appears in all three rows and once in the total. Both numbers are right.</text>
     </svg>
 </div>
 
@@ -95,38 +95,38 @@ weight: 3
 <p>A calculated metric can contain another calculated metric, and it can contain a segment that other people also use. Both are references rather than copies, so both are live.</p>
 
 <div class="diagram-box">
-    <div class="diagram-title">📊 One edit on the left. Everything to the right of it moved.</div>
-    <svg viewBox="0 0 700 260" style="width:100%;height:auto;display:block;margin:4px 0 8px"
+    <div class="diagram-title">One edit on the left. Everything to the right of it moved.</div>
+    <svg viewBox="0 0 700 260" style="width:100%;height:auto;display:block"
          role="img" aria-label="A dependency chain. One shared segment named New Visitors is edited. It feeds three calculated metrics, revenue from new visitors, conversion rate for new visitors, and average order value for new visitors. Those three metrics feed an approved executive dashboard and a scheduled Report Builder workbook. A single edit to the segment changes every one of them, and nobody downstream is notified.">
-        <rect x="14" y="104" width="156" height="52" rx="8" style="fill:var(--accent,#e11d48);stroke:var(--accent,#e11d48);stroke-width:2"/>
-        <text x="92" y="126" text-anchor="middle" style="fill:var(--on-accent,#ffffff);font-size:11px;font-family:sans-serif">Segment</text>
-        <text x="92" y="144" text-anchor="middle" style="fill:var(--on-accent,#ffffff);font-size:13px;font-weight:700;font-family:sans-serif">New Visitors</text>
-        <text x="92" y="176" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:11px;font-weight:700;font-family:sans-serif">edited this morning</text>
+        <rect x="14" y="104" width="156" height="52" rx="6" style="fill:var(--dia-a,#ba2142);stroke:var(--dia-a,#ba2142);stroke-width:1.6"/>
+        <text x="92" y="126" text-anchor="middle" style="fill:var(--on-accent,#ffffff);font-size:11px">Segment</text>
+        <text x="92" y="144" text-anchor="middle" style="fill:var(--on-accent,#ffffff);font-size:13px;font-weight:700">New Visitors</text>
+        <text x="92" y="176" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:11px;font-weight:700">edited this morning</text>
 
-        <line x1="170" y1="130" x2="246" y2="48" style="stroke:var(--accent,#e11d48);stroke-width:1.8"/>
-        <line x1="170" y1="130" x2="246" y2="130" style="stroke:var(--accent,#e11d48);stroke-width:1.8"/>
-        <line x1="170" y1="130" x2="246" y2="212" style="stroke:var(--accent,#e11d48);stroke-width:1.8"/>
+        <line x1="170" y1="130" x2="246" y2="48" style="stroke:var(--dia-a,#ba2142);stroke-width:1.8"/>
+        <line x1="170" y1="130" x2="246" y2="130" style="stroke:var(--dia-a,#ba2142);stroke-width:1.8"/>
+        <line x1="170" y1="130" x2="246" y2="212" style="stroke:var(--dia-a,#ba2142);stroke-width:1.8"/>
 
-        <rect x="246" y="26" width="168" height="44" rx="6" style="fill:var(--card,#ffffff);stroke:var(--accent,#e11d48);stroke-width:1.5"/>
-        <rect x="246" y="108" width="168" height="44" rx="6" style="fill:var(--card,#ffffff);stroke:var(--accent,#e11d48);stroke-width:1.5"/>
-        <rect x="246" y="190" width="168" height="44" rx="6" style="fill:var(--card,#ffffff);stroke:var(--accent,#e11d48);stroke-width:1.5"/>
-        <text x="330" y="53" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">Revenue, new visitors</text>
-        <text x="330" y="135" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">Conv. rate, new visitors</text>
-        <text x="330" y="217" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-family:sans-serif">AOV, new visitors</text>
+        <rect x="246" y="26" width="168" height="44" rx="6" style="fill:var(--card,#ffffff);stroke:var(--dia-a,#ba2142);stroke-width:1.4"/>
+        <rect x="246" y="108" width="168" height="44" rx="6" style="fill:var(--card,#ffffff);stroke:var(--dia-a,#ba2142);stroke-width:1.4"/>
+        <rect x="246" y="190" width="168" height="44" rx="6" style="fill:var(--card,#ffffff);stroke:var(--dia-a,#ba2142);stroke-width:1.4"/>
+        <text x="330" y="53" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px">Revenue, new visitors</text>
+        <text x="330" y="135" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px">Conv. rate, new visitors</text>
+        <text x="330" y="217" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px">AOV, new visitors</text>
 
-        <line x1="414" y1="48" x2="486" y2="84" style="stroke:var(--accent,#e11d48);stroke-width:1.8"/>
-        <line x1="414" y1="130" x2="486" y2="84" style="stroke:var(--accent,#e11d48);stroke-width:1.8"/>
-        <line x1="414" y1="130" x2="486" y2="194" style="stroke:var(--accent,#e11d48);stroke-width:1.8"/>
-        <line x1="414" y1="212" x2="486" y2="194" style="stroke:var(--accent,#e11d48);stroke-width:1.8"/>
+        <line x1="414" y1="48" x2="486" y2="84" style="stroke:var(--dia-a,#ba2142);stroke-width:1.8"/>
+        <line x1="414" y1="130" x2="486" y2="84" style="stroke:var(--dia-a,#ba2142);stroke-width:1.8"/>
+        <line x1="414" y1="130" x2="486" y2="194" style="stroke:var(--dia-a,#ba2142);stroke-width:1.8"/>
+        <line x1="414" y1="212" x2="486" y2="194" style="stroke:var(--dia-a,#ba2142);stroke-width:1.8"/>
 
-        <rect x="486" y="60" width="200" height="48" rx="6" style="fill:var(--accent-light,rgba(225,29,72,.10));stroke:var(--accent,#e11d48);stroke-width:2"/>
-        <rect x="486" y="170" width="200" height="48" rx="6" style="fill:var(--accent-light,rgba(225,29,72,.10));stroke:var(--accent,#e11d48);stroke-width:2"/>
-        <text x="586" y="82" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">Executive dashboard</text>
-        <text x="586" y="99" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">approved, read by the board</text>
-        <text x="586" y="192" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">Report Builder workbook</text>
-        <text x="586" y="209" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">scheduled, sends Monday</text>
+        <rect x="486" y="60" width="200" height="48" rx="6" style="fill:var(--dia-a-soft,rgba(186,33,66,.10));stroke:var(--dia-a,#ba2142);stroke-width:1.6"/>
+        <rect x="486" y="170" width="200" height="48" rx="6" style="fill:var(--dia-a-soft,rgba(186,33,66,.10));stroke:var(--dia-a,#ba2142);stroke-width:1.6"/>
+        <text x="586" y="82" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700">Executive dashboard</text>
+        <text x="586" y="99" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">approved, read by the board</text>
+        <text x="586" y="192" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700">Report Builder workbook</text>
+        <text x="586" y="209" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">scheduled, sends Monday</text>
 
-        <text x="14" y="252" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">Nothing warned the analyst. Nothing warned the board. The numbers simply changed.</text>
+        <text x="14" y="252" style="fill:var(--text3,#5d6b7e);font-size:11px">Nothing warned the analyst. Nothing warned the board. The numbers simply changed.</text>
     </svg>
 </div>
 
@@ -147,28 +147,40 @@ weight: 3
 <p>So the decision has to be made once, by somebody, and then published. Which two or three rates are the organizational standard. What each one is called. What it deliberately excludes. Which one is meant when a person in a meeting says "the conversion rate" without qualifying it. None of that is a reporting task and none of it happens in the builder, which is precisely why it never gets done.</p>
 
 <div class="diagram-box">
-    <div class="diagram-title">A library that happened, and a library that was decided</div>
-    <div class="diagram-content">
-        <div class="strategy-diagram">
-            <div class="strategy-col">
-                <div class="strategy-header" style="background:var(--text2, #475569);color:#fff">What accumulates on its own</div>
-                <div class="strategy-item">Conversion Rate</div>
-                <div class="strategy-item">Conversion Rate (Visits)</div>
-                <div class="strategy-item">CVR</div>
-                <div class="strategy-item">Conversion Rate NEW</div>
-                <div class="strategy-item">No descriptions, four owners</div>
-                <div class="strategy-item">All four quoted in meetings</div>
-            </div>
-            <div class="strategy-col">
-                <div class="strategy-header" style="background:var(--accent, #e11d48);color:#fff">What somebody decided</div>
-                <div class="strategy-item">Conversion Rate (Visits), approved</div>
-                <div class="strategy-item">Cart Rate (Visits), approved</div>
-                <div class="strategy-item">Checkout Completion Rate, approved</div>
-                <div class="strategy-item">Each with a written definition</div>
-                <div class="strategy-item">Everything else left unapproved</div>
-            </div>
-        </div>
-    </div>
+    <div class="diagram-title">One of these libraries was decided. The other simply accumulated.</div>
+    <svg viewBox="0 0 700 298" style="width:100%;height:auto;display:block" role="img"
+         aria-label="Two metric libraries side by side. The left one accumulated on its own and holds four near-identical names: Conversion Rate, Conversion Rate in Visits, CVR, and Conversion Rate NEW, with no descriptions, four owners, and all four quoted in meetings. The right one was decided: three metrics marked approved, each carrying a written definition, with everything else left unapproved.">
+      <rect x="20" y="64" width="300" height="196" rx="6" style="fill:none;stroke:var(--dia-d,#f59e0b);stroke-width:1.6"/>
+      <text x="34" y="88" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:700">What accumulates on its own</text>
+      <text x="34" y="104" style="fill:var(--dia-d-ink,#8a5700);font-size:11px">nobody chose any of this</text>
+      <rect x="34" y="114" width="272" height="26" rx="3" style="fill:var(--dia-d-soft,rgba(245,158,11,.14));stroke:var(--dia-d,#f59e0b);stroke-width:1.2"/>
+      <text x="46" y="132" style="fill:var(--text1,#0f172a);font-size:11px">Conversion Rate</text>
+      <rect x="34" y="144" width="272" height="26" rx="3" style="fill:var(--dia-d-soft,rgba(245,158,11,.14));stroke:var(--dia-d,#f59e0b);stroke-width:1.2"/>
+      <text x="46" y="162" style="fill:var(--text1,#0f172a);font-size:11px">Conversion Rate (Visits)</text>
+      <rect x="34" y="174" width="272" height="26" rx="3" style="fill:var(--dia-d-soft,rgba(245,158,11,.14));stroke:var(--dia-d,#f59e0b);stroke-width:1.2"/>
+      <text x="46" y="192" style="fill:var(--text1,#0f172a);font-size:11px">CVR</text>
+      <rect x="34" y="204" width="272" height="26" rx="3" style="fill:var(--dia-d-soft,rgba(245,158,11,.14));stroke:var(--dia-d,#f59e0b);stroke-width:1.2"/>
+      <text x="46" y="222" style="fill:var(--text1,#0f172a);font-size:11px">Conversion Rate NEW</text>
+      <text x="34" y="250" style="fill:var(--dia-d-ink,#8a5700);font-size:11px;font-weight:600">no descriptions, four owners, all four quoted</text>
+
+      <rect x="380" y="64" width="300" height="196" rx="6" style="fill:none;stroke:var(--dia-c,#10b981);stroke-width:1.6"/>
+      <text x="394" y="88" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:700">What somebody decided</text>
+      <text x="394" y="104" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px">one of them, on purpose</text>
+      <rect x="394" y="114" width="272" height="26" rx="3" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.2"/>
+      <text x="406" y="132" style="fill:var(--text1,#0f172a);font-size:11px">Conversion Rate (Visits)</text>
+      <text x="654" y="132" text-anchor="end" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px;font-weight:600">approved</text>
+      <rect x="394" y="144" width="272" height="26" rx="3" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.2"/>
+      <text x="406" y="162" style="fill:var(--text1,#0f172a);font-size:11px">Cart Rate (Visits)</text>
+      <text x="654" y="162" text-anchor="end" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px;font-weight:600">approved</text>
+      <rect x="394" y="174" width="272" height="26" rx="3" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.2"/>
+      <text x="406" y="192" style="fill:var(--text1,#0f172a);font-size:11px">Checkout Completion Rate</text>
+      <text x="654" y="192" text-anchor="end" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px;font-weight:600">approved</text>
+      <rect x="394" y="204" width="272" height="26" rx="3" style="fill:none;stroke:var(--text3,#5d6b7e);stroke-width:1.2;stroke-dasharray:5 4"/>
+      <text x="530" y="222" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">everything else, left unapproved</text>
+      <text x="394" y="250" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px;font-weight:600">each one carrying a written definition</text>
+
+      <text x="350" y="288" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">The left column is not a mistake anybody made. It is what happens when nobody decides.</text>
+    </svg>
 </div>
 
 <p>The right hand column is not smaller because metrics were deleted. It is smaller because three of them were chosen, and the rest were allowed to exist without pretending to be the standard.</p>
