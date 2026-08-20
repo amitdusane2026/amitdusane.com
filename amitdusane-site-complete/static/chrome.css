@@ -357,3 +357,20 @@ body.wf-lock{overflow:hidden}
   .author-fab{width:60px !important; height:60px !important}
   .author-fab svg{width:60px; height:60px}
 }
+
+/* CMP-11. Honour prefers-reduced-motion across the whole surface, not just the
+   two places that were handled piecemeal (scroll-behavior here, the author
+   fab's breathe in chrome.css). Vestibular triggers are transitions and
+   keyframes generally, so the sweep has to be universal.
+
+   .01ms rather than none is deliberate: animation:none suppresses the
+   animationend event, and any script waiting on one would hang instead of
+   degrade. A duration this short is imperceptible but still fires. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

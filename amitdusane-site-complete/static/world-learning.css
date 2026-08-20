@@ -718,6 +718,12 @@ body.world-learning .welcome-btn:hover{background:var(--accent2);text-decoration
   .print-doc .info-box,.print-doc .warn-box,.print-doc .pro-tip,.print-doc .ref-box,.print-doc .path-box,.print-doc .tbl-wrap,.print-doc .diagram-box,.print-doc .code-block,.print-doc .flow-horizontal{break-inside:avoid;page-break-inside:avoid;box-shadow:none !important}
   .print-doc a[href]{color:#ba2142;text-decoration:none}
   .print-doc .ref-box a[href]{color:#10b981}
+  /* CMP-10. On paper a link is just coloured text, and the ref-box is the
+     whole point of the section ending: it is the handoff to Experience League.
+     Printed without its URL it points nowhere. Expanded for ref-box links
+     only, because doing it to every inline link would bury the prose in
+     parentheses. */
+  .print-doc .ref-box a[href^="http"]::after{content:" (" attr(href) ")";font-size:8pt;font-weight:400;color:#4b5563;word-break:break-all}
   .print-doc .path{background:#CECBF6;color:#3C3489;padding:3px 9px;border-radius:4px;font-family:Consolas,monospace;font-size:13px}
   .hm-arrow{display:none !important}
   .hm-row-mod,.hm-row-sec{display:none !important}
@@ -1140,3 +1146,19 @@ body.world-learning .lcontent p.lscale{
   font-variant-numeric:tabular-nums;
 }
 .lscale .ls-sep{color:var(--text3)}
+/* CMP-11. Honour prefers-reduced-motion across the whole surface, not just the
+   two places that were handled piecemeal (scroll-behavior here, the author
+   fab's breathe in chrome.css). Vestibular triggers are transitions and
+   keyframes generally, so the sweep has to be universal.
+
+   .01ms rather than none is deliberate: animation:none suppresses the
+   animationend event, and any script waiting on one would hang instead of
+   degrade. A duration this short is imperceptible but still fires. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
