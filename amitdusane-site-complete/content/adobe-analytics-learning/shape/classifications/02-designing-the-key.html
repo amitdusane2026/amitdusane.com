@@ -81,73 +81,91 @@ weight: 2
 <p>Look at two tracking codes for the same email campaign.</p>
 
 <div class="diagram-box">
-    <div class="diagram-title">Same campaign, two keys, two very different futures</div>
-    <div class="diagram-content">
-        <div class="comparison-grid">
-            <div class="comp-item">
-                <div class="comp-label">emljul26wb</div>
-                <div class="comp-desc">Short, tidy, and completely opaque. A machine sees ten characters and nothing more. Every attribute gets typed into a file by a human, forever, for every campaign.</div>
-            </div>
-            <span class="comp-vs">vs</span>
-            <div class="comp-item">
-                <div class="comp-label">eml_2026_07_winback_in</div>
-                <div class="comp-desc">Longer, and it carries its own meaning. A rule reads it once and produces five dimensions automatically, for every campaign that follows the convention, with nobody uploading anything.</div>
-            </div>
-        </div>
-    </div>
+    <div class="diagram-title">Ten characters a human has to decode, or five parts a rule can read</div>
+    <svg viewBox="0 0 700 268" style="width:100%;height:auto;display:block" role="img"
+         aria-label="Two tracking codes for the same campaign. The opaque one, emljul26wb, is a single block of ten characters that a rule cannot read, so every attribute is typed in by hand. The structured one, eml underscore 2026 underscore 07 underscore winback underscore in, is drawn split into five labelled segments: channel, year, month, campaign and region, which one rule can read for every campaign that follows the convention.">
+      <text x="20" y="90" style="fill:var(--text2,#475569);font-size:12.5px;font-weight:700">Opaque</text>
+      <rect x="120" y="64" width="200" height="44" rx="3" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="220" y="92" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:14px;font-weight:700;font-family:'IBM Plex Mono',ui-monospace,monospace">emljul26wb</text>
+      <text x="340" y="82" style="fill:var(--text2,#475569);font-size:11px">ten characters, and nothing a rule can grip</text>
+      <text x="340" y="100" style="fill:var(--text3,#5d6b7e);font-size:11px">so every attribute is typed in by a human, forever</text>
+      <text x="120" y="128" style="fill:var(--text3,#5d6b7e);font-size:11px">one row in a file for every campaign you ever run</text>
+
+      <text x="20" y="176" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:700">Structured</text>
+      <rect x="120" y="150" width="90" height="36" rx="3" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.4"/>
+      <text x="165" y="173" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:700;font-family:'IBM Plex Mono',ui-monospace,monospace">eml</text>
+      <rect x="220" y="150" width="100" height="36" rx="3" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.4"/>
+      <text x="270" y="173" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:700;font-family:'IBM Plex Mono',ui-monospace,monospace">2026</text>
+      <rect x="330" y="150" width="80" height="36" rx="3" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.4"/>
+      <text x="370" y="173" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:700;font-family:'IBM Plex Mono',ui-monospace,monospace">07</text>
+      <rect x="420" y="150" width="170" height="36" rx="3" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.4"/>
+      <text x="505" y="173" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:700;font-family:'IBM Plex Mono',ui-monospace,monospace">winback</text>
+      <rect x="600" y="150" width="80" height="36" rx="3" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.4"/>
+      <text x="640" y="173" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:700;font-family:'IBM Plex Mono',ui-monospace,monospace">in</text>
+
+      <text x="165" y="204" text-anchor="middle" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px">channel</text>
+      <text x="270" y="204" text-anchor="middle" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px">year</text>
+      <text x="370" y="204" text-anchor="middle" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px">month</text>
+      <text x="505" y="204" text-anchor="middle" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px">campaign</text>
+      <text x="640" y="204" text-anchor="middle" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px">region</text>
+
+      <text x="120" y="228" style="fill:var(--text2,#475569);font-size:11px">one rule reads all five, for every campaign that follows the convention, with nobody uploading anything</text>
+
+      <text x="350" y="258" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">Whether a rule is even possible was settled months earlier, by whoever wrote the naming convention.</text>
+    </svg>
 </div>
 
 <p>The second key is not just nicer to look at. It has a <strong>structure</strong>, and structure is the thing a regular expression can grip.</p>
 
 <div class="diagram-box">
-    <div class="diagram-title">📊 The anatomy of a designed key</div>
-    <svg viewBox="0 0 700 230" style="width:100%;height:auto;display:block;margin:4px 0 8px" role="img" aria-label="The tracking code eml underscore 2026 underscore 07 underscore winback underscore in splits at each underscore into five classification columns: Channel equals Email, Year equals 2026, Month equals July, Campaign equals Winback, and Country equals India.">
-        <text x="20" y="24" style="fill:var(--text3,#94a3b8);font-size:10px;font-weight:700;letter-spacing:1px;font-family:sans-serif">ONE COLLECTED VALUE</text>
+    <div class="diagram-title">The anatomy of a designed key</div>
+    <svg viewBox="0 0 700 230" style="width:100%;height:auto;display:block" role="img" aria-label="The tracking code eml underscore 2026 underscore 07 underscore winback underscore in splits at each underscore into five classification columns: Channel equals Email, Year equals 2026, Month equals July, Campaign equals Winback, and Country equals India.">
+        <text x="20" y="24" style="fill:var(--text3,#5d6b7e);font-size:11px;font-weight:700">One collected value</text>
 
-        <rect x="20" y="38" width="660" height="42" rx="6" style="fill:var(--card,#ffffff);stroke:var(--accent,#e11d48);stroke-width:2"/>
-        <text x="80" y="65" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:15px;font-weight:700;font-family:monospace">eml</text>
-        <text x="145" y="65" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:15px;font-family:monospace">_</text>
-        <text x="215" y="65" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:15px;font-weight:700;font-family:monospace">2026</text>
-        <text x="280" y="65" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:15px;font-family:monospace">_</text>
-        <text x="345" y="65" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:15px;font-weight:700;font-family:monospace">07</text>
-        <text x="410" y="65" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:15px;font-family:monospace">_</text>
-        <text x="480" y="65" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:15px;font-weight:700;font-family:monospace">winback</text>
-        <text x="550" y="65" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:15px;font-family:monospace">_</text>
-        <text x="620" y="65" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:15px;font-weight:700;font-family:monospace">in</text>
+        <rect x="20" y="38" width="660" height="42" rx="6" style="fill:var(--card,#ffffff);stroke:var(--dia-a,#ba2142);stroke-width:1.6"/>
+        <text x="80" y="65" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:15px;font-weight:700;font-family:'IBM Plex Mono',ui-monospace,monospace">eml</text>
+        <text x="145" y="65" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:15px;font-family:'IBM Plex Mono',ui-monospace,monospace">_</text>
+        <text x="215" y="65" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:15px;font-weight:700;font-family:'IBM Plex Mono',ui-monospace,monospace">2026</text>
+        <text x="280" y="65" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:15px;font-family:'IBM Plex Mono',ui-monospace,monospace">_</text>
+        <text x="345" y="65" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:15px;font-weight:700;font-family:'IBM Plex Mono',ui-monospace,monospace">07</text>
+        <text x="410" y="65" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:15px;font-family:'IBM Plex Mono',ui-monospace,monospace">_</text>
+        <text x="480" y="65" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:15px;font-weight:700;font-family:'IBM Plex Mono',ui-monospace,monospace">winback</text>
+        <text x="550" y="65" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:15px;font-family:'IBM Plex Mono',ui-monospace,monospace">_</text>
+        <text x="620" y="65" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:15px;font-weight:700;font-family:'IBM Plex Mono',ui-monospace,monospace">in</text>
 
-        <line x1="80" y1="84" x2="80" y2="122" style="stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <line x1="80" y1="84" x2="80" y2="122" style="stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
         <polygon points="80,128 75,118 85,118" style="fill:var(--border,#e2e8f0)"/>
-        <line x1="215" y1="84" x2="215" y2="122" style="stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <line x1="215" y1="84" x2="215" y2="122" style="stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
         <polygon points="215,128 210,118 220,118" style="fill:var(--border,#e2e8f0)"/>
-        <line x1="345" y1="84" x2="345" y2="122" style="stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <line x1="345" y1="84" x2="345" y2="122" style="stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
         <polygon points="345,128 340,118 350,118" style="fill:var(--border,#e2e8f0)"/>
-        <line x1="480" y1="84" x2="480" y2="122" style="stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <line x1="480" y1="84" x2="480" y2="122" style="stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
         <polygon points="480,128 475,118 485,118" style="fill:var(--border,#e2e8f0)"/>
-        <line x1="620" y1="84" x2="620" y2="122" style="stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+        <line x1="620" y1="84" x2="620" y2="122" style="stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
         <polygon points="620,128 615,118 625,118" style="fill:var(--border,#e2e8f0)"/>
 
         <rect x="26" y="132" width="108" height="46" rx="5" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1"/>
-        <text x="80" y="150" text-anchor="middle" style="fill:var(--text2,#475569);font-size:10px;font-family:sans-serif">Channel</text>
-        <text x="80" y="167" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">Email</text>
+        <text x="80" y="150" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">Channel</text>
+        <text x="80" y="167" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700">Email</text>
 
         <rect x="161" y="132" width="108" height="46" rx="5" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1"/>
-        <text x="215" y="150" text-anchor="middle" style="fill:var(--text2,#475569);font-size:10px;font-family:sans-serif">Year</text>
-        <text x="215" y="167" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">2026</text>
+        <text x="215" y="150" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">Year</text>
+        <text x="215" y="167" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700">2026</text>
 
         <rect x="291" y="132" width="108" height="46" rx="5" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1"/>
-        <text x="345" y="150" text-anchor="middle" style="fill:var(--text2,#475569);font-size:10px;font-family:sans-serif">Month</text>
-        <text x="345" y="167" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">July</text>
+        <text x="345" y="150" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">Month</text>
+        <text x="345" y="167" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700">July</text>
 
         <rect x="426" y="132" width="108" height="46" rx="5" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1"/>
-        <text x="480" y="150" text-anchor="middle" style="fill:var(--text2,#475569);font-size:10px;font-family:sans-serif">Campaign</text>
-        <text x="480" y="167" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">Winback</text>
+        <text x="480" y="150" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">Campaign</text>
+        <text x="480" y="167" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700">Winback</text>
 
         <rect x="566" y="132" width="108" height="46" rx="5" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1"/>
-        <text x="620" y="150" text-anchor="middle" style="fill:var(--text2,#475569);font-size:10px;font-family:sans-serif">Country</text>
-        <text x="620" y="167" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">India</text>
+        <text x="620" y="150" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">Country</text>
+        <text x="620" y="167" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700">India</text>
 
-        <text x="20" y="205" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">Five reportable dimensions. One eVar spent. No file uploaded, and no developer involved.</text>
-        <text x="20" y="222" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">The delimiter is what makes this possible. Remove it and the whole thing collapses into a string.</text>
+        <text x="20" y="205" style="fill:var(--text2,#475569);font-size:11px">Five reportable dimensions. One eVar spent. No file uploaded, and no developer involved.</text>
+        <text x="20" y="222" style="fill:var(--text2,#475569);font-size:11px">The delimiter is what makes this possible. Remove it and the whole thing collapses into a string.</text>
     </svg>
 </div>
 

@@ -103,9 +103,14 @@ window.DGC = function () {
     // Cycle 6: both inherited §8 figures carried font-family:sans-serif on
     // every text element, so neither rendered in Plex on a site that
     // self-hosts its typeface precisely so that it does.
+    // Section 03 permits mono "where the text IS code or a field path", so the
+    // site's own Plex Mono stack is legal. Everything else is not: a generic
+    // sans-serif or an -apple-system stack means the figure is not rendering in
+    // the typeface the site self-hosts, which is the fault this check exists for.
     const raw = svg.outerHTML;
-    const families = raw.match(/font-family[:=]/g);
-    if (families) bad.push(families.length + ' hardcoded font-family — remove, let it inherit Plex');
+    const families = (raw.match(/font-family\s*[:=]\s*"?'?([^;"']+)/g) || [])
+      .filter(f => !/IBM Plex Mono/.test(f));
+    if (families.length) bad.push(families.length + ' off-scale font-family — only the Plex Mono stack is allowed, for code and field paths');
 
     const texts  = [...svg.querySelectorAll('text')];
     const shapes = [...svg.querySelectorAll('rect,circle,path,line,ellipse,polygon')].filter(e => !e.closest('defs'));

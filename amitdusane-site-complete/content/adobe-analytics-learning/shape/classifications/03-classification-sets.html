@@ -22,25 +22,33 @@ weight: 3
 <p>And then the real cost arrived. All of it was scoped to <em>one report suite</em>. Twelve report suites meant doing the whole thing twelve times, by hand, and keeping twelve copies in agreement forever.</p>
 
 <div class="diagram-box">
-    <div class="diagram-title">The same job, before and after</div>
-    <div class="diagram-content">
-        <div class="strategy-diagram">
-            <div class="strategy-col">
-                <div class="strategy-header" style="background:var(--text2, #475569);color:#fff">Legacy classifications</div>
-                <div class="strategy-item">Report suite settings: create the columns</div>
-                <div class="strategy-item">Rule Builder: write the rules</div>
-                <div class="strategy-item">Importer: upload the files</div>
-                <div class="strategy-item">Then repeat all of it, per report suite</div>
-            </div>
-            <div class="strategy-col">
-                <div class="strategy-header" style="background:var(--accent, #e11d48);color:#fff">Classification sets</div>
-                <div class="strategy-item">Subscriptions: which suites and which key</div>
-                <div class="strategy-item">Schema: the columns</div>
-                <div class="strategy-item">Rules: the patterns that fill them</div>
-                <div class="strategy-item">One set, serving every subscribed suite</div>
-            </div>
-        </div>
-    </div>
+    <div class="diagram-title">Three screens, twelve times over, against one set that serves them all</div>
+    <svg viewBox="0 0 700 286" style="width:100%;height:auto;display:block" role="img"
+         aria-label="Legacy classifications needed three separate screens that knew nothing about each other: report suite settings to create the columns, the Rule Builder to write the rules, and the Importer to upload the files, and the whole lot repeated for every report suite. A classification set holds the same three jobs as three tabs in one place: subscriptions, schema and rules, and one set serves every subscribed suite.">
+      <rect x="20" y="64" width="300" height="180" rx="6" style="fill:none;stroke:var(--border,#e2e8f0);stroke-width:1.6"/>
+      <text x="34" y="88" style="fill:var(--text2,#475569);font-size:12.5px;font-weight:700">Legacy classifications</text>
+      <text x="34" y="104" style="fill:var(--text3,#5d6b7e);font-size:11px">three screens, none aware of the others</text>
+      <rect x="42" y="116" width="256" height="30" rx="3" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
+      <text x="170" y="135" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">Report suite settings: the columns</text>
+      <rect x="42" y="152" width="256" height="30" rx="3" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
+      <text x="170" y="171" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">Rule Builder: the rules</text>
+      <rect x="42" y="188" width="256" height="30" rx="3" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
+      <text x="170" y="207" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">Importer: the files</text>
+      <text x="170" y="232" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:11px;font-weight:600">and all of it again, per report suite</text>
+
+      <rect x="380" y="64" width="300" height="180" rx="6" style="fill:none;stroke:var(--dia-c,#10b981);stroke-width:1.6"/>
+      <text x="394" y="88" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:700">Classification sets</text>
+      <text x="394" y="104" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px">one place, three tabs</text>
+      <rect x="402" y="116" width="256" height="30" rx="3" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.2"/>
+      <text x="530" y="135" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px">Subscriptions: which suites, which key</text>
+      <rect x="402" y="152" width="256" height="30" rx="3" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.2"/>
+      <text x="530" y="171" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px">Schema: the columns</text>
+      <rect x="402" y="188" width="256" height="30" rx="3" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.2"/>
+      <text x="530" y="207" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px">Rules: the patterns that fill them</text>
+      <text x="530" y="232" text-anchor="middle" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px;font-weight:600">one set, every subscribed suite</text>
+
+      <text x="350" y="272" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">Creating the columns was a report suite setting. That step is gone, and it is the habit to unlearn first.</text>
+    </svg>
 </div>
 
 <p>Look at the left column and notice that creating the classification columns was a report suite setting. That step is gone. In a classification set, the columns are created inside the set itself, on the Schema tab. If you have worked with classifications before, this is the habit to unlearn first, because you will go looking for a screen that no longer has a job.</p>
@@ -49,39 +57,39 @@ weight: 3
 <p>A classification set is three things bolted together, and holding them apart in your head makes everything else easy.</p>
 
 <div class="diagram-box">
-    <div class="diagram-title">📊 The three parts of a classification set</div>
-    <svg viewBox="0 0 700 250" style="width:100%;height:auto;display:block;margin:4px 0 8px" role="img" aria-label="A classification set contains three parts. Subscriptions pair report suites with a key dimension. The schema lists the classification columns such as Age Band, Gender, Membership Tier and Join Year. Rules hold the patterns that fill those columns automatically.">
-        <rect x="14" y="14" width="672" height="222" rx="10" style="fill:none;stroke:var(--accent,#e11d48);stroke-width:2"/>
-        <text x="30" y="40" style="fill:var(--accent,#e11d48);font-size:12px;font-weight:700;font-family:sans-serif">Classification Set: Club Member Attributes</text>
+    <div class="diagram-title">The three parts of a classification set</div>
+    <svg viewBox="0 0 700 250" style="width:100%;height:auto;display:block" role="img" aria-label="A classification set contains three parts. Subscriptions pair report suites with a key dimension. The schema lists the classification columns such as Age Band, Gender, Membership Tier and Join Year. Rules hold the patterns that fill those columns automatically.">
+        <rect x="14" y="14" width="672" height="222" rx="10" style="fill:none;stroke:var(--dia-a,#ba2142);stroke-width:1.6"/>
+        <text x="30" y="40" style="fill:var(--dia-a-ink,#951833);font-size:12px;font-weight:700">Classification Set: Club Member Attributes</text>
 
-        <rect x="30" y="56" width="200" height="164" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
-        <text x="130" y="80" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">SUBSCRIPTIONS</text>
-        <text x="130" y="98" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:10px;font-family:sans-serif">where it applies</text>
-        <text x="46" y="126" style="fill:var(--text2,#475569);font-size:11px;font-family:monospace">club-prod</text>
-        <text x="214" y="126" text-anchor="end" style="fill:var(--text1,#0f172a);font-size:11px;font-family:monospace">eVar12</text>
+        <rect x="30" y="56" width="200" height="164" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+        <text x="130" y="80" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700">Subscriptions</text>
+        <text x="130" y="98" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">where it applies</text>
+        <text x="46" y="126" style="fill:var(--text2,#475569);font-size:11px;font-family:'IBM Plex Mono',ui-monospace,monospace">club-prod</text>
+        <text x="214" y="126" text-anchor="end" style="fill:var(--text1,#0f172a);font-size:11px;font-family:'IBM Plex Mono',ui-monospace,monospace">eVar12</text>
         <line x1="46" y1="136" x2="214" y2="136" style="stroke:var(--border,#e2e8f0);stroke-width:1"/>
-        <text x="46" y="156" style="fill:var(--text2,#475569);font-size:11px;font-family:monospace">club-dev</text>
-        <text x="214" y="156" text-anchor="end" style="fill:var(--text1,#0f172a);font-size:11px;font-family:monospace">eVar12</text>
+        <text x="46" y="156" style="fill:var(--text2,#475569);font-size:11px;font-family:'IBM Plex Mono',ui-monospace,monospace">club-dev</text>
+        <text x="214" y="156" text-anchor="end" style="fill:var(--text1,#0f172a);font-size:11px;font-family:'IBM Plex Mono',ui-monospace,monospace">eVar12</text>
         <line x1="46" y1="166" x2="214" y2="166" style="stroke:var(--border,#e2e8f0);stroke-width:1"/>
-        <text x="130" y="192" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:10px;font-family:sans-serif">report suite + key dimension</text>
-        <text x="130" y="207" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:10px;font-family:sans-serif">one pair per line</text>
+        <text x="130" y="192" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">report suite + key dimension</text>
+        <text x="130" y="207" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">one pair per line</text>
 
-        <rect x="250" y="56" width="200" height="164" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
-        <text x="350" y="80" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">SCHEMA</text>
-        <text x="350" y="98" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:10px;font-family:sans-serif">the columns</text>
-        <text x="266" y="124" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">Age Band</text>
-        <text x="266" y="144" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">Gender</text>
-        <text x="266" y="164" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">Membership Tier</text>
-        <text x="266" y="184" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">Join Year</text>
-        <text x="350" y="207" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:10px;font-family:sans-serif">each becomes a dimension</text>
+        <rect x="250" y="56" width="200" height="164" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+        <text x="350" y="80" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700">Schema</text>
+        <text x="350" y="98" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">the columns</text>
+        <text x="266" y="124" style="fill:var(--text2,#475569);font-size:11px">Age Band</text>
+        <text x="266" y="144" style="fill:var(--text2,#475569);font-size:11px">Gender</text>
+        <text x="266" y="164" style="fill:var(--text2,#475569);font-size:11px">Membership Tier</text>
+        <text x="266" y="184" style="fill:var(--text2,#475569);font-size:11px">Join Year</text>
+        <text x="350" y="207" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">each becomes a dimension</text>
 
-        <rect x="470" y="56" width="200" height="164" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
-        <text x="570" y="80" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">RULES</text>
-        <text x="570" y="98" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:10px;font-family:sans-serif">the automation</text>
-        <text x="570" y="132" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">Patterns that read the key</text>
-        <text x="570" y="150" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">and fill the columns</text>
-        <text x="570" y="168" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">without a file</text>
-        <text x="570" y="207" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:10px;font-family:sans-serif">optional, and covered later</text>
+        <rect x="470" y="56" width="200" height="164" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+        <text x="570" y="80" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700">Rules</text>
+        <text x="570" y="98" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">the automation</text>
+        <text x="570" y="132" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">Patterns that read the key</text>
+        <text x="570" y="150" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">and fill the columns</text>
+        <text x="570" y="168" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">without a file</text>
+        <text x="570" y="207" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">optional, and covered later</text>
     </svg>
 </div>
 
@@ -132,17 +140,44 @@ Save</pre></div>
 <p>Instead you attach a <strong>lookup</strong>: a small second set whose key is the color code and whose column is the color name. One row per color, not one row per product. Rename the color once and every product inherits it.</p>
 
 <div class="diagram-box">
-    <div class="diagram-title">Primary and lookup, working together</div>
-    <div class="diagram-content">
-        <div class="flow-horizontal">
-            <div class="flow-step">Product SKU<br><span style="font-weight:400;color:var(--text2, #475569)">the collected key</span></div>
-            <span class="flow-arrow">&rarr;</span>
-            <div class="flow-step">Color Code: C-114<br><span style="font-weight:400;color:var(--text2, #475569)">primary classification</span></div>
-            <span class="flow-arrow">&rarr;</span>
-            <div class="flow-step highlight">Color Name: Midnight Blue<br><span style="font-weight:400;color:var(--text2, #475569)">lookup classification</span></div>
-        </div>
-        <p style="text-align:center;margin-top:12px;font-size:13px;color:var(--text3, #94a3b8)">Thousands of SKU rows on the left. One row per color on the right.</p>
-    </div>
+    <div class="diagram-title">Thousands of product rows on one side, one row per colour on the other</div>
+    <svg viewBox="0 0 700 250" style="width:100%;height:auto;display:block" role="img"
+         aria-label="Many product SKUs converge on a single primary classification, Color Code C-114. A dashed connector leads from that to a lookup classification holding the colour name, Midnight Blue. The SKU side carries thousands of rows; the lookup side carries one row per colour, so renaming the colour once updates every product.">
+      <defs>
+        <marker id="cl3c" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" style="fill:var(--text3,#5d6b7e)"/></marker>
+      </defs>
+
+      <rect x="20" y="70" width="180" height="26" rx="3" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
+      <text x="110" y="88" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:'IBM Plex Mono',ui-monospace,monospace">SKU-8841</text>
+      <rect x="20" y="100" width="180" height="26" rx="3" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
+      <text x="110" y="118" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:'IBM Plex Mono',ui-monospace,monospace">SKU-9013</text>
+      <rect x="20" y="130" width="180" height="26" rx="3" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
+      <text x="110" y="148" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:'IBM Plex Mono',ui-monospace,monospace">SKU-9147</text>
+      <rect x="20" y="160" width="180" height="26" rx="3" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
+      <text x="110" y="178" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:'IBM Plex Mono',ui-monospace,monospace">SKU-9302</text>
+      <text x="110" y="204" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">and thousands more</text>
+
+      <line x1="204" y1="83" x2="216" y2="83" style="stroke:var(--text3,#5d6b7e);stroke-width:1.2"/>
+      <line x1="204" y1="113" x2="216" y2="113" style="stroke:var(--text3,#5d6b7e);stroke-width:1.2"/>
+      <line x1="204" y1="143" x2="216" y2="143" style="stroke:var(--text3,#5d6b7e);stroke-width:1.2"/>
+      <line x1="204" y1="173" x2="216" y2="173" style="stroke:var(--text3,#5d6b7e);stroke-width:1.2"/>
+      <line x1="216" y1="83" x2="216" y2="173" style="stroke:var(--text3,#5d6b7e);stroke-width:1.2"/>
+      <line x1="216" y1="128" x2="258" y2="128" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#cl3c)"/>
+
+      <rect x="262" y="104" width="180" height="48" rx="6" style="fill:var(--dia-b-soft,rgba(37,99,235,.10));stroke:var(--dia-b,#2563eb);stroke-width:1.6"/>
+      <text x="352" y="124" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-weight:600">Colour Code</text>
+      <text x="352" y="142" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:700;font-family:'IBM Plex Mono',ui-monospace,monospace">C-114</text>
+      <text x="352" y="170" text-anchor="middle" style="fill:var(--dia-b-ink,#1d4ed8);font-size:11px">primary classification</text>
+
+      <line x1="446" y1="128" x2="486" y2="128" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4;stroke-dasharray:5 4" marker-end="url(#cl3c)"/>
+
+      <rect x="490" y="104" width="190" height="48" rx="6" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.6"/>
+      <text x="585" y="124" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-weight:600">Colour Name</text>
+      <text x="585" y="142" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:700">Midnight Blue</text>
+      <text x="585" y="170" text-anchor="middle" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px">lookup, one row per colour</text>
+
+      <text x="350" y="236" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">Rename the colour once, and every product inherits it. Put the name on the SKU instead and you edit thousands of rows.</text>
+    </svg>
 </div>
 
 <p>Lookups are how you avoid repeating yourself, and they are the reason classification data does not have to be flat. Reach for one whenever an attribute has attributes of its own.</p>

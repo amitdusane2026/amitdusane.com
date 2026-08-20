@@ -38,38 +38,38 @@ weight: 1
 <p>You give Adobe a file. The first column holds a value that Adobe Analytics <em>already collected</em>, and that column is called the <strong>key</strong>. Every column after it holds an attribute that Adobe Analytics never collected and never could have: Age Band, Gender, Membership Tier, Join Year. Adobe stores that table off to one side, and from then on, whenever you ask for a report, it matches the raw value against the key and hands back the attributes you supplied.</p>
 
 <div class="diagram-box">
-    <div class="diagram-title">📊 One key, as many columns as you need</div>
-    <svg viewBox="0 0 700 210" style="width:100%;height:auto;display:block;margin:4px 0 8px" role="img" aria-label="A key value M-10482 on the left resolves into four classification columns on the right: Age Band 60 plus, Gender Male, Membership Tier Gold, and Join Year 2019">
-        <text x="20" y="24" style="fill:var(--text3,#94a3b8);font-size:10px;font-weight:700;letter-spacing:1px;font-family:sans-serif">THE KEY</text>
-        <text x="400" y="24" style="fill:var(--text3,#94a3b8);font-size:10px;font-weight:700;letter-spacing:1px;font-family:sans-serif">THE CLASSIFICATION COLUMNS</text>
+    <div class="diagram-title">One key, as many columns as you need</div>
+    <svg viewBox="0 0 700 210" style="width:100%;height:auto;display:block" role="img" aria-label="A key value M-10482 on the left resolves into four classification columns on the right: Age Band 60 plus, Gender Male, Membership Tier Gold, and Join Year 2019">
+        <text x="20" y="24" style="fill:var(--text3,#5d6b7e);font-size:11px;font-weight:700">The key</text>
+        <text x="400" y="24" style="fill:var(--text3,#5d6b7e);font-size:11px;font-weight:700">The classification columns</text>
 
-        <rect x="20" y="70" width="180" height="56" rx="6" style="fill:var(--card,#ffffff);stroke:var(--accent,#e11d48);stroke-width:2"/>
-        <text x="110" y="94" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:16px;font-weight:700;font-family:monospace">M-10482</text>
-        <text x="110" y="113" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">User ID, already collected</text>
+        <rect x="20" y="70" width="180" height="56" rx="6" style="fill:var(--card,#ffffff);stroke:var(--dia-a,#ba2142);stroke-width:1.6"/>
+        <text x="110" y="94" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:16px;font-weight:700;font-family:'IBM Plex Mono',ui-monospace,monospace">M-10482</text>
+        <text x="110" y="113" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">User ID, already collected</text>
 
-        <line x1="205" y1="98" x2="380" y2="98" style="stroke:var(--border,#e2e8f0);stroke-width:2"/>
+        <line x1="205" y1="98" x2="380" y2="98" style="stroke:var(--border,#e2e8f0);stroke-width:1.6"/>
         <polygon points="380,98 370,93 370,103" style="fill:var(--border,#e2e8f0)"/>
-        <text x="292" y="90" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:10px;font-family:sans-serif">looked up</text>
+        <text x="292" y="90" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">looked up</text>
 
-        <rect x="400" y="42" width="280" height="30" rx="4" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1"/>
-        <text x="414" y="62" style="fill:var(--text2,#475569);font-size:12px;font-family:sans-serif">Age Band</text>
-        <text x="666" y="62" text-anchor="end" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">60+</text>
+        <rect x="400" y="42" width="280" height="30" rx="3" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1"/>
+        <text x="414" y="62" style="fill:var(--text2,#475569);font-size:12px">Age Band</text>
+        <text x="666" y="62" text-anchor="end" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700">60+</text>
 
-        <rect x="400" y="78" width="280" height="30" rx="4" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1"/>
-        <text x="414" y="98" style="fill:var(--text2,#475569);font-size:12px;font-family:sans-serif">Gender</text>
-        <text x="666" y="98" text-anchor="end" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">Male</text>
+        <rect x="400" y="78" width="280" height="30" rx="3" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1"/>
+        <text x="414" y="98" style="fill:var(--text2,#475569);font-size:12px">Gender</text>
+        <text x="666" y="98" text-anchor="end" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700">Male</text>
 
-        <rect x="400" y="114" width="280" height="30" rx="4" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1"/>
-        <text x="414" y="134" style="fill:var(--text2,#475569);font-size:12px;font-family:sans-serif">Membership Tier</text>
-        <text x="666" y="134" text-anchor="end" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">Gold</text>
+        <rect x="400" y="114" width="280" height="30" rx="3" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1"/>
+        <text x="414" y="134" style="fill:var(--text2,#475569);font-size:12px">Membership Tier</text>
+        <text x="666" y="134" text-anchor="end" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700">Gold</text>
 
-        <rect x="400" y="150" width="280" height="30" rx="4" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1"/>
-        <text x="414" y="170" style="fill:var(--text2,#475569);font-size:12px;font-family:sans-serif">Join Year</text>
-        <text x="666" y="170" text-anchor="end" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">2019</text>
+        <rect x="400" y="150" width="280" height="30" rx="3" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1"/>
+        <text x="414" y="170" style="fill:var(--text2,#475569);font-size:12px">Join Year</text>
+        <text x="666" y="170" text-anchor="end" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700">2019</text>
 
-        <text x="20" y="160" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">Collected by</text>
-        <text x="20" y="176" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">Adobe Analytics.</text>
-        <text x="20" y="196" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">Supplied by you.</text>
+        <text x="20" y="160" style="fill:var(--text2,#475569);font-size:11px">Collected by</text>
+        <text x="20" y="176" style="fill:var(--text2,#475569);font-size:11px">Adobe Analytics.</text>
+        <text x="20" y="196" style="fill:var(--text2,#475569);font-size:11px">Supplied by you.</text>
     </svg>
 </div>
 
@@ -81,47 +81,47 @@ weight: 1
 <p>The first is the property that makes practitioners fall in love with this feature. Because the lookup happens when you run the report, and not when the data was collected, <strong>classifications are retroactive</strong>. Upload the club's member file this afternoon, and every hit from every month in your history that carried a User ID becomes readable through Age Band and Membership Tier immediately. Not the hits from tomorrow onward. All of them, going back. The report will look as though you had been collecting age and gender all along, and in a sense you had been, because you had the key.</p>
 
 <div class="diagram-box">
-    <div class="diagram-title">📊 The collection pipeline is never touched</div>
-    <svg viewBox="0 0 700 250" style="width:100%;height:auto;display:block;margin:4px 0 8px" role="img" aria-label="A collection pipeline runs left to right from browser to server call to report suite to report. A classification data file joins only at the report stage, entering from below with a dashed arrow, and never touches the collection pipeline.">
-        <text x="30" y="30" style="fill:var(--text3,#94a3b8);font-size:10px;font-weight:700;letter-spacing:1px;font-family:sans-serif">COLLECTION TIME</text>
+    <div class="diagram-title">The collection pipeline is never touched</div>
+    <svg viewBox="0 0 700 250" style="width:100%;height:auto;display:block" role="img" aria-label="A collection pipeline runs left to right from browser to server call to report suite to report. A classification data file joins only at the report stage, entering from below with a dashed arrow, and never touches the collection pipeline.">
+        <text x="30" y="30" style="fill:var(--text3,#5d6b7e);font-size:11px;font-weight:700">Collection time</text>
 
-        <rect x="30" y="46" width="130" height="46" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
-        <text x="95" y="74" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">Browser or app</text>
+        <rect x="30" y="46" width="130" height="46" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+        <text x="95" y="74" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700">Browser or app</text>
 
-        <line x1="162" y1="69" x2="196" y2="69" style="stroke:var(--text2,#475569);stroke-width:1.5"/>
+        <line x1="162" y1="69" x2="196" y2="69" style="stroke:var(--text2,#475569);stroke-width:1.4"/>
         <polygon points="200,69 190,64 190,74" style="fill:var(--text2,#475569)"/>
 
-        <rect x="200" y="46" width="130" height="46" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
-        <text x="265" y="74" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">Server call</text>
+        <rect x="200" y="46" width="130" height="46" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+        <text x="265" y="74" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700">Server call</text>
 
-        <line x1="332" y1="69" x2="366" y2="69" style="stroke:var(--text2,#475569);stroke-width:1.5"/>
+        <line x1="332" y1="69" x2="366" y2="69" style="stroke:var(--text2,#475569);stroke-width:1.4"/>
         <polygon points="370,69 360,64 360,74" style="fill:var(--text2,#475569)"/>
 
-        <rect x="370" y="46" width="130" height="46" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
-        <text x="435" y="74" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700;font-family:sans-serif">Report suite</text>
+        <rect x="370" y="46" width="130" height="46" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+        <text x="435" y="74" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700">Report suite</text>
 
-        <line x1="502" y1="69" x2="536" y2="69" style="stroke:var(--text2,#475569);stroke-width:1.5"/>
+        <line x1="502" y1="69" x2="536" y2="69" style="stroke:var(--text2,#475569);stroke-width:1.4"/>
         <polygon points="540,69 530,64 530,74" style="fill:var(--text2,#475569)"/>
 
-        <rect x="540" y="46" width="130" height="46" rx="6" style="fill:var(--card,#ffffff);stroke:var(--accent,#e11d48);stroke-width:2"/>
-        <text x="605" y="74" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:12px;font-weight:700;font-family:sans-serif">Report</text>
+        <rect x="540" y="46" width="130" height="46" rx="6" style="fill:var(--card,#ffffff);stroke:var(--dia-a,#ba2142);stroke-width:1.6"/>
+        <text x="605" y="74" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:12px;font-weight:700">Report</text>
 
-        <text x="30" y="118" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">The hit is stored exactly as it arrived. No classification has any say here.</text>
+        <text x="30" y="118" style="fill:var(--text2,#475569);font-size:11px">The hit is stored exactly as it arrived. No classification has any say here.</text>
 
         <line x1="30" y1="140" x2="670" y2="140" style="stroke:var(--border,#e2e8f0);stroke-width:1;stroke-dasharray:2 4"/>
 
-        <text x="30" y="170" style="fill:var(--text3,#94a3b8);font-size:10px;font-weight:700;letter-spacing:1px;font-family:sans-serif">REPORT TIME</text>
+        <text x="30" y="170" style="fill:var(--text3,#5d6b7e);font-size:11px;font-weight:700">Report time</text>
 
-        <rect x="515" y="188" width="180" height="48" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--success,#10b981);stroke-width:1.5"/>
-        <text x="605" y="208" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-weight:700;font-family:sans-serif">Classification data</text>
-        <text x="605" y="224" text-anchor="middle" style="fill:var(--text2,#475569);font-size:10px;font-family:sans-serif">a file you upload, or a rule</text>
+        <rect x="515" y="188" width="180" height="48" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--dia-c,#10b981);stroke-width:1.4"/>
+        <text x="605" y="208" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px;font-weight:700">Classification data</text>
+        <text x="605" y="224" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">a file you upload, or a rule</text>
 
-        <line x1="605" y1="186" x2="605" y2="102" style="stroke:var(--success,#10b981);stroke-width:1.5;stroke-dasharray:4 3"/>
-        <polygon points="605,94 600,105 610,105" style="fill:var(--success,#10b981)"/>
+        <line x1="605" y1="186" x2="605" y2="102" style="stroke:var(--dia-c,#10b981);stroke-width:1.4;stroke-dasharray:4 3"/>
+        <polygon points="605,94 600,105 610,105" style="fill:var(--dia-c,#10b981)"/>
 
-        <text x="30" y="205" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">The key is resolved when you</text>
-        <text x="30" y="221" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">run the report, which is why</text>
-        <text x="30" y="237" style="fill:var(--text2,#475569);font-size:11px;font-family:sans-serif">history changes too.</text>
+        <text x="30" y="205" style="fill:var(--text2,#475569);font-size:11px">The key is resolved when you</text>
+        <text x="30" y="221" style="fill:var(--text2,#475569);font-size:11px">run the report, which is why</text>
+        <text x="30" y="237" style="fill:var(--text2,#475569);font-size:11px">history changes too.</text>
     </svg>
 </div>
 
@@ -176,25 +176,42 @@ weight: 1
 <p>Then Adobe rebuilt the experience properly as <strong>Classification Sets</strong>. Where the older system spread the work across three separate interfaces, a set brings all of it into one place: the dimensions being classified, the schema of columns, the imports, the jobs, and the rules. Processing time came down from seventy-two hours to twenty-four. A single set can subscribe multiple report suites and multiple dimensions at once, so a product classification built once can serve every report suite that has a product SKU, instead of being replicated by hand into each one.</p>
 
 <div class="diagram-box">
-    <div class="diagram-title">📊 Three names, one direction of travel</div>
-    <svg viewBox="0 0 700 130" style="width:100%;height:auto;display:block;margin:4px 0 8px" role="img" aria-label="An evolution timeline showing SAINT in the SiteCatalyst era, renamed to Classifications with no change to the mechanics, then rebuilt as Classification Sets, which is the destination Adobe is consolidating on.">
-        <line x1="40" y1="88" x2="630" y2="88" style="stroke:var(--border,#e2e8f0);stroke-width:2"/>
-        <polygon points="646,88 628,80 628,96" style="fill:var(--border,#e2e8f0)"/>
+    <div class="diagram-title">One of these was a rename. The other was a rebuild, and it is the one still moving.</div>
+    <svg viewBox="0 0 700 204" style="width:100%;height:auto;display:block" role="img"
+         aria-label="Three stops on a timeline. SAINT, from the SiteCatalyst era, is where the name came from. A dashed connector marked renamed leads to Classifications, where the mechanics were unchanged. A solid connector marked rebuilt leads to Classification Sets, one interface and where Adobe is consolidating.">
+      <defs>
+        <marker id="cl1c" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" style="fill:var(--text3,#5d6b7e)"/></marker>
+        <marker id="cl1d" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" style="fill:var(--dia-a,#ba2142)"/></marker>
+      </defs>
 
-        <circle cx="110" cy="88" r="7" style="fill:var(--text2,#475569)"/>
-        <text x="110" y="60" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:13px;font-weight:700;font-family:sans-serif">SAINT</text>
-        <text x="110" y="42" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">SiteCatalyst era</text>
-        <text x="110" y="112" text-anchor="middle" style="fill:var(--text2,#475569);font-size:10px;font-family:sans-serif">where the name came from</text>
+      <text x="232" y="62" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px;font-weight:600">renamed</text>
+      <text x="467" y="62" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:11px;font-weight:600">rebuilt</text>
 
-        <circle cx="330" cy="88" r="7" style="fill:var(--text2,#475569)"/>
-        <text x="330" y="60" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:13px;font-weight:700;font-family:sans-serif">Classifications</text>
-        <text x="330" y="42" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">renamed</text>
-        <text x="330" y="112" text-anchor="middle" style="fill:var(--text2,#475569);font-size:10px;font-family:sans-serif">mechanics unchanged</text>
+      <rect x="20" y="76" width="190" height="70" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="115" y="102" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12.5px;font-weight:700">SAINT</text>
+      <text x="115" y="120" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">the SiteCatalyst era</text>
+      <text x="115" y="136" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">where the name came from</text>
 
-        <circle cx="560" cy="88" r="9" style="fill:var(--accent,#e11d48)"/>
-        <text x="560" y="60" text-anchor="middle" style="fill:var(--accent,#e11d48);font-size:13px;font-weight:700;font-family:sans-serif">Classification Sets</text>
-        <text x="560" y="42" text-anchor="middle" style="fill:var(--text3,#94a3b8);font-size:11px;font-family:sans-serif">rebuilt</text>
-        <text x="560" y="112" text-anchor="middle" style="fill:var(--text2,#475569);font-size:10px;font-family:sans-serif">one interface, the destination</text>
+      <line x1="214" y1="111" x2="251" y2="111" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4;stroke-dasharray:5 4" marker-end="url(#cl1c)"/>
+
+      <rect x="255" y="76" width="190" height="70" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="350" y="102" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:700">Classifications</text>
+      <text x="350" y="120" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">a new name, and nothing else</text>
+      <text x="350" y="136" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">the mechanics never changed</text>
+
+      <line x1="449" y1="111" x2="486" y2="111" style="stroke:var(--dia-a,#ba2142);stroke-width:1.6" marker-end="url(#cl1d)"/>
+
+      <rect x="490" y="76" width="190" height="70" rx="6" style="fill:var(--dia-a-soft,rgba(186,33,66,.10));stroke:var(--dia-a,#ba2142);stroke-width:1.6"/>
+      <text x="585" y="102" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:700">Classification Sets</text>
+      <text x="585" y="120" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:11px">rebuilt, one interface</text>
+      <text x="585" y="136" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:11px">where Adobe is consolidating</text>
+
+      <line x1="20" y1="166" x2="680" y2="166" style="stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
+      <circle cx="115" cy="166" r="4" style="fill:var(--text3,#5d6b7e)"/>
+      <circle cx="350" cy="166" r="4" style="fill:var(--text3,#5d6b7e)"/>
+      <circle cx="585" cy="166" r="4" style="fill:var(--dia-a,#ba2142)"/>
+
+      <text x="350" y="196" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">Two of these three names are still in daily use, which is why the vocabulary is confusing.</text>
     </svg>
 </div>
 
