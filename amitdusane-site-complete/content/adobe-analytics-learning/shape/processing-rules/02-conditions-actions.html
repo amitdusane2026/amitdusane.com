@@ -25,27 +25,38 @@ weight: 2
 </ul>
 
 <div class="diagram-box">
-    <div class="diagram-title">Anatomy of a processing rule, using the page-type example</div>
-    <div class="diagram-content">
-        <div style="font-size:12px;color:var(--text2);margin-bottom:12px"><strong style="color:var(--text1)">Title:</strong> Map page type into reporting</div>
-        <div class="rule-structure">
-            <div class="rule-part conditions">
-                <div class="rule-part-title">Condition (when)</div>
-                <div class="rule-part-desc">If ALL are true:<br><code>c.pagetype</code> is set</div>
-            </div>
-            <div class="rule-connector">&rarr;</div>
-            <div class="rule-part actions">
-                <div class="rule-part-title">Then do the following</div>
-                <div class="rule-part-desc">Overwrite <code>eVar1</code> with <code>c.pagetype</code><br>Overwrite <code>prop1</code> with <code>c.pagetype</code></div>
-            </div>
-            <div class="rule-connector">&rarr;</div>
-            <div class="rule-part">
-                <div class="rule-part-title">Otherwise</div>
-                <div class="rule-part-desc">Condition false:<br>do nothing, leave the hit as it is</div>
-            </div>
-        </div>
-        <div style="font-size:12px;color:var(--text2);margin-top:12px"><strong style="color:var(--text1)">Reason:</strong> Requested by the analytics team to route page type into reporting until the tag update ships. No undo, so the note earns its place.</div>
-    </div>
+    <div class="diagram-title">Five parts, and the two people skip are the two that save them six months later</div>
+    <svg viewBox="0 0 700 326" style="width:100%;height:auto;display:block" role="img"
+         aria-label="One processing rule drawn as its five numbered parts. Rule title, a plain label. Condition, if all are true and c.pagetype is set. Then do the following, overwrite eVar1 and prop1. Otherwise, the either-or half so no mirror rule is needed. And Reason, recording who asked for it and why. The last two are shaded to mark them as the parts most people leave empty.">
+      <rect x="20" y="44" width="660" height="250" rx="6" style="fill:none;stroke:var(--border,#e2e8f0);stroke-width:1.6"/>
+
+      <rect x="34" y="56" width="632" height="40" rx="3" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
+      <text x="48" y="81" style="fill:var(--text2,#475569);font-size:11px;font-weight:700">1</text>
+      <text x="70" y="81" style="fill:var(--text1,#0f172a);font-size:11px;font-weight:600">Rule title</text>
+      <text x="230" y="81" style="fill:var(--text2,#475569);font-size:11px">Map page type into reporting</text>
+
+      <rect x="34" y="102" width="632" height="40" rx="3" style="fill:var(--dia-b-soft,rgba(37,99,235,.10));stroke:var(--dia-b,#2563eb);stroke-width:1.2"/>
+      <text x="48" y="127" style="fill:var(--dia-b-ink,#1d4ed8);font-size:11px;font-weight:700">2</text>
+      <text x="70" y="127" style="fill:var(--text1,#0f172a);font-size:11px;font-weight:600">Condition</text>
+      <text x="230" y="127" style="fill:var(--text1,#0f172a);font-size:11px">if all are true: c.pagetype is set</text>
+
+      <rect x="34" y="148" width="632" height="40" rx="3" style="fill:var(--dia-b-soft,rgba(37,99,235,.10));stroke:var(--dia-b,#2563eb);stroke-width:1.2"/>
+      <text x="48" y="173" style="fill:var(--dia-b-ink,#1d4ed8);font-size:11px;font-weight:700">3</text>
+      <text x="70" y="173" style="fill:var(--text1,#0f172a);font-size:11px;font-weight:600">Then do the following</text>
+      <text x="230" y="173" style="fill:var(--text1,#0f172a);font-size:11px">overwrite eVar1 and prop1 with c.pagetype</text>
+
+      <rect x="34" y="194" width="632" height="40" rx="3" style="fill:var(--dia-d-soft,rgba(245,158,11,.14));stroke:var(--dia-d,#f59e0b);stroke-width:1.4"/>
+      <text x="48" y="219" style="fill:var(--dia-d-ink,#8a5700);font-size:11px;font-weight:700">4</text>
+      <text x="70" y="219" style="fill:var(--text1,#0f172a);font-size:11px;font-weight:600">Otherwise</text>
+      <text x="230" y="219" style="fill:var(--text1,#0f172a);font-size:11px">the either/or half, so no mirror rule is needed</text>
+
+      <rect x="34" y="240" width="632" height="40" rx="3" style="fill:var(--dia-d-soft,rgba(245,158,11,.14));stroke:var(--dia-d,#f59e0b);stroke-width:1.4"/>
+      <text x="48" y="265" style="fill:var(--dia-d-ink,#8a5700);font-size:11px;font-weight:700">5</text>
+      <text x="70" y="265" style="fill:var(--text1,#0f172a);font-size:11px;font-weight:600">Reason</text>
+      <text x="230" y="265" style="fill:var(--text1,#0f172a);font-size:11px">who asked for it, and why. There is no undo.</text>
+
+      <text x="350" y="314" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">The shaded two change nothing about how the rule runs, and everything about whether it survives you.</text>
+    </svg>
 </div>
 
 <h3 class="subsec-title">Conditions: deciding when a rule acts</h3>

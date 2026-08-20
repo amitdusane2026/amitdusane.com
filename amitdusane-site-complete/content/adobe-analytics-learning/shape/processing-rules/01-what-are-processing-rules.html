@@ -19,19 +19,6 @@ weight: 1
 
 <p>Analytics data is the same. Collection, variables, and server calls put up the structure. What turns that structure into something a business user can actually live in is the shaping layer: processing rules, VISTA rules, classifications, and marketing channels. Each one adds a utility the raw structure lacks. None of them can be poured in all at once, so they arrive one at a time, and the first is processing rules.</p>
 
-<div class="diagram-box">
-    <div class="diagram-title">From collection to insight: the shaping layer</div>
-    <div class="diagram-content">
-        <div class="flow-horizontal">
-            <div class="flow-step">Collect the data</div>
-            <span class="flow-arrow">&rarr;</span>
-            <div class="flow-step highlight">Shape the data<br><span style="font-weight:400;color:var(--text2)">Processing Rules, VISTA, Classifications, Marketing Channels</span></div>
-            <span class="flow-arrow">&rarr;</span>
-            <div class="flow-step">Analyze the data</div>
-        </div>
-    </div>
-</div>
-
 <h3 class="subsec-title">What a processing rule is</h3>
 <p>A processing rule is an instruction that Adobe runs on your data server-side, as each hit is collected, before that data is written into the report suite. It lives in the report suite settings, not in your page code, and that is the whole point of it: it changes what gets stored without anyone touching the implementation.</p>
 
@@ -52,6 +39,50 @@ weight: 1
 
 <h3 class="subsec-title">Where processing rules sit in the pipeline</h3>
 <p>It helps to see where this shaping happens. After a hit reaches Adobe, it passes through a pre-processing stage (bot filtering, internal lookups), and then processing rules run, in the order you list them, from top to bottom. VISTA rules, a separate and more powerful server-side mechanism that Adobe sets up for you, generally run after processing rules, though depending on how an organization is configured they can sit on either side. Marketing channel processing rules, a distinct feature covered in <a href="/adobe-analytics-learning/shape/marketing-channels/">Marketing Channels</a>, run later still, and only then is the hit written into the report suite. The practical takeaway for now is simple: a processing rule acts while the data is being collected, on its way in, not after it has landed.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">A processing rule runs on the way in, which is why it fixes tomorrow and never yesterday</div>
+    <svg viewBox="0 0 700 240" style="width:100%;height:auto;display:block" role="img"
+         aria-label="Four stages run left to right. A hit passes through pre-processing, where bot filtering and internal lookups happen; then processing rules, highlighted, which run in the order you listed them; then VISTA and marketing channel rules, which run later still; and only then is it written into the report suite. A bracket beneath the first three stages notes that all of it happens while the hit is on its way in.">
+      <defs>
+        <marker id="pr1a" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" style="fill:var(--text3,#5d6b7e)"/></marker>
+      </defs>
+
+      <text x="350" y="38" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">A hit reaches Adobe, and passes through all of this before anything is stored</text>
+
+      <rect x="28" y="58" width="138" height="76" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="97" y="84" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:700">Pre-processing</text>
+      <text x="97" y="102" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">bot filtering,</text>
+      <text x="97" y="118" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">internal lookups</text>
+
+      <rect x="198" y="58" width="138" height="76" rx="6" style="fill:var(--dia-a-soft,rgba(186,33,66,.10));stroke:var(--dia-a,#ba2142);stroke-width:1.6"/>
+      <text x="267" y="84" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:700">Processing rules</text>
+      <text x="267" y="102" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:11px">in the order you</text>
+      <text x="267" y="118" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:11px">listed them</text>
+
+      <rect x="368" y="58" width="138" height="76" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="437" y="84" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:700">VISTA, then</text>
+      <text x="437" y="102" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">marketing channel</text>
+      <text x="437" y="118" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">rules, later still</text>
+
+      <rect x="538" y="58" width="138" height="76" rx="6" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.6"/>
+      <text x="607" y="84" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:700">Report suite</text>
+      <text x="607" y="102" text-anchor="middle" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px">written, and this</text>
+      <text x="607" y="118" text-anchor="middle" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px">is what you get</text>
+
+      <line x1="170" y1="96" x2="194" y2="96" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#pr1a)"/>
+      <line x1="340" y1="96" x2="364" y2="96" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#pr1a)"/>
+      <line x1="510" y1="96" x2="534" y2="96" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#pr1a)"/>
+
+      <line x1="28" y1="152" x2="506" y2="152" style="stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
+      <line x1="28" y1="146" x2="28" y2="152" style="stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
+      <line x1="506" y1="146" x2="506" y2="152" style="stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
+      <text x="267" y="172" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">all of this happens while the hit is on its way in</text>
+
+      <text x="350" y="204" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12.5px;font-weight:600">Which is why a rule fixes tomorrow and never yesterday</text>
+      <text x="350" y="226" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">It applies from the moment you save it. Hits already stored stay exactly as they were.</text>
+    </svg>
+</div>
 
 <h3 class="subsec-title">The guardrails to understand before you touch them</h3>
 <p>Three properties of processing rules matter more than any single action, and getting them wrong is how careful teams end up with bad data. The table below frames the boundary; the paragraphs that follow explain the three that bite hardest.</p>
