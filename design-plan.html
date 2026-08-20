@@ -346,7 +346,7 @@ footer.end{border-top:1px solid var(--line);padding-top:18px;font-family:var(--m
     </dl>
   </div>
 
-  <div class="it" data-pri="P2" data-status="open">
+  <div class="it" data-pri="P2" data-status="done">
     <div class="it-h"><span class="id">IDN-04</span><span class="ti">Extract the monogram into a partial</span>
       <span class="tags"><span class="t p2">P2</span><span class="t eff">S</span><span class="t st done">done 18 Aug</span></span></div>
     <dl class="row">
@@ -635,24 +635,25 @@ footer.end{border-top:1px solid var(--line);padding-top:18px;font-family:var(--m
     </dl>
   </div>
 
-  <div class="it" data-pri="P2" data-status="open">
+  <div class="it" data-pri="P2" data-status="done">
     <div class="it-h"><span class="id">CMP-10</span><span class="ti">Expand <code>ref-box</code> URLs in print</span>
-      <span class="tags"><span class="t p2">P2</span><span class="t eff">S</span><span class="t st">open</span></span></div>
+      <span class="tags"><span class="t p2">P2</span><span class="t eff">S</span><span class="t st">done</span></span></div>
     <dl class="row">
       <dt>Why</dt><dd>Inherited from the external draft and genuinely clever for a document meant to be printed: a printed link with no URL is a dead end, and the <code>ref-box</code> is the deliberate handoff to Adobe's documentation.</dd>
       <dt>What</dt><dd><code>content:" (" attr(href) ")"</code> on <code>ref-box</code> links inside the print stylesheet only.</dd>
       <dt>Scope</dt><dd class="scope">83 ref-boxes &middot; print only</dd>
+      <dt>Result</dt><dd>Done 20 Aug 2026. Expanded on ref-box links only; verified the URL does not leak into the screen view.</dd>
     </dl>
   </div>
 
-  <div class="it" data-pri="P1" data-status="partial">
+  <div class="it" data-pri="P1" data-status="done">
     <div class="it-h"><span class="id">CMP-11</span><span class="ti">Honour <code>prefers-reduced-motion</code></span>
-      <span class="tags"><span class="t p1">P1</span><span class="t eff">S</span><span class="t st part">partial</span></span></div>
+      <span class="tags"><span class="t p1">P1</span><span class="t eff">S</span><span class="t st">done</span></span></div>
     <dl class="row">
       <dt>Why</dt><dd>Basic accessibility hygiene, and it becomes relevant the moment the in-page spine introduces smooth scrolling and active-state transitions.</dd>
       <dt>What</dt><dd>Disable smooth scroll and transitions under the media query. Cheap now, awkward to retrofit across a design system later.</dd>
       <dt>Scope</dt><dd class="scope">Site-wide</dd>
-      <dt>Result</dt><dd>Two thirds done rather than swept. <code>scroll-behavior</code> is disabled under the media query, and the About mark's halo keeps its whole affordance while dropping only the movement &mdash; it still swells and lights, instantly. What has not happened is a site-wide sweep of every remaining transition and animation, which is what this item actually asks for.</dd>
+      <dt>Result</dt><dd>Two thirds done rather than swept. <code>scroll-behavior</code> is disabled under the media query, and the About mark's halo keeps its whole affordance while dropping only the movement &mdash; it still swells and lights, instantly. What has not happened is a site-wide sweep of every remaining transition and animation, which is what this item actually asks for. <strong>Closed 20 Aug 2026.</strong> The remaining third is done: a universal block in all three stylesheets now covers the thirteen transitions and the home map keyframe that the two piecemeal cases had left moving. It sets .01ms rather than none, so animationend still fires and nothing waiting on one hangs.</dd>
     </dl>
   </div>
 
@@ -883,13 +884,14 @@ footer.end{border-top:1px solid var(--line);padding-top:18px;font-family:var(--m
     </dl>
   </div>
 
-  <div class="it" data-pri="P1" data-status="open" data-seo="1">
+  <div class="it" data-pri="P1" data-status="partial" data-seo="1">
     <div class="it-h"><span class="id">SEO-08</span><span class="ti">Verify the restructure did not orphan knowledge</span>
-      <span class="tags"><span class="t p1">P1</span><span class="t seo">SEO</span><span class="t eff">S</span><span class="t st">open</span></span></div>
+      <span class="tags"><span class="t p1">P1</span><span class="t seo">SEO</span><span class="t eff">S</span><span class="t st">checked, gap found</span></span></div>
     <dl class="row">
       <dt>Why</dt><dd>M01 §3 defined a visit solely by the 30-minute timeout because the other conditions were going to be taught in a module the restructure deleted. Nothing was ever marked missing: the tracker showed the section written, QA'd and final, and it was. The movement ledger records three deletions with stated destinations, and only one has been verified.</dd>
       <dt>What</dt><dd>Read the ledger's deleted sections, list what each was expected to carry, and confirm the receiving section carries it. Three deletions, so a short check. Anything found is likely foundational.</dd>
       <dt>Scope</dt><dd class="scope">3 deleted sections, unknown receivers</dd>
+      <dt>Result</dt><dd>Run 20 Aug 2026. Understanding Metrics is closed - M01 §3 now carries all four visit-ending conditions. Understanding Dimensions was only partially honoured: capacity moved to Props and eVars, cardinality did not, so <strong>the unique-value ceiling on a dimension, and the Low Traffic bucket, is taught nowhere</strong>. Same shape as the visit gap and the same absence of any error signal. Recorded in development-plan.md; needs Amit's notes to write.</dd>
       <dt>SEO</dt><dd class="seo-note">A foundational gap in an early module undermines topical authority for everything built on it.</dd>
     </dl>
   </div>
@@ -1216,9 +1218,9 @@ footer.end{border-top:1px solid var(--line);padding-top:18px;font-family:var(--m
     </dl>
   </div>
 
-  <div class="it" data-pri="P3" data-status="open">
+  <div class="it" data-pri="P3" data-status="done">
     <div class="it-h"><span class="id">INF-07</span><span class="ti">Remove dead code</span>
-      <span class="tags"><span class="t p3">P3</span><span class="t eff">S</span><span class="t st">open</span></span></div>
+      <span class="tags"><span class="t p3">P3</span><span class="t eff">S</span><span class="t st">done</span></span></div>
     <dl class="row">
       <dt>Why</dt><dd>Zero reader-visible value, but <code>static/guide.css</code> (16KB), <code>static/theme.js</code>, <code>partials/header.html</code> and <code>partials/footer.html</code> are unreferenced, and dead CSS beside a live stylesheet is a trap during a redesign &mdash; it is exactly the sort of thing that gets edited by mistake.</dd>
       <dt>What</dt><dd>Confirm unreferenced, then delete. Worth doing early <em>because</em> of the redesign rather than despite it.</dd>

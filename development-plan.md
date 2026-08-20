@@ -395,6 +395,26 @@ Visit mechanics belonged to Understanding Metrics, and its stated destination wa
 
 **Work item for the pre-launch pass:** read the movement ledger's deleted sections, list what each was expected to carry, and confirm the receiving section actually carries it. Three deletions, so this is a short check, and it is the only mechanism that would catch a second instance. Anything found is likely to be foundational, because that is what an early module was holding.
 
+### SEO-08 run: the ledger check, and it found a second orphan (20 Aug 2026)
+
+The movement ledger records three deletions from the old M13. Each was checked against its stated destination.
+
+| Deleted section | Stated destination | Verdict |
+|---|---|---|
+| Understanding Metrics | "taught in Events" | **Closed.** This was the known instance. M01 §3 now carries "A visit ends four ways, and only one of them is famous", with all four conditions and the midnight case. |
+| Understanding Dimensions | "taught in Props and eVars" | **Partially honoured — a second orphan.** See below. |
+| Dimension and Metric Best Practices | deleted outright, no destination | Nothing was promised, so nothing is owed. Noted only that M03 §8 Variable Planning is thin at three headings, and is the natural home if any of it is ever wanted back. |
+
+**The second orphan is the unique-value ceiling on a dimension — Low Traffic.**
+
+The destination was honoured for capacity but not for cardinality. M03 §1 teaches that a report suite gives 75 props at 100 bytes each and that longer values truncate silently; M03 §2 teaches eVar capacity and its 255 bytes. What no section teaches is that a dimension has a ceiling on how many *distinct values* it can hold in a reporting period, and that everything past it collapses into a single Low Traffic line.
+
+The corpus mentions it twice, and neither is where a reader would look. One is a clause inside M04 §2 about keeping link names low in variety — "every dimension has a ceiling" — in a section about naming custom links. The other is a passing note in M02 §3 about virtual report suites sharing a schema.
+
+**It is the same shape as the visit-mechanics gap, and it produces no error signal.** Both receiving sections are written, QA'd and final, and they are: the knowledge that moved arrived intact, and the knowledge that did not was never marked missing by anything. It also happens to be the site's own recurring theme — a report quietly stops showing you rows, and nothing anywhere says why.
+
+Not written, because content is Amit's call and this needs his notes. Recorded so it is not lost a third time.
+
 ### Banked finding: eight sections assert a journey the reader has not taken (10 Aug 2026)
 
 Found by sweeping the learning world for journey-assuming constructions. **All eight are signed off and all eight passed QA**, which is the same lesson as M02 §4: every check in the rulebook is a pattern match, and none of them reads a sentence and asks whether it is true for the reader in front of it. This is QA Rulebook check 4 and component rulebook rule 5, both failing silently.
