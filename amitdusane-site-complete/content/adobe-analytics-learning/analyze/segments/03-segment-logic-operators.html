@@ -56,10 +56,10 @@ weight: 3
     <div class="diagram-title">And narrows to the overlap, Or widens to either</div>
     <svg viewBox="0 0 700 250" style="width:100%;height:auto;display:block" role="img" aria-label="Two set diagrams. On the left, And highlights only the overlap where both conditions are true, a smaller group. On the right, Or highlights both full circles, everything in either condition, a larger group.">
         <defs><clipPath id="andLens3"><circle cx="150" cy="120" r="58"/></clipPath></defs>
-        <text x="180" y="34" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:15px;font-weight:700">AND</text>
-        <circle cx="150" cy="120" r="58" style="fill:none;stroke:var(--text2,#475569);stroke-width:1.4"/>
-        <circle cx="222" cy="120" r="58" style="fill:none;stroke:var(--text2,#475569);stroke-width:1.4"/>
-        <circle cx="222" cy="120" r="58" style="fill:var(--dia-a,#ba2142);opacity:.34" clip-path="url(#andLens3)"/>
+        <text x="180" y="34" text-anchor="middle" style="fill:var(--text2,#475569);font-size:15px;font-weight:700">AND</text>
+        <circle cx="150" cy="120" r="58" style="fill:var(--dia-b-soft,rgba(37,99,235,.10));stroke:var(--dia-b,#2563eb);stroke-width:1.4"/>
+        <circle cx="222" cy="120" r="58" style="fill:var(--dia-d-soft,rgba(245,158,11,.14));stroke:var(--dia-d,#f59e0b);stroke-width:1.4"/>
+        <circle cx="222" cy="120" r="58" style="fill:var(--dia-c,#10b981);opacity:.30" clip-path="url(#andLens3)"/>
         <text x="118" y="124" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px">Mobile</text>
         <text x="254" y="124" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px">Bought</text>
         <text x="180" y="208" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:600">Both true: the overlap only</text>
@@ -67,11 +67,9 @@ weight: 3
 
         <line x1="350" y1="40" x2="350" y2="200" style="stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
 
-        <text x="520" y="34" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:15px;font-weight:700">OR</text>
-        <circle cx="490" cy="120" r="58" style="fill:var(--dia-a,#ba2142);opacity:.20"/>
-        <circle cx="562" cy="120" r="58" style="fill:var(--dia-a,#ba2142);opacity:.20"/>
-        <circle cx="490" cy="120" r="58" style="fill:none;stroke:var(--text2,#475569);stroke-width:1.4"/>
-        <circle cx="562" cy="120" r="58" style="fill:none;stroke:var(--text2,#475569);stroke-width:1.4"/>
+        <text x="520" y="34" text-anchor="middle" style="fill:var(--text2,#475569);font-size:15px;font-weight:700">OR</text>
+        <circle cx="490" cy="120" r="58" style="fill:var(--dia-b-soft,rgba(37,99,235,.10));stroke:var(--dia-b,#2563eb);stroke-width:1.4"/>
+        <circle cx="562" cy="120" r="58" style="fill:var(--dia-d-soft,rgba(245,158,11,.14));stroke:var(--dia-d,#f59e0b);stroke-width:1.4"/>
         <text x="458" y="124" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px">iOS</text>
         <text x="594" y="124" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:11px">Android</text>
         <text x="520" y="208" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:600">Either true: everything in both</text>

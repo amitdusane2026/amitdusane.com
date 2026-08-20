@@ -45,14 +45,14 @@ weight: 6
     <div class="diagram-title">With OR, one true column is enough to get in</div>
     <svg viewBox="0 0 700 268" style="width:100%;height:auto;display:block" role="img" aria-label="A table of four visitors. Columns show whether each met your conditions A and B and C, whether the page contained abc, and whether they land in the segment. Visitor 1 met your conditions and is in. Visitors 2 and 3 failed your conditions but matched the broad contains-abc branch and are in anyway. Visitor 4 matched nothing and is the only one out. OR needs only one true column to include a visitor.">
         <rect x="16" y="28" width="668" height="46" rx="6" style="fill:var(--bg3,#f1f5f9)"/>
-        <rect x="330" y="28" width="182" height="182" style="fill:var(--dia-a,#ba2142);opacity:.07"/>
+        <rect x="330" y="28" width="182" height="182" style="fill:var(--dia-d,#f59e0b);opacity:.10"/>
         <rect x="16" y="102" width="668" height="36" style="fill:var(--dia-a,#ba2142);opacity:.10"/>
         <rect x="16" y="138" width="668" height="36" style="fill:var(--dia-a,#ba2142);opacity:.10"/>
 
         <text x="67" y="56" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12px;font-weight:700">Visitor</text>
         <text x="224" y="48" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12px;font-weight:700">Your conditions</text>
         <text x="224" y="64" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">(A and B and C)</text>
-        <text x="421" y="56" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:12px;font-weight:700">OR: contains abc</text>
+        <text x="421" y="56" text-anchor="middle" style="fill:var(--dia-d-ink,#8a5700);font-size:12px;font-weight:700">OR: contains abc</text>
         <text x="598" y="56" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12px;font-weight:700">In segment?</text>
 
         <line x1="118" y1="28" x2="118" y2="210" style="stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
@@ -61,24 +61,24 @@ weight: 6
         <line x1="16" y1="210" x2="684" y2="210" style="stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
 
         <text x="67" y="90" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12px">V1</text>
-        <text x="224" y="91" text-anchor="middle" style="fill:var(--dia-c-ink,#0a6e50);font-size:16px;font-weight:700">&#10003;</text>
-        <text x="421" y="91" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:15px">&#10007;</text>
-        <text x="598" y="90" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:12px;font-weight:700">IN</text>
+        <text x="224" y="91" text-anchor="middle" style="fill:var(--success-ink,#0a6e50);font-size:16px;font-weight:700">&#10003;</text>
+        <text x="421" y="91" text-anchor="middle" style="fill:var(--danger-ink,#a4161a);font-size:15px">&#10007;</text>
+        <text x="598" y="90" text-anchor="middle" style="fill:var(--success-ink,#0a6e50);font-size:12px;font-weight:700">IN</text>
 
         <text x="67" y="126" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12px">V2</text>
-        <text x="224" y="127" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:15px">&#10007;</text>
-        <text x="421" y="127" text-anchor="middle" style="fill:var(--dia-c-ink,#0a6e50);font-size:16px;font-weight:700">&#10003;</text>
-        <text x="598" y="126" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:12px;font-weight:700">IN</text>
+        <text x="224" y="127" text-anchor="middle" style="fill:var(--danger-ink,#a4161a);font-size:15px">&#10007;</text>
+        <text x="421" y="127" text-anchor="middle" style="fill:var(--success-ink,#0a6e50);font-size:16px;font-weight:700">&#10003;</text>
+        <text x="598" y="126" text-anchor="middle" style="fill:var(--success-ink,#0a6e50);font-size:12px;font-weight:700">IN</text>
 
         <text x="67" y="162" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12px">V3</text>
-        <text x="224" y="163" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:15px">&#10007;</text>
-        <text x="421" y="163" text-anchor="middle" style="fill:var(--dia-c-ink,#0a6e50);font-size:16px;font-weight:700">&#10003;</text>
-        <text x="598" y="162" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:12px;font-weight:700">IN</text>
+        <text x="224" y="163" text-anchor="middle" style="fill:var(--danger-ink,#a4161a);font-size:15px">&#10007;</text>
+        <text x="421" y="163" text-anchor="middle" style="fill:var(--success-ink,#0a6e50);font-size:16px;font-weight:700">&#10003;</text>
+        <text x="598" y="162" text-anchor="middle" style="fill:var(--success-ink,#0a6e50);font-size:12px;font-weight:700">IN</text>
 
         <text x="67" y="198" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12px">V4</text>
-        <text x="224" y="199" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:15px">&#10007;</text>
-        <text x="421" y="199" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:15px">&#10007;</text>
-        <text x="598" y="198" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:12px;font-weight:700">OUT</text>
+        <text x="224" y="199" text-anchor="middle" style="fill:var(--danger-ink,#a4161a);font-size:15px">&#10007;</text>
+        <text x="421" y="199" text-anchor="middle" style="fill:var(--danger-ink,#a4161a);font-size:15px">&#10007;</text>
+        <text x="598" y="198" text-anchor="middle" style="fill:var(--danger-ink,#a4161a);font-size:12px;font-weight:700">OUT</text>
 
         <rect x="16" y="226" width="9" height="15" rx="2" style="fill:var(--dia-a,#ba2142);opacity:.55"/>
         <text x="33" y="238" style="fill:var(--text1,#0f172a);font-size:11px;font-weight:600">V2 and V3 met none of your conditions. The broad OR branch pulled them in anyway.</text>
@@ -109,20 +109,20 @@ weight: 6
 <div class="diagram-box">
     <div class="diagram-title">A good name describes the segment before anyone opens it</div>
     <svg viewBox="0 0 700 188" style="width:100%;height:auto;display:block" role="img" aria-label="A segment name broken into three parts. Visit, the scope, meaning how wide it reaches. Purchasers, the audience, meaning who it captures. Mobile, the qualifier, meaning the narrowing detail.">
-        <rect x="40" y="40" width="168" height="46" rx="6" style="fill:var(--card,#ffffff);stroke:var(--dia-a,#ba2142);stroke-width:1.6"/>
+        <rect x="40" y="40" width="168" height="46" rx="6" style="fill:var(--dia-b-soft,rgba(37,99,235,.10));stroke:var(--dia-b,#2563eb);stroke-width:1.6"/>
         <text x="124" y="69" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:15px;font-weight:700">Visit</text>
         <text x="221" y="70" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:16px">&#183;</text>
-        <rect x="234" y="40" width="196" height="46" rx="6" style="fill:var(--card,#ffffff);stroke:var(--dia-a,#ba2142);stroke-width:1.6"/>
+        <rect x="234" y="40" width="196" height="46" rx="6" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.6"/>
         <text x="332" y="69" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:15px;font-weight:700">Purchasers</text>
         <text x="443" y="70" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:16px">&#183;</text>
-        <rect x="456" y="40" width="168" height="46" rx="6" style="fill:var(--card,#ffffff);stroke:var(--dia-a,#ba2142);stroke-width:1.6"/>
+        <rect x="456" y="40" width="168" height="46" rx="6" style="fill:var(--dia-d-soft,rgba(245,158,11,.14));stroke:var(--dia-d,#f59e0b);stroke-width:1.6"/>
         <text x="540" y="69" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:15px;font-weight:700">Mobile</text>
 
-        <text x="124" y="120" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:11px;font-weight:700">Scope</text>
+        <text x="124" y="120" text-anchor="middle" style="fill:var(--dia-b-ink,#1d4ed8);font-size:11px;font-weight:700">Scope</text>
         <text x="124" y="138" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">how wide it reaches</text>
-        <text x="332" y="120" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:11px;font-weight:700">Audience</text>
+        <text x="332" y="120" text-anchor="middle" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px;font-weight:700">Audience</text>
         <text x="332" y="138" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">who it captures</text>
-        <text x="540" y="120" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:11px;font-weight:700">Qualifier</text>
+        <text x="540" y="120" text-anchor="middle" style="fill:var(--dia-d-ink,#8a5700);font-size:11px;font-weight:700">Qualifier</text>
         <text x="540" y="138" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">the narrowing detail</text>
 
         <text x="332" y="172" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12px">Read at a glance: a visit-scoped segment of purchasers, narrowed to mobile.</text>
