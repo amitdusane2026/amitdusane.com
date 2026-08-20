@@ -12,6 +12,7 @@ Adobe Analytics/                     <- working directory, supporting docs live 
 ├── completion-tracker.tsv          <- per-page status
 ├── design-plan.html                 <- the design and SEO work plan, 106 items
 ├── diagram-spec.html                <- the drawing standard, and the redraw programme
+├── diagram-check.js                 <- the per-figure pass, automated. Paste once, call per page
 └── amitdusane-site-complete/        <- the Hugo site, website files ONLY
 ```
 
@@ -52,6 +53,7 @@ So whenever something written here is made wrong, narrower, or redundant by a la
 |---|---|---|
 | `structure-map.html` | Titles, seotitles, slugs, module and section numbering, the curriculum arc | Creating any page, or naming anything |
 | `diagram-spec.html` | Every figure: the reader's test, when to draw at all, type, colour, the canvas, the per-figure pass | Drawing, redrawing or removing any diagram |
+| `diagram-check.js` | The measurable half of the per-figure pass, so it is not retyped fifteen times a session | Verifying any redrawn or inherited figure |
 | `design-plan.html` | The 106 design and SEO items, their priority and status | Picking up design work |
 | `content-component-rulebook.html` | Every component, its tier, when it is earned, prose rules, the 20-item checklist | Writing any section body |
 | `QA_Rulebook.html` | The 13-point delivery gate, binary PASS/FAILED | Declaring anything done |
@@ -76,7 +78,7 @@ These documents were produced during earlier plain chat sessions. They are close
 **A "world" is a self-contained sub-site** selected by URL prefix, with its own stylesheet, JS, shell, and print document. Two exist: `/web-sdk-migration/` (blue accent, `world-shell.css`) and `/adobe-analytics-learning/` (crimson accent, `world-learning.css`). The switch is an if/else chain in `layouts/partials/head.html:37` and `layouts/_default/baseof.html:4-6`.
 
 
-**Every size comes from a token. Never hard-code a px in a component.** `:root` in `world-learning.css` carries a type scale (`--fs-title` 34, `--fs-h3` 24, `--fs-body` 18, `--fs-sm`, `--fs-label`, `--fs-meta`, `--fs-micro`, `--fs-code`), a spacing scale (`--sp-xs` 6 through `--sp-xl` 48), line-heights, and one column width (`--column` 760px, prose and figures alike). Each has a mobile step in the 880px query and the type scale has a print step in points. Changing a size means changing a token, never a rule. Before this existed the whole reading column was 16px and component margins had drifted across five arbitrary values.
+**Every size comes from a token. Never hard-code a px in a component.** `:root` in `world-learning.css` carries a type scale (`--fs-title` 34, `--fs-h3` 24, `--fs-body` 17, `--fs-sm`, `--fs-label`, `--fs-meta`, `--fs-micro`, `--fs-code`), a spacing scale (`--sp-xs` 6 through `--sp-xl` 48), line-heights, and one column width (`--column` 760px, prose and figures alike). Each has a mobile step in the 880px query and the type scale has a print step in points. Changing a size means changing a token, never a rule. Before this existed the whole reading column was 16px and component margins had drifted across five arbitrary values.
 
 **Colour is tokenised the same way, and three of the tokens exist because a colour cannot be reused across grounds.** The accent is `--accent` (#ba2142, deepened off Tailwind's rose-600 on 18 Aug because the old value measured 4.49:1 on the page ground and failed AA), with `--accent2` as its companion and `--accent-light` as its wash. Alongside them:
 
@@ -127,6 +129,11 @@ for f in $(find amitdusane-site-complete/content -name '*.html'); do o=$(grep -o
 ```
 
 Depth counting has to count *every* `<div` and `</div>` on a line, not line-anchored patterns: inner tags are indented, outer ones are not, and a pattern like `/^<\/div>$/` closes the block at the first outer-looking tag it meets, which may not be the right one.
+
+**An eleventh, found 20 Aug 2026, and it is expensive because it wastes whole verification passes.** `hugo server`'s file watcher **silently misses in-place rewrites in this tree** — a `perl -pi` or any editor that replaces rather than appends. The source is correct, a clean build is correct, and the served page is the old one. It looks exactly like an edit that did nothing, which is the same symptom as trap four, so the instinct is to go hunting in the CSS or the cascade.
+
+It cost three false verification passes in one session, each one a full re-measure of nine figures in two themes. **Never verify against a running `hugo server` in this tree.** The reliable sequence is: stop the server, `rm -rf public`, `hugo --gc`, assert the page count, restart, then check. Confirm the served markup carries something unique to your edit before trusting a single measurement taken from it.
+
 ---
 
 ## Building

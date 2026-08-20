@@ -158,6 +158,20 @@ footer{border-top:1px solid var(--line);padding-top:16px;font-size:12.5px;color:
   </table></div>
   <div class="no"><b>Nothing below 11.</b> The corpus currently has 141 places at 8 to 10.5px, 16 of them under the legibility floor for any handset. They are known and they are not a precedent.</div>
   <div class="card">
+    <h3>A box has to be tall enough for the lines in it</h3>
+    <p>Written down because the same mistake was made twice in one session, in two different figures, and each time it cost a rebuild and a full re-verification. <strong>Sizes for a box holding stacked lines, at the sizes above:</strong></p>
+    <div class="tw"><table>
+      <thead><tr><th style="width:110px">Lines</th><th style="width:110px">Box height</th><th>Baselines, from the box top</th></tr></thead>
+      <tbody>
+        <tr><td>One</td><td><code>36</code></td><td>+23</td></tr>
+        <tr><td>Two</td><td><code>52</code></td><td>+22, +40</td></tr>
+        <tr><td>Three</td><td><code>70</code></td><td>+26, +43, +58</td></tr>
+      </tbody>
+    </table></div>
+    <p><strong>A three-line box at height 64 leaves 3px under the last line</strong>, which reads as cramped and fails the pass. The rule of thumb: the last baseline needs <strong>at least 9px of box below it</strong>, because a glyph descends about 3px and the eye needs the rest.</p>
+    <p>Line spacing inside a box is <strong>15 to 18</strong>. Below 15 the em boxes touch, which is not a collision but looks tight; above 18 the lines stop reading as one label.</p>
+  </div>
+  <div class="card">
     <h3>Sentence case, not capitals</h3>
     <p>Panel headings are <strong>sentence case bold</strong>, matching the label voice used by every box on the page. Capitals plus tracking is half of a recognisable generated-page signature, and this site has already rejected it once. A figure is part of the page, not a separate object with its own typography.</p>
     <p>Never mono inside a diagram, except where the text <em>is</em> code or a field path.</p>
@@ -273,25 +287,38 @@ footer{border-top:1px solid var(--line);padding-top:16px;font-size:12.5px;color:
       <tr><td>03 Variables</td><td>11</td><td>0</td><td><b>done</b></td></tr>
       <tr><td>04 Data Collection</td><td>6</td><td>0</td><td><b>done</b></td></tr>
       <tr><td>05 Data Layers</td><td>5</td><td>0</td><td><b>done</b></td></tr>
-      <tr><td>06 Adobe Launch (Tags)</td><td>9</td><td>6</td><td>next</td></tr>
-      <tr><td>07 Tracking Calls</td><td>8</td><td>5</td><td></td></tr>
+      <tr><td>06 Adobe Launch (Tags)</td><td>9</td><td>0</td><td><b>done</b></td></tr>
+      <tr><td>07 Tracking Calls</td><td>8</td><td>5</td><td>next</td></tr>
       <tr><td>08 Processing Rules</td><td>2</td><td>2</td><td></td></tr>
       <tr><td>09 VISTA Rules</td><td>3</td><td>3</td><td></td></tr>
-      <tr><td>10 Classifications</td><td>13</td><td>5</td><td></td></tr>
-      <tr><td>11 Marketing Channels</td><td>14</td><td>14</td><td>heaviest</td></tr>
+      <tr><td>10 Marketing Channels</td><td>14</td><td>14</td><td>heaviest</td></tr>
+      <tr><td>11 Classifications</td><td>13</td><td>5</td><td></td></tr>
       <tr><td>12 Calculated Metrics</td><td>9</td><td>1</td><td></td></tr>
       <tr><td>13 Segments</td><td>15</td><td>1</td><td></td></tr>
       <tr><td>14 Analysis Workspace</td><td>18</td><td>0</td><td>verify only</td></tr>
-      <tr><th>Total</th><th>126</th><th>37</th><th>5 of 14</th></tr>
+      <tr><th>Total</th><th>126</th><th>31</th><th>6 of 14</th></tr>
     </tbody>
   </table>
   </div>
-  <p><strong>Marketing Channels carries 14 of the 37 remaining redraws</strong> and will need more than one sitting. Analysis Workspace needs no redraw at all, only the verification pass over its 18 figures.</p>
+  <p><strong>Marketing Channels carries 14 of the 31 remaining redraws</strong> and will need more than one sitting. Analysis Workspace needs no redraw at all, only the verification pass over its 18 figures.</p>
   <p>A by-product worth tracking, because it is CMP-05 arriving for free: eight one-off diagram classes are already unused corpus-wide &mdash; <code>human-priority</code>, <code>hp-node</code>, <code>hp-face</code>, <code>hp-badge</code>, <code>tri-box</code>, <code>tri-h</code>, <code>tri-arrow</code>, <code>scene-split</code>. The remaining HTML figures still lean on <code>flow-step</code> and <code>flow-arrow</code> (22 files each), <code>comp-vs</code> and <code>comp-item</code> (14 each), and <code>flow-horizontal</code> (15).</p>
 </section>
 
+<section>
+  <div class="cat"><span class="cat-id">08</span><h2>Revision history</h2></div>
+  <div class="card">
+    <h3>20 August 2026 &mdash; after cycle 6</h3>
+    <ul class="chk">
+      <li><strong>Two module numbers in the programme table were wrong.</strong> The table listed Classifications as 10 and Marketing Channels as 11; the front matter says the opposite, and the front matter is the code. Corrected, and it moves the heaviest cycle one place earlier than the table implied. The figure counts were attached to the right module <em>names</em> throughout, so nothing was mis-estimated.</li>
+      <li><strong>Box heights added to section 03</strong>, because a three-line box was built at height 64 twice in one session and failed the pass both times.</li>
+      <li><strong>The measurable half of section 06 is now <code>diagram-check.js</code></strong> in the working directory. It exists because cycle 6 retyped the same checks fifteen times, once per page per theme, and that was the largest single cost of the session. It cannot judge the reader&rsquo;s test in section 00; that still needs eyes.</li>
+      <li><strong>Never verify against a running <code>hugo server</code> in this tree.</strong> Its watcher misses in-place rewrites and serves a stale page, which reads as an edit that did nothing. Recorded as trap eleven in <code>CLAUDE.md</code>.</li>
+    </ul>
+  </div>
+</section>
+
 <footer>
-  amitdusane.com &middot; diagram specification &middot; written 19 August 2026<br>
+  amitdusane.com &middot; diagram specification &middot; written 19 August 2026, revised 20 August 2026<br>
   The values here are this site&rsquo;s own. Where this document and the built site disagree, the site wins and this document is corrected.
 </footer>
 
