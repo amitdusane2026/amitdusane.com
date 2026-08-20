@@ -235,7 +235,6 @@ a:hover{text-decoration:underline}
 .lnav-catbody.open{display:block}
 .lnav-catbody .lnav-headlink{font-size:12.5px}
 
-
 /* ---------- Main ---------- */
 .lmain{margin-left:var(--sidebar-w);margin-top:var(--header-h);min-height:calc(100vh - var(--header-h));padding:24px 32px}
 .lcontent{max-width:var(--column);margin:0 auto}
@@ -795,8 +794,6 @@ a.card .card-desc{color:var(--text2)}
 .flow-vertical{display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center}
 .flow-arrow-down{color:var(--accent);font-size:18px}
 .flow-dest{background:var(--accent-light);color:var(--accent);padding:8px 16px;border-radius:4px;font-size:12px;font-weight:500}
-.flow-multi{display:flex;gap:10px;justify-content:center;margin:8px 0}
-.flow-step-sm{background:var(--bg3);padding:6px 12px;border-radius:5px;font-size:11px;font-weight:500}
 .flow-horizontal{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap}
 
 .ref-box{background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2);border-radius:6px;padding:14px 16px;margin:var(--sp-lg) 0}
@@ -864,74 +861,6 @@ body.world-learning .lcontent .diagram-title{
 .diagram-box:has(> svg){overflow-x:auto;overscroll-behavior-x:contain}
 .diagram-box > svg,.diagram-content > svg{min-width:var(--diagram-min)}
 .diagram-box:has(> svg) > .diagram-title{position:sticky;left:0}
-.hierarchy{text-align:center}
-.h-level{padding:14px 28px;border-radius:8px;margin:6px 0;font-size:15px;font-weight:600}
-.h-visitor{background:rgba(186,33,66,.15);color:var(--accent);border:1px solid rgba(186,33,66,.35)}
-.h-visit{background:rgba(59,130,246,.15);color:var(--info);border:1px solid rgba(59,130,246,.3)}
-.h-hit{background:rgba(16,185,129,.15);color:var(--success);border:1px solid rgba(16,185,129,.3)}
-.h-arrow{color:var(--text3);font-size:16px;margin:4px 0}
-
-.strategy-diagram{display:flex;gap:30px;justify-content:center;flex-wrap:wrap}
-.strategy-col{text-align:center}
-.strategy-header{padding:8px 16px;border-radius:5px;font-size:12px;font-weight:600;margin-bottom:10px}
-.global-hdr{background:rgba(16,185,129,.15);color:var(--success)}
-.individual-hdr{background:rgba(59,130,246,.15);color:var(--info)}
-.strategy-item{font-size:12px;color:var(--text2);margin:4px 0}
-
-.event-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px}
-.event-item{background:var(--bg3);padding:8px 12px;border-radius:5px;font-size:12px;text-align:center}
-.event-item code{background:transparent;color:var(--accent);padding:0}
-
-.decision-tree{text-align:center}
-.decision-q{background:var(--bg3);padding:12px 20px;border-radius:6px;font-size:13px;font-weight:500;margin-bottom:12px}
-.decision-branches{display:flex;justify-content:center;gap:20px}
-.decision-branch{text-align:center}
-.decision-answer{padding:10px 16px;border-radius:6px;font-size:12px;font-weight:600}
-.decision-answer.yes{background:rgba(16,185,129,.15);color:var(--success)}
-.decision-answer.no{background:rgba(59,130,246,.15);color:var(--info)}
-
-.architecture-flow{text-align:center}
-.arch-layer{background:var(--bg3);padding:12px 20px;border-radius:6px;margin:6px 0}
-.arch-layer.highlight{background:var(--accent-light);border:1px solid rgba(186,33,66,.35)}
-.arch-title{font-size:13px;font-weight:600;color:var(--text1)}
-.arch-desc{font-size:11px;color:var(--text3);margin-top:2px}
-
-.launch-arch{text-align:center}
-.launch-layer{background:var(--bg3);padding:14px 20px;border-radius:6px;margin:6px 0}
-.launch-title{font-size:14px;font-weight:600;color:var(--text1)}
-.launch-components{display:flex;justify-content:center;gap:10px;margin-top:8px}
-.launch-comp{background:var(--bg1);padding:6px 12px;border-radius:4px;font-size:11px}
-.launch-envs{display:flex;justify-content:center;gap:10px}
-.launch-env{padding:8px 14px;border-radius:5px;font-size:11px;font-weight:500}
-.launch-env.dev{background:rgba(59,130,246,.15);color:var(--info)}
-.launch-env.stage{background:rgba(245,158,11,.15);color:var(--warning)}
-.launch-env.prod{background:rgba(16,185,129,.15);color:var(--success)}
-
-.rule-structure{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap}
-.rule-part{background:var(--bg3);padding:12px 16px;border-radius:6px;text-align:center;min-width:140px}
-.rule-part.events{border-left:3px solid var(--info)}
-.rule-part.conditions{border-left:3px solid var(--warning)}
-.rule-part.actions{border-left:3px solid var(--success)}
-.rule-part-title{font-size:12px;font-weight:600;color:var(--text1)}
-.rule-part-desc{font-size:10px;color:var(--text3);margin-top:4px}
-.rule-connector{font-size:18px;font-weight:700;color:var(--accent)}
-
-.publish-flow{display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap}
-.publish-step{background:var(--bg3);padding:6px 10px;border-radius:4px;font-size:11px}
-
-.calc-example{background:var(--bg3);padding:16px;border-radius:6px;max-width:300px;margin:0 auto}
-.calc-row{display:flex;justify-content:space-between;padding:6px 0;font-size:13px}
-.calc-row.total{border-top:2px solid var(--border);margin-top:8px;padding-top:12px;font-weight:600}
-.calc-label{color:var(--text2)}
-.calc-value{color:var(--text1);font-weight:500}
-.calc-row.total .calc-value{color:var(--accent)}
-
-.cookie-compare{display:flex;justify-content:center;gap:20px;flex-wrap:wrap}
-.cookie-col{text-align:center;min-width:160px}
-.cookie-header{padding:8px 16px;border-radius:5px;font-size:12px;font-weight:600;margin-bottom:10px}
-.cookie-header.fp{background:rgba(16,185,129,.15);color:var(--success)}
-.cookie-header.tp{background:rgba(239,68,68,.15);color:#ef4444}
-.cookie-item{font-size:11px;color:var(--text2);margin:4px 0}
 
 .author-quote{background:var(--accent-light);border-left:3px solid var(--accent);padding:16px 20px;margin:20px 0;border-radius:0 6px 6px 0}
 .author-quote p{font-size:14px;color:var(--text1);font-style:italic;margin:0}
@@ -941,27 +870,6 @@ body.world-learning .lcontent .diagram-title{
 .glossary-item:last-child{border-bottom:none}
 .glossary-term{font-weight:600;color:var(--accent);margin-bottom:4px;font-size:var(--fs-sm)}
 .glossary-def{font-size:var(--fs-sm);color:var(--text2);line-height:1.6}
-
-.hierarchy-tree{text-align:left}
-.tree-item{padding:6px 12px;margin:4px 0;font-size:13px}
-.tree-item.level-0{background:var(--accent);color:var(--on-accent,#fff);border-radius:4px;font-weight:600}
-.tree-item.level-1{margin-left:24px;color:var(--text2)}
-
-.container-diagram{display:flex;justify-content:center}
-.container-box{border:2px solid var(--border);border-radius:8px;padding:12px;margin:6px}
-.container-box.visitor{border-color:var(--accent);background:rgba(186,33,66,.06)}
-.container-box.visit{border-color:#3b82f6;background:rgba(59,130,246,.05);display:inline-block;margin:8px}
-.container-box.hit{border-color:#10b981;background:rgba(16,185,129,.05);display:inline-block;margin:4px;padding:8px}
-.container-label{font-size:11px;font-weight:600;margin-bottom:6px}
-.container-box.visitor .container-label{color:var(--accent)}
-.container-box.visit .container-label{color:#3b82f6}
-.container-box.hit .container-label{color:#10b981}
-.hit-dots{font-size:10px;color:#10b981}
-
-.workspace-layout{display:flex;gap:12px;border:1px solid var(--border);border-radius:8px;overflow:hidden}
-.ws-rail{width:100px;background:var(--bg3);padding:20px 10px;text-align:center;font-size:12px;color:var(--text2);border-right:1px solid var(--border)}
-.ws-main{flex:1;padding:12px;display:flex;flex-direction:column;gap:8px}
-.ws-panel{border:1px dashed var(--accent);border-radius:6px;padding:16px;text-align:center;font-size:12px;color:var(--text2);background:var(--accent-light)}
 
 .comparison-grid{display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap}
 .comp-item{background:var(--bg3);padding:16px 24px;border-radius:8px;text-align:center;min-width:150px}
@@ -979,7 +887,6 @@ body.world-learning .lcontent .diagram-title{
 .am-link.cool{background:rgba(34,197,94,.2);color:var(--success-ink)}
 .am-bubble{font-size:10px;font-weight:600;margin-left:4px}
 .am-content{padding:24px;text-align:center}
-
 
 /* ---------- Documentation signpost (auto-injected before ref-box) ---------- */
 .doc-note{margin:var(--sp-lg) 0 var(--sp-sm);padding:3px 0 3px 14px;background:transparent;border:none;border-left:3px solid var(--accent);border-radius:0}
