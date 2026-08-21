@@ -155,6 +155,38 @@
     </div>
   </div>
 
+  {{- /* Ask Amit. A same-tab overlay, like the pocket map, the About panel and
+       the screenshot zoom, because these are fifteen-minute reads and
+       navigating away costs the reader their place.
+
+       Deliberately NOT a mail link on its own. On a machine with no mail
+       client configured -- which is most people who live in webmail --
+       clicking a mailto does nothing at all, and a dead end reads as a broken
+       site. So the address is here as selectable text with a copy button, and
+       the mail button is the convenience rather than the only route.
+
+       The subject carries the page title, so an arriving mail is already
+       labelled with the section that prompted it. That is the whole triage,
+       and it costs the reader nothing. */ -}}
+  <div class="ask-overlay" id="askOverlay" hidden>
+    <div class="ask-card" role="dialog" aria-modal="true" aria-labelledby="askHeading">
+      <button class="ask-x" id="askClose" aria-label="Close">&times;</button>
+      <p class="ask-kicker">Ask Amit</p>
+      <h2 class="ask-h" id="askHeading">Still working through this?</h2>
+      <p class="ask-lede">Write to me. Tell me what you were trying to do and where it stopped making sense &mdash; that is usually enough for me to be useful.</p>
+
+      <p class="ask-label">Email</p>
+      <div class="ask-row">
+        <code class="ask-addr" id="askAddr">{{ .Site.Params.askEmail }}</code>
+        <button class="ask-copy" id="askCopy" type="button">Copy</button>
+      </div>
+      <a class="ask-cta" id="askMail" href="mailto:{{ .Site.Params.askEmail }}">Open in my mail app &rarr;</a>
+
+      <p class="ask-note">I read everything that arrives. I reply to most of it, usually within a week, and I answer implementation questions as readily as questions about the writing.</p>
+      <div class="ask-foot">Prefer LinkedIn? <a href="{{ .Site.Params.linkedin }}" target="_blank" rel="noopener">Message me there</a>.</div>
+    </div>
+  </div>
+
   {{ if $mig }}
   <div class="search-overlay" id="searchOverlay" hidden>
     <div class="search-box" role="dialog" aria-modal="true" aria-label="Search the guide">
@@ -163,12 +195,17 @@
     </div>
   </div>
   <script>window.SEARCH_INDEX="{{ "index.json" | relURL }}";</script>
-  <script src="{{ "search.js" | relURL }}"></script>
+  <script src="{{ "search.js" | relURL }}?v={{ substr (sha256 (readFile "static/search.js")) 0 10 }}"></script>
   <script src="{{ "world-migration.js" | relURL }}"></script>
   {{ end }}
   {{ if $learn }}
   <script src="{{ "world-learning.js" | relURL }}?v={{ substr (sha256 (readFile "static/world-learning.js")) 0 10 }}"></script>
   {{ end }}
-  <script src="{{ "author.js" | relURL }}"></script>
+  {{- /* The content hash is not optional here, and this file proved why on
+       22 Aug 2026: author.js was the one script referenced without it, so an
+       edit to it served stale from cache and the new code simply did not run.
+       It looked exactly like a scripting bug. Same trap as the stylesheet
+       tags, and the same fix. */ -}}
+  <script src="{{ "author.js" | relURL }}?v={{ substr (sha256 (readFile "static/author.js")) 0 10 }}"></script>
 </body>
 </html>

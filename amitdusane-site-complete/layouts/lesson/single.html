@@ -28,6 +28,20 @@
   {{ $content = replaceRE `(<div class="ref-box")` (printf "%s$1" (partial "doc-note.html" .)) $content 1 }}
 {{ end }}
 <div class="section">{{ $content | safeHTML }}</div>
+{{- /* Ask Amit, at the foot of every section.
+
+     Generated furniture, never authored, so it lands on all 116 without
+     anyone writing it -- and so it sits OUTSIDE .section, which is what keeps
+     the rule that nothing follows the ref-box true of the content itself.
+
+     A real mailto in the served HTML. author.js intercepts the click and
+     opens the overlay; with JavaScript off the link still works. Framed as
+     the reader's question, never as a correction: "found an error" would tell
+     every reader the site might be wrong before they have found anything
+     wrong, on 116 pages. */ -}}
+<aside class="ask-foot-line">
+  <a href="mailto:{{ .Site.Params.askEmail }}" data-ask>Still working through this? <b>Ask Amit &rarr;</b></a>
+</aside>
 {{ $all := where .Site.RegularPages "Type" "lesson" }}
 {{ $all = sort $all "Params.sectionnum" }}
 {{ $all = sort $all "Params.modulenum" }}

@@ -1427,3 +1427,72 @@ body.world-learning .lcontent p.lscale{
     scroll-behavior: auto !important;
   }
 }
+
+/* ==========================================================================
+   Ask Amit — the three surfaces, 22 August 2026
+   The overlay itself lives in chrome.css because it is universal. These are
+   the learning world's entry points into it.
+   ========================================================================== */
+
+/* Spine entry, below the path-box jump. Same shape as .wf-path: not a heading,
+   so it takes no number and gets a rule above it to separate it from the list
+   of places in the page. This is the one that answers the reachability
+   problem -- the spine is the only furniture reachable from any scroll
+   position without scrolling first. */
+.wf-rail li.wf-ask{counter-increment:none; margin-top:7px; padding-top:8px; border-top:1px solid var(--border)}
+.wf-rail li.wf-ask > a{color:var(--accent); font-weight:650}
+.wf-rail li.wf-ask > a:hover{color:var(--accent2); background:var(--accent-light)}
+.wf-rail li.wf-ask > a::before{
+  content:""; width:12px; height:12px; margin-top:3px; border-radius:50%;
+  background:radial-gradient(circle at 50% 50%, var(--accent,#ba2142) 0 3.2px, transparent 3.4px);
+}
+
+/* Foot of every section. Deliberately quiet: one line, no box, no button. It
+   sits outside .section so the rule that nothing follows the ref-box stays
+   true of the content itself. */
+.ask-foot-line{margin:var(--sp-lg) 0 0; padding-top:var(--sp-md); border-top:1px solid var(--border)}
+body.world-learning .lcontent .ask-foot-line a{display:inline-block; font-size:var(--fs-sm); color:var(--text2); text-decoration:none}
+body.world-learning .lcontent .ask-foot-line a b{color:var(--accent); font-weight:650}
+body.world-learning .lcontent .ask-foot-line a:hover b{text-decoration:underline}
+
+/* The bar that ARRIVES. Hidden above the three-column threshold, where the
+   spine already carries Ask without costing anything. Below it, the spine is a
+   drawer, so this is the one-tap route -- but it only appears once the reader
+   is two thirds through, and it can be dismissed for the session.
+
+   Sits ABOVE the phone's own furniture: env(safe-area-inset-bottom) keeps it
+   clear of the iOS home indicator, which is the strip a naive sticky footer
+   always collides with. */
+.ask-bar{display:none}
+@media(max-width:1243px){
+  .ask-bar{
+    display:flex; align-items:center; gap:10px;
+    position:fixed; left:12px; right:12px; z-index:930;
+    bottom:calc(12px + env(safe-area-inset-bottom, 0px));
+    padding:11px 14px; border-radius:12px;
+    background:var(--card); border:1px solid var(--border);
+    box-shadow:0 8px 26px rgba(15,23,42,.18);
+    transform:translateY(calc(100% + 24px)); opacity:0; pointer-events:none;
+    transition:transform .32s cubic-bezier(.2,.8,.3,1), opacity .22s ease;
+  }
+  .ask-bar.is-in{transform:none; opacity:1; pointer-events:auto}
+  /* The bar spans the full width, and the bottom-right corner is already taken:
+     at 390 the About mark sits from y766 to y826 and the page-nav button just
+     above it. Measured, they collide. So while the bar is showing, both lift by
+     exactly its height plus its gap. Shifting `bottom` rather than `transform`
+     is deliberate -- .author-fab:hover sets transform:none, which would cancel
+     a translate mid-hover and make the mark jump. */
+  body.ask-bar-in .author-fab{bottom:calc(84px + env(safe-area-inset-bottom, 0px))}
+  body.ask-bar-in .wf-nav-fab{bottom:calc(178px + env(safe-area-inset-bottom, 0px))}
+  .author-fab,.wf-nav-fab{transition:bottom .32s cubic-bezier(.2,.8,.3,1)}
+  .ask-bar > a{flex:1; display:flex; align-items:baseline; gap:7px; text-decoration:none; min-width:0}
+  .ask-bar span{font-size:var(--fs-sm); color:var(--text2); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+  .ask-bar b{flex:none; font-size:var(--fs-sm); font-weight:700; color:var(--accent)}
+  .ask-bar-x{flex:none; width:30px; height:30px; border:none; border-radius:8px; background:transparent;
+             color:var(--text3); font-size:20px; line-height:1; cursor:pointer}
+  .ask-bar-x:hover{background:var(--bg3); color:var(--text1)}
+  [data-theme="dark"] .ask-bar{box-shadow:0 8px 26px rgba(0,0,0,.5)}
+}
+/* A bar that slides is a bar that moves under the reader's thumb. Honour the
+   preference and let it simply appear. */
+@media(prefers-reduced-motion:reduce){.ask-bar{transition:none}}

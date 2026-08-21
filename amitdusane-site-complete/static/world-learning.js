@@ -482,6 +482,21 @@
             'wf-path');
   }
 
+  /* Ask Amit, the last entry, below the path-box jump. The spine is the only
+     furniture on a section page that is reachable from any scroll position
+     without first scrolling, which is exactly the problem a foot-of-page link
+     has. Same pattern as wf-path: not a heading, so it takes no number.
+     A real mailto; author.js upgrades the click to the overlay. */
+  var askLi = addItem('mailto:' + (document.getElementById('askAddr')
+                ? document.getElementById('askAddr').textContent.trim() : ''),
+              'Ask Amit',
+              'Still working through this? Write to me.',
+              'wf-ask');
+  if (askLi) {
+    var askA = askLi.querySelector('a');
+    if (askA) askA.setAttribute('data-ask', '');
+  }
+
   if (ol.children.length) {
     var hd = document.createElement('p');
     hd.className = 'wf-rail-h';
@@ -529,6 +544,39 @@
     if (ev.key === 'Escape' || ev.keyCode === 27) closeDrawer();
   });
 
+  /* ---- Ask Amit, the bar that ARRIVES ----
+     The spine solves reachability on desktop, but below 1244 it is a drawer
+     and Ask is two taps behind a button. A bar pinned from the first paragraph
+     was rejected: three floating controls already sit on a phone, it would
+     outrank all of them by spanning the full width, and it costs about 7% of a
+     390x844 screen permanently to serve an action most readers never take.
+
+     So it arrives instead. It slides up once the reader is two thirds through
+     the article -- roughly the point where a question has actually formed --
+     and it can be dismissed. Dismissal is remembered for the session, so
+     saying no once means it does not reappear on the next section.
+
+     CSS confines it to the drawer range; this only toggles a class. */
+  var askBar = null, askDismissed = false;
+  try { askDismissed = sessionStorage.getItem('ask-bar-off') === '1'; } catch (e) {}
+
+  if (!askDismissed) {
+    askBar = document.createElement('div');
+    askBar.className = 'ask-bar';
+    askBar.innerHTML =
+      '<a href="mailto:' + (document.getElementById('askAddr')
+        ? document.getElementById('askAddr').textContent.trim() : '') + '" data-ask>' +
+      '<span>Still working through this?</span><b>Ask Amit</b></a>' +
+      '<button type="button" class="ask-bar-x" aria-label="Dismiss">&times;</button>';
+    document.body.appendChild(askBar);
+    askBar.querySelector('.ask-bar-x').addEventListener('click', function () {
+      askBar.classList.remove('is-in');
+      document.body.classList.remove('ask-bar-in');   /* let the fabs drop back */
+      askDismissed = true;
+      try { sessionStorage.setItem('ask-bar-off', '1'); } catch (e) {}
+    });
+  }
+
   /* ---- scrollspy ---- */
   var items = [].slice.call(ol.children), ticking = false;
   function sync() {
@@ -540,6 +588,20 @@
       li.classList.toggle('on', i === active);
       li.classList.toggle('seen', i < active);
     });
+
+    /* Measured against the ARTICLE, not the document: the footer, the
+       prev/next and the print block are not reading, and counting them would
+       push the trigger past the end of the prose on a short section. */
+    if (askBar && !askDismissed) {
+      var r = main.getBoundingClientRect(),
+          read = (-r.top + window.innerHeight) / (r.height || 1),
+          shown = read > 0.66;
+      askBar.classList.toggle('is-in', shown);
+      /* The body class lifts the About mark and the page-nav button clear of
+         the bar. They occupy the same corner, and measured at 390 they collide
+         with it exactly. */
+      document.body.classList.toggle('ask-bar-in', shown);
+    }
     ticking = false;
   }
   window.addEventListener('scroll', function () {

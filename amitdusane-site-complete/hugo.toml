@@ -32,6 +32,11 @@ disableKinds = ["taxonomy", "term"]
   author = "Amit G Dusane"
   jobTitle = "Adobe Experience Platform Architect"
   linkedin = "https://www.linkedin.com/in/amitdusane/"
+  # The one reader-facing address. `ask` rather than support, help or feedback:
+  # a helpdesk implies an SLA, and feedback invites the reader to grade the site
+  # instead of asking their question. Namecheap forwarding, so it costs nothing
+  # and can be rotated on its own if it ever gets scraped.
+  askEmail = "ask@amitdusane.com"
 
 [services]
   [services.googleAnalytics]
