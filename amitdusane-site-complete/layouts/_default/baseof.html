@@ -171,6 +171,12 @@
   <div class="ask-overlay" id="askOverlay" hidden>
     <div class="ask-card" role="dialog" aria-modal="true" aria-labelledby="askHeading">
       <button class="ask-x" id="askClose" aria-label="Close">&times;</button>
+      {{- /* Same 58px as the header mark, and the same 48px step below 880, so
+           the panel is recognisably the same site rather than a stray dialog.
+           Ink is written out rather than tokenised because chrome.css is
+           universal and carries no theme variables -- the About panel's avatar
+           does exactly this. */ -}}
+      <span class="ask-logo" aria-hidden="true">{{ partial "logo.html" (dict "size" 58 "hidden" true) }}</span>
       <p class="ask-kicker">Ask Amit</p>
       <h2 class="ask-h" id="askHeading">How to reach me</h2>
       <p class="ask-lede">Questions about this section, the wider curriculum, or an Adobe Analytics implementation. Whichever route suits you.</p>
