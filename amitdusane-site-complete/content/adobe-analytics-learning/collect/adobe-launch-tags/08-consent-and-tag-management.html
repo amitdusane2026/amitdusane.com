@@ -119,17 +119,13 @@ return decodeURIComponent(raw).indexOf('C0002:1') !== -1;</pre></div>
 </div>
 <p>That is the entire integration. One data element, readable by anybody, with the consent platform's specifics contained in a single place rather than scattered through twenty rules.</p>
 <p>Second, a condition on the <a href="/adobe-analytics-learning/collect/adobe-launch-tags/rules/">rule</a> that sends the beacon. Rules already makes this case: a condition turns a rule into something self-policing, running only when permission is present.</p>
-<div class="code-block">
-    <div class="code-hdr"><span class="code-lang">Rule: Analytics - Page View</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-    <div class="code-body"><pre>Event      Library Loaded (Page Top)
-
-Condition  Value Comparison
-           Left operand   %Consent - Performance%
-           Operator       Equals
-           Right operand  true
-
-Action     Adobe Analytics - Set Variables
-           Adobe Analytics - Send Beacon</pre></div>
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>Rule: Analytics - Page View</span></div>
+    <dl class="dothis-fields">
+        <div><dt>Event</dt><dd><code>Library Loaded (Page Top)</code></dd></div>
+        <div><dt>Condition</dt><dd><code>Value Comparison</code><ul><li>Left operand <code>%Consent - Performance%</code></li><li>Operator <code>Equals</code></li><li>Right operand <code>true</code></li></ul></dd></div>
+        <div><dt>Action</dt><dd><ol><li><code>Adobe Analytics - Set Variables</code></li><li><code>Adobe Analytics - Send Beacon</code></li></ol></dd></div>
+    </dl>
 </div>
 <p>Repeat the pattern per category rather than per tag. One data element for Performance gates every <a href="/adobe-analytics-learning/collect/tracking-calls/page-view-tracking/">page view</a> and <a href="/adobe-analytics-learning/collect/tracking-calls/link-tracking/">link tracking</a> rule you own. One for Targeting gates the marketing pixels. When the consent platform changes, and it will, you edit two data elements instead of auditing the property.</p>
 <div class="pro-tip">

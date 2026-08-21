@@ -62,49 +62,38 @@ weight: 6
 <h3 class="subsec-title">Build and name your first library</h3>
 <p>With everything ready, go to the publishing workflow and create your first library. Assign it to your development environment, add your changed resources, and build it. Then comes one of the genuine pleasures of a tag management system: the moment that build completes, the change is live on whatever page carries your development embed script. Open that page, hard reload it with Shift+Ctrl+R, and your work is right there to test. No deployment ticket, no waiting on a release window.</p>
 
-<div class="code-block">
-    <div class="code-hdr"><span class="code-lang">A library, all the way from Development to Production</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-    <div class="code-body"><pre>Data Collection > Tags > "Club Web" > Publishing Flow
-
-
-DEVELOPMENT  ....................................  needs the Develop right
-
-    Add Library
-        Name:         Foundation Library v1.0
-        Environment:  Development
-
-        + Add All Changed Resources
-            -> picks up the rule, the data element, and the Core and
-               Analytics extensions you just created
-
-        Save & Build to Development
-            -> a status dot appears. Wait for it to turn green.
-               Red means the build failed, and it almost always failed
-               because a rule depends on something you left out.
-
-    [ Now go and test. Load your site with the development embed code.
-      Watch the network tab. Do not skip this. ]
-
-    ... > Submit for Approval
-
-
-SUBMITTED  ......................................  needs the Approve right
-
-    ... > Build to Staging          -> QA tests here, on the real site
-    ... > Approve for Publishing
-
-
-APPROVED  .......................................  needs the Publish right
-
-    ... > Build & Publish to Production
-
-    -> the production build is now live on every page carrying the
-       production embed code. There is no undo button.
-
-
-PUBLISHED
-    The library is now the baseline. Every library you create after this
-    inherits it automatically, so the next one only carries your changes.</pre></div>
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>Take a library from Development to Production</span></div>
+    <p class="dothis-setup"><strong>Before you start:</strong> open <code>Data Collection</code> <span class="ds-sep">&rsaquo;</span> <code>Tags</code> <span class="ds-sep">&rsaquo;</span> <code>Club Web</code> <span class="ds-sep">&rsaquo;</span> <code>Publishing Flow</code>. Each stage below needs a different right.</p>
+    <ol class="dothis-steps">
+        <li class="ds-group">Development &mdash; needs the Develop right</li>
+        <li><span class="ds-do">Choose <code>Add Library</code>. Set <code>Name</code> to <code>Foundation Library v1.0</code> and <code>Environment</code> to <code>Development</code>.</span></li>
+        <li>
+            <span class="ds-do">Choose <code>+ Add All Changed Resources</code>.</span>
+            <span class="ds-see">It picks up the rule, the data element, and the Core and Analytics extensions you just created.</span>
+        </li>
+        <li>
+            <span class="ds-do">Choose <code>Save &amp; Build to Development</code>.</span>
+            <span class="ds-see">A status dot appears. Wait for it to turn green. Red means the build failed, and it almost always failed because a rule depends on something you left out.</span>
+        </li>
+        <li>
+            <span class="ds-do">Now go and test. Load your site with the development embed code and watch the network tab.</span>
+            <span class="ds-see">Do not skip this. It is the only stage where a mistake costs nothing.</span>
+        </li>
+        <li><span class="ds-do">Choose <code>Submit for Approval</code>.</span></li>
+        <li class="ds-group">Submitted &mdash; needs the Approve right</li>
+        <li>
+            <span class="ds-do">Choose <code>Build to Staging</code>.</span>
+            <span class="ds-see">QA tests here, on the real site.</span>
+        </li>
+        <li><span class="ds-do">Choose <code>Approve for Publishing</code>.</span></li>
+        <li class="ds-group">Approved &mdash; needs the Publish right</li>
+        <li>
+            <span class="ds-do">Choose <code>Build &amp; Publish to Production</code>.</span>
+            <span class="ds-see">The production build is now live on every page carrying the production embed code. There is no undo button.</span>
+        </li>
+    </ol>
+    <p class="dothis-end"><strong>Published.</strong> The library is now the baseline. Every library you create after this inherits it automatically, so the next one only carries your changes.</p>
 </div>
 
 <p>Before you build, give the library a real name. It feels trivial on day one, when you have exactly one library. It stops feeling trivial the day you have eighty, and you are trying to find which one changed the tracking code last March.</p>

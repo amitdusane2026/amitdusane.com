@@ -53,29 +53,21 @@ weight: 2
     <p>You set web or mobile when you create the property, and it shapes the entire toolset around it. It is not a switch you flip later, so picking the wrong one effectively means starting the property over. Decide what you are instrumenting before you create it.</p>
 </div>
 
-<div class="code-block">
-    <div class="code-hdr"><span class="code-lang">Create a property</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-    <div class="code-body"><pre>Data Collection > Tags > New Property
-
-Name:      Club Web
-Platform:  Web                    <- decided here, permanently
-Domains:   club.example           <- the base URL you will deploy to
-
-(Advanced, and both worth understanding before you touch them)
-  [ ] Run rule components in sequence
-      Makes each condition and action wait for the previous one to finish.
-      Leave it off unless you know you need it.
-
-  [ ] Return an empty string for missing data elements
-      Without it, a missing data element returns undefined, which is
-      usually louder and easier to catch.
-
-Save
-
-What Adobe creates for you, automatically, the moment you save:
-  - three environments:  Development, Staging, Production
-  - a default host       (Adobe-managed, on Akamai)
-  - the Core extension   (which is why a brand-new property can already build a rule)</pre></div>
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>Create a property</span></div>
+    <ol class="dothis-steps">
+        <li><span class="ds-do">Go to <code>Data Collection</code> <span class="ds-sep">&rsaquo;</span> <code>Tags</code> <span class="ds-sep">&rsaquo;</span> <code>New Property</code>.</span></li>
+        <li>
+            <span class="ds-do">Set <code>Name</code> to <code>Club Web</code>, <code>Platform</code> to <code>Web</code>, and <code>Domains</code> to <code>club.example</code>.</span>
+            <span class="ds-see">Platform is decided here, permanently. Domains is the base URL you will deploy to.</span>
+        </li>
+        <li>
+            <span class="ds-do">Leave both advanced options off: <code>Run rule components in sequence</code> and <code>Return an empty string for missing data elements</code>.</span>
+            <span class="ds-see">The first makes each condition and action wait for the previous one to finish, which you do not want unless you know you need it. Without the second, a missing data element returns <code>undefined</code>, which is usually louder and easier to catch.</span>
+        </li>
+        <li><span class="ds-do">Save.</span></li>
+    </ol>
+    <p class="dothis-end"><strong>What Adobe creates for you the moment you save:</strong> three environments (Development, Staging and Production), a default Adobe-managed host on Akamai, and the Core extension &mdash; which is why a brand-new property can already build a rule.</p>
 </div>
 
 <h3 class="subsec-title">Environments and the embed script</h3>

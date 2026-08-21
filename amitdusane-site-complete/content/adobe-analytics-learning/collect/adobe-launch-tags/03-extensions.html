@@ -79,26 +79,17 @@ weight: 3
 
 <p>The Core extension is the reason a brand-new property can already build a basic rule: it supplies the generic, product-neutral building blocks. The product extensions add their own specialised delegates on top. This is why the components genuinely overlap, and why it is pointless to pretend a clean wall exists between extensions, rules, and data elements. They are one connected system. An extension is the supplier; rules and data elements are where its delegates get used.</p>
 
-<div class="code-block">
-    <div class="code-hdr"><span class="code-lang">Install and configure an extension</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-    <div class="code-body"><pre>Data Collection > Tags > "Club Web" > Extensions > Catalog
-
-Search:  Adobe Analytics
-Install
-
-Configure  (this screen is the extension's contract with the product)
-    Library Management
-        Manage the library for me           <- Adobe hosts AppMeasurement, and updates it
-        Report suites
-            Development:  club-dev
-            Staging:      club-stage
-            Production:   club-prod         <- one suite per environment. Do this now.
-
-    Save
-
-The extension now appears under Extensions > Installed, and its delegates
-show up wherever they are relevant: as data element types, as rule events,
-and as rule actions. You did not write a line of code.</pre></div>
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>Install and configure an extension</span></div>
+    <ol class="dothis-steps">
+        <li><span class="ds-do">Go to <code>Data Collection</code> <span class="ds-sep">&rsaquo;</span> <code>Tags</code> <span class="ds-sep">&rsaquo;</span> <code>Club Web</code> <span class="ds-sep">&rsaquo;</span> <code>Extensions</code> <span class="ds-sep">&rsaquo;</span> <code>Catalog</code>.</span></li>
+        <li><span class="ds-do">Search for <code>Adobe Analytics</code>, then choose <code>Install</code>.</span></li>
+        <li>
+            <span class="ds-do">Open <code>Configure</code> and set <code>Library Management</code> to <code>Manage the library for me</code>.</span>
+            <span class="ds-see">This screen is the extension's contract with the product.</span>
+        </li>
+    </ol>
+    <p class="dothis-end">Installed, and its delegates show up wherever they are relevant: as data element types, as rule events, and as rule actions. You did not write a line of code.</p>
 </div>
 
 <p>A concrete pass makes it click. Say you want to record a product view on a product detail page. You install the Adobe Analytics extension and fill in its configuration, the report suite and tracking server. Then you build a rule. For the trigger you reach for a Core event, DOM Ready. To make sure it only runs where it should, you add a Core condition that checks the page is a product detail page. For the outcome you add two Adobe Analytics actions, Set Variables to populate what you want to send, then Send Beacon to send it. The values those variables draw on come from data elements, which themselves were created from data element types. In one small rule you have used delegates from the Core extension and the Adobe Analytics extension together, with data elements feeding them. That is the whole machine working as one.</p>

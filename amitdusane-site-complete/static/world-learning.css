@@ -925,9 +925,15 @@ body.world-learning .lcontent ol.dothis-steps > li.ds-group{margin:22px 0 12px;f
 .dothis-fields dt{color:var(--text2);font-size:var(--fs-sm);line-height:1.5}
 .dothis-fields dd{margin:0;color:var(--text1);font-size:var(--fs-sm);line-height:1.5}
 .dothis-fields ul{margin:0;padding-left:16px}
+/* An ordered list inside a field, for the one case where a finished setup
+   still contains something sequential: a rule's actions run top to bottom,
+   and reversing them sends an empty hit. The panel is a snapshot, but that
+   ordering is part of what is being copied. */
+.dothis-fields ol{margin:0;padding-left:18px}
 .dothis-fields li{font-size:var(--fs-sm);margin-bottom:2px}
 body.world-learning .lcontent .dothis-fields dd{margin:0;color:var(--text1);font-size:var(--fs-sm);line-height:1.5}
 body.world-learning .lcontent .dothis-fields ul{margin:0;padding-left:16px;color:var(--text1)}
+body.world-learning .lcontent .dothis-fields ol{margin:0;padding-left:18px;color:var(--text1)}
 body.world-learning .lcontent .dothis-fields li{font-size:var(--fs-sm);margin-bottom:2px}
 
 /* Monospace is a spice here, not the medium: exact values and UI labels only,
