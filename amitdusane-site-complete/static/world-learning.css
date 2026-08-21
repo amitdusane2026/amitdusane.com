@@ -758,7 +758,7 @@ body.world-learning .welcome-btn:hover{background:var(--accent2);text-decoration
   .print-doc .diagram-box{overflow:visible !important}
   .print-doc .diagram-box > svg,.print-doc .diagram-content > svg{min-width:0 !important;max-width:100% !important}
   .print-doc .diagram-box > .diagram-title{position:static !important}
-  .print-doc .info-box,.print-doc .warn-box,.print-doc .pro-tip,.print-doc .ref-box,.print-doc .path-box,.print-doc .tbl-wrap,.print-doc .diagram-box,.print-doc .code-block,.print-doc .flow-horizontal{break-inside:avoid;page-break-inside:avoid;box-shadow:none !important}
+  .print-doc .info-box,.print-doc .warn-box,.print-doc .pro-tip,.print-doc .ref-box,.print-doc .path-box,.print-doc .tbl-wrap,.print-doc .diagram-box,.print-doc .code-block,.print-doc .dothis,.print-doc .flow-horizontal{break-inside:avoid;page-break-inside:avoid;box-shadow:none !important}
   .print-doc a[href]{color:#ba2142;text-decoration:none}
   .print-doc .ref-box a[href]{color:#10b981}
   /* CMP-10. On paper a link is just coloured text, and the ref-box is the
@@ -833,6 +833,84 @@ body.world-learning .lcontent .warn-box p{margin:0;font-size:var(--fs-body)}
 .code-body{padding:12px;overflow-x:auto}
 .code-body pre{font-family:Consolas,monospace;font-size:var(--fs-code);line-height:1.5;color:#e6edf3;margin:0}
 body.world-learning .lcontent code{font-family:Consolas,monospace;font-size:var(--fs-code);background:var(--bg3);padding:2px 5px;border-radius:3px;color:var(--code-ink)}
+
+/* ==========================================================================
+   "Do this" -- the light instruction panel, 21 August 2026
+
+   The code block above was carrying three different jobs and only one of
+   them was code. Measured across the corpus: 33 blocks are genuinely code,
+   19 are hands-on walkthroughs and 63 are transcripts of an Adobe settings
+   screen. 86% of all the text inside a near-black block was not code. On
+   Marketing Channel Processing Rules every one of the ten blocks was a rule
+   configuration, and together they took up 19% of the page's height as dark
+   slabs. A reader's eye reads "dark = code = skippable" and slides past --
+   which is fatal here, because CLAUDE.md calls the walkthrough the engine of
+   a section, the thing that earns the second visit.
+
+   So real code keeps the terminal. Everything the reader is meant to DO
+   moves here: a light panel that reads as a recipe rather than as output.
+
+   One component, two body shapes, because Amit's ruling was that these are
+   the same family and should not become two things to learn:
+     .dothis-steps   a sequence, where order matters   (the 19 walkthroughs)
+     .dothis-fields  a finished setup to copy           (the 63 transcripts)
+
+   No new hue. The semantic vocabulary is full -- amber warns, blue informs,
+   crimson tips, green points at Adobe, violet is a screen path -- so the
+   "you are doing something" signal comes from STRUCTURE: the numbered rail.
+   Nothing else on the site looks like it. The only colour spent is the
+   accent on the step numbers, which is a job COL-02 had already assigned to
+   it and never delivered.
+   ========================================================================== */
+.dothis{background:var(--card);border:1px solid var(--border);border-radius:8px;margin:var(--sp-lg) 0;overflow:hidden}
+.dothis-hdr{display:flex;align-items:baseline;gap:9px;padding:11px 16px;background:var(--bg3);border-bottom:1px solid var(--border);font-weight:700;font-size:var(--fs-label);color:var(--text1)}
+.dothis-hdr b{color:var(--accent);flex:none}
+/* Scoped forms below: `body.world-learning .lcontent p` and `... li` are
+   (0,2,2) and silently beat any bare component selector. CLAUDE.md trap 7. */
+body.world-learning .lcontent p.dothis-setup{margin:0;padding:10px 16px;background:var(--bg1);border-bottom:1px solid var(--border);font-size:var(--fs-sm);color:var(--text2)}
+body.world-learning .lcontent p.dothis-end{margin:0;padding:11px 16px;background:var(--bg1);border-top:1px solid var(--border);font-size:var(--fs-sm);color:var(--text2)}
+
+/* ---- shape one: an ordered sequence ---- */
+body.world-learning .lcontent ol.dothis-steps{list-style:none;margin:0;padding:16px 16px 4px 0;counter-reset:ds;color:var(--text1)}
+body.world-learning .lcontent ol.dothis-steps > li{position:relative;padding-left:48px;margin-bottom:16px;counter-increment:ds;font-size:var(--fs-body)}
+.dothis-steps > li::before{content:counter(ds);position:absolute;left:10px;top:1px;width:26px;height:26px;border-radius:50%;background:var(--accent);color:var(--on-accent);font-weight:700;font-size:13px;line-height:26px;text-align:center}
+/* The connector is what turns nine boxes into one journey. It stops at the
+   last step and at a group break, so the grouping stays legible. */
+.dothis-steps > li::after{content:"";position:absolute;left:22px;top:31px;bottom:-16px;width:2px;background:var(--border)}
+.dothis-steps > li:last-child::after{display:none}
+body.world-learning .lcontent ol.dothis-steps > li.ds-group{counter-increment:none;margin:22px 0 12px;padding-left:48px;font-size:var(--fs-sm);font-weight:600;color:var(--text2)}
+.dothis-steps > li.ds-group::before,.dothis-steps > li.ds-group::after{display:none;content:none}
+.dothis-steps > li.ds-group:first-child{margin-top:0}
+/* Action and outcome are separated deliberately. Running them together is
+   what made the old block hard to follow: you could not see where the doing
+   stopped and the checking began. */
+.ds-do{display:block;color:var(--text1);line-height:var(--lh-body)}
+.ds-see{display:block;margin-top:6px;padding-left:11px;border-left:2px solid var(--border);color:var(--text2);font-size:var(--fs-sm);line-height:1.55}
+
+/* ---- shape two: a finished setup, as a properties panel ---- */
+.dothis-fields{margin:0;padding:4px 16px 10px}
+.dothis-fields > div{display:grid;grid-template-columns:minmax(150px,36%) 1fr;gap:12px;padding:9px 0;border-bottom:1px dashed var(--border)}
+.dothis-fields > div:last-child{border-bottom:none}
+.dothis-fields dt{color:var(--text2);font-size:var(--fs-sm);line-height:1.5}
+body.world-learning .lcontent .dothis-fields dd{margin:0;color:var(--text1);font-size:var(--fs-sm);line-height:1.5}
+body.world-learning .lcontent .dothis-fields ul{margin:0;padding-left:16px}
+body.world-learning .lcontent .dothis-fields li{font-size:var(--fs-sm);margin-bottom:2px}
+
+/* Monospace is a spice here, not the medium: exact values and UI labels only,
+   inside a sentence that is set in the reading font at reading size. */
+/* overflow-wrap:anywhere because these carry landing URLs and query strings.
+   The longest one today happens to fit at 390px; the next one added would not,
+   and an overflowing chip pushes the whole grid item wide. */
+body.world-learning .lcontent .dothis code{background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:1px 6px;font-size:.88em;color:var(--text1);overflow-wrap:anywhere}
+.dothis .ds-sep{color:var(--text3);padding:0 2px}
+
+@media(max-width:880px){
+  .dothis-fields > div{grid-template-columns:1fr;gap:3px}
+  body.world-learning .lcontent ol.dothis-steps > li,
+  body.world-learning .lcontent ol.dothis-steps > li.ds-group{padding-left:40px}
+  .dothis-steps > li::before{left:6px;width:24px;height:24px;line-height:24px;font-size:12px}
+  .dothis-steps > li::after{left:17px}
+}
 
 .tbl-wrap{overflow-x:auto;margin:var(--sp-lg) 0;border:1px solid var(--border);border-radius:6px}
 body.world-learning .lcontent table{width:100%;border-collapse:collapse;font-size:var(--fs-sm)}

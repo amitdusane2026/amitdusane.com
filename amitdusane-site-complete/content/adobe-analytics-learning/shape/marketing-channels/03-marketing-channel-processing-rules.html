@@ -217,179 +217,141 @@ weight: 3
 <p>Notice the shape of that list. Paid and managed channels at the top, organic and absorbent channels at the bottom, and a catch-all sitting on the boundary between them. Now build it.</p>
 
 <h3 class="subsec-title">1. Paid Search</h3>
-<div class="code-block">
-    <div class="code-hdr"><span class="code-lang">Marketing Channel Rule</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-    <div class="code-body"><pre>Rule: Paid Search
-Position: 1  (top of the waterfall)
-
-Condition: if ALL are true
-    Matches Paid Search Detection Rules
-
-Then do the following
-    Identify the channel as:  Paid Search
-    Set the channel's value:  Search Engine + Search Keyword(s)
-
-Depends on:  Edit Settings > General > Paid Search Detection</pre></div>
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>Marketing Channel rule: Paid Search</span></div>
+    <dl class="dothis-fields">
+        <div><dt>Position</dt><dd>1 &mdash; top of the waterfall</dd></div>
+        <div><dt>If all are true</dt><dd>Matches <code>Paid Search Detection Rules</code></dd></div>
+        <div><dt>Identify the channel as</dt><dd><code>Paid Search</code></dd></div>
+        <div><dt>Set the channel's value</dt><dd><code>Search Engine + Search Keyword(s)</code></dd></div>
+        <div><dt>Depends on</dt><dd><code>Edit Settings</code> <span class="ds-sep">&rsaquo;</span> <code>General</code> <span class="ds-sep">&rsaquo;</span> <code>Paid Search Detection</code></dd></div>
+    </dl>
 </div>
 
 <p>This is an Adobe-detected condition, so there is nothing to type. It leans on a separate screen, Paid Search Detection, where you tell Adobe which query string parameters mark a click as paid. Configure that screen first or this rule catches nothing. It sits first because a paid click looks exactly like organic search traffic in every respect except the parameter marking it, so it has to be caught before anything else gets a look.</p>
 
 <h3 class="subsec-title">2. Natural Search</h3>
-<div class="code-block">
-    <div class="code-hdr"><span class="code-lang">Marketing Channel Rule</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-    <div class="code-body"><pre>Rule: Natural Search
-Position: 2
-
-Condition: if ALL are true
-    Matches Natural Search Detection Rules
-
-Then do the following
-    Identify the channel as:  Natural Search
-    Set the channel's value:  Search Engine + Search Keyword(s)</pre></div>
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>Marketing Channel rule: Natural Search</span></div>
+    <dl class="dothis-fields">
+        <div><dt>Position</dt><dd>2</dd></div>
+        <div><dt>If all are true</dt><dd>Matches <code>Natural Search Detection Rules</code></dd></div>
+        <div><dt>Identify the channel as</dt><dd><code>Natural Search</code></dd></div>
+        <div><dt>Set the channel's value</dt><dd><code>Search Engine + Search Keyword(s)</code></dd></div>
+    </dl>
 </div>
 
 <p>Adobe-detected again, and it means: the hit came from a recognized search engine and did <em>not</em> match paid detection. Read that definition carefully, because this rule is defined by what the rule above it already removed. It only works because Paid Search ran first. That dependency is the waterfall in miniature.</p>
 
 <h3 class="subsec-title">3. Display</h3>
-<div class="code-block">
-    <div class="code-hdr"><span class="code-lang">Marketing Channel Rule</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-    <div class="code-body"><pre>Rule: Display
-Position: 3
-
-Condition: if ALL are true
-    Query String Parameter  "cid"  contains  "display"
-
-Then do the following
-    Identify the channel as:  Display
-    Set the channel's value:  Query String Parameter "cid"
-
-Landing URL:  https://site.com/offer?cid=display_q3_banner
-Result:       Channel = Display,  Detail = display_q3_banner</pre></div>
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>Marketing Channel rule: Display</span></div>
+    <dl class="dothis-fields">
+        <div><dt>Position</dt><dd>3</dd></div>
+        <div><dt>If all are true</dt><dd>Query String Parameter <code>cid</code> contains <code>display</code></dd></div>
+        <div><dt>Identify the channel as</dt><dd><code>Display</code></dd></div>
+        <div><dt>Set the channel's value</dt><dd>Query String Parameter <code>cid</code></dd></div>
+        <div><dt>Example landing URL</dt><dd><code>https://site.com/offer?cid=display_q3_banner</code></dd></div>
+        <div><dt>What you get</dt><dd>Channel <code>Display</code>, Detail <code>display_q3_banner</code></dd></div>
+    </dl>
 </div>
 
 <p>Display traffic carries no natural signal. A banner click arrives looking like a referral from an ad server, so the only reliable marker is whatever marketing appended to the landing URL. Which means this rule is only as good as the parameter convention agreed in the design document. Substitute your own parameter name and value; the ones above are illustrative.</p>
 
 <h3 class="subsec-title">4. Email</h3>
-<div class="code-block">
-    <div class="code-hdr"><span class="code-lang">Marketing Channel Rule</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-    <div class="code-body"><pre>Rule: Email
-Position: 4
-
-Condition: if ALL are true
-    Query String Parameter  "cid"  contains  "eml"
-
-Then do the following
-    Identify the channel as:  Email
-    Set the channel's value:  Query String Parameter "cid"
-
-Landing URL:  https://site.com/sale?cid=eml_july_winback
-Result:       Channel = Email,  Detail = eml_july_winback</pre></div>
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>Marketing Channel rule: Email</span></div>
+    <dl class="dothis-fields">
+        <div><dt>Position</dt><dd>4</dd></div>
+        <div><dt>If all are true</dt><dd>Query String Parameter <code>cid</code> contains <code>eml</code></dd></div>
+        <div><dt>Identify the channel as</dt><dd><code>Email</code></dd></div>
+        <div><dt>Set the channel's value</dt><dd>Query String Parameter <code>cid</code></dd></div>
+        <div><dt>Example landing URL</dt><dd><code>https://site.com/sale?cid=eml_july_winback</code></dd></div>
+        <div><dt>What you get</dt><dd>Channel <code>Email</code>, Detail <code>eml_july_winback</code></dd></div>
+    </dl>
 </div>
 
 <p>Same principle as Display, and the detail is what earns its keep: it is how a marketer sees that the July winback send outperformed the others. Without the detail assignment, the report says Email produced revenue and nothing more, which is almost useless to the person who has to decide what to send next.</p>
 
 <h3 class="subsec-title">5. Affiliate</h3>
-<div class="code-block">
-    <div class="code-hdr"><span class="code-lang">Marketing Channel Rule</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-    <div class="code-body"><pre>Rule: Affiliate
-Position: 5
-
-Condition: if ANY are true
-    Referring Domain  contains  "partnersite.com"
-    Referring Domain  contains  "dealsite.net"
-
-Then do the following
-    Identify the channel as:  Affiliate
-    Set the channel's value:  Referring Domain
-
-Note: list root domains only, without the "www." prefix</pre></div>
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>Marketing Channel rule: Affiliate</span></div>
+    <dl class="dothis-fields">
+        <div><dt>Position</dt><dd>5</dd></div>
+        <div><dt>If any are true</dt><dd><ul><li>Referring Domain contains <code>partnersite.com</code></li><li>Referring Domain contains <code>dealsite.net</code></li></ul></dd></div>
+        <div><dt>Identify the channel as</dt><dd><code>Affiliate</code></dd></div>
+        <div><dt>Set the channel's value</dt><dd><code>Referring Domain</code></dd></div>
+        <div><dt>Watch out</dt><dd>List root domains only, without the <code>www.</code> prefix.</dd></div>
+    </dl>
 </div>
 
 <p>Affiliates are a managed channel with a real commercial relationship behind them, which is why they sit above the organic tier rather than being swept up by Referring Domains at the bottom. Use <strong>ANY</strong> here rather than ALL, since a visitor arrives from one partner, not all of them at once. Setting the detail to Referring Domain is what lets you see each partner separately and pay them accordingly.</p>
 
 <h3 class="subsec-title">6. Other Campaigns</h3>
-<div class="code-block">
-    <div class="code-hdr"><span class="code-lang">Marketing Channel Rule</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-    <div class="code-body"><pre>Rule: Other Campaigns
-Position: 6  (after every paid rule, before every organic rule)
-
-Condition: if ALL are true
-    Query String Parameter  "cid"  exists
-
-Then do the following
-    Identify the channel as:  Other Campaigns
-    Set the channel's value:  Query String Parameter "cid"</pre></div>
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>Marketing Channel rule: Other Campaigns</span></div>
+    <dl class="dothis-fields">
+        <div><dt>Position</dt><dd>6 &mdash; after every paid rule, before every organic rule</dd></div>
+        <div><dt>If all are true</dt><dd>Query String Parameter <code>cid</code> exists</dd></div>
+        <div><dt>Identify the channel as</dt><dd><code>Other Campaigns</code></dd></div>
+        <div><dt>Set the channel's value</dt><dd>Query String Parameter <code>cid</code></dd></div>
+    </dl>
 </div>
 
 <p>This is the paid catch-all, and its position is exact. It sits after every specific paid rule and before every organic one. The reason is simple and it will happen to you: marketing launches something next quarter with a tracking parameter nobody told you about. Without this rule, that traffic falls straight past all your paid rules and lands in Referring Domains or Direct, and a campaign somebody spent real money on appears to have produced nothing at all. This rule catches anything tagged as a campaign that you have not written a specific rule for yet.</p>
 
 <h3 class="subsec-title">7. Social Networks</h3>
-<div class="code-block">
-    <div class="code-hdr"><span class="code-lang">Marketing Channel Rule</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-    <div class="code-body"><pre>Rule: Social Networks   (rename to "Organic Social")
-Position: 7
-
-Condition: if ALL are true
-    Referrer Is Social Network
-
-Then do the following
-    Identify the channel as:  Organic Social
-    Set the channel's value:  Referring Domain</pre></div>
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>Marketing Channel rule: Social Networks</span></div>
+    <dl class="dothis-fields">
+        <div><dt>Position</dt><dd>7</dd></div>
+        <div><dt>Rule name</dt><dd>Social Networks &mdash; rename it to <code>Organic Social</code></dd></div>
+        <div><dt>If all are true</dt><dd><code>Referrer Is Social Network</code></dd></div>
+        <div><dt>Identify the channel as</dt><dd><code>Organic Social</code></dd></div>
+        <div><dt>Set the channel's value</dt><dd><code>Referring Domain</code></dd></div>
+    </dl>
 </div>
 
 <p>Adobe-detected, matched against a known list of platforms. Two things to do here. Rename the channel to <strong>Organic Social</strong> if you also run paid social, because otherwise no analyst will ever be sure which one a report is showing. And check Adobe's platform list against your own market, since the defaults will not include every network that matters to a regional or industry-specific audience.</p>
 
 <h3 class="subsec-title">8. Internal, renamed Session Refresh</h3>
-<div class="code-block">
-    <div class="code-hdr"><span class="code-lang">Marketing Channel Rule</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-    <div class="code-body"><pre>Rule: Session Refresh   (Adobe names this channel "Internal")
-Position: 8
-
-Condition: if ALL are true
-    Referrer Matches Internal URL Filters
-    Is First Hit of Visit
-
-Then do the following
-    Identify the channel as:  Session Refresh
-    Set the channel's value:  Page
-
-In Marketing Channel Manager:  leave Override Last-Touch UNCHECKED</pre></div>
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>Marketing Channel rule: Session Refresh</span></div>
+    <dl class="dothis-fields">
+        <div><dt>Position</dt><dd>8</dd></div>
+        <div><dt>Rule name</dt><dd>Session Refresh &mdash; Adobe names this channel <code>Internal</code></dd></div>
+        <div><dt>If all are true</dt><dd><ul><li><code>Referrer Matches Internal URL Filters</code></li><li><code>Is First Hit of Visit</code></li></ul></dd></div>
+        <div><dt>Identify the channel as</dt><dd><code>Session Refresh</code></dd></div>
+        <div><dt>Set the channel's value</dt><dd><code>Page</code></dd></div>
+        <div><dt>In Marketing Channel Manager</dt><dd>Leave <code>Override Last-Touch</code> unchecked.</dd></div>
+    </dl>
 </div>
 
 <p>This catches a visit that <em>begins</em> with a referrer from your own domain, which sounds impossible until you picture it: a visitor leaves a tab open, goes to lunch, the session times out after thirty minutes, and they come back and click. New visit, internal referrer. Both conditions are load-bearing. Drop <em>Is First Hit of Visit</em> and this rule matches every internal click on your entire site. Rename it, because "Internal" gets confused with internal campaigns, which are a completely different feature and must never appear in this report.</p>
 
 <h3 class="subsec-title">9. Direct</h3>
-<div class="code-block">
-    <div class="code-hdr"><span class="code-lang">Marketing Channel Rule</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-    <div class="code-body"><pre>Rule: Direct
-Position: 9
-
-Condition: if ALL are true
-    Referrer  does not exist
-    Is First Hit of Visit
-
-Then do the following
-    Identify the channel as:  Direct
-    Set the channel's value:  Page
-
-In Marketing Channel Manager:  leave Override Last-Touch UNCHECKED</pre></div>
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>Marketing Channel rule: Direct</span></div>
+    <dl class="dothis-fields">
+        <div><dt>Position</dt><dd>9</dd></div>
+        <div><dt>If all are true</dt><dd><ul><li>Referrer <code>does not exist</code></li><li><code>Is First Hit of Visit</code></li></ul></dd></div>
+        <div><dt>Identify the channel as</dt><dd><code>Direct</code></dd></div>
+        <div><dt>Set the channel's value</dt><dd><code>Page</code></dd></div>
+        <div><dt>In Marketing Channel Manager</dt><dd>Leave <code>Override Last-Touch</code> unchecked.</dd></div>
+    </dl>
 </div>
 
 <p>A typed URL or a bookmark arrives with no referrer at all. Again, <em>Is First Hit of Visit</em> is doing essential work, since plenty of hits deep inside a visit can also arrive without a referrer. Leave Override Last-Touch unchecked so that a visitor who was acquired by a paid ad last week and returns today by bookmark does not hand the credit to Direct.</p>
 
 <h3 class="subsec-title">10. Referring Domains</h3>
-<div class="code-block">
-    <div class="code-hdr"><span class="code-lang">Marketing Channel Rule</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-    <div class="code-body"><pre>Rule: Referring Domains
-Position: 10  (LAST. This position is not negotiable.)
-
-Condition: if ALL are true
-    Referrer  exists
-    Referrer Does Not Match Internal URL Filters
-
-Then do the following
-    Identify the channel as:  Referring Domains
-    Set the channel's value:  Referring Domain</pre></div>
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>Marketing Channel rule: Referring Domains</span></div>
+    <dl class="dothis-fields">
+        <div><dt>Position</dt><dd>10 &mdash; last, and this position is not negotiable</dd></div>
+        <div><dt>If all are true</dt><dd><ul><li>Referrer <code>exists</code></li><li><code>Referrer Does Not Match Internal URL Filters</code></li></ul></dd></div>
+        <div><dt>Identify the channel as</dt><dd><code>Referring Domains</code></dd></div>
+        <div><dt>Set the channel's value</dt><dd><code>Referring Domain</code></dd></div>
+    </dl>
 </div>
 
 <div class="warn-box">

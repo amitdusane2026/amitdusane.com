@@ -239,59 +239,50 @@ weight: 3
 <h3 class="subsec-title" data-nav="Follow along: one table, four ways">Follow along: build one table four ways and watch the meaning move</h3>
 <p>This is the exercise that makes the rest of the section permanent, and it takes about five minutes. The numbers are not the point. What you are watching for is how little has to change before a number means something else.</p>
 
-<div class="code-block">
-    <div class="code-hdr"><span class="code-lang">Follow along: four arrangements, four different questions</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-    <div class="code-body"><pre>SETUP
-
-1  A blank panel, a report suite with data, a month that has some
-
-ARRANGEMENT ONE, the plain question
-
-2  Rows: Browser.  Columns: Page Views.
-       Note the number against the top browser. Write it down.
-
-ARRANGEMENT TWO, the breakdown
-
-3  Right-click the top browser row &gt; Break down &gt; Day
-       The indented numbers now sum to that browser's total,
-       not to the site's daily totals. Same data, narrower
-       question, no visible warning.
-
-ARRANGEMENT THREE, the swap
-
-4  New table. Rows: Day. Break the top day down by Browser.
-       Find the cell that matches step 3. It is the only figure
-       the two tables share. Everything around it has changed.
-
-ARRANGEMENT FOUR, pinned
-
-5  Expand the Browser dimension in the left rail and drag ONE
-   specific browser into the rows
-       That row is static now. It will report that browser next
-       year, or report zero, and will never quietly become a
-       different browser.
-
-WORKING IT
-
-6  Shift-click three rows, then break those three down
-       Only the selection expands. Try the same with ctrl-click
-       on rows that are far apart.
-
-7  Select several rows &gt; right-click &gt; create a segment
-       You now have exactly those items isolated, in seconds.
-
-8  Shift-select two segments in the rail and drag both onto the
-   panel drop zone
-       A dropdown appears rather than a stacked filter.
-
-THE COLUMN SETTING
-
-9  Column settings on a conversion metric &gt; Attribution &gt; First touch
-       If the row dimension is a prop, watch the numbers move.
-       Nothing was recollected. The model was recalculated.
-
-There is nothing else to configure. Every table in this product is
-these few settings in some combination.</pre></div>
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>Four arrangements, four different questions</span></div>
+    <p class="dothis-setup"><strong>Before you start:</strong> a blank panel, a report suite with data, and a month that has some.</p>
+    <ol class="dothis-steps">
+        <li class="ds-group">Arrangement one, the plain question</li>
+        <li>
+            <span class="ds-do">Set <code>Rows</code> to <code>Browser</code>, and <code>Columns</code> to <code>Page Views</code>.</span>
+            <span class="ds-see">Note the number against the top browser. Write it down.</span>
+        </li>
+        <li class="ds-group">Arrangement two, the breakdown</li>
+        <li>
+            <span class="ds-do">Right-click the top browser row <span class="ds-sep">&rsaquo;</span> <code>Break down</code> <span class="ds-sep">&rsaquo;</span> <code>Day</code>.</span>
+            <span class="ds-see">The indented numbers now sum to that browser's total, not to the site's daily totals. Same data, narrower question, no visible warning.</span>
+        </li>
+        <li class="ds-group">Arrangement three, the swap</li>
+        <li>
+            <span class="ds-do">Start a new table. Set <code>Rows</code> to <code>Day</code>, then break the top day down by <code>Browser</code>.</span>
+            <span class="ds-see">Find the cell that matches step 2. It is the only figure the two tables share. Everything around it has changed.</span>
+        </li>
+        <li class="ds-group">Arrangement four, pinned</li>
+        <li>
+            <span class="ds-do">Expand the <code>Browser</code> dimension in the left rail and drag one specific browser into the rows.</span>
+            <span class="ds-see">That row is static now. It will report that browser next year, or report zero, and will never quietly become a different browser.</span>
+        </li>
+        <li class="ds-group">Working it</li>
+        <li>
+            <span class="ds-do">Shift-click three rows, then break those three down.</span>
+            <span class="ds-see">Only the selection expands. Try the same with ctrl-click on rows that are far apart.</span>
+        </li>
+        <li>
+            <span class="ds-do">Select several rows <span class="ds-sep">&rsaquo;</span> right-click <span class="ds-sep">&rsaquo;</span> <code>Create a segment</code>.</span>
+            <span class="ds-see">You now have exactly those items isolated, in seconds.</span>
+        </li>
+        <li>
+            <span class="ds-do">Shift-select two segments in the rail and drag both onto the panel drop zone.</span>
+            <span class="ds-see">A dropdown appears rather than a stacked filter.</span>
+        </li>
+        <li class="ds-group">The column setting</li>
+        <li>
+            <span class="ds-do">Open <code>Column settings</code> on a conversion metric <span class="ds-sep">&rsaquo;</span> <code>Attribution</code> <span class="ds-sep">&rsaquo;</span> <code>First touch</code>.</span>
+            <span class="ds-see">If the row dimension is a prop, watch the numbers move. Nothing was recollected. The model was recalculated.</span>
+        </li>
+    </ol>
+    <p class="dothis-end">There is nothing else to configure. Every table in this product is these few settings in some combination.</p>
 </div>
 
 <p>Work through it once and the rest of this section stops being theory. Steps 3 and 4 together are the pair worth repeating until the difference is instant, because that is the difference between reading a table and operating one, and steps 6 to 8 are where most of the speed lives.</p>
