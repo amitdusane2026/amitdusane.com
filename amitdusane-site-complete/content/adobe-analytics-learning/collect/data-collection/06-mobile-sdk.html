@@ -93,15 +93,21 @@ MobileCore.track(action: "Download", data: actionData)</pre></div>
     </table>
 </div>
 <p>Each row is one rule. Two of them, written in the Processing Rules interface, read like this:</p>
-<div class="code-block">
-    <div class="code-hdr"><span class="code-lang">Processing Rules (same for Android &amp; iOS)</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-    <div class="code-body"><pre>Rule 1: Set Document Name
-  IF   app.documentName  is set
-  THEN Overwrite value of  eVar4  with  app.documentName
-
-Rule 2: Count a Download
-  IF   app.download  is set
-  THEN Set event  event1</pre></div>
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>Processing rule: Set Document Name</span></div>
+    <dl class="dothis-fields">
+        <div><dt>If</dt><dd><code>app.documentName</code> is set</dd></div>
+        <div><dt>Then</dt><dd>Overwrite the value of <code>eVar4</code> with <code>app.documentName</code></dd></div>
+        <div><dt>Applies to</dt><dd>Android and iOS alike &mdash; one rule covers both</dd></div>
+    </dl>
+</div>
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>Processing rule: Count a Download</span></div>
+    <dl class="dothis-fields">
+        <div><dt>If</dt><dd><code>app.download</code> is set</dd></div>
+        <div><dt>Then</dt><dd>Set event <code>event1</code></dd></div>
+        <div><dt>Applies to</dt><dd>Android and iOS alike &mdash; one rule covers both</dd></div>
+    </dl>
 </div>
 <p>A useful rule of thumb when you inherit an app's context data: a key whose value looks like a label (<code>app.pageType = "Landing"</code>) usually belongs in an eVar or prop, while a key that is really just a flag (<code>app.download = "1"</code>) usually belongs on an event. One built-in exception is worth knowing: the <strong>products</strong> string is sent directly by the SDK (via a special <code>&amp;&amp;products</code> key) and does <em>not</em> need a processing rule. Everything else does. The full Processing Rules toolkit, conditions, ordering, the authorization it requires, is the entire subject of <a href="/adobe-analytics-learning/shape/processing-rules/">Processing Rules</a>; here you only need the shape of it.</p>
 <div class="diagram-box">
