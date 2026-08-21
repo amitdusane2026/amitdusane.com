@@ -1447,51 +1447,61 @@ body.world-learning .lcontent p.lscale{
   background:radial-gradient(circle at 50% 50%, var(--accent,#ba2142) 0 3.2px, transparent 3.4px);
 }
 
-/* Foot of every section. Deliberately quiet: one line, no box, no button. It
-   sits outside .section so the rule that nothing follows the ref-box stays
-   true of the content itself. */
-.ask-foot-line{margin:var(--sp-lg) 0 0; padding-top:var(--sp-md); border-top:1px solid var(--border)}
-body.world-learning .lcontent .ask-foot-line a{display:inline-block; font-size:var(--fs-sm); color:var(--text2); text-decoration:none}
-body.world-learning .lcontent .ask-foot-line a b{color:var(--accent); font-weight:650}
-body.world-learning .lcontent .ask-foot-line a:hover b{text-decoration:underline}
+/* The bar that ARRIVES, at every width.
 
-/* The bar that ARRIVES. Hidden above the three-column threshold, where the
-   spine already carries Ask without costing anything. Below it, the spine is a
-   drawer, so this is the one-tap route -- but it only appears once the reader
-   is two thirds through, and it can be dismissed for the session.
+   It replaced a permanent line at the foot of the section, on Amit's call:
+   a tip pinned to the bottom of every page is only ever seen by somebody who
+   already finished, and it sat below the ref-box, which the section anatomy
+   says nothing should follow. Removing it dissolved that tension rather than
+   arguing with it.
 
-   Sits ABOVE the phone's own furniture: env(safe-area-inset-bottom) keeps it
-   clear of the iOS home indicator, which is the strip a naive sticky footer
-   always collides with. */
-.ask-bar{display:none}
+   The behaviour is now identical on a phone and a desktop -- it slides in at
+   two thirds of the article, where a question has actually formed, and it can
+   be dismissed for the session. What changes with width is only its SHAPE.
+
+   Below 1244 it spans the width, because the spine is a drawer there and this
+   is the only one-tap route. env(safe-area-inset-bottom) keeps it clear of the
+   iOS home indicator, which is the strip a naive sticky footer always hits.
+
+   At 1244 and up it becomes a compact centred pill. Full width would be absurd
+   on a 1440 screen, and centring keeps it clear of the About mark in the
+   bottom-right corner without anything having to move: measured at 1244, 1280
+   and 1440, the pill ends at least 280px short of the mark. */
+.ask-bar{
+  display:flex; align-items:center; gap:10px;
+  position:fixed; z-index:930;
+  bottom:calc(12px + env(safe-area-inset-bottom, 0px));
+  padding:11px 14px; border-radius:12px;
+  background:var(--card); border:1px solid var(--border);
+  box-shadow:0 8px 26px rgba(15,23,42,.18);
+  opacity:0; pointer-events:none;
+  transition:transform .32s cubic-bezier(.2,.8,.3,1), opacity .22s ease;
+}
+.ask-bar > a{flex:1; display:flex; align-items:baseline; gap:7px; text-decoration:none; min-width:0}
+.ask-bar span{font-size:var(--fs-sm); color:var(--text2); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.ask-bar b{flex:none; font-size:var(--fs-sm); font-weight:700; color:var(--accent)}
+.ask-bar-x{flex:none; width:30px; height:30px; border:none; border-radius:8px; background:transparent;
+           color:var(--text3); font-size:20px; line-height:1; cursor:pointer}
+.ask-bar-x:hover{background:var(--bg3); color:var(--text1)}
+[data-theme="dark"] .ask-bar{box-shadow:0 8px 26px rgba(0,0,0,.5)}
+
 @media(max-width:1243px){
-  .ask-bar{
-    display:flex; align-items:center; gap:10px;
-    position:fixed; left:12px; right:12px; z-index:930;
-    bottom:calc(12px + env(safe-area-inset-bottom, 0px));
-    padding:11px 14px; border-radius:12px;
-    background:var(--card); border:1px solid var(--border);
-    box-shadow:0 8px 26px rgba(15,23,42,.18);
-    transform:translateY(calc(100% + 24px)); opacity:0; pointer-events:none;
-    transition:transform .32s cubic-bezier(.2,.8,.3,1), opacity .22s ease;
-  }
+  .ask-bar{left:12px; right:12px; transform:translateY(calc(100% + 24px))}
   .ask-bar.is-in{transform:none; opacity:1; pointer-events:auto}
-  /* The bar spans the full width, and the bottom-right corner is already taken:
+  /* The bar spans the full width and the bottom-right corner is already taken:
      at 390 the About mark sits from y766 to y826 and the page-nav button just
-     above it. Measured, they collide. So while the bar is showing, both lift by
-     exactly its height plus its gap. Shifting `bottom` rather than `transform`
-     is deliberate -- .author-fab:hover sets transform:none, which would cancel
-     a translate mid-hover and make the mark jump. */
+     above it. Measured, they collide. So while the bar shows, both lift by
+     exactly its height plus its gap. Shifting `bottom` rather than
+     `transform` is deliberate -- .author-fab:hover sets transform:none, which
+     would cancel a translate mid-hover and make the mark jump. */
   body.ask-bar-in .author-fab{bottom:calc(84px + env(safe-area-inset-bottom, 0px))}
   body.ask-bar-in .wf-nav-fab{bottom:calc(178px + env(safe-area-inset-bottom, 0px))}
   .author-fab,.wf-nav-fab{transition:bottom .32s cubic-bezier(.2,.8,.3,1)}
-  .ask-bar > a{flex:1; display:flex; align-items:baseline; gap:7px; text-decoration:none; min-width:0}
-  .ask-bar span{font-size:var(--fs-sm); color:var(--text2); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
-  .ask-bar b{flex:none; font-size:var(--fs-sm); font-weight:700; color:var(--accent)}
-  .ask-bar-x{flex:none; width:30px; height:30px; border:none; border-radius:8px; background:transparent;
-             color:var(--text3); font-size:20px; line-height:1; cursor:pointer}
-  .ask-bar-x:hover{background:var(--bg3); color:var(--text1)}
-  [data-theme="dark"] .ask-bar{box-shadow:0 8px 26px rgba(0,0,0,.5)}
+}
+
+@media(min-width:1244px){
+  .ask-bar{left:50%; width:min(430px, calc(100vw - 48px)); transform:translateX(-50%) translateY(calc(100% + 24px))}
+  .ask-bar.is-in{transform:translateX(-50%); opacity:1; pointer-events:auto}
 }
 /* A bar that slides is a bar that moves under the reader's thumb. Honour the
    preference and let it simply appear. */
