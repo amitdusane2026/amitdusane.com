@@ -86,18 +86,15 @@ M-10485,40-59,Female,Gold,2021</pre></div>
 
 <p>The Schema tab has a <strong>Template</strong> button, and it generates an empty file directly from your own schema. The Key column is spelled correctly because Adobe spelled it. The classification names match because Adobe copied them from the set you built. A template file cannot have a wrong header, and that single habit removes an entire category of failure.</p>
 
-<div class="code-block">
-    <div class="code-hdr"><span class="code-lang">Download a template</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-    <div class="code-body"><pre>Components > Classification sets > "Club Member Attributes" > Schema tab > Template
-
-Download template for Club Member Attributes
-    File Format:    Comma separated values      (or Excel tab separated values)
-    File encoding:  UTF-8                       (or Latin-1)
-
-Download
-
-    -> lands in your browser's download folder as "Classification Set.csv"
-    -> if a file of that name exists already, Adobe appends (1), (2), and so on</pre></div>
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>Download a template</span></div>
+    <p class="dothis-setup"><strong>Before you start:</strong> open <code>Components</code> <span class="ds-sep">&rsaquo;</span> <code>Classification sets</code> <span class="ds-sep">&rsaquo;</span> <code>Club Member Attributes</code> <span class="ds-sep">&rsaquo;</span> <code>Schema</code> tab <span class="ds-sep">&rsaquo;</span> <code>Template</code>.</p>
+    <ol class="dothis-steps">
+        <li><span class="ds-do">Set <code>File Format</code> to <code>Comma separated values</code>, or Excel tab separated values.</span></li>
+        <li><span class="ds-do">Set <code>File encoding</code> to <code>UTF-8</code>, or Latin-1.</span></li>
+        <li><span class="ds-do">Choose <code>Download</code>.</span></li>
+    </ol>
+    <p class="dothis-end">It lands in your browser's download folder as <code>Classification Set.csv</code>. If a file of that name exists already, Adobe appends (1), (2), and so on &mdash; which is how people end up importing last month's file by mistake.</p>
 </div>
 
 <p>Open it, paste your data under the headers, save, and it is ready to upload. If your source is a CRM or a product catalog that can export directly, point the export at the template's column names rather than hand-editing afterward.</p>
@@ -143,23 +140,22 @@ Download
 <h3 class="subsec-title">Follow along: the browser upload</h3>
 <p>With a file ready, go back to the Schema tab and select <strong>Upload</strong>.</p>
 
-<div class="code-block">
-    <div class="code-hdr"><span class="code-lang">Upload classification data</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-    <div class="code-body"><pre>Components > Classification sets > "Club Member Attributes" > Schema tab > Upload
-
-Add new classifications
-    Drag and drop the file, or Browse to it
-
-    Schema Preview appears, showing the columns Adobe found in your file
-    -> READ THIS. It is the last checkpoint before the data lands.
-    -> An alert here means a column in your file is not in your schema.
-
-    [ ] Overwrite data on conflict?
-
-Apply
-    -> if any column is new, Adobe warns that it will be created on import
-
-Confirm Upload      (or Cancel Upload)</pre></div>
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>Upload classification data</span></div>
+    <p class="dothis-setup"><strong>Before you start:</strong> open <code>Components</code> <span class="ds-sep">&rsaquo;</span> <code>Classification sets</code> <span class="ds-sep">&rsaquo;</span> <code>Club Member Attributes</code> <span class="ds-sep">&rsaquo;</span> <code>Schema</code> tab <span class="ds-sep">&rsaquo;</span> <code>Upload</code>.</p>
+    <ol class="dothis-steps">
+        <li><span class="ds-do">Under <code>Add new classifications</code>, drag and drop the file, or browse to it.</span></li>
+        <li>
+            <span class="ds-do">Read the <code>Schema Preview</code> that appears, showing the columns Adobe found in your file.</span>
+            <span class="ds-see">This is the last checkpoint before the data lands. An alert here means a column in your file is not in your schema.</span>
+        </li>
+        <li><span class="ds-do">Decide whether to tick <code>Overwrite data on conflict?</code>.</span></li>
+        <li>
+            <span class="ds-do">Choose <code>Apply</code>.</span>
+            <span class="ds-see">If any column is new, Adobe warns that it will be created on import.</span>
+        </li>
+        <li><span class="ds-do">Choose <code>Confirm Upload</code> &mdash; or <code>Cancel Upload</code> if the preview showed something you did not expect.</span></li>
+    </ol>
 </div>
 
 <p>Two of those steps decide whether this goes well.</p>
@@ -308,22 +304,18 @@ Rules:
 <h3 class="subsec-title">Step two: point the set at the location</h3>
 <p>Back in the classification set, on the Schema tab, select <strong>Automate</strong>.</p>
 
-<div class="code-block">
-    <div class="code-hdr"><span class="code-lang">Associate an ingest location</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-    <div class="code-body"><pre>Components > Classification sets > "Club Member Attributes" > Schema tab > Automate
-
-Associate / Update Ingest Location
-    Location Account:  Club CRM Exports        (or New account)
-    Location:          club-analytics/classifications/
-    List delimiter:    Comma
-                       (also: Semicolon, Colon, Vertical bar, Space, Tab)
-    File encoding:     UTF-8                   (or Latin-1)
-    Notify on ingest:  analytics@club.example
-
-Validate
-    -> "Location validation successful. Connection to cloud storage verified."
-
-Save    (or Update, if the connection already existed)</pre></div>
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>Associate an ingest location</span></div>
+    <dl class="dothis-fields">
+        <div><dt>Where</dt><dd><code>Components</code> <span class="ds-sep">&rsaquo;</span> <code>Classification sets</code> <span class="ds-sep">&rsaquo;</span> <code>Club Member Attributes</code> <span class="ds-sep">&rsaquo;</span> <code>Schema</code> tab <span class="ds-sep">&rsaquo;</span> <code>Automate</code></dd></div>
+        <div><dt>Location Account</dt><dd><code>Club CRM Exports</code>, or create a new account</dd></div>
+        <div><dt>Location</dt><dd><code>club-analytics/classifications/</code></dd></div>
+        <div><dt>List delimiter</dt><dd><code>Comma</code> &mdash; the alternatives are Semicolon, Colon, Vertical bar, Space and Tab</dd></div>
+        <div><dt>File encoding</dt><dd><code>UTF-8</code>, or Latin-1</dd></div>
+        <div><dt>Notify on ingest</dt><dd><code>analytics@club.example</code></dd></div>
+        <div><dt>Then</dt><dd>Choose <code>Validate</code>, and wait for <em>&ldquo;Location validation successful. Connection to cloud storage verified.&rdquo;</em></dd></div>
+        <div><dt>Finally</dt><dd><code>Save</code>, or <code>Update</code> if the connection already existed</dd></div>
+    </dl>
 </div>
 
 <p>Do not skip <strong>Validate</strong>. It is the only moment where a wrong bucket name, a missing permission, or a blocked IP range tells you so directly. Everything after this point fails quietly.</p>

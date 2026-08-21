@@ -107,25 +107,18 @@ weight: 3
 
 <p>The Add New Classification Set dialog asks for everything at once. Here is the club's set, filled in.</p>
 
-<div class="code-block">
-    <div class="code-hdr"><span class="code-lang">Add New Classification Set</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-    <div class="code-body"><pre>Components > Classification sets > Classification sets tab > New
-
-Name:          Club Member Attributes
-Description:   CRM attributes classified against the member User ID
-Type:          Primary
-
-Job notifications
-    Notify on failure:   ON
-    Failure recipients:  analytics@club.example, crm-ops@club.example
-    Notify on success:   OFF
-
-Subscriptions
-    Report Suite        Key Dimension
-    club-prod           eVar12  (User ID)
-    club-dev            eVar12  (User ID)
-
-Save</pre></div>
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>Add a new classification set</span></div>
+    <dl class="dothis-fields">
+        <div><dt>Where</dt><dd><code>Components</code> <span class="ds-sep">&rsaquo;</span> <code>Classification sets</code> <span class="ds-sep">&rsaquo;</span> <code>Classification sets</code> tab <span class="ds-sep">&rsaquo;</span> <code>New</code></dd></div>
+        <div><dt>Name</dt><dd><code>Club Member Attributes</code></dd></div>
+        <div><dt>Description</dt><dd>CRM attributes classified against the member User ID</dd></div>
+        <div><dt>Type</dt><dd><code>Primary</code></dd></div>
+        <div><dt>Notify on failure</dt><dd><code>ON</code>, to <code>analytics@club.example</code> and <code>crm-ops@club.example</code></dd></div>
+        <div><dt>Notify on success</dt><dd><code>OFF</code></dd></div>
+        <div><dt>Subscriptions</dt><dd><ul><li><code>club-prod</code> &mdash; key dimension <code>eVar12</code> (User ID)</li><li><code>club-dev</code> &mdash; key dimension <code>eVar12</code> (User ID)</li></ul></dd></div>
+        <div><dt>Finally</dt><dd><code>Save</code></dd></div>
+    </dl>
 </div>
 
 <p>Four of those fields deserve more than a glance.</p>
@@ -209,22 +202,27 @@ Save</pre></div>
 
 <p>Select <strong>Add</strong>, type a name, select Add again. Repeat for each column.</p>
 
-<div class="code-block">
-    <div class="code-hdr"><span class="code-lang">Classification Set Schema</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-    <div class="code-body"><pre>Components > Classification sets > "Club Member Attributes" > Schema tab
-
-Add  ->  Classification Name:  Age Band
-Add  ->  Classification Name:  Gender
-Add  ->  Classification Name:  Membership Tier
-Add  ->  Classification Name:  Join Year
-
-Resulting list:
-
-    Classification name     Identity name        Classified by
-    Age Band                age_band             -
-    Gender                  gender               -
-    Membership Tier         membership_tier      -
-    Join Year               join_year            -</pre></div>
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>Define the classification set schema</span></div>
+    <p class="dothis-setup"><strong>Before you start:</strong> open <code>Components</code> <span class="ds-sep">&rsaquo;</span> <code>Classification sets</code> <span class="ds-sep">&rsaquo;</span> <code>Club Member Attributes</code> <span class="ds-sep">&rsaquo;</span> <code>Schema</code> tab.</p>
+    <ol class="dothis-steps">
+        <li><span class="ds-do">Choose <code>Add</code> and set Classification Name to <code>Age Band</code>.</span></li>
+        <li><span class="ds-do">Choose <code>Add</code> again for <code>Gender</code>.</span></li>
+        <li><span class="ds-do">Choose <code>Add</code> again for <code>Membership Tier</code>.</span></li>
+        <li><span class="ds-do">Choose <code>Add</code> again for <code>Join Year</code>.</span></li>
+    </ol>
+    <p class="dothis-end">Four classifications, and the identity names Adobe derives from them are what your import file's column headers must match.</p>
+</div>
+<div class="tbl-wrap">
+<table>
+    <thead><tr><th>Classification name</th><th>Identity name</th><th>Classified by</th></tr></thead>
+    <tbody>
+        <tr><td>Age Band</td><td><code>age_band</code></td><td>&mdash;</td></tr>
+        <tr><td>Gender</td><td><code>gender</code></td><td>&mdash;</td></tr>
+        <tr><td>Membership Tier</td><td><code>membership_tier</code></td><td>&mdash;</td></tr>
+        <tr><td>Join Year</td><td><code>join_year</code></td><td>&mdash;</td></tr>
+    </tbody>
+</table>
 </div>
 
 <p>Each of those names becomes a real, reportable dimension in Analysis Workspace, sitting under the parent variable. Four names typed into a dialog, and the club can now report Hall Bookings by Membership Tier. Nothing was deployed. No developer was involved.</p>

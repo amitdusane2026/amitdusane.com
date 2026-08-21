@@ -88,16 +88,16 @@ weight: 5
 
 <p>So the club's first rule is almost embarrassingly simple.</p>
 
-<div class="code-block">
-    <div class="code-hdr"><span class="code-lang">Rule 1</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-    <div class="code-body"><pre>Components > Classification sets > "Campaign Tracking" > Rules tab > Add rule
-
-Rule  Type          Match criteria    Set classification    To
-----  ------------  ----------------  --------------------  --------
-1     Starts with   eml_              Channel               Email
-2     Starts with   ppc_              Channel               Paid Search
-3     Starts with   soc_              Channel               Social
-4     Starts with   aff_              Channel               Affiliate</pre></div>
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>Classification rules: channel from the prefix</span></div>
+    <dl class="dothis-fields">
+        <div><dt>Where</dt><dd><code>Components</code> <span class="ds-sep">&rsaquo;</span> <code>Classification sets</code> <span class="ds-sep">&rsaquo;</span> <code>Campaign Tracking</code> <span class="ds-sep">&rsaquo;</span> <code>Rules</code> tab <span class="ds-sep">&rsaquo;</span> <code>Add rule</code></dd></div>
+        <div><dt>Type, all four</dt><dd><code>Starts with</code>, each one setting the <code>Channel</code> classification</dd></div>
+        <div><dt>Rule 1</dt><dd><code>eml_</code> <span class="ds-sep">&rarr;</span> <code>Email</code></dd></div>
+        <div><dt>Rule 2</dt><dd><code>ppc_</code> <span class="ds-sep">&rarr;</span> <code>Paid Search</code></dd></div>
+        <div><dt>Rule 3</dt><dd><code>soc_</code> <span class="ds-sep">&rarr;</span> <code>Social</code></dd></div>
+        <div><dt>Rule 4</dt><dd><code>aff_</code> <span class="ds-sep">&rarr;</span> <code>Affiliate</code></dd></div>
+    </dl>
 </div>
 
 <p>Four rules, and the Channel column will fill itself forever, for every campaign anyone launches, without a single conversation. You have a handful of channels and you will have a handful of channels in five years. This is exactly what Starts With is for.</p>
@@ -113,19 +113,27 @@ Rule  Type          Match criteria    Set classification    To
 
 <p>Classification sets will just do that.</p>
 
-<div class="code-block">
-    <div class="code-hdr"><span class="code-lang">Rule 5</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-    <div class="code-body"><pre>Components > Classification sets > "Campaign Tracking" > Rules tab > Add rule
-
-Rule  Type    Input (token)   Sets
-----  ------  --------------  ---------------------------------------
-5     Split   _               Channel, Year, Month, Campaign, Country
-
-Key:      eml_2026_07_winback_in
-          |    |    |   |       |
-          v    v    v   v       v
-Sets:  Channel Year Month Campaign Country
-       Email   2026  07    winback   in</pre></div>
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>Classification rule: split the key into five</span></div>
+    <dl class="dothis-fields">
+        <div><dt>Where</dt><dd><code>Components</code> <span class="ds-sep">&rsaquo;</span> <code>Classification sets</code> <span class="ds-sep">&rsaquo;</span> <code>Campaign Tracking</code> <span class="ds-sep">&rsaquo;</span> <code>Rules</code> tab <span class="ds-sep">&rsaquo;</span> <code>Add rule</code></dd></div>
+        <div><dt>Rule</dt><dd>5</dd></div>
+        <div><dt>Type</dt><dd><code>Split</code></dd></div>
+        <div><dt>Input token</dt><dd><code>_</code></dd></div>
+        <div><dt>Sets</dt><dd><code>Channel</code>, <code>Year</code>, <code>Month</code>, <code>Campaign</code>, <code>Country</code></dd></div>
+    </dl>
+</div>
+<div class="tbl-wrap">
+<table>
+    <thead><tr><th>Segment of <code>eml_2026_07_winback_in</code></th><th>Sets</th><th>Value</th></tr></thead>
+    <tbody>
+        <tr><td><code>eml</code></td><td>Channel</td><td>Email</td></tr>
+        <tr><td><code>2026</code></td><td>Year</td><td>2026</td></tr>
+        <tr><td><code>07</code></td><td>Month</td><td>07</td></tr>
+        <tr><td><code>winback</code></td><td>Campaign</td><td>winback</td></tr>
+        <tr><td><code>in</code></td><td>Country</td><td>in</td></tr>
+    </tbody>
+</table>
 </div>
 
 <p>The <strong>Split</strong> function takes a token, cuts the key on it, and maps the resulting pieces to your classifications in order. One rule. One character. No anchors, no capture groups, nothing to get wrong at two in the morning, and nothing a colleague has to decode before they can change it.</p>
@@ -171,17 +179,17 @@ Captures: $1 = eml      $2 = 2026     $3 = 07
 
 <p>The parentheses are the point. Each pair captures whatever it matched, numbered left to right, and those numbers become values you can assign to a column.</p>
 
-<div class="code-block">
-    <div class="code-hdr"><span class="code-lang">The same job, done the long way</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-    <div class="code-body"><pre>Rule  Type                Match criteria                            Set classification  To
-----  ------------------  ----------------------------------------  ------------------  ---
-5     Regular expression  ^([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_]+)$  Year                $2
-6     Regular expression  ^([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_]+)$  Month               $3
-7     Regular expression  ^([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_]+)$  Campaign            $4
-8     Regular expression  ^([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_]+)$  Country             $5
-
-Four rules where Split needed one. Every one of them carrying the same
-expression, which somebody now has to keep in agreement with the other three.</pre></div>
+<div class="dothis dothis--avoid">
+    <div class="dothis-hdr"><b>Avoid this</b> <span>The same job, done the long way</span></div>
+    <dl class="dothis-fields">
+        <div><dt>Type, all four</dt><dd><code>Regular expression</code></dd></div>
+        <div><dt>Expression, all four</dt><dd><code>^([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_]+)$</code></dd></div>
+        <div><dt>Rule 5</dt><dd>Sets <code>Year</code> to <code>$2</code></dd></div>
+        <div><dt>Rule 6</dt><dd>Sets <code>Month</code> to <code>$3</code></dd></div>
+        <div><dt>Rule 7</dt><dd>Sets <code>Campaign</code> to <code>$4</code></dd></div>
+        <div><dt>Rule 8</dt><dd>Sets <code>Country</code> to <code>$5</code></dd></div>
+        <div><dt>Why not</dt><dd>Four rules where Split needed one, every one of them carrying the same expression, which somebody now has to keep in agreement with the other three.</dd></div>
+    </dl>
 </div>
 
 <p>Look at what that costs, and then look back at Rule 5. Four rules against one, the same pattern repeated four times, and a maintenance burden that lands on whoever inherits it. That is the price of a key that was never designed to be read.</p>
@@ -225,21 +233,19 @@ expression, which somebody now has to keep in agreement with the other three.</p
 <h3 class="subsec-title" data-nav="Test it, the only free look you get">Test it. It costs nothing and it is the only free look you get</h3>
 <p>The Rules tab has a <strong>Test rule set</strong> button, and it is the most underused control in Adobe Analytics.</p>
 
-<div class="code-block">
-    <div class="code-hdr"><span class="code-lang">Test rule set</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-    <div class="code-body"><pre>Rules tab > Test rule set
-
-Left panel   Paste sample keys, or drag in a classification file to test many at once
-             [x] Remember sample keys        (keeps them for next time)
-
-             eml_2026_07_winback_in
-             ppc_2026_07_brand_in
-             eml_2026_11_bogo07_in           <- the one designed to break Rule "Contains 07"
-             soc_2026_07_summer-fest_in      <- the one with a hyphen in the campaign name
-
-Right panel  What each key WOULD be classified as, if you activated
-
-Nothing is classified. No data changes. This is a rehearsal.</pre></div>
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>Test the rule set before you activate it</span></div>
+    <p class="dothis-setup"><strong>Before you start:</strong> open the <code>Rules</code> tab <span class="ds-sep">&rsaquo;</span> <code>Test rule set</code>.</p>
+    <ol class="dothis-steps">
+        <li>
+            <span class="ds-do">In the left panel, paste sample keys, or drag in a classification file to test many at once. Tick <code>Remember sample keys</code> to keep them for next time.</span>
+            <span class="ds-see">Choose the keys that should hurt, not the ones that should pass: <code>eml_2026_11_bogo07_in</code> is the one designed to break a rule matching &ldquo;contains 07&rdquo;, and <code>soc_2026_07_summer-fest_in</code> is the one with a hyphen in the campaign name.</span>
+        </li>
+        <li>
+            <span class="ds-do">Read the right panel, which shows what each key <em>would</em> be classified as if you activated.</span>
+            <span class="ds-see">Nothing is classified. No data changes. This is a rehearsal.</span>
+        </li>
+    </ol>
 </div>
 
 <p>Feed it the ugly keys. Not the clean ones. The clean ones always work, and testing them tells you nothing you did not already believe. Test the campaign with a hyphen in the name, the one with a missing segment, the one somebody URL encoded. Ten minutes here saves a week of explaining to a marketing director why November is being reported as July.</p>

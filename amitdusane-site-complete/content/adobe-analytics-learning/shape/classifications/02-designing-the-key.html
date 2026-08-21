@@ -236,26 +236,19 @@ weight: 2
 
 <p>Which is why the key convention becomes a document, in exactly the way the channel list has in <a href="/adobe-analytics-learning/shape/marketing-channels/">Marketing Channels</a>, and for exactly the same reason. It encodes a decision nobody can take back.</p>
 
-<div class="code-block">
-    <div class="code-hdr"><span class="code-lang">Tracking Code Convention</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-    <div class="code-body"><pre>Format:      channel _ year _ month _ campaign _ country
-Example:     eml_2026_07_winback_in
-
-Delimiter:   underscore
-             Underscores are FORBIDDEN inside any segment value.
-             Campaign names use no spaces and no hyphens.
-
-Segments:    exactly five, always. Never four, never six.
-             Unknown values use a literal token, never blank.
-             (country unknown -> "xx", never "")
-
-Case:        lowercase, enforced by the campaign URL builder
-Encoding:    the value must arrive UNENCODED
-             (URL-encoded codes cannot be classified by rules)
-
-Owner:       Marketing Operations
-Approved by: Marketing, Analytics, Web Development
-Reviewed:    annually, or before any new channel is added</pre></div>
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>Agree a tracking code convention, and write it down</span></div>
+    <dl class="dothis-fields">
+        <div><dt>Format</dt><dd><code>channel _ year _ month _ campaign _ country</code></dd></div>
+        <div><dt>Example</dt><dd><code>eml_2026_07_winback_in</code></dd></div>
+        <div><dt>Delimiter</dt><dd>Underscore. Underscores are <strong>forbidden</strong> inside any segment value, and campaign names use no spaces and no hyphens.</dd></div>
+        <div><dt>Segments</dt><dd>Exactly five, always. Never four, never six. Unknown values use a literal token, never blank &mdash; an unknown country is <code>xx</code>, never an empty string.</dd></div>
+        <div><dt>Case</dt><dd>Lowercase, enforced by the campaign URL builder</dd></div>
+        <div><dt>Encoding</dt><dd>The value must arrive <strong>unencoded</strong>. URL-encoded codes cannot be classified by rules.</dd></div>
+        <div><dt>Owner</dt><dd>Marketing Operations</dd></div>
+        <div><dt>Approved by</dt><dd>Marketing, Analytics, Web Development</dd></div>
+        <div><dt>Reviewed</dt><dd>Annually, or before any new channel is added</dd></div>
+    </dl>
 </div>
 
 <p>Hand that to a marketer and it looks like bureaucracy. It is not. It is the only thing standing between a business and the discovery, two years and forty thousand campaigns later, that all of its campaign reporting has to be rebuilt by hand because nobody ever decided what the code should look like.</p>
