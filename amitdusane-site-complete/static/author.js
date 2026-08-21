@@ -79,11 +79,15 @@
 
   if (copyB && addr) {
     copyB.addEventListener('click', function () {
+      /* Flip the action label only. The button is the whole row now, so
+         rewriting its textContent would erase the icon and the address. */
+      var act = copyB.querySelector('.ask-route-act');
       var done = function () {
-        var was = copyB.textContent;
-        copyB.textContent = 'Copied';
+        if (!act) return;
+        var was = act.textContent;
+        act.textContent = 'Copied';
         copyB.classList.add('is-copied');
-        setTimeout(function () { copyB.textContent = was; copyB.classList.remove('is-copied'); }, 1600);
+        setTimeout(function () { act.textContent = was; copyB.classList.remove('is-copied'); }, 1600);
       };
       var fallback = function () {
         var ta = document.createElement('textarea');

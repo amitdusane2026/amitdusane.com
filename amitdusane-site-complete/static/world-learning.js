@@ -490,7 +490,7 @@
   var askLi = addItem('mailto:' + (document.getElementById('askAddr')
                 ? document.getElementById('askAddr').textContent.trim() : ''),
               'Ask Amit',
-              'Still working through this? Write to me.',
+              'Email, mail app, or LinkedIn',
               'wf-ask');
   if (askLi) {
     var askA = askLi.querySelector('a');
@@ -566,7 +566,7 @@
     askBar.innerHTML =
       '<a href="mailto:' + (document.getElementById('askAddr')
         ? document.getElementById('askAddr').textContent.trim() : '') + '" data-ask>' +
-      '<span>Still working through this?</span><b>Ask Amit</b></a>' +
+      '<span>Questions about this section?</span><b>Ask Amit</b></a>' +
       '<button type="button" class="ask-bar-x" aria-label="Dismiss">&times;</button>';
     document.body.appendChild(askBar);
     askBar.querySelector('.ask-bar-x').addEventListener('click', function () {
