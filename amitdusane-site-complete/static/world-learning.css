@@ -1261,10 +1261,22 @@ body.world-learning .lcontent .diagram-title{
    capture never dominates the page, and a zoom control. The image itself
    is inert. Only the button opens the overlay, and the overlay stays in
    the same tab. */
-.shot-box{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:22px;margin:var(--sp-xl) 0}
-.shot-title{font-weight:700;color:var(--text1);margin-bottom:14px;font-size:var(--fs-label)}
+/* 21 Aug 2026: the chrome came off. A screenshot was sitting inside THREE
+   nested borders -- the card, the grey frame, and the image's own -- which
+   made the component read as a good piece of interface and a poor piece of
+   teaching. The card and the frame are gone. What survives is the one border
+   that belongs to the picture, a heading above it and a description below,
+   which is what a figure in a book looks like.
 
-.shot-frame{position:relative;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:16px;display:flex;align-items:center;justify-content:center;min-height:120px}
+   The height cap went up with them, and that was the real complaint. The
+   image was clamped to 360px tall at EVERY viewport, so even at 1440px a
+   reader had to open the overlay to see anything. 560px lets a landscape
+   capture fill the 760px column; the overlay is now for detail rather than
+   for legibility. */
+.shot-box{margin:var(--sp-xl) 0}
+.shot-title{font-weight:550;color:var(--text1);margin-bottom:12px;font-size:var(--fs-h3);line-height:var(--lh-h3)}
+
+.shot-frame{position:relative;display:flex;align-items:flex-start;justify-content:center}
 /* CMP-04 / SEO-09: the box is driven by WIDTH alone.
    A lazy image with width:auto has no intrinsic size until its bytes arrive,
    so it occupied 2px and then jumped to 336px -- a 334px shift on first
@@ -1276,14 +1288,14 @@ body.world-learning .lcontent .diagram-title{
    width cap instead: --shot-cap x the image aspect ratio. --sw and --sar are
    set inline per image and derived from the width and height attributes that
    were already there. */
-.shot-frame img{display:block;max-width:min(var(--sw,100%),calc(var(--shot-cap,360px) * var(--sar,1)));width:100%;height:auto;border:1px solid var(--border);border-radius:4px;background:#fff;pointer-events:none}
+.shot-frame img{display:block;max-width:min(var(--sw,100%),calc(var(--shot-cap,560px) * var(--sar,1)));width:100%;height:auto;border:1px solid var(--border);border-radius:4px;background:#fff;pointer-events:none}
 /* Portrait captures lose their text under the landscape cap. Taller ceiling. */
-.shot-box.shot-tall .shot-frame img{--shot-cap:470px}
+.shot-box.shot-tall .shot-frame img{--shot-cap:700px}
 
 .shot-zoom-btn{position:absolute;top:8px;right:8px;width:30px;height:30px;display:flex;align-items:center;justify-content:center;padding:0;font-size:15px;line-height:1;border:1px solid var(--border);border-radius:6px;background:var(--card);color:var(--text2);cursor:pointer}
 .shot-zoom-btn:hover{background:var(--accent,#ba2142);border-color:var(--accent,#ba2142);color:var(--on-accent,#fff)}
 
-.shot-note{margin-top:16px;padding-top:14px;border-top:1px solid var(--border);font-size:var(--fs-sm);color:var(--text2);line-height:1.65}
+.shot-note{margin-top:14px;font-size:var(--fs-sm);color:var(--text2);line-height:1.65}
 :root[data-theme="dark"] .shot-frame img{filter:brightness(.9) contrast(1.02)}
 
 /* Overlay: same tab, natural size, scrollable in both directions. */
@@ -1296,10 +1308,12 @@ body.world-learning .lcontent .diagram-title{
 body.shot-ov-open{overflow:hidden}
 
 @media (max-width:768px){
-  .shot-box{padding:16px;margin:32px 0}
-  .shot-frame{padding:10px}
-  .shot-frame img{--shot-cap:260px}
-  .shot-box.shot-tall .shot-frame img{--shot-cap:340px}
+  /* The two padding overrides that used to sit here were re-adding inset to
+     the card and the frame, and both are gone now. Only the margin and the
+     height caps still mean anything on a phone. */
+  .shot-box{margin:32px 0}
+  .shot-frame img{--shot-cap:300px}
+  .shot-box.shot-tall .shot-frame img{--shot-cap:380px}
 }
 @media print{
   .shot-zoom-btn{display:none !important}
@@ -1309,6 +1323,16 @@ body.shot-ov-open{overflow:hidden}
      small once the column is A4 wide. */
   .print-doc .shot-box{break-inside:avoid;page-break-inside:avoid;box-shadow:none !important}
   .print-doc .shot-frame{padding:8px;background:#fff}
+  /* The dark-mode dimming has to be switched off explicitly here, and this
+     was a live bug Amit found on paper. `:root[data-theme="dark"] .shot-frame
+     img` applies a brightness(.9) filter, and printing does not clear the
+     theme attribute -- the root is still data-theme="dark" while the paper is
+     white. So a print taken from dark mode carried a dimmed screenshot onto a
+     white page, for no reason, while the same print from light mode was fine.
+     Resetting the frame background was not enough; the filter lives on the
+     image. Anything that paints for a THEME needs an explicit print reset,
+     because print is not a theme. */
+  .print-doc .shot-frame img{filter:none !important}
   .print-doc .shot-frame img,.print-doc .shot-box.shot-tall .shot-frame img{max-height:150mm;max-width:100%}
 }
 /* Screenshot placeholder. Deliberately loud: an unfilled slot reaching
