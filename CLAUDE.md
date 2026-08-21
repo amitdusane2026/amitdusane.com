@@ -10,7 +10,7 @@ Adobe Analytics/                     <- working directory, supporting docs live 
 ├── content-component-rulebook.html  <- formatting and voice authority
 ├── QA_Rulebook.html                 <- delivery gate
 ├── completion-tracker.tsv          <- per-page status
-├── design-plan.html                 <- the design and SEO work plan, 106 items
+├── design-plan.html                 <- CLOSED record of design decisions, not a work queue
 ├── diagram-spec.html                <- the drawing standard, and the redraw programme
 ├── diagram-check.js                 <- the per-figure pass, automated. Paste once, call per page
 └── amitdusane-site-complete/        <- the Hugo site, website files ONLY
@@ -54,7 +54,7 @@ So whenever something written here is made wrong, narrower, or redundant by a la
 | `structure-map.html` | Titles, seotitles, slugs, module and section numbering, the curriculum arc | Creating any page, or naming anything |
 | `diagram-spec.html` | Every figure: the reader's test, when to draw at all, type, colour, the canvas, the per-figure pass | Drawing, redrawing or removing any diagram |
 | `diagram-check.js` | The measurable half of the per-figure pass, so it is not retyped fifteen times a session | Verifying any redrawn or inherited figure |
-| `design-plan.html` | The 106 design and SEO items, their priority and status | Picking up design work |
+| `design-plan.html` | Why a shipped design decision was made, and what was rejected. **Closed 21 Aug 2026 -- not a work queue** | Understanding an existing design choice. Never for finding work |
 | `content-component-rulebook.html` | Every component, its tier, when it is earned, prose rules, the 20-item checklist | Writing any section body |
 | `QA_Rulebook.html` | The 13-point delivery gate, binary PASS/FAILED | Declaring anything done |
 | `completion-tracker.tsv` | Which pages are written, QA'd, SEO-complete | Deciding what to work on |
@@ -171,6 +171,10 @@ Then crawl the built HTML, not the source. Source passing every check proves not
 **This matters more than it sounds, because every quality mechanism here can only add.** The rulebook's checklist finds things absent or malformed. The QA gate finds things missing or inconsistent. Comparing a section against a generated reference finds things not covered. **None of them can say cut this.** Additions-only review is therefore the default direction of the whole process, and left alone it drifts the site toward the shape of a reference document, one defensible addition at a time, invisibly, because each addition is individually justified.
 
 The counterweight has to be deliberate. When reviewing a draft or proposing an addition, ask what comes out, whether the section is still about one thing, and whether the new material serves the reader at that point or only makes the page more complete. Established 10 Aug 2026, after comparing M12 and M13 against generated references on the same topics: both comparisons produced only recommendations to add, which is the one output that shape of analysis can produce. Amit's ruling: **do not run that comparison across the finished modules.** Use a generated reference as a checklist *before* drafting the unwritten sections, where it costs nothing and touches no signed-off work, and use the factual accuracy pass rather than a coverage pass on what already exists, because wrong is worse than incomplete.
+
+**The same drift produces backlogs, and on 21 August 2026 one was killed for it.** The design review of 17 August became a 106-item plan; by the time it was closed, sessions were spent arguing about whether its own items were necessary while the remaining 32 sections went unwritten. Amit's ruling: **stop the activity, discard the 55 open items outright, and do not carry them forward.** He holds what matters himself and will raise it when the content is done.
+
+So: **do not build or maintain long backlogs of improvements, and never let meta-work displace writing.** A list of possible work is not progress, and a list that only grows will always argue itself into more work. When something worth doing appears mid-task, either it is small enough to do now, or it is important enough to say in one line, or it does not survive. `design-plan.html` is a closed record of *why* shipped things look the way they do; it is never a source of what to do next.
 
 **Give opinions, not options.** A learner driver facing an oncoming car does not need four alternatives and a trade-off table, they need "do this". Four options is what documentation already provides and it is why documentation does not teach. Take a position and say which one to use.
 

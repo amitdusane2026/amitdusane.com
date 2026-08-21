@@ -748,13 +748,13 @@ Deferred until enough of the section is written to make indexing worthwhile. The
 
 ---
 
-## Phase 7 — Hygiene
+## Phase 7 — Hygiene ✅ DONE (verified 20 Aug 2026)
 
 Zero reader-visible value, so it goes last, but it removes traps: derive the hardcoded 13/24/42 stats in `web-sdk-migration/list.html:10-12`; extract `partials/logo.html` (the monogram SVG is copy-pasted 7 times); delete dead code (`static/guide.css`, `static/theme.js`, `partials/header.html`, `partials/footer.html`) after confirming it is unreferenced; fix `brandColor`/`accentColor`, mis-nested under `[services]` so `.Site.Params.brandColor` does not resolve; remove or wire the never-rendered `[menu.main]`; update the stale "21 modules, 116 sections" comment at `world-learning.js:15`.
 
 ---
 
-## Phase 8 — Groundwork before CJA
+## Phase 8 — Groundwork before CJA ✅ DONE (INF-05/INF-06, 20 Aug 2026)
 
 One structural change must happen before a third world exists, and it is cheap now and expensive later: `wherefits.html:12` and `homemap.html:10` read `.Site.Params.phases` globally and unscoped, so a second world using those partials inherits Adobe Analytics' phases. `params.phases` needs to become per-world, with the partials taking a world argument. The world switch itself is an if/else chain on URL prefix in two files (`head.html:37`, `baseof.html:4-6`) that would be eight branches deep by the sixth section; worth keying off `.Section` instead.
 
@@ -772,6 +772,22 @@ The rulebook's porting rule stands: copy `world-learning.css`, change `--accent`
 
 ---
 
-## Open item
+## Open item ✅ ANSWERED
 
 **How do changes reach the live site?** This folder is a dump, not the deploy repo. If a GitHub repo builds via Actions, our edits need a path back into it. Options: you copy files back, you point me at the real repo, or this folder becomes the source of truth and you push it. Writing can start before this is settled; shipping cannot.
+
+---
+
+## The design plan is closed, 21 August 2026
+
+**Amit stopped it.** The design review of 17 August had become a 106-item plan; 35 items shipped, and the remaining 55 open and partial ones were discarded outright rather than deferred, along with the three unbuilt landing-page items.
+
+His reasoning, and it is correct: a simple ask had been elevated to close to 150 points, most of them trivial and many ultimately discarded, and the work had reached the stage of debating with itself about whether its own items were necessary. Website building had stopped. Nothing on the list was adding anything concrete.
+
+**This is the additions-only drift CLAUDE.md already documents, applied to process instead of prose.** Every quality mechanism here can only add — a checklist finds what is absent, a QA gate finds what is missing, a reference comparison finds what is not covered, and none of them can say *cut this*. A 106-item plan is that pathology at scale: every item individually defensible, the aggregate a net loss of momentum.
+
+**What this means going forward.** `design-plan.html` is now a closed record of why shipped design decisions were made and what was rejected. It is never a source of work. Do not reopen the discarded items, do not re-derive them, and do not propose them back — Amit holds what matters and will raise it when the content is finished.
+
+**The next work is content.** 32 of 116 sections remain unwritten, and that is the only front that matters until it is closed.
+
+One thing genuinely on a clock is not a design item: the deprecation warn-box in Classifications §1 expires 31 August 2026. Those dates live in the content itself.
