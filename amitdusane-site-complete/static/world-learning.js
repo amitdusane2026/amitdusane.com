@@ -553,29 +553,35 @@
 
      So it arrives instead. It slides up once the reader is two thirds through
      the article -- roughly the point where a question has actually formed --
-     and it can be dismissed. Dismissal is remembered for the session, so
-     saying no once means it does not reappear on the next section.
+     and it can be dismissed.
 
-     CSS confines it to the drawer range; this only toggles a class. */
-  var askBar = null, askDismissed = false;
-  try { askDismissed = sessionStorage.getItem('ask-bar-off') === '1'; } catch (e) {}
+     DISMISSAL IS FOR THIS READING PASS ONLY. It used to persist across the
+     whole session, which was wrong twice over: the offer is tied to THIS
+     section -- the subject line carries the section title, so it is a
+     different offer on every page -- and a reader who waved it away on
+     section 3 was silently denied it on the other 115. It also never came
+     back after scrolling up and down again, which simply reads as broken.
 
-  if (!askDismissed) {
-    askBar = document.createElement('div');
-    askBar.className = 'ask-bar';
-    askBar.innerHTML =
-      '<a href="mailto:' + (document.getElementById('askAddr')
-        ? document.getElementById('askAddr').textContent.trim() : '') + '" data-ask>' +
-      '<span>Questions about this section?</span><b>Ask Amit</b></a>' +
-      '<button type="button" class="ask-bar-x" aria-label="Dismiss">&times;</button>';
-    document.body.appendChild(askBar);
-    askBar.querySelector('.ask-bar-x').addEventListener('click', function () {
-      askBar.classList.remove('is-in');
-      document.body.classList.remove('ask-bar-in');   /* let the fabs drop back */
-      askDismissed = true;
-      try { sessionStorage.setItem('ask-bar-off', '1'); } catch (e) {}
-    });
-  }
+     So dismissal now re-arms as soon as the reader scrolls back above the
+     threshold, and nothing is remembered between pages. The re-arm point is
+     lower than the show point on purpose: matching them would let the bar
+     flicker in and out for anyone resting near the boundary.
+
+     CSS confines the shape by width; this only toggles a class. */
+  var askDismissed = false;
+  var askBar = document.createElement('div');
+  askBar.className = 'ask-bar';
+  askBar.innerHTML =
+    '<a href="mailto:' + (document.getElementById('askAddr')
+      ? document.getElementById('askAddr').textContent.trim() : '') + '" data-ask>' +
+    '<span>Questions about this section?</span><b>Ask Amit</b></a>' +
+    '<button type="button" class="ask-bar-x" aria-label="Dismiss">&times;</button>';
+  document.body.appendChild(askBar);
+  askBar.querySelector('.ask-bar-x').addEventListener('click', function () {
+    askBar.classList.remove('is-in');
+    document.body.classList.remove('ask-bar-in');   /* let the fabs drop back */
+    askDismissed = true;
+  });
 
   /* ---- scrollspy ---- */
   var items = [].slice.call(ol.children), ticking = false;
@@ -592,10 +598,15 @@
     /* Measured against the ARTICLE, not the document: the footer, the
        prev/next and the print block are not reading, and counting them would
        push the trigger past the end of the prose on a short section. */
-    if (askBar && !askDismissed) {
+    if (askBar) {
       var r = main.getBoundingClientRect(),
-          read = (-r.top + window.innerHeight) / (r.height || 1),
-          shown = read > 0.66;
+          read = (-r.top + window.innerHeight) / (r.height || 1);
+      /* Coming back up past the re-arm point clears the dismissal, so the bar
+         is available again on the next pass down. 0.58 rather than 0.66 gives
+         it hysteresis: with one threshold it would flicker for a reader
+         resting on the boundary. */
+      if (read < 0.58) askDismissed = false;
+      var shown = read > 0.66 && !askDismissed;
       askBar.classList.toggle('is-in', shown);
       /* The body class lifts the About mark and the page-nav button clear of
          the bar. They occupy the same corner, and measured at 390 they collide
