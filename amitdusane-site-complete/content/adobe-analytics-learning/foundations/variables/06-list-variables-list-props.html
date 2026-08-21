@@ -57,7 +57,7 @@ weight: 6
     </svg>
 </div>
 <div class="info-box">
-    <div class="info-hdr">ℹ️ The flip side: rows won't add up to the total</div>
+    <div class="info-hdr"><span class="info-ico"></span>The flip side: rows won't add up to the total</div>
     <p>Because every value receives full credit for the <em>same</em> events, the per-row counts overlap, so they deliberately don't sum to the column total. Say a "filter applied" event fires three times and those hits carry filters A, B, and C: each of A, B, and C can show 3, yet the real total is still 3, not 9. Adding the rows overcounts; the total reflects the actual, unique number of events. This is expected behavior, not a bug, but it reliably confuses anyone trying to reconcile the numbers, so explain it before they ask.</p>
 </div>
 <h3 class="subsec-title">Two kinds, and which side they sit on</h3>
@@ -101,12 +101,12 @@ s.prop1 = "shoes,apparel,accessories";</pre></div>
 </ul>
 <p>The failure mode is switching on all three early, then discovering a genuine list-variable need a year later with nothing left to give. At that point you are stuck: you cannot free one without abandoning the data already collected in it. Spend the last slot as if it were the last.</p>
 <div class="info-box">
-    <div class="info-hdr">ℹ️ When to reach for one</div>
+    <div class="info-hdr"><span class="info-ico"></span>When to reach for one</div>
     <p>Use a list variable when several values are true at once and each deserves credit: multiple categories viewed, multiple filters applied, multiple interests selected, multiple authors on an article. Use a list prop when you want that multi-value capture for traffic analysis only, with no attribution.</p>
 </div>
 <p>One last practical note. Raw list values are often codes or messy strings, a banner ID, an error code, which make for an unreadable report. The fix is the same one that helps elsewhere: <a href="/adobe-analytics-learning/shape/classifications/">classifications</a> turn each raw list value into a friendly, reportable label, so a list of cryptic IDs becomes a clean report of names.</p>
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ Two things that trip people up</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>Two things that trip people up</div>
     <ul>
         <li><strong>Delimiter collisions:</strong> if a value itself contains the delimiter (a comma inside a category name, say), it fractures into extra values, the same class of bug as the products string.</li>
         <li><strong>Only three list variables exist.</strong> They're a scarce resource, so reserve them for genuinely multi-value needs rather than spending one where a normal eVar would do.</li>
@@ -119,7 +119,7 @@ s.prop1 = "shoes,apparel,accessories";</pre></div>
     <p>Enable a List Prop: <span class="path">Admin → Report Suites → Edit Settings → Traffic → Traffic Variables → Enable List</span></p>
 </div>
 <div class="ref-box">
-    <div class="ref-title">📚 Learn More</div>
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
     <ul>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/admin/admin-tools/manage-report-suites/edit-report-suite/conversion-variables/list-var-admin" target="_blank">Adobe Docs: List Variables</a></li>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/implementation/vars/page-vars/list" target="_blank">Adobe Docs: List Variable Implementation</a></li>

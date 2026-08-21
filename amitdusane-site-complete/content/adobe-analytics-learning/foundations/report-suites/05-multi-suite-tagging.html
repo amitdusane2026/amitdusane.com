@@ -73,7 +73,7 @@ s.account = rsids;</pre></div>
 </div>
 <p>In practice you will rarely type that by hand. In an Adobe Launch (Tags) implementation, which is almost certainly how you will deploy, you choose the destination suites in the interface: in the Adobe Analytics extension for a library setup, or on the datastream for a Web SDK setup. There is no page code to maintain. The full deployment story is the <a href="/adobe-analytics-learning/collect/data-collection/">data collection module</a>, so for now you can relax: the concept matters here, the clicking comes later.</p>
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ You pay for every copy</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>You pay for every copy</div>
     <p>Each suite a hit is sent to is a separate, billable server call. Send to three suites and every single visitor interaction costs three server calls instead of one, tripling the volume Adobe meters you on. At scale that is real money. Always model the cost before turning it on, and never add a suite to the list "just in case."</p>
 </div>
 <h3 class="subsec-title">The decision that saves you the most: multi-suite or a VRS?</h3>
@@ -85,17 +85,17 @@ s.account = rsids;</pre></div>
 <p>The short rule: if you only need a different lens on the same data, that is a VRS. If you need a truly independent suite, that is multi-suite tagging, and you accept the per-call cost for it.</p>
 <p>There is a second consequence of that independence, and it arrives as an argument rather than as a bug. Separate suites have separate settings, and eVar expiration and allocation are settings. So two suites receiving the identical hit, from the same tag, on the same page view, can report different numbers for the same question, because one suite credits the original value while the other credits the most recent, or one expires the eVar at the end of the visit while the other holds it for thirty days.</p>
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ When two suites disagree, check the settings before you check the tag</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>When two suites disagree, check the settings before you check the tag</div>
     <p>Nothing in either report says which allocation produced the number, so a discrepancy between a global suite and a regional one reads as a tagging fault, and that is where teams look first: the rule, the data element, the network call. All three will check out, because the hit was identical. The divergence happened after collection, in a settings panel somebody edited on one suite and never mirrored on the other. Multi-suite tagging duplicates the hit, never the configuration.</p>
 </div>
 <div class="info-box">
-    <div class="info-hdr">ℹ️ This is the AppMeasurement way</div>
+    <div class="info-hdr"><span class="info-ico"></span>This is the AppMeasurement way</div>
     <p>Listing report suite IDs in <code>s.account</code> is the classic library-based approach. In a <a href="/adobe-analytics-learning/collect/data-collection/adobe-web-sdk/">Web SDK</a> / Edge implementation the page no longer names report suites at all; you list them on the datastream instead (the Add Report Suite control), and a single datastream can forward to several suites. The concept, one event sent to several destinations, survives the migration; where you configure it moves from the page to the Edge.</p>
 
 <p>Multi-suite tagging was the last of the structural choices: how many suites, how to divide them, how to view them, how to configure them, and how to feed several at once. What has been assumed throughout, though, is that every hit that reaches a suite belongs there. Not all of it does. A large share of raw traffic is automated, and left in place it quietly inflates every number you report. <a href="/adobe-analytics-learning/foundations/report-suites/bot-filtering/">Bot Filtering</a> is where that traffic gets removed before it is ever counted.</p>
 </div>
 <div class="ref-box">
-    <div class="ref-title">📚 Learn More</div>
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
     <ul>
         <li><a href="https://experienceleague.adobe.com/docs/analytics/implementation/prepare/multi-suite-tagging.html" target="_blank">Adobe Docs: Multi-Suite Tagging</a></li>
         <li><a href="https://experienceleague.adobe.com/en/docs/experience-platform/datastreams/overrides" target="_blank">Adobe Docs: Datastream Report Suite Overrides (Web SDK)</a></li>

@@ -44,17 +44,17 @@ weight: 5
 <p>This is also where the tag world's publishing rights live. When you set up tags, separate rights, Develop, Approve, and Publish, govern who can build changes versus who can push them live to production, and they are granted right here, through the Data Collection product profile in the same Admin Console. You will learn how that publishing flow actually works in the publishing workflow section of Adobe Launch; for now, just note that this access model is what enforces it, so the person who builds need not be the person who ships.</p>
 
 <div class="info-box">
-    <div class="info-hdr">ℹ️ Admin lives in a different place</div>
+    <div class="info-hdr"><span class="info-ico"></span>Admin lives in a different place</div>
     <p>A frequent point of confusion: user and permission management is not done inside the Adobe Analytics interface. It happens in the separate <strong>Adobe Admin Console</strong> (adminconsole.adobe.com), which governs all your Adobe products at once. Analytics is where you analyze; the Admin Console is where you decide who's allowed to.</p>
 </div>
 
 <div class="pro-tip">
-    <div class="pro-tip-hdr">💡 Keep your own record of who has what</div>
+    <div class="pro-tip-hdr"><span class="tip-ico"></span>Keep your own record of who has what</div>
     <p>Maintain a simple document of which users hold which access, and when it was granted. The Admin Console keeps logs, but reconstructing the picture from them after the fact is slow and painful. A living record, who your admins are, who can reach which report suite, who can publish, gives you an at-a-glance view when someone leaves, when something breaks, or when an audit lands on your desk.</p>
 </div>
 
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ Two failure modes, not one</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>Two failure modes, not one</div>
     <p>"Least privilege" is the right principle, but it fails in two directions. Over-provision and everyone becomes an admin: now no one knows who changed a processing rule and broke last week's data. Over-correct and you get profile sprawl: forty overlapping profiles, half of them named "test", that no one can audit. The fix is the same in both cases, design profiles around <em>roles</em>, not individuals, and review them periodically. A handful of clean, role-based cards beats a drawer full of one-offs.</p>
 </div>
 
@@ -72,7 +72,7 @@ weight: 5
 </div>
 
 <div class="ref-box">
-    <div class="ref-title">📚 Learn More</div>
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
     <ul>
         <li><a href="https://experienceleague.adobe.com/docs/analytics/admin/admin-console/home.html" target="_blank">Adobe Docs: Admin Console Guide</a></li>
         <li><a href="https://experienceleague.adobe.com/docs/analytics/admin/admin-console/permissions/product-profile.html" target="_blank">Adobe Docs: Product Profiles</a></li>

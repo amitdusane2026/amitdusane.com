@@ -35,12 +35,12 @@ weight: 2
 <h3 class="subsec-title">Why property design matters</h3>
 <p>Because a property is sealed in this way, with its own extensions, rules, data elements, publishing flow, and its own set of permissions, deciding how to split an implementation into properties is one of the more consequential architectural calls you will make. Draw too many and you end up maintaining the same rules and data elements in parallel across them, where they quietly drift out of sync. Draw too few and unrelated teams share one publishing flow and one permission set, and start colliding over each other's work. The structure that holds up is the one that mirrors how the organisation is actually divided, by site, by brand, by team, or by region, so that the people who own a thing are the people allowed to change it. Adobe's own guidance lands in the same place: structure your properties to match how you actually work, not the other way round.</p>
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ A property split is close to one-way</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>A property split is close to one-way</div>
     <p>There is no way to merge two properties, and no supported copy that carries rules, data elements, extensions and the relationships between them across intact. Splitting one property into four is an afternoon. Putting four back into one is a rebuild, done by hand, against a live site, with every embed code changing on the way. Draw the boundaries as though you will not get to redraw them, because in practice you will not.</p>
 </div>
 
 <div class="info-box">
-    <div class="info-hdr">ℹ️ Watch for the hands-on walkthroughs</div>
+    <div class="info-hdr"><span class="info-ico"></span>Watch for the hands-on walkthroughs</div>
     <p>From here on, this module includes hands-on walkthroughs, each shown as a code block with a real sequence of clicks, in order, with the fields filled in. When you reach one, that is your signal to build alongside: open Adobe Experience Platform Data Collection in another tab, because a property you have made yourself teaches more in twenty minutes than any amount of reading.</p>
     <p>And if you cannot right now, that is fine. Read it through, then come back when you have access and a spare half hour. The steps are written so that they still work months later, when you have forgotten every word of the prose around them.</p>
 </div>
@@ -49,7 +49,7 @@ weight: 2
 <p>When you create a property, the first thing Launch asks is its platform: web or mobile. This is foundational rather than cosmetic, because it sets the entire toolset you work with. It decides which extensions you start with and can add: a web property opens with the Core extension and the web catalog, while a mobile property opens with Mobile Core and Profile already installed and draws from the mobile catalog. It decides which events your rules can fire on: browser and DOM events like page load and click on the web, application lifecycle events on mobile. And it changes how the property even reaches what it instruments: a web property gives you the <code>&lt;head&gt;</code> embed script, while a mobile property gives you an Environment File ID that the Adobe Experience Platform Mobile SDK is compiled against inside the app. A single mobile property can even manage several iOS and Android apps at once. Pick the platform that matches what you are instrumenting, because it shapes everything you build afterwards.</p>
 
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ The platform choice is made once</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>The platform choice is made once</div>
     <p>You set web or mobile when you create the property, and it shapes the entire toolset around it. It is not a switch you flip later, so picking the wrong one effectively means starting the property over. Decide what you are instrumenting before you create it.</p>
 </div>
 
@@ -112,7 +112,7 @@ weight: 2
 </div>
 
 <div class="ref-box">
-    <div class="ref-title">📚 Learn More</div>
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
     <ul>
         <li><a href="https://experienceleague.adobe.com/en/docs/experience-platform/tags/home" target="_blank">Adobe Docs: Tags Overview</a></li>
         <li><a href="https://experienceleague.adobe.com/en/docs/experience-platform/tags/publish/environments/environments" target="_blank">Adobe Docs: Environments</a></li>

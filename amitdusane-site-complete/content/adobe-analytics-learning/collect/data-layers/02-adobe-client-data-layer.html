@@ -112,12 +112,12 @@ weight: 2
     <p>This is also why the product went into <code>eventInfo</code> rather than the top level. If every <code>cartAdd</code> wrote its product into the persistent state, each one would overwrite the last, and the state would only ever show the most recent item. By keeping each product on its own event, every add-to-cart is preserved as its own entry in the log, distinct and in order, which is exactly what you want for a cart that fills up over a session.</p>
 </div>
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ The mirror-image trap on single-page apps</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>The mirror-image trap on single-page apps</div>
     <p>The flip side of <code>eventInfo</code> is a bug teams hit constantly. Because top-level data <em>persists</em> in the state, on a single-page application it carries over between virtual views unless you clear it. If page A pushes <code>page: { name: "Product" }</code> and the shopper navigates to page B without a reload, <code>getState()</code> still reports "Product" until something overwrites it, so page B's hit can be tagged with page A's values. The fix is deliberate: before the next view's data, push a null to wipe the stale branch, <code>adobeDataLayer.push({ page: null })</code>. Persistent state is a feature, but on a single-page app it is also a thing you must actively reset.</p>
 </div>
 <p>There is a shortcut that suggests itself at exactly this point, and it is worth refusing before you reach for it. Clearing a branch with a null push is deliberate and narrow. Emptying the whole array by assigning a fresh one looks like the same idea, only tidier.</p>
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ Never reassign the array to reset it</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>Never reassign the array to reset it</div>
     <p><code>window.adobeDataLayer = []</code> does not clear the data layer. It discards the initialised instance along with every listener registered against it, and puts an ordinary array in its place, one with no <code>getState</code> and no <code>addEventListener</code>. Everything pushed after that lands in a plain array where nothing is listening. No error is raised, the page carries on, and collection simply stops. The same caution covers any array method that changes the log in place, <code>pop</code>, <code>shift</code>, <code>splice</code>, <code>sort</code> and <code>reverse</code>: the log is append-only, and <code>push</code> is the only method that belongs in your code.</p>
 </div>
 
@@ -156,7 +156,7 @@ weight: 2
 <p>Whether that trade is worth it for your site is a genuine decision, not a foregone conclusion, and it deserves far more than a paragraph. That is exactly what <a href="/adobe-analytics-learning/collect/data-layers/do-you-need-acdl/">Do You Really Need ACDL?</a> takes on: not whether ACDL works, which you now understand, but whether you actually need it. Whichever way it lands, hold on to one thing. The data layer is the most human part of the whole pipeline, an agreement between the analytics and engineering teams, and quietly the most decisive thing in the entire implementation.</p>
 
 <div class="info-box">
-    <div class="info-hdr">ℹ️ Companion reading on this site</div>
+    <div class="info-hdr"><span class="info-ico"></span>Companion reading on this site</div>
     <p>This site's second guide, <strong>AppMeasurement to Web SDK Migration</strong>, covers how an event-driven data layer like this one feeds XDM once you move to the Web SDK and the Edge. Its <a href="/web-sdk-migration/kb/datalayer/">data layer reference</a> is worth reading alongside this section.</p>
 </div>
 
@@ -166,7 +166,7 @@ weight: 2
 </div>
 
 <div class="ref-box">
-    <div class="ref-title">📚 Learn More</div>
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
     <ul>
         <li><a href="https://github.com/adobe/adobe-client-data-layer/wiki" target="_blank">Adobe Client Data Layer: official documentation and API (GitHub)</a></li>
         <li><a href="https://experienceleague.adobe.com/en/docs/experience-platform/tags/extensions/client/client-data-layer/overview" target="_blank">Adobe Docs: Adobe Client Data Layer extension for Tags</a></li>

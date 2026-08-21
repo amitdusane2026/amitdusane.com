@@ -99,7 +99,7 @@ weight: 6
 <p>Before you build, give the library a real name. It feels trivial on day one, when you have exactly one library. It stops feeling trivial the day you have eighty, and you are trying to find which one changed the tracking code last March.</p>
 
 <div class="pro-tip">
-    <div class="pro-tip-hdr">💡 Name libraries so future-you can read the history</div>
+    <div class="pro-tip-hdr"><span class="tip-ico"></span>Name libraries so future-you can read the history</div>
     <p>Pick a naming convention and keep it. A first library can simply be <code>Foundation Library</code> or <code>SiteName Analytics v1.0</code>. After that, name by intent, <code>Exclude downloads from articles</code>, <code>Added APAC countries to Meta pixel</code>, or stamp them with dates, <code>Download changes 22/Jun/2026</code>, <code>Disabled old product string 04/May/2025</code>. Versioning, dates, or plain-English intent all work. A pile of libraries called "Library 1" through "Library 80" does not.</p>
 </div>
 
@@ -122,19 +122,19 @@ weight: 6
 <p>QA realistically runs in several rounds, back and forth between you and the web developer, until both sides agree the data is right. And when you reach that point, do one more thing that people routinely skip.</p>
 
 <div class="pro-tip">
-    <div class="pro-tip-hdr">💡 Get a formal sign-off</div>
+    <div class="pro-tip-hdr"><span class="tip-ico"></span>Get a formal sign-off</div>
     <p>Once the analytics developer and the web developer are satisfied, get explicit sign-off from everyone involved. It has no technical effect at all, which is exactly why people overlook it. But the day someone asks why the numbers changed, or whether a thing was ever agreed, that sign-off is what protects you. Be disciplined about the paperwork, not just the code.</p>
 </div>
 
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ Only one library can sit in Submitted or Approved at a time</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>Only one library can sit in Submitted or Approved at a time</div>
     <p>The workflow is a single lane, not a queue. While one library is waiting for approval, nobody else can submit. On a small team that is invisible. On a team of six, all shipping in the same week, it becomes the thing everyone is waiting on, and the temptation is to bundle unrelated changes into one library to get them through together. Resist it: a library is the unit you roll back, and a library carrying four teams' work is a library you cannot roll back.</p>
 </div>
 
 <p>The single lane is the constraint you can see. There is a second one underneath it that is invisible, and it catches the same teams.</p>
 <p>Rules, data elements and extensions belong to the property, not to a library. A library holds a <em>revision</em> of each resource it touches. So two people can open two libraries in Development, edit the same rule in each, and neither is told the other exists. Both build. Both pass QA, because each library contains its own author's version and behaves exactly as that author intended.</p>
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ The second library to publish wins, and nobody is told</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>The second library to publish wins, and nobody is told</div>
     <p>When the second one reaches production it carries its own revision of that shared rule, and that revision replaces the first team's. Their change is gone from the live site while their library still shows as published, which is precisely why nobody thinks to look there. The symptom arrives days later as a report that stopped populating, and the team who lost the work is the least likely to suspect a publish they had nothing to do with. Keep libraries small, keep them short-lived, and publish them quickly, for the same reason short-lived branches are the rule in every other codebase.</p>
 </div>
 
@@ -142,7 +142,7 @@ weight: 6
 <p>The move from Development to live is deliberately gated, and the gates map to three separate rights. They are not bundled together: a person has each one only if it is granted to them.</p>
 
 <div class="info-box">
-    <div class="info-hdr">ℹ️ The three rights are separate by design</div>
+    <div class="info-hdr"><span class="info-ico"></span>The three rights are separate by design</div>
     <p><strong>Develop</strong> lets someone create libraries, build for development, and submit for approval. <strong>Approve</strong> lets someone build to staging and approve a staged build. <strong>Publish</strong> lets someone publish an approved library to production. They are not inclusive, so for one person to run the whole flow alone, they need all three. This separation is the point: it lets an organisation keep the person who builds, the person who approves, and the person who ships as different people, which is how you stop a single mistake from walking straight onto the live site.</p>
 </div>
 
@@ -152,7 +152,7 @@ weight: 6
 <p>When QA is signed off, ask whoever holds the approve and publish rights to move the library to production. Production deserves its own high-level check once the library lands. And then the part people get wrong: do not celebrate early.</p>
 
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ Watch the reports before you call it a win</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>Watch the reports before you call it a win</div>
     <p>A clean QA does not guarantee clean production data. Watch your reports for the first two or three days, or however long your plan calls for. If the numbers look factual and correct after that window, that is your real first win. The beacon firing in a debugger and the data being right in a report are two different confirmations, and only the second one counts.</p>
 </div>
 
@@ -162,7 +162,7 @@ weight: 6
 <p>You can <strong>fix forward</strong>: make the correction in a new library back in Development, test it, take it through approval, and publish it. Or you can <strong>roll back</strong>: republish a previous, known-good library. Launch keeps your published history, the currently live library is marked with a green dot, and republishing an earlier one restores it. Either way the situation is recoverable.</p>
 
 <div class="info-box">
-    <div class="info-hdr">ℹ️ Why this works: libraries layer on a baseline</div>
+    <div class="info-hdr"><span class="info-ico"></span>Why this works: libraries layer on a baseline</div>
     <p>A library is not a complete copy of your whole implementation. A library in Development, Submitted, or Approved inherits the rules, data elements, and extensions of the libraries upstream as its baseline. So each new library is really just a set of changes laid on top of what is already live. That is why a small fix can ship as a small library, and why republishing an old one cleanly returns you to a known state.</p>
 </div>
 
@@ -174,7 +174,7 @@ weight: 6
 </div>
 
 <div class="ref-box">
-    <div class="ref-title">📚 Learn More</div>
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
     <ul>
         <li><a href="https://experienceleague.adobe.com/en/docs/experience-platform/tags/publish/publishing-flow" target="_blank">Adobe Docs: Publishing Flow</a></li>
         <li><a href="https://experienceleague.adobe.com/en/docs/experience-platform/tags/publish/libraries" target="_blank">Adobe Docs: Libraries</a></li>

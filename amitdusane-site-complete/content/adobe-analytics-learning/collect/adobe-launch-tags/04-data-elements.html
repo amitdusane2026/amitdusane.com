@@ -35,7 +35,7 @@ weight: 4
 <p><strong>It survives missing data.</strong> This is the most important reason. Suppose the web developer forgot to populate that data layer node, so <code>digitalData.page.pageInfo</code> does not exist. The shortcut line above does not quietly do nothing. It throws a script error, because you are reading a property of something undefined, and that error can stop the rest of your custom code from running. Worse, depending on how the code is written you can end up sending an unpredictable value: garbage, or the value left over from the previous page. The variable gets populated with something you never intended. To guard against that by hand, you would have to wrap every assignment in an <code>if</code> check. A data element pointed at the same path does this for you. If the path is missing, the data element returns the default value you configured, or simply nothing, instead of throwing. You set a sensible default once, and you never write a defensive check again.</p>
 
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ Never read a deep path in raw custom code unguarded</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>Never read a deep path in raw custom code unguarded</div>
     <p>A line like <code>s.prop1 = digitalData.page.pageInfo.name</code> throws a script error the moment any link in that chain is missing, and that error can take the rest of your rule down with it. If you must use custom code, guard every nested path. Better, point a data element at it and let the default value absorb the gap.</p>
 </div>
 
@@ -55,13 +55,13 @@ s.linkTrackEvents = "";</pre></div>
 <p><strong>It can persist.</strong> A plain JavaScript variable lives and dies with its natural scope. A data element lets you choose how long its value sticks around through its storage duration setting: <code>None</code> does not store it at all, <code>Pageview</code> holds it until the next page loads, <code>Session</code> keeps it until the browser tab closes, and <code>Visitor</code> stores it in the browser indefinitely. That sounds like a small convenience, but it is more useful than it looks. Capture a campaign code from the landing page URL once, set it to persist for the visit, and it stays available to attach to later hits without ever reading the URL again.</p>
 
 <div class="pro-tip">
-    <div class="pro-tip-hdr">💡 Capture once, let it ride the visit</div>
+    <div class="pro-tip-hdr"><span class="tip-ico"></span>Capture once, let it ride the visit</div>
     <p>Storage duration turns a data element into memory. Read a campaign code or a landing entry point from the URL on the first page, set the duration to <code>Session</code> or <code>Visitor</code>, and it stays available to attach to every later hit without re-reading the source. It is one of the quietest, most useful things a data element does that a plain variable cannot.</p>
 </div>
 
 <p>That same persistence is worth turning over, because a data element that remembers is also a data element that can be wrong quietly. Storage duration puts a value somewhere the reader of a rule cannot see. Nothing in the rule says the value arrived three page views ago, and nothing in the data layer contradicts it, because the data layer is no longer where it is being read from.</p>
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ A remembered value looks exactly like a fresh one</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>A remembered value looks exactly like a fresh one</div>
     <p>Set a campaign code to <code>Visitor</code> and it attaches itself to hits for as long as the browser keeps it, including visits that had nothing to do with that campaign. The report is populated, the values are plausible, and the attribution is wrong. Choose the shortest duration that does the job, and when you do reach for <code>Session</code> or <code>Visitor</code>, say so in the data element's name, because the next person debugging it will be looking at the data layer and finding nothing wrong there.</p>
 </div>
 <p>The default value carries a smaller version of the same problem. A default of an empty string turns a broken source into an empty field, and those are two different diagnoses that now look identical in a report. A visible default like <code>n/a</code> or <code>unknown</code> keeps them apart: it groups in a report, it can be segmented on, and it tells you the element ran and found nothing, rather than leaving you to work out whether it ran at all.</p>
@@ -119,7 +119,7 @@ s.linkTrackEvents = "";</pre></div>
 </div>
 
 <div class="ref-box">
-    <div class="ref-title">📚 Learn More</div>
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
     <ul>
         <li><a href="https://experienceleague.adobe.com/en/docs/experience-platform/tags/ui/data-elements" target="_blank">Adobe Docs: Data Elements</a></li>
         <li><a href="https://experienceleague.adobe.com/en/docs/experience-platform/tags/extensions/client/core/overview" target="_blank">Adobe Docs: Core Extension Data Element Types</a></li>

@@ -34,7 +34,7 @@ weight: 6
 <p>Two smaller traps deserve naming because they are almost never obvious. The first is case sensitivity, which is not one rule but several: the contains operator is not case sensitive in Adobe Analytics, while the matches operator is, and beyond the operator, eVars are case insensitive while props may be either depending on how the report suite is configured. A segment that looks airtight can silently miss values that differ only in capitalization. The second is the belief that a segment cannot express time. It can: a segment may carry a rolling date range, such as purchased within the last 60 days, as a component of its own. That is different from the report's date range, and confusing the two, or assuming a segment has no date logic at all, leads to segments that quietly mean something other than intended.</p>
 
 <div class="info-box">
-    <div class="info-hdr">ℹ️ Case sensitivity is not a single setting</div>
+    <div class="info-hdr"><span class="info-ico"></span>Case sensitivity is not a single setting</div>
     <p>Before trusting a string condition, know that the answer depends on both the operator and the variable. In Adobe Analytics, contains ignores case while matches respects it, eVars ignore case, and props follow the report suite's configuration. When capitalization varies in the data, prefer contains, or normalize the value upstream, rather than assuming an exact match will catch every case.</p>
 </div>
 
@@ -89,7 +89,7 @@ weight: 6
 <p>What makes this dangerous rather than merely annoying is where it hides. In a small segment the stray <code>Or</code> branch is right there, easy to catch. In a large or deeply nested definition, the branch that swallows everything sits somewhere the eye never lands, and nothing errors. The segment simply returns far more than intended, with a count that looks big but believable. Container scope compounds it: at Visit or Visitor scope, an <code>Or</code> branch that matches even one hit pulls in the entire visit or visitor.</p>
 
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ OR only ever widens, and a large segment hides where</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>OR only ever widens, and a large segment hides where</div>
     <p>An <code>Or</code> condition can only grow a result set, never shrink it, so a single broad branch, an exists, a negation, or a whole extra container, can quietly match almost everything and make the conditions around it irrelevant. Two defenses catch it. Watch the builder's live preview count as each <code>Or</code> branch is added, and treat any sudden jump as a signal that the branch reaches wider than intended. And keep an <code>Or</code> group inside its own nested container, so its reach stays visible and contained instead of buried in a long flat definition.</p>
 </div>
 
@@ -132,7 +132,7 @@ weight: 6
 <p>The exact convention matters less than that there is one and the team holds to it. Around the name, use the metadata that <a href="/adobe-analytics-learning/analyze/segments/segment-types-sharing/">Segment Types and Sharing</a> introduced: a description that states the segment's business purpose, and tags that let the manager filter a crowded library. Before building anything, search the existing library first, because the fastest way to add clutter is to recreate a segment that already exists under a name you did not think to search. And periodically prune: retire the stale and the duplicated, and keep a clear owner for each segment that stays.</p>
 
 <div class="pro-tip">
-    <div class="pro-tip-hdr">💡 Keep a segment register outside the tool</div>
+    <div class="pro-tip-hdr"><span class="tip-ico"></span>Keep a segment register outside the tool</div>
     <p>For any library beyond a handful of segments, maintain a simple register, a spreadsheet or a wiki page, that lists each shared segment with its business definition, its underlying logic in plain language, and its owner. It is the fastest way for a new analyst to learn what exists without reverse-engineering definitions, and the fastest way to spot duplicates before they multiply. Review it on a regular cadence and clear out what no longer earns its place.</p>
 </div>
 
@@ -198,7 +198,7 @@ weight: 6
 </div>
 
 <div class="ref-box">
-    <div class="ref-title">📚 Learn More</div>
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
     <ul>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/segmentation/best-practices" target="_blank">Adobe Docs: Segmentation Best Practices</a></li>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/segmentation/segment-reference/seg-operators" target="_blank">Adobe Docs: Comparison Operators for Segments</a></li>

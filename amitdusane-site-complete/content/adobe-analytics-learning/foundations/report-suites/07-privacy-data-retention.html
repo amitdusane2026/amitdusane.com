@@ -48,7 +48,7 @@ weight: 7
 <p>They made it through by a single month. Had the email arrived next February instead, the honest answer would have been that nothing remains, and the whole exercise would have ended at the first gate.</p>
 <p>Nobody at your organisation chose that margin. Twenty five months is simply where a company that has never discussed retention finds itself, and it is the number governing this request unless your contract says otherwise.</p>
 <div class="info-box">
-    <div class="info-hdr">ℹ️ You can read the policy, but you cannot change it</div>
+    <div class="info-hdr"><span class="info-ico"></span>You can read the policy, but you cannot change it</div>
     <p>The data governance dialog in the admin tools shows the period currently in force. Changing it is a conversation with your Adobe account team, not a setting. Reducing the period costs nothing. Extending it is a purchase made in yearly increments, eight at most, which puts the ceiling at ten years and one month. Administrators go looking for the dropdown. There is no dropdown.</p>
 </div>
 <p>That is worth a moment, because it contradicts everything else in this panel. <a href="/adobe-analytics-learning/foundations/report-suites/bot-filtering/">Bot Filtering</a> hands you a checkbox and steps back, on the reasoning that deciding which traffic counts is your judgment to defend. Retention takes the opposite position in the same screen.</p>
@@ -79,7 +79,7 @@ weight: 7
 </div>
 <p>What leaves is not moved to cheaper storage. Adobe reserves the right to delete it with no option for recovery, and that covers every surface at once: Analysis Workspace, Data Warehouse, and the feeds carrying raw hits into your own systems. One escape hatch exists, and only before the fact. A historical data dump can be requested ahead of a deletion, which turns data you are about to lose into a file you own.</p>
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ Nothing announces the day your history stops</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>Nothing announces the day your history stops</div>
     <p>No notification, no banner, no entry in any log a practitioner reads. The first symptom is a year over year comparison returning nothing for the earlier period, and in a Workspace panel an absent year and a catastrophic one render identically. Both are zero. The person who discovers the retention boundary is usually the one presenting the trend, to an audience who assume the number means what it appears to mean.</p>
 </div>
 <p>The purchase in this request cleared that edge by four weeks. Nobody checked, and nobody would have been told.</p>
@@ -100,7 +100,7 @@ weight: 7
 </div>
 <p>Read that table as a one-way door. Every other setting in this module can be changed later at the cost of a seam in the data. Shortening retention changes what exists, and lengthening it afterwards does not bring back what the shorter window already discarded.</p>
 <div class="pro-tip">
-    <div class="pro-tip-hdr">💡 Record the comparison that justifies the window, next to the window</div>
+    <div class="pro-tip-hdr"><span class="tip-ico"></span>Record the comparison that justifies the window, next to the window</div>
     <p>A period defended as "two years feels about right" loses to the first cost review, because a feeling does not survive a spreadsheet. A period defended as "the board pack compares each quarter against the same quarter last year, which needs twenty five months" survives, because it names something the business would visibly lose. Write down the comparison the window exists to protect, and keep it wherever the rest of the suite's decisions live.</p>
 </div>
 
@@ -111,7 +111,7 @@ weight: 7
 <p>Obfuscation happens last. IP filtering and exclusion, bot rule evaluation, and geo-segmentation lookups all finish before the address is touched. Country, region and city resolve normally. The exclude-by-IP tool described in <a href="/adobe-analytics-learning/foundations/report-suites/bot-filtering/">Bot Filtering</a>, the practical answer to automated traffic the IAB list never catches, keeps working exactly as before. Nothing in your reporting goes dark.</p>
 <p>What you give up is narrower, and it is investigative rather than analytical.</p>
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ You cannot exclude an address you can no longer see</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>You cannot exclude an address you can no longer see</div>
     <p>Finding unwanted automated traffic usually means spotting a pattern in last quarter's data, identifying the address behind it, and excluding it. With the address removed at collection the middle step is gone: the pattern is visible and its origin is not. Exclusions can only be built from traffic arriving now. Like everything else in this panel the change is forward-only, so a suite switched to remove keeps whatever it already stored and never records another.</p>
 </div>
 
@@ -152,13 +152,13 @@ weight: 7
 <p>It does not fail. It does not warn. It was told nothing about that field, so it looks at nothing, finds nothing, and reports that the work is complete. A small clean file goes back. The deletion is recorded as fulfilled. Legal replies inside the thirty days and the ticket closes.</p>
 <p>Everyone in that chain believes the request was honoured. The customer's email address is still sitting in eVar 12.</p>
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ The gap surfaces years later, and never at a convenient moment</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>The gap surfaces years later, and never at a convenient moment</div>
     <p>An unlabeled variable produces no error at the time and no artefact afterwards, so the failure has no discovery mechanism of its own. It waits. What eventually surfaces it is an audit, a regulator's follow-up, or a second request from someone who has noticed their data is still in use, and by then the original response has been sent, logged and relied upon. Labeling is verified by opening the screen and reading it, because nothing in the system will ever raise a hand.</p>
 </div>
 <p>Labeling rests on an assumption worth examining, which is that you know which fields could be holding personal data. For eVar 12 you did. Somebody decided to put an email address there, and the only failure was never writing that decision down. The harder case is the field nobody decided anything about.</p>
 <p>A page URL captured whole is that field. Query strings collect whatever the site, a partner, or a customer's own pasted link happens to put in them, and that includes the password reset token, the email address in a pre-filled form link, the session identifier appended by a third-party tool. Nobody chose to send any of it. It arrived because the implementation captures the URL, which is what every implementation does.</p>
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ The variable nobody labeled because nobody knew it held anything</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>The variable nobody labeled because nobody knew it held anything</div>
     <p>A labeling exercise walks the variable list and asks what each field is for, and the page URL answers "the page URL", which sounds like a location rather than a container. The personal data inside it is invisible to that question and stays unlabeled through every audit that asks it. The fix sits upstream of labeling: strip or allow-list query parameters at collection, so those values never reach a variable, rather than governing them once they have.</p>
 </div>
 
@@ -169,7 +169,7 @@ weight: 7
 <p>Now recall the phone and the laptop. The second route only reaches the browser in front of you, so it would find the laptop they use today and never touch the phone they bought on two years ago. Half the request would go unanswered, and the response would still come back clean.</p>
 <p>Because they signed in, a person-level identifier was written on every one of those visits, from both devices. That single implementation decision, taken years earlier for reasons that had nothing to do with privacy, is what makes an honest answer possible.</p>
 <div class="pro-tip">
-    <div class="pro-tip-hdr">💡 Settle the identity route while nobody is waiting for an answer</div>
+    <div class="pro-tip-hdr"><span class="tip-ico"></span>Settle the identity route while nobody is waiting for an answer</div>
     <p>This is the one part of privacy readiness that cannot be assembled after a request arrives, because the answer depends on data collected months or years earlier. Establish which identifier requests will be matched against, confirm it is being captured, and confirm it is labeled, as implementation work with no deadline attached. A statutory clock is a poor time to discover the identifier was never collected.</p>
 </div>
 <p>What the deletion then performs is worth knowing, because the word oversells it. Values are anonymised rather than removed. Traffic and commerce variables are overwritten with a random hexadecimal string prefixed "Data Privacy-", the visitor ID becomes a random value, custom visitor IDs and IP addresses are cleared, and precise coordinates are degraded to roughly a kilometre.</p>
@@ -187,7 +187,7 @@ weight: 7
 </div>
 
 <div class="ref-box">
-    <div class="ref-title">📚 Learn More</div>
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
     <ul>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/technotes/data-retention" target="_blank">Adobe Docs: Data Retention in Adobe Analytics</a></li>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/admin/admin-tools/data-governance/data-labels/gdpr-labels" target="_blank">Adobe Docs: Data Privacy Labels for Analytics Variables</a></li>

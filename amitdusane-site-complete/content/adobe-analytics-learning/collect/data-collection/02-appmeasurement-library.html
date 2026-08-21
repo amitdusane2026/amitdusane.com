@@ -153,7 +153,7 @@ s.tl(this, "o", "Newsletter Signup");</pre></div>
 <p>Now the trap as it actually springs. You build a link-tracking rule in the tag manager, set your variables through the interface, and everything works, because the Adobe Analytics extension quietly maintains <code>linkTrackVars</code> for every variable you set through its form. Then you add a few lines of custom code to that same rule to set one more eVar, and that eVar vanishes from the hit. Nothing errors. The data simply is not there.</p>
 <p>The reason is exact: the extension only manages <code>linkTrackVars</code> for variables set <em>through its interface</em>. Anything you set in the custom code editor, you have to add to <code>linkTrackVars</code> yourself, in code. Forget, and it gets stripped.</p>
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ Custom code silently strips your variables off link hits</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>Custom code silently strips your variables off link hits</div>
     <p>Computing the value in a data element is only half the answer. A data element produces a value, but you still have to assign it, and if you assign it with custom code you are right back in the trap. What actually saves you is assigning the value through the extension's "Set Variables" form, pointing it at the data element, because that is what makes the extension manage <code>linkTrackVars</code> for you. So let the data element do the computing, then set the variable through the form rather than in custom code. The rule-level mechanics of this belong with <a href="/adobe-analytics-learning/collect/adobe-launch-tags/">Adobe Launch (Tags)</a>.</p>
 </div>
 
@@ -182,7 +182,7 @@ s.linkTrackEvents = s.apl(s.linkTrackEvents, "event5", ",", ",", 1);</pre></div>
 </div>
 <p>This is exactly what makes it powerful inside a products-string builder. When your code is looping through a data layer array, adding a merchandising eVar here, an event there, building the string in stages, <code>apl</code> lets you accumulate the events and keep <code>linkTrackVars</code> in sync as you go, without ever hand-tracking whether something is already in the list. That is the real use case, and treating <code>apl</code> as events-only leaves the most useful half on the table.</p>
 <div class="info-box">
-    <div class="info-hdr">ℹ️ Worth knowing</div>
+    <div class="info-hdr"><span class="info-ico"></span>Worth knowing</div>
     <p><code>apl</code> is an Adobe Consulting plug-in rather than part of the core library, you add it through the Common Analytics Plugins extension. It also does not carry over to the Web SDK, which handles list values its own way. One more thing that belongs to the AppMeasurement era specifically.</p>
 </div>
 
@@ -208,7 +208,7 @@ s.linkTrackEvents = s.apl(s.linkTrackEvents, "event5", ",", ",", 1);</pre></div>
 </div>
 
 <div class="ref-box">
-    <div class="ref-title">📚 Learn More</div>
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
     <ul>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/implementation/js/overview" target="_blank">Adobe Docs: Implement Adobe Analytics with AppMeasurement for JavaScript</a></li>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/implementation/vars/config-vars/linktrackvars" target="_blank">Adobe Docs: linkTrackVars</a></li>

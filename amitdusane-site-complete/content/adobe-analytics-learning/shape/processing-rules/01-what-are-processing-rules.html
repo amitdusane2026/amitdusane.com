@@ -106,7 +106,7 @@ weight: 1
 <p><strong>They act on live production data directly.</strong> A careless rule can cause real data loss. The classic trap: a rule that overwrites eVar1 with eVar2 will blank out eVar1 whenever eVar2 happens to be empty. Always build and test rules in a development report suite first, and add a condition that checks a value exists before you use it to overwrite another. The fuller set of limits and habits lives in <a href="/adobe-analytics-learning/shape/processing-rules/limitations-best-practices/">Limitations and Best Practices</a>; for now, treat these three as the non-negotiables.</p>
 
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ Test in a development report suite first</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>Test in a development report suite first</div>
     <p>Processing rules affect data collection directly and cannot be undone on data already stored. A rule that looks right can still blank out a variable or overwrite the wrong field the moment it goes live. Prove every rule in a development report suite before you enable it in production, so a mistake costs you test data, not real reporting.</p>
 </div>
 
@@ -121,7 +121,7 @@ weight: 1
 </div>
 
 <div class="ref-box">
-    <div class="ref-title">📚 Learn More</div>
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
     <ul>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/admin/admin-tools/manage-report-suites/edit-report-suite/report-suite-general/processing-rules/pr-overview" target="_blank">Adobe Docs: Processing Rules Overview</a></li>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/technotes/processing-order" target="_blank">Adobe Docs: Processing Order for Data in Adobe Analytics</a></li>

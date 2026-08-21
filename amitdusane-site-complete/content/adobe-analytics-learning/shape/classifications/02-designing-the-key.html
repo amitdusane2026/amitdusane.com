@@ -65,7 +65,7 @@ weight: 2
 <p>And two years of hall bookings by a senior Gold member have just become two years of hall bookings by a twenty-three year old.</p>
 
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ A recycled key rewrites history silently</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>A recycled key rewrites history silently</div>
     <p>No validation catches this, because nothing failed. The upload succeeded. The report renders. The totals still reconcile, because no hits were added or removed. Only the labels moved, and they moved backward through every report anyone has ever run. If your key can be recycled, reassigned, or reused by the source system, <strong>it is not a key.</strong> It is a slot number, and slot numbers are not identities.</p>
 </div>
 
@@ -174,7 +174,7 @@ weight: 2
 <p>So the delimiter matters more than it looks. It has to be a character that can never appear inside any of the values it separates. An underscore is safe, because campaign names rarely contain one. A hyphen is riskier, because <code>win-back</code> is a perfectly natural thing for a marketer to type, and the moment they do, your rule quietly produces a Campaign of <code>win</code> and a Country of <code>back</code>.</p>
 
 <div class="pro-tip">
-    <div class="pro-tip-hdr">💡 The trap that kills rule-based classification outright</div>
+    <div class="pro-tip-hdr"><span class="tip-ico"></span>The trap that kills rule-based classification outright</div>
     <p><strong>A URL-encoded tracking code will not be classified by the Rule Builder at all.</strong> This sounds like a bug, but it is a hard limit of the feature, and one worth knowing before you design a single rule. A beautifully delimited key that arrives as <code>eml%5F2026%5F07%5Fwinback</code> is simply unreadable to the rule builder, and no amount of regular expression skill will rescue it. The fix lives upstream, in how the campaign link is built and how the value is read into the variable. Which makes it a conversation with whoever owns the campaign URLs, not a configuration you can solve alone.</p>
 </div>
 
@@ -254,7 +254,7 @@ weight: 2
 <p>Hand that to a marketer and it looks like bureaucracy. It is not. It is the only thing standing between a business and the discovery, two years and forty thousand campaigns later, that all of its campaign reporting has to be rebuilt by hand because nobody ever decided what the code should look like.</p>
 
 <div class="info-box">
-    <div class="info-hdr">ℹ️ Who owns the key</div>
+    <div class="info-hdr"><span class="info-ico"></span>Who owns the key</div>
     <p>Marketing owns the campaign codes. Web development owns what lands in the variable. The source system owns the User ID and the product SKU. You own none of them, and you depend on all of them. So the most valuable thing you can do at the start of a classification project is find out who generates each key, ask them whether it can ever be reused, and ask them how many unique values it will hold. Two questions, one afternoon, and between them they decide whether this module works for you or against you.</p>
 </div>
 
@@ -271,7 +271,7 @@ weight: 2
 </div>
 
 <div class="ref-box">
-    <div class="ref-title">📚 Learn More</div>
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
     <ul>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/classifications/sets/data-files" target="_blank">Adobe Docs: Classification Set File Formats (key requirements and limits)</a></li>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/classifications/sets/overview" target="_blank">Adobe Docs: Classification Sets Overview (performance and unique keys)</a></li>

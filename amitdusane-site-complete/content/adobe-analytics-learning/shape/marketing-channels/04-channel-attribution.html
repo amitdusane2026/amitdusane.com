@@ -35,7 +35,7 @@ weight: 4
 <p>Once the objective exists, the entire game of attribution reduces to a single question. <strong>Who helped you reach it?</strong></p>
 
 <div class="info-box">
-    <div class="info-hdr">ℹ️ Two words, taken separately</div>
+    <div class="info-hdr"><span class="info-ico"></span>Two words, taken separately</div>
     <p><strong>Attribution</strong> is the act of assigning credit for a success to the channels that led to it. A <strong>model</strong> is one particular method of dividing that credit up. Put them together and attribution modeling is simply this: choosing a rule for who gets the credit, and how much.</p>
 </div>
 
@@ -49,7 +49,7 @@ weight: 4
 <p>Is that logical? Plainly not. Direct did no persuading. It was simply standing closest to the finish line. The channels that did the actual work show nothing, and a marketer reading that report would cut the very campaigns that built the sale.</p>
 
 <div class="pro-tip">
-    <div class="pro-tip-hdr">💡 You already fixed part of this, in Channel Configuration</div>
+    <div class="pro-tip-hdr"><span class="tip-ico"></span>You already fixed part of this, in Channel Configuration</div>
     <p>That failure is exactly why the <strong>Override Last-Touch Channel</strong> checkbox exists, and why <a href="/adobe-analytics-learning/shape/marketing-channels/channel-configuration/">Channel Configuration</a> told you to leave it unchecked for Direct and Internal. With override off, Direct is not permitted to seize last-touch credit from a channel still persisting from an earlier visit. The paid search click keeps the credit, and Direct does not steal it.</p>
     <p>But notice how blunt that fix is. It only answers a yes-or-no question: <em>may this channel claim last touch at all?</em> It cannot answer the harder question, which is how credit should be <strong>shared</strong> among the four channels that each did real work. Adobe patched the worst symptom at collection time. The disease needs attribution models.</p>
 </div>
@@ -138,7 +138,7 @@ weight: 4
 <p>Two rules govern all of them. For the J models and Custom, a journey with only <strong>two</strong> touch points collapses to a 75 / 25 split in favor of the emphasized end, since there is no middle to divide. And across every model, if only <strong>one</strong> touch point appears inside the lookback window, it receives 100 percent of the credit no matter which model is selected. A model only has something to do when there is more than one candidate.</p>
 
 <div class="info-box">
-    <div class="info-hdr">ℹ️ Where the Shapley value comes from</div>
+    <div class="info-hdr"><span class="info-ico"></span>Where the Shapley value comes from</div>
     <p>The Algorithmic model is worth a moment. It is built on the Shapley value, which comes from cooperative game theory and earned Lloyd Shapley a Nobel Prize in economics. The problem it solves is exactly the one you have: several players cooperate to produce a payoff, they contribute unequally, and the surplus has to be divided fairly. Attribution turns out to be a special case of a problem that economists had already spent decades on. That is a good reminder that "who gets the credit" is a genuinely hard question, not a reporting preference.</p>
 </div>
 
@@ -206,7 +206,7 @@ weight: 4
 </ul>
 
 <div class="pro-tip">
-    <div class="pro-tip-hdr">💡 Why Marketing Channel beats First Touch Channel and Last Touch Channel</div>
+    <div class="pro-tip-hdr"><span class="tip-ico"></span>Why Marketing Channel beats First Touch Channel and Last Touch Channel</div>
     <p>The overview mentioned that Adobe offers four channel dimensions and recommended the <strong>Marketing Channel</strong> pair. Here is the reason. First Touch Channel and Last Touch Channel have their models <em>frozen</em>: the name is the model, and it cannot be changed. The Marketing Channel dimension carries no baked-in opinion, so any attribution model can be applied to it at runtime. Build your reporting on Marketing Channel and every model stays open to you. Build it on the frozen pair and you have thrown that flexibility away for nothing.</p>
 </div>
 
@@ -218,7 +218,7 @@ weight: 4
 <p>The second is broader. In Analysis Workspace, an attribution model can be applied to a <strong>success event against almost any dimension</strong>, not just a channel. Internal promotions, campaign codes, page names, products, even the day of week. The dimension does not have to be a marketing channel for the credit question to be interesting.</p>
 
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ Attribution applies to success events, not to traffic metrics</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>Attribution applies to success events, not to traffic metrics</div>
     <p>Attribution models work on <strong>conversion metrics</strong>: orders, revenue, leads, subscriptions, custom success events. They are not meaningful for baseline traffic metrics such as page views, visits, and visitors. The reason is definitional rather than technical. Attribution divides credit for something that was <em>achieved</em>. A page view is not an achievement anybody competed to cause, so there is no credit to allocate. If a stakeholder asks for first-touch attribution on visits, the honest answer is that the question does not have a meaning.</p>
 </div>
 
@@ -240,7 +240,7 @@ weight: 4
 </div>
 
 <div class="ref-box">
-    <div class="ref-title">📚 Learn More</div>
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
     <ul>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/analyze/analysis-workspace/attribution/models" target="_blank">Adobe Docs: Attribution Models, Containers, and Lookback Windows</a></li>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/analyze/analysis-workspace/panels/attribution" target="_blank">Adobe Docs: The Attribution Panel</a></li>

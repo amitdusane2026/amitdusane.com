@@ -82,7 +82,7 @@ weight: 5
 <p>A regular user can share the segments they created, and only with individual users, which is the natural way to hand a segment to a colleague for a second opinion. An administrator can go wider, sharing with permission groups defined in the Admin Console, or with the entire organization at once. Sharing carries a subtlety that decides whether an organization's numbers stay aligned, and it is worth understanding precisely.</p>
 
 <div class="info-box">
-    <div class="info-hdr">ℹ️ A shared segment updates live, a copied one does not</div>
+    <div class="info-hdr"><span class="info-ico"></span>A shared segment updates live, a copied one does not</div>
     <p>When someone applies a shared segment directly to a report, they are using a live reference: edit the segment once and every report that applies it updates automatically. But if someone drags your segment inside a segment of their own, Adobe stores a copy of its definition at that moment, not a link, and later edits to your original never reach that copy. This is why a single shared, directly applied segment is the safest way to keep a whole organization counting the same thing.</p>
 </div>
 
@@ -146,7 +146,7 @@ weight: 5
 <p>Publishing is not a casual toggle. It works only if the organization uses Experience Cloud IDs, the shared visitor ID that lets separate Adobe solutions recognize the same person, and an administrator has to grant the segment-publishing permission through a product profile before the option even appears. Once published, the segment's definition reaches the Experience Cloud almost at once, but its membership, the actual list of people, is evaluated on a schedule rather than in real time, so an audience takes a few hours to become fully actionable in the downstream tools. The exact ceilings and timings are the kind of number Adobe revises, so they are recorded here as a dated snapshot rather than stated as permanent fact.</p>
 
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ Current status, verified July 2026</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>Current status, verified July 2026</div>
     <p>A single report suite can have up to <strong>75</strong> published segments, and a published audience cannot exceed <strong>20 million</strong> unique members. The title and definition reach the Experience Cloud almost immediately; membership is re-evaluated roughly <strong>every 4 hours</strong>, and an audience generally becomes actionable in Target and Advertising within <strong>4 to 8 hours</strong>, with Adobe Campaign adding a further 24 hours or so. These limits and intervals have been raised and retuned before, so confirm them against Experience League before you design around them.</p>
 </div>
 
@@ -168,7 +168,7 @@ weight: 5
 </div>
 
 <div class="ref-box">
-    <div class="ref-title">📚 Learn More</div>
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
     <ul>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/segmentation/segmentation-workflow/t-seg-share" target="_blank">Adobe Docs: Share Segments</a></li>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/segmentation/segmentation-workflow/seg-publish" target="_blank">Adobe Docs: Publish Segments</a></li>

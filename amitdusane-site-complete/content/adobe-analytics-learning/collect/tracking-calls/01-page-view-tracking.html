@@ -86,7 +86,7 @@ weight: 1
 <p>In a tag management setup you do not write <code>s.t()</code> by hand. As covered in the <a href="/adobe-analytics-learning/collect/adobe-launch-tags/rules/">Rules</a> section, you build a rule that fires on a page load trigger and add a Send Beacon action set to the <code>s.t()</code> page view type. That same section is where the choice of trigger lives, since which page load event you fire on depends on when your data layer finishes building. Rather than repeat that here, treat this as the call that the rule ultimately sends.</p>
 
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ Always set pageName, or reports get messy</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>Always set pageName, or reports get messy</div>
     <p>The <code>pageName</code> variable has a limit of 100 bytes, and longer values are truncated. More importantly, when <code>pageName</code> is left blank, Adobe falls back to the page's full URL as the name. Do that across a site and the Pages report fills with long, near duplicate URLs instead of clean, readable names. Set an explicit <code>pageName</code> on every page, following a naming convention agreed before implementation starts.</p>
 </div>
 
@@ -138,7 +138,7 @@ s.t();
 </div>
 
 <div class="ref-box">
-    <div class="ref-title">📚 Learn More</div>
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
     <ul>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/implementation/vars/functions/t-method" target="_blank">Adobe Docs: t() Method</a></li>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/implementation/vars/page-vars/pagename" target="_blank">Adobe Docs: pageName Variable</a></li>

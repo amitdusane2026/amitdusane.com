@@ -37,12 +37,12 @@ weight: 4
 <p>Because there is no undo, never learn a rule on production. Build and prove it in a non-production report suite first, watch the data it produces, and only then copy the proven rule across. Because an overwrite does not check whether its source has a value, guard it: add an "is set" condition so the rule can never blank out good data with an empty one. Because rules run top to bottom with no early exit, sequence them on purpose, any rule that reads a value must sit above the rule that overwrites it, or it will read the wrong thing. And because rules are permanent and tend to outlive the person who wrote them, write the Reason on every rule, give it a name a stranger could understand, and audit the set now and then to retire the ones no longer earning their place.</p>
 
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ Permanent and immediate, by design</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>Permanent and immediate, by design</div>
     <p>A processing rule takes effect the moment you save it and changes your data before it is ever stored. There is no reprocessing and no undo for the data it writes. This is not a warning to memorize and move past; it is the reason the non-production report suite exists. Prove every rule where a mistake costs you nothing, then promote it.</p>
 </div>
 
 <div class="pro-tip">
-    <div class="pro-tip-hdr">💡 Use View History as your black box</div>
+    <div class="pro-tip-hdr"><span class="tip-ico"></span>Use View History as your black box</div>
     <p>The Processing Rules page has a View History tab that records what changed and who changed it. It will not reverse a bad rule, but when a report shifts unexpectedly and nobody remembers touching anything, it is the first place to look. Pair it with a well-written Reason field and most "why did this break" investigations end in minutes instead of days.</p>
 </div>
 
@@ -92,7 +92,7 @@ weight: 4
 </div>
 
 <div class="ref-box">
-    <div class="ref-title">📚 Learn More</div>
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
     <ul>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/admin/admin-tools/manage-report-suites/edit-report-suite/report-suite-general/processing-rules/pr-overview" target="_blank">Adobe Docs: Processing Rules Overview and Things to Consider</a></li>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/admin/admin-tools/manage-report-suites/edit-report-suite/report-suite-general/processing-rules/pr-view-history" target="_blank">Adobe Docs: View Processing Rule History</a></li>

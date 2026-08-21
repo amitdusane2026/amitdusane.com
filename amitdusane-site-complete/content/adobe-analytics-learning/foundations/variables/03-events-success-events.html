@@ -109,7 +109,7 @@ s.events = "event1:ORD-5582";</pre></div>
 <p>You get up to <strong>1000 custom events</strong> (event1 to event1000, depending on your contract), which sounds extravagant next to 250 eVars until you think about scale. A modern site is not just pages to read; a transactional site has a huge number of <em>actions</em>: add to cart, apply a coupon, start checkout, submit each form, rate, share. Every action you want to count needs an event. It is normal to have far more events than dimensions, because there are simply more things to <em>count</em> than there are ways to <em>label</em>.</p>
 <p>One per-event setting worth knowing is <strong>polarity</strong>: you can flag whether an upward trend for a metric is good or bad, because for some events, error counts or refunds, a rising number is bad news. It mattered more in classic reporting, where it shaped default sorting and coloring. In Analysis Workspace, where you sort and conditionally format however you like, it matters far less, but it is still there.</p>
 <div class="pro-tip">
-    <div class="pro-tip-hdr">💡 The failure mode is not running out of events. It is sprawl.</div>
+    <div class="pro-tip-hdr"><span class="tip-ico"></span>The failure mode is not running out of events. It is sprawl.</div>
     <p>With so many events available, the failure mode is not running out, it is sprawl. Name and document every event in a <a href="/adobe-analytics-learning/foundations/variables/variable-planning/">solution design document</a> the moment you enable it. An unnamed <code>event47</code> that nobody remembers the purpose of is how a measurement plan quietly rots.</p>
 
 </div>
@@ -121,7 +121,7 @@ s.events = "event1:ORD-5582";</pre></div>
     <p>Enable Serialization: <span class="path">Success Events → Edit → Unique Event Recording → Use Event ID</span></p>
 </div>
 <div class="ref-box">
-    <div class="ref-title">📚 Learn More</div>
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
     <ul>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/implementation/vars/page-vars/events/events-overview" target="_blank">Adobe Docs: Events Overview</a></li>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/metrics/custom-events" target="_blank">Adobe Docs: Custom Events (Types)</a></li>

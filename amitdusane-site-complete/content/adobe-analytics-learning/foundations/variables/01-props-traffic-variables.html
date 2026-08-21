@@ -97,12 +97,12 @@ s.prop3 = "option1,option3,option4";</pre></div>
 <p>Two cautions with list props: Adobe sets no default delimiter, so you must choose one (a comma, pipe, or colon) and configure it in settings, and the 100-byte limit applies to the <em>entire</em> list, every value and delimiter combined, so list props truncate easily. Where values are long, a common trick is to store short codes and expand them with classifications. The fuller treatment, including the dedicated <a href="/adobe-analytics-learning/foundations/variables/list-variables-list-props/">list variables</a>, is its own section.</p>
 <p><strong>Pathing.</strong> Props have a historical claim to fame: they were once the only variables that could power path reports. In the classic Reports and Analytics interface, if you wanted to see the sequence of values a visitor moved through, you enabled pathing on a prop, and eVars could not do it at all. That has changed. In Analysis Workspace, the Flow and Fallout visualizations accept any dimension, prop, eVar, or default, and even work across events, so the old prop-only pathing toggle is now largely a legacy setting. If you inherit an implementation with pathing switched on for certain props, that is why. <a href="/adobe-analytics-learning/analyze/analysis-workspace/">Analysis Workspace</a> has a module of its own.</p>
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ The prop-versus-eVar line has blurred, and vanishes in CJA</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>The prop-versus-eVar line has blurred, and vanishes in CJA</div>
     <p>The clean split, props are hit-scoped traffic and eVars are persistent conversion, is an AppMeasurement-era distinction. Adobe now recommends eVars for most cases, because they have grown to cover almost everything a prop can do. In Customer Journey Analytics the distinction disappears entirely: every field is just a dimension you attribute however you like. For classic library-based implementations the split still matters and you should know it cold, but treat it as a product-era artifact, not a law of nature, and one that is fading.</p>
 </div>
 <p>So the rule of thumb for a classic implementation stays simple. Reach for a prop when you want to <em>describe</em> a hit or analyze a <em>path</em>, and you do not need the value to follow the visitor or credit a later outcome. The moment you need persistence or attribution, that is an eVar.</p>
 <div class="pro-tip">
-    <div class="pro-tip-hdr">💡 Wanting a prop that persists means you wanted an eVar</div>
+    <div class="pro-tip-hdr"><span class="tip-ico"></span>Wanting a prop that persists means you wanted an eVar</div>
     <p>Props tend to surface in reporting quickly and cleanly, which makes them handy for near-real-time, page-level monitoring. If you catch yourself wanting a prop that also persists, that is your signal you actually want an <a href="/adobe-analytics-learning/foundations/variables/evars-conversion-variables/">eVar</a>, or both.</p>
 
 </div>
@@ -114,7 +114,7 @@ s.prop3 = "option1,option3,option4";</pre></div>
     <p>Enable List Props / Pathing: <span class="path">Edit Settings → Traffic → Traffic Variables (per-prop columns)</span></p>
 </div>
 <div class="ref-box">
-    <div class="ref-title">📚 Learn More</div>
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
     <ul>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/implementation/vars/page-vars/prop" target="_blank">Adobe Docs: Props (Traffic Variables)</a></li>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/admin/admin-tools/manage-report-suites/edit-report-suite/traffic-variables/traffic-var" target="_blank">Adobe Docs: Traffic Variables Admin</a></li>

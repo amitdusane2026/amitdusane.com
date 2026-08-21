@@ -313,7 +313,7 @@ weight: 1
 <p>Because the setting sits on the panel, a single project can compare two properties, two regions or two brands side by side. That is precisely the thing a Dashboard in the old interface could not do at any price, and it is why a report that once needed two screens and a spreadsheet is now one scroll.</p>
 
 <div class="info-box">
-    <div class="info-hdr">ℹ️ Two panels, two suites, and numbers that will never reconcile</div>
+    <div class="info-hdr"><span class="info-ico"></span>Two panels, two suites, and numbers that will never reconcile</div>
     <p>The same flexibility produces a specific confusion, and it catches experienced people. Two panels in one project can sit on different report suites, and nothing in the body of the report says so. A colleague scrolls from one panel to the next, sees visits fall by half, and reaches for an explanation about traffic. The explanation is a dropdown they did not look at. When numbers between two panels refuse to agree, check the report suite and the date range in both headers before investigating anything else.</p>
 </div>
 
@@ -323,21 +323,21 @@ weight: 1
 <p>That advice is usually given nervously, and the nervousness is misplaced.</p>
 
 <div class="info-box">
-    <div class="info-hdr">ℹ️ Nothing done in Analysis Workspace can alter collected data</div>
+    <div class="info-hdr"><span class="info-ico"></span>Nothing done in Analysis Workspace can alter collected data</div>
     <p>There is no path from this screen back to the data. No button renames a variable, changes what a past hit contained, re-runs processing, or deletes a day of history. Reporting reads. Every destructive setting in Adobe Analytics lives in the admin tools, not here. A person exploring a freeform table cannot damage anything, and knowing that is what makes it possible to explore properly rather than tentatively.</p>
 </div>
 
 <p>There is a real risk, and it is a different one. Some things created inside a project are saved to the shared component library the moment they are created, not when the project is saved. Build a segment or a calculated metric inside a table and it appears in a list that every colleague on that report suite has to scroll past. Nobody has broken any data. They have added to a list that only ever grows, and an organization two years into this has hundreds of abandoned experiments in it, which is the subject of <a href="/adobe-analytics-learning/analyze/analysis-workspace/curation-and-templates/">Curation and Templates</a>.</p>
 
 <div class="pro-tip">
-    <div class="pro-tip-hdr">💡 Prefix every experiment and the cleanup takes one search</div>
+    <div class="pro-tip-hdr"><span class="tip-ico"></span>Prefix every experiment and the cleanup takes one search</div>
     <p>Put a fixed marker at the front of anything created while learning, something like <code>zz test AD</code>, with initials in it. Everything sorts to the bottom of every list, it is obvious to a colleague that it is not for them, and clearing up later is one search and a multi-select rather than an archaeology exercise. Do not share any of it, and leave the tags and descriptions blank so nothing gets picked up by a curated view. This costs nothing at the moment of creation and is close to impossible to reconstruct three months later.</p>
 </div>
 
 <p>One caveat, and it is the only one. If the account carries administrator rights, the surrounding admin tools are reachable from the same login and those absolutely do change things permanently. The freedom described here belongs to Workspace. It does not extend to the menu above it.</p>
 
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ You cannot damage the data, but you can mislead yourself</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>You cannot damage the data, but you can mislead yourself</div>
     <p>Refusing nothing has a price, and it lands on the reader of the report rather than the data. A combination that makes no analytical sense still returns a number, formatted exactly like a good one, with a confident total at the bottom. The classic case is a prop broken down by a conversion metric: left alone, a prop does not survive the hit it was set on, so nearly every product shows zero orders and the confirmation page collects all the credit. Nothing on screen marks it as wrong. The fix is not to avoid the pairing but to tell the table how to attribute it, because an attribution model is recalculated at report time and will reach back through the visit for you. <a href="/adobe-analytics-learning/analyze/analysis-workspace/freeform-tables/">Freeform Tables</a> covers how a table decides what it is counting, which is the knowledge that keeps this from happening to you.</p>
 </div>
 
@@ -400,7 +400,7 @@ weight: 1
 </div>
 
 <div class="ref-box">
-    <div class="ref-title">📚 Learn More</div>
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
     <ul>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/analyze/analysis-workspace/home" target="_blank">Adobe Docs: Analysis Workspace Overview</a></li>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/analyze/analysis-workspace/components/analysis-workspace-components" target="_blank">Adobe Docs: Components in Analysis Workspace</a></li>

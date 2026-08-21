@@ -38,7 +38,7 @@ weight: 7
 <p>The isolation is real, and it is narrower than it looks. Separate environments separate the <em>builds</em>, not the resources. Two teams working in two development environments are still editing one shared pool of rules and data elements, so if both touch the same rule, nothing warns either of them and the collision surfaces at publish rather than at edit. <a href="/adobe-analytics-learning/collect/adobe-launch-tags/publishing-workflow/">Publishing Workflow</a> covers what that costs and how to avoid it.</p>
 
 <div class="pro-tip">
-    <div class="pro-tip-hdr">💡 The audit trail is for context, not blame</div>
+    <div class="pro-tip-hdr"><span class="tip-ico"></span>The audit trail is for context, not blame</div>
     <p>Because each library and change is attributable, you can look back later and see who created which library and who edited which rule. The value of that is not catching someone out. It is recovering the context of a past decision, why a thing was done the way it was, when you are staring at it a year later trying to understand it. Treat the history as institutional memory.</p>
 </div>
 
@@ -62,14 +62,14 @@ weight: 7
 <p>Where does that built library actually live? That is set by the environment's <strong>host</strong>, and you have two options.</p>
 
 <div class="info-box">
-    <div class="info-hdr">ℹ️ Adobe-managed hosting versus self-hosting</div>
+    <div class="info-hdr"><span class="info-ico"></span>Adobe-managed hosting versus self-hosting</div>
     <p>By default every property gets an <strong>Adobe-managed host</strong>: your build is delivered to a third-party content delivery network (a CDN, via Akamai) that Adobe contracts with. A useful consequence is resilience, because the CDN runs independently, your deployed code keeps working on your site even if the Experience Platform interface itself is down. The alternative is <strong>self-hosting</strong>, where you push the build to your own servers over SFTP (or pull it down using the environment's archive option). Most implementations are perfectly happy on the Adobe-managed default.</p>
 </div>
 
 <p>The embed code also comes in two flavours, and the choice has real performance weight. The recommended default is <strong>asynchronous</strong>: a single script tag that lets the browser keep parsing and rendering the page while the library loads in parallel. The older <strong>synchronous</strong> form is two script tags, one in the <code>&lt;head&gt;</code> and one just before the closing <code>&lt;/body&gt;</code>, and it pauses the page while the library loads and runs. Synchronous loading is exactly what performance tools like Lighthouse and PageSpeed flag, so reach for async unless you have a specific reason not to.</p>
 
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ Never use the dev or staging embed on a production-scale page</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>Never use the dev or staging embed on a production-scale page</div>
     <p>Browser caching is deliberately switched off for development and staging environments, so every visitor refetches the library every time. That is exactly what you want while developing, you always see the latest build, but it is the opposite of what a high-traffic production page needs. Using a development or staging embed code in a production context means no caching at scale, which is both slow and wasteful. Production pages get the production embed, always.</p>
 </div>
 
@@ -86,7 +86,7 @@ weight: 7
 </div>
 
 <div class="ref-box">
-    <div class="ref-title">📚 Learn More</div>
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
     <ul>
         <li><a href="https://experienceleague.adobe.com/en/docs/experience-platform/tags/publish/environments/environments" target="_blank">Adobe Docs: Environments</a></li>
         <li><a href="https://experienceleague.adobe.com/en/docs/experience-platform/tags/publish/hosts/hosts-overview" target="_blank">Adobe Docs: Hosts</a></li>

@@ -179,7 +179,7 @@ weight: 3
 <p>The dialog offers to email you when a classification job fails or succeeds, and it is tempting to skip past it. Do not.</p>
 
 <div class="pro-tip">
-    <div class="pro-tip-hdr">💡 Turn on Notify on failure. Leave Notify on success off.</div>
+    <div class="pro-tip-hdr"><span class="tip-ico"></span>Turn on Notify on failure. Leave Notify on success off.</div>
     <p>Classifications fail quietly. A rejected upload does not break a report, does not raise an alarm, and does not empty a dimension. Yesterday's data simply keeps showing while today's never arrives, and the report looks completely normal. Failure notification is the only thing standing between a broken nightly import and a stakeholder discovering it three weeks later. Success notification, meanwhile, produces a daily email that everyone learns to ignore within a fortnight, which then teaches your team to ignore the failure ones too.</p>
 </div>
 
@@ -191,7 +191,7 @@ weight: 3
 <p>Then you will hit the rule that stops people cold.</p>
 
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ One report suite and key dimension pairing belongs to exactly one primary set</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>One report suite and key dimension pairing belongs to exactly one primary set</div>
     <p>Try to subscribe a report suite and key dimension combination that is already subscribed to another classification set, and Adobe blocks it with a red message. Your only choices are to open the existing set and add your classifications to <em>its</em> schema, or to pick a different combination. There is no way to have two primary sets both classifying eVar12 in club-prod. This is not a limit you can design around later, so it shapes how you plan sets from the beginning: <strong>one set per key, not one set per project.</strong> If the marketing team wants campaign attributes and the finance team wants campaign margins, both are columns in the same tracking code set. They do not get a set each.</p>
 </div>
 
@@ -249,7 +249,7 @@ weight: 3
 <p>So the very first name you type is the name that survives. Rename Age Band to Member Age Group next year and the reports will say Member Age Group, but underneath, forever, it is still <code>age_band</code>. That identity name is what the API returns, what integrations bind to, and what anybody debugging your implementation will actually see.</p>
 
 <div class="pro-tip">
-    <div class="pro-tip-hdr">💡 Type the name as if it were permanent, because half of it is</div>
+    <div class="pro-tip-hdr"><span class="tip-ico"></span>Type the name as if it were permanent, because half of it is</div>
     <p>The five seconds you spend getting the first name right are the only five seconds you get. Name columns the way you would name a variable: clear, consistent, and free of the project code or team name that will be meaningless in two years. <code>Campaign Owner</code>, not <code>Q3 Owner Field v2</code>.</p>
 </div>
 
@@ -304,7 +304,7 @@ weight: 3
 </div>
 
 <div class="ref-box">
-    <div class="ref-title">📚 Learn More</div>
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
     <ul>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/classifications/sets/create-set" target="_blank">Adobe Docs: Create and Edit Classification Sets</a></li>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/classifications/sets/set/schema" target="_blank">Adobe Docs: Classification Set Schema</a></li>

@@ -135,7 +135,7 @@ _satellite.track('Link_Click');</pre></div>
 </div>
 <p>Picture filling a glass from a tap. You set the empty glass down, then you turn on the water. Do it in the wrong order, water first, glass second, and the water simply runs down the drain while you stand there thirsty, glass still empty. It is the same with tracking. Fire the direct call before the values are in the layer, and analytics reads an empty layer, captures nothing, and moves on. You end up with a data layer that looks perfectly populated a moment later and reports that stubbornly show zero. This is the single most common failure in real implementations, and it has a name everyone uses: a timing issue. Now you know exactly what causes it, and exactly how to avoid it.</p>
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ Populate, then signal</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>Populate, then signal</div>
     <p>Set the variables, then fire <code>_satellite.track()</code>. If the trigger runs before the data is written, the hit goes out empty and the data is gone, there is no second chance for that interaction. When a tag "fires but has no data," this ordering is the first thing to check.</p>
 </div>
 
@@ -147,12 +147,12 @@ _satellite.track('Link_Click');</pre></div>
 <p>One last thing, because it is the theme this whole section started on. A data layer is only ever as trustworthy as the discipline maintaining it. Left unowned, it rots: fields drift, meanings blur, a well-intentioned front-end refactor renames something, and reports die without a sound. Treat the data layer as a living contract with a named owner. Version it, document it in the <a href="/adobe-analytics-learning/deliver/solution-design-reference/what-is-an-sdr/">SDR</a>, and review it when the site changes. The technology will never be your problem. The agreement always will be, so guard it.</p>
 
 <div class="info-box">
-    <div class="info-hdr">ℹ️ Companion reading on this site</div>
+    <div class="info-hdr"><span class="info-ico"></span>Companion reading on this site</div>
     <p>This site has a second guide alongside this one, <strong>AppMeasurement to Web SDK Migration</strong>, focused on moving an older implementation to the modern Web SDK. Its <a href="/web-sdk-migration/kb/datalayer/">data layer reference</a> covers the same contract from that angle, including how the computed-state and event-driven shapes differ in practice. Worth a look once you have both this section and the next under your belt.</p>
 </div>
 
 <div class="ref-box">
-    <div class="ref-title">📚 Learn More</div>
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
     <ul>
         <li><a href="https://www.w3.org/2013/12/ceddl-201312.pdf" target="_blank">W3C: Customer Experience Digital Data Layer 1.0 (CEDDL specification)</a></li>
         <li><a href="https://experienceleague.adobe.com/en/docs/experience-platform/collection/tags/track" target="_blank">Adobe Docs: _satellite.track() and direct call rules</a></li>

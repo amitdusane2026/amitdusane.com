@@ -81,7 +81,7 @@ weight: 4
 </div>
 <p>Two modern caveats are worth knowing. First, only the broad signals come free: browser <em>type</em>, OS <em>type</em>, and desktop-versus-mobile are automatic, but precise versions (the exact browser build, device model, or OS version) now require configuring <strong>client hints</strong>, because browsers have tightened what they reveal by default. Second, on a <strong>Web SDK</strong> implementation these device, browser, and OS dimensions are not automatic the way they were in classic AppMeasurement; you must enable <strong>Device Lookup</strong> on the datastream to populate them. Geolocation precision is also yours to control: the same IP obfuscation setting from report suites decides how precise the country, region, and city data is allowed to be.</p>
 <div class="info-box">
-    <div class="info-hdr">ℹ️ One reserved variable is big enough to need its own section</div>
+    <div class="info-hdr"><span class="info-ico"></span>One reserved variable is big enough to need its own section</div>
     <p>You will have noticed <code>products</code> sitting in the reserved table above, untouched. That is deliberate. The products variable is the foundation of <em>all</em> ecommerce reporting in Adobe Analytics, and it is also the single most error-prone variable in the product. It earns a section of its own, <a href="/adobe-analytics-learning/foundations/variables/products-string/">The Products String</a>, which is the very next one.</p>
 </div>
 <div class="path-box">
@@ -90,7 +90,7 @@ weight: 4
     <p>Geo precision (IP obfuscation): <span class="path">Admin → Report Suites → Edit Settings → General → General Account Settings</span></p>
 </div>
 <div class="ref-box">
-    <div class="ref-title">📚 Learn More</div>
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
     <ul>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/implementation/vars/page-vars/page-variables" target="_blank">Adobe Docs: Page Variables</a></li>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/dimensions/overview" target="_blank">Adobe Docs: Dimensions Overview (auto-collected)</a></li>

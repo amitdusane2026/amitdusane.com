@@ -33,7 +33,7 @@ weight: 5
 <p>Now here is the part that catches nearly everybody, and it is the single most important idea in this section.</p>
 
 <div class="info-box">
-    <div class="info-hdr">ℹ️ It measures inactivity, not age</div>
+    <div class="info-hdr"><span class="info-ico"></span>It measures inactivity, not age</div>
     <p>The engagement period is not thirty days from the first visit. It is thirty days of <strong>silence</strong>. Every time the visitor returns, the clock resets and starts counting again from that visit. The window rolls along with an active visitor and only closes once they have stayed away for the full period without a single hit.</p>
 </div>
 
@@ -113,7 +113,7 @@ weight: 5
 <p>Only the first is truly a session refresh. The other three are implementation defects wearing its clothing, which is why a large Session Refresh number is worth investigating rather than accepting.</p>
 
 <div class="pro-tip">
-    <div class="pro-tip-hdr">💡 The rule that finally explains the checkbox</div>
+    <div class="pro-tip-hdr"><span class="tip-ico"></span>The rule that finally explains the checkbox</div>
     <p>Adobe states it plainly: <strong>Direct and Session Refresh can only receive last-touch credit if they were also the first touch.</strong> Read that again, because it closes a loop this module opened two sections ago. With Override Last-Touch unchecked, these channels cannot take credit from a persisting channel. And a channel persists precisely as long as the engagement period keeps it alive. So the checkbox in Channel Configuration and the setting in this section are not two features. They are one mechanism seen from opposite ends: one decides <em>who may claim</em>, the other decides <em>how long the claim survives</em>.</p>
 </div>
 
@@ -127,7 +127,7 @@ weight: 5
 <p><strong>Expire All.</strong> A button that immediately expires every visitor engagement period across the report suite. First and last touch channels reset for everybody, and repopulate as visitors return.</p>
 
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ Press Expire All after your first setup, and after every rule change</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>Press Expire All after your first setup, and after every rule change</div>
     <p>This is the most practical thing in this section, and skipping it will make you doubt work that was actually correct.</p>
     <p>You already know marketing channel processing rules are not retroactive. The engagement period makes that worse in a way that is easy to miss. Suppose you discover a broken rule and fix it today. Last touch starts behaving correctly straight away, because it is reassigned on each new visit. But <strong>first touch does not</strong>. Every visitor already carrying a first touch channel keeps the wrong one, and keeps feeding it, until <em>their individual</em> engagement period expires. With a rolling thirty-day window, a frequently returning visitor may never expire at all. Your first touch report goes on collecting into the wrong channel indefinitely, long after the rule that caused it is gone.</p>
     <p><strong>Expire All is the cure.</strong> Press it after the initial Marketing Channel setup, and press it again after any change to channels or rules. Adobe recommends exactly this. Skip it and you will spend a week convinced your corrected rules did not work.</p>
@@ -174,7 +174,7 @@ weight: 5
 </div>
 
 <div class="ref-box">
-    <div class="ref-title">📚 Learn More</div>
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
     <ul>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/dimensions/last-touch-channel" target="_blank">Adobe Docs: Last Touch Channel and the Engagement Period</a></li>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/marketing-channels/c-faq" target="_blank">Adobe Docs: Marketing Channels FAQ</a></li>

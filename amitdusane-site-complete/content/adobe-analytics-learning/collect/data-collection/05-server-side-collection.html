@@ -27,7 +27,7 @@ weight: 5
 <p>You do not need the payload details to make the decision. Which one you reach for follows directly from which world you are already living in: classic Analytics, or the Edge.</p>
 
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ Do not confuse this with the Analytics 1.4 API sunset</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>Do not confuse this with the Analytics 1.4 API sunset</div>
     <p>The Adobe Analytics <strong>1.4 reporting and admin APIs</strong>, along with WSSE authentication, reached end of life on <strong>August 12, 2026</strong>. The <strong>Data Insertion API is explicitly excluded</strong> from that retirement and remains supported. The two get conflated because both carry the "1.4" label, but only the reporting and admin side was retired. Dates move, so confirm against Experience League before planning around either.</p>
 </div>
 
@@ -75,7 +75,7 @@ weight: 5
 </div>
 <p>Get it wrong and the data is quietly useless in one of two ways. Send no usable identity, and every server hit becomes a brand-new stranger, inflating your visitor counts and attaching to no real journey. Reuse a single ID for everyone, and the opposite happens: every visitor collapses into one, and your eVar and event allocation goes haywire. Remember from <a href="/adobe-analytics-learning/collect/data-collection/appmeasurement-library/">the AppMeasurement section</a> that Visitors is not a stored number, it is counted from the identity on each hit at report time. Server-side is where that truth gets sharp, because here the identity is entirely in your hands.</p>
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ The make-or-break decision</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>The make-or-break decision</div>
     <p>Before you send a single server-side hit, decide how you will identify the visitor and how that ID travels from the browser, where it was created, to the back-office system that fires the offline event. This is not a detail to sort out later. It is the thing that determines whether server-side data is worth collecting at all.</p>
 </div>
 
@@ -93,7 +93,7 @@ weight: 5
     </table>
 </div>
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ Timestamped and non-timestamped data cannot share a report suite</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>Timestamped and non-timestamped data cannot share a report suite</div>
     <p>A report suite set to require timestamps <strong>will reject ordinary JavaScript beacons</strong>, because those arrive without one. Required and Not Allowed are two separate worlds. "Optional" exists for hybrids, and it carries its own awkward rules that are easy to get subtly wrong. Decide this before a single hit lands, because a report suite that has been collecting one kind of data for six months is not something you casually reconfigure.</p>
 </div>
 
@@ -106,7 +106,7 @@ weight: 5
 <p>Identity and timestamps have been framed here as server-side problems, the price of leaving the browser behind. There is one more collection method where they are not edge cases at all but the ordinary daily condition, because the device drops off the network constantly and the hit routinely arrives long after the action. <a href="/adobe-analytics-learning/collect/data-collection/mobile-sdk/">Mobile SDK</a> is where collection leaves the web entirely.</p>
 
 <div class="ref-box">
-    <div class="ref-title">📚 Learn More</div>
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
     <ul>
         <li><a href="https://developer.adobe.com/analytics-apis/docs/2.0/guides/endpoints/bulk-data-insertion/" target="_blank">Adobe Docs: Bulk Data Insertion API</a></li>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/admin/admin-tools/manage-report-suites/edit-report-suite/report-suite-general/timestamp-configuration" target="_blank">Adobe Docs: Timestamp configuration for report suites</a></li>

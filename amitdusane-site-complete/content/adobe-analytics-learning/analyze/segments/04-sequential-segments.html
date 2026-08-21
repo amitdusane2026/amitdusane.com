@@ -172,7 +172,7 @@ weight: 4
 <p>The reason a Logic Group exists rather than an ordinary container is subtle and easy to get wrong.</p>
 
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ A plain container inside a THEN sequence misbehaves</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>A plain container inside a THEN sequence misbehaves</div>
     <p>It is tempting to drop an ordinary Hit or Visit container into a sequence to hold two order-independent steps. Do not. A non-sequential container does not require its conditions to fall inside the sequence, so the two grouped steps can be satisfied anywhere in the visitor's history, before the sequence, after it, or scattered apart, and the segment quietly returns more than intended. The Logic Group container is built precisely to prevent this: it holds unordered steps while still forcing the group as a whole to sit in its place in the sequence.</p>
 </div>
 
@@ -199,7 +199,7 @@ weight: 4
 <p>The third is cost. A sequence is more expensive to process than a plain condition, because the engine has to evaluate order across a visitor's timeline rather than check each hit in isolation. That is a fair price for the questions only a sequence can answer, but it is a reason to reach for one on purpose, not by habit.</p>
 
 <div class="pro-tip">
-    <div class="pro-tip-hdr">💡 Validate a sequence against data you already understand</div>
+    <div class="pro-tip-hdr"><span class="tip-ico"></span>Validate a sequence against data you already understand</div>
     <p>Sequential logic is easy to get subtly wrong, and a segment that returns a plausible number is not the same as a correct one. The reliable way to trust a sequence is to build and test it against a small, known data set first, where the right answer is already obvious, before turning it loose on the full report. It is the fastest way to catch a greedy default or a misplaced checkpoint before it reaches a stakeholder.</p>
 </div>
 
@@ -212,7 +212,7 @@ weight: 4
 </div>
 
 <div class="ref-box">
-    <div class="ref-title">📚 Learn More</div>
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
     <ul>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/segmentation/segmentation-workflow/seg-sequential-build" target="_blank">Adobe Docs: Build Sequential Segments</a></li>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/segmentation/seg-containers" target="_blank">Adobe Docs: Segment Containers (Logic Group)</a></li>

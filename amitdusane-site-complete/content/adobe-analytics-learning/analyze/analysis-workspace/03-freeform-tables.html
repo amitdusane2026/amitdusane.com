@@ -111,7 +111,7 @@ weight: 3
 <p>Both of those tables are correct, and that is what makes the situation awkward. Neither is a better version of the other, neither contains an error, and the only visible difference between them is which dimension was dragged in first. A colleague handed the wrong one will read it perfectly fluently, quote a figure from it with complete confidence, and never encounter anything that suggests there was a choice made on their behalf.</p>
 
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ Indented rows never sum to the site total, and they look exactly like rows that do</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>Indented rows never sum to the site total, and they look exactly like rows that do</div>
     <p>A breakdown inherits every condition above it, including the parent row itself, so the numbers underneath a broken-down row describe that row and nothing wider. Copy one of them into a slide and it quietly becomes a claim about the whole site, which is a claim the table never made and cannot support. The only thing distinguishing the two on screen is an indentation, and an indentation survives neither a screenshot nor a paste into a spreadsheet nor somebody reading a figure out loud. If a number is going to travel beyond the person who built the table, take it from a table where that dimension sits at the top level rather than from a breakdown.</p>
 </div>
 
@@ -203,7 +203,7 @@ weight: 3
 <p>Which matters mostly for projects that get saved and reopened later. A top ten products table built in March is showing September's products in September, with the same title, the same layout and nothing at all to mark the change, so anybody comparing it against last quarter's deck is comparing two different sets of products without knowing it. A pinned row cannot do that, and if its value disappears from the data the row shows zero, which is a finding somebody can act on rather than a silent substitution.</p>
 
 <div class="pro-tip">
-    <div class="pro-tip-hdr">💡 Anything a stakeholder reads monthly should be pinned</div>
+    <div class="pro-tip-hdr"><span class="tip-ico"></span>Anything a stakeholder reads monthly should be pinned</div>
     <p>The rule that avoids most of this is short: dynamic rows while you are exploring, static rows for anything scheduled, shared or repeated. A project that goes to the same five people every month exists so they can see change over time, and change over time means nothing at all if the rows themselves change underneath the numbers. Pinning has a second benefit that matters during an incident, which is that it makes a disappearance visible: a static row dropping to zero is a finding somebody can act on, while a dynamic row quietly falling out of the top ten is not an event at all.</p>
 </div>
 
@@ -233,7 +233,7 @@ weight: 3
 <p>The second is the row most people scroll past. <strong>Unspecified</strong>, sometimes shown as None, is what appears when a hit was counted but the dimension had no value on it. The reflex is to treat it as noise and exclude it, and the row settings will happily let you. That reflex hides the finding. A large Unspecified against a variable that is supposed to be populated everywhere is not an untidy row, it is a report telling you the implementation is not doing what the specification says, which is exactly the sort of thing this screen exists to surface. Look at it before you decide whether to hide it, and if it is large, go and find out why rather than tidying it away.</p>
 
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ A column of Unique Visitors summed by hand will never match the total, and the table is the one that is right</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>A column of Unique Visitors summed by hand will never match the total, and the table is the one that is right</div>
     <p>This is the most common way a spreadsheet disagrees with Adobe Analytics, and the disagreement usually gets blamed on the tool. Deduplicated metrics cannot be reassembled from smaller pieces: monthly uniques are not the sum of the weeks, weekly uniques are not the sum of the days, and the total of a broken-down column is not the sum of its children. If a number has to be added up outside Workspace, use a metric that actually sums, such as Visits or Occurrences, and leave the deduplicated ones to be read where they are calculated.</p>
 </div>
 <h3 class="subsec-title" data-nav="Follow along: one table, four ways">Follow along: build one table four ways and watch the meaning move</h3>
@@ -301,7 +301,7 @@ weight: 3
 </div>
 
 <div class="ref-box">
-    <div class="ref-title">📚 Learn More</div>
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
     <ul>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/analyze/analysis-workspace/visualizations/freeform-table/freeform-table" target="_blank">Adobe Docs: Freeform Table</a></li>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/analyze/analysis-workspace/visualizations/freeform-table/column-row-settings/table-settings" target="_blank">Adobe Docs: Row and Column Settings</a></li>

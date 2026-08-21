@@ -22,7 +22,7 @@ weight: 3
 </ol>
 <p>Not every example below can be built this minute. The ones that map context data need that context data to be arriving in the suite first, and you may not have it yet. But several can be built right now with data you already have: anything keyed off an existing variable, or the query string example. Build those as you go and let the rest wait.</p>
 <div class="info-box">
-    <div class="info-hdr">ℹ️ If your setup is not ready yet</div>
+    <div class="info-hdr"><span class="info-ico"></span>If your setup is not ready yet</div>
     <p>This assumes you have followed the earlier modules: you have access to Analytics, your variables are set up and populating through <a href="/adobe-analytics-learning/collect/adobe-launch-tags/">Launch</a>, and you have a report suite of your own. If you are not there yet, do not stall. Read the theory now for the insight it gives, and come back to build when your setup is ready. The understanding will still be waiting, and it will land faster the second time.</p>
 </div>
 
@@ -39,7 +39,7 @@ weight: 3
     </dl>
 </div>
 <div class="info-box">
-    <div class="info-hdr">ℹ️ The scaling trick</div>
+    <div class="info-hdr"><span class="info-ico"></span>The scaling trick</div>
     <p>This looks fragile if you imagine one rule per variable and dozens of variables. You do not need that. A single rule can hold many conditional actions, and a report suite allows up to 150 rules, so a handful of well-organized rules can map an entire implementation's worth of context data without ever approaching the limit.</p>
 </div>
 
@@ -108,7 +108,7 @@ weight: 3
 </div>
 
 <div class="pro-tip">
-    <div class="pro-tip-hdr">💡 A fair question: could Launch have done this?</div>
+    <div class="pro-tip-hdr"><span class="tip-ico"></span>A fair question: could Launch have done this?</div>
     <p>Look back at these examples, copying one variable into another, pulling a value out of the URL, correcting a value, and a suspicion should form: most of this could also be done in your tag manager. It could. In <a href="/adobe-analytics-learning/collect/adobe-launch-tags/">Launch</a>, a data element carries far more capability than a processing rule, close to unlimited, so for many of these it is the better instrument. That is not a contradiction, it is the point. The two do not compete; they are two levers, and skill is knowing which to pull.</p>
     <p>The exception is the one that keeps processing rules essential. If your primary platform is a mobile app, there is no tag manager running inside it. You cannot deploy Launch there, and a mobile app ships on its own release cycle that you often cannot wait for. That is exactly where a processing rule earns its place: server-side, immediate, no deployment. Launch and processing rules also sit in different layers, Launch shaping data before it is sent, a processing rule acting inside collection on the raw data itself, so neither is superior. Choose by use case, urgency, and platform.</p>
 </div>
@@ -121,7 +121,7 @@ weight: 3
 </div>
 
 <div class="ref-box">
-    <div class="ref-title">📚 Learn More</div>
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
     <ul>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/admin/admin-tools/manage-report-suites/edit-report-suite/report-suite-general/processing-rules/pr-use-cases" target="_blank">Adobe Docs: Processing Rules Use Cases</a></li>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/admin/admin-tools/manage-report-suites/edit-report-suite/report-suite-general/processing-rules/pr-variables" target="_blank">Adobe Docs: Dimensions and Metrics Available to Processing Rules</a></li>

@@ -47,7 +47,7 @@ weight: 4
 
 <p>One more thing about that first screen, because it is where the double count comes from. Many frameworks call their router hook on the initial mount as well as on every navigation after it. So if a rule listens for the normal page load and the app also announces the opening view through the router, the entry screen sends two hits: one from the load, one from the announcement. Both are correct. Neither is wrong on its own. Together they count the visitor's first screen twice.</p>
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ The most visited screen in the app is the one most likely to be double counted</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>The most visited screen in the app is the one most likely to be double counted</div>
     <p>Nothing errors, and the two hits carry the same page name, so the report looks plausible rather than broken. What it produces is an entry screen with roughly twice the page views of anything else, a bounce rate that collapses because almost nobody registers a single-page-view visit any more, and conversion rates quietly measured against an inflated denominator. Decide which mechanism owns the first view, the page load or the router, and make sure only one of them fires for it. The check takes seconds: load the app cold and count the hits before touching anything else.</p>
 </div>
 
@@ -118,7 +118,7 @@ s.registerPostTrackCallback(function () { s.clearVars(); });</pre></div>
 </div>
 
 <div class="pro-tip">
-    <div class="pro-tip-hdr">💡 Set, send, clear, every time</div>
+    <div class="pro-tip-hdr"><span class="tip-ico"></span>Set, send, clear, every time</div>
     <p>The single habit that keeps SPA data clean is treating every virtual page view as a full cycle: set this view's variables, send the beacon, then clear. Skip the clear and old values haunt the next screen. Clear too early and you wipe the values before they are sent. The order is the whole game.</p>
 </div>
 
@@ -137,7 +137,7 @@ s.registerPostTrackCallback(function () { s.clearVars(); });</pre></div>
 </div>
 
 <div class="ref-box">
-    <div class="ref-title">📚 Learn More</div>
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
     <ul>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/implementation/vars/functions/clearvars" target="_blank">Adobe Docs: clearVars()</a></li>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/implementation/vars/functions/registerposttrackcallback" target="_blank">Adobe Docs: registerPostTrackCallback</a></li>

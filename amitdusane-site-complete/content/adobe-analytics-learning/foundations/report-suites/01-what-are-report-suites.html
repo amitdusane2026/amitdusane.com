@@ -55,7 +55,7 @@ weight: 1
 </div>
 <p>Adobe does offer a couple of <em>derived</em> report-suite types that soften strict isolation, and it is worth knowing they exist before the sealed-box rule feels like a trap. A <a href="/adobe-analytics-learning/foundations/report-suites/virtual-report-suites/">virtual report suite</a> lets you carve a focused, segmented view out of a single suite, handy for giving a regional team just their slice of the data. But note the direction: it works <em>within</em> one suite, it does not stitch two suites together. A <strong>rollup report suite</strong> goes the other way and combines several suites, with an important catch.</p>
 <div class="info-box">
-    <div class="info-hdr">ℹ️ The rollup report suite, briefly</div>
+    <div class="info-hdr"><span class="info-ico"></span>The rollup report suite, briefly</div>
     <p>A rollup is a single report suite that aggregates the data of several others (up to 40 child suites) as a once-daily job. The catch is that it simply <strong>adds</strong> the numbers, it does not deduplicate them. A visitor who appears on three of your domains in one day counts as three daily unique visitors in the rollup, not one. It does not reconcile or normalize anything, it sums. It is also a dated feature, and Adobe now steers most teams toward a global report suite instead, which is exactly the trade that global versus individual report suites is about. Knowing a rollup exists is enough for now; you will rarely build one today.</p>
 </div>
 <p>The honest summary is that neither of these undoes isolation at the moment of collection. A virtual report suite gives you a segmented view of one suite; a rollup gives you an additive, undeduplicated total across several. The only way to get a single, genuinely deduplicated view across many properties is to collect them into one <strong>global</strong> suite from the start, which is the choice that global versus individual report suites weighs.</p>
@@ -78,7 +78,7 @@ s.account = "mycompanyglobal,mycompanyus,mycompanyuk";</pre></div>
 </div>
 <p>Notice what comes first in that code: <code>s.account</code>. This is why the report suite sits at the center of data collection itself, not just storage. Every server call, the request that carries a hit to Adobe, names a report suite as its destination before anything else. The suite is the first thing every hit declares. You will see exactly how that request is built in the data collection module; for now the point is simply that the report suite is where data collection both begins and lands.</p>
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ Some of these choices don't have an undo</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>Some of these choices don't have an undo</div>
     <p>Report suites are easy to create, which is exactly the trap. Teams spin them up casually, split data prematurely, then discover that isolation means the pieces can never be compared in a report. Time zone is the other classic: set it wrong and every daily report is quietly off, with no clean retroactive fix, because data is recorded forward, not backward. Decide your structure and core settings deliberately <em>before</em> data starts flowing, not after you need the answer.</p>
 </div>
 <p>The rest of this module is really about drawing those boundaries well: how many suites and how to divide them (<a href="/adobe-analytics-learning/foundations/report-suites/global-vs-individual-report-suites/">Global vs Individual Report Suites</a>), how to get a focused view without re-collecting anything (<a href="/adobe-analytics-learning/foundations/report-suites/virtual-report-suites/">Virtual Report Suites</a>), the settings themselves (<a href="/adobe-analytics-learning/foundations/report-suites/report-suite-settings/">Report Suite Settings</a>), and how to feed several suites from one implementation (<a href="/adobe-analytics-learning/foundations/report-suites/multi-suite-tagging/">Multi-Suite Tagging</a>).</p>
@@ -88,7 +88,7 @@ s.account = "mycompanyglobal,mycompanyus,mycompanyuk";</pre></div>
     <p>Create New Report Suite: <span class="path">Admin → Report Suites → Create New</span></p>
 </div>
 <div class="ref-box">
-    <div class="ref-title">📚 Learn More</div>
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
     <ul>
         <li><a href="https://experienceleague.adobe.com/docs/analytics/admin/admin-tools/manage-report-suites/c-new-report-suite/new-report-suite.html" target="_blank">Adobe Docs: Create a Report Suite</a></li>
         <li><a href="https://experienceleague.adobe.com/docs/analytics/admin/admin-tools/manage-report-suites/report-suites-admin.html" target="_blank">Adobe Docs: Report Suite Manager</a></li>

@@ -51,7 +51,7 @@ s.tl(this, "d", "User Guide PDF");</pre></div>
 <p>That "holds a brief moment" in the code above deserves more than a comment, because it marks the one place a link call can be perfectly built and still never arrive.</p>
 <p>When a click both fires a tracking call and sends the browser somewhere else, two things start at once: the beacon is dispatched, and the new document begins loading. If the navigation wins, the page is torn down and the beacon goes with it. Passing <code>this</code> is what makes AppMeasurement hold the navigation back for a moment, around half a second, so the call gets away first. That is a trade rather than a fix. Every visitor who clicks a tracked outbound link waits through it, and on a slow connection the call can still lose.</p>
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ Exit and download clicks are the calls most likely to be missing</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>Exit and download clicks are the calls most likely to be missing</div>
     <p>Nothing reports the loss. The click happened, the visitor arrived at the other site, and the only trace is a number lower than it should be, which is indistinguishable from a quiet week. The modern answer is <code>s.useBeacon = true</code>, which hands the request to the browser through <code>navigator.sendBeacon</code>. The browser then owns delivery and completes it even while the document is being destroyed, so the delay stops being necessary at all. What you give up is the response: no confirmation and no error, so you cannot verify delivery from the page. That is a fair trade for a call you were previously losing without knowing it.</p>
 </div>
 
@@ -72,12 +72,12 @@ s.tl(this, "d", "User Guide PDF");</pre></div>
 <p>In modern practice the download and exit types are less central than they once were. Downloads are often captured as an ordinary custom link paired with a success event, which fits them into the same conversion reporting as everything else. And both downloads and exits can be tracked automatically without you writing an <code>s.tl()</code> at all. Turning on <code>trackDownloadLinks</code> lets AppMeasurement fire a download call whenever a clicked link ends in one of the file extensions you list in <code>linkDownloadFileTypes</code>, such as <code>pdf,zip,doc</code>. Turning on <code>trackExternalLinks</code> does the same for exits, firing a call the moment a visitor clicks a link that leaves your domain. The special types are not obsolete; they simply sit alongside the more common pattern of custom links carrying success events.</p>
 
 <div class="info-box">
-    <div class="info-hdr">ℹ️ Two "internal" settings that are often confused</div>
+    <div class="info-hdr"><span class="info-ico"></span>Two "internal" settings that are often confused</div>
     <p>What counts as an exit link is decided by <code>linkInternalFilters</code>, a comma-separated list of domains you consider part of your own site. When automatic exit tracking is on, any clicked link that does not match this list is treated as an exit. This is a separate feature from the report suite's <strong>Internal URL Filters</strong> setting in the Admin console. Those Internal URL Filters exist to support traffic-source dimensions like Referring Domain, deciding which referrers count as internal and are ignored. They do not define exit links. Same word, different jobs: one shapes exit link tracking in the implementation, the other shapes referrer reporting in the report suite.</p>
 </div>
 
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ Automatic and manual tracking can double-count</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>Automatic and manual tracking can double-count</div>
     <p>If automatic download or exit tracking is on and you also fire a manual <code>s.tl()</code> for the same click, Adobe receives two calls for one action. That inflates the numbers and quietly makes the report wrong. Decide per behavior whether it is tracked automatically or by hand, and do not do both for the same link.</p>
 </div>
 
@@ -115,7 +115,7 @@ s.tl(this, "d", "User Guide PDF");</pre></div>
 </div>
 
 <div class="ref-box">
-    <div class="ref-title">📚 Learn More</div>
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
     <ul>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/implementation/vars/functions/tl-method" target="_blank">Adobe Docs: tl() Method</a></li>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/implementation/vars/config-vars/linktrackvars" target="_blank">Adobe Docs: linkTrackVars</a></li>

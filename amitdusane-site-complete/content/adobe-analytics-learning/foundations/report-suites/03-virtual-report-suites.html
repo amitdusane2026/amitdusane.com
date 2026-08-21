@@ -76,11 +76,11 @@ weight: 3
 </div>
 <p>This is why the VRS changed how analytics architects design. For the price of a single global implementation you get the per-team separation that used to require multiple suites and the server calls that came with them. It is the rare upgrade with no surcharge, business-class seating at the economy fare. Adobe has offered it for roughly a decade, and it quietly rewrote the default: collect once, view many ways.</p>
 <div class="pro-tip">
-    <div class="pro-tip-hdr">💡 It is one suite underneath, so keep the discipline</div>
+    <div class="pro-tip-hdr"><span class="tip-ico"></span>It is one suite underneath, so keep the discipline</div>
     <p>Because every VRS resolves against the same parent, they all share one schema. Define an eVar once and it exists for every view; there is no separate variable list per property. Curation can hide or rename a dimension for one team, but it never adds a new one, and consolidating sites into a global suite does not grant you extra variables or events. Two things follow. First, you must hold one consistent schema and taxonomy across every property, which is a matter of discipline, not a technical limit. Second, the parent's unique-value limits are shared too, so a very high-cardinality estate can hit "Low Traffic" truncation inside a VRS that genuinely separate suites would have avoided. That shared-limit case is the main reason multi-suite tagging still occasionally wins.</p>
 </div>
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ A VRS is a view, not a source</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>A VRS is a view, not a source</div>
     <p>The one real limit, and it catches people: a VRS exists only at query time, so it cannot feed the raw-export machinery. You cannot point Data Feeds, scheduled Data Warehouse extracts, or data source uploads at a virtual report suite; those all run off the parent. If a regional team needs a raw hit-level export, the workaround is to take the feed from the <em>global</em> suite and split it downstream yourself, not to read off the VRS. Raw exports get their own treatment in Data Feeds. Use a VRS for focused analysis and access control, not as a data pipeline.</p>
 </div>
 <p>Classifications follow the same logic: you build them once on the parent suite and every dependent VRS inherits them automatically, but you cannot define a classification on a VRS itself. <a href="/adobe-analytics-learning/shape/classifications/">Classifications</a> covers them in full. This is also why defaulting to global in the last section was safe: you can carve out as many focused VRS views as teams need, after the fact, without ever having split the underlying data. A VRS is a small, low-cost piece of the machine, easy to overlook, and doing a great deal to keep the whole thing running.</p>
@@ -92,7 +92,7 @@ weight: 3
     <p>Create New VRS: <span class="path">Components → Virtual Report Suites → Add +</span></p>
 </div>
 <div class="ref-box">
-    <div class="ref-title">📚 Learn More</div>
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
     <ul>
         <li><a href="https://experienceleague.adobe.com/docs/analytics/components/virtual-report-suites/vrs-about.html" target="_blank">Adobe Docs: Virtual Report Suites Overview</a></li>
         <li><a href="https://experienceleague.adobe.com/docs/analytics/components/virtual-report-suites/vrs-workflow/vrs-create.html" target="_blank">Adobe Docs: Create a VRS</a></li>

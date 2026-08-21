@@ -109,7 +109,7 @@ weight: 5
 <p>The usual choice for that page-load beacon is <strong>DOM Ready</strong> or <strong>Window Loaded</strong>, and which one depends on a single question: when is your data layer fully built? DOM Ready fires once the page structure is parsed; Window Loaded waits until every asset has finished. If your data layer is ready early, DOM Ready is snappier; if it populates late, Window Loaded keeps you from sending a half-empty beacon.</p>
 
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ Page Bottom is a legacy trigger</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>Page Bottom is a legacy trigger</div>
     <p>Page Bottom only fires once a <code>_satellite.pageBottom()</code> call placed in your page source runs, and it works for synchronous implementations only. Modern embed codes load asynchronously by default, where Page Bottom simply will not fire. Treat it as a leftover from the older synchronous world, not as a default. It survives mainly because so much older guidance still names it.</p>
 </div>
 
@@ -137,7 +137,7 @@ weight: 5
 <p>That gatekeeper role is also what makes conditions essential for <a href="/adobe-analytics-learning/collect/adobe-launch-tags/consent-and-tag-management/">user consent</a>. When a visitor grants consent to be tracked, that choice is typically stored in a cookie. A condition can read that cookie and let the rule run only when consent is present, and discard the whole operation when it is not. The rule becomes self-policing.</p>
 
 <div class="info-box">
-    <div class="info-hdr">ℹ️ Regular and exception conditions</div>
+    <div class="info-hdr"><span class="info-ico"></span>Regular and exception conditions</div>
     <p>A condition can be set as a regular condition (the rule proceeds only if it is true) or as an exception (the rule proceeds only if it is false). The exception form saves you from writing awkward inverse logic, and reads more clearly when your intent is "everywhere except here."</p>
 </div>
 
@@ -147,7 +147,7 @@ weight: 5
 <p>Two of them need almost no configuration. <strong>Send Beacon</strong> is the explicit instruction to send the server call, and you choose its type: <code>s.t()</code> for a page view, or <code>s.tl()</code> for a link, where you also give the custom link a name. <strong>Clear Variables</strong> calls <code>s.clearVars()</code>, which wipes every variable currently set on the tracker and hands you a clean slate.</p>
 
 <div class="info-box">
-    <div class="info-hdr">ℹ️ Launch made the beacon a choice</div>
+    <div class="info-hdr"><span class="info-ico"></span>Launch made the beacon a choice</div>
     <p>In the DTM era, creating a rule sent a beacon by default, you had little say in it. Launch separated the two: setting variables and sending the call are now distinct actions. A <strong>Set Variables</strong> action never sends anything on its own. That decoupling is what gives you the control the rest of this section is built on.</p>
 </div>
 
@@ -165,14 +165,14 @@ weight: 5
 </div>
 
 <div class="pro-tip">
-    <div class="pro-tip-hdr">💡 Always name your custom links</div>
+    <div class="pro-tip-hdr"><span class="tip-ico"></span>Always name your custom links</div>
     <p>On an <code>s.tl()</code> beacon, give the custom link a real, descriptive name. Many people leave it blank, and then regret it. A good name is what makes the call findable later in the debugger and meaningful in your reports. A blank one is a hole in your data you cannot fill after the fact.</p>
 </div>
 
 <p>The third action, <strong>Set Variables</strong>, is where the real work lives. If rules are 60 to 70 percent of your time in Launch, Set Variables is 80 to 90 percent of your time inside rules. You select Adobe Analytics as the extension, and you get a clean interface to map your data elements onto Analytics variables, eVars, props, events, and the standard dimensions like page name, channel, URL, and tracking code. When the UI is not enough, the same action gives you a custom code editor with the full power of JavaScript, exactly as a data element does. There is very little you cannot do here.</p>
 
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ Custom code on a link rule needs the tracking lists</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>Custom code on a link rule needs the tracking lists</div>
     <p>If you set variables in custom code on a link beacon (an <code>s.tl()</code> rule, or any non-page-load call), you must also set <code>s.linkTrackVars</code> and <code>s.linkTrackEvents</code> by hand, naming every variable and event you want included, or they will not be sent. Page-load calls do not need them. When you set your variables through the Set Variables UI instead, the extension manages both lists for you, which is one more reason to stay in the interface when you can.</p>
 </div>
 
@@ -184,7 +184,7 @@ weight: 5
 <p>Across rules, the lever is the <strong>rule order</strong>, an integer you assign. The lower the number, the earlier the rule runs; the rule with the highest number runs last. A practical convention is to leave gaps, ordering rules 1, 50, 100 rather than 1, 2, 3, so you can slot new rules between existing ones later.</p>
 
 <div class="info-box">
-    <div class="info-hdr">ℹ️ Order only matters on a shared trigger</div>
+    <div class="info-hdr"><span class="info-ico"></span>Order only matters on a shared trigger</div>
     <p>Rule order has no effect across rules that fire on different events. It only sequences rules that share the same trigger. Two rules both listening for DOM Ready will respect their order relative to each other; a DOM Ready rule and a click rule have no ordering relationship at all.</p>
 </div>
 
@@ -237,20 +237,20 @@ weight: 5
 <p>The low-order rule sets variables and stops, no beacon. The next rule adds its own variables and stops. The final, highest-order rule sends the beacon, which carries everything accumulated on the shared tracker, then clears. The result is exactly one page view that contains variables contributed by several rules, each scoped to its own concern. This is how a scalable implementation avoids repeating itself, set a variable in one place, let it ride into the right beacon.</p>
 
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ Do not clear before you send</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>Do not clear before you send</div>
     <p>The sandwich has one classic failure. If the final rule clears variables <em>before</em> it sends, or starts with a clear, it wipes everything the earlier rules set, and the beacon goes out nearly empty. Clear only after the beacon has been sent. Watch repeated variables too: if two rules set the same variable, the later rule wins, so the last value on the shared object is the one that ships.</p>
 </div>
 
 <p>There is a second way the sandwich comes apart, and it is harder to catch because most of the time it works. Rule order decides when each rule <em>starts</em>. It does not hold the next rule back until the previous one has finished.</p>
 <p>A rule that sets its variables synchronously is safe, because it is done before it hands control on. A rule whose custom code fetches something, waits on a promise, or sets a timeout returns immediately and finishes later. The next rule in the order runs inside that gap, and the beacon leaves without the variable the earlier rule was still in the middle of setting.</p>
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ Rule order does not sequence asynchronous work</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>Rule order does not sequence asynchronous work</div>
     <p>This passes every manual test, because on a warm cache and a fast connection the slow thing returns before the beacon rule runs and the data is correct. It fails on the connections nobody tests, for a fraction of visitors, producing a variable that is populated most of the time and empty the rest. Nothing errors and nothing is logged. The fix is not a higher order number. Either have the value ready before the sandwich starts, through a data element or an earlier event, or let whatever finishes the work fire the beacon itself through a direct call, so the send is caused by the data arriving rather than scheduled alongside it.</p>
 </div>
 <p>One related setting is worth knowing so you do not reach for it here. <strong>Run rule components in sequence</strong>, in the property's advanced settings, makes the conditions and actions <em>inside a single rule</em> wait for each other. It says nothing about the order of separate rules, so it does not solve the case above.</p>
 
 <div class="pro-tip">
-    <div class="pro-tip-hdr">💡 Set global variables in a rule, not the extension config</div>
+    <div class="pro-tip-hdr"><span class="tip-ico"></span>Set global variables in a rule, not the extension config</div>
     <p>The Adobe Analytics extension has a built-in global variables section, and it is tempting to set page name and site section there. The catch is that it evaluates only once, when the tracker is first created on page load, and the values do not survive a clearVars. Many experienced implementers skip it and instead use a dedicated order-1 "set global variables" rule that fires on every relevant trigger. You keep one place for your universal variables, and they behave predictably with the rest of the sandwich.</p>
 </div>
 
@@ -262,7 +262,7 @@ weight: 5
 </div>
 
 <div class="ref-box">
-    <div class="ref-title">📚 Learn More</div>
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
     <ul>
         <li><a href="https://experienceleague.adobe.com/en/docs/experience-platform/tags/ui/rules" target="_blank">Adobe Docs: Rules</a></li>
         <li><a href="https://experienceleague.adobe.com/en/docs/experience-platform/tags/extensions/client/analytics/overview" target="_blank">Adobe Docs: Adobe Analytics Extension Overview</a></li>

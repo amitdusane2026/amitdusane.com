@@ -66,7 +66,7 @@ s.contextData["page.type"]   = "product";
     <li><strong>Future-proofing:</strong> send everything meaningful now, decide where it lands as reporting needs evolve.</li>
 </ul>
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ Context data does nothing on its own</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>Context data does nothing on its own</div>
     <p>This is the catch that surprises people: context data is <strong>inert until it's mapped</strong>. Send <code>s.contextData["user.tier"]</code> and never write a Processing Rule for it, and it simply doesn't appear in any report, no error, no variable, nothing. The flexibility comes with a dependency: Processing Rules, which are admin-gated and require Adobe's processing-rules authorization. Context data is the input; Processing Rules are what turn it into data you can actually see.</p>
 </div>
 <h3 class="subsec-title">On mobile, it isn't optional</h3>
@@ -84,13 +84,13 @@ s.contextData["page.type"]   = "product";
     </table>
 </div>
 <div class="info-box">
-    <div class="info-hdr">ℹ️ The dots are just for humans</div>
+    <div class="info-hdr"><span class="info-ico"></span>The dots are just for humans</div>
     <p>Names like <code>page.type</code> read as a hierarchy, but to Adobe they're flat, namespaced keys. The dot notation is a readability and organization convention, not a real object structure. Use it to keep your context data tidy and predictable, not because it changes how the value is stored.</p>
 </div>
 <h3 class="subsec-title">Where this is heading</h3>
 <p>Context data is the AppMeasurement-era answer to "send meaning, map it later." The Web SDK world takes the same philosophy further: you send structured <strong>XDM</strong> to the Edge, and where it isn't auto-mapped, the Edge flattens it into context data (under an <code>a.x.</code> prefix) that Processing Rules can still pick up. If the idea of decoupling what developers send from where it lands makes sense to you here, you already understand the instinct behind the whole move to Web SDK and Customer Journey Analytics.</p>
 <div class="pro-tip">
-    <div class="pro-tip-hdr">💡 Never name context data after the variable it lands in</div>
+    <div class="pro-tip-hdr"><span class="tip-ico"></span>Never name context data after the variable it lands in</div>
     <p>Whatever you name your context data, don't name it after the variable it might land in. A key called <code>"eVar6"</code> or <code>"prop3"</code> destroys the entire point of the abstraction and causes painful validation confusion when a report doesn't match the key. Name it for what it <em>means</em> (<code>"user.tier"</code>), not for where it goes.</p>
 </div>
 <p>That naming instinct, describe what a value means and decide where it lands deliberately, is the same discipline this whole module has been circling. The final section makes it formal: <a href="/adobe-analytics-learning/foundations/variables/variable-planning/">Variable Planning</a>, and the solution design document that captures every one of these decisions in a single place.</p>
@@ -100,7 +100,7 @@ s.contextData["page.type"]   = "product";
     <p>See available context data: <span class="path">Processing Rules → (it lists context data seen in recent hits)</span></p>
 </div>
 <div class="ref-box">
-    <div class="ref-title">📚 Learn More</div>
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
     <ul>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/implementation/vars/page-vars/contextdata" target="_blank">Adobe Docs: Context Data Variables</a></li>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/admin/admin-tools/manage-report-suites/edit-report-suite/report-suite-general/processing-rules/pr-overview" target="_blank">Adobe Docs: Processing Rules</a></li>

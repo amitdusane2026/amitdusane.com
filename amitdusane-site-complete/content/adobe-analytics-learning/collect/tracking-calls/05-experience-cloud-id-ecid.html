@@ -153,7 +153,7 @@ weight: 5
 <p>An ECID identifies a browser on a device. Nothing more. It is not a person, was never designed to be, and the gap runs in both directions.</p>
 <p>One person produces several ECIDs. A phone, a work laptop, a private window, and a fresh one each time cookies are cleared. And one ECID can cover several people, because a shared tablet at home or a machine in a library is one browser used by many humans.</p>
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ Unique Visitors counts browsers, and has always counted browsers</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>Unique Visitors counts browsers, and has always counted browsers</div>
     <p>The metric gets read aloud in meetings as though it meant people. It does not, and no configuration changes that. There is no error, no warning, and the number looks equally credible whether it is close to the human count or nowhere near it. If a business decision genuinely depends on a count of people, that count has to come from an authenticated identifier or from a system that holds one, not from this metric.</p>
 </div>
 
@@ -181,7 +181,7 @@ visitor.getMarketingCloudVisitorID(function (id) {
 </div>
 <p>Storing it turns an abstract identifier into something you can search for, and that unlocks a verification technique worth building into every release.</p>
 <div class="pro-tip">
-    <div class="pro-tip-hdr">💡 Prove a new feature works by becoming a known visitor</div>
+    <div class="pro-tip-hdr"><span class="tip-ico"></span>Prove a new feature works by becoming a known visitor</div>
     <p>Ship a new tracked feature, then go and use it yourself with a deliberate, counted pattern: exactly five visits, exactly ten clicks on the new button, nothing else. Note your own ECID from the browser before you start. Wait past the processing window, then filter a report to that single ECID and check whether it shows exactly five and exactly ten. Numbers that match mean the implementation is correct end to end, from tag to report. Numbers that do not tell you precisely where to look. It is the cheapest end-to-end test in Adobe Analytics and almost nobody runs it.</p>
 </div>
 <p>On the waiting: standard processing latency runs roughly thirty to ninety minutes, because collection servers batch and upload on an hourly cycle. Checking after ten minutes and concluding the implementation is broken is a common and avoidable panic. Give it more than ninety minutes before drawing conclusions.</p>
@@ -191,7 +191,7 @@ visitor.getMarketingCloudVisitorID(function (id) {
 <p>Sites with a login have always had a tempting shortcut available. Adobe Analytics exposes a <code>visitorID</code> variable, and setting it to your own customer identifier makes Analytics identify people by that value instead of by the cookie.</p>
 <p>The appeal is obvious. Sign in on a phone and a laptop and both become the same visitor, so your unique visitor count starts approximating actual people. It genuinely works, and it is genuinely not recommended.</p>
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ It overrides everything, and the damage is outside Analytics</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>It overrides everything, and the damage is outside Analytics</div>
     <p>The <code>visitorID</code> variable overrides every other method of visitor identification. Adobe advises against it directly. Analytics itself will run perfectly well and your numbers will look better than before, which is exactly why the problem goes unnoticed: the breakage is elsewhere. A visitor identified this way has no ECID, and segments shared across Experience Cloud products do not include visitors without one. Target and Audience Manager stop seeing them. Every integration you might want later has been quietly disabled in exchange for a tidier number in one report.</p>
 </div>
 <p>It is an artefact of an era when Adobe Analytics stood alone and integration was not the point. That era has been over for some time.</p>
@@ -209,13 +209,13 @@ visitor.getMarketingCloudVisitorID(function (id) {
 });</pre></div>
 </div>
 <div class="pro-tip">
-    <div class="pro-tip-hdr">💡 Send it on every authenticated hit, not only on the login page</div>
+    <div class="pro-tip-hdr"><span class="tip-ico"></span>Send it on every authenticated hit, not only on the login page</div>
     <p>Signing in happens once, and the session that follows can run for hours across dozens of page views. Setting the identifier only where the login occurs means every hit afterwards carries the browser identity alone, and the stitching you were relying on covers one page view instead of the whole visit. If the visitor is signed in, say so on every hit. This is the single most common way an otherwise correct identity setup underdelivers.</p>
 </div>
 <p>Both then travel into Adobe Experience Platform, where the person identifier joins the identity graph and pulls the scattered cookie identities together into one profile. Analytics keeps its integrations. You gain the person-level view. Nothing is overridden.</p>
 <p>The part that makes this genuinely different from anything Analytics could do alone is that Platform is not restricted to online behaviour. It will ingest from a CRM, a call centre, a store system, a loyalty database. Where the same customer identifier is maintained in those systems, web behaviour joins purchases made in a shop and conversations with an agent, and the result is an omnichannel view of one person rather than a browser. Building analysis on top of that view is the work of Customer Journey Analytics, which is where this curriculum eventually arrives.</p>
 <div class="info-box">
-    <div class="info-hdr">ℹ️ Identity is also what makes a privacy request answerable</div>
+    <div class="info-hdr"><span class="info-ico"></span>Identity is also what makes a privacy request answerable</div>
     <p>There is a compliance dimension to keeping a person-level identifier that is easy to overlook while thinking about reporting. A deletion request arrives naming a human being, usually by email address, and Adobe Analytics knows only cookie identities. Without a stored person-level identifier there is no route from the request to the data, and the request cannot be honoured properly. <a href="/adobe-analytics-learning/foundations/report-suites/privacy-data-retention/">Privacy and Data Retention</a> covers what that failure looks like, which is a clean and entirely successful-looking response that found nothing.</p>
 </div>
 
@@ -242,13 +242,13 @@ visitor.getMarketingCloudVisitorID(function (id) {
 <p>Two things go wrong often enough to be worth knowing before they happen.</p>
 <p><strong>Loading order, if any code is placed by hand.</strong> The ID service has to run before AppMeasurement, because AppMeasurement asks it for an identity while building the request and gets nothing if the service has not finished initialising. Inside Launch the extensions handle this for you and it is a non-issue. It becomes an issue when hand-written tags are mixed with the tag manager, or when one library loads asynchronously and the other does not.</p>
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ If unique visitors are slightly too high forever, check this first</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>If unique visitors are slightly too high forever, check this first</div>
     <p>A request built before the ID service is ready does not fail. It is sent, it is processed, and it arrives carrying a different identity from every other hit in the same visit. The visit fragments, the visitor count inflates, and the pages that load fastest are the ones affected. No console error, no failed request, no report that flags it. This is the diagnosis nobody reaches for, because everything looks like it is working. Implementations on the Web SDK are exempt: the Edge Network owns identity there, so the ordering problem cannot occur.</p>
 </div>
 <p><strong>Deploying onto a site that already has history.</strong> A frequent and reasonable worry is that switching the ID service on will orphan years of existing visitors. It does not. Where the older Analytics visitor cookie is present, that legacy identifier is carried into the new cookie alongside the freshly issued ECID, and it continues to identify the visitor until the cookie expires or is cleared. Existing visitors keep their history rather than appearing as a wave of new people.</p>
 <p>The wrinkle is a partial rollout. If some pages have the ID service and some do not while all of them report into the same suite, the two kinds of page will disagree about who the visitor is, and the numbers will look wrong in ways nobody can pin down. Adobe Customer Care can apply a grace period, during which the service returns both identifiers so the pages agree. It runs up to 180 days and can be renewed.</p>
 <div class="pro-tip">
-    <div class="pro-tip-hdr">💡 Turn the grace period off when the rollout finishes</div>
+    <div class="pro-tip-hdr"><span class="tip-ico"></span>Turn the grace period off when the rollout finishes</div>
     <p>It exists to cover a migration, not to run indefinitely, and there is nothing in any interface that will remind you. A grace period still running years after the last page was converted is a loose end worth checking for on any implementation you inherit.</p>
 </div>
 
@@ -266,7 +266,7 @@ visitor.getMarketingCloudVisitorID(function (id) {
 </div>
 
 <div class="ref-box">
-    <div class="ref-title">📚 Learn More</div>
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
     <ul>
         <li><a href="https://experienceleague.adobe.com/en/docs/id-service/using/home" target="_blank">Adobe Docs: Experience Cloud Identity Service Overview</a></li>
         <li><a href="https://experienceleague.adobe.com/en/docs/id-service/using/intro/cookies" target="_blank">Adobe Docs: Cookies and the Experience Cloud ID Service</a></li>

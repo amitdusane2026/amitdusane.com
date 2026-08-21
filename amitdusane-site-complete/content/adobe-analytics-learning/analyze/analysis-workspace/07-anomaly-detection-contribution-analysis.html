@@ -52,7 +52,7 @@ weight: 7
 <p>Two things follow from that, and both are worth carrying. The first is that the band is not a judgment about whether a number is good. A metric can be alarmingly low and entirely unsurprising, because it has been alarmingly low for a month and the model has learned to expect it. The second is that the model only knows what is in the data. It has no idea that marketing paused a campaign, that a release shipped on Thursday, or that a tracking change went live and broke a variable, so a perfectly explainable event and a genuine problem arrive on the screen looking exactly the same.</p>
 
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ An anomaly is a question, and treating it as a finding is how teams learn to ignore it</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>An anomaly is a question, and treating it as a finding is how teams learn to ignore it</div>
     <p>The flagged dot means one thing only: this value is unusual against the recent past. It does not mean something broke, it does not mean anybody should act, and on a metric with genuine volatility a handful of points will fall outside the band in any given month simply because that is what statistical ranges do. Teams that treat every flag as an incident spend a fortnight chasing normal variation and then quietly stop looking, which leaves them worse off than before, because now there is a monitoring system everybody has been trained to dismiss. Read a flag as a prompt to go and look, never as a conclusion that has already been reached.</p>
 </div>
 
@@ -71,7 +71,7 @@ weight: 7
 <p>What it will not do is tell you why. It reports that Safari 17 on iOS accounted for most of the movement, which is a fact and not an explanation, and the explanation still requires somebody who knows that the release last Thursday touched the checkout script. That gap between correlation and cause is permanent, and the feature is honest about it, but the ranked list is persuasive enough that people forget.</p>
 
 <div class="info-box">
-    <div class="info-hdr">ℹ️ Contribution analysis is not included in every Adobe Analytics package</div>
+    <div class="info-hdr"><span class="info-ico"></span>Contribution analysis is not included in every Adobe Analytics package</div>
     <p>Access depends on the package a company bought, and the number of analyses available per month can be limited rather than unlimited. That is worth checking before building a workflow around it or promising it to a team, because discovering the limit halfway through an incident is an unpleasant way to learn. Anomaly detection itself is broadly available; it is specifically the contribution step that carries the entitlement question.</p>
 </div>
 
@@ -92,7 +92,7 @@ weight: 7
 <p>Alerts can also be stacked, so one alert watches for a small movement and another for a large one, which lets you separate the thing worth glancing at from the thing worth interrupting somebody about. And because they are built on the same anomaly model rather than on a fixed number, they already understand that Sunday is not Wednesday, which is the reason a hand-written "tell me if orders drop below 500" rule fires every weekend and gets switched off within a month.</p>
 
 <div class="pro-tip">
-    <div class="pro-tip-hdr">💡 Build the anomaly view first, then set the threshold from what it showed you</div>
+    <div class="pro-tip-hdr"><span class="tip-ico"></span>Build the anomaly view first, then set the threshold from what it showed you</div>
     <p>The order matters more than it sounds. Put the metric in a project with anomaly detection switched on, look at ninety days of it, and count how often it steps outside the band on its own. That count is your noise floor, and it tells you where the alert threshold has to sit to be worth having. Teams that skip this step guess a threshold, get flooded, and conclude that alerting does not work for their business, when what actually happened is that they pointed a sensitive instrument at a volatile metric and never checked how volatile it was.</p>
 </div>
 
@@ -159,7 +159,7 @@ weight: 7
 </div>
 
 <div class="ref-box">
-    <div class="ref-title">📚 Learn More</div>
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
     <ul>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/analyze/analysis-workspace/anomaly-detection/anomaly-detection" target="_blank">Adobe Docs: Anomaly Detection Overview</a></li>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/analyze/analysis-workspace/anomaly-detection/statistics-anomaly-detection" target="_blank">Adobe Docs: Statistical Techniques Used in Anomaly Detection</a></li>

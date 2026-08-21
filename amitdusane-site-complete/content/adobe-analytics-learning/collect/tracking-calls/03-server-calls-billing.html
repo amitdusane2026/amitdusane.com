@@ -93,12 +93,12 @@ weight: 3
 <p>Concretely, that means matching the depth of tracking to how much the page matters. The legal links in a site footer need to exist for legal reasons, but ask honestly whether the business needs to know how often the returns policy was opened. If it does, a plain link click is plenty; it does not need scroll tracking, page-depth, and the full page-level kit layered on top. An ecommerce site should spend its richest instrumentation on the purchase journey and the product detail pages, and stay deliberately light on supporting pages like terms and returns. And instrument any single action once: if a PDF link already fires a download call, do not also fire a separate engagement event for the same click. That is an architecture decision, made before code is written, not a cleanup done afterward.</p>
 
 <div class="info-box">
-    <div class="info-hdr">ℹ️ The expensive misconception: filtering bots does not reduce your bill</div>
+    <div class="info-hdr"><span class="info-ico"></span>The expensive misconception: filtering bots does not reduce your bill</div>
     <p>It is tempting to think that bot filtering cuts server call costs. It does not. Bot rules, exclude-by-IP, and VISTA rules all act after the hit has already reached Adobe's servers. They keep bot traffic out of your reports, which is genuinely valuable for accuracy, but the call was already sent and is still billed. Adobe even identifies a hit as a bot only after receiving it. The only way to stop paying for a hit is to stop it from being sent at all. The <code>abort</code> variable in AppMeasurement, or <code>onBeforeEventSend</code> returning false in the Web SDK, prevents the image request from ever leaving the browser, and a call that never reaches Adobe is never counted. Cleaning your reports and cutting your cost are two different jobs, done in two different places.</p>
 </div>
 <p>One property of <code>abort</code> catches almost everybody who reaches for it after reading that.</p>
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ abort does not stay set</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>abort does not stay set</div>
     <p>It reverts to false after every hit, so it suppresses exactly the one call it was set on and nothing after. Set it once in a rule that runs at page load and you stop the page view while every link call that follows sails straight past, which is close to the opposite of what most people intend. If a whole class of hit should never be sent, the condition has to be evaluated on every hit, which in practice means setting <code>abort</code> inside <a href="/adobe-analytics-learning/collect/data-collection/appmeasurement-library/"><code>doPlugins</code></a>, the one piece of code AppMeasurement runs before every single beacon.</p>
 </div>
 
@@ -123,7 +123,7 @@ weight: 3
 </div>
 
 <div class="ref-box">
-    <div class="ref-title">📚 Learn More</div>
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
     <ul>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/admin/admin-tools/server-call-usage/overage-overview" target="_blank">Adobe Docs: Server Call Usage Overview</a></li>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/implementation/prepare/multi-suite-tagging" target="_blank">Adobe Docs: Multi-Suite Tagging</a></li>

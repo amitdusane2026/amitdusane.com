@@ -158,7 +158,7 @@ s.products = "Apparel;Shirt;1;29.99,Footwear;Socks;3;26.91;event1=3";</pre></div
     </div>
 </div>
 <div class="info-box">
-    <div class="info-hdr">ℹ️ Why the products string never truncates</div>
+    <div class="info-hdr"><span class="info-ico"></span>Why the products string never truncates</div>
     <p>Props cap at 100 bytes and eVars at 255, but the products string can hold up to 64k bytes, effectively unlimited for any real basket. When a hit's request grows long (beyond about 2047 bytes), AppMeasurement automatically switches the beacon from a GET to a POST request, and POST data is not truncated regardless of length. So large multi-product orders are handled fine, you just won't see the whole string in the request URL when you're debugging a GET.</p>
 </div>
 <h3 class="subsec-title">Build it once, the right way</h3>
@@ -178,11 +178,11 @@ function buildProducts(p) {
 s.products = buildProducts(digitalData.products);</pre></div>
 </div>
 <div class="pro-tip">
-    <div class="pro-tip-hdr">💡 Inspect it, don't trust it blind</div>
+    <div class="pro-tip-hdr"><span class="tip-ico"></span>Inspect it, don't trust it blind</div>
     <p>Use a debugger to <em>see</em> the products string broken into its products and fields. Adobe's own <a href="https://experienceleague.adobe.com/en/docs/experience-platform/debugger/home" target="_blank">Experience Platform Debugger</a> is the official option; many practitioners also use a community Chrome extension that lays out each product and parameter clearly (<a href="https://chromewebstore.google.com/detail/bdingoflfadhnjohjaplginnpjeclmof" target="_blank">Adobe Analytics debugger extension</a>, third-party, not an Adobe product). Either way these are read-only inspectors, perfect for verifying the string, not for fixing it.</p>
 </div>
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ The traps that silently corrupt commerce data</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>The traps that silently corrupt commerce data</div>
     <p>This variable punishes small mistakes without a single error message. The recurring ones:</p>
     <ul>
         <li><strong>A missing semicolon</strong> shifts every later value into the wrong slot, with no error.</li>
@@ -199,7 +199,7 @@ s.products = buildProducts(digitalData.products);</pre></div>
     <p>Set via implementation/Tags, not report suite settings. Commerce reports appear under <span class="path">Components → Dimensions → Products</span> and the Commerce metrics (Orders, Revenue, Units).</p>
 </div>
 <div class="ref-box">
-    <div class="ref-title">📚 Learn More</div>
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
     <ul>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/implementation/vars/page-vars/products" target="_blank">Adobe Docs: Products Variable</a></li>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/implementation/vars/page-vars/evar-merchandising" target="_blank">Adobe Docs: Merchandising eVars</a></li>

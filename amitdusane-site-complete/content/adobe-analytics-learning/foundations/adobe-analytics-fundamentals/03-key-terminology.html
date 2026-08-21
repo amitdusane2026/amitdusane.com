@@ -74,14 +74,14 @@ weight: 3
 <p>The middle two are the ones that catch experienced people, and they catch them quietly. A single-page application that sends a tracking call on every route change, filter, and lazily loaded panel accumulates hits at a rate a traditional page-view site never approaches, and a long media session is instrumented far more densely than the page it sits on. Nothing errors, nothing is flagged, and one person's single sitting is now two visits in the report.</p>
 
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ A split visit moves every per-visit number you own</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>A split visit moves every per-visit number you own</div>
     <p>When a session splits, the visit count goes up and nothing else does. Every rate built on visits, conversion rate, revenue per visit, pages per visit, drops by the same proportion, on exactly the properties most likely to trip the limits: video, apps, and anything with a chatty single-page front end. The numbers stay internally consistent, which is what makes it hard to spot. If a per-visit rate is inexplicably low on one property and normal everywhere else, count the hits in a long session before looking anywhere else.</p>
 </div>
 
 <p>One more piece of visit behavior surprises people, and it is worth carrying because it ends an argument rather than starting one. <strong>A visit does not end at midnight.</strong> A session running from 11:45 PM to 12:10 AM is one visit, not two. In a daily trend it appears on both days, because it genuinely happened on both, but the total for the period counts it once. That is why the daily visit numbers in a trend will not add up to the month's total, and the gap is not a defect. It is the same deduplication that makes unique visitors behave the way they do, applied to sessions.</p>
 
 <div class="info-box">
-    <div class="info-hdr">ℹ️ "Near real time" is not instant</div>
+    <div class="info-hdr"><span class="info-ico"></span>"Near real time" is not instant</div>
     <p>A hit is collected the moment it happens, but it does not land in your reports that same instant. Adobe collects continuously, then processes the data in batches, so standard reports are typically current to within about 30 to 90 minutes, and you can usually expect complete data roughly two hours after it was collected. There is a separate Real-Time report for a small set of metrics that refreshes within a couple of minutes, but the everyday analysis you will do runs on that short processing delay. It is near real time, not live.</p>
 </div>
 
@@ -120,7 +120,7 @@ weight: 3
 </div>
 
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ A "visitor" is not a person</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>A "visitor" is not a person</div>
     <p>This is the term stakeholders misread most. "Unique Visitors" counts unique cookies or device IDs, not human beings. The same person on a phone and a laptop is two visitors. Someone who clears cookies, or whose browser caps cookie lifetime, becomes several visitors over time. A shared family computer can be one visitor that is really several people. Treat visitor counts as a useful proxy, never a literal headcount. True person-level identity needs an explicit user ID and <a href="/adobe-analytics-learning/deliver/adobe-analytics-cja/cross-device-analytics/">Cross-Device Analytics</a> or CJA, which is a different setup entirely.</p>
 
 </div>
@@ -128,7 +128,7 @@ weight: 3
 <p>With the vocabulary in hand, a different question tends to arrive next, and it usually arrives from somebody holding a budget. Why this tool, and not the one already in the building? <a href="/adobe-analytics-learning/foundations/adobe-analytics-fundamentals/adobe-analytics-vs-google-analytics/">Adobe Analytics vs Google Analytics</a> takes that question seriously rather than defensively.</p>
 
 <div class="ref-box">
-    <div class="ref-title">📚 Learn More</div>
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
     <ul>
         <li><a href="https://experienceleague.adobe.com/docs/analytics/components/dimensions/overview.html" target="_blank">Adobe Docs: Dimensions Overview</a></li>
         <li><a href="https://experienceleague.adobe.com/docs/analytics/components/metrics/overview.html" target="_blank">Adobe Docs: Metrics Overview</a></li>

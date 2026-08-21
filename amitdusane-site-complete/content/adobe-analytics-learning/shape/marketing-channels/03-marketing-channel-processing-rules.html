@@ -42,7 +42,7 @@ weight: 3
 <p>The processing-rule paradigm was the only one that gave all three things the job needs at once: a builder a practitioner can operate without engineering, execution at collection time so a value is written onto the hit, and, most importantly, <strong>an order the practitioner decides</strong>. That last one turns out to matter enormously, and the rest of this section is largely about why.</p>
 
 <div class="info-box">
-    <div class="info-hdr">ℹ️ Two features, one name</div>
+    <div class="info-hdr"><span class="info-ico"></span>Two features, one name</div>
     <p>Marketing Channel Processing Rules are a <strong>separate feature</strong> from Processing Rules. They share a name, a philosophy, and a similar builder, but they are different screens, they run at different stages of the pipeline, and they do different jobs. Adobe's own documentation opens by disambiguating the two. Think of them as siblings rather than as the same thing wearing two hats.</p>
 </div>
 
@@ -52,7 +52,7 @@ weight: 3
 <p>Marketing channel rules run <strong>late</strong>. A hit arrives, the general processing rules run, VISTA runs, and then marketing channel rules run near the end, just before the hit is stored. Which means the data these rules are reading has already been shaped by everything upstream.</p>
 
 <div class="pro-tip">
-    <div class="pro-tip-hdr">💡 What VISTA gives you, and what it takes away</div>
+    <div class="pro-tip-hdr"><span class="tip-ico"></span>What VISTA gives you, and what it takes away</div>
     <p>Marketing channel rules <strong>can read a variable that VISTA has set</strong>, but they <strong>cannot read data that VISTA has deleted</strong>. That is not a quirk, it is a lever. If a channel signal is buried somewhere awkward, a VISTA rule upstream can lift it into an eVar, and a marketing channel rule can then match on that eVar. But if something upstream stripped a referrer, no marketing channel rule can recover it, because by the time these rules run, it is gone.</p>
 </div>
 
@@ -173,12 +173,12 @@ weight: 3
 <h3 class="subsec-title">Three facts that will save you</h3>
 
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ These rules run on every hit, not just the first</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>These rules run on every hit, not just the first</div>
     <p>This is the one that catches experienced practitioners. Marketing channel rules process <strong>every hit a visitor makes</strong>, not only the arrival. So a rule with a loose condition, the classic being <code>Page URL exists</code> with nothing else, matches on every single page view and reassigns the channel over and over. A page URL always exists. That is why the bottom rules carry the <strong>Is First Hit of Visit</strong> condition: it is what stops them from re-firing on every page a visitor touches.</p>
 </div>
 
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ The data is permanent. Fixing a rule does not fix history.</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>The data is permanent. Fixing a rule does not fix history.</div>
     <p>Marketing channel data is processed at collection time and written into the hit. It is not retroactive. Discover a broken rule after six months and you can correct it going forward, but every hit already collected under the broken rule stays wrong forever. There is no reprocessing, no backfill, no undo. This is the same irreversibility that made the channel list a business decision in Channel Configuration, and here it has a sharper edge, because a rule is far easier to get subtly wrong than a channel name is.</p>
 </div>
 
@@ -188,7 +188,7 @@ weight: 3
 <p>If the report suite had no channels, Auto Setup created both the channels and a first pass at their rules. Treat that as your starting document and walk it rule by rule. What follows is the standard set in Adobe's recommended order, and it is written so you can build it as you read.</p>
 
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ Build this in a test report suite, not production</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>Build this in a test report suite, not production</div>
     <p>If you are going to follow along and build these rules yourself, and you should, do it in a development or test report suite. Marketing channel data is written at collection time and is <strong>not retroactive</strong>. A rule you save and then think better of has already miscategorized every hit that arrived while it was live, permanently. Adobe recommends keeping a template report suite exactly for this, and pushing the finished rule set to production once it is settled. Practice where mistakes cost nothing.</p>
 </div>
 
@@ -355,14 +355,14 @@ weight: 3
 </div>
 
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ This is the biggest sponge in the set</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>This is the biggest sponge in the set</div>
     <p>Almost every visitor who arrived from anywhere at all has a referring domain. Social platforms have one. Affiliates have one. Move this rule up even a few positions and it will quietly swallow every channel beneath it, and those channels will simply stop reporting. Nothing breaks, no error appears, and your Social and Affiliate lines just go quiet. If a channel that should have traffic is showing none, this rule's position is the first thing to check.</p>
 </div>
 
 <p>Save. Every rule is in place and every rule is in the right position, which on this screen are two different achievements.</p>
 
 <div class="info-box">
-    <div class="info-hdr">ℹ️ A newer condition worth knowing: Conversational AI</div>
+    <div class="info-hdr"><span class="info-ico"></span>A newer condition worth knowing: Conversational AI</div>
     <p>Adobe now offers <strong>Referrer Is Conversational AI</strong> as a detected condition, which identifies visitors arriving from AI chat tools. If a meaningful share of your traffic now comes from someone asking an assistant a question rather than a search engine, this deserves its own channel. Place it in the organic tier alongside Social Networks and above Referring Domains, with <em>Referring Domain</em> as the detail. Most channel configurations written before this existed are currently counting that traffic as Referring Domains, which is worth checking on your own report suite.</p>
 </div>
 
@@ -377,7 +377,7 @@ weight: 3
 </div>
 
 <div class="ref-box">
-    <div class="ref-title">📚 Learn More</div>
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
     <ul>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/admin/admin-tools/manage-report-suites/edit-report-suite/marketing-channels/mc-proc-rules" target="_blank">Adobe Docs: Marketing Channel Processing Rules</a></li>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/marketing-channels/c-faq" target="_blank">Adobe Docs: Marketing Channels FAQ</a></li>

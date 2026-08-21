@@ -129,7 +129,7 @@ return decodeURIComponent(raw).indexOf('C0002:1') !== -1;</pre></div>
 </div>
 <p>Repeat the pattern per category rather than per tag. One data element for Performance gates every <a href="/adobe-analytics-learning/collect/tracking-calls/page-view-tracking/">page view</a> and <a href="/adobe-analytics-learning/collect/tracking-calls/link-tracking/">link tracking</a> rule you own. One for Targeting gates the marketing pixels. When the consent platform changes, and it will, you edit two data elements instead of auditing the property.</p>
 <div class="pro-tip">
-    <div class="pro-tip-hdr">💡 Default the data element to false, never to true</div>
+    <div class="pro-tip-hdr"><span class="tip-ico"></span>Default the data element to false, never to true</div>
     <p>The code above returns false when the cookie is missing, and that choice carries the whole compliance posture. A missing cookie means the visitor has not answered yet, and treating an unanswered question as a yes is exactly the behaviour the regulation exists to prevent. It is one line, it is easy to write the other way round while debugging, and it is worth checking in code review specifically.</p>
 </div>
 <p>Ship this the way you ship anything else. A consent change is precisely the kind of edit that deserves a full pass through <a href="/adobe-analytics-learning/collect/adobe-launch-tags/environments/">development and staging environments</a> before it reaches production, because the failure mode is invisible in reports and the <a href="/adobe-analytics-learning/collect/adobe-launch-tags/publishing-workflow/">publishing workflow</a> exists for changes with exactly this risk profile.</p>
@@ -170,7 +170,7 @@ return decodeURIComponent(raw).indexOf('C0002:1') !== -1;</pre></div>
     </svg>
 </div>
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ A rule that does not run leaves no evidence that it did not run</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>A rule that does not run leaves no evidence that it did not run</div>
     <p>There is no error, no console warning, and no entry in any report. A skipped rule and a rule that never existed look identical from the outside, and the only symptom is a number lower than expected, which is indistinguishable from a quiet week. Test consent conditions on a genuinely fresh browser profile, because the second visit, when the cookie already exists, works perfectly and proves nothing.</p>
 </div>
 
@@ -190,7 +190,7 @@ return decodeURIComponent(raw).indexOf('C0002:1') !== -1;</pre></div>
 <p>Pending is the value worth understanding, because it is the only one that does not force a choice between the obligation and the data. Nothing leaves the browser without permission, and nothing is discarded before the visitor has spoken. Accept, and the queued page view is released. Refuse, and it is dropped without a request ever being made.</p>
 <p>The value can come from a data element rather than a fixed setting, which is how a single property serves several jurisdictions: pending in the European Union, in where prior consent is not required.</p>
 <div class="info-box">
-    <div class="info-hdr">ℹ️ The default is a posture, not a record</div>
+    <div class="info-hdr"><span class="info-ico"></span>The default is a posture, not a record</div>
     <p>Adobe is precise that the default consent level is not written to the visitor's profile. It governs how the library behaves while waiting and nothing more. The recorded decision comes from the Set Consent action, which updates the profile and creates a timestamped event describing the change. Confusing the two leaves teams believing they have a consent audit trail when they have configured a waiting-room policy.</p>
 </div>
 <p>Implementations still on <a href="/adobe-analytics-learning/collect/data-collection/appmeasurement-library/">AppMeasurement</a> have the older equivalent: the Opt-in service, a library bundled with the Experience Cloud ID service, exposed as <code>adobe.optIn</code> and configured through its own extension. Its distinguishing feature is granularity, gating Analytics, Target and Audience Manager separately, which maps neatly onto the category structure your consent platform already uses.</p>
@@ -199,7 +199,7 @@ return decodeURIComponent(raw).indexOf('C0002:1') !== -1;</pre></div>
 <p>One radio button carries more risk than everything else in this section combined.</p>
 <p>The permissive default collects events before the visitor has agreed to anything. It produces complete data, it makes a new implementation look like it is working, and for any jurisdiction requiring prior consent it is the wrong choice. Adobe's own guidance for organisations needing explicit consent is to use Out or Pending.</p>
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ Nothing tells you the setting is inappropriate for your visitors</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>Nothing tells you the setting is inappropriate for your visitors</div>
     <p>The library does not know which jurisdiction someone is in and does not read your privacy policy. A permissive default produces clean, complete, entirely plausible reports while collecting data nobody permitted, and reports are the only feedback most teams ever look at. This is never discovered by watching dashboards. It surfaces in a privacy review, an audit, or a complaint, by which time collection has been running for months. It is the same silent shape as the labeling trap in <a href="/adobe-analytics-learning/foundations/report-suites/privacy-data-retention/">Privacy and Data Retention</a>, where a missing label produces a successful-looking answer to a deletion request.</p>
 </div>
 
@@ -223,7 +223,7 @@ return decodeURIComponent(raw).indexOf('C0002:1') !== -1;</pre></div>
 </div>
 
 <div class="ref-box">
-    <div class="ref-title">📚 Learn More</div>
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
     <ul>
         <li><a href="https://experienceleague.adobe.com/en/docs/experience-platform/tags/extensions/client/web-sdk/configure/consent" target="_blank">Adobe Docs: Consent Configuration Settings (Web SDK extension)</a></li>
         <li><a href="https://experienceleague.adobe.com/en/docs/experience-platform/landing/governance-privacy-security/consent/sdk" target="_blank">Adobe Docs: Process Customer Consent Data Using the Web SDK</a></li>

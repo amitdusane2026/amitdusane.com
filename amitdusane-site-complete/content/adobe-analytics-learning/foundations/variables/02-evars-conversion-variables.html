@@ -52,7 +52,7 @@ weight: 2
 <p>Expiration is the attribution window: how long an eVar's value stays eligible to receive credit for a later event. The options run from short to effectively forever: <strong>visit</strong>, <strong>visitor</strong>, a set number of <strong>days, weeks, months, quarters, or years</strong>, <strong>until a specific success event</strong> (for example, expire the moment a purchase happens), or <strong>never</strong>. A campaign eVar expiring at "visit" credits only same-session conversions; the same eVar set to "30 days" keeps crediting that campaign for a month. Same data collected, very different story. You can also force an eVar to expire immediately by resetting it, which is how you cleanly repurpose a variable for a new use.</p>
 
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ A repurposed eVar makes one dimension mean two things</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>A repurposed eVar makes one dimension mean two things</div>
     <p>The word "cleanly" in that last sentence is carrying a lot of weight. Point an eVar at a new meaning without retiring the old one and both meanings now live in a single dimension. Run a report over any range spanning the changeover and campaign codes sit in the same list as product categories, sorted together, summed together, with nothing in the interface hinting that the values above and below a certain date are different kinds of thing. No error appears, because as far as Adobe is concerned these are all just values of eVar 12.</p>
 </div>
 
@@ -61,7 +61,7 @@ weight: 2
 <p>One of those expiration options deserves singling out, because it is the one most often chosen by accident rather than decided. <strong>Never</strong> sounds like the safe, generous setting. It is the opposite.</p>
 
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ "Never" keeps claiming credit long after the credit stopped being real</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>"Never" keeps claiming credit long after the credit stopped being real</div>
     <p>An eVar that never expires holds its value for the entire life of the visitor cookie. A campaign code picked up fourteen months ago is still sitting there when somebody buys today, and that purchase is credited to it. The report is not broken and nothing warns you: every number is exactly what the configuration asked for. It simply overstates that campaign, permanently, and the overstatement is invisible unless somebody thinks to ask how old the attributed touches are. Reserve <strong>never</strong> for attributes that are genuinely permanent properties of a visitor, and treat anything acquisition-related as needing a written justification before it gets that setting.</p>
 </div>
 <h3 class="subsec-title">Allocation: who gets the credit</h3>
@@ -108,7 +108,7 @@ weight: 2
 </div>
 <p>Nothing about the visitor changed across those three rows, only the allocation setting did, yet each tells a different story about what your marketing is doing. That is why this setting deserves a deliberate decision, not a default.</p>
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ Two traps that quietly corrupt attribution</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>Two traps that quietly corrupt attribution</div>
     <p>First, expiration and allocation shape how data is credited, but changing them does not fix the past, history stays as it was processed (the forward-only rule from report suites). Second, <strong>Linear</strong> has a sharp edge: it is only accurate within a visit, so Adobe pairs it with Visit expiration, and switching an eVar to or from Linear hides that eVar's historical data in the interface to prevent mixing incompatible models. The safe move when you need a new allocation is to use a new eVar, not to flip an existing one.</p>
 </div>
 <p>One more setting worth knowing is an eVar's <strong>type</strong>. Most eVars are Text String, the default, holding values like a campaign name or a search term. But an eVar can instead be a <strong>Counter</strong>, which counts how many times something happened before a conversion rather than storing text, for example how many internal searches a visitor ran before they bought. It is a niche mode, but exactly right when the question is "how many times" rather than "which value."</p>
@@ -122,7 +122,7 @@ weight: 2
 
 <p>Which gives a clear rule for where to spend the design conversation. Default allocation to Most Recent and move on, because you can ask a first-touch question of it at report time whenever somebody wants one. Spend the argument on expiration instead, matched to the real decision cycle of whatever is being measured, because that setting is genuinely permanent and forward-only. And when you inherit an implementation carrying unusual allocation settings, check whether they exist only because report-time attribution did not when they were configured. Several of them will.</p>
 <div class="pro-tip">
-    <div class="pro-tip-hdr">💡 When in doubt: Most Recent, expiring on your real sales cycle</div>
+    <div class="pro-tip-hdr"><span class="tip-ico"></span>When in doubt: Most Recent, expiring on your real sales cycle</div>
     <p>When you are unsure, the most common safe starting point for a campaign-style eVar is "Most Recent" allocation with an expiration that matches your real sales cycle. And when stakeholders argue about first-touch versus last-touch, that is your cue to lean on Workspace's <a href="/adobe-analytics-learning/shape/marketing-channels/channel-attribution/">attribution models</a> to show them both, rather than re-litigating a variable setting.</p>
 </div>
 <div class="path-box">
@@ -131,7 +131,7 @@ weight: 2
     <p>Set Expiration &amp; Allocation: <span class="path">Conversion Variables → (select eVar) → Expire After / Allocation</span></p>
 </div>
 <div class="ref-box">
-    <div class="ref-title">📚 Learn More</div>
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
     <ul>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/dimensions/evar" target="_blank">Adobe Docs: eVars (Conversion Variables)</a></li>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/admin/admin-tools/manage-report-suites/edit-report-suite/conversion-variables/merchandising-evars" target="_blank">Adobe Docs: Merchandising eVars</a></li>

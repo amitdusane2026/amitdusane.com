@@ -181,7 +181,7 @@ M-10485,40-59,Female,Gold,2021</pre></div>
 <p>Look again at the third row of the rules table, the one that says a mismatched header does not fail.</p>
 
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ A typo in a header creates a new classification. It does not raise an error.</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>A typo in a header creates a new classification. It does not raise an error.</div>
     <p>Type <code>Membership Teir</code> instead of <code>Membership Tier</code> and the upload succeeds. Adobe shows an alert in the Schema Preview saying the column is not in the existing schema and will be created on import, you select Confirm Upload the way you have a hundred times, and now your set has five classifications instead of four. Membership Tier stays exactly as stale as it was. Membership Teir is a brand new, permanently identified dimension holding all of your fresh data, and it will appear in the dimension list beside the real one, forever. Read the Schema Preview. It is the only place this gets caught, and the alert is telling you the truth in a tone that sounds like a formality.</p>
 </div>
 
@@ -215,7 +215,7 @@ Rules:
 <p>And removing a classification value also removes anything hanging beneath it. A classification with subclassifications takes its children with it, because a child cannot exist without its parent.</p>
 
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ A delete is retroactive, and it is not reversible</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>A delete is retroactive, and it is not reversible</div>
     <p>The same property that makes classifications wonderful makes deletion dangerous. Upload a <code>~deletekey~</code> and that key stops being classified across your entire history, immediately. Every report that ever used it changes, going back to the day the key was first collected. Nothing warns you, because nothing failed. Before deleting anything at scale, use Download to export what is currently there, and keep that file. It is the only backup that exists.</p>
 </div>
 
@@ -284,7 +284,7 @@ Rules:
 <p>The account types available for classification import are the modern, role-based ones: <strong>Amazon S3 Role ARN</strong>, <strong>Google Cloud Platform</strong>, and <strong>Azure</strong>. The older credential styles, including plain FTP and key-based S3 or Azure accounts, still exist but are export-only. They serve Data Feeds and Data Warehouse, and they will not appear when you are importing classifications. If you built an FTP account years ago and cannot find it in the dropdown here, that is why.</p>
 
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ Two prerequisites that live outside Adobe Analytics</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>Two prerequisites that live outside Adobe Analytics</div>
     <p><strong>The location must point at a folder, not the root of the bucket.</strong> Give the location a prefix, something as simple as <code>classifications/</code>. Hosting files at the root of a bucket does not work with most cloud providers, and the failure is confusing rather than obvious.</p>
     <p><strong>Adobe's IP ranges have to be allowed through your network.</strong> This is a conversation with a network administrator, not a checkbox, and it is worth starting before you need it. Which range depends on the Analytics data center you are on.</p>
 </div>
@@ -324,7 +324,7 @@ Rules:
 
 <h3 class="subsec-title">The one that will bite you</h3>
 <div class="pro-tip">
-    <div class="pro-tip-hdr">💡 Adobe does not delete the file after importing it. You have to.</div>
+    <div class="pro-tip-hdr"><span class="tip-ico"></span>Adobe does not delete the file after importing it. You have to.</div>
     <p>An imported file stays exactly where it was. And on the next import job, Adobe finds it sitting there and imports it again. Then again. A folder that nobody cleans up becomes a folder that reprocesses its entire history on every run, and the set grows slower and stranger week by week while the data looks fine. Delete the file after a successful import, or put a lifecycle rule on the bucket that ages files out. Whichever you choose, decide it now, on the day you set this up, because this is not the kind of problem that announces itself.</p>
 </div>
 
@@ -348,7 +348,7 @@ Rules:
 </div>
 
 <div class="ref-box">
-    <div class="ref-title">📚 Learn More</div>
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
     <ul>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/classifications/sets/data-files" target="_blank">Adobe Docs: Classification Set File Formats</a></li>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/classifications/sets/set/schema" target="_blank">Adobe Docs: Classification Set Schema (upload, template, download, automate)</a></li>

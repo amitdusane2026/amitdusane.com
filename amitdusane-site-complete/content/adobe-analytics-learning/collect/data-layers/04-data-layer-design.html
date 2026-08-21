@@ -77,7 +77,7 @@ weight: 4
 <p>The cost is not technical, which is exactly why it gets waved through. The cost is that a path stops being self-describing. Somebody reading <code>category.name</code> in a rule, a report, or a support ticket now has to trace back up the tree before they know what they are looking at, and they will do that every single time.</p>
 <p>Give the two things different names. <code>pageCategory</code> and <code>interactionType</code> cost nothing and never need explaining.</p>
 <div class="info-box">
-    <div class="info-hdr">ℹ️ Four levels is a house rule, not a standard</div>
+    <div class="info-hdr"><span class="info-ico"></span>Four levels is a house rule, not a standard</div>
     <p>It is often said that a CEDDL data layer has four levels. The specification does not say that. Several objects sit directly beneath the root, including <code>digitalData.pageInstanceID</code> and <code>digitalData.version</code>, which are two levels deep, and the spec explicitly allows extension at varying depths. Committing your own implementation to a consistent shape is still worth doing, because a uniform structure is predictable to read and cheap to extend. Just adopt it as your convention rather than believing the standard requires it, because the difference matters the moment somebody quotes the spec back at you.</p>
 </div>
 
@@ -89,7 +89,7 @@ weight: 4
 <p>And that is the real argument. A standard you are free to ignore is still worth keeping, because its value was never to you. It goes to whoever arrives next, and it is paid in the time they do not spend asking questions.</p>
 <p>The Adobe Client Data Layer works the same way with a different word. Adobe did not invent the array-based model, it standardised an approach that already existed, and its default global object is <code>adobeDataLayer</code>. The name is configurable, which sounds harmless.</p>
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ Renaming the ACDL object leaves you with two objects, not one</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>Renaming the ACDL object leaves you with two objects, not one</div>
     <p>Set a custom name in the Adobe Client Data Layer extension and the original <code>adobeDataLayer</code> is still instantiated, then duplicated into the name you chose. Both exist on the page, both carry the same data, and anybody debugging has to know which one the site code actually writes to. Renaming does not replace the default. It adds a second copy alongside it, and that copy has to be explained to every person who opens the console from then on.</p>
 </div>
 
@@ -200,7 +200,7 @@ digitalData.interaction.dropDown.value  = "Male"</pre></div>
 <p><strong>Commit to types.</strong> Numbers arrive as numbers, booleans as booleans, arrays as arrays. A price sent as <code>"49.00"</code> and a flag sent as <code>"false"</code> both look harmless in a console, and both fail quietly downstream, because a data element asking whether the visitor is logged in receives the string <code>"false"</code> and finds it perfectly true. Every non-empty string is. The report then shows an authenticated population of one hundred percent, and nothing anywhere has failed.</p>
 <p><strong>Enumerate what a categorical field is allowed to hold.</strong> A login status field will receive <code>logged in</code> from one team, <code>loggedIn</code> from another, <code>authenticated</code> from a third, and <code>Y</code> from whoever was in a hurry. Every one of those is a separate row in the report. The dimension still populates, which is the problem: it simply cannot be segmented on, and the person who finds that out is an analyst six months later who had assumed the field meant one thing.</p>
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ Naming the field is the easy half</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>Naming the field is the easy half</div>
     <p>A specification that lists field names and paths and stops there has documented the part that rarely goes wrong. Carry the type as well, the permitted values for anything categorical, and one more decision teams almost never make explicitly: what absence means. A field that does not apply, a field that applies but is unknown, and a field the visitor deliberately left blank are three different situations. If all three arrive as a missing key, every consumer downstream invents its own reading of the same silence.</p>
 </div>
 
@@ -228,7 +228,7 @@ digitalData.interaction.dropDown.value  = "Male"</pre></div>
 <p>The second is the row carrying a customer identifier, and what goes into it is a deliberate decision rather than a convenience. Use your own internal identifier, never a raw email address or phone number. A data layer is a global object on the page, readable by every script the site loads, including tags nobody on your team wrote, so a contact detail placed there has effectively been handed to all of them. The reporting is identical either way, which makes the safe choice free.</p>
 <p>An internal identifier still carries an obligation, because it identifies a person the moment it is joined to your own systems. It has to be labeled before Adobe can act on it in a deletion request, and <a href="/adobe-analytics-learning/foundations/report-suites/privacy-data-retention/">Privacy and Data Retention</a> covers that labeling, along with the silent failure when it is missing.</p>
 <div class="pro-tip">
-    <div class="pro-tip-hdr">💡 The path column is the contract, and it is the only column developers need</div>
+    <div class="pro-tip-hdr"><span class="tip-ico"></span>The path column is the contract, and it is the only column developers need</div>
     <p>Everything to the left of the path belongs to analytics: which variable, what it is called in reports, what the business expects to see. Only the rightmost column is a build instruction. Keeping that boundary visible is what stops a mapping document turning into a negotiation, because the developer can be handed one column and be certain it is complete.</p>
 </div>
 <p>The equivalent under the Adobe Client Data Layer swaps the path for a state read, so <code>digitalData.page.pageInfo.pageName</code> becomes <code>adobeDataLayer.getState("page.pageInfo.pageName")</code>. The mapping document keeps its shape, and so does every naming decision inside it.</p>
@@ -240,7 +240,7 @@ digitalData.interaction.dropDown.value  = "Male"</pre></div>
 <p>A design is only worth what gets read from it. The mechanism that does that reading in a tag management system is the data element, a named reference that points at a path and hands its value to rules without any of them knowing where it came from. <a href="/adobe-analytics-learning/collect/adobe-launch-tags/data-elements/">Data Elements</a> covers how that indirection works and why bypassing it costs you later.</p>
 
 <div class="ref-box">
-    <div class="ref-title">📚 Learn More</div>
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
     <ul>
         <li><a href="https://www.w3.org/2013/12/ceddl-201312.pdf" target="_blank">W3C: Customer Experience Digital Data Layer 1.0 (specification)</a></li>
         <li><a href="https://www.w3.org/community/custexpdata/" target="_blank">W3C: Customer Experience Digital Data Community Group</a></li>

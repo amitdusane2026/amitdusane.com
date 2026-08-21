@@ -97,11 +97,11 @@ weight: 2
 <h3 class="subsec-title">Giving every team its own view</h3>
 <p>A global suite raises a fair question: if everything lands in one box, how does each business unit get a focused view of just its own data? There are two answers, and which one you reach for marks the difference between an older setup and a modern one.</p>
 <div class="pro-tip">
-    <div class="pro-tip-hdr">💡 The older hybrid, and what replaced it</div>
+    <div class="pro-tip-hdr"><span class="tip-ico"></span>The older hybrid, and what replaced it</div>
     <p>For years the answer was <a href="/adobe-analytics-learning/foundations/report-suites/multi-suite-tagging/">multi-suite tagging</a>: a single implementation sends each hit to a global suite <em>and</em> to an individual one at the same time, so leadership gets the whole-estate picture while each team works in its own suite. It works, and many companies still run this way. But it carries a cost, and roughly a decade ago <a href="/adobe-analytics-learning/foundations/report-suites/virtual-report-suites/">virtual report suites</a> made it largely unnecessary: collect everything into the global suite only, then carve each team's view as a virtual report suite, with no second server call. The global suite did not fall out of favor, it became the foundation. What VRS replaced was the need for those separate individual suites alongside it.</p>
 </div>
 <div class="info-box">
-    <div class="info-hdr">ℹ️ The cost of sending to two suites at once</div>
+    <div class="info-hdr"><span class="info-ico"></span>The cost of sending to two suites at once</div>
     <p>Every extra suite a hit is sent to is another server call, and Adobe bills on server calls, so multi-suite tagging raises your billable volume. The copy sent to the individual suite is a <strong>secondary server call</strong>. Two things are worth knowing. First, "secondary" does not mean lesser: it is a full copy of the data, with nothing trimmed in quality or features. Second, what it costs depends on your contract. The figure most often quoted is roughly half the primary rate, which applies when your contract provisions for secondary calls; but in other contracts secondary calls deplete your primary commitment, and overage secondary calls can be billed at the full primary rate. Treat "half" as a common case, not a guarantee, and check your own contract. This cost is a large part of why global plus VRS now wins over global plus individual suites.</p>
 </div>
 <h3 class="subsec-title">The individual strategy: deliberately separate archives</h3>
@@ -113,13 +113,13 @@ weight: 2
 </ul>
 <p>The price is steep and permanent: you give up ever comparing those properties side by side in a single report. Choose it only when that is an acceptable cost.</p>
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ When in doubt, go global</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>When in doubt, go global</div>
     <p>The decision is not symmetric, and that is the whole point. From a global suite you can always carve out a narrower, team-specific view later (a virtual report suite). But you can never merge two separate suites back into one, the data was isolated the moment it was collected. Splitting is a one-way door. Defaulting to global keeps your options open; defaulting to individual quietly closes them forever.</p>
 
 <p>Which puts a great deal of weight on that carve-out, and it is fair to be suspicious of it. A team asks for its own data, you tell them to use a view of somebody else's, and it sounds like a fob-off. It is not. <a href="/adobe-analytics-learning/foundations/report-suites/virtual-report-suites/">Virtual Report Suites</a> is the section that shows why.</p>
 </div>
 <div class="ref-box">
-    <div class="ref-title">📚 Learn More</div>
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
     <ul>
         <li><a href="https://experienceleague.adobe.com/docs/analytics/implementation/prepare/global-rs.html" target="_blank">Adobe Docs: Global Report Suites</a></li>
         <li><a href="https://experienceleague.adobe.com/docs/analytics/implementation/prepare/multi-suite-tagging.html" target="_blank">Adobe Docs: Multi-Suite Tagging</a></li>

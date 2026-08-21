@@ -145,7 +145,7 @@ weight: 5
 <p>The delimiter was never a style preference. It was the interface.</p>
 
 <div class="pro-tip">
-    <div class="pro-tip-hdr">💡 Contains is where good rule sets go to die</div>
+    <div class="pro-tip-hdr"><span class="tip-ico"></span>Contains is where good rule sets go to die</div>
     <p>It is tempting to skip all of this and write <code>Contains "07"</code> to set Month to July. Then a campaign called <code>eml_2026_11_bogo07_in</code> arrives, and November is quietly reported as July. Contains does not know <em>where</em> in the key it matched, and it does not care. Use it for genuinely unstructured text like search terms. For a structured key, position is the whole meaning, and Contains is blind to position.</p>
 </div>
 
@@ -153,7 +153,7 @@ weight: 5
 <p>Split is the right tool for a key you designed. It is often the wrong tool for a key you inherited, and most keys are inherited.</p>
 
 <div class="info-box">
-    <div class="info-hdr">ℹ️ Split needs a promise. A regular expression does not.</div>
+    <div class="info-hdr"><span class="info-ico"></span>Split needs a promise. A regular expression does not.</div>
     <p>Split assumes the key keeps its word: the same delimiter every time, the same number of segments every time, and the delimiter never buried inside a value. Break any one of those and Split quietly puts the wrong piece in the wrong column.</p>
     <p>Real keys break promises. A legacy code where some campaigns have five segments and some have four. A delimiter that shows up inside a campaign name because a marketer typed <code>win-back</code>. A pattern that holds for ninety percent of the traffic and not the rest.</p>
     <p><strong>That is what regular expressions are for,</strong> and it is why they are still worth learning. Split is the shortcut for a key that behaves. A regular expression is the tool for a key that only mostly behaves.</p>
@@ -223,7 +223,7 @@ Captures: $1 = eml      $2 = 2026     $3 = 07
 <p>Both write to the Campaign column.</p>
 
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ Rules overwrite imports, and they do it every four hours</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>Rules overwrite imports, and they do it every four hours</div>
     <p>With Rules overwrite set to <strong>apply to all values</strong>, the rule wins. Not once. Every four hours, forever. Somebody uploads the curated file, the report looks right for an afternoon, and by evening the machine has scraped it back to lowercase. They upload it again. It happens again. And because nothing failed, nothing is logged as an error, and the report never goes blank, the team concludes that classifications are simply unreliable and stops trusting them.</p>
     <p>They are not unreliable. They are doing precisely what they were told. Decide once, per column, who owns it: <strong>the rule or the file.</strong> If it is the file, set Rules overwrite to <em>apply to only unset values</em>, and the rule will fill gaps without touching curated data. If it is the rule, delete the file and stop maintaining it.</p>
 </div>
@@ -296,7 +296,7 @@ Captures: $1 = eml      $2 = 2026     $3 = 07
 <p>Which gives you the ownership rule for the whole module, and it is cleaner than most people expect:</p>
 
 <div class="info-box">
-    <div class="info-hdr">ℹ️ Rules for the living, files for the dead</div>
+    <div class="info-hdr"><span class="info-ico"></span>Rules for the living, files for the dead</div>
     <p><strong>Rules</strong> handle keys that keep arriving. New campaigns, new SKUs, new search terms, values that will still be appearing next Tuesday. They are the right answer for anything that is constantly changing, which is exactly the case that makes manual upload unbearable.</p>
     <p><strong>Files</strong> handle history, and anything a rule cannot see. Backfilling three years of old campaign codes is a file, and always will be. Correcting a value from 2023 is a file. If it stopped arriving before the lookback window closed, a rule cannot help you.</p>
     <p>A mature implementation runs both. Rules keeping the present tidy, and a one-time historical file that somebody built carefully, once, and then never had to touch again.</p>
@@ -326,7 +326,7 @@ Captures: $1 = eml      $2 = 2026     $3 = 07
 </div>
 
 <div class="ref-box">
-    <div class="ref-title">📚 Learn More</div>
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
     <ul>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/classifications/sets/set/rules" target="_blank">Adobe Docs: Classification Set Rules (functions, lookback, testing)</a></li>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/classifications/classifications-rulebuilder/classification-quickstart-rules" target="_blank">Adobe Docs: Classification Rules and Rule Priority</a></li>

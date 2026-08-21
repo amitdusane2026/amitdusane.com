@@ -64,7 +64,7 @@ weight: 2
 <p>Now put a Hit container around a rule on that eVar. It does not return the one hit where the value was set. It returns every hit where the value was still in effect, which for a tracking code expiring after a week means the rest of the visit, and quite possibly several visits after it. The container is doing exactly what it was told. The variable underneath it was never hit-scoped in the first place.</p>
 
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ A Hit container on an eVar quietly returns whole visits</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>A Hit container on an eVar quietly returns whole visits</div>
     <p>This is the reason a "narrow" segment comes back far larger than expected, and nothing about the definition looks wrong. When the question really is about the single moment a value was set, segment on the instance metric for that variable, or on a <a href="/adobe-analytics-learning/foundations/variables/props-traffic-variables/">prop</a> carrying the same value, since props do not persist. Check the expiration setting before trusting any hit-scoped rule on an eVar, because the segment inherits that setting whether or not anyone remembers it was configured.</p>
 </div>
 
@@ -72,7 +72,7 @@ weight: 2
 <p>The rule is easy to state: match the container to the natural scope of the question, not to the metric you plan to pair with it. A question about a single moment, such as which page threw an error, wants Hit. A question about a session, such as what happened in visits that included a purchase, wants Visit. A question about a person over time, such as what purchasers do across all their visits, wants Visitor.</p>
 
 <div class="pro-tip">
-    <div class="pro-tip-hdr">💡 A Visitor container is not how you count unique visitors</div>
+    <div class="pro-tip-hdr"><span class="tip-ico"></span>A Visitor container is not how you count unique visitors</div>
     <p>The most common reflex is to reach for a Visitor container because the report needs a Unique Visitors number. Scope and metric are independent. A Hit container paired with the Unique Visitors metric still counts the unique visitors who had that hit. Choose the container for the data you want to pull in, then pair whatever metric answers the question. Picking Visitor scope just to get a visitor count silently widens the data far past what was asked.</p>
 </div>
 
@@ -146,7 +146,7 @@ weight: 2
 <p>The reason to respect that order is not a matter of taste. It is how the evaluation actually runs.</p>
 
 <div class="info-box">
-    <div class="info-hdr">ℹ️ The outer container decides first, and never looks back</div>
+    <div class="info-hdr"><span class="info-ico"></span>The outer container decides first, and never looks back</div>
     <p>Nested containers evaluate from the outside in. The outermost container decides which data is included, and everything it discards is gone for good. The inner container then refines only what survived. It can never reach back out to data the outer already threw away.</p>
 </div>
 
@@ -219,7 +219,7 @@ weight: 2
 </div>
 
 <div class="ref-box">
-    <div class="ref-title">📚 Learn More</div>
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
     <ul>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/segmentation/seg-containers" target="_blank">Adobe Docs: Segment Containers</a></li>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/segmentation/segmentation-workflow/seg-build" target="_blank">Adobe Docs: Build Segments</a></li>

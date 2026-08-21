@@ -38,7 +38,7 @@ weight: 3
 <p>Metrics, being numbers, take numeric operators instead: is greater than, is less than, is greater than or equal to, and so on. Revenue is greater than 100 is a metric condition, not a string one. And three operators handle whole lists at once: equals any of matches a value that exactly equals any item in a list, contains any of matches when the value contains any listed item, and contains all of requires every listed token to be present. They save building long chains of <code>Or</code> conditions by hand.</p>
 
 <div class="pro-tip">
-    <div class="pro-tip-hdr">💡 "contains any of" and "equals any of" are not interchangeable</div>
+    <div class="pro-tip-hdr"><span class="tip-ico"></span>"contains any of" and "equals any of" are not interchangeable</div>
     <p>These two look alike and behave differently, and the difference bites. contains any of is space-delimited and matches partial strings, so a list containing 42 will also match 425 and 1042. equals any of is comma-delimited, matches values exactly, accepts up to 500 items, and runs faster. When the goal is an exact list of IDs or page names, reach for equals any of. Using contains any of on identifiers is a quiet way to pull in values that were never intended, and the contains family is also the most processing-heavy set of operators, since it scans the full content of every value.</p>
 </div>
 
@@ -135,7 +135,7 @@ weight: 3
 </div>
 
 <div class="ref-box">
-    <div class="ref-title">📚 Learn More</div>
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
     <ul>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/segmentation/segment-reference/seg-operators" target="_blank">Adobe Docs: Comparison Operators for Segments</a></li>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/segmentation/segmentation-workflow/seg-build" target="_blank">Adobe Docs: Build Segments</a></li>

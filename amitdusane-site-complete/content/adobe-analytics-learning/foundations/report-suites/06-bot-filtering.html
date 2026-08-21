@@ -117,7 +117,7 @@ weight: 6
 </div>
 <p>This is not a criticism of Adobe, and it is not a mistake anyone made in your implementation. A shared industry list can only contain what the industry has agreed to name. Recognising traffic that is actively trying not to be recognised is a genuinely harder problem, and it is one the product has not solved yet. Tick the box, because it is free and it removes real noise. Just do not walk away believing the job is finished.</p>
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ Clean reports and a smaller bill are two different things</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>Clean reports and a smaller bill are two different things</div>
     <p>Filtering removes bots from your reports. It does not remove them from your invoice. Adobe can only classify a hit after receiving it, so the server call has already been made and metered by the time any rule looks at it. This catches people out often enough to be worth stating plainly, and it is covered in full in <a href="/adobe-analytics-learning/collect/tracking-calls/server-calls-billing/">Server Calls and Billing</a>.</p>
 </div>
 
@@ -137,11 +137,11 @@ weight: 6
 </div>
 <p>Once you have a candidate, the exclusion itself is as simple as the checkbox was. You add the address, or a range, and every future hit from it is dropped before processing. Exclusion by IP is decided per report suite, like almost everything else in this module, so a rule added to one suite protects that suite and nothing else.</p>
 <div class="pro-tip">
-    <div class="pro-tip-hdr">💡 Write down why an address was excluded, on the day you exclude it</div>
+    <div class="pro-tip-hdr"><span class="tip-ico"></span>Write down why an address was excluded, on the day you exclude it</div>
     <p>An IP exclusion list is one of the few settings that becomes harder to read every year it survives. Two years on, nobody remembers whether an address was a scraper, a load balancer, or the office. The result is that nobody ever dares remove anything, and the list grows until it is quietly excluding a partner who moved onto that range. Keep the reason next to the address, wherever your team keeps such things.</p>
 </div>
 <div class="info-box">
-    <div class="info-hdr">ℹ️ The same job, done in three different places</div>
+    <div class="info-hdr"><span class="info-ico"></span>The same job, done in three different places</div>
     <p>Bot rules and IP exclusion both act inside Adobe, after the hit arrives. <a href="/adobe-analytics-learning/shape/vista-rules/">VISTA rules</a> can do the same job with far more precision, and are worth knowing about when a pattern is too complex for an address. And if you can identify the traffic in the browser before the hit is ever sent, that is the only option that also stops you paying for it. Same outcome, three very different points in the pipeline.</p>
 </div>
 
@@ -154,7 +154,7 @@ weight: 6
 <p>Filtered traffic is not deleted. It is set aside, and Adobe keeps a small set of bot reports showing what was removed and which rule removed it. This is the only feedback the feature gives you, and it is worth opening twice: once when you first enable filtering, and once a few weeks later.</p>
 <p>The first look tells you the rules are matching something. The second tells you whether the volume is stable, climbing, or has suddenly stopped, and a bot report that falls to zero is far more likely to mean a setting was changed than that the bots went away.</p>
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ An exclusion that is too wide removes real customers, and says nothing</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>An exclusion that is too wide removes real customers, and says nothing</div>
     <p>An IP range chosen generously, or an address recycled by its owner and handed to somebody else, will quietly drop genuine visitors. There is no error, no alert, and no entry in any report to tell you it happened, because excluded hits are not counted anywhere you would think to look. The only symptom is a number that is lower than it should be, and a number that is lower than it should be looks exactly like a bad month. Exclude the narrowest range that solves the problem, and never a range you did not verify.</p>
 </div>
 
@@ -169,7 +169,7 @@ weight: 6
 </div>
 
 <div class="ref-box">
-    <div class="ref-title">📚 Learn More</div>
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
     <ul>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/admin/admin-tools/manage-report-suites/edit-report-suite/report-suite-general/bot-removal/bot-rules" target="_blank">Adobe Docs: Understand and Configure Bot Rules</a></li>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/admin/admin-tools/manage-report-suites/edit-report-suite/report-suite-general/bot-removal/bot-exclusion-methods" target="_blank">Adobe Docs: Comparison of Different Bot Exclusion Methods</a></li>

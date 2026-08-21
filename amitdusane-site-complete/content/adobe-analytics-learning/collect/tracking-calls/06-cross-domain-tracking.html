@@ -20,7 +20,7 @@ weight: 6
 <p>The reason is where the identity actually lives. The <a href="/adobe-analytics-learning/collect/tracking-calls/experience-cloud-id-ecid/">ECID</a> is stored in a first-party cookie named <code>AMCV_</code>, and that cookie is scoped to the domain that wrote it. A cookie written by brand.com is readable only by brand.com. So when the visitor lands on the booking domain, that domain cannot see brand.com's <code>AMCV_</code> cookie, has no idea one exists, and does the only thing it can: it writes its own <code>AMCV_</code> cookie with a brand new ECID. Same extension, same org ID, two different cookie values, two visitors. This is not an Adobe flaw, it is the browser enforcing domain isolation for privacy, and it applies to everyone. The whole job of cross-domain tracking is to carry one ECID across that boundary so the second domain reuses it instead of inventing a new one.</p>
 
 <div class="info-box">
-    <div class="info-hdr">ℹ️ First, check that you actually have this problem</div>
+    <div class="info-hdr"><span class="info-ico"></span>First, check that you actually have this problem</div>
     <p>"Different domains" and "different subdomains" are not the same thing. Subdomains such as shop.brand.com and www.brand.com share a common root, so a cookie written to <code>.brand.com</code> is visible to all of them. If your ID extension sets the cookie at the root domain, movement between subdomains is already stitched and you need to do nothing. The work below is only for genuinely different registrable domains, like brand.com to booking-partner.com. Confirm which case you are in before building anything.</p>
 </div>
 
@@ -101,7 +101,7 @@ crossDomains.forEach(function (domain) {
 <p><strong>The Web SDK path.</strong> The <a href="/adobe-analytics-learning/collect/data-collection/adobe-web-sdk/">Web SDK</a> extension replaces both AppMeasurement and the ID extension, and the Edge Network manages identity. Here there is no custom code to write, because the extension already includes the action. You build a Core Click rule whose selector matches your outbound links (for example <code>a[href]</code>) with a condition limiting it to your other domain's hostname, and you attach the Web SDK "Redirect with identity" action. It appends the same <code>adobe_mc</code> parameter for you.</p>
 
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ Two things people expect to use here, but do not</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>Two things people expect to use here, but do not</div>
     <p>This is not a <code>doPlugins</code> job. <code>doPlugins</code> runs on every beacon to set Analytics variables, which is a different layer from identity, so cross-domain decoration does not belong there. It is also not an "extra plugin" you install: <code>appendVisitorIDsTo()</code> is a built-in method of the Experience Cloud ID library, not an add-on. The AppMeasurement recipe is exactly the ID extension plus one custom-code rule, nothing more exotic.</p>
 </div>
 
@@ -113,7 +113,7 @@ crossDomains.forEach(function (domain) {
 <p><strong>Decorate the right links, and only those.</strong> You append identity to links pointing at domains you own and want to stitch, not to every outbound link on the page. Spraying your ECID onto links to sites you do not control leaks identity where it does not belong. Configure the specific destination domains and leave everything else alone.</p>
 
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ For the stitch to actually hold</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>For the stitch to actually hold</div>
     <ul>
         <li>Every domain uses the same Experience Cloud organization ID and runs the ID service or Web SDK.</li>
         <li>For the journey and any campaign attribution to survive, the domains generally report into the same report suite, often a global one.</li>
@@ -132,7 +132,7 @@ crossDomains.forEach(function (domain) {
 </div>
 
 <div class="ref-box">
-    <div class="ref-title">📚 Learn More</div>
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
     <ul>
         <li><a href="https://experienceleague.adobe.com/en/docs/experience-platform/collection/identity/cross-domain-sharing" target="_blank">Adobe Docs: Share Identity Across Domains (Web SDK)</a></li>
         <li><a href="https://experienceleague.adobe.com/en/docs/id-service/using/id-service-api/methods/appendvisitorid" target="_blank">Adobe Docs: appendVisitorIDsTo (ECID library)</a></li>

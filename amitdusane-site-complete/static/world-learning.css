@@ -672,7 +672,6 @@ body.world-learning .welcome-btn:hover{background:var(--accent2);text-decoration
   .llogo-author{display:none}
   .llogo-icon{width:48px;height:48px}
   .path-box{padding:12px 14px}
-  .path-ico{width:26px;height:26px}
   body.world-learning .lcontent .path{padding:2px 7px}
   .ref-box{padding:12px 13px}
   .diagram-box{padding:var(--sp-md) var(--sp-sm)}
@@ -823,7 +822,7 @@ body.world-learning .lcontent li{margin-bottom:var(--sp-xs);font-size:var(--fs-b
 body.world-learning .lcontent li strong{color:var(--text1)}
 
 .pro-tip{background:var(--accent-light);border:1px solid rgba(186,33,66,.25);border-radius:6px;padding:14px 16px;margin:var(--sp-lg) 0}
-.pro-tip-hdr{display:flex;align-items:center;gap:6px;font-weight:700;color:var(--accent);margin-bottom:8px;font-size:var(--fs-label)}
+.pro-tip-hdr{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--accent);margin-bottom:8px;font-size:var(--fs-label)}
 /* Box prose is body-sized. Scoped so the token actually applies: the
    generic .lcontent p rule outranks a bare `.pro-tip p`, so before this
    these three declarations were dead and the 15px they asked for never
@@ -831,10 +830,10 @@ body.world-learning .lcontent li strong{color:var(--text1)}
    page, so it gets body size rather than a de-emphasised aside size. */
 body.world-learning .lcontent .pro-tip p{margin:0;font-size:var(--fs-body)}
 .info-box{background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.2);border-radius:6px;padding:14px 16px;margin:var(--sp-lg) 0}
-.info-hdr{display:flex;align-items:center;gap:6px;font-weight:700;color:var(--info-ink);margin-bottom:8px;font-size:var(--fs-label)}
+.info-hdr{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--info-ink);margin-bottom:8px;font-size:var(--fs-label)}
 body.world-learning .lcontent .info-box p{margin:0;font-size:var(--fs-body)}
 .warn-box{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);border-radius:6px;padding:14px 16px;margin:var(--sp-lg) 0}
-.warn-hdr{display:flex;align-items:center;gap:6px;font-weight:700;color:var(--warning-ink);margin-bottom:8px;font-size:var(--fs-label)}
+.warn-hdr{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--warning-ink);margin-bottom:8px;font-size:var(--fs-label)}
 body.world-learning .lcontent .warn-box p{margin:0;font-size:var(--fs-body)}
 
 .code-block{background:#0d1117;border:1px solid var(--border);border-radius:6px;margin:var(--sp-lg) 0;overflow:hidden}
@@ -995,7 +994,7 @@ a.card .card-desc{color:var(--text2)}
 .flow-horizontal{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap}
 
 .ref-box{background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2);border-radius:6px;padding:14px 16px;margin:var(--sp-lg) 0}
-.ref-title{font-weight:700;color:var(--success-ink);margin-bottom:10px;font-size:var(--fs-label)}
+.ref-title{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--success-ink);margin-bottom:10px;font-size:var(--fs-label)}
 .ref-box ul{margin:0;padding-left:18px}
 body.world-learning .lcontent .ref-box li{margin-bottom:4px;font-size:var(--fs-sm)}
 .ref-box a{color:var(--success);text-decoration:none}
@@ -1004,6 +1003,46 @@ body.world-learning .lcontent .ref-box li{margin-bottom:4px;font-size:var(--fs-s
 .path-box{background:rgba(167,139,250,.12);border:1px solid rgba(167,139,250,.35);border-radius:8px;padding:16px 18px;margin:var(--sp-lg) 0}
 .path-title{display:flex;align-items:center;gap:10px;font-weight:700;color:#534AB7;margin-bottom:10px;font-size:var(--fs-label)}
 .path-ico{flex:none;width:30px;height:30px;border-radius:7px;background:#534AB7 url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23ffffff%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M9%2011a3%203%200%201%200%206%200a3%203%200%200%200%20-6%200%22%2F%3E%3Cpath%20d%3D%22M17.657%2016.657l-4.243%204.243a2%202%200%200%201%20-2.827%200l-4.244%20-4.243a8%208%200%201%201%2011.314%200z%22%2F%3E%3C%2Fsvg%3E") center/17px no-repeat}
+
+/* ==========================================================================
+   Component icons, 21 August 2026: four tiles replacing four emoji.
+
+   These are not a new design. They are .path-ico above, applied four more
+   times -- Amit picked that one out as the icon on the site that works, and
+   the reason it works is that it is DRAWN: a 30px tile carrying a white line
+   glyph at the same 24-unit viewBox, stroke 2, round caps that every chrome
+   icon on the site already uses. The four emoji it replaces were the only
+   things not speaking that language, and because the operating system drew
+   them they were a different picture on Windows, Mac and Android, in colours
+   the site never chose.
+
+   Fills are fixed in both themes rather than following the -ink tokens,
+   exactly as .path-ico's violet is. Following the token would flip the amber
+   to #fbbf24 in dark and strand a white glyph on a light ground. Measured on
+   the fill: white sits between 5.9:1 and 6.7:1 on all four, which is what
+   decides whether the glyph is legible. Tile-against-card is 2.3 to 3.0 in
+   dark, and that is not the binding constraint -- the label text beside it
+   carries the meaning, and .path-ico itself measures 2.15 there and has been
+   accepted since August.
+
+   Retires a documented trap with them: the warning emoji depended on the
+   U+FE0F variation selector, and without it some platforms rendered a
+   monochrome glyph. A tile has no such dependency. */
+.warn-ico,.info-ico,.tip-ico,.ref-ico{flex:none;width:30px;height:30px;border-radius:7px;background-repeat:no-repeat;background-position:center;background-size:17px}
+.warn-ico{background-color:#8a5700;background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23ffffff%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M10.36%203.59%202.26%2017.12A1.91%201.91%200%200%200%203.9%2020h16.2a1.91%201.91%200%200%200%201.64-2.88L13.63%203.6a1.91%201.91%200%200%200-3.27%200z%22%2F%3E%3Cpath%20d%3D%22M12%209v4%22%2F%3E%3Cpath%20d%3D%22M12%2017h.01%22%2F%3E%3C%2Fsvg%3E")}
+.info-ico{background-color:#1d4ed8;background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23ffffff%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2212%22%20r%3D%229%22%2F%3E%3Cpath%20d%3D%22M12%208h.01%22%2F%3E%3Cpath%20d%3D%22M11%2012h1v4h1%22%2F%3E%3C%2Fsvg%3E")}
+.tip-ico{background-color:#ba2142;background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23ffffff%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2210%22%20r%3D%225.2%22%2F%3E%3Cpath%20d%3D%22M9.8%2017h4.4%22%2F%3E%3Cpath%20d%3D%22M10.6%2019.6h2.8%22%2F%3E%3C%2Fsvg%3E")}
+.ref-ico{background-color:#0a6e50;background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23ffffff%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M3%2018.5a8%208%200%200%201%209%200%208%208%200%200%201%209%200%22%2F%3E%3Cpath%20d%3D%22M3%206.5a8%208%200%200%201%209%200%208%208%200%200%201%209%200%22%2F%3E%3Cpath%20d%3D%22M3%206.5v12%22%2F%3E%3Cpath%20d%3D%22M12%206.5v12%22%2F%3E%3Cpath%20d%3D%22M21%206.5v12%22%2F%3E%3C%2Fsvg%3E")}
+
+/* Mobile sizing sits HERE, after the base rules, not up in the 880px block
+   where it used to live. It was written at line 675 against base rules that
+   land around 1010, and media queries add no specificity -- so the later
+   30px simply won and the override had never once applied. .path-ico
+   carried the same dead rule since August: it measured 30px at 390 while
+   the stylesheet claimed 26px. Trap 7, second form, in the wild. */
+@media(max-width:880px){
+  .path-ico,.warn-ico,.info-ico,.tip-ico,.ref-ico{width:26px;height:26px;background-size:15px}
+}
 body.world-learning .lcontent .path-box p{margin:5px 0;font-size:var(--fs-sm)}
 body.world-learning .lcontent .path{background:#CECBF6;padding:3px 9px;border-radius:4px;font-family:Consolas,monospace;font-size:var(--fs-code);color:#3C3489}
 [data-theme="dark"] .lupdated{color:var(--text3)}

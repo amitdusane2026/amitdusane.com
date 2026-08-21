@@ -143,7 +143,7 @@ weight: 2
 <p>The same argument runs well outside conversion rate, and bounce rate is the case worth knowing because the convention is not obvious. Bounce rate divides bounces by <strong>entries</strong>, not by visits. On a page dimension those are different populations: entries counts the visits that started on that page, while visits counts every visit that touched it at any point. Build it against visits and the number comes out lower on every page that is more often passed through than landed on, which is most of them, and it will disagree with the built in Bounce Rate sitting two rows above it in the metric list.</p>
 
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ A cookie banner can make your bounces disappear</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>A cookie banner can make your bounces disappear</div>
     <p>Bounces counts visits containing exactly one <strong>hit</strong>, not one page. So a visitor who lands, reads nothing, and leaves is not a bounce if a consent prompt, a pop up, or any other tracked interaction fired a second call on that page. Deploy a cookie banner that sends a hit and the bounce rate drops across the whole site overnight, with no change whatever in behavior. Where the question is really about disengagement, build the rate on Single Page Visits instead and say so in the description.</p>
 </div>
 
@@ -204,12 +204,12 @@ weight: 2
 <p>The mechanic is undramatic: drop a segment into a container in the builder, put the metric inside it, and the segment is evaluated at report run time against whatever the report is looking at. Nothing about the implementation changes, and no data is precomputed. What you have built is a column that quietly asks a narrower question than its neighbors.</p>
 
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ The panel segment does not step aside for the metric segment</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>The panel segment does not step aside for the metric segment</div>
     <p>Both filters apply. A panel scoped to mobile traffic, containing a metric with new visitors fused into it, returns revenue from mobile new visitors, and the column header says nothing about mobile. The number is correct and the label is a lie of omission. This is the most common way a segmented metric misleads, and it never produces an error, because logically there is nothing wrong with asking two questions at once.</p>
 </div>
 
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ Editing a shared segment rewrites every metric that contains it</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>Editing a shared segment rewrites every metric that contains it</div>
     <p>A segment inside a calculated metric is a live reference, not a copy. Adobe updates the segment everywhere it is used the moment it is saved, including inside metric definitions. So an analyst tightening one segment for their own project can silently change an approved company metric, in a dashboard they have never opened, for people they have never met. Nothing warns either party. Before editing any shared segment, check what it is embedded in.</p>
 </div>
 
@@ -237,7 +237,7 @@ weight: 2
 <p>One more is worth knowing because it solves a problem every ranked table has. The advanced list includes <strong>IF</strong> along with the comparison and logical operators, so a rate can be made to return zero below a volume threshold. A page with three visits and one order is not a 33 percent conversion rate, it is noise, and left alone it will sit at the top of the sorted table looking like the best page on the site. Wrapping the rate in a condition that requires, say, a hundred visits before it reports anything makes the table readable without deleting the underlying data. Put the threshold in the metric description, because a reader who does not know it is there will wonder why a row shows zero.</p>
 
 <div class="pro-tip">
-    <div class="pro-tip-hdr">💡 Cumulative average over a rate metric averages the wrong thing</div>
+    <div class="pro-tip-hdr"><span class="tip-ico"></span>Cumulative average over a rate metric averages the wrong thing</div>
     <p>Applying a cumulative average to a rate, such as revenue per person, averages the rates themselves rather than dividing cumulative revenue by cumulative people, and those two answers are not the same whenever the daily volumes differ. Build it as cumulative revenue divided by cumulative people instead. The same reasoning applies to any average of an average: aggregate the parts first, then divide.</p>
 </div>
 
@@ -299,7 +299,7 @@ weight: 2
 </div>
 
 <div class="ref-box">
-    <div class="ref-title">📚 Learn More</div>
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
     <ul>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/calculated-metrics/calcmetric-workflow/cm-build-metrics" target="_blank">Adobe Docs: Build Calculated Metrics</a></li>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/calculated-metrics/calcmetric-workflow/m-metric-type-alloc" target="_blank">Adobe Docs: Metric Type and Attribution</a></li>

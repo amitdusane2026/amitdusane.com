@@ -81,7 +81,7 @@ weight: 2
 
 <p>One word in that table carries more weight than it looks. <strong>Delete</strong> removes the value from this hit, and that is the whole of what it does. It is not a way to stop a value being credited.</p>
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ Deleting a value does not undo persistence</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>Deleting a value does not undo persistence</div>
     <p>An eVar that persisted from an earlier hit is resolved long after processing rules have finished, when Adobe works out attribution at the visitor level. So a rule that deletes <code>eVar5</code> on today's hit removes the incoming value and leaves the persisted one entirely alone, and the report goes on crediting it exactly as its expiration and allocation settings say it should. The rule ran. Nothing failed. If a value should stop being attributed, that is a question for the eVar's own settings in <a href="/adobe-analytics-learning/foundations/variables/evars-conversion-variables/">eVars</a>, not for a processing rule.</p>
 </div>
 
@@ -94,7 +94,7 @@ weight: 2
 <p>The habit that prevents it is to group rules by what they do rather than by which feature they belong to: first the rules that <strong>set</strong> raw values, then the rules that <strong>refine</strong> them, then the rules that <strong>read</strong> them to derive events. Kept in that order, a derived event can never rest on a value that is still going to change. Dropped into an ungrouped list, a new rule breaks an old one without anybody editing the rule that broke.</p>
 
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ Guard an overwrite with a condition</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>Guard an overwrite with a condition</div>
     <p>Actions do not check whether their source has a value first. A rule that overwrites <code>eVar1</code> with <code>eVar2</code> will blank out <code>eVar1</code> on every hit where <code>eVar2</code> happens to be empty, quietly destroying good data. Before you use one variable to overwrite another, add a condition that the source is set. The full catalog of traps like this lives in <a href="/adobe-analytics-learning/shape/processing-rules/limitations-best-practices/">Limitations and Best Practices</a>; this one is common enough to fix on sight.</p>
 </div>
 
@@ -114,7 +114,7 @@ weight: 2
 </div>
 
 <div class="ref-box">
-    <div class="ref-title">📚 Learn More</div>
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
     <ul>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/admin/admin-tools/manage-report-suites/edit-report-suite/report-suite-general/processing-rules/pr-interface" target="_blank">Adobe Docs: Processing Rules Interface</a></li>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/admin/admin-tools/manage-report-suites/edit-report-suite/report-suite-general/processing-rules/pr-variables" target="_blank">Adobe Docs: Dimensions and Metrics Available to Processing Rules</a></li>

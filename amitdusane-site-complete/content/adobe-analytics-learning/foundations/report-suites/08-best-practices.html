@@ -55,20 +55,20 @@ weight: 8
 <h3 class="subsec-title">5. Spend the most time on the architecture itself</h3>
 <p>If you take one thing from this module, take this: the architectural decisions you make at setup matter more than any single setting, and they deserve the most time you can give them. Two decisions sit at the center. First, the data-model shape, one global suite with virtual report suites (the modern default), separate individual suites, or multi-suite tagging, decided against the digital assets you actually need to track. Second, the topology between Tags and your suites: how many Tags properties you will run, and whether one property feeds several suites or several properties feed one. Draw it. A simple diagram of properties, suites, and the lines between them surfaces problems that prose hides. And decide it with the people who genuinely own the product, not in isolation.</p>
 <div class="pro-tip">
-    <div class="pro-tip-hdr">💡 Before you create, ask one question</div>
+    <div class="pro-tip-hdr"><span class="tip-ico"></span>Before you create, ask one question</div>
     <p>Before spinning up any new report suite, ask: could a virtual report suite do this instead? Most "this team needs its own data" requests are really requests for a view, which a VRS delivers for free. Reach for a real new suite only when you need genuinely separate collection. <a href="/adobe-analytics-learning/foundations/report-suites/virtual-report-suites/">Virtual Report Suites</a> covers exactly where that line falls.</p>
 </div>
 <h3 class="subsec-title">6. Document everything, and make it the organization's decision</h3>
 <p>All of this technical and architectural work happens under business pressure, and the discipline that protects it is documentation. Record every significant decision, the why, the what, the where, and the how, and take a sign-off at each critical stage. Business stakeholders will not follow every technical detail, and they do not need to; it is your job to translate, to hand them a small set of clear options with a recommendation, and to make them comfortable enough to choose. Because at this stage the decision must belong to the organization, not to one person. You supply the thinking; the organization owns the outcome. That is what lets the system survive the day you, or anyone, moves on. The course returns to this in the <a href="/adobe-analytics-learning/deliver/solution-design-reference/">solution design reference</a>.</p>
 <div class="warn-box">
-    <div class="warn-hdr">⚠️ This is the phase you cannot redo cheaply</div>
+    <div class="warn-hdr"><span class="warn-ico"></span>This is the phase you cannot redo cheaply</div>
     <p>Everywhere else in Adobe Analytics, a mistake is a Tuesday: you fix the setting and move on. At setup, the same mistake is structural. A careless suite split can never be merged, a wrong time zone seams every trend, a missing foundational variable means there is simply no history to recover. Treat the setup phase with the weight it deserves, slow, deliberate, and documented, because it is the one phase whose mistakes you pay for in years, not minutes.</p>
 </div>
 <p>That closes the module. You now know what a report suite is and why it sits at the center of collection, how to choose between global and individual, how virtual report suites hand teams their own views at no extra cost, what the settings panel really controls, how multi-suite tagging works and what it bills, and how to set the whole thing up to last. The variables module goes one level deeper.</p>
 
 <p>Because a report suite, for all its architectural weight, is still just an empty box. Nothing in it yet. What actually fills it, hit after hit, are the variables: the props, the eVars, the events, and the products string that carries an entire ecommerce funnel through a single line of text. Choose them badly and no amount of report suite architecture will save the reporting. <a href="/adobe-analytics-learning/foundations/variables/">The variables module</a> is where the box gets filled.</p>
 <div class="ref-box">
-    <div class="ref-title">📚 Learn More</div>
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
     <ul>
         <li><a href="https://experienceleague.adobe.com/en/docs/analytics/admin/admin-tools/manage-report-suites/c-new-report-suite/new-report-suite" target="_blank">Adobe Docs: Create a Report Suite</a></li>
         <li><a href="https://experienceleague.adobe.com/docs/analytics/implementation/prepare/global-rs.html" target="_blank">Adobe Docs: Global Report Suite Considerations</a></li>
