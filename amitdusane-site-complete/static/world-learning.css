@@ -774,6 +774,18 @@ body.world-learning .welcome-btn:hover{background:var(--accent2);text-decoration
   .hm-tagline{font-size:15px !important}
   .welcome-icon{width:70px !important;height:70px !important}
   .welcome-title{font-size:24px !important}
+  /* "Do this" on paper. The step number stays, because a walkthrough without
+     its numbers is not a walkthrough, but the filled crimson disc becomes a
+     thin ring with crimson figures: the same information at a fraction of the
+     ink, and it survives a greyscale printer, which a white number knocked
+     out of a solid fill does not. */
+  .print-doc .dothis-steps > li::before{
+    background:transparent !important; color:#ba2142 !important;
+    border:1.5px solid #ba2142; line-height:23px;
+  }
+  .print-doc .dothis-steps > li::after{background:#e2e8f0}
+  .print-doc .dothis{border:1px solid #cbd5e1}
+  .print-doc .dothis-hdr{background:#f1f5f9}
   @page{margin:14mm}
 }
 
@@ -865,20 +877,39 @@ body.world-learning .lcontent code{font-family:Consolas,monospace;font-size:var(
 .dothis{background:var(--card);border:1px solid var(--border);border-radius:8px;margin:var(--sp-lg) 0;overflow:hidden}
 .dothis-hdr{display:flex;align-items:baseline;gap:9px;padding:11px 16px;background:var(--bg3);border-bottom:1px solid var(--border);font-weight:700;font-size:var(--fs-label);color:var(--text1)}
 .dothis-hdr b{color:var(--accent);flex:none}
-/* Scoped forms below: `body.world-learning .lcontent p` and `... li` are
-   (0,2,2) and silently beat any bare component selector. CLAUDE.md trap 7. */
-body.world-learning .lcontent p.dothis-setup{margin:0;padding:10px 16px;background:var(--bg1);border-bottom:1px solid var(--border);font-size:var(--fs-sm);color:var(--text2)}
-body.world-learning .lcontent p.dothis-end{margin:0;padding:11px 16px;background:var(--bg1);border-top:1px solid var(--border);font-size:var(--fs-sm);color:var(--text2)}
+/* TWO LAYERS, and the split is load-bearing rather than tidiness.
+   Everything structural is declared BARE so it applies wherever the panel
+   renders. The `.lcontent`-scoped rules below re-assert only the handful of
+   properties that `body.world-learning .lcontent p` and `... li` would
+   otherwise win at (0,2,2) -- CLAUDE.md trap 7.
+
+   The print document is why this matters. It is a separate
+   `<table class="print-doc">` with content cloned into `#printBody`, and it
+   is NOT inside `.lcontent`. The first version of this component scoped its
+   structure, so on paper `list-style:none` vanished and the browser numbered
+   every li including the group headings, `counter-increment` vanished so the
+   counter read 0, and `position:relative` vanished so the absolutely
+   positioned step circle escaped its list item and landed on the masthead.
+   The bare `::before` and `::after` kept rendering throughout, which is what
+   put an orphan crimson "0" over the logo and a stray rule down the page.
+   Scope a component's LOOK, never its STRUCTURE. */
+.dothis-setup{margin:0;padding:10px 16px;background:var(--bg1);border-bottom:1px solid var(--border);font-size:var(--fs-sm);color:var(--text2)}
+.dothis-end{margin:0;padding:11px 16px;background:var(--bg1);border-top:1px solid var(--border);font-size:var(--fs-sm);color:var(--text2)}
+body.world-learning .lcontent p.dothis-setup{margin:0;padding:10px 16px;font-size:var(--fs-sm);color:var(--text2)}
+body.world-learning .lcontent p.dothis-end{margin:0;padding:11px 16px;font-size:var(--fs-sm);color:var(--text2)}
 
 /* ---- shape one: an ordered sequence ---- */
-body.world-learning .lcontent ol.dothis-steps{list-style:none;margin:0;padding:16px 16px 4px 0;counter-reset:ds;color:var(--text1)}
-body.world-learning .lcontent ol.dothis-steps > li{position:relative;padding-left:48px;margin-bottom:16px;counter-increment:ds;font-size:var(--fs-body)}
+.dothis-steps{list-style:none;margin:0;padding:16px 16px 4px 0;counter-reset:ds;color:var(--text1)}
+.dothis-steps > li{position:relative;padding-left:48px;margin-bottom:16px;counter-increment:ds;font-size:var(--fs-body)}
+body.world-learning .lcontent ol.dothis-steps{margin:0;padding:16px 16px 4px 0;color:var(--text1)}
+body.world-learning .lcontent ol.dothis-steps > li{margin-bottom:16px;font-size:var(--fs-body)}
 .dothis-steps > li::before{content:counter(ds);position:absolute;left:10px;top:1px;width:26px;height:26px;border-radius:50%;background:var(--accent);color:var(--on-accent);font-weight:700;font-size:13px;line-height:26px;text-align:center}
 /* The connector is what turns nine boxes into one journey. It stops at the
    last step and at a group break, so the grouping stays legible. */
 .dothis-steps > li::after{content:"";position:absolute;left:22px;top:31px;bottom:-16px;width:2px;background:var(--border)}
 .dothis-steps > li:last-child::after{display:none}
-body.world-learning .lcontent ol.dothis-steps > li.ds-group{counter-increment:none;margin:22px 0 12px;padding-left:48px;font-size:var(--fs-sm);font-weight:600;color:var(--text2)}
+.dothis-steps > li.ds-group{counter-increment:none;margin:22px 0 12px;padding-left:48px;font-size:var(--fs-sm);font-weight:600;color:var(--text2)}
+body.world-learning .lcontent ol.dothis-steps > li.ds-group{margin:22px 0 12px;font-size:var(--fs-sm);font-weight:600;color:var(--text2)}
 .dothis-steps > li.ds-group::before,.dothis-steps > li.ds-group::after{display:none;content:none}
 .dothis-steps > li.ds-group:first-child{margin-top:0}
 /* Action and outcome are separated deliberately. Running them together is
@@ -892,8 +923,11 @@ body.world-learning .lcontent ol.dothis-steps > li.ds-group{counter-increment:no
 .dothis-fields > div{display:grid;grid-template-columns:minmax(150px,36%) 1fr;gap:12px;padding:9px 0;border-bottom:1px dashed var(--border)}
 .dothis-fields > div:last-child{border-bottom:none}
 .dothis-fields dt{color:var(--text2);font-size:var(--fs-sm);line-height:1.5}
+.dothis-fields dd{margin:0;color:var(--text1);font-size:var(--fs-sm);line-height:1.5}
+.dothis-fields ul{margin:0;padding-left:16px}
+.dothis-fields li{font-size:var(--fs-sm);margin-bottom:2px}
 body.world-learning .lcontent .dothis-fields dd{margin:0;color:var(--text1);font-size:var(--fs-sm);line-height:1.5}
-body.world-learning .lcontent .dothis-fields ul{margin:0;padding-left:16px}
+body.world-learning .lcontent .dothis-fields ul{margin:0;padding-left:16px;color:var(--text1)}
 body.world-learning .lcontent .dothis-fields li{font-size:var(--fs-sm);margin-bottom:2px}
 
 /* Monospace is a spice here, not the medium: exact values and UI labels only,
@@ -901,6 +935,7 @@ body.world-learning .lcontent .dothis-fields li{font-size:var(--fs-sm);margin-bo
 /* overflow-wrap:anywhere because these carry landing URLs and query strings.
    The longest one today happens to fit at 390px; the next one added would not,
    and an overflowing chip pushes the whole grid item wide. */
+.dothis code{background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:1px 6px;font-size:.88em;color:var(--text1);overflow-wrap:anywhere}
 body.world-learning .lcontent .dothis code{background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:1px 6px;font-size:.88em;color:var(--text1);overflow-wrap:anywhere}
 .dothis .ds-sep{color:var(--text3);padding:0 2px}
 
