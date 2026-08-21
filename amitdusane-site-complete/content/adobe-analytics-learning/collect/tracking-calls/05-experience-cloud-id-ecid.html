@@ -221,25 +221,22 @@ visitor.getMarketingCloudVisitorID(function (id) {
 
 <h3 class="subsec-title">What you actually do, and the two things that bite</h3>
 <p>Everything so far is understanding. Here is the work, and it is genuinely short.</p>
-<div class="code-block">
-    <div class="code-hdr"><span class="code-lang">Follow along: ECID, start to finish</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-    <div class="code-body"><pre>1  Launch > your property > Extensions > Catalog
-   Install "Experience Cloud ID Service"
-   Check the Organization ID is correct (usually pre-filled)
-
-2  Launch > Data Elements > Add > Custom Code
-   Return the ECID, using getMarketingCloudVisitorID()
-
-3  Launch > Extensions > Adobe Analytics > Configure
-   Assign that data element to a spare eVar
-
-4  Publish through development, then staging, then production
-
-5  Verify: use the site yourself with a counted pattern,
-   note your own ECID, wait more than 90 minutes,
-   then filter a report to that single ECID
-
-Done. There is nothing else to configure.</pre></div>
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>ECID, start to finish</span></div>
+    <ol class="dothis-steps">
+        <li>
+            <span class="ds-do">Go to <code>Launch</code> <span class="ds-sep">&rsaquo;</span> your property <span class="ds-sep">&rsaquo;</span> <code>Extensions</code> <span class="ds-sep">&rsaquo;</span> <code>Catalog</code> and install <code>Experience Cloud ID Service</code>.</span>
+            <span class="ds-see">Check that the Organization ID is correct. It is usually pre-filled.</span>
+        </li>
+        <li><span class="ds-do">Go to <code>Launch</code> <span class="ds-sep">&rsaquo;</span> <code>Data Elements</code> <span class="ds-sep">&rsaquo;</span> <code>Add</code> <span class="ds-sep">&rsaquo;</span> <code>Custom Code</code> and return the ECID using <code>getMarketingCloudVisitorID()</code>.</span></li>
+        <li><span class="ds-do">Go to <code>Launch</code> <span class="ds-sep">&rsaquo;</span> <code>Extensions</code> <span class="ds-sep">&rsaquo;</span> <code>Adobe Analytics</code> <span class="ds-sep">&rsaquo;</span> <code>Configure</code> and assign that data element to a spare eVar.</span></li>
+        <li><span class="ds-do">Publish through development, then staging, then production.</span></li>
+        <li>
+            <span class="ds-do">Verify it yourself: use the site with a counted pattern and note your own ECID.</span>
+            <span class="ds-see">Wait more than 90 minutes, then filter a report to that single ECID. The wait is not optional &mdash; ask sooner and you will be reading incomplete data and drawing the wrong conclusion from it.</span>
+        </li>
+    </ol>
+    <p class="dothis-end">Done. There is nothing else to configure.</p>
 </div>
 <p>Step one is the part people get wrong by looking in the wrong place, hunting for an identity setting inside the Adobe Analytics extension. It is not there. Step two exists purely so future-you can debug, and step five is what turns an implementation you believe in into one you have proved.</p>
 <p>Two things go wrong often enough to be worth knowing before they happen.</p>
