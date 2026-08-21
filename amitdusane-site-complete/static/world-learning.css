@@ -877,6 +877,15 @@ body.world-learning .lcontent code{font-family:Consolas,monospace;font-size:var(
 .dothis{background:var(--card);border:1px solid var(--border);border-radius:8px;margin:var(--sp-lg) 0;overflow:hidden}
 .dothis-hdr{display:flex;align-items:baseline;gap:9px;padding:11px 16px;background:var(--bg3);border-bottom:1px solid var(--border);font-weight:700;font-size:var(--fs-label);color:var(--text1)}
 .dothis-hdr b{color:var(--accent);flex:none}
+/* The one case where the component's own header would contradict its content:
+   a rule shown so the reader does NOT build it. The panel stays structurally
+   identical, because it is still a rule configuration and belongs beside the
+   four correct ones -- only the kicker changes, and it is the loudest element
+   in the panel, so that is enough. Amber is already the site's warning hue,
+   so this spends no new colour. --warning-ink rather than the bare --warning,
+   which is not dark enough to carry text: warn-hdr measured 1.91:1 before the
+   -ink tokens existed. */
+.dothis--avoid .dothis-hdr b{color:var(--warning-ink)}
 /* TWO LAYERS, and the split is load-bearing rather than tidiness.
    Everything structural is declared BARE so it applies wherever the panel
    renders. The `.lcontent`-scoped rules below re-assert only the handful of

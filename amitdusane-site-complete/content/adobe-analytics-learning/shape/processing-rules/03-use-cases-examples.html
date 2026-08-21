@@ -29,18 +29,14 @@ weight: 3
 <h3 class="subsec-title">Example 1: Give context data a home</h3>
 <p>Your developers send a value on every hit as a context data variable, say <code>user.loginStatus</code>. Here is the part that surprises people the first time: on its own, that value populates nothing. A context data variable that is never mapped is invisible in every report, and if you never map it, its value is discarded for good. Context data is deliberately inert until a processing rule gives it a home.</p>
 <p>That inertness is the design intent, not a limitation. It lets developers send clean, well-named keys without knowing or caring which eVar or prop each one belongs in, and it lets the analyst own that mapping decision where it belongs. The rule is the seam between the two roles.</p>
-<div class="code-block">
-    <div class="code-hdr"><span class="code-lang">Processing Rule</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-    <div class="code-body"><pre>Rule title: Map login status into reporting
-
-Condition: if ALL are true
-    Context data "user.loginStatus" is set
-
-Then do the following
-    Overwrite eVar5 with the value of "user.loginStatus"
-
-Implementation sends:  s.contextData["user.loginStatus"] = "logged-in"
-Result:                eVar5 = "logged-in"</pre></div>
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>Processing rule: Map login status into reporting</span></div>
+    <dl class="dothis-fields">
+        <div><dt>If all are true</dt><dd>Context data <code>user.loginStatus</code> is set</dd></div>
+        <div><dt>Then</dt><dd>Overwrite <code>eVar5</code> with the value of <code>user.loginStatus</code></dd></div>
+        <div><dt>Implementation sends</dt><dd><code>s.contextData["user.loginStatus"] = "logged-in"</code></dd></div>
+        <div><dt>What you get</dt><dd><code>eVar5 = "logged-in"</code></dd></div>
+    </dl>
 </div>
 <div class="info-box">
     <div class="info-hdr">ℹ️ The scaling trick</div>
@@ -49,66 +45,50 @@ Result:                eVar5 = "logged-in"</pre></div>
 
 <h3 class="subsec-title">Example 2: Pull a value out of the query string</h3>
 <p>Your site's internal search puts the search term in the page URL as <code>?q=</code>, and reporting needs it in an eVar. The clean fix is to capture it in your implementation, but suppose a release is weeks away and you need the data now. A processing rule can read the query string parameter directly and route it into the eVar you keep for internal search terms.</p>
-<div class="code-block">
-    <div class="code-hdr"><span class="code-lang">Processing Rule</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-    <div class="code-body"><pre>Rule title: Capture internal search term from the URL
-
-Condition: if ALL are true
-    Query string parameter "q" is set
-
-Then do the following
-    Overwrite eVar10 with the value of query string parameter "q"
-
-URL:     https://site.com/search?q=blue+widgets
-Result:  eVar10 = "blue widgets"</pre></div>
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>Processing rule: Capture internal search term from the URL</span></div>
+    <dl class="dothis-fields">
+        <div><dt>If all are true</dt><dd>Query string parameter <code>q</code> is set</dd></div>
+        <div><dt>Then</dt><dd>Overwrite <code>eVar10</code> with the value of query string parameter <code>q</code></dd></div>
+        <div><dt>Example URL</dt><dd><code>https://site.com/search?q=blue+widgets</code></dd></div>
+        <div><dt>What you get</dt><dd><code>eVar10 = "blue widgets"</code></dd></div>
+    </dl>
 </div>
 <p>Two things to hold onto here. First, the value must be UTF-8 or Unicode encoded for the rule to read it, so an oddly encoded parameter will silently fail. Second, this is a patch, not a home. Adobe's own guidance is to capture query string values in the implementation when you reasonably can, because a URL parameter is exposed, easily changed by marketing links, and outside your governance. Reach for the rule when the timeline forces your hand, then plan the proper capture.</p>
 
 <h3 class="subsec-title">Example 3: Manufacture an event from data you already have</h3>
 <p>You need to count form completions, but the confirmation page's template is locked behind a release you cannot influence today. The page already sends its page type, and it arrives in <code>eVar1</code> as <code>confirmation</code>. That is enough. A rule can watch for that value and set the success event itself, with no page code at all.</p>
-<div class="code-block">
-    <div class="code-hdr"><span class="code-lang">Processing Rule</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-    <div class="code-body"><pre>Rule title: Count form completions on the confirmation page
-
-Condition: if ALL are true
-    eVar1 (Page Type) equals "confirmation"
-
-Then do the following
-    Set event5 (Form Complete)
-
-Result: on every hit where eVar1 = "confirmation", event5 = 1</pre></div>
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>Processing rule: Count form completions on the confirmation page</span></div>
+    <dl class="dothis-fields">
+        <div><dt>If all are true</dt><dd><code>eVar1</code> (Page Type) equals <code>confirmation</code></dd></div>
+        <div><dt>Then</dt><dd>Set <code>event5</code> (Form Complete)</dd></div>
+        <div><dt>What you get</dt><dd>On every hit where <code>eVar1 = "confirmation"</code>, <code>event5 = 1</code></dd></div>
+    </dl>
 </div>
 <p>This is where the sequencing lesson from Conditions and Actions stops being abstract. The rule can only test <code>eVar1</code> if <code>eVar1</code> already holds its value by the time this rule runs. If page type is itself set by a later processing rule, this one reads an empty value and quietly does nothing. Two more things worth knowing: the same action set to a custom value of 0 instead of 1 will discard an event, which is the clean way to drop a mistakenly fired metric, and this mechanism cannot set product-specific (merchandising) events or the products variable, so purchase-level events still belong in your implementation.</p>
 
 <h3 class="subsec-title">Example 4: Copy an eVar into a prop to see paths</h3>
 <p>A value lives in an eVar, and you want to see the sequence, the flow from one value to the next across a visit. You open the pathing reports and the eVar is not available in them. That is not a bug. Pathing lives on traffic variables (props), and eVars do not support it. Rather than re-implement the value a second time as a prop, a rule can copy it across.</p>
-<div class="code-block">
-    <div class="code-hdr"><span class="code-lang">Processing Rule</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-    <div class="code-body"><pre>Rule title: Enable pathing on page type
-
-Condition: if ALL are true
-    eVar1 (Page Type) is set
-
-Then do the following
-    Overwrite prop1 with the value of eVar1
-
-Result: prop1 mirrors page type, and now supports flow and next/previous reports</pre></div>
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>Processing rule: Enable pathing on page type</span></div>
+    <dl class="dothis-fields">
+        <div><dt>If all are true</dt><dd><code>eVar1</code> (Page Type) is set</dd></div>
+        <div><dt>Then</dt><dd>Overwrite <code>prop1</code> with the value of <code>eVar1</code></dd></div>
+        <div><dt>What you get</dt><dd><code>prop1</code> mirrors page type, and now supports flow and next/previous reports</dd></div>
+    </dl>
 </div>
 <p>The trade-off is that you now maintain the same fact in two places. They will stay in sync only as long as this rule does, and the prop and the eVar carry different expiration and allocation behavior, so the pathing view and the eVar view answer subtly different questions. Copy for a reason you can name, not reflexively.</p>
 
 <h3 class="subsec-title">Example 5: When a processing rule is the wrong tool</h3>
 <p>The most useful example in this section is the one you should not build. Campaign codes are arriving messy, <code>email_spring</code>, <code>email_q3</code>, <code>social_reels</code>, and someone suggests a rule that buckets them into tidy labels.</p>
-<div class="code-block">
-    <div class="code-hdr"><span class="code-lang">Tempting, but reconsider</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-    <div class="code-body"><pre>Rule title: Bucket campaign codes
-
-Condition: if ANY are true
-    Tracking Code contains "email_"
-
-Then do the following
-    Overwrite eVar20 with "Email Campaign"
-
-...then another rule for "social_", and another, and another.</pre></div>
+<div class="dothis dothis--avoid">
+    <div class="dothis-hdr"><b>Avoid this</b> <span>Processing rule: Bucket campaign codes</span></div>
+    <dl class="dothis-fields">
+        <div><dt>If any are true</dt><dd>Tracking Code contains <code>email_</code></dd></div>
+        <div><dt>Then</dt><dd>Overwrite <code>eVar20</code> with <code>Email Campaign</code></dd></div>
+        <div><dt>Why not</dt><dd>&hellip;then another rule for <code>social_</code>, and another, and another.</dd></div>
+    </dl>
 </div>
 <p>A single typo fix, correcting a misspelled site section as it arrives, is a fair use of a rule. But systematic bucketing is a different task wearing the same clothes, and a processing rule is the wrong tool for it for two reasons you already know. It only acts going forward, so every campaign code collected before today stays messy. And it needs a rule or condition per bucket, which grows without end. The tools built for this job are <a href="/adobe-analytics-learning/shape/classifications/">Classifications</a>, which relabel values through a lookup and apply backward across data already collected, and for traffic categorization specifically, <a href="/adobe-analytics-learning/shape/marketing-channels/">Marketing Channels</a>. Recognizing which tool a problem belongs to is the real skill; the rule is just one instrument in a set.</p>
 
