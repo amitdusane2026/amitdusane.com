@@ -77,7 +77,7 @@ weight: 8
     </svg>
 </div>
 <p><strong>Step 1: Discovery.</strong> Sit down with the business stakeholders and understand, in detail, what they need to learn from the data. Not "track everything," but the actual questions: which campaigns drive revenue, where people drop out of checkout, what content converts. Every real requirement is, underneath, a report someone wants. Capture those reports, they are your specification.</p>
-<p><strong>Step 2: Design the plan (the SDR).</strong> Now translate each desired report into the variables and events that produce it, and write it all down in a <strong><a href="/adobe-analytics-learning/deliver/solution-design-reference/">Solution Design Reference</a></strong> (SDR), your implementation's single source of truth. It is a living document that says exactly what every variable is, what it holds, and why, and it is what stops the slow rot where, two years in, nobody remembers what <code>eVar37</code> was for. Document each variable with:</p>
+<p><strong>Step 2: Design the plan (the SDR).</strong> Now translate each desired report into the variables and events that produce it, and write it all down in a <a href="/adobe-analytics-learning/deliver/solution-design-reference/">Solution Design Reference</a> (SDR), your implementation's single source of truth. It is a living document that says exactly what every variable is, what it holds, and why, and it is what stops the slow rot where, two years in, nobody remembers what <code>eVar37</code> was for. Document each variable with:</p>
 <ul>
     <li><strong>Number and friendly name:</strong> <code>eVar1</code> = "Internal Campaign ID".</li>
     <li><strong>Business purpose:</strong> the question it exists to answer.</li>
@@ -90,13 +90,13 @@ weight: 8
     <table>
         <thead><tr><th>What you need to do</th><th>Reach for</th></tr></thead>
         <tbody>
-            <tr><td>Describe a hit, or analyze the path through the site</td><td><strong><a href="/adobe-analytics-learning/foundations/variables/props-traffic-variables/">prop</a></strong></td></tr>
-            <tr><td>Credit a later conversion back to a value</td><td><strong><a href="/adobe-analytics-learning/foundations/variables/evars-conversion-variables/">eVar</a></strong></td></tr>
-            <tr><td>Count or measure that something happened</td><td><strong><a href="/adobe-analytics-learning/foundations/variables/events-success-events/">event</a></strong></td></tr>
-            <tr><td>Capture several values at once, each fully credited</td><td><strong><a href="/adobe-analytics-learning/foundations/variables/list-variables-list-props/">list variable</a></strong></td></tr>
-            <tr><td>Track products, quantity, and revenue</td><td><strong><a href="/adobe-analytics-learning/foundations/variables/products-string/">products string</a></strong></td></tr>
-            <tr><td>Bind a value to a specific product</td><td><strong><a href="/adobe-analytics-learning/foundations/variables/products-string/">merchandising eVar</a></strong></td></tr>
-            <tr><td>Decouple code from variable numbers (and all mobile data)</td><td><strong><a href="/adobe-analytics-learning/foundations/variables/context-data-variables/">context data</a></strong></td></tr>
+            <tr><td>Describe a hit, or analyze the path through the site</td><td><a href="/adobe-analytics-learning/foundations/variables/props-traffic-variables/">prop</a></td></tr>
+            <tr><td>Credit a later conversion back to a value</td><td><a href="/adobe-analytics-learning/foundations/variables/evars-conversion-variables/">eVar</a></td></tr>
+            <tr><td>Count or measure that something happened</td><td><a href="/adobe-analytics-learning/foundations/variables/events-success-events/">event</a></td></tr>
+            <tr><td>Capture several values at once, each fully credited</td><td><a href="/adobe-analytics-learning/foundations/variables/list-variables-list-props/">list variable</a></td></tr>
+            <tr><td>Track products, quantity, and revenue</td><td><a href="/adobe-analytics-learning/foundations/variables/products-string/">products string</a></td></tr>
+            <tr><td>Bind a value to a specific product</td><td><a href="/adobe-analytics-learning/foundations/variables/products-string/">merchandising eVar</a></td></tr>
+            <tr><td>Decouple code from variable numbers (and all mobile data)</td><td><a href="/adobe-analytics-learning/foundations/variables/context-data-variables/">context data</a></td></tr>
         </tbody>
     </table>
 </div>
@@ -146,7 +146,7 @@ weight: 8
 </div>
 <h3 class="subsec-title">That completes the module</h3>
 <p>You now know every variable type Adobe Analytics offers, props and eVars, events, the built-ins, the products string, list variables, and context data, and, just as importantly, how to plan them as an architect rather than assemble them at random. You can look at a business question, know which material it calls for, and document that decision so it survives the people who made it.</p>
-<p>That also closes the first of this course's five phases. As the left navigation and the map both show, the journey runs in five: you have finished <a href="/adobe-analytics-learning/foundations/"><strong>Foundations</strong></a>, the what and the why, and everything that follows now has a vocabulary to build on. The next phase is <a href="/adobe-analytics-learning/collect/"><strong>Collect</strong></a>, the how, where planned variables stop being a design on paper and start flowing from a real site or app into your report suites. It opens with <a href="/adobe-analytics-learning/collect/data-collection/"><strong>Data Collection</strong></a>, and the first question it answers is the one every implementation starts from: which collection method, and why.</p>
+<p>That also closes the first of this course's five phases. As the left navigation and the map both show, the journey runs in five: you have finished <a href="/adobe-analytics-learning/foundations/">Foundations</a>, the what and the why, and everything that follows now has a vocabulary to build on. The next phase is <a href="/adobe-analytics-learning/collect/">Collect</a>, the how, where planned variables stop being a design on paper and start flowing from a real site or app into your report suites. It opens with <a href="/adobe-analytics-learning/collect/data-collection/">Data Collection</a>, and the first question it answers is the one every implementation starts from: which collection method, and why.</p>
 <div class="path-box">
     <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to Find in Adobe Analytics</div>
     <p>The SDR lives outside Adobe (a shared doc or spreadsheet). Inside Analytics, audit your current variables at <span class="path">Admin → Report Suites → Edit Settings → Conversion / Traffic</span>.</p>

@@ -190,6 +190,23 @@ a:hover{text-decoration:underline}
 .section a:hover{text-decoration-thickness:2px}
 .section .ref-box a{text-decoration:none}
 .section .ref-box a:hover{text-decoration:underline}
+/* A content link is already marked twice over -- accent colour and a persistent
+   underline -- so setting it bold is a third signal for the same thing. In
+   running prose it reads as shouting, and in a table whose first column is all
+   links it reads as a heavy block, which is where Amit caught it on 21 Aug 2026.
+   Bold is stripped wherever the two are combined, in either nesting order.
+
+   The 44 cases then in the corpus were unwrapped in the markup as well, so this
+   rule is not covering anything up today. It exists because the habit will
+   recur across the sections still to be written, and a rule catches it once
+   where sixteen file edits would have to be repeated every time.
+
+   Deliberately scoped to .section, the same scope that gives content links
+   their underline. Navigation keeps its weight: a bold nav item is a
+   "you are here" signal, not decoration, and flattening it would cost
+   wayfinding. Only .section is prose. */
+.section strong a, .section b a{font-weight:400}
+.section a strong, .section a b{font-weight:inherit}
 
 /* ---------- Header ---------- */
 .lhead{position:fixed;top:0;left:0;right:0;height:var(--header-h);background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 16px;z-index:1000;gap:16px}

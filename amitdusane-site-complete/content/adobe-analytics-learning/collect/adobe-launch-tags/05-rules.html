@@ -134,7 +134,7 @@ weight: 5
 
 <p>The smart approach is to ask the developer once, finally, to fire the Submit direct call on every page across the site. Then you handle the <em>where</em> entirely inside Launch, in the rule's <strong>Conditions</strong> section. You either use the UI to compare the page, or write a small piece of custom code: if the page is the Home page, proceed, otherwise discard. When the scope grows to the Product page, you change one condition in Launch and never touch the developer again.</p>
 
-<p>That gatekeeper role is also what makes conditions essential for <strong><a href="/adobe-analytics-learning/collect/adobe-launch-tags/consent-and-tag-management/">user consent</a></strong>. When a visitor grants consent to be tracked, that choice is typically stored in a cookie. A condition can read that cookie and let the rule run only when consent is present, and discard the whole operation when it is not. The rule becomes self-policing.</p>
+<p>That gatekeeper role is also what makes conditions essential for <a href="/adobe-analytics-learning/collect/adobe-launch-tags/consent-and-tag-management/">user consent</a>. When a visitor grants consent to be tracked, that choice is typically stored in a cookie. A condition can read that cookie and let the rule run only when consent is present, and discard the whole operation when it is not. The rule becomes self-policing.</p>
 
 <div class="info-box">
     <div class="info-hdr">ℹ️ Regular and exception conditions</div>
