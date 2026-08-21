@@ -18,12 +18,46 @@ weight: 5
 
 <p>Underneath the governance question is one mechanical idea, asked over and over: <em>who can do what, and where?</em> Adobe answers it with a small hierarchy, and one piece of it does almost all the real work.</p>
 
-<div class="flow">
-    <div class="flow-step">Organization</div>
-    <span class="flow-arrow">→</span>
-    <div class="flow-step highlight">Product Profile</div>
-    <span class="flow-arrow">→</span>
-    <div class="flow-step">User / Group</div>
+<div class="diagram-box">
+    <div class="diagram-title">Permissions live in the middle, not at either end</div>
+    <svg viewBox="0 0 700 250" style="width:100%;height:auto;display:block" role="img"
+         aria-label="Three boxes left to right joined by arrows: Organization, Product Profile, and User or Group. The Organization and the User or Group are drawn plain and each is labelled grants nothing on its own. The Product Profile in the middle is filled and emphasised and reads every permission lives here, the keycard not the door. Beneath it a dashed panel lists what the profile switches on: report suites, tools, dimensions and metrics, these doors and no others. A line underneath reads that a user gets access by being added to a profile, never directly.">
+      <defs>
+        <marker id="a5arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+          <path d="M0 0 L10 5 L0 10 Z" style="fill:var(--text3,#5d6b7e)"/>
+        </marker>
+      </defs>
+
+      <rect x="16" y="46" width="172" height="60" rx="8"
+            style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+      <text x="102" y="76" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:14px;font-weight:600">Organization</text>
+      <text x="102" y="94" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">grants nothing on its own</text>
+
+      <line x1="196" y1="76" x2="246" y2="76" style="stroke:var(--text3,#5d6b7e);stroke-width:1.6" marker-end="url(#a5arrow)"/>
+
+      <rect x="256" y="34" width="188" height="84" rx="8"
+            style="fill:var(--dia-a-soft,rgba(186,33,66,.10));stroke:var(--dia-a,#ba2142);stroke-width:2.2"/>
+      <text x="350" y="62" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:14.5px;font-weight:700">Product Profile</text>
+      <text x="350" y="82" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:11.5px">every permission lives here</text>
+      <text x="350" y="101" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">the keycard, not the door</text>
+
+      <line x1="452" y1="76" x2="502" y2="76" style="stroke:var(--text3,#5d6b7e);stroke-width:1.6" marker-end="url(#a5arrow)"/>
+
+      <rect x="512" y="46" width="172" height="60" rx="8"
+            style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+      <text x="598" y="76" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:14px;font-weight:600">User / Group</text>
+      <text x="598" y="94" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">grants nothing on its own</text>
+
+      <line x1="350" y1="118" x2="350" y2="141" style="stroke:var(--dia-a,#ba2142);stroke-width:1.6;stroke-dasharray:4 3"/>
+
+      <rect x="196" y="141" width="308" height="64" rx="7"
+            style="fill:var(--card,#ffffff);stroke:var(--dia-a,#ba2142);stroke-width:1.4;stroke-dasharray:5 4"/>
+      <text x="350" y="162" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px;font-weight:600">what the profile actually switches on</text>
+      <text x="350" y="182" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px">Report suites &#183; Tools &#183; Dimensions &amp; metrics</text>
+      <text x="350" y="199" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">these doors, and no others</text>
+
+      <text x="350" y="233" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12px">A user gets access by being added to a profile &#8212; never directly.</text>
+    </svg>
 </div>
 
 <h3 class="subsec-title">The piece that does the work: the Product Profile</h3>
