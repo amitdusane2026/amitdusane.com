@@ -549,8 +549,14 @@ body.world-learning .lcontent > h1.lsec-title{margin-left:calc(var(--title-inden
    this rule said 13px and the page rendered it at 16px. */
 body.world-learning .lcontent .lcrumb{font-size:var(--fs-meta);color:var(--text2);margin:0 0 10px}
 .lcrumb a{color:var(--text2)} .lcrumb a:hover{color:var(--accent)}
-.lmod-title{font-size:var(--fs-title);line-height:var(--lh-title);font-weight:700;color:var(--text1);margin:.1em 0 .4em}
-.lsec-title{font-size:var(--fs-title);line-height:var(--lh-title);font-weight:700;color:var(--text1);margin:0 0 var(--sp-sm);padding-left:14px;border-left:3px solid var(--accent)}
+/* Size carries the hierarchy, weight does not have to shout as well.
+   Both page titles ran at 700, which with a 34px size and a crimson rule
+   beside it made the heaviest thing on the page heavier still. Google Cloud
+   sets its equivalent at 500 and still reads as more confident, because the
+   size alone is doing the work. 600 keeps the mark authoritative without the
+   slab look that dates a documentation page. */
+.lmod-title{font-size:var(--fs-title);line-height:var(--lh-title);font-weight:600;color:var(--text1);margin:.1em 0 .4em}
+.lsec-title{font-size:var(--fs-title);line-height:var(--lh-title);font-weight:600;color:var(--text1);margin:0 0 var(--sp-sm);padding-left:14px;border-left:3px solid var(--accent)}
 /* Last-updated stamp. Sits under the section title, aligned to the title text (14px padding + 3px rule). Lives inside .lcontent, so lFillPrintDoc carries it into the print document automatically. */
 
 /* --------------------------------------------------------------------------
@@ -596,7 +602,7 @@ body.world-learning .lcontent .byline{
 }
 body.world-learning .lcontent .lupdated{font-size:var(--fs-meta);color:var(--text3);font-weight:400;margin:-6px 0 var(--sp-lg);padding-left:0;letter-spacing:normal}
 .lupdated time{font-weight:500;color:inherit}
-.lcontent p{color:var(--text2);margin:0 0 1em}
+.lcontent p{color:var(--text1);margin:0 0 1em}
 
 /* ---------- Module landing cards (world index) ---------- */
 .welcome{display:flex;align-items:center;justify-content:center;gap:18px;padding:16px 16px 6px;margin-top:-4px}
@@ -780,9 +786,27 @@ body.world-learning .welcome-btn:hover{background:var(--accent2);text-decoration
    ========================================================================== */
 .section{margin-bottom:8px}
 /* Four to one: separate from what came before, bind to what follows. */
-.subsec-title{font-size:var(--fs-h3);line-height:var(--lh-h3);font-weight:600;margin:var(--sp-xl) 0 var(--sp-sm);color:var(--text1)}
-body.world-learning .lcontent p{margin-bottom:var(--sp-md);color:var(--text2);font-size:var(--fs-body)}
-body.world-learning .lcontent ul,body.world-learning .lcontent ol{margin:var(--sp-md) 0;padding-left:20px;color:var(--text2);font-size:var(--fs-body)}
+/* The section heading repeats 5 to 17 times down a page, so it sets the
+   page's rhythm more than the title does. 550 rather than 600: still clearly
+   a heading against 17px prose, with the weight stepped back one notch now
+   that the prose around it is near-black and no longer needs a heavy heading
+   to out-rank it. If this reads too light on a real page, 600 is the number
+   to go back to -- it is the one judgement here that needs an eye, not a
+   measurement. */
+.subsec-title{font-size:var(--fs-h3);line-height:var(--lh-h3);font-weight:550;margin:var(--sp-xl) 0 var(--sp-sm);color:var(--text1)}
+/* Reading text is the PRIMARY ink, not the secondary one.
+   It ran on --text2 for a long time as a deliberate softening, and measured
+   against the two sites Amit benchmarked on 21 Aug 2026 that softening is
+   what made the page look faded rather than calm. Body prose contrast:
+   Google Cloud 15.27:1, Experience League 15.91:1, us 7.24:1 -- roughly half.
+   Grey ink on the light grey ground put the whole page in one narrow tonal
+   band with nothing to anchor the eye. On --text1 it measures 17.06:1.
+   This is not an accessibility fix; 7.24 already cleared AAA. It is a
+   legibility and freshness one. --text2 stays correct for genuinely
+   secondary text -- nav, byline, captions, meta -- which is most of its
+   other 28 uses. */
+body.world-learning .lcontent p{margin-bottom:var(--sp-md);color:var(--text1);font-size:var(--fs-body)}
+body.world-learning .lcontent ul,body.world-learning .lcontent ol{margin:var(--sp-md) 0;padding-left:20px;color:var(--text1);font-size:var(--fs-body)}
 body.world-learning .lcontent li{margin-bottom:var(--sp-xs);font-size:var(--fs-body)}
 body.world-learning .lcontent li strong{color:var(--text1)}
 
@@ -814,7 +838,10 @@ body.world-learning .lcontent code{font-family:Consolas,monospace;font-size:var(
 body.world-learning .lcontent table{width:100%;border-collapse:collapse;font-size:var(--fs-sm)}
 body.world-learning .lcontent th,body.world-learning .lcontent td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--border)}
 body.world-learning .lcontent th{background:var(--bg3);font-weight:600;font-size:var(--fs-meta);color:var(--text2);text-transform:uppercase;letter-spacing:var(--label-ls)}
-body.world-learning .lcontent td{color:var(--text2)}
+/* Table cells are reading text too, so they follow the prose ink above. The
+   uppercase th stays on --text2: it is a label, not something anyone reads
+   a sentence of. */
+body.world-learning .lcontent td{color:var(--text1)}
 body.world-learning .lcontent tr:last-child td{border-bottom:none}
 
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:var(--sp-lg) 0}
@@ -912,7 +939,7 @@ body.world-learning .lcontent .diagram-title{
 .glossary-item{padding:12px 0;border-bottom:1px solid var(--border)}
 .glossary-item:last-child{border-bottom:none}
 .glossary-term{font-weight:600;color:var(--accent);margin-bottom:4px;font-size:var(--fs-sm)}
-.glossary-def{font-size:var(--fs-sm);color:var(--text2);line-height:1.6}
+.glossary-def{font-size:var(--fs-sm);color:var(--text1);line-height:1.6}
 
 .comparison-grid{display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap}
 .comp-item{background:var(--bg3);padding:16px 24px;border-radius:8px;text-align:center;min-width:150px}
