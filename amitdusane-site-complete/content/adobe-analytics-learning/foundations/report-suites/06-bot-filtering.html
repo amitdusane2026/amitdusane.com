@@ -44,15 +44,14 @@ weight: 6
 
 <h3 class="subsec-title">The setting itself, which takes about ten seconds</h3>
 <p>Here is the part that surprises people who expect a hard problem: switching on bot filtering is a checkbox. Adobe subscribes to the bot list published by the IAB, the Interactive Advertising Bureau, an industry body that maintains a shared register of known automated agents. You tick the box, and from that moment every incoming hit is checked against that list before it is counted.</p>
-<div class="code-block">
-    <div class="code-hdr"><span class="code-lang">Enabling IAB bot filtering</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-    <div class="code-body"><pre>Analytics > Admin > Report Suites
-    select your report suite
-    Edit Settings > General > Bot Rules
-
-    [x] Enable IAB Bot Filtering Rules
-
-Save</pre></div>
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>Enable IAB bot filtering</span></div>
+    <ol class="dothis-steps">
+        <li><span class="ds-do">Go to <code>Analytics</code> <span class="ds-sep">&rsaquo;</span> <code>Admin</code> <span class="ds-sep">&rsaquo;</span> <code>Report Suites</code>.</span></li>
+        <li><span class="ds-do">Select your report suite.</span></li>
+        <li><span class="ds-do">Open <code>Edit Settings</code> <span class="ds-sep">&rsaquo;</span> <code>General</code> <span class="ds-sep">&rsaquo;</span> <code>Bot Rules</code>.</span></li>
+        <li><span class="ds-do">Tick <code>Enable IAB Bot Filtering Rules</code>, then <code>Save</code>.</span></li>
+    </ol>
 </div>
 <p>That is the whole configuration. There is no tuning, no sensitivity, and nothing to maintain: the list is Adobe's to keep current, not yours. Any hit matched against it is diverted before it reaches your reports, and it lands instead in a set of bot reports where you can see what was taken out.</p>
 <div class="diagram-box">

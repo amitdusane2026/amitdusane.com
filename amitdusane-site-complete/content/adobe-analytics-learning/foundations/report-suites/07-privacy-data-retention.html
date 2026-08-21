@@ -135,20 +135,15 @@ weight: 7
     </table>
 </div>
 <p>The dependency column is the part that bites. Identity labels are load-bearing: without I1 or I2 on a field, the delete label cannot be attached to it at all. Label the obvious personal fields as sensitive and stop there, and you have built a taxonomy that describes your data accurately while instructing the platform to do nothing.</p>
-<div class="code-block">
-    <div class="code-hdr"><span class="code-lang">Labeling a variable for data governance</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-    <div class="code-body"><pre>Analytics > Admin > All admin
-    Data configuration and collection > Data governance
-    select the report suite
-
-    choose a variable group in the left filter
-        Standard Components | Conversion Variables (eVars)
-        List Variables | Traffic Variables (props)
-        Success Events | Classifications
-
-    tick the variable
-    Edit Privacy Labels
-    apply the labels, then Apply</pre></div>
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>Label a variable for data governance</span></div>
+    <ol class="dothis-steps">
+        <li><span class="ds-do">Go to <code>Analytics</code> <span class="ds-sep">&rsaquo;</span> <code>Admin</code> <span class="ds-sep">&rsaquo;</span> <code>All admin</code>.</span></li>
+        <li><span class="ds-do">Open <code>Data configuration and collection</code> <span class="ds-sep">&rsaquo;</span> <code>Data governance</code>, then select the report suite.</span></li>
+        <li><span class="ds-do">Choose a variable group in the left filter: <code>Standard Components</code>, <code>Conversion Variables (eVars)</code>, <code>List Variables</code>, <code>Traffic Variables (props)</code>, <code>Success Events</code> or <code>Classifications</code>.</span></li>
+        <li><span class="ds-do">Tick the variable, then open <code>Edit Privacy Labels</code>.</span></li>
+        <li><span class="ds-do">Apply the labels, then choose <code>Apply</code>.</span></li>
+    </ol>
 </div>
 <p>One variable group at a time, one report suite at a time. Labels belong to the suite they were applied in, exactly like bot rules and IP exclusions, which means the suite created next year for a new market starts with none of them.</p>
 
