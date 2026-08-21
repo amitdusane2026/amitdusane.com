@@ -330,9 +330,24 @@ body.wf-lock{overflow:hidden}
   transition:transform .38s cubic-bezier(.2,.8,.3,1), opacity .38s ease;
 }
 /* The mark paints above its own halo. Both are positioned, so paint order is
-   z-index rather than source order. */
+   z-index rather than source order.
+
+   The nudge is an optical correction, not a fudge. The monogram's ink is not
+   centred inside its own viewBox: measured with getBBox, it spans x 18..58 and
+   y 18..50 in a "0 0 64 64" box, so its visual centre is (38,34) against a box
+   centre of (32,32) -- 6 units right and 2 down. Rendered at 88px that put the
+   visible mark 8.25px right and 2.75px below the button's centre, which is why
+   aligning the two floating controls by their boxes still looked wrong, and why
+   the halo did not sit concentric with the mark it belongs to.
+
+   Percentages, not pixels, so it scales with --fab-size: 6/64 = 9.375% and
+   2/64 = 3.125%, resolved against the button. The offset uses left/top rather
+   than a transform because the hover and reduced-motion rules below own the
+   transform, and folding it in there would mean repeating it four times. */
 .author-fab svg{
-  position:relative; z-index:1; width:88px; height:88px;
+  position:relative; z-index:1;
+  width:var(--fab-size, 88px); height:var(--fab-size, 88px);
+  left:-9.375%; top:-3.125%;
   filter:drop-shadow(0 2px 6px rgba(15,23,42,.26));
   transition:transform .32s cubic-bezier(.2,.8,.3,1), filter .32s ease;
 }
@@ -385,8 +400,10 @@ body.wf-lock{overflow:hidden}
      site's mark. At 60px the button and the mark are the same size
      again, as they are on desktop, and the touch target sits well clear
      of the 44px minimum without needing padding to get there. */
+  /* One value. The svg follows --fab-size, so the button and the mark cannot
+     be given different sizes here by accident, which is what the old pair of
+     hard-coded rules allowed. */
   .author-fab{--fab-size:60px}
-  .author-fab svg{width:60px; height:60px}
 }
 
 /* CMP-11. Honour prefers-reduced-motion across the whole surface, not just the
