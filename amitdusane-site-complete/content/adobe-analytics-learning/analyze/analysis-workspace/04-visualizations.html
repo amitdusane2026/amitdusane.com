@@ -174,45 +174,40 @@ weight: 4
 <h3 class="subsec-title">Follow along: build three pictures, then break them on purpose</h3>
 <p>The attachment between a chart and its table is easier to trust once you have watched it work and then watched it fail, and the failure is much better met in a project nobody depends on.</p>
 
-<div class="code-block">
-    <div class="code-hdr"><span class="code-lang">Follow along: prove that the chart is a drawing of the table</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-    <div class="code-body"><pre>PART ONE, ATTACHMENT
-
-1  A panel with one freeform table: Day in rows, Page Views in columns
-
-2  Left rail &gt; Visualizations &gt; drag a Line chart underneath it
-       It arrives already populated. Nothing was configured.
-       It went looking for a table and found yours.
-
-3  Add a Bar chart and a Summary number the same way
-
-4  Now change the table: swap the metric, or drop a segment on a column
-       All three pictures move together, and none of them was
-       touched. That is the whole mechanic in one action.
-
-PART TWO, THE BREAK
-
-5  Insert a second freeform table ABOVE one of the charts
-       Check whether that chart is still reading the table you
-       think it is. It may not be.
-
-6  Open that chart's settings &gt; Data Source
-       This is the only place the relationship is visible. Point
-       it deliberately at the table you actually mean.
-
-7  Delete the original table
-       Watch what happens to the charts that were drawing from
-       it. Undo straight away, and remember the shape of it.
-
-PART THREE, MAKE IT READABLE
-
-8  Left rail &gt; Visualizations &gt; Text, dropped above the panel
-       One sentence saying what the panel found. Not what it
-       shows. What it found.
-
-There is nothing else to configure. A visualization has almost no
-settings of its own, because nearly every decision it displays was
-already made in the table it is reading.</pre></div>
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>Prove that the chart is a drawing of the table</span></div>
+    <ol class="dothis-steps">
+        <li class="ds-group">Part one, attachment</li>
+        <li><span class="ds-do">Start with a panel holding one freeform table: <code>Day</code> in rows, <code>Page Views</code> in columns.</span></li>
+        <li>
+            <span class="ds-do">Open the left rail <span class="ds-sep">&rsaquo;</span> <code>Visualizations</code> and drag a <code>Line</code> chart underneath it.</span>
+            <span class="ds-see">It arrives already populated. Nothing was configured. It went looking for a table and found yours.</span>
+        </li>
+        <li><span class="ds-do">Add a <code>Bar</code> chart and a <code>Summary number</code> the same way.</span></li>
+        <li>
+            <span class="ds-do">Now change the table: swap the metric, or drop a segment on a column.</span>
+            <span class="ds-see">All three pictures move together, and none of them was touched. That is the whole mechanic in one action.</span>
+        </li>
+        <li class="ds-group">Part two, the break</li>
+        <li>
+            <span class="ds-do">Insert a second freeform table <em>above</em> one of the charts.</span>
+            <span class="ds-see">Check whether that chart is still reading the table you think it is. It may not be.</span>
+        </li>
+        <li>
+            <span class="ds-do">Open that chart's settings <span class="ds-sep">&rsaquo;</span> <code>Data Source</code> and point it deliberately at the table you actually mean.</span>
+            <span class="ds-see">This is the only place the relationship is visible.</span>
+        </li>
+        <li>
+            <span class="ds-do">Delete the original table, watch what happens to the charts that were drawing from it, then undo straight away.</span>
+            <span class="ds-see">Remember the shape of it. That is what a broken data source looks like when it happens to somebody else's project.</span>
+        </li>
+        <li class="ds-group">Part three, make it readable</li>
+        <li>
+            <span class="ds-do">Open the left rail <span class="ds-sep">&rsaquo;</span> <code>Visualizations</code> <span class="ds-sep">&rsaquo;</span> <code>Text</code>, and drop it above the panel. Write one sentence saying what the panel found.</span>
+            <span class="ds-see">Not what it shows. What it found.</span>
+        </li>
+    </ol>
+    <p class="dothis-end">There is nothing else to configure. A visualization has almost no settings of its own, because nearly every decision it displays was already made in the table it is reading.</p>
 </div>
 
 <p>There is more to each of those steps, though not much more that matters. Step 7 is the one worth doing deliberately, so that the first time a chart empties on you it is a thing you recognize rather than a thing you panic about with a stakeholder waiting.</p>

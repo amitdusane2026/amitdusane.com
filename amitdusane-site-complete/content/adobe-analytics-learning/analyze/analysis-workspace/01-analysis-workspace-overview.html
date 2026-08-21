@@ -344,52 +344,44 @@ weight: 1
 <h3 class="subsec-title">Follow along: the first project, and the first thing to check in someone else's</h3>
 <p>Everything above is orientation. This is the part that turns it into muscle memory, and it takes about five minutes with a real account.</p>
 
-<div class="code-block">
-    <div class="code-hdr"><span class="code-lang">Follow along: build one table, then learn to read a stranger's</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-    <div class="code-body"><pre>PART ONE, BUILD SOMETHING
-
-1  Analytics &gt; Workspace &gt; Create new project &gt; Blank project
-
-2  Panel header, top right: set the report suite
-       Do this before anything else. Everything in the rail
-       is drawn from whatever is selected here.
-
-3  Panel header, top right: set the date range
-       The calendar sits beside the report suite. Pick a month
-       you know had traffic. A range with no data looks exactly
-       like a broken report.
-
-4  Left rail &gt; Components, the third icon down
-       Type "day" in the search box.
-       Drag the orange Day dimension into the empty table.
-
-5  Drag a green metric onto the table
-       Page Views, or Visits. The table populates as it lands.
-       That is a report. It took four steps.
-
-6  Now drag a blue segment onto the same table
-       Watch it land as a column rather than replacing anything.
-       Two columns, same rows, filtered and unfiltered.
-
-PART TWO, READ SOMETHING YOU DID NOT BUILD
-
-7  Open any project a colleague shared with you
-
-8  Read the panel header first, not the numbers
-       Which report suite. Which date range. Every figure
-       below it means nothing until those two are known.
-
-9  Check the header of every panel, not just the first
-       Each one carries its own. They are frequently different,
-       and that difference is rarely mentioned in the title.
-
-10 Look at the color of every column before reading a value
-       Blue in a dimension position is a segment.
-       Orange where a metric belongs is a breakdown.
-
-There is nothing else to configure. Workspace has no setup
-step, no preferences to get right first, and no state to
-prepare. Access to a report suite is the entire prerequisite.</pre></div>
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>Build one table, then learn to read a stranger's</span></div>
+    <ol class="dothis-steps">
+        <li class="ds-group">Part one, build something</li>
+        <li><span class="ds-do">Open <code>Analytics</code> <span class="ds-sep">&rsaquo;</span> <code>Workspace</code> <span class="ds-sep">&rsaquo;</span> <code>Create new project</code> <span class="ds-sep">&rsaquo;</span> <code>Blank project</code>.</span></li>
+        <li>
+            <span class="ds-do">In the panel header, top right, set the report suite.</span>
+            <span class="ds-see">Do this before anything else. Everything in the rail is drawn from whatever is selected here.</span>
+        </li>
+        <li>
+            <span class="ds-do">In the same panel header, set the date range.</span>
+            <span class="ds-see">The calendar sits beside the report suite. Pick a month you know had traffic &mdash; a range with no data looks exactly like a broken report.</span>
+        </li>
+        <li><span class="ds-do">Open the left rail <span class="ds-sep">&rsaquo;</span> <code>Components</code>, the third icon down. Type <code>day</code> in the search box and drag the orange <code>Day</code> dimension into the empty table.</span></li>
+        <li>
+            <span class="ds-do">Drag a green metric onto the table &mdash; <code>Page Views</code>, or <code>Visits</code>.</span>
+            <span class="ds-see">The table populates as it lands. That is a report. It took four steps.</span>
+        </li>
+        <li>
+            <span class="ds-do">Now drag a blue segment onto the same table.</span>
+            <span class="ds-see">Watch it land as a column rather than replacing anything. Two columns, same rows, filtered and unfiltered.</span>
+        </li>
+        <li class="ds-group">Part two, read something you did not build</li>
+        <li><span class="ds-do">Open any project a colleague shared with you.</span></li>
+        <li>
+            <span class="ds-do">Read the panel header first, not the numbers.</span>
+            <span class="ds-see">Which report suite, which date range. Every figure below it means nothing until those two are known.</span>
+        </li>
+        <li>
+            <span class="ds-do">Check the header of every panel, not just the first.</span>
+            <span class="ds-see">Each one carries its own. They are frequently different, and that difference is rarely mentioned in the title.</span>
+        </li>
+        <li>
+            <span class="ds-do">Look at the colour of every column before reading a value.</span>
+            <span class="ds-see">Blue in a dimension position is a segment. Orange where a metric belongs is a breakdown.</span>
+        </li>
+    </ol>
+    <p class="dothis-end">There is nothing else to configure. Workspace has no setup step, no preferences to get right first, and no state to prepare. Access to a report suite is the entire prerequisite.</p>
 </div>
 
 <p>That is the minimum rather than the whole of it. Part one is the smallest complete thing this tool does, and part two is the habit that separates somebody who builds reports from somebody who can be handed one and trusted to say what it means.</p>

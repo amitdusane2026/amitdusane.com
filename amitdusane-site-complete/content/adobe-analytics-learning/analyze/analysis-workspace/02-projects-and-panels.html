@@ -225,48 +225,45 @@ weight: 2
 <h3 class="subsec-title">Follow along: build the container before the content</h3>
 <p>This is the habit worth forming, and it takes two minutes. Set the context first, then build inside it, rather than building something and trying to work out afterward what it was measuring.</p>
 
-<div class="code-block">
-    <div class="code-hdr"><span class="code-lang">Follow along: two panels, one project, and inheritance you can see</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-    <div class="code-body"><pre>PART ONE, SET THE CONTEXT
-
-1  Analytics &gt; Workspace &gt; Create new project &gt; Blank project
-
-2  Panel header, top right: choose the report suite, then the dates
-       Both before you drag anything in. Everything you build
-       next will silently inherit them.
-
-3  Drag any segment onto "Drop a component to filter"
-       That is the panel drop zone. The chip that appears now
-       applies to everything in this panel.
-
-PART TWO, WATCH IT INHERIT
-
-4  Build a freeform table: any dimension, any metric
-
-5  Add a second visualization to the same panel
-       Neither one asked you for a report suite or a date range.
-       They took the panel's.
-
-6  Change the panel date range
-       Both update together. That is the container doing its job.
-
-PART THREE, PROVE THE BOUNDARY
-
-7  Insert &gt; New blank panel
-
-8  Give the second panel a different date range
-       Now scroll between them. Nothing in the body of either
-       panel tells you they disagree. Only the headers do.
-
-9  Remove the segment from panel one and watch every number move
-       Then put it back. That is the difference between a panel
-       segment and a column segment, seen once rather than read.
-
-10 Project &gt; Save as, and give it a name you would recognize
-       in six months. Until this step, it exists only in this tab.
-
-There is nothing else to configure. A panel has no settings beyond
-the three in its header, and that is the entire design.</pre></div>
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>Two panels, one project, and inheritance you can see</span></div>
+    <ol class="dothis-steps">
+        <li class="ds-group">Part one, set the context</li>
+        <li><span class="ds-do">Open <code>Analytics</code> <span class="ds-sep">&rsaquo;</span> <code>Workspace</code> <span class="ds-sep">&rsaquo;</span> <code>Create new project</code> <span class="ds-sep">&rsaquo;</span> <code>Blank project</code>.</span></li>
+        <li>
+            <span class="ds-do">In the panel header, top right, choose the report suite, then the dates.</span>
+            <span class="ds-see">Both before you drag anything in. Everything you build next will silently inherit them.</span>
+        </li>
+        <li>
+            <span class="ds-do">Drag any segment onto <code>Drop a component to filter</code>.</span>
+            <span class="ds-see">That is the panel drop zone. The chip that appears now applies to everything in this panel.</span>
+        </li>
+        <li class="ds-group">Part two, watch it inherit</li>
+        <li><span class="ds-do">Build a freeform table with any dimension and any metric.</span></li>
+        <li>
+            <span class="ds-do">Add a second visualization to the same panel.</span>
+            <span class="ds-see">Neither one asked you for a report suite or a date range. They took the panel's.</span>
+        </li>
+        <li>
+            <span class="ds-do">Change the panel date range.</span>
+            <span class="ds-see">Both update together. That is the container doing its job.</span>
+        </li>
+        <li class="ds-group">Part three, prove the boundary</li>
+        <li><span class="ds-do">Choose <code>Insert</code> <span class="ds-sep">&rsaquo;</span> <code>New blank panel</code>.</span></li>
+        <li>
+            <span class="ds-do">Give the second panel a different date range, then scroll between them.</span>
+            <span class="ds-see">Nothing in the body of either panel tells you they disagree. Only the headers do.</span>
+        </li>
+        <li>
+            <span class="ds-do">Remove the segment from panel one and watch every number move, then put it back.</span>
+            <span class="ds-see">That is the difference between a panel segment and a column segment, seen once rather than read.</span>
+        </li>
+        <li>
+            <span class="ds-do">Choose <code>Project</code> <span class="ds-sep">&rsaquo;</span> <code>Save as</code>, and give it a name you would recognize in six months.</span>
+            <span class="ds-see">Until this step, it exists only in this tab.</span>
+        </li>
+    </ol>
+    <p class="dothis-end">There is nothing else to configure. A panel has no settings beyond the three in its header, and that is the entire design.</p>
 </div>
 
 <p>None of that is the limit of what a panel can do, only the least worth knowing about one. Step 8 in particular is worth doing deliberately once, because it is the failure you will otherwise meet for the first time in front of somebody who is asking why two numbers disagree.</p>

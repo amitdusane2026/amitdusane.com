@@ -169,48 +169,44 @@ weight: 5
 <h3 class="subsec-title">Follow along: watch a total hide a collapse</h3>
 <p>The gym at the top of this section is much easier to believe once you have seen the same months read both ways in your own account, and the whole exercise takes about ten minutes.</p>
 
-<div class="code-block">
-    <div class="code-hdr"><span class="code-lang">Follow along: the same months, read two different ways</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-    <div class="code-body"><pre>PART ONE, THE REPORT THAT HIDES IT
-
-1  Freeform table: Month in rows, Visitors in columns
-       Six months if you have them. This is the reassuring view.
-       Note whether the trend looks stable.
-
-PART TWO, THE COHORT
-
-2  Visualizations &gt; Cohort table, into the same panel
-
-3  Inclusion criteria: a first meaningful action
-       Orders, or a signup event. Something that means arrival.
-
-4  Return criteria: something DIFFERENT
-       Visits, or any engagement event. Setting this to the same
-       metric as inclusion asks whether buyers bought, and the
-       answer will look better than the business is.
-
-5  Granularity: Monthly.  Table type: Retention.
-
-6  Read across one row, then down one column
-       Across is the life of one intake. Down compares intakes
-       at the same age, which is the only fair comparison.
-
-PART THREE, THE SETTINGS THAT CHANGE THE STORY
-
-7  Switch table type to Churn
-       Identical data, and notice how differently it reads.
-
-8  Switch rolling calculation on
-       Every figure improves. Nothing about the business did.
-       Turn it off again and decide which one you would present.
-
-9  Change the cohort to a dimension instead of a date
-       First marketing channel, if you have it. Now the table is
-       about acquisition quality rather than loyalty.
-
-There is nothing else to configure. Inclusion, return, granularity,
-table type. Four choices, and the last two change the story more
-than most people expect.</pre></div>
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>The same months, read two different ways</span></div>
+    <ol class="dothis-steps">
+        <li class="ds-group">Part one, the report that hides it</li>
+        <li>
+            <span class="ds-do">Build a freeform table: <code>Month</code> in rows, <code>Visitors</code> in columns. Six months if you have them.</span>
+            <span class="ds-see">This is the reassuring view. Note whether the trend looks stable.</span>
+        </li>
+        <li class="ds-group">Part two, the cohort</li>
+        <li><span class="ds-do">Drag <code>Visualizations</code> <span class="ds-sep">&rsaquo;</span> <code>Cohort table</code> into the same panel.</span></li>
+        <li>
+            <span class="ds-do">Set the inclusion criteria to a first meaningful action.</span>
+            <span class="ds-see"><code>Orders</code>, or a signup event. Something that means arrival.</span>
+        </li>
+        <li>
+            <span class="ds-do">Set the return criteria to something <strong>different</strong> &mdash; <code>Visits</code>, or any engagement event.</span>
+            <span class="ds-see">Setting this to the same metric as inclusion asks whether buyers bought, and the answer will look better than the business is.</span>
+        </li>
+        <li><span class="ds-do">Set <code>Granularity</code> to <code>Monthly</code> and <code>Table type</code> to <code>Retention</code>.</span></li>
+        <li>
+            <span class="ds-do">Read across one row, then down one column.</span>
+            <span class="ds-see">Across is the life of one intake. Down compares intakes at the same age, which is the only fair comparison.</span>
+        </li>
+        <li class="ds-group">Part three, the settings that change the story</li>
+        <li>
+            <span class="ds-do">Switch <code>Table type</code> to <code>Churn</code>.</span>
+            <span class="ds-see">Identical data, and notice how differently it reads.</span>
+        </li>
+        <li>
+            <span class="ds-do">Switch rolling calculation on.</span>
+            <span class="ds-see">Every figure improves. Nothing about the business did. Turn it off again and decide which one you would present.</span>
+        </li>
+        <li>
+            <span class="ds-do">Change the cohort to a dimension instead of a date &mdash; first marketing channel, if you have it.</span>
+            <span class="ds-see">Now the table is about acquisition quality rather than loyalty.</span>
+        </li>
+    </ol>
+    <p class="dothis-end">There is nothing else to configure. Inclusion, return, granularity, table type. Four choices, and the last two change the story more than most people expect.</p>
 </div>
 
 <p>Run it once and the rest follows on its own. Step 8 is worth doing once on real data, because watching your own numbers improve while nothing improves is considerably more persuasive than any warning about denominators.</p>

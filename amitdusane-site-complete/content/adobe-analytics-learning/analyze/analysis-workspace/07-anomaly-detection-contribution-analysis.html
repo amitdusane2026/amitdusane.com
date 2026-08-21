@@ -109,48 +109,38 @@ weight: 7
 <h3 class="subsec-title">Follow along: find out how noisy your own metrics are</h3>
 <p>The most useful thing you can do with this feature on a first pass is not to hunt for a problem. It is to learn which of your metrics are quiet enough for the statistics to be worth anything, because that tells you what to monitor and what to leave alone.</p>
 
-<div class="code-block">
-    <div class="code-hdr"><span class="code-lang">Follow along: calibrate before you monitor</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-    <div class="code-body"><pre>PART ONE, TURN IT ON
-
-1  Freeform table: Day in rows, a high volume metric in columns
-       Ninety days or so, enough for the model to have learned.
-
-2  Add a Line visualization underneath it
-
-3  Column settings on the metric &gt; enable anomaly detection
-       The band appears. Count the flagged points.
-
-PART TWO, CALIBRATE
-
-4  Repeat with a small metric: something under a hundred a day
-       Count the flags again. It will be a lot more, and none of
-       them will mean anything. That contrast is the lesson.
-
-5  Repeat with a campaign driven metric
-       Watch it flag every start and stop, correctly and
-       uselessly. This is what "the model cannot see your
-       calendar" looks like in practice.
-
-PART THREE, INVESTIGATE ONE
-
-6  Pick a real flagged day on a metric that matters
-
-7  Ask, in this order:
-       Did the data arrive at all?
-       Did everything move, or one slice of it?
-       Did anything ship that day?
-
-8  Right-click the anomaly &gt; run contribution analysis
-       Read the ranked dimension items. Note that it tells you
-       WHERE the movement was and never WHY.
-
-9  Take the generated segment into a new panel and go and find
-   the why yourself
-
-There is nothing else to configure. The statistics have no settings
-worth arguing with. The judgment is entirely in what you point them
-at and what you do with a flag.</pre></div>
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>Calibrate before you monitor</span></div>
+    <ol class="dothis-steps">
+        <li class="ds-group">Part one, turn it on</li>
+        <li>
+            <span class="ds-do">Build a freeform table: <code>Day</code> in rows, a high volume metric in columns.</span>
+            <span class="ds-see">Ninety days or so, enough for the model to have learned.</span>
+        </li>
+        <li><span class="ds-do">Add a <code>Line</code> visualization underneath it.</span></li>
+        <li>
+            <span class="ds-do">Open column settings on the metric and enable anomaly detection.</span>
+            <span class="ds-see">The band appears. Count the flagged points.</span>
+        </li>
+        <li class="ds-group">Part two, calibrate</li>
+        <li>
+            <span class="ds-do">Repeat with a small metric &mdash; something under a hundred a day.</span>
+            <span class="ds-see">Count the flags again. It will be a lot more, and none of them will mean anything. That contrast is the lesson.</span>
+        </li>
+        <li>
+            <span class="ds-do">Repeat with a campaign-driven metric.</span>
+            <span class="ds-see">Watch it flag every start and stop, correctly and uselessly. This is what &ldquo;the model cannot see your calendar&rdquo; looks like in practice.</span>
+        </li>
+        <li class="ds-group">Part three, investigate one</li>
+        <li><span class="ds-do">Pick a real flagged day on a metric that matters.</span></li>
+        <li><span class="ds-do">Ask, in this order: did the data arrive at all? Did everything move, or one slice of it? Did anything ship that day?</span></li>
+        <li>
+            <span class="ds-do">Right-click the anomaly and run contribution analysis, then read the ranked dimension items.</span>
+            <span class="ds-see">Note that it tells you <strong>where</strong> the movement was and never <strong>why</strong>.</span>
+        </li>
+        <li><span class="ds-do">Take the generated segment into a new panel and go and find the why yourself.</span></li>
+    </ol>
+    <p class="dothis-end">There is nothing else to configure. The statistics have no settings worth arguing with. The judgment is entirely in what you point them at and what you do with a flag.</p>
 </div>
 
 <p>None of that is exhaustive, and it does not need to be. Step 4 is the one worth doing on your own data, because a small metric flagging six times in ninety days is the single fastest way to understand why teams stop trusting automated monitoring.</p>
