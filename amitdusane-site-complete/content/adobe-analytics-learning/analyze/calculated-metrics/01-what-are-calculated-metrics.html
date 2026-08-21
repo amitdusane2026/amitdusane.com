@@ -227,31 +227,29 @@ weight: 1
 <h3 class="subsec-title">Read the library before you add to it</h3>
 <p>The first useful thing to do with this feature is not to build anything. Adobe ships a set of default calculated metrics in every report suite, including Bounce Rate, Conversion Rate, Revenue per Order and Average Time on Site, and most organizations have built dozens more before anyone new arrives. Almost every metric a newcomer is asked to create already exists in some form.</p>
 
-<div class="code-block">
-    <div class="code-hdr"><span class="code-lang">Follow along: read the library you already have</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-    <div class="code-body"><pre>Analytics &gt; Components &gt; Calculated metrics
-
-1  Filter:  Report suite = the suite you actually report on
-2  Filter:  Approved
-       Read every one of these. They are the definitions your
-       organization has already agreed to, whether or not you
-       were in the room when it happened.
-
-3  Sort by: Last used
-       Anything untouched for six months is a candidate for
-       deletion, not a candidate to copy.
-
-4  Open two metrics whose names sound alike
-       Compare the formulas. Where they differ, you have found
-       next quarter's argument, three months early.
-
-5  Analysis Workspace &gt; left rail &gt; Data Dictionary
-       Search the metric a stakeholder keeps quoting.
-       The dictionary shows its formula, its owner, its
-       description, and whether an administrator approved it.
-
-Every step above is a read. Nothing here writes, changes,
-or deletes anything.</pre></div>
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>Read the library you already have</span></div>
+    <p class="dothis-setup"><strong>Before you start:</strong> open <code>Analytics</code> <span class="ds-sep">&rsaquo;</span> <code>Components</code> <span class="ds-sep">&rsaquo;</span> <code>Calculated metrics</code>.</p>
+    <ol class="dothis-steps">
+        <li><span class="ds-do">Filter <code>Report suite</code> to the suite you actually report on.</span></li>
+        <li>
+            <span class="ds-do">Filter to <code>Approved</code>.</span>
+            <span class="ds-see">Read every one of these. They are the definitions your organization has already agreed to, whether or not you were in the room when it happened.</span>
+        </li>
+        <li>
+            <span class="ds-do">Sort by <code>Last used</code>.</span>
+            <span class="ds-see">Anything untouched for six months is a candidate for deletion, not a candidate to copy.</span>
+        </li>
+        <li>
+            <span class="ds-do">Open two metrics whose names sound alike and compare the formulas.</span>
+            <span class="ds-see">Where they differ, you have found next quarter's argument three months early.</span>
+        </li>
+        <li>
+            <span class="ds-do">Open <code>Analysis Workspace</code> <span class="ds-sep">&rsaquo;</span> left rail <span class="ds-sep">&rsaquo;</span> <code>Data Dictionary</code> and search the metric a stakeholder keeps quoting.</span>
+            <span class="ds-see">The dictionary shows its formula, its owner, its description, and whether an administrator approved it.</span>
+        </li>
+    </ol>
+    <p class="dothis-end">Every step above is a read. Nothing here writes, changes, or deletes anything.</p>
 </div>
 
 <p>There is nothing else to run. That sequence is a floor rather than a ceiling: it is the minimum a person should know about their own metric library before adding to it, and a team that repeats it once a quarter stops having most of its arguments about numbers.</p>

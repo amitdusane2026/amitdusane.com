@@ -213,45 +213,42 @@ weight: 3
 <h3 class="subsec-title">Auditing a library in an afternoon</h3>
 <p>The audit below is deliberately mechanical, because the value is in doing it at all rather than in doing it cleverly. It is a read for the first five steps, and nothing is deleted until the consumers of a metric are known.</p>
 
-<div class="code-block">
-    <div class="code-hdr"><span class="code-lang">Follow along: audit a calculated metrics library</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-    <div class="code-body"><pre>Analytics &gt; Components &gt; Calculated metrics
-
-1  Clear every filter
-       Owner: all.  Approved: all.  Tags: none.
-       You are looking at the whole library, including the
-       metrics built by people who have left.
-
-2  Show the columns that matter
-       Owner, Tags, Approved, Used in, Last used
-
-3  Export to CSV
-       Sorting and reading 300 rows is a spreadsheet job,
-       not an interface job.
-
-4  Sort by title and read for collisions
-       Anything whose names differ only by a suffix, a case
-       change, or the word NEW is a duplicate until proven
-       otherwise. Open both and compare the definitions.
-
-5  Sort by Last used
-       Unused for a year, zero entries under Used in, owner
-       has left: that is the deletion pile.
-
-6  For everything with entries under Used in
-       Do not edit it. Build the corrected metric alongside,
-       rename the old one to say it is superseded, and let
-       its consumers move at their own pace.
-
-7  Fix the descriptions before the definitions
-       An accurate metric nobody understands still causes
-       the argument. The description is the cheaper fix.
-
-8  Approve the survivors, and only the survivors
-       Each approval is a commitment that somebody will
-       maintain that metric. Approve accordingly.
-
-Steps 1 to 5 change nothing. The first write happens at step 6.</pre></div>
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>Audit a calculated metrics library</span></div>
+    <p class="dothis-setup"><strong>Before you start:</strong> open <code>Analytics</code> <span class="ds-sep">&rsaquo;</span> <code>Components</code> <span class="ds-sep">&rsaquo;</span> <code>Calculated metrics</code>.</p>
+    <ol class="dothis-steps">
+        <li class="ds-group">Look, and change nothing</li>
+        <li>
+            <span class="ds-do">Clear every filter: <code>Owner</code> to all, <code>Approved</code> to all, <code>Tags</code> to none.</span>
+            <span class="ds-see">You are looking at the whole library, including the metrics built by people who have left.</span>
+        </li>
+        <li><span class="ds-do">Show the columns that matter: <code>Owner</code>, <code>Tags</code>, <code>Approved</code>, <code>Used in</code>, <code>Last used</code>.</span></li>
+        <li>
+            <span class="ds-do">Export to CSV.</span>
+            <span class="ds-see">Sorting and reading 300 rows is a spreadsheet job, not an interface job.</span>
+        </li>
+        <li>
+            <span class="ds-do">Sort by title and read for collisions.</span>
+            <span class="ds-see">Anything whose names differ only by a suffix, a case change, or the word NEW is a duplicate until proven otherwise. Open both and compare the definitions.</span>
+        </li>
+        <li>
+            <span class="ds-do">Sort by <code>Last used</code>.</span>
+            <span class="ds-see">Unused for a year, zero entries under <code>Used in</code>, owner has left: that is the deletion pile.</span>
+        </li>
+        <li class="ds-group">Now you start changing things</li>
+        <li>
+            <span class="ds-do">For everything with entries under <code>Used in</code>, do not edit it. Build the corrected metric alongside, rename the old one to say it is superseded, and let its consumers move at their own pace.</span>
+        </li>
+        <li>
+            <span class="ds-do">Fix the descriptions before the definitions.</span>
+            <span class="ds-see">An accurate metric nobody understands still causes the argument. The description is the cheaper fix.</span>
+        </li>
+        <li>
+            <span class="ds-do">Approve the survivors, and only the survivors.</span>
+            <span class="ds-see">Each approval is a commitment that somebody will maintain that metric. Approve accordingly.</span>
+        </li>
+    </ol>
+    <p class="dothis-end">Steps 1 to 5 change nothing. The first write happens at step 6.</p>
 </div>
 
 <p>Nothing else needs to be configured, and there is no scheduled job or automation to set up: Adobe provides no housekeeping for this, which is exactly why it accumulates. This sequence is a floor rather than a ceiling. A mature practice does it quarterly, keeps the CSV exports, and can therefore say how the library changed over a year. A practice doing it for the first time will find most of the value in step 4 alone.</p>

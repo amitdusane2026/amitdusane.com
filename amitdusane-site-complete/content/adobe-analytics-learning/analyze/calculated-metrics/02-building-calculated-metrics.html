@@ -244,52 +244,43 @@ weight: 2
 <h3 class="subsec-title">Building the metric this section started with</h3>
 <p>Enough theory. Here is the conversion rate that room agreed on, built so that the agreement survives contact with a report.</p>
 
-<div class="code-block">
-    <div class="code-hdr"><span class="code-lang">Follow along: build Conversion Rate (Visits)</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-    <div class="code-body"><pre>Analytics &gt; Components &gt; Calculated metrics &gt; Add
-
-1  Title:        Conversion Rate (Visits)
-       The denominator is in the name on purpose. It is the only
-       thing that stops a second, different Conversion Rate
-       appearing next quarter.
-
-2  Description:  Orders divided by visits. Session level purchase
-                 rate. Agreed definition for site reporting.
-       Not optional. This field is the only explanation a
-       stranger will ever get.
-
-3  Report suite: the suite you report on
-4  Tags:         Standard, Ecommerce
-
-5  Definition:
-       Drag  Orders   onto the canvas
-       Drag  Visits   below it
-       The operator between them defaults to Divide. Leave it.
-
-6  On each metric, open the gear:
-       Metric type:        Standard        (not Total)
-       Attribution model:  leave default   (this is not an
-                                            attribution question)
-
-7  Format:            Percent
-   Decimal places:    1
-   Show upward trend: Good, green
-
-8  Preview
-       The builder charts the last 90 days. A rate that is
-       flat at zero, or that spikes to several hundred percent,
-       is a formula error and not a data story.
-
-9  Save
-
-10 Verify before anyone else sees it:
-       Open a Freeform table. Add Orders, Visits, and the new
-       metric side by side. Check two or three rows by hand.
-       Then change the date range and check that the number
-       moves the way a rate should.
-
-Nothing else needs configuring. The metric is now available in
-every project in the report suite, over all history, immediately.</pre></div>
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>Build Conversion Rate (Visits)</span></div>
+    <p class="dothis-setup"><strong>Before you start:</strong> open <code>Analytics</code> <span class="ds-sep">&rsaquo;</span> <code>Components</code> <span class="ds-sep">&rsaquo;</span> <code>Calculated metrics</code> <span class="ds-sep">&rsaquo;</span> <code>Add</code>.</p>
+    <ol class="dothis-steps">
+        <li class="ds-group">Name it so a stranger cannot misread it</li>
+        <li>
+            <span class="ds-do">Set <code>Title</code> to <code>Conversion Rate (Visits)</code>.</span>
+            <span class="ds-see">The denominator is in the name on purpose. It is the only thing that stops a second, different Conversion Rate appearing next quarter.</span>
+        </li>
+        <li>
+            <span class="ds-do">Set <code>Description</code> to <em>&ldquo;Orders divided by visits. Session level purchase rate. Agreed definition for site reporting.&rdquo;</em></span>
+            <span class="ds-see">Not optional. This field is the only explanation a stranger will ever get.</span>
+        </li>
+        <li><span class="ds-do">Set <code>Report suite</code> to the suite you report on.</span></li>
+        <li><span class="ds-do">Set <code>Tags</code> to <code>Standard</code> and <code>Ecommerce</code>.</span></li>
+        <li class="ds-group">Build the definition</li>
+        <li>
+            <span class="ds-do">Drag <code>Orders</code> onto the canvas, then drag <code>Visits</code> below it.</span>
+            <span class="ds-see">The operator between them defaults to Divide. Leave it.</span>
+        </li>
+        <li>
+            <span class="ds-do">On each metric, open the gear and set <code>Metric type</code> to <code>Standard</code>, not Total. Leave <code>Attribution model</code> at its default.</span>
+            <span class="ds-see">This is not an attribution question, so do not turn it into one.</span>
+        </li>
+        <li><span class="ds-do">Set <code>Format</code> to <code>Percent</code>, <code>Decimal places</code> to <code>1</code>, and <code>Show upward trend</code> to <code>Good, green</code>.</span></li>
+        <li class="ds-group">Check it before anyone else sees it</li>
+        <li>
+            <span class="ds-do">Choose <code>Preview</code>.</span>
+            <span class="ds-see">The builder charts the last 90 days. A rate that is flat at zero, or that spikes to several hundred percent, is a formula error and not a data story.</span>
+        </li>
+        <li><span class="ds-do">Choose <code>Save</code>.</span></li>
+        <li>
+            <span class="ds-do">Open a Freeform table and put <code>Orders</code>, <code>Visits</code> and the new metric side by side. Check two or three rows by hand.</span>
+            <span class="ds-see">Then change the date range and check that the number moves the way a rate should.</span>
+        </li>
+    </ol>
+    <p class="dothis-end">Nothing else needs configuring. The metric is now available in every project in the report suite, over all history, immediately.</p>
 </div>
 
 <p>Those ten steps are a floor rather than a ceiling. They produce one correct, well labeled metric; they do not make anybody an architect of a metric library. Step 10 is the one that gets skipped, and it is the only step that would have caught a wrong denominator before a stakeholder did.</p>
