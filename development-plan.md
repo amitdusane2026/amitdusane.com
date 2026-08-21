@@ -791,3 +791,147 @@ His reasoning, and it is correct: a simple ask had been elevated to close to 150
 **The next work is content.** 32 of 116 sections remain unwritten, and that is the only front that matters until it is closed.
 
 One thing genuinely on a clock is not a design item: the deprecation warn-box in Classifications §1 expires 31 August 2026. Those dates live in the content itself.
+
+---
+
+## The component and contact session, 22 August 2026
+
+Four pieces of work, and the through-line is that every one started with Amit
+looking at a rendered page and naming something that felt wrong.
+
+### The dark block was three components wearing one costume
+
+Measured across the corpus: **86% of the text inside near-black code blocks was
+not code.** 33 blocks were genuinely code, 19 were hands-on walkthroughs, 63 were
+transcripts of an Adobe settings screen. On Marketing Channel Processing Rules
+every one of the ten blocks was a rule configuration, together occupying 19% of
+the page's height as dark slabs — and a reader's eye reads "dark means code means
+skippable", which is fatal when CLAUDE.md calls the walkthrough the engine of a
+section.
+
+Real code kept the terminal. Everything the reader is meant to *do* moved to
+`.dothis`, a light panel with two body shapes: numbered steps where order
+matters, a field list where it is a finished setup to copy. One component, two
+shapes, because Amit's ruling was that these are the same family and should not
+become two things to learn.
+
+**47 blocks converted across modules 2 to 14**, module by module with a list
+approved before each. Modules 1, 3, 5 and 9 needed nothing. The Analyze phase —
+Workspace, Calculated Metrics, Segments — now has no dark blocks at all.
+
+Three things the conversion surfaced that formatting alone would not have:
+
+- **Five ASCII tables** in Classifications were tables pretending not to be,
+  space-aligned inside a monospace block and unable to reflow. They became real
+  `tbl-wrap` tables.
+- **A content defect.** The ownership register in Classifications section 6 had
+  an email address sitting in the OVERWRITE column of a table, and a "Notify on
+  success" line with no matching failure line. A heading and a label had been
+  lost. Amit confirmed the recipient and the label was restored rather than
+  guessed.
+- **An expired claim**, found by CNT-02: `data-collection/05` said the 1.4 API
+  "reaches" end of life on a date eight days past.
+
+An `--avoid` variant was added for the one case where the component's own header
+would contradict its content: a rule shown so the reader does *not* build it.
+Same panel, amber kicker reading "Avoid this". Used twice.
+
+### The benchmark pass
+
+Amit compared the site against Google Cloud docs and Experience League and asked
+whether it still looked fresh. Two of the three suspected causes were wrong: the
+light grey ground is Google's own `#f8f9fa`, and our crimson links measure
+5.93:1 against Experience League's blue at 5.13:1.
+
+**The real cause was that our reading text was grey and theirs is black.**
+Google 15.27:1, Experience League 15.91:1, us 7.24:1. Prose moved to `--text1`
+at 17.06:1, and both page titles dropped from 700 to 600 with the section
+heading to 550, because size carries hierarchy and weight does not have to shout
+as well.
+
+The tinted semantic boxes were left alone on Amit's ruling: the colours have
+become the site's vocabulary and readers have learned that blue means one thing
+and amber another. Losing that to look current would be a bad trade.
+
+### Icons, and a review that corrected itself
+
+`icon-review.html` laid every icon out, existing against suggested. The argument
+it leads with is that **the site already has an icon language** — 24-unit
+viewBox, stroke 2, round caps — and the emoji were the only things not speaking
+it. Four became drawn tiles across **340 component headers**, modelled exactly on
+`path-ico`, which Amit had picked out as the one icon that works.
+
+**Two corrections to my own review, both found while implementing.** The
+"thirteen one-off emoji" I recommended removing were not one-offs at all: they
+are the cards component's icon set, 28 cards each pairing a chosen glyph with a
+title and description. I had sampled by frequency instead of by component and
+mistaken a deliberate pattern for noise. All 28 were left alone. And the glossary
+carried an `info-hdr` using a book emoji, which a label-based sweep would have
+skipped silently.
+
+### Ask Amit
+
+The site had no way to reach Amit at all — one LinkedIn link on the About page.
+
+The framing decided the design. Not "found an error" and not "feedback": both
+make the reader an assessor of the site, and a correction prompt on 116 pages
+tells every visitor the writing might be wrong before they have found anything
+wrong. It is about the reader's question instead, and the address is `ask@`
+rather than `support@` or `help@`, because a helpdesk address implies an SLA and
+a person does not.
+
+Three surfaces, one overlay, no new floating control: the spine's last entry, and
+a bar that **arrives** at two thirds of the article rather than sitting pinned to
+the bottom. Amit asked for a permanent mobile footer; the argument against was
+that three floating controls already sit on a phone and a full-width bar would
+outrank all of them for an action most readers never take. He took the
+alternative, then extended it to desktop and had the permanent foot-of-section
+line removed — which also dissolved the "nothing follows the ref-box" rule
+conflict rather than arguing with it.
+
+The panel offers three peer routes, deliberately equal: copy the address, open a
+mail app, message on LinkedIn. Nothing filled, nothing dominant.
+
+Dismissal originally persisted for the session. Amit reported it as a bug and he
+was right: the offer is tied to *this* section, so suppressing it site-wide
+treats a contextual prompt as a nag. It now lasts one reading pass.
+
+**A real defect surfaced on the way.** `author.js` was the one script referenced
+without a `?v=` content hash, so editing it served stale from cache and the new
+code silently did not run. Trap 4, and it means any earlier edit to that file
+never reached returning visitors. `author.js` and `search.js` are both hashed now.
+
+### Screenshots
+
+`shot-box` lost two nested layers of chrome, and the height cap that was the real
+reason a reader had to expand on desktop: the image was clamped to 360px at
+*every* viewport. Now 560, so a landscape capture fills the column.
+
+A print bug Amit found on paper: the dark-mode brightness filter on screenshots
+survives into print, because **printing does not clear the theme attribute**. A
+print taken from dark mode carried a dimmed screenshot onto white paper. The
+general lesson is now in the stylesheet: anything that paints for a theme needs
+an explicit print reset, because print is not a theme.
+
+**32 screenshot briefs** were then written across modules 1 to 13, each a
+`shot-pending` box placed against the heading it illustrates, mirrored into
+`screenshot-briefs.md` as a capture checklist. 74 sections were reviewed and most
+got nothing. M9 VISTA has none by design — there is no customer-facing screen.
+
+### What the next session should know
+
+- **Amit is capturing the 32 screenshots.** When they arrive they need converting
+  to lossless WebP and wiring in, replacing each `shot-pending` box.
+- **`ask@amitdusane.com` exists** on Namecheap Private Email. MX, SPF and DKIM are
+  correct — DKIM is under the non-standard selector `privateemail._domainkey`,
+  which is easy to mistake for missing. **DMARC is still absent**, and mail to
+  Gmail was landing in spam; a `p=none` record plus sending reputation is the fix.
+- **The About page still has no contact block**, and the wording about
+  availability for work is Amit's call, deliberately left alone.
+- **31 files carry `shot-pending`.** The pre-merge guard means none can reach
+  `main` until filled or removed.
+- The reading-progress hairline came up again and was declined again. It is
+  `REJ-03`, and the reasoning still holds: the spine already shows position by
+  heading, which is better than a bar. The one thin spot is mobile, where the
+  spine is a drawer — if it ever matters, the fix is the page-nav button carrying
+  progress, not a fourth piece of scroll-driven chrome.

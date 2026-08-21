@@ -202,3 +202,14 @@ Platform	presentation		prefers-reduced-motion honoured site-wide (CMP-11)	Featur
 Platform	presentation		ref-box URLs expanded in print (CMP-10)	Feature	static/world-learning.css	NA	NA	NA	NA	NA	NA	Yes	No	No
 Platform	tech-debt		Dead diagram CSS and four dead files removed (CMP-05, INF-07)	Feature	static/	NA	NA	NA	NA	NA	NA	Yes	No	No
 Platform	infrastructure		World registry keyed on .Section, per-world phases (INF-05, INF-06)	Feature	hugo.toml	NA	NA	NA	NA	NA	NA	Yes	No	No
+Platform	presentation		"Do this" component: light instruction panel replacing dark blocks	Feature	static/world-learning.css	NA	NA	NA	NA	NA	NA	Yes	No	No
+Platform	presentation		47 code blocks converted to Do this across modules 2 to 14	Feature	content/adobe-analytics-learning/	NA	NA	NA	NA	NA	NA	Yes	No	No
+Platform	presentation		Reading ink to primary, heading weights lowered (benchmark pass)	Feature	static/world-learning.css	NA	NA	NA	NA	NA	NA	Yes	No	No
+Platform	presentation		Screenshot chrome removed, height cap raised, print dimming fixed	Feature	static/world-learning.css	NA	NA	NA	NA	NA	NA	Yes	No	No
+Platform	presentation		Four emoji replaced by drawn tiles, 340 component headers	Feature	static/world-learning.css	NA	NA	NA	NA	NA	NA	Yes	No	No
+Platform	presentation		Links never bold in content, markup and rule	Feature	static/world-learning.css	NA	NA	NA	NA	NA	NA	Yes	No	No
+Platform	presentation		32 shot-pending screenshot briefs, modules 1 to 13	Feature	content/adobe-analytics-learning/	NA	NA	NA	NA	NA	NA	Yes	No	No
+Platform	chrome		Floating controls share one centre axis (--fab-axis)	Feature	static/chrome.css	NA	NA	NA	NA	NA	NA	Yes	No	No
+Platform	chrome		Pocket map tab vertical at every width	Feature	static/chrome.css	NA	NA	NA	NA	NA	NA	Yes	No	No
+Platform	chrome		"Ask Amit": overlay, spine entry, arriving bar	Feature	layouts/_default/baseof.html	NA	NA	NA	NA	NA	NA	Yes	No	No
+Platform	infrastructure		author.js and search.js given ?v= content hashes (trap 4)	Feature	layouts/_default/baseof.html	NA	NA	NA	NA	NA	NA	Yes	No	No
