@@ -2,7 +2,7 @@
    home + About styling. Migration pages get their shell from world-shell.css. */
 
 /* ---- author fab + About overlay (universal, bottom-right) ---- */
-.author-fab{position:fixed;bottom:24px;right:24px;width:54px;height:54px;border-radius:50%;background:#ba2142;color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(186,33,66,.4);z-index:55;transition:transform .18s,box-shadow .18s}
+.author-fab{position:fixed;bottom:24px;right:calc(var(--fab-axis) - var(--fab-size, 88px) / 2);width:54px;height:54px;border-radius:50%;background:#ba2142;color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(186,33,66,.4);z-index:55;transition:transform .18s,box-shadow .18s}
 .author-fab:hover{transform:scale(1.08);box-shadow:0 9px 24px rgba(186,33,66,.5)}
 /* The mark needs to be bigger than the stock glyph it replaced, not the
    same size. A two-stroke person silhouette reads as dominant at 25px; the
@@ -33,8 +33,14 @@
 [data-theme="dark"] .about-x:hover{color:#e6eaf0}
 [data-theme="dark"] .about-name{color:#e6eaf0}
 [data-theme="dark"] .about-body p{color:#bcc3cd}
-@media(max-width:560px){.author-fab{width:48px;height:48px;bottom:18px;right:18px}
-  .author-fab svg{width:32px;height:32px}}
+/* Only `bottom` is set here. The 48px width/height and the 32px svg this rule
+   used to carry were dead declarations: the halo block below sets 88px with
+   !important, and its `.author-fab svg` rule sits later in the file at equal
+   specificity, so the mark was 88px on a phone too. That is exactly why the
+   two floating controls were misaligned on mobile as well as on desktop --
+   the sizes here looked authoritative and never applied. Horizontal position
+   comes from --fab-axis. */
+@media(max-width:560px){.author-fab{bottom:18px}}
 @media print{.author-fab,.about-overlay{display:none !important}}
 
 /* ---- GLOBAL shell (home, About, 404): slim top, no toggle/search/print ---- */
@@ -117,14 +123,38 @@
   --wf-g-cat2:#1a9247;
   --wf-g-mod:#22c55e;      /* mid green, module */
   --wf-g-sec:#6ee7a0;      /* light green, section */
-}
 
-/* right-edge tab: horizontal text on two lines */
-.wf-tab{position:fixed;top:50%;right:0;transform:translateY(-50%);z-index:1002;display:flex;align-items:center;gap:8px;padding:11px 13px;border:none;border-radius:12px 0 0 12px;background:#16a34a;color:#fff;cursor:pointer;box-shadow:-4px 4px 16px rgba(22,163,74,.34);transition:padding .18s,background .18s}
+  /* Shared centre axis for the stacked floating controls, measured from the
+     right edge of the viewport. The page-nav button and the About mark are
+     different sizes -- 44px and 88px -- so aligning them by `right` alone put
+     their centres 26px apart and they never read as one column. Each control
+     now offsets by half its own width from this single axis. Move the axis,
+     never the individual buttons.
+
+     Both values are derived from where the About mark already sat, so the
+     identity mark never moves and the utility button is the one that shifts:
+     desktop 24px inset + half of 88 = 68; phone 18px inset + half of 60 = 48. */
+  --fab-axis:68px;
+}
+@media(max-width:560px){ :root{ --fab-axis:48px } }
+
+/* Right-edge tab, vertical at EVERY width.
+   It used to be a horizontal pill above 600px and only turned vertical on a
+   phone. That put a 112px-wide green slab across the reading column the
+   moment the window narrowed, which is the widest range people actually
+   resize through. Vertical is the orientation that costs the text nothing at
+   any width, so it is now the single behaviour rather than a phone exception.
+   Two consequences are deliberate: the icon is dropped, because a glyph does
+   not rotate usefully in vertical-rl, and the two label spans merge into one
+   run via ::after, because as a flex column they would stand as two parallel
+   vertical strips instead of one line. */
+.wf-tab{position:fixed;top:50%;right:0;transform:translateY(-50%);z-index:1002;display:flex;align-items:center;gap:0;padding:12px 7px;border:none;border-radius:12px 0 0 12px;background:#16a34a;color:#fff;cursor:pointer;box-shadow:-4px 4px 16px rgba(22,163,74,.34);transition:padding .18s,background .18s;writing-mode:vertical-rl;text-orientation:mixed}
 .wf-tab:hover{background:#15803d;padding-right:17px}
-.wf-tab svg{width:18px;height:18px;flex:none}
-.wf-tab-txt{display:flex;flex-direction:column;line-height:1.18;text-align:left}
-.wf-tab-l1,.wf-tab-l2{font:600 12.5px/1.18 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;letter-spacing:.2px;white-space:nowrap}
+.wf-tab svg{display:none}
+.wf-tab-txt{display:flex;flex-direction:column;line-height:1.1;text-align:left}
+.wf-tab-l1,.wf-tab-l2{font:600 12px/1.1 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;letter-spacing:.2px;white-space:nowrap;display:inline}
+.wf-tab-l1::after{content:" this fits"}
+.wf-tab-l2{display:none}
 
 .wf-overlay{position:fixed;inset:0;z-index:1050;background:rgba(4,7,13,.66);display:none;justify-content:center;align-items:center;padding:24px;backdrop-filter:blur(3px)}
 .wf-overlay.wf-open{display:flex}
@@ -184,15 +214,10 @@ body.wf-lock{overflow:hidden}
 .wf-sec.on .wf-lab{text-shadow:0 0 13px rgba(110,231,160,.95),0 0 26px rgba(110,231,160,.55)}
 .wf-sec.soon{opacity:.4;pointer-events:none}
 
-/* Tab keeps its original phone-only breakpoint */
-@media(max-width:600px){
-  .wf-tab{padding:12px 7px;gap:0;writing-mode:vertical-rl;text-orientation:mixed}
-  .wf-tab svg{display:none}
-  .wf-tab-txt{flex-direction:column;line-height:1.1}
-  .wf-tab-l1,.wf-tab-l2{font-size:11px;display:inline}
-  .wf-tab-l1::after{content:" this fits";}
-  .wf-tab-l2{display:none}
-}
+/* The phone-only vertical block that used to sit here is gone. It became an
+   exact duplicate of the default once the tab went vertical at every width;
+   the only value it still carried was an 11px label, and 12px reads better
+   in the desktop range the tab now also occupies. */
 
 /* MOBILE: names only, no taglines, no icon, smaller, keep glow + dotted dividers */
 @media(max-width:880px){
@@ -257,7 +282,13 @@ body.wf-lock{overflow:hidden}
    -------------------------------------------------------------------------- */
 .author-fab{
   background:none !important; border:none !important; box-shadow:none !important;
-  color:#1E3A8A; padding:0; width:88px !important; height:88px !important;
+  color:#1E3A8A; padding:0;
+  /* The mark's size lives in one variable because its horizontal position is
+     derived from it: the button centres on --fab-axis by offsetting half its
+     own width. It is 88px here and 60px on a phone, and hard-coding either
+     half is how the phone case silently fell out of alignment. */
+  --fab-size:88px;
+  width:var(--fab-size) !important; height:var(--fab-size) !important;
   --fab-rgb:99,102,241;         /* indigo. Crimson fought the navy monogram:
                                    a red ring behind a blue mark reads as an
                                    applied ring, not as light coming off the
@@ -354,7 +385,7 @@ body.wf-lock{overflow:hidden}
      site's mark. At 60px the button and the mark are the same size
      again, as they are on desktop, and the touch target sits well clear
      of the 44px minimum without needing padding to get there. */
-  .author-fab{width:60px !important; height:60px !important}
+  .author-fab{--fab-size:60px}
   .author-fab svg{width:60px; height:60px}
 }
 

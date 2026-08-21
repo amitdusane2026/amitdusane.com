@@ -23,6 +23,13 @@
      2.46:1 -- unreadable, and it appears in prose across the corpus. */
   --code-chrome-ink:#94a3b8; --code-ink:#ba2142;
   --accent:#ba2142; --accent2:#951833; --accent-light:rgba(186,33,66,.10); --on-accent:#ffffff;
+  /* One neutral for BOTH themes, and deliberately not redefined for dark.
+     It carries the page-nav button, which previously used --bg2 and so
+     tracked the theme to its extremes: a white disc on a white page, a black
+     one on a black page. Picked by measurement to sit equally on either
+     ground -- 4.17:1 on light (#f8fafc), 4.09:1 on dark (#0f172a) -- so it is
+     always visible and never the loudest thing in the corner. */
+  --fab-quiet:#6b7a90; --fab-quiet-hover:#5c6a7e; --on-fab-quiet:#ffffff;
   --success:#10b981; --warning:#f59e0b; --info:#3b82f6;
   /* -ink = the same semantic, dark enough to carry TEXT at AA. The bare
      token stays the cross-world constant (COL-03) and keeps doing tints,
@@ -487,22 +494,35 @@ body.world-learning .lcontent > h1.lsec-title{margin-left:calc(var(--title-inden
     background:rgba(0,0,0,.42); opacity:0; pointer-events:none; transition:opacity .22s;
   }
   .wf-nav-veil.open{opacity:1; pointer-events:auto}
-  /* A quiet control, deliberately. It sits directly above the About mark,
-     and as a near-black solid disc it shouted over it: a utility for moving
+  /* A quiet control, deliberately. It sits directly above the About mark, and
+     as a near-black solid disc it once shouted over it: a utility for moving
      inside one page was outweighing the site's own identity. The order of
-     loudness should be pocket map, then page nav, then identity, and this
-     is the middle one. Surface fill with a border reads as a button without
-     competing. */
+     loudness should be pocket map, then page nav, then identity, and this is
+     the middle one.
+
+     The fix for that was a surface fill, --bg2, and it traded one fault for
+     another: --bg2 is #ffffff in light and #1e293b in dark, so the button
+     tracked the theme to its extremes and read as a white disc on a white
+     page or a black disc on a black one. It either vanished or shouted.
+
+     --fab-quiet is one neutral for BOTH themes, chosen by measurement rather
+     than by picking an opposite: 4.17:1 against the light page ground
+     (#f8fafc) and 4.09:1 against the dark one (#0f172a). Near-identical
+     presence either way, clearly a control, and never the loudest thing in
+     the corner. The icon rides at 4.36:1 on it, past the 3:1 non-text line.
+     One value means there is no dark override to keep in step. */
   .wf-nav-fab{
     display:flex; align-items:center; justify-content:center;
-    /* Clear of the About mark, which is 80px tall at bottom:18 on a phone
-       and would otherwise sit underneath this. */
-    position:fixed; right:20px; bottom:112px; z-index:940;
+    /* Clear of the About mark, which is 88px tall -- not the 80px this note
+       used to claim -- and would otherwise sit underneath this. Horizontal
+       position comes from the shared --fab-axis so the two controls stack as
+       one column; offset is half this button's own width. */
+    position:fixed; right:calc(var(--fab-axis) - 22px); bottom:112px; z-index:940;
     width:44px; height:44px; border-radius:50%; cursor:pointer;
-    color:var(--text2); background:var(--bg2); border:1px solid var(--border);
-    box-shadow:0 3px 10px rgba(15,23,42,.14);
+    color:var(--on-fab-quiet); background:var(--fab-quiet); border:none;
+    box-shadow:0 3px 10px rgba(15,23,42,.18);
   }
-  .wf-nav-fab:hover{color:var(--text1); border-color:var(--text3)}
+  .wf-nav-fab:hover{background:var(--fab-quiet-hover)}
   [data-theme="dark"] .wf-nav-fab{box-shadow:0 3px 10px rgba(0,0,0,.45)}
   .wf-nav-fab svg{width:20px;height:20px}
   .wf-rail a{font-size:var(--fs-sm); padding:7px 6px 7px 0}
