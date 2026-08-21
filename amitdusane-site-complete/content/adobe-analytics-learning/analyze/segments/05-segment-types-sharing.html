@@ -33,22 +33,24 @@ weight: 5
 <h3 class="subsec-title">The Segment manager: where saved segments live</h3>
 <p>Every saved segment lands in the Segment manager, the hub for finding, organizing, and sharing them. It lists the segments you own, the ones scoped to all your projects, and the ones others have shared with you, each row showing its owner, the report suite it belongs to, its tags, and how many people it is shared with. Alongside its definition, every segment carries metadata that has nothing to do with logic and everything to do with keeping a library usable: a Title, a Description, and Tags. The description tells the next person what a segment is for without forcing them to open and decode its definition, and tags let the manager filter a crowded library down to what matters, so a search for everything tagged Funnel returns exactly those. This metadata is worth filling in even for a segment only you use today, because the moment it is shared it is the only thing standing between a useful component and an unlabeled mystery. How to name and structure it systematically, so a library stays sane at scale, is its own discipline and belongs to Segment Best Practices. That the fields exist, and that they carry the segment's intent rather than its logic, is this section's point.</p>
 
-<div class="code-block">
-    <div class="code-hdr"><span class="code-lang">Follow along: save a segment and find it again</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-    <div class="code-body"><pre>Components > Segments > Add          (opens the Segment builder)
-
-    Title:        Engaged mobile purchasers        (required)
-    Description:  Mobile visitors who purchased and spent
-                  over two minutes on the site
-    Tags:         Mobile, Purchasers
-
-    Build the definition, then  Save.
-
-To find it again:
-Components > Segments                (the Segment manager)
-    The segment appears in the list you own, showing its
-    title, report suite, owner, tags, and shared-with count.
-    Select the title to reopen it in the builder.</pre></div>
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>Save a segment, and find it again</span></div>
+    <ol class="dothis-steps">
+        <li class="ds-group">Save it</li>
+        <li><span class="ds-do">Open <code>Components</code> <span class="ds-sep">&rsaquo;</span> <code>Segments</code> <span class="ds-sep">&rsaquo;</span> <code>Add</code> to open the Segment builder.</span></li>
+        <li>
+            <span class="ds-do">Set <code>Title</code> to <code>Engaged mobile purchasers</code>.</span>
+            <span class="ds-see">Required. Description and Tags are not.</span>
+        </li>
+        <li><span class="ds-do">Set <code>Description</code> to <em>&ldquo;Mobile visitors who purchased and spent over two minutes on the site&rdquo;</em>, and <code>Tags</code> to <code>Mobile</code> and <code>Purchasers</code>.</span></li>
+        <li><span class="ds-do">Build the definition, then choose <code>Save</code>.</span></li>
+        <li class="ds-group">Find it again</li>
+        <li>
+            <span class="ds-do">Open <code>Components</code> <span class="ds-sep">&rsaquo;</span> <code>Segments</code>, the Segment manager.</span>
+            <span class="ds-see">The segment appears in the list you own, showing its title, report suite, owner, tags, and shared-with count.</span>
+        </li>
+        <li><span class="ds-do">Select the title to reopen it in the builder.</span></li>
+    </ol>
 </div>
 
 <h3 class="subsec-title">Sharing: one definition, many people</h3>
@@ -84,20 +86,22 @@ Components > Segments                (the Segment manager)
     <p>When someone applies a shared segment directly to a report, they are using a live reference: edit the segment once and every report that applies it updates automatically. But if someone drags your segment inside a segment of their own, Adobe stores a copy of its definition at that moment, not a link, and later edits to your original never reach that copy. This is why a single shared, directly applied segment is the safest way to keep a whole organization counting the same thing.</p>
 </div>
 
-<div class="code-block">
-    <div class="code-hdr"><span class="code-lang">Follow along: share a segment</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-    <div class="code-body"><pre>Components > Segments                (the Segment manager)
-
-    Select the segment's row (its checkbox).
-    Select the  Share  icon  >  the Share Component dialog opens.
-
-    Search for and select one or more individuals to share with.
-    An Admin can also pick  Groups  or the whole  Organization.
-
-    Save.
-
-The recipient then finds it under:
-Components > Segments  >  Filters > Other Filters > Shared with Me</pre></div>
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>Share a segment</span></div>
+    <p class="dothis-setup"><strong>Before you start:</strong> open <code>Components</code> <span class="ds-sep">&rsaquo;</span> <code>Segments</code>, the Segment manager.</p>
+    <ol class="dothis-steps">
+        <li><span class="ds-do">Select the segment's row using its checkbox.</span></li>
+        <li>
+            <span class="ds-do">Select the <code>Share</code> icon.</span>
+            <span class="ds-see">The Share Component dialog opens.</span>
+        </li>
+        <li>
+            <span class="ds-do">Search for and select one or more individuals to share with.</span>
+            <span class="ds-see">An Admin can also pick <code>Groups</code>, or the whole <code>Organization</code>.</span>
+        </li>
+        <li><span class="ds-do">Choose <code>Save</code>.</span></li>
+    </ol>
+    <p class="dothis-end">The recipient finds it under <code>Components</code> <span class="ds-sep">&rsaquo;</span> <code>Segments</code> <span class="ds-sep">&rsaquo;</span> <code>Filters</code> <span class="ds-sep">&rsaquo;</span> <code>Other Filters</code> <span class="ds-sep">&rsaquo;</span> <code>Shared with Me</code>.</p>
 </div>
 
 <p>The Segment manager also lets an administrator mark a segment as approved, a visible signal that it has been vetted and is safe to rely on. The mechanic sits here, but the policy behind it, who is allowed to approve, and how a shared library is curated over time, is a governance question, and this curriculum treats governance as its own subject later on rather than folding it in here.</p>

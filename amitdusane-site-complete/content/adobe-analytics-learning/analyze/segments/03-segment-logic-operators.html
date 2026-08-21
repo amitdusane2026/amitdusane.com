@@ -107,28 +107,21 @@ weight: 3
     </svg>
 </div>
 
-<div class="code-block">
-    <div class="code-hdr"><span class="code-lang">Combine AND and OR with a nested container</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-    <div class="code-body"><pre>Components > Segments > Add
-
-Title:  Saw ABC with a video, or saw XYZ
-
-Definition
-    Top container scope:  Visits
-
-    Rule 1:  Page        equals   ABC
-    Rule 2:  Video Play  exists
-        Select Rule 1 and Rule 2 > Options > Add container from selection
-        Set the join inside the new container to  AND
-        (this nested container now means: in one visit, saw ABC and played a video)
-
-    Rule 3:  Page        equals   XYZ      (added outside the nested container)
-
-    Set the join between the nested container and Rule 3 to  OR
-
-Reads as: visits where (Page ABC AND a video played) OR Page XYZ
-
-Save</pre></div>
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>Combine AND and OR with a nested container</span></div>
+    <p class="dothis-setup"><strong>Before you start:</strong> open <code>Components</code> <span class="ds-sep">&rsaquo;</span> <code>Segments</code> <span class="ds-sep">&rsaquo;</span> <code>Add</code>, set the Title to <code>Saw ABC with a video, or saw XYZ</code>, and set the top container scope to <code>Visits</code>.</p>
+    <ol class="dothis-steps">
+        <li><span class="ds-do">Add Rule 1: <code>Page</code> equals <code>ABC</code>.</span></li>
+        <li><span class="ds-do">Add Rule 2: <code>Video Play</code> <code>exists</code>.</span></li>
+        <li><span class="ds-do">Select both rules, then choose <code>Options</code> <span class="ds-sep">&rsaquo;</span> <code>Add container from selection</code>.</span></li>
+        <li>
+            <span class="ds-do">Set the join inside the new container to <code>AND</code>.</span>
+            <span class="ds-see">This nested container now means: in one visit, saw ABC <em>and</em> played a video.</span>
+        </li>
+        <li><span class="ds-do">Add Rule 3 <em>outside</em> the nested container: <code>Page</code> equals <code>XYZ</code>.</span></li>
+        <li><span class="ds-do">Set the join between the nested container and Rule 3 to <code>OR</code>, then <code>Save</code>.</span></li>
+    </ol>
+    <p class="dothis-end"><strong>Reads as:</strong> visits where (Page ABC AND a video played) OR Page XYZ.</p>
 </div>
 
 <p>Without the nested container, three conditions at one level would all share a single <code>And</code> or a single <code>Or</code>, and neither expresses the question. The nesting is what lets the <code>And</code> bind tightly around its pair while the <code>Or</code> governs the whole. That is the general move: group the conditions that belong together, then relate the groups.</p>

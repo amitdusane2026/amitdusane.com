@@ -102,50 +102,36 @@ weight: 4
     </table>
 </div>
 
-<div class="code-block">
-    <div class="code-hdr"><span class="code-lang">Follow along: build a basic sequence</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-    <div class="code-body"><pre>Components > Segments > Add
-
-Title:  Pricing page, then a trial start
-
-Definition
-    Top container scope:  Visitors
-
-    Checkpoint 1:  Page          equals   Pricing
-    Join:          THEN  >  within  7  days
-    Checkpoint 2:  Trial Start   exists
-
-    Sequence returns:  Only After Sequence
-        (keeps the pricing-to-trial sequence and what followed,
-         instead of the default Include Everyone)
-
-Reads as: visitors who viewed Pricing and then, within 7 days,
-started a trial, plus everything they did afterward.
-
-Save</pre></div>
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>Build a basic sequence</span></div>
+    <dl class="dothis-fields">
+        <div><dt>Where</dt><dd><code>Components</code> <span class="ds-sep">&rsaquo;</span> <code>Segments</code> <span class="ds-sep">&rsaquo;</span> <code>Add</code></dd></div>
+        <div><dt>Title</dt><dd><code>Pricing page, then a trial start</code></dd></div>
+        <div><dt>Top container scope</dt><dd><code>Visitors</code></dd></div>
+        <div><dt>Checkpoint 1</dt><dd><code>Page</code> equals <code>Pricing</code></dd></div>
+        <div><dt>Join</dt><dd><code>THEN</code> <span class="ds-sep">&rsaquo;</span> within <code>7</code> days</dd></div>
+        <div><dt>Checkpoint 2</dt><dd><code>Trial Start</code> <code>exists</code></dd></div>
+        <div><dt>Sequence returns</dt><dd><code>Only After Sequence</code> &mdash; keeps the pricing-to-trial sequence and what followed, instead of the default <code>Include Everyone</code></dd></div>
+        <div><dt>Finally</dt><dd><code>Save</code></dd></div>
+    </dl>
+    <p class="dothis-end"><strong>Reads as:</strong> visitors who viewed Pricing and then, within 7 days, started a trial, plus everything they did afterward.</p>
 </div>
 
 <h3 class="subsec-title">Excluding a step: the drop-off question</h3>
 <p>Some of the most valuable journeys are defined by what did not happen. A checkout funnel's real question is usually "who started but never finished." A sequence answers this with an Exclude checkpoint, and where the exclusion sits changes its meaning. Placed in the middle, it means "A then C, but never B in between," the visitors who skipped a step. Placed at the end, it means "did A, then never did B afterward," the classic drop-off. This is a truer way to build a funnel drop-off than a "does not equal" condition, which, as <a href="/adobe-analytics-learning/analyze/segments/segment-logic-operators/">Segment Logic and Operators</a> showed, negates a single hit rather than the whole step.</p>
 
-<div class="code-block">
-    <div class="code-hdr"><span class="code-lang">Follow along: a funnel drop-off with an end Exclude</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-    <div class="code-body"><pre>Components > Segments > Add
-
-Title:  Started checkout, never confirmed
-
-Definition
-    Top container scope:  Visits
-
-    Checkpoint 1:  Page   equals   Checkout
-    Join:          THEN
-    Checkpoint 2:  Page   equals   Order Confirmation
-        Set the EXCLUDE operator on Checkpoint 2
-
-Reads as: visits that reached Checkout and then never reached
-Order Confirmation afterward. A real funnel drop-off.
-
-Save</pre></div>
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>A funnel drop-off with an end Exclude</span></div>
+    <dl class="dothis-fields">
+        <div><dt>Where</dt><dd><code>Components</code> <span class="ds-sep">&rsaquo;</span> <code>Segments</code> <span class="ds-sep">&rsaquo;</span> <code>Add</code></dd></div>
+        <div><dt>Title</dt><dd><code>Started checkout, never confirmed</code></dd></div>
+        <div><dt>Top container scope</dt><dd><code>Visits</code></dd></div>
+        <div><dt>Checkpoint 1</dt><dd><code>Page</code> equals <code>Checkout</code></dd></div>
+        <div><dt>Join</dt><dd><code>THEN</code></dd></div>
+        <div><dt>Checkpoint 2</dt><dd><code>Page</code> equals <code>Order Confirmation</code>, with the <code>EXCLUDE</code> operator set on this checkpoint</dd></div>
+        <div><dt>Finally</dt><dd><code>Save</code></dd></div>
+    </dl>
+    <p class="dothis-end"><strong>Reads as:</strong> visits that reached Checkout and then never reached Order Confirmation afterward. A real funnel drop-off.</p>
 </div>
 
 <h3 class="subsec-title">Logic Group: an unordered step inside an ordered sequence</h3>
@@ -190,30 +176,21 @@ Save</pre></div>
     <p>It is tempting to drop an ordinary Hit or Visit container into a sequence to hold two order-independent steps. Do not. A non-sequential container does not require its conditions to fall inside the sequence, so the two grouped steps can be satisfied anywhere in the visitor's history, before the sequence, after it, or scattered apart, and the segment quietly returns more than intended. The Logic Group container is built precisely to prevent this: it holds unordered steps while still forcing the group as a whole to sit in its place in the sequence.</p>
 </div>
 
-<div class="code-block">
-    <div class="code-hdr"><span class="code-lang">Follow along: build a Logic Group step</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-    <div class="code-body"><pre>Components > Segments > Add
-
-Title:  Campaign, then demo and coupon in any order, then order
-
-Definition
-    Top container scope:  Visitors
-
-    Checkpoint 1:  Marketing Channel   equals   Paid Campaign
-    Join:          THEN
-
-    Middle steps:  Page equals Demo     Page equals Coupon
-        Select both > Options > Add container from selection
-        Change the container type to  Logic Group
-        (inside a Logic Group the two may occur in any order)
-    Join:          THEN
-
-    Last checkpoint:  Page   equals   Order Confirmation
-
-Reads as: arrived from a paid campaign, then viewed the demo and
-the coupon pages in either order, then reached order confirmation.
-
-Save</pre></div>
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>Build a Logic Group step</span></div>
+    <p class="dothis-setup"><strong>Before you start:</strong> open <code>Components</code> <span class="ds-sep">&rsaquo;</span> <code>Segments</code> <span class="ds-sep">&rsaquo;</span> <code>Add</code>, set the Title to <code>Campaign, then demo and coupon in any order, then order</code>, and set the top container scope to <code>Visitors</code>.</p>
+    <ol class="dothis-steps">
+        <li><span class="ds-do">Set Checkpoint 1 to <code>Marketing Channel</code> equals <code>Paid Campaign</code>, and the join to <code>THEN</code>.</span></li>
+        <li><span class="ds-do">Add the two middle steps: <code>Page</code> equals <code>Demo</code>, and <code>Page</code> equals <code>Coupon</code>.</span></li>
+        <li><span class="ds-do">Select both, then choose <code>Options</code> <span class="ds-sep">&rsaquo;</span> <code>Add container from selection</code>.</span></li>
+        <li>
+            <span class="ds-do">Change the container type to <code>Logic Group</code>.</span>
+            <span class="ds-see">Inside a Logic Group the two may occur in any order, which is the whole reason for this step.</span>
+        </li>
+        <li><span class="ds-do">Set the next join to <code>THEN</code>, and the last checkpoint to <code>Page</code> equals <code>Order Confirmation</code>.</span></li>
+        <li><span class="ds-do">Choose <code>Save</code>.</span></li>
+    </ol>
+    <p class="dothis-end"><strong>Reads as:</strong> arrived from a paid campaign, then viewed the demo and the coupon pages in either order, then reached order confirmation.</p>
 </div>
 
 <h3 class="subsec-title">What to watch for</h3>

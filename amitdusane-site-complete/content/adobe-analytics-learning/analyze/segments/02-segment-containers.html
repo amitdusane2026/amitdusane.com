@@ -79,22 +79,19 @@ weight: 2
 <h3 class="subsec-title">Follow along: build your first segment</h3>
 <p>The clearest way to feel the container is to make one. Segments are created in the Segment builder, reached from the main menu. The steps below build the simplest possible segment and save it. They stop short of putting it in a report on purpose: building a segment and using one inside a Workspace panel are two different skills, and the second belongs to a module on <a href="/adobe-analytics-learning/analyze/analysis-workspace/">Analysis Workspace</a>. Here the goal is only to make the object exist.</p>
 
-<div class="code-block">
-    <div class="code-hdr"><span class="code-lang">Create a simple Hit segment</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-    <div class="code-body"><pre>Components > Segments > Add        (opens the Segment builder)
-
-Title:        Safari hits
-Description:  Hits that came from the Safari browser
-
-Definition
-    Set the scope:  Options (gear) > scope drop-down > Hits
-    Drag in:        Browser
-    Operator:       contains
-    Value:          Safari
-
-The preview at the top right updates as you build.
-
-Save</pre></div>
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>Create a simple Hit segment</span></div>
+    <dl class="dothis-fields">
+        <div><dt>Where</dt><dd><code>Components</code> <span class="ds-sep">&rsaquo;</span> <code>Segments</code> <span class="ds-sep">&rsaquo;</span> <code>Add</code>, which opens the Segment builder</dd></div>
+        <div><dt>Title</dt><dd><code>Safari hits</code></dd></div>
+        <div><dt>Description</dt><dd>Hits that came from the Safari browser</dd></div>
+        <div><dt>Scope</dt><dd><code>Hits</code> &mdash; set it from <code>Options</code> (gear) <span class="ds-sep">&rsaquo;</span> scope drop-down</dd></div>
+        <div><dt>Drag in</dt><dd><code>Browser</code></dd></div>
+        <div><dt>Operator</dt><dd><code>contains</code></dd></div>
+        <div><dt>Value</dt><dd><code>Safari</code></dd></div>
+        <div><dt>Finally</dt><dd><code>Save</code></dd></div>
+    </dl>
+    <p class="dothis-end">The preview at the top right updates as you build, so you never have to save to find out whether you got it right.</p>
 </div>
 
 <p>That is a complete, saved, reusable segment, and it already has a container: the top-level one whose scope was set to Hits. Which is the next thing worth understanding, because that container is always there, even when it looks like nothing was set.</p>
@@ -155,22 +152,20 @@ Save</pre></div>
 
 <p>That single rule is why nesting a wider container inside a narrower one is a mistake. Put a Visitor container inside a Visit container and it cannot do its job: the Visit container has already discarded every visit that did not match, so the Visitor container trapped inside it has nothing left to widen back out to. The structure looks meaningful on the canvas and changes nothing in the result. Keep the widest container on the outside, every time.</p>
 
-<div class="code-block">
-    <div class="code-hdr"><span class="code-lang">Nest a container inside another</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-    <div class="code-body"><pre>Components > Segments > Add
-
-Title:  Visitors who ordered
-
-Definition
-    Top container scope:   Visitors
-    Options (gear) > Add container      (a nested container appears)
-    Nested container scope:  Visits
-    Drag into the nested container:  Orders
-    Operator:  exists
-
-Reads as: visitors for whom at least one visit contained an order.
-
-Save</pre></div>
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>Nest a container inside another</span></div>
+    <p class="dothis-setup"><strong>Before you start:</strong> open <code>Components</code> <span class="ds-sep">&rsaquo;</span> <code>Segments</code> <span class="ds-sep">&rsaquo;</span> <code>Add</code>, and set the Title to <code>Visitors who ordered</code>.</p>
+    <ol class="dothis-steps">
+        <li><span class="ds-do">Set the top container scope to <code>Visitors</code>.</span></li>
+        <li>
+            <span class="ds-do">Choose <code>Options</code> (gear) <span class="ds-sep">&rsaquo;</span> <code>Add container</code>.</span>
+            <span class="ds-see">A nested container appears inside the first one.</span>
+        </li>
+        <li><span class="ds-do">Set the nested container's scope to <code>Visits</code>.</span></li>
+        <li><span class="ds-do">Drag <code>Orders</code> into the nested container and set the operator to <code>exists</code>.</span></li>
+        <li><span class="ds-do">Choose <code>Save</code>.</span></li>
+    </ol>
+    <p class="dothis-end"><strong>Reads as:</strong> visitors for whom at least one visit contained an order.</p>
 </div>
 
 <p>With a single condition like this, the nested form and a plain Visitor segment return the same people, so the nesting can look like effort spent for nothing. It earns its keep the moment two conditions have to happen together inside the same visit, for example viewing the pricing page and then not purchasing, within one session rather than scattered across weeks. Forcing conditions to co-occur is a job for logic and operators, the subject of Segment Logic and Operators.</p>
