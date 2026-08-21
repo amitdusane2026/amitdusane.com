@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Icon review — amitdusane.com</title>
+<style>
+  :root{
+    --ink:#0f172a; --ink2:#475569; --line:#e2e8f0; --bg:#f8fafc; --card:#fff;
+    --accent:#ba2142; --warn-ink:#8a5700; --info-ink:#1d4ed8; --ok-ink:#0a6e50; --violet:#534AB7;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;padding:38px 22px 70px;background:var(--bg);color:var(--ink);
+       font:16px/1.6 'IBM Plex Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}
+  .wrap{max-width:900px;margin:0 auto}
+  h1{font-size:30px;font-weight:600;margin:0 0 6px}
+  .sub{color:var(--ink2);margin:0 0 30px;font-size:15px}
+  h2{font-size:20px;font-weight:600;margin:38px 0 4px;padding-left:12px;border-left:3px solid var(--accent)}
+  h2 + p{color:var(--ink2);font-size:14.5px;margin:0 0 16px}
+  table{width:100%;border-collapse:collapse;background:var(--card);
+        border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  th{text-align:left;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+     color:var(--ink2);background:#f1f5f9;padding:11px 16px;border-bottom:1px solid var(--line)}
+  td{padding:16px;border-bottom:1px solid var(--line);vertical-align:middle;width:50%}
+  tr:last-child td{border-bottom:none}
+  .cell{display:flex;align-items:center;gap:13px;flex-wrap:wrap}
+  .emoji{font-size:26px;line-height:1;width:30px;text-align:center;flex:none}
+  .meta{font-size:14px;line-height:1.45}
+  .meta b{display:block;font-weight:600}
+  .meta span{color:var(--ink2);font-size:12.5px}
+  .tile{flex:none;width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center}
+  .tile svg{width:17px;height:17px;display:block}
+  .keep{font-size:12px;color:var(--ok-ink);font-weight:600}
+  .drop{font-size:12px;color:var(--warn-ink);font-weight:600}
+  .chrome{display:flex;align-items:center;justify-content:center;width:30px;height:30px;
+          border:1px solid var(--line);border-radius:7px;color:var(--ink2);flex:none;background:#fff}
+  .chrome svg{width:16px;height:16px}
+  .note{background:#fff;border:1px solid var(--line);border-left:3px solid var(--accent);
+        border-radius:0 8px 8px 0;padding:14px 18px;margin:26px 0 0;font-size:14.5px;color:var(--ink2)}
+  .note b{color:var(--ink)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>Icon review</h1>
+<p class="sub">Left, what is on the site today. Right, what I suggest. Where an icon already works, it is copied across unchanged.</p>
+
+<div class="note">
+  <b>The one rule behind every suggestion.</b> The site already has an icon language and uses it everywhere except the content components: a 24-unit viewBox, stroke width 2, round caps and joins, one colour. Every chrome icon speaks it, and so does the path tile. The six emoji are the only things that do not — and because the operating system draws them, they are a different picture on Windows, Mac and Android, in colours the site never chose. Column two puts them into the language the site already has.
+</div>
+
+<h2>Content components</h2>
+<p>These six carry the site's semantic vocabulary. They are the ones worth changing.</p>
+<table>
+  <tr><th>Existing</th><th>Suggested</th></tr>
+
+  <tr>
+    <td><div class="cell"><div class="emoji">&#9888;&#65039;</div>
+      <div class="meta"><b>warn-box</b><span>108 uses &middot; OS emoji</span></div></div></td>
+    <td><div class="cell"><div class="tile" style="background:#8a5700">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M10.36 3.59 2.26 17.12A1.91 1.91 0 0 0 3.9 20h16.2a1.91 1.91 0 0 0 1.64-2.88L13.63 3.6a1.91 1.91 0 0 0-3.27 0z"/>
+        <path d="M12 9v4"/><path d="M12 17h.01"/></svg></div>
+      <div class="meta"><b>Amber tile</b><span>#8a5700 &middot; the warning ink</span></div></div></td>
+  </tr>
+
+  <tr>
+    <td><div class="cell"><div class="emoji">&#8505;&#65039;</div>
+      <div class="meta"><b>info-box</b><span>62 uses &middot; OS emoji</span></div></div></td>
+    <td><div class="cell"><div class="tile" style="background:#1d4ed8">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="9"/><path d="M12 8h.01"/><path d="M11 12h1v4h1"/></svg></div>
+      <div class="meta"><b>Blue tile</b><span>#1d4ed8 &middot; the info ink</span></div></div></td>
+  </tr>
+
+  <tr>
+    <td><div class="cell"><div class="emoji">&#128161;</div>
+      <div class="meta"><b>pro-tip</b><span>68 uses &middot; OS emoji</span></div></div></td>
+    <td><div class="cell"><div class="tile" style="background:#ba2142">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="10" r="5.2"/><path d="M9.8 17h4.4"/><path d="M10.6 19.6h2.8"/></svg></div>
+      <div class="meta"><b>Crimson tile</b><span>#ba2142 &middot; the accent</span></div></div></td>
+  </tr>
+
+  <tr>
+    <td><div class="cell"><div class="emoji">&#128218;</div>
+      <div class="meta"><b>ref-box</b><span>102 uses &middot; OS emoji</span></div></div></td>
+    <td><div class="cell"><div class="tile" style="background:#0a6e50">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 18.5a8 8 0 0 1 9 0 8 8 0 0 1 9 0"/><path d="M3 6.5a8 8 0 0 1 9 0 8 8 0 0 1 9 0"/>
+        <path d="M3 6.5v12"/><path d="M12 6.5v12"/><path d="M21 6.5v12"/></svg></div>
+      <div class="meta"><b>Green tile</b><span>#0a6e50 &middot; the Adobe handoff</span></div></div></td>
+  </tr>
+
+  <tr>
+    <td><div class="cell"><div class="tile" style="background:#534AB7">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 11a3 3 0 1 0 6 0 3 3 0 0 0-6 0"/>
+        <path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1-2.827 0l-4.244-4.243a8 8 0 1 1 11.314 0z"/></svg></div>
+      <div class="meta"><b>path-box</b><span>Violet tile &middot; already designed</span></div></div></td>
+    <td><div class="cell"><div class="tile" style="background:#534AB7">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 11a3 3 0 1 0 6 0 3 3 0 0 0-6 0"/>
+        <path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1-2.827 0l-4.244-4.243a8 8 0 1 1 11.314 0z"/></svg></div>
+      <div class="meta"><b>Unchanged</b><span class="keep">This is the model for the four above</span></div></div></td>
+  </tr>
+
+  <tr>
+    <td><div class="cell"><div class="emoji">&#128202;</div>
+      <div class="meta"><b>diagram-title</b><span>6 uses of 130 figures</span></div></div></td>
+    <td><div class="cell"><div class="tile" style="background:#e2e8f0;color:#475569">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 19V5"/><path d="M4 19h16"/><path d="M8 16v-5"/><path d="M12 16V8"/><path d="M16 16v-3"/></svg></div>
+      <div class="meta"><b>Remove it</b><span class="drop">124 of 130 figures already have none</span></div></div></td>
+  </tr>
+
+  <tr>
+    <td><div class="cell"><div class="emoji" style="opacity:.35">&#128247;</div>
+      <div class="meta"><b>shot-title</b><span style="text-decoration:line-through">14 uses</span></div></div></td>
+    <td><div class="cell"><div class="tile" style="background:transparent;border:1px dashed var(--line)"></div>
+      <div class="meta"><b>Already removed</b><span class="keep">Done &mdash; the heading sits above the picture</span></div></div></td>
+  </tr>
+</table>
+
+<h2>Chrome and identity</h2>
+<p>All already in the language. Nothing to change &mdash; shown so the set is complete.</p>
+<table>
+  <tr><th>Existing</th><th>Suggested</th></tr>
+
+  <tr>
+    <td><div class="cell"><div class="chrome">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg></div>
+      <div class="meta"><b>Print</b><span>Header control</span></div></div></td>
+    <td><div class="cell"><div class="chrome">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg></div>
+      <div class="meta"><b>Unchanged</b><span class="keep">Keep</span></div></div></td>
+  </tr>
+
+  <tr>
+    <td><div class="cell"><div class="chrome">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/></svg></div>
+      <div class="meta"><b>Theme toggle</b><span>Header control</span></div></div></td>
+    <td><div class="cell"><div class="chrome">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/></svg></div>
+      <div class="meta"><b>Unchanged</b><span class="keep">Keep</span></div></div></td>
+  </tr>
+
+  <tr>
+    <td><div class="cell"><div class="chrome">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="14" y2="12"/><line x1="4" y1="17" x2="18" y2="17"/></svg></div>
+      <div class="meta"><b>Page navigation</b><span>Floating button</span></div></div></td>
+    <td><div class="cell"><div class="chrome">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="14" y2="12"/><line x1="4" y1="17" x2="18" y2="17"/></svg></div>
+      <div class="meta"><b>Unchanged</b><span class="keep">Keep</span></div></div></td>
+  </tr>
+
+  <tr>
+    <td><div class="cell"><div class="chrome">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+      <div class="meta"><b>Search</b><span>Header control</span></div></div></td>
+    <td><div class="cell"><div class="chrome">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+      <div class="meta"><b>Unchanged</b><span class="keep">Keep</span></div></div></td>
+  </tr>
+
+  <tr>
+    <td><div class="cell"><div class="chrome">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M7 17 17 7"/><path d="M9 7h8v8"/></svg></div>
+      <div class="meta"><b>Screenshot zoom</b><span>Opens the overlay</span></div></div></td>
+    <td><div class="cell"><div class="chrome">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M7 17 17 7"/><path d="M9 7h8v8"/></svg></div>
+      <div class="meta"><b>Unchanged</b><span class="keep">Keep &mdash; you asked for this one to stay</span></div></div></td>
+  </tr>
+
+  <tr>
+    <td><div class="cell"><div class="chrome" style="border-color:#1E3A8A">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><path fill="#1E3A8A" d="M18 50 L32 18 L46 50 H40 L35 39 H29 L24 50 Z"/>
+        <path fill="#1E3A8A" d="M34 18 H44 C54 18 58 24 58 32 C58 40 54 46 44 46 H38 L41 40 H44 C49 40 52 37 52 32 C52 27 49 24 44 24 H37 Z"/>
+        <rect x="24" y="44" width="20" height="3.5" rx="1.7" fill="#C8102E"/></svg></div>
+      <div class="meta"><b>Monogram</b><span>Header, byline, About mark, print</span></div></div></td>
+    <td><div class="cell"><div class="chrome" style="border-color:#1E3A8A">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><path fill="#1E3A8A" d="M18 50 L32 18 L46 50 H40 L35 39 H29 L24 50 Z"/>
+        <path fill="#1E3A8A" d="M34 18 H44 C54 18 58 24 58 32 C58 40 54 46 44 46 H38 L41 40 H44 C49 40 52 37 52 32 C52 27 49 24 44 24 H37 Z"/>
+        <rect x="24" y="44" width="20" height="3.5" rx="1.7" fill="#C8102E"/></svg></div>
+      <div class="meta"><b>Unchanged</b><span class="keep">Your own design &mdash; not to be altered</span></div></div></td>
+  </tr>
+</table>
+
+<h2>One-off emoji buried in content</h2>
+<p>Thirteen glyphs, one use each, scattered inside diagrams and boxes. Nobody learns a vocabulary from a single instance.</p>
+<table>
+  <tr><th>Existing</th><th>Suggested</th></tr>
+  <tr>
+    <td><div class="cell"><div class="emoji" style="font-size:19px;width:auto;flex:1 1 auto;min-width:0;text-align:left;line-height:1.85;word-spacing:6px">&#127919; &#127991; &#128290; &#128993; &#128994; &#129534; &#128214; &#128421; &#128279; &#9733; &#9999; &#128760; &#128228;</div></div>
+      <div class="meta" style="margin-top:8px"><span>1 use each &middot; 13 glyphs</span></div></td>
+    <td><div class="cell">
+      <div class="meta"><b>Remove them</b><span class="drop">Delete, or fold into the four tiles above where the meaning already fits</span></div></div></td>
+  </tr>
+</table>
+
+<div class="note" style="margin-top:34px">
+  <b>If you take the four tiles.</b> It is one CSS pattern reused four times &mdash; a 30px rounded tile, the semantic ink as the fill, a white line glyph at 17px &mdash; plus removing the emoji character from 340 component headers. White measures between 5.6:1 and 6.3:1 on all four fills, so every glyph clears the non-text contrast line. It also retires a documented trap: the warning emoji depends on the U+FE0F variation selector, and without it some platforms render a monochrome glyph instead. A tile has no such dependency.
+</div>
+
+</div>
+</body>
+</html>
