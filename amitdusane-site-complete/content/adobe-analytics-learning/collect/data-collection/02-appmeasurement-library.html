@@ -88,6 +88,17 @@ weight: 2
 <p>Two things are worth taking from that. The address is mostly not yours: the fixed path, the hit source, the library version and the cache buster are all added for you, and the report suite is the only part of the address you decided. Everything you actually chose to measure sits in the second half, after the question mark, which is why a debugging session usually starts there.</p>
 <p>The version segment repays a second look, because it is the fastest way to find something nobody knew was still running. It names the library that built the request, so a <code>JS-</code> prefix is AppMeasurement and an <code>H.</code> prefix is the far older H-code library it replaced. Find an <code>H.</code> version on a site that migrated years ago and you have found a hardcoded library still firing from a template nobody remembers owning, which is not a thing any amount of reading the tag manager would have told you.</p>
 
+<div class="shot-box shot-pending">
+    <div class="shot-title">Code Manager, and why the library has a version</div>
+    <div class="shot-frame">
+        <p class="shot-brief">FILE     aal_module04_section02_ss1.png
+SCREEN   Analytics > Admin > All admin > Code manager
+STATE    The Code Manager list showing the available downloads and their versions.
+INCLUDE  The version number and the JavaScript download row. The date column if present.
+EXCLUDE  Nothing sensitive here, but check the org name in the header.
+WHY      The section explains AppMeasurement is a file you host. Seeing the download screen makes it a file rather than an abstraction.</p>
+    </div>
+</div>
 <h3 class="subsec-title">The s object: what packs the pixel</h3>
 <p>So what assembles all that data and stuffs it into the request? A single object that lives on the page, named <code>s</code> by convention. Everything AppMeasurement does revolves around it. You write values into its fields, and when you fire a tracking call, AppMeasurement reads those fields, builds the pixel request, and sends it.</p>
 <div class="code-block">
@@ -191,6 +202,17 @@ s.linkTrackEvents = s.apl(s.linkTrackEvents, "event5", ",", ",", 1);</pre></div>
 <p>First, reconciliation. A clean link name gives you a stable thing to QA and debug against. When a number looks wrong, a well-named Custom Link report is often where you confirm whether the hit fired at all and what it carried.</p>
 <p>Second, keep your link names low in variety. The Custom Link report is a dimension like any other, and every dimension has a ceiling on how many unique values it will track in a month before the rest get swept into a single "Low-Traffic" bucket and effectively lost. It is a myth that custom links are exempt from this. What protects you is not the dimension, it is your own restraint: a small, controlled set of meaningful names stays comfortably under the ceiling, while dumping a raw URL or a unique string into the name on every click will blow past it. Name links by what they mean, not by where they happen to point.</p>
 
+<div class="shot-box shot-pending">
+    <div class="shot-title">One page view beacon, as the browser actually sends it</div>
+    <div class="shot-frame">
+        <p class="shot-brief">FILE     aal_module04_section02_ss2.png
+SCREEN   Browser DevTools > Network, filtered to the Adobe collection request, Payload or Query String panel open
+STATE    A single page-view request selected, with its query parameters expanded in the right-hand panel.
+INCLUDE  The request name in the left list and the decoded parameters on the right: pageName, the eVars, the events. Both panels in one frame.
+EXCLUDE  Any real page URLs, order IDs or values from a production site. Capture from the training property.
+WHY      The section says the pixel is where the variables go. Reading the actual parameter list is the moment that stops being a metaphor.</p>
+    </div>
+</div>
 <h3 class="subsec-title">The last piece: how a pixel becomes a report</h3>
 <p>You now know how a hit leaves the page. But a hit landing on Adobe's servers is not yet a report, and the gap between those two things is where the whole picture finally clicks together.</p>
 <p>Every server call you send lands as a single row in an enormous table, one row per hit. There is one such table per report suite, which is a large part of why the report suite is such a consequential choice: it is the boundary of where your data physically lives. The table is hundreds of columns wide, with a slot waiting for every eVar, every prop, every event, and all the standard fields a hit can carry. Whatever your pixel brought with it gets dropped into the matching columns of its row, and that is collection: a steady rain of rows, one per interaction.</p>

@@ -85,6 +85,17 @@ weight: 4
     </svg>
 </div>
 
+<div class="shot-box shot-pending">
+    <div class="shot-title">A sequence, and the THEN that orders it</div>
+    <div class="shot-frame">
+        <p class="shot-brief">FILE     aal_module13_section04_ss1.png
+SCREEN   Analytics > Components > Segments > Add, with a two-checkpoint sequence built
+STATE    The builder showing checkpoint one, the THEN join with its within-time control, and checkpoint two.
+INCLUDE  The THEN control and its time window in the same frame as both checkpoints.
+EXCLUDE  Client page names.
+WHY      The section turns on THEN and the greedy default. The join control is a small dropdown in the middle of the builder and is easy to miss entirely.</p>
+    </div>
+</div>
 <h3 class="subsec-title">Tightening the gap: After and Within</h3>
 <p>By default, "then" is patient. Page A <code>THEN</code> Page B matches whether B came one hit later or three months later. Sometimes that is fine. Often it is not: a trial that starts within a day of reading the pricing page is a different signal from one that starts a quarter later. Two modifiers on the <code>THEN</code> put limits on the gap. "Within" caps it, so <code>THEN</code> within 7 days or <code>THEN</code> within 1 hit requires B to arrive inside that window. "After" sets a floor, so B must come at least a stated interval later. Used well, these turn a loose "eventually" into a precise "soon after," which is usually what the business question actually meant.</p>
 

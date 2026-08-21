@@ -160,6 +160,17 @@ M-10485,40-59,Female,Gold,2021</pre></div>
 
 <p>Two of those steps decide whether this goes well.</p>
 
+<div class="shot-box shot-pending">
+    <div class="shot-title">The Schema Preview, the last checkpoint before data lands</div>
+    <div class="shot-frame">
+        <p class="shot-brief">FILE     aal_module11_section04_ss1.png
+SCREEN   Components > Classification sets > a set > Schema tab > Upload, after choosing a file
+STATE    The upload dialog showing the Schema Preview with the columns Adobe found in the file.
+INCLUDE  The preview table and the Overwrite data on conflict checkbox in the same frame.
+EXCLUDE  Real member IDs or customer values in the preview rows. Use the sample file from the section.
+WHY      The section calls this the last checkpoint before the data lands and warns that an alert here means a column mismatch. It is also the screen people click straight past.</p>
+    </div>
+</div>
 <h3 class="subsec-title">Overwrite on conflict, and what it actually means</h3>
 <p>The checkbox governs what happens when the file has a value for a key that already has a different value. It does nothing at all for keys that are new, and nothing for fields you left empty. It matters only where old and new disagree.</p>
 

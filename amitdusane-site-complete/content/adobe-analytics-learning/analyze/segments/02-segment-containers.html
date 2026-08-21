@@ -170,6 +170,17 @@ weight: 2
 
 <p>With a single condition like this, the nested form and a plain Visitor segment return the same people, so the nesting can look like effort spent for nothing. It earns its keep the moment two conditions have to happen together inside the same visit, for example viewing the pricing page and then not purchasing, within one session rather than scattered across weeks. Forcing conditions to co-occur is a job for logic and operators, the subject of Segment Logic and Operators.</p>
 
+<div class="shot-box shot-pending">
+    <div class="shot-title">A container inside a container, in the builder</div>
+    <div class="shot-frame">
+        <p class="shot-brief">FILE     aal_module13_section02_ss1.png
+SCREEN   Analytics > Components > Segments > Add, with a nested container built
+STATE    The Segment builder showing a Visitors container with a Visits container nested inside it, and a rule in the nested one.
+INCLUDE  Both container scope labels visible at once, with the nesting indent clear. The preview panel top right if it fits.
+EXCLUDE  Client segment names.
+WHY      The section's hardest idea is containers inside containers. The builder draws the nesting as an indent, which is far easier to grasp than the prose describing it.</p>
+    </div>
+</div>
 <h3 class="subsec-title">The same segment can change a report's numbers</h3>
 <p>Because the container controls how much data is pulled in, the very same condition returns different numbers at different scopes, and this trips people up constantly. A condition of page equals Pricing at Hit scope returns just the pricing-page hits. At Visit scope it returns every hit in any visit that touched the pricing page. At Visitor scope it returns every hit from any visitor who touched the pricing page even once, across all of their visits.</p>
 

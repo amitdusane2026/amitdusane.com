@@ -112,6 +112,17 @@ weight: 2
     <p>First, expiration and allocation shape how data is credited, but changing them does not fix the past, history stays as it was processed (the forward-only rule from report suites). Second, <strong>Linear</strong> has a sharp edge: it is only accurate within a visit, so Adobe pairs it with Visit expiration, and switching an eVar to or from Linear hides that eVar's historical data in the interface to prevent mixing incompatible models. The safe move when you need a new allocation is to use a new eVar, not to flip an existing one.</p>
 </div>
 <p>One more setting worth knowing is an eVar's <strong>type</strong>. Most eVars are Text String, the default, holding values like a campaign name or a search term. But an eVar can instead be a <strong>Counter</strong>, which counts how many times something happened before a conversion rather than storing text, for example how many internal searches a visitor ran before they bought. It is a niche mode, but exactly right when the question is "how many times" rather than "which value."</p>
+<div class="shot-box shot-pending">
+    <div class="shot-title">Allocation and expiration, the two dropdowns that decide the answer</div>
+    <div class="shot-frame">
+        <p class="shot-brief">FILE     aal_module03_section02_ss1.png
+SCREEN   Analytics > Admin > Report Suites > Edit Settings > Conversion > Conversion Variables, one eVar expanded
+STATE    A single eVar row expanded so both the Allocation and Expiration dropdowns are visible, ideally with one open.
+INCLUDE  Both dropdowns in the same frame, and the eVar name beside them.
+EXCLUDE  Client eVar names.
+WHY      This is the highest-value screenshot in the module. The section spends two headings on these two settings, and they are two unremarkable dropdowns most people never open.</p>
+    </div>
+</div>
 <h3 class="subsec-title">Merchandising eVars: crediting products, not visitors</h3>
 <p>A standard eVar attaches its value to the <em>visitor</em>. A <strong>merchandising eVar</strong> instead binds the value to a specific <em>product</em>, which unlocks a whole class of ecommerce questions a normal eVar cannot answer, like "how much revenue did each product earn, broken down by the on-site search term that surfaced it?" It comes in two flavors, product syntax (the value is set in the products string) and conversion syntax (set as a normal eVar but bound to a product by a chosen binding event), and its allocation controls whether the first or most recent value binds to the product. It is genuinely advanced; for now, just know it exists and what it is for. It depends on <a href="/adobe-analytics-learning/foundations/variables/products-string/">the products string</a>.</p>
 <h3 class="subsec-title">eVars, events, and the old dividing line</h3>

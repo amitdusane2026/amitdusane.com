@@ -73,6 +73,17 @@ weight: 7
     <p>Browser caching is deliberately switched off for development and staging environments, so every visitor refetches the library every time. That is exactly what you want while developing, you always see the latest build, but it is the opposite of what a high-traffic production page needs. Using a development or staging embed code in a production context means no caching at scale, which is both slow and wasteful. Production pages get the production embed, always.</p>
 </div>
 
+<div class="shot-box shot-pending">
+    <div class="shot-title">Three environments, three different embed codes</div>
+    <div class="shot-frame">
+        <p class="shot-brief">FILE     aal_module06_section07_ss1.png
+SCREEN   Inside a property > Environments, with one environment's Install dialog open
+STATE    The environment list with the install code dialog open over it, showing the script tag.
+INCLUDE  The environment names behind and the embed code in front, so the pairing is obvious.
+EXCLUDE  The actual property ID in the embed code. Blur is not allowed here, so use a training property whose ID is safe to publish.
+WHY      The section warns that pasting the wrong code sends production traffic into dev. The three codes look nearly identical, and that is exactly why.</p>
+    </div>
+</div>
 <h3 class="subsec-title">You cannot edit staging or production directly</h3>
 <p>One last point ties this back to publishing. You do all your real editing in development, because a library in any later stage is a fixed snapshot. If something is wrong in <strong>staging</strong>, you reject the library back to development, fix it there, and send it through again. If something is wrong in <strong>production</strong>, you cannot edit it in place either; you create a new corrected library and publish it over the old one, or republish a previous known-good library to roll back. The environments are where builds land; the changes themselves always happen in development.</p>
 

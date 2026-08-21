@@ -103,3 +103,68 @@ Add `-crop x<height>+0+0 +repage` before `-resize` to trim page bleed off the bo
 - **Shows:** what "blank canvas" actually means, before anything is dragged in.
 - **Width:** about 1200px.
 - **Skip it** if the section is already carrying enough. Lowest priority of the five.
+
+---
+
+# Modules 1 to 13 — briefs written 21 August 2026
+
+**32 shots across 12 modules.** Every one is also written into the section itself as a
+`shot-pending` box, so the brief sits where the picture will go and can be read in context.
+This list is the capture-day checklist; the box in the section is the detail.
+
+**Selection was deliberate and most sections got nothing.** 74 sections were reviewed. A shot
+was briefed only where seeing the real interface teaches something the prose and the diagrams
+cannot — the precedent is M14 §1, which started with five briefs and shipped two, because a
+section already carrying three diagrams does not need more pictures. Sections whose subject has
+no Adobe screen at all were skipped outright.
+
+**M9 VISTA Rules has none, on purpose.** VISTA rules are built by Adobe engineering; there is no
+customer-facing screen to capture.
+
+**Nine are not Adobe screens.** DevTools and console captures carry the same rules: training or
+demo site only, nothing identifying in a URL, a value or a cookie.
+
+| # | Section | File | Screen |
+|---|---|---|---|
+| 1 | M1 §1 What Is Adobe Analytics | `aal_module01_section01_ss1` | Experience Cloud app switcher |
+| 2 | M1 §5 Account Structure | `aal_module01_section05_ss1` | Admin Console, product profile permissions |
+| 3 | M2 §1 What Are Report Suites | `aal_module02_section01_ss1` | Report Suite Manager list |
+| 4 | M2 §3 Virtual Report Suites | `aal_module02_section03_ss1` | VRS builder with its segment |
+| 5 | M2 §4 Report Suite Settings | `aal_module02_section04_ss1` | Edit Settings menu, fully expanded |
+| 6 | M2 §7 Privacy and Data Retention | `aal_module02_section07_ss1` | Data governance labelling |
+| 7 | M3 §1 Props | `aal_module03_section01_ss1` | Traffic Variables list |
+| 8 | M3 §2 eVars | `aal_module03_section02_ss1` | **Allocation and expiration dropdowns** |
+| 9 | M3 §3 Events | `aal_module03_section03_ss1` | Success Events, the Type dropdown |
+| 10 | M4 §2 AppMeasurement | `aal_module04_section02_ss1` | Code Manager |
+| 11 | M4 §2 AppMeasurement | `aal_module04_section02_ss2` | **DevTools Network, one beacon decoded** |
+| 12 | M4 §3 Web SDK | `aal_module04_section03_ss1` | A datastream and its services |
+| 13 | M5 §1 What Is a Data Layer | `aal_module05_section01_ss1` | **Console, data layer expanded** |
+| 14 | M5 §2 ACDL | `aal_module05_section02_ss1` | Console, `getState()` |
+| 15 | M6 §2 Properties | `aal_module06_section02_ss1` | Property navigation |
+| 16 | M6 §3 Extensions | `aal_module06_section03_ss1` | Extension catalog |
+| 17 | M6 §4 Data Elements | `aal_module06_section04_ss1` | Builder with its option checkboxes |
+| 18 | M6 §5 Rules | `aal_module06_section05_ss1` | **One rule, all three parts** |
+| 19 | M6 §6 Publishing Workflow | `aal_module06_section06_ss1` | The four columns |
+| 20 | M6 §7 Environments | `aal_module06_section07_ss1` | Embed code dialog |
+| 21 | M7 §3 Server Calls and Billing | `aal_module07_section03_ss1` | Server Call Usage |
+| 22 | M7 §5 ECID | `aal_module07_section05_ss1` | ECID extension config |
+| 23 | M7 §7 First-Party Cookies | `aal_module07_section07_ss1` | **DevTools, the Expires column** |
+| 24 | M8 §2 Conditions and Actions | `aal_module08_section02_ss1` | Processing Rules builder |
+| 25 | M10 §2 Channel Configuration | `aal_module10_section02_ss1` | Marketing Channel Manager |
+| 26 | M10 §3 Channel Processing Rules | `aal_module10_section03_ss1` | The waterfall, numbered |
+| 27 | M11 §3 Classification Sets | `aal_module11_section03_ss1` | A set and its three tabs |
+| 28 | M11 §4 Importing | `aal_module11_section04_ss1` | Schema Preview before upload |
+| 29 | M11 §5 Rule Builder | `aal_module11_section05_ss1` | **Test rule set, both panels** |
+| 30 | M12 §2 Building Calculated Metrics | `aal_module12_section02_ss1` | The canvas with a formula |
+| 31 | M13 §2 Segment Containers | `aal_module13_section02_ss1` | A container nested in a container |
+| 32 | M13 §4 Sequential Segments | `aal_module13_section04_ss1` | The THEN join and its window |
+
+**Access to confirm before capture day.** Some briefs need entitlements the training account may
+not have: a Tags property with the Analytics and ECID extensions installed (shots 15 to 20, 22), a
+datastream (12), Classification Sets (27 to 29), Marketing Channel Manager (25, 26), Server Call
+Usage (21), and Admin Console access at the product-profile level (2). Amit said to list what is
+needed rather than work around it.
+
+**The bolded rows are the ones that carry the most weight.** If capture time runs short, those
+eight are the ones to do first: each of them shows a control the section spends a whole heading
+arguing about, and which is nearly invisible in the interface.

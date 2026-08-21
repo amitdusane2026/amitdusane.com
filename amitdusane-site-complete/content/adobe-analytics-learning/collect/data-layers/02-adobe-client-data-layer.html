@@ -92,6 +92,17 @@ weight: 2
 </div>
 <p>Still just page and user. Two add-to-cart events have happened, and the current state shows neither product. So where did those two events go, and this is the question you were probably asking yourself the entire last section: if the state only holds the present, why keep a history at all?</p>
 
+<div class="shot-box shot-pending">
+    <div class="shot-title">getState, and what the event did not write into it</div>
+    <div class="shot-frame">
+        <p class="shot-brief">FILE     aal_module05_section02_ss1.png
+SCREEN   Browser DevTools > Console, after a push, running adobeDataLayer.getState()
+STATE    The console showing the getState result expanded, with page and user present.
+INCLUDE  The command and its returned object together. The absence of the event payload is the point, so do not crop it out.
+EXCLUDE  Real values.
+WHY      The section's whole argument is that eventInfo never lands in state. The console is where a reader can verify that themselves rather than take it on trust.</p>
+    </div>
+</div>
 <h3 class="subsec-title">Where the history actually earns its keep</h3>
 <p>Here is the honest answer, and it is worth being precise about, because it is easy to oversell. The data layer's history is not a database. Adobe Analytics and CJA store your history for the long term downstream, that is their job, not the data layer's. The log in the browser is something narrower and genuinely useful: it is working memory for the current session, and it earns its place in exactly three situations.</p>
 <p><strong>First, a listener that arrives late still catches what it missed.</strong> This is the timing problem from that section, solved by design. You register a handler for the event, and by default it fires for matching events whether they happened in the past or the future:</p>

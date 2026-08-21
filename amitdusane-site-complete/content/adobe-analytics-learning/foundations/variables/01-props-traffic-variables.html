@@ -81,6 +81,17 @@ weight: 1
 <p>On the hit where you did not set it, the prop is simply empty. An eVar set to "Homepage" on hit 1 would still be reporting "Homepage" on hits 2 and 3; a prop will not. If you need the value to travel with the visitor, you are describing an eVar, not a prop.</p>
 <h3 class="subsec-title">The prop is not the weaker sibling</h3>
 <p>It is tempting to conclude that the eVar is simply more powerful and the prop a lesser tool. Not so. There are cases where persistence is exactly what you do <em>not</em> want, because it would distort the report. Say you capture the type of a form in a variable. Once the form is submitted, its job is done. You do not want that form type clinging to every action the visitor takes afterward, quietly attributing later outcomes to a form they already finished. Here, a variable that forgets after one hit is not a limitation, it is the correct behavior. That is a prop's moment.</p>
+<div class="shot-box shot-pending">
+    <div class="shot-title">The traffic variable list, before anyone has named anything</div>
+    <div class="shot-frame">
+        <p class="shot-brief">FILE     aal_module03_section01_ss1.png
+SCREEN   Analytics > Admin > Report Suites > Edit Settings > Traffic > Traffic Variables
+STATE    The prop list showing a mix of named and unnamed slots.
+INCLUDE  At least one configured prop and several still reading their default name, plus the enable/disable column.
+EXCLUDE  Client-specific prop names.
+WHY      The section says a prop is written in pencil. A list of numbered, mostly-empty slots is what that looks like.</p>
+    </div>
+</div>
 <h3 class="subsec-title">Capacity and limits</h3>
 <p>Every report suite gives you up to <strong>75 props</strong> (the exact number depends on your Adobe contract), and each prop holds up to <strong>100 bytes</strong>; anything longer is truncated when it reaches Adobe, silently, with nothing in the interface marking that it happened. The symptom is worth recognizing on sight: a prop report full of rows that look identical, because the values differ only past the cut. Long URLs, breadcrumb strings and concatenated page hierarchies all cross 100 bytes routinely. That is notably tighter than an eVar's 255 bytes, so props reward short, disciplined values. With only 75 to spend, plan what earns a slot.</p>
 <h3 class="subsec-title">Two things props are quietly good at</h3>

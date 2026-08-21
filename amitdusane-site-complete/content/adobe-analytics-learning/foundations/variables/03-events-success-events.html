@@ -73,6 +73,17 @@ s.events = "purchase,event20=149.99";
 // Serialized with an event ID, so a refresh cannot double-count
 s.events = "event1:ORD-5582";</pre></div>
 </div>
+<div class="shot-box shot-pending">
+    <div class="shot-title">An event, and the type that decides what it counts</div>
+    <div class="shot-frame">
+        <p class="shot-brief">FILE     aal_module03_section03_ss1.png
+SCREEN   Analytics > Admin > Report Suites > Edit Settings > Conversion > Success Events, one event expanded
+STATE    One event row with the Type dropdown visible, ideally open to show Counter, Numeric and Currency.
+INCLUDE  The Type dropdown and the serialization column in the same frame if the layout allows.
+EXCLUDE  Client event names.
+WHY      The section turns on the difference between a counter, a numeric and a currency event. That distinction is one dropdown.</p>
+    </div>
+</div>
 <h3 class="subsec-title">Serialization: stopping the double-count</h3>
 <p>Here is a problem that silently inflates KPIs: a visitor lands on the order-confirmation page, the purchase event fires, then they hit refresh, and it fires again. Now you have recorded two orders for one sale. <strong>Serialization</strong> is Adobe's built-in fix. Each event's "Unique Event Recording" setting offers three modes: <strong>always record</strong> (the default, every occurrence counts), <strong>record once per visit</strong>, and <strong>use event ID</strong> (true serialization).</p>
 <div class="diagram-box">

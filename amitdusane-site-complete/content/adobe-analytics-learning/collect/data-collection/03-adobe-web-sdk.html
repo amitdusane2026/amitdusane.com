@@ -70,6 +70,17 @@ weight: 3
     </svg>
 </div>
 
+<div class="shot-box shot-pending">
+    <div class="shot-title">A datastream, and the three products one hit can feed</div>
+    <div class="shot-frame">
+        <p class="shot-brief">FILE     aal_module04_section03_ss1.png
+SCREEN   experience.adobe.com > Data Collection > Datastreams > open one
+STATE    A datastream open with its service cards visible: Adobe Analytics, Experience Platform, and any others configured.
+INCLUDE  The service list, with the Analytics service showing its report suite mapping if it is configured.
+EXCLUDE  The datastream ID if it belongs to a real property. Training only.
+WHY      The section argues the Web SDK sends once and the datastream fans it out. This is the fan-out, and it exists nowhere in Analytics itself.</p>
+    </div>
+</div>
 <h3 class="subsec-title">The honest catch: Analytics is still frozen</h3>
 <p>Here is where most "Web SDK is the future" explanations quietly skip a step, and you should not. Suppose you point the Web SDK at Adobe Analytics. Your data leaves as clean, flexible XDM, but the moment it reaches the Edge on its way to Analytics, the Edge translates it back into the shape Analytics has always understood: the same props, eVars, events, and report suites as always. Which means the data lands in Analytics in exactly the same fixed structure as before.</p>
 <p>So read this plainly: moving to the Web SDK, by itself, does not solve the time-travel problem for Adobe Analytics. The opening frustration is still there. And Adobe cannot simply switch Analytics off, it is a premium product that thousands of companies still run and rely on, so it keeps working the old way on purpose. The Web SDK is necessary for what comes next, but on its own, pointed at Analytics, it is not the resolution.</p>

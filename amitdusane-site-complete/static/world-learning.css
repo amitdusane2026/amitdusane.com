@@ -1378,9 +1378,19 @@ body.shot-ov-open{overflow:hidden}
    production is exactly the silent failure this site keeps being bitten
    by, so it is impossible to mistake for finished work. Guarded by a
    grep on shot-pending before every commit. */
-.shot-box.shot-pending{border:2px dashed var(--accent,#ba2142);background:transparent}
-.shot-pending .shot-frame{background:transparent;border:2px dashed var(--border);min-height:150px;align-items:flex-start;justify-content:flex-start}
-.shot-pending .shot-brief{font-family:Consolas,monospace;font-size:12px;line-height:1.75;color:var(--text2);white-space:pre-wrap;margin:0}
+/* The padding here is re-added deliberately. Taking the chrome off .shot-box
+   on 21 Aug stripped the inset a finished screenshot no longer needs, but the
+   pending placeholder is a different object: it is a panel of text inside a
+   dashed border, and without padding the brief sat hard against the rule.
+   Only the pending state carries it. */
+.shot-box.shot-pending{border:2px dashed var(--accent,#ba2142);background:transparent;border-radius:10px;padding:18px}
+.shot-pending .shot-title{font-size:var(--fs-label);line-height:1.4;margin-bottom:12px}
+.shot-pending .shot-frame{background:var(--bg1);border:2px dashed var(--border);border-radius:8px;padding:14px 16px;min-height:150px;align-items:flex-start;justify-content:flex-start}
+/* Scoped, because the brief is a <p> inside .lcontent and that rule is (0,2,2)
+   while `.shot-pending .shot-brief` is only (0,2,0). Unscoped it rendered at
+   body size, 16.5px, and a six-line monospace brief at body size runs wider
+   than the column. Trap 7, for the third time in one session. */
+body.world-learning .lcontent p.shot-brief{font-size:12.5px;line-height:1.75;color:var(--text2);white-space:pre-wrap;margin:0}
 .shot-pending .shot-title::after{content:" — SCREENSHOT PENDING";color:var(--accent,#ba2142);font-weight:700;letter-spacing:.5px}
 
 /* "Created by" prefix, landings only. Sized with the metadata around it so

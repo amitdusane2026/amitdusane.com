@@ -59,6 +59,17 @@ weight: 1
     <p>A rollup is a single report suite that aggregates the data of several others (up to 40 child suites) as a once-daily job. The catch is that it simply <strong>adds</strong> the numbers, it does not deduplicate them. A visitor who appears on three of your domains in one day counts as three daily unique visitors in the rollup, not one. It does not reconcile or normalize anything, it sums. It is also a dated feature, and Adobe now steers most teams toward a global report suite instead, which is exactly the trade that global versus individual report suites is about. Knowing a rollup exists is enough for now; you will rarely build one today.</p>
 </div>
 <p>The honest summary is that neither of these undoes isolation at the moment of collection. A virtual report suite gives you a segmented view of one suite; a rollup gives you an additive, undeduplicated total across several. The only way to get a single, genuinely deduplicated view across many properties is to collect them into one <strong>global</strong> suite from the start, which is the choice that global versus individual report suites weighs.</p>
+<div class="shot-box shot-pending">
+    <div class="shot-title">Every report suite the account can see</div>
+    <div class="shot-frame">
+        <p class="shot-brief">FILE     aal_module02_section01_ss1.png
+SCREEN   Analytics > Admin > Report Suites
+STATE    The manager list view with several suites visible, unfiltered.
+INCLUDE  The suite ID column beside the friendly name, so the reader sees the two are different things. The toolbar above the list.
+EXCLUDE  Client or employer suite names. Use only training-account suites.
+WHY      The section argues a suite is a box you choose deliberately. Seeing several side by side, with IDs, makes that concrete.</p>
+    </div>
+</div>
 <h3 class="subsec-title">What defines a report suite</h3>
 <ul>
     <li><strong>A unique RSID:</strong> every suite has a Report Suite ID (for example <code>mycompanyglobal</code>), the address your implementation sends data to, plus a friendly title you see in the interface. The RSID is the name on the envelope.</li>

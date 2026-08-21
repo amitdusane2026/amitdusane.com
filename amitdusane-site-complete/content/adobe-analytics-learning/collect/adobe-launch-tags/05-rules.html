@@ -176,6 +176,17 @@ weight: 5
     <p>If you set variables in custom code on a link beacon (an <code>s.tl()</code> rule, or any non-page-load call), you must also set <code>s.linkTrackVars</code> and <code>s.linkTrackEvents</code> by hand, naming every variable and event you want included, or they will not be sent. Page-load calls do not need them. When you set your variables through the Set Variables UI instead, the extension manages both lists for you, which is one more reason to stay in the interface when you can.</p>
 </div>
 
+<div class="shot-box shot-pending">
+    <div class="shot-title">One rule, and its three parts on one screen</div>
+    <div class="shot-frame">
+        <p class="shot-brief">FILE     aal_module06_section05_ss1.png
+SCREEN   Inside a property > Rules > open a configured rule
+STATE    A complete rule showing Events, Conditions and Actions all populated, with at least two actions in order.
+INCLUDE  All three sections in a single frame, with the action order visible. This is the most important screenshot in the module.
+EXCLUDE  Client rule names.
+WHY      The section is built around the three parts and the fact that action order decides the outcome. One frame shows both.</p>
+    </div>
+</div>
 <h3 class="subsec-title">Sequence and order: making rules work together</h3>
 <p>Once a rule has actions, their order inside the rule matters, and so does the order of rules that fire on the same trigger. Get this right and several rules cooperate into one clean beacon. Get it wrong and you send garbage, or duplicate page views.</p>
 
