@@ -1313,23 +1313,55 @@ body.world-learning .lcontent .diagram-title{
    capture fill the 760px column; the overlay is now for detail rather than
    for legibility. */
 .shot-box{margin:var(--sp-xl) 0}
-.shot-title{font-weight:550;color:var(--text1);margin-bottom:12px;font-size:var(--fs-h3);line-height:var(--lh-h3)}
+/* 23 Aug 2026: this was --fs-h3 at weight 550, byte-identical to
+   .subsec-title, so a figure label rendered as a section heading and set up
+   an expectation the in-page spine deliberately does not meet (shots are
+   evidence under a heading, not destinations, so they are not listed there).
+   Brought into the one label voice the rulebook already specifies and that
+   .diagram-title already used. It only became visible now: the
+   .shot-pending override below sets --fs-label, so every placeholder looked
+   correct and the real style was unseen until Module 1 shipped a real shot. */
+.shot-title{font-weight:700;color:var(--text1);margin-bottom:12px;font-size:var(--fs-label)}
 
 .shot-frame{position:relative;display:flex;align-items:flex-start;justify-content:center}
-/* CMP-04 / SEO-09: the box is driven by WIDTH alone.
-   A lazy image with width:auto has no intrinsic size until its bytes arrive,
-   so it occupied 2px and then jumped to 336px -- a 334px shift on first
-   visit, measured cold at 1280. The width/height attributes cannot help while
-   the used width is auto, so width is now definite and the attribute-derived
-   aspect ratio reserves the height.
-   A max-HEIGHT would fight that, clamping the box after the ratio had already
-   reserved it and shifting the other way, so the height cap is expressed as a
-   width cap instead: --shot-cap x the image aspect ratio. --sw and --sar are
-   set inline per image and derived from the width and height attributes that
-   were already there. */
-.shot-frame img{display:block;max-width:min(var(--sw,100%),calc(var(--shot-cap,560px) * var(--sar,1)));width:100%;height:auto;border:1px solid var(--border);border-radius:4px;background:#fff;pointer-events:none}
-/* Portrait captures lose their text under the landscape cap. Taller ceiling. */
-.shot-box.shot-tall .shot-frame img{--shot-cap:700px}
+/* CMP-04 / SEO-09: the box is driven by WIDTH alone, and the reason is a
+   334px layout shift measured cold at 1280 -- a lazy image with no definite
+   width occupied 2px until its bytes arrived. The width attribute keeps the
+   width definite, so that stays fixed.
+
+   23 Aug 2026: a screenshot now renders at the size the thing really is.
+   Every capture is 2x retina, so the width/height ATTRIBUTES carry the true
+   1x size (2880x1800 is a 1440x900 window) while the file keeps its 2x
+   pixels and stays sharp. The browser takes its intrinsic size from those
+   attributes, so `width:auto` still reserves the box before the bytes land
+   and there is no layout shift -- which is what the old `width:100%` was
+   there for.
+
+   What went with it: --sw, --sar and the whole --shot-cap ladder. They sized
+   by column and by a height ceiling, and neither knew how big the thing
+   actually was, so a small dialog and the entire Workspace both filled the
+   column. Now a 726px permissions panel occupies 726px and only the genuinely
+   wide captures hit the column edge.
+
+   ONE RULE HOLDS THIS TOGETHER: never constrain width and height at the same
+   time. `width:100%` plus a `max-height` clamps the height without moving the
+   width, which stretches the picture -- that is exactly how the print
+   stylesheet distorted every figure. Constrain width, let height follow. */
+/* Note there is deliberately NO `width` declaration here. The width/height
+   attributes are presentational hints, so width="1440" IS the CSS width until
+   an author rule overrides it -- and `width:auto` would override it, sending
+   the image back to its intrinsic 2880px and filling the column again, which
+   is the bug this whole change exists to kill. Leave width alone, cap it with
+   max-width, and let height follow. */
+.shot-frame img{display:block;max-width:100%;height:auto;border:1px solid var(--border);border-radius:4px;background:#fff;pointer-events:none}
+/* Both .shot-tall and its replacement .shot-side were removed the same day
+   they were written, because true sizing dissolved the problem they existed
+   for. .shot-tall raised the height ceiling to 700px and so spent ~700px of
+   page on a narrow strip; .shot-side moved the note into the dead space
+   beside it. Sized truly, those three captures are 390x495, 314x405 and
+   496x687 -- small figures that sit under their note without waste, which is
+   how a figure works in a book and how Adobe's own documentation sets one.
+   Two shapes fewer to choose between, and no class to remember. */
 
 .shot-zoom-btn{position:absolute;top:8px;right:8px;width:30px;height:30px;display:flex;align-items:center;justify-content:center;padding:0;font-size:15px;line-height:1;border:1px solid var(--border);border-radius:6px;background:var(--card);color:var(--text2);cursor:pointer}
 .shot-zoom-btn:hover{background:var(--accent,#ba2142);border-color:var(--accent,#ba2142);color:var(--on-accent,#fff)}
@@ -1341,7 +1373,11 @@ body.world-learning .lcontent .diagram-title{
 .shot-ov{position:fixed;top:0;right:0;bottom:0;left:0;z-index:9999;background:rgba(15,23,42,.93);display:none}
 .shot-ov.open{display:block}
 .shot-ov-scroll{position:absolute;top:0;right:0;bottom:0;left:0;overflow:auto;-webkit-overflow-scrolling:touch;padding:58px 16px 24px}
-.shot-ov-scroll img{display:block;margin:0 auto;max-width:none}
+/* width is set inline by the script, to the capture's TRUE size rather than
+   the file's 2x pixels. max-width:none lets it exceed the viewport on a
+   phone, where panning is expected; height:auto keeps the ratio, and nothing
+   here constrains height, so the overlay cannot distort either. */
+.shot-ov-scroll img{display:block;margin:0 auto;max-width:none;height:auto}
 .shot-ov-close{position:fixed;top:12px;right:14px;z-index:2;width:38px;height:38px;padding:0;border:1px solid rgba(255,255,255,.28);border-radius:8px;background:rgba(15,23,42,.85);color:#fff;font-size:20px;line-height:1;cursor:pointer}
 .shot-ov-hint{position:fixed;top:20px;left:16px;z-index:2;color:rgba(255,255,255,.72);font-size:12px;font-weight:600}
 body.shot-ov-open{overflow:hidden}
@@ -1351,15 +1387,20 @@ body.shot-ov-open{overflow:hidden}
      the card and the frame, and both are gone now. Only the margin and the
      height caps still mean anything on a phone. */
   .shot-box{margin:32px 0}
-  .shot-frame img{--shot-cap:300px}
-  .shot-box.shot-tall .shot-frame img{--shot-cap:380px}
+  /* No height cap on a phone either. max-width:100% already shrinks every
+     capture to the column, and a second constraint on height is what breaks
+     the aspect ratio. A capture wider than the phone simply scales down and
+     the expand button is there for detail. */
 }
 @media print{
   .shot-zoom-btn{display:none !important}
   .shot-ov{display:none !important}
-  /* Keep a screenshot and its note on one page, and size it for paper
-     rather than for a screen: the on-screen height caps are far too
-     small once the column is A4 wide. */
+  /* Keep a screenshot and its note on one page. This used to fight the
+     on-screen height caps; there are none now, and paper reads the same true
+     size the screen does, so a figure arrives here already the right shape
+     and already small enough to sit inside the text. The blank pages came
+     from the opposite: an image forced near page-size could not fit beside
+     anything, so break-inside threw the whole box forward. */
   .print-doc .shot-box{break-inside:avoid;page-break-inside:avoid;box-shadow:none !important}
   .print-doc .shot-frame{padding:8px;background:#fff}
   /* The dark-mode dimming has to be switched off explicitly here, and this
@@ -1372,7 +1413,13 @@ body.shot-ov-open{overflow:hidden}
      image. Anything that paints for a THEME needs an explicit print reset,
      because print is not a theme. */
   .print-doc .shot-frame img{filter:none !important}
-  .print-doc .shot-frame img,.print-doc .shot-box.shot-tall .shot-frame img{max-height:150mm;max-width:100%}
+  /* Paper gets the same number the screen gets: true size, capped to the
+     column, width only. The max-height that used to sit here is what
+     distorted every printed figure -- it clamped the height while
+     `width:100%` held the width, so a 0.79 portrait printed at 1.13. There is
+     no height constraint on any surface now, which is why the ratio cannot
+     break on any of them. */
+  .print-doc .shot-frame img{max-width:100%;height:auto}
 }
 /* Screenshot placeholder. Deliberately loud: an unfilled slot reaching
    production is exactly the silent failure this site keeps being bitten

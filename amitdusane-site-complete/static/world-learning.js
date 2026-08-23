@@ -288,12 +288,35 @@
   var frames = document.querySelectorAll('.shot-box .shot-frame');
   if (!frames.length) return;
 
+  /* The hint names the input the reader actually has. A phone has no Esc key,
+     so advertising it sends them after a control that does not exist while
+     the close button sits visible in the same corner.
+
+     Two things here were wrong the first time. It tested pointer ALONE, and a
+     touch device that reports hover:hover -- a Windows touch laptop, an
+     Android tablet, a desktop browser in device mode -- came out as "fine"
+     and got told to press Esc at phone width. And it was evaluated once at
+     load, so it could never notice the viewport changing afterwards.
+
+     So: coarse pointer OR the site's own mobile breakpoint, and evaluated at
+     the moment the overlay opens rather than at load. 768px is not an
+     arbitrary number; it is where this stylesheet already switches the whole
+     layout to its mobile form, so the wording and the layout agree.
+
+     The Esc listener stays unconditional either way -- a tablet with a
+     keyboard attached still closes on Esc. Only the wording changes. */
+  function isTouchView() {
+    var coarse = !(window.matchMedia &&
+                   window.matchMedia('(hover: hover) and (pointer: fine)').matches);
+    return coarse || window.innerWidth <= 768;
+  }
+
   var ov = document.createElement('div');
   ov.className = 'shot-ov';
   ov.setAttribute('role', 'dialog');
   ov.setAttribute('aria-modal', 'true');
   ov.innerHTML =
-    '<div class="shot-ov-hint">Scroll to pan &middot; Esc to close</div>' +
+    '<div class="shot-ov-hint"></div>' +
     '<button type="button" class="shot-ov-close" aria-label="Close">&#215;</button>' +
     '<div class="shot-ov-scroll"><img alt=""></div>';
   document.body.appendChild(ov);
@@ -301,11 +324,29 @@
   var ovImg = ov.querySelector('img'),
       scroller = ov.querySelector('.shot-ov-scroll'),
       closeBtn = ov.querySelector('.shot-ov-close'),
+      hint = ov.querySelector('.shot-ov-hint'),
       opener = null;
 
-  function open(src, alt, btn) {
+  function trueWidth(img) { return parseInt(img.getAttribute('width'), 10) || 0; }
+
+  /* Expanding shows the capture at the size it really is, not at the file's
+     2x pixels. A 2880px asset is a 1440px window, and 1440 fits any desktop
+     screen -- so on desktop expanding means "see all of it", with no panning,
+     which is what expanding ought to mean. It still overflows a phone, but at
+     1440 rather than 2880, so it is a swipe or two instead of five. */
+  function open(src, alt, btn, w, h) {
     ovImg.setAttribute('src', src);
     ovImg.setAttribute('alt', alt || '');
+    ovImg.style.width = w ? w + 'px' : '';
+    /* The hint has to describe THIS picture, not screenshots in general:
+       most of them now fit the screen whole, and telling a reader to pan
+       something that cannot move is the same fault as offering them an Esc
+       key they do not have. */
+    var pans = (w > window.innerWidth - 32) || (h > window.innerHeight - 82);
+    var touch = isTouchView();
+    hint.innerHTML = pans
+      ? (touch ? 'Drag to pan &middot; Tap &#215; to close' : 'Scroll to pan &middot; Esc to close')
+      : (touch ? 'Tap &#215; to close' : 'Esc to close');
     ov.classList.add('open');
     document.body.classList.add('shot-ov-open');
     scroller.scrollTop = 0;
@@ -328,9 +369,28 @@
     if (!btn || !img) return;
     btn.addEventListener('click', function (ev) {
       ev.preventDefault();
-      open(img.getAttribute('src'), img.getAttribute('alt'), btn);
+      open(img.getAttribute('src'), img.getAttribute('alt'), btn,
+           trueWidth(img), parseInt(img.getAttribute('height'), 10) || 0);
     });
   });
+
+  /* Hide the control on any capture already shown whole. Once a screenshot
+     renders at its true size, most of them are not constrained by the column
+     at all, and a magnifier over a picture that cannot get any bigger is a
+     promise the overlay cannot keep. Re-run on resize, because the same shot
+     is constrained on a phone and unconstrained on a desktop. */
+  function syncZoomButtons() {
+    Array.prototype.forEach.call(frames, function (frame) {
+      var btn = frame.querySelector('.shot-zoom-btn'),
+          img = frame.querySelector('img');
+      if (!btn || !img) return;
+      var t = trueWidth(img);
+      btn.hidden = t > 0 && img.getBoundingClientRect().width >= t - 1;
+    });
+  }
+  syncZoomButtons();
+  window.addEventListener('resize', syncZoomButtons);
+  window.addEventListener('load', syncZoomButtons);
 
   /* Close on the button, on the backdrop, or on the padding around the
      image. Never on the image, so a click while panning does not dismiss. */
