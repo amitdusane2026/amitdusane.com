@@ -79,16 +79,14 @@ weight: 1
 <p>Once the developer says it is done, you do not take his word for it, you look. Open the browser's developer tools (Ctrl+Shift+I on Windows, Cmd+Option+I on a Mac, or just F12), go to the Console, type the name of the variable, <code>digitalData</code>, and press enter. The browser prints the object back to you, and you can see exactly what is populated and with what value. That answers <em>whether</em> the data is there and whether it is correct.</p>
 <p>The harder question is <em>when</em> it is there, the timing, and that is the thread that leads to the last and most important idea in this section.</p>
 
-<div class="shot-box shot-pending">
+<div class="shot-box">
     <div class="shot-title">The data layer, opened in the console</div>
     <div class="shot-frame">
-        <p class="shot-brief">FILE     aal_module05_section01_ss1.png
-SCREEN   Browser DevTools > Console, having typed the data layer object name and expanded the result
-STATE    The object expanded two levels, so nesting is visible: page, then pageInfo, then the values.
-INCLUDE  The typed command and the expanded tree in one frame. Expand at least one nested object.
-EXCLUDE  Any real customer values. Use a demo or training site.
-WHY      The section says checking it is just open the console. This is the single most useful screenshot in the module: until you have seen a data layer expanded, it is a word.</p>
+        <img src="/img/adobe-analytics-data-layer-console-digitaldata.webp" width="1315" height="767" loading="lazy"
+             alt="A browser console with digitalData typed at the prompt and the returned object expanded. The top line shows Object containing page, user, events and two keys that have been blurred out. Beneath it the page branch is opened, listing banner with position and link, bottom with navIcons, category with primaryCategory, footer with link, header with link, mobile with app, pageInfo, plan, search and social with media, along with several key names that are blurred. Almost every leaf value reads undefined. The pageInfo branch is opened further to show pageName holding a string that is blurred except for the word Page, and PCBanner set to undefined. At the bottom the user branch shows login, enrollment and error.">
+        <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
     </div>
+    <div class="shot-note">Look past the structure to the values. banner, bottom, category, footer, header, mobile, search, social. Almost every leaf on this page reads <code>undefined</code>. That is not a broken implementation, it is the normal condition, and it is the thing worth taking away: the shape is declared on every page, and any single page fills in only the branches that apply to it. A data layer is a contract about what could be present, never a promise that it is.</div>
 </div>
 <h3 class="subsec-title">Using it: data just sitting there does nothing</h3>
 <p>Here is the move that trips up almost everyone. A populated data layer, on its own, captures nothing. Analytics is not hovering over your page hungrily swallowing values the moment they appear. It is not a conveyor belt in a factory, with data rolling past and being scooped up automatically. The values can be sitting right there in <code>digitalData</code>, perfect and complete, and not one of them will reach Adobe until something explicitly says: "now. an event happened. go read the layer."</p>

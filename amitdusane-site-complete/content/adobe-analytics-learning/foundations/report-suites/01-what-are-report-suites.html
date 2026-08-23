@@ -59,16 +59,14 @@ weight: 1
     <p>A rollup is a single report suite that aggregates the data of several others (up to 40 child suites) as a once-daily job. The catch is that it simply <strong>adds</strong> the numbers, it does not deduplicate them. A visitor who appears on three of your domains in one day counts as three daily unique visitors in the rollup, not one. It does not reconcile or normalize anything, it sums. It is also a dated feature, and Adobe now steers most teams toward a global report suite instead, which is exactly the trade that global versus individual report suites is about. Knowing a rollup exists is enough for now; you will rarely build one today.</p>
 </div>
 <p>The honest summary is that neither of these undoes isolation at the moment of collection. A virtual report suite gives you a segmented view of one suite; a rollup gives you an additive, undeduplicated total across several. The only way to get a single, genuinely deduplicated view across many properties is to collect them into one <strong>global</strong> suite from the start, which is the choice that global versus individual report suites weighs.</p>
-<div class="shot-box shot-pending">
+<div class="shot-box">
     <div class="shot-title">Every report suite the account can see</div>
     <div class="shot-frame">
-        <p class="shot-brief">FILE     aal_module02_section01_ss1.png
-SCREEN   Analytics > Admin > Report Suites
-STATE    The manager list view with several suites visible, unfiltered.
-INCLUDE  The suite ID column beside the friendly name, so the reader sees the two are different things. The toolbar above the list.
-EXCLUDE  Client or employer suite names. Use only training-account suites.
-WHY      The section argues a suite is a box you choose deliberately. Seeing several side by side, with IDs, makes that concrete.</p>
+        <img src="/img/adobe-analytics-report-suite-manager.webp" width="682" height="760" loading="lazy"
+             alt="The Report Suite Manager in Adobe Analytics. A left panel holds Report Suite Groups with All Report Suites selected, and Saved Searches beneath it. The main area is a long list under a toolbar carrying Edit Settings and Add Report Suite, headed 1 Report Suite Selected, limit 1,000. The list has two columns, Report Suite Id and Site Title, and runs to roughly thirty rows. Nearly every value is blurred out; the few left readable are Test Report Suite, Test and Training. One row is highlighted in blue as the current selection.">
+        <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
     </div>
+    <div class="shot-note">Two columns, and the left one is the part that does the work. Report Suite Id is the address your implementation actually sends to; Site Title is only what the interface shows you. They are set separately, nobody keeps them in step, and they drift apart in every account that has been running a few years, which is why "we send to the production suite" and "we send to Production" are not the same sentence and cannot be checked against each other.</div>
 </div>
 <h3 class="subsec-title">What defines a report suite</h3>
 <ul>

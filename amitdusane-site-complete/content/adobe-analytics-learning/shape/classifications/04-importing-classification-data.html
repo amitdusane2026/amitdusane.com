@@ -160,16 +160,14 @@ M-10485,40-59,Female,Gold,2021</pre></div>
 
 <p>Two of those steps decide whether this goes well.</p>
 
-<div class="shot-box shot-pending">
-    <div class="shot-title">The Schema Preview, the last checkpoint before data lands</div>
+<div class="shot-box">
+    <div class="shot-title">The upload dialog, and the schema sitting behind it</div>
     <div class="shot-frame">
-        <p class="shot-brief">FILE     aal_module11_section04_ss1.png
-SCREEN   Components > Classification sets > a set > Schema tab > Upload, after choosing a file
-STATE    The upload dialog showing the Schema Preview with the columns Adobe found in the file.
-INCLUDE  The preview table and the Overwrite data on conflict checkbox in the same frame.
-EXCLUDE  Real member IDs or customer values in the preview rows. Use the sample file from the section.
-WHY      The section calls this the last checkpoint before the data lands and warns that an alert here means a column mismatch. It is also the screen people click straight past.</p>
+        <img src="/img/adobe-analytics-classification-import-schema.webp" width="1342" height="665" loading="lazy"
+             alt="An Add new classifications dialog open over the Schema tab of a classification set. The set name in the header behind is blurred out, and tabs for Settings, Schema and Rules sit beneath it with Schema active. Behind the dialog a Classification name column is partly visible, listing Campaign, Campaign Id, Active Dates and Campaign Type among several entries that are blurred, with Job history and Automate controls to the right. The dialog itself holds a large dashed drop area with a file icon, the words Drag and drop here, a line reading Upload JSON, CSV, TSV, or TAB files, a link to file restrictions and documentation, and a blue Browse button, with Cancel and a greyed-out Apply at the bottom.">
+        <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
     </div>
+    <div class="shot-note">The dialog asks for a file and tells you almost nothing about what belongs in it. The answer is greyed out behind it: the Classification name column, listing Campaign, Campaign Id, Active Dates and Campaign Type, is exactly the set of headers your file has to carry. That list is the contract, and it is only visible here by accident of the dialog being transparent. Read the schema before you build the file, not after Adobe rejects it.</div>
 </div>
 <h3 class="subsec-title">Overwrite on conflict, and what it actually means</h3>
 <p>The checkbox governs what happens when the file has a value for a key that already has a different value. It does nothing at all for keys that are new, and nothing for fields you left empty. It matters only where old and new disagree.</p>

@@ -99,16 +99,14 @@ weight: 5
 </div>
 <p>That ownership shows up the moment you open a Launch property. The ECID is not a setting inside the Adobe Analytics extension, where most people first look for it. It has an <a href="/adobe-analytics-learning/collect/adobe-launch-tags/extensions/">extension</a> of its own, named Experience Cloud ID Service, whose entire job is creating and maintaining the identifier in the visitor's browser. The <a href="/adobe-analytics-learning/foundations/adobe-analytics-fundamentals/adobe-analytics-ecosystem/">wider Adobe ecosystem</a> is the reason it earns that separate billing.</p>
 
-<div class="shot-box shot-pending">
+<div class="shot-box">
     <div class="shot-title">The ECID extension, and the one field that matters</div>
     <div class="shot-frame">
-        <p class="shot-brief">FILE     aal_module07_section05_ss1.png
-SCREEN   Inside a Launch property > Extensions > Experience Cloud ID Service > Configure
-STATE    The configuration screen with the Organization ID field visible.
-INCLUDE  The Org ID field and the surrounding options, so the reader sees how little there is to configure.
-EXCLUDE  The real Organization ID if it belongs to an employer. Training only.
-WHY      The section says the ECID is not an Analytics identifier and its configuration lives in the property, not in Analytics. This is that screen, and it is nearly empty.</p>
+        <img src="/img/adobe-experience-cloud-id-service-extension.webp" width="1244" height="1378" loading="lazy"
+             alt="The Configure Extension screen for the Experience Cloud ID Service inside a Tags property. A left panel shows the Adobe logo, the extension name, Adobe Systems version 5.5.0, the contact reactor at adobe.com, and a description explaining that it implements the Experience Cloud ID Service which identifies visitors across all Experience Cloud solutions. The right side begins with Marketing Cloud Organization ID, holding a value that has been blurred out followed by the visible suffix at AdobeOrg. Below it are Exclude specific paths with an empty Path field and a Regex toggle, then an Opt In panel: Enable Opt In set to No, Is Opt In Storage Enabled, Opt In Cookie Domain, Opt In Storage Expiry, Previous Permissions, and Pre Opt In Approvals with unticked checkboxes for AAM, ANALYTICS, ECID, TARGET and MEDIA_ANALYTICS, then Enable IAB. A Variables section sits at the bottom with an empty selector.">
+        <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
     </div>
+    <div class="shot-note">One field is filled in, and everything under it is off. That single Organization ID ending <code>@AdobeOrg</code> is the whole configuration. It names which company's visitor space this browser belongs to, and nothing else on the screen has to be touched for the ECID to start working. Note where you are standing while you do it: this is a Tags property, not Adobe Analytics. The identifier that ties every Experience Cloud product together is configured somewhere Analytics cannot see.</div>
 </div>
 <h3 class="subsec-title">What one shared identifier unlocked</h3>
 <p>The payoff is that products stop being islands. An audience assembled in Audience Manager can be delivered by Target and measured in Analytics, because all three are discussing the same number rather than three private ones. A test can finally be connected to the conversion it produced, which was the question that could not be answered before.</p>

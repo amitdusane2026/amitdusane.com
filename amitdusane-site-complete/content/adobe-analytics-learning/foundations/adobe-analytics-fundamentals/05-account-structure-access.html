@@ -67,16 +67,14 @@ weight: 5
 
 <p>You can hand the card to a person directly, but the way it scales is through <strong>user groups</strong>. Assign a profile to a group, then drop people into the group, and they pick up the group's access automatically. New analyst joins the team? Add them to the "Marketing Analysts" group and they are set up in one step, no profile-by-profile fiddling.</p>
 
-<div class="shot-box shot-pending">
+<div class="shot-box">
     <div class="shot-title">One product profile, and everything it decides</div>
     <div class="shot-frame">
-        <p class="shot-brief">FILE     aal_module01_section05_ss1.png
-SCREEN   adminconsole.adobe.com > Products > Adobe Analytics > a product profile > Permissions tab
-STATE    A profile open on Permissions, showing the permission categories down the left and the included/excluded lists.
-INCLUDE  The category rail (Report Suites, Metrics, Dimensions, Tools) and at least one category expanded so the include/exclude model is visible.
-EXCLUDE  Real user names or email addresses on the Users tab. Do not capture that tab at all.
-WHY      The profile is the object that actually grants access, and it is the thing people expect to find inside Analytics and cannot.</p>
+        <img src="/img/adobe-analytics-product-profile-permissions.webp" width="726" height="416" loading="lazy"
+             alt="The Permissions tab of a product profile in the Adobe Admin Console. The title reads Analytics followed by a profile name that has been blurred out, and the profile is marked 0 of 1 service. Tabs for Users, Admins and Permissions run below it, with Permissions selected. Five permission categories are then listed as rows, each with no description and a chevron to expand it: Report Suites showing 2 of 3 included, Metrics 3 of 1429 included, Dimensions 0 of 571 included, Report Suite Tools 0 of 55 included, and Analytics Tools 0 of 32 included.">
+        <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
     </div>
+    <div class="shot-note">Read the counts rather than the names. Metrics says 3 of 1429, and that single line is the whole model: a profile begins holding nothing and you add what the group actually needs, rather than starting from everything and taking things away. So the zeros are not broken settings, they are categories nobody has filled in yet, and a person on this profile would open Workspace to find almost every dimension missing with no error to explain why.</div>
 </div>
 <h3 class="subsec-title">What a profile actually controls</h3>
 <ul>

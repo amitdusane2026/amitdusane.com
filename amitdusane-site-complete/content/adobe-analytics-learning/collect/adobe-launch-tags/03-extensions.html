@@ -60,16 +60,14 @@ weight: 3
 </ul>
 <p>Worth knowing that partners such as Search Discovery, Blast, and Further publish their own extensions too, including their own product-string builders, which is exactly the open-ecosystem effect the framework was designed to create.</p>
 
-<div class="shot-box shot-pending">
+<div class="shot-box">
     <div class="shot-title">The extension catalog, and how little of it you need</div>
     <div class="shot-frame">
-        <p class="shot-brief">FILE     aal_module06_section03_ss1.png
-SCREEN   Inside a property > Extensions > Catalog
-STATE    The catalog grid, unfiltered, showing many available extensions with Adobe's own among them.
-INCLUDE  Enough tiles to show the catalog is large, with the Adobe Analytics tile visible and its Install button.
-EXCLUDE  Nothing sensitive.
-WHY      The section says Adobe put its own products in the catalog alongside everyone else's. Seeing Analytics as one tile among dozens is the point.</p>
+        <img src="/img/adobe-launch-tags-extension-catalog.webp" width="1440" height="727" loading="lazy"
+             alt="The Extensions screen inside a Tags property, with tabs for Installed, Catalog and Usage Authorizations, and Catalog selected. A search box sits above a grid of extension tiles, each carrying a logo, a name, the publisher and version, and a truncated description. Eight tiles are visible in alphabetical order: 6sense for Analytics and Target by 6sense, AA+Dynamics by Stoke Data, AA Product String Builder by Further, AA via AEP Web SDK by Further, Accessible Site Speed Metrics by Craig Charlton at Insight In Analytics, Activity Map Customizer by Softcrylic LLC, Acton PageRefresh by Sagar Mandal, and Acxiom Digital Recognition by Victor Solanoy. The grid continues below the frame. The organisation name and property name are blurred out.">
+        <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
     </div>
+    <div class="shot-note">Read the second line of each tile rather than the first. 6sense, Stoke Data, Further, Softcrylic, and two individual people publishing under their own names. This is a marketplace, and the ordering is plain alphabetical, so Adobe's own extensions queue up among everyone else's with no precedence at all. The catalog runs to hundreds of these. Almost every implementation ever built needs three or four.</div>
 </div>
 <h3 class="subsec-title">The anatomy of an extension</h3>
 <p>To use extensions well, you need to know what one actually contributes when you install it. Adobe's own engineers have a word for the pieces an extension supplies: <em>delegates</em>. An extension hands Launch a set of these delegates, and they become the building blocks you select from later when you assemble rules and data elements. Install a new extension and the menus you build with grow new options. That is the mechanism underneath everything.</p>

@@ -138,16 +138,14 @@ weight: 6
     <p>When the second one reaches production it carries its own revision of that shared rule, and that revision replaces the first team's. Their change is gone from the live site while their library still shows as published, which is precisely why nobody thinks to look there. The symptom arrives days later as a report that stopped populating, and the team who lost the work is the least likely to suspect a publish they had nothing to do with. Keep libraries small, keep them short-lived, and publish them quickly, for the same reason short-lived branches are the rule in every other codebase.</p>
 </div>
 
-<div class="shot-box shot-pending">
+<div class="shot-box">
     <div class="shot-title">The four columns a library moves through</div>
     <div class="shot-frame">
-        <p class="shot-brief">FILE     aal_module06_section06_ss1.png
-SCREEN   Inside a property > Publishing Flow
-STATE    The flow view with at least one library visible, ideally in a middle column rather than the first.
-INCLUDE  All four columns and their headings in one frame, with a library card sitting in one of them.
-EXCLUDE  Client library names.
-WHY      The section's core idea is a library moving left to right through gates. The screen is literally that, and prose has to work hard to say it.</p>
+        <img src="/img/adobe-launch-tags-publishing-flow.webp" width="1158" height="370" loading="lazy"
+             alt="The Publishing Flow screen inside a Tags property. A search box sits top left and an Add Library button top right. Below them four columns run left to right, headed Development, Submitted, Approved and Published. Only the Development column holds anything: a single card titled Library v1 with a green dot beside it and a row of three dots for its menu, and underneath the card a line reading Environment followed by Development. The Submitted, Approved and Published columns are empty.">
+        <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
     </div>
+    <div class="shot-note">Development, Submitted, Approved, Published, and one library sitting in the first of them. The detail on the card is the part worth catching: underneath the name it states its environment. A library is always pointed somewhere, and walking it right is what changes where its code is actually served from. Nothing crosses a gate backwards either: a rejected library lands back in Development and makes the whole walk again.</div>
 </div>
 <h3 class="subsec-title">The approval gates, and why they exist</h3>
 <p>The move from Development to live is deliberately gated, and the gates map to three separate rights. They are not bundled together: a person has each one only if it is granted to them.</p>

@@ -108,16 +108,14 @@ s.linkTrackEvents = "";</pre></div>
     <p class="dothis-end">Those four options are the capability the raw data layer never had. Once saved, reference the element anywhere in the property as <code>%Page Name%</code>, or from custom code as <code>_satellite.getVar('Page Name')</code>.</p>
 </div>
 
-<div class="shot-box shot-pending">
+<div class="shot-box">
     <div class="shot-title">A data element, and the capability underneath the value</div>
     <div class="shot-frame">
-        <p class="shot-brief">FILE     aal_module06_section04_ss1.png
-SCREEN   Inside a property > Data Elements > Add Data Element, filled in
-STATE    The builder with a type selected and the options below it visible: storage duration, force lowercase, clean text, default value.
-INCLUDE  The Data Element Type dropdown and the option checkboxes in one frame. Those options are the capability the section is about.
-EXCLUDE  Client data layer paths.
-WHY      The section argues a data element is more than a variable because it carries capability. The capability is four controls most people never scroll to.</p>
+        <img src="/img/adobe-launch-tags-data-element-builder.webp" width="1160" height="560" loading="lazy"
+             alt="The Create Data Element screen inside a Tags property. A left column holds the settings: Name reading Page_Name, Extension set to Core, Data Element Type set to JavaScript Variable, then three checkboxes for Enable Default Value, Force lowercase value and Clean text, of which only Clean text is ticked, and finally Storage Duration set to None. The right side of the screen holds a single field, JavaScript variable name marked required, containing digitalData.page.pageInfo.name. The property name in the breadcrumb above is blurred out.">
+        <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
     </div>
+    <div class="shot-note">The value itself is one field on the right: <code>digitalData.page.pageInfo.name</code>. Everything worth looking at is on the left. Enable Default Value, Force lowercase value, Clean text and a Storage Duration. Those four are the whole difference between a data element and a variable, and three of them are sitting unticked. That is the state most data elements on most sites are left in, not because somebody weighed them and declined, but because the fields are below the one people came to fill in.</div>
 </div>
 <h3 class="subsec-title">Referencing and checking a data element</h3>
 <p>Once created, a data element is referenced anywhere in the interface by wrapping its name in percent signs, like <code>%Page Name%</code>, and in code or the console through the <code>_satellite</code> object, with <code>_satellite.getVar('Page Name')</code>. That console call is the quickest way to confirm a data element is returning what you expect on a given page before you trust it in a rule.</p>

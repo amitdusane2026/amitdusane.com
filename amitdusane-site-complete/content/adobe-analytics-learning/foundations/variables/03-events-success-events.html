@@ -73,16 +73,14 @@ s.events = "purchase,event20=149.99";
 // Serialized with an event ID, so a refresh cannot double-count
 s.events = "event1:ORD-5582";</pre></div>
 </div>
-<div class="shot-box shot-pending">
+<div class="shot-box">
     <div class="shot-title">An event, and the type that decides what it counts</div>
     <div class="shot-frame">
-        <p class="shot-brief">FILE     aal_module03_section03_ss1.png
-SCREEN   Analytics > Admin > Report Suites > Edit Settings > Conversion > Success Events, one event expanded
-STATE    One event row with the Type dropdown visible, ideally open to show Counter, Numeric and Currency.
-INCLUDE  The Type dropdown and the serialization column in the same frame if the layout allows.
-EXCLUDE  Client event names.
-WHY      The section turns on the difference between a counter, a numeric and a currency event. That distinction is one dropdown.</p>
+        <img src="/img/adobe-analytics-success-event-type-dropdown.webp" width="1440" height="608" loading="lazy"
+             alt="The Success Events page in the Report Suite Manager, with the Type dropdown open on event1. The dropdown lists seven options: Disabled, Counter (no subrelations), Counter, Currency (no subrelations), Currency, Numeric (no subrelations) and Numeric, with Counter currently highlighted. Behind it a Custom Success Events table lists event1 through event6 in columns headed Event, Name, Type, Polarity, Visibility and Description; every event name is blurred out. Below that a Standard Events table shows two purchase rows: Revenue with type Currency, and Orders with type Counter, both using purchaseID for Unique Event Recording and both with Participation disabled.">
+        <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
     </div>
+    <div class="shot-note">Seven options in that list, and they are three decisions wearing six names. Counter adds one, Numeric adds whatever number you send, Currency adds money and converts it. The "no subrelations" twin of each is a storage economy inherited from an older Adobe, and choosing one quietly limits how far you can break that metric down afterwards. The Standard Events table underneath shows the choice already made and living with its consequences: the same purchase carries Revenue as Currency and Orders as Counter.</div>
 </div>
 <h3 class="subsec-title">Serialization: stopping the double-count</h3>
 <p>Here is a problem that silently inflates KPIs: a visitor lands on the order-confirmation page, the purchase event fires, then they hit refresh, and it fires again. Now you have recorded two orders for one sale. <strong>Serialization</strong> is Adobe's built-in fix. Each event's "Unique Event Recording" setting offers three modes: <strong>always record</strong> (the default, every occurrence counts), <strong>record once per visit</strong>, and <strong>use event ID</strong> (true serialization).</p>

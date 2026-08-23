@@ -176,16 +176,14 @@ weight: 5
     <p>If you set variables in custom code on a link beacon (an <code>s.tl()</code> rule, or any non-page-load call), you must also set <code>s.linkTrackVars</code> and <code>s.linkTrackEvents</code> by hand, naming every variable and event you want included, or they will not be sent. Page-load calls do not need them. When you set your variables through the Set Variables UI instead, the extension manages both lists for you, which is one more reason to stay in the interface when you can.</p>
 </div>
 
-<div class="shot-box shot-pending">
+<div class="shot-box">
     <div class="shot-title">One rule, and its three parts on one screen</div>
     <div class="shot-frame">
-        <p class="shot-brief">FILE     aal_module06_section05_ss1.png
-SCREEN   Inside a property > Rules > open a configured rule
-STATE    A complete rule showing Events, Conditions and Actions all populated, with at least two actions in order.
-INCLUDE  All three sections in a single frame, with the action order visible. This is the most important screenshot in the module.
-EXCLUDE  Client rule names.
-WHY      The section is built around the three parts and the fact that action order decides the outcome. One frame shows both.</p>
+        <img src="/img/adobe-launch-tags-rule-events-conditions-actions.webp" width="1163" height="616" loading="lazy"
+             alt="The Create Rule screen inside a Tags property. The rule Name field reads Page_View. Below it a heading reads IF, described as determining when you want the rule to fire, and beneath that two sections: EVENTS holding one card labelled Core - Window Loaded with a purple bar across its top, and CONDITIONS holding only an Add button with nothing configured. A second heading reads THEN, described as determining what you want the rule to do, and beneath it ACTIONS holds three cards in a row, each with a yellow bar across its top and separated by the words WAIT, THEN: Adobe Analytics - Clear Variables, then Adobe Analytics - Set Variables, then Adobe Analytics - Send Beacon.">
+        <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
     </div>
+    <div class="shot-note">The three parts, top to bottom: IF gives you Events and Conditions, THEN gives you Actions. Conditions is empty here, and that is the ordinary case rather than an unfinished rule, because most rules fire on their event alone. The row that repays study is the last one. Three actions sit in a fixed order, separated by WAIT, THEN: clear, then set, then send. Reorder those three and the rule still saves, still fires, still returns success, and sends the wrong data.</div>
 </div>
 <h3 class="subsec-title">Sequence and order: making rules work together</h3>
 <p>Once a rule has actions, their order inside the rule matters, and so does the order of rules that fire on the same trigger. Get this right and several rules cooperate into one clean beacon. Get it wrong and you send garbage, or duplicate page views.</p>

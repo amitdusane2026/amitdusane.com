@@ -85,16 +85,14 @@ weight: 4
     </svg>
 </div>
 
-<div class="shot-box shot-pending">
+<div class="shot-box">
     <div class="shot-title">A sequence, and the THEN that orders it</div>
     <div class="shot-frame">
-        <p class="shot-brief">FILE     aal_module13_section04_ss1.png
-SCREEN   Analytics > Components > Segments > Add, with a two-checkpoint sequence built
-STATE    The builder showing checkpoint one, the THEN join with its within-time control, and checkpoint two.
-INCLUDE  The THEN control and its time window in the same frame as both checkpoints.
-EXCLUDE  Client page names.
-WHY      The section turns on THEN and the greedy default. The join control is a small dropdown in the middle of the builder and is easy to miss entirely.</p>
+        <img src="/img/adobe-analytics-sequential-segment-builder.webp" width="903" height="545" loading="lazy"
+             alt="The Segment builder in Adobe Analytics configured as a sequence. Title reads Download after Account visit and Description reads No of instances when visitor downloaded after account visit, with a Tags field holding Sequence. The Definition area sets Include to Visitors, with Include Everyone and Options controls to the right. Beneath it sits the first checkpoint, a rule whose dimension name is partly blurred and ends in Account View, set to exists. A joining strip follows, reading Then, then a Within chip, then the number 1, then Week(s), with a clock icon. The second checkpoint below reads File Downloads exists. Save and Cancel buttons sit at the bottom, beside an Experience Cloud publishing option whose report suite name is blurred out.">
+        <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
     </div>
+    <div class="shot-note">Two checkpoints, and everything that matters sits between them. <code>Then</code> makes the order compulsory: the account view has to come <em>before</em> the download, not merely somewhere in the same person's history. Now look above the checkpoints at the container, because the two settings are really one decision. It reads <strong>Visitors</strong>, not Visits, and that is what allows the sequence to cross from one visit into another, which is the only reason the window beside <code>Then</code> can say <strong>Within 1 Week</strong> and mean anything. Set the container to Visits and a week-long window quietly describes something that can almost never happen.</div>
 </div>
 <h3 class="subsec-title">Tightening the gap: After and Within</h3>
 <p>By default, "then" is patient. Page A <code>THEN</code> Page B matches whether B came one hit later or three months later. Sometimes that is fine. Often it is not: a trial that starts within a day of reading the pricing page is a different signal from one that starts a quarter later. Two modifiers on the <code>THEN</code> put limits on the gap. "Within" caps it, so <code>THEN</code> within 7 days or <code>THEN</code> within 1 hit requires B to arrive inside that window. "After" sets a floor, so B must come at least a stated interval later. Used well, these turn a loose "eventually" into a precise "soon after," which is usually what the business question actually meant.</p>

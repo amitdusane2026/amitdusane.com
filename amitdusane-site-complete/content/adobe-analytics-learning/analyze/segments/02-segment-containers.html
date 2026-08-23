@@ -170,16 +170,14 @@ weight: 2
 
 <p>With a single condition like this, the nested form and a plain Visitor segment return the same people, so the nesting can look like effort spent for nothing. It earns its keep the moment two conditions have to happen together inside the same visit, for example viewing the pricing page and then not purchasing, within one session rather than scattered across weeks. Forcing conditions to co-occur is a job for logic and operators, the subject of Segment Logic and Operators.</p>
 
-<div class="shot-box shot-pending">
+<div class="shot-box">
     <div class="shot-title">A container inside a container, in the builder</div>
     <div class="shot-frame">
-        <p class="shot-brief">FILE     aal_module13_section02_ss1.png
-SCREEN   Analytics > Components > Segments > Add, with a nested container built
-STATE    The Segment builder showing a Visitors container with a Visits container nested inside it, and a rule in the nested one.
-INCLUDE  Both container scope labels visible at once, with the nesting indent clear. The preview panel top right if it fits.
-EXCLUDE  Client segment names.
-WHY      The section's hardest idea is containers inside containers. The builder draws the nesting as an indent, which is far easier to grasp than the prose describing it.</p>
+        <img src="/img/adobe-analytics-segment-containers.webp" width="1350" height="584" loading="lazy"
+             alt="The Segment builder in Adobe Analytics. A component rail on the left lists Dimensions and Metrics, several of them blurred out, with All Visits under Segments. The centre holds Title reading Visitors from USA, Description reading Visitors from the United States, and a Tags field holding Region. The Definition area begins with Include set to Visitors, then shows two nested grey containers indented inside one another, the outer labelled in brackets and the inner labelled Countries equals, with the rule Countries equals United States sitting inside the innermost one. A Data Preview panel on the right reports Visitors with Experience Cloud ID 0 of 0 at 0 percent, Unique Visitors 54,037 of 86,766 at 62 percent, Visits 166,451 of 209,290 at 80 percent and Page Views 992,153 of 1.13 million at 88 percent, over the last 90 days, with Product compatibility listing Analysis Workspace, Reports and Analytics, and Data Warehouse.">
+        <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
     </div>
+    <div class="shot-note">The nesting is drawn as an indent, and the indent is the whole idea: Include Visitors sets the outer scope, a container sits inside it, and the rule sits inside that. While you are here, read the Data Preview on the right rather than the definition on the left. This segment keeps <strong>62% of unique visitors but 88% of page views</strong>. One condition, three different answers, because the people it selects are heavier users than average. That comparison is available before you save anything, and almost nobody looks at it.</div>
 </div>
 <h3 class="subsec-title">The same segment can change a report's numbers</h3>
 <p>Because the container controls how much data is pulled in, the very same condition returns different numbers at different scopes, and this trips people up constantly. A condition of page equals Pricing at Hit scope returns just the pricing-page hits. At Visit scope it returns every hit in any visit that touched the pricing page. At Visitor scope it returns every hit from any visitor who touched the pricing page even once, across all of their visits.</p>

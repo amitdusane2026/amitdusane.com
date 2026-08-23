@@ -250,16 +250,14 @@ Captures: $1 = eml      $2 = 2026     $3 = 07
 
 <p>Feed it the ugly keys. Not the clean ones. The clean ones always work, and testing them tells you nothing you did not already believe. Test the campaign with a hyphen in the name, the one with a missing segment, the one somebody URL encoded. Ten minutes here saves a week of explaining to a marketing director why November is being reported as July.</p>
 
-<div class="shot-box shot-pending">
-    <div class="shot-title">Test rule set, the only free look you get</div>
+<div class="shot-box">
+    <div class="shot-title">One rule, and the panel that decides what it touches</div>
     <div class="shot-frame">
-        <p class="shot-brief">FILE     aal_module11_section05_ss1.png
-SCREEN   Components > Classification sets > a set > Rules tab > Test rule set
-STATE    The test panel with sample keys pasted on the left and the resulting classifications on the right.
-INCLUDE  Both panels in one frame, including at least one key that does not classify as expected.
-EXCLUDE  Client tracking codes. Use the sample keys from the section.
-WHY      The section's heading says it costs nothing and it is the only free look you get. A reader who has seen the two panels will actually use it.</p>
+        <img src="/img/adobe-analytics-classification-rule-builder.webp" width="1339" height="657" loading="lazy"
+             alt="The Rules tab of a classification set, with the set name in the header blurred out and tabs for Settings, Schema and Rules. A Functions list on the left offers Starts With, Ends With, Contains, Matches, Regular Expression and Split. The centre holds one rule card headed Starts With, with eml beneath it: a Starts With field containing eml, then a row reading Set Classification Campaign to Email, and an Add operation control. A right-hand column carries Overwrite values with Overwrite any existing values selected and Overwrite only unset values unselected, then Lookback set to 1 month with a Perform lookback button, then Test options with a Sample keys box containing eml123, a ticked Remember sample keys checkbox and a Test rule set button. Cancel and Save rules sit at the bottom.">
+        <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
     </div>
+    <div class="shot-note">The rule itself is the small part: starts with <code>eml</code>, set Campaign to Email. Everything deciding what that does to your data is stacked in the right-hand column. <strong>Overwrite any existing values</strong> against <strong>Overwrite only unset values</strong> is the difference between correcting history and refusing to touch it. Lookback sets how far back the rule reaches. And <strong>Test rule set</strong>, with a sample key already sitting above it, runs before you commit and costs nothing, which makes skipping it a choice rather than an oversight.</div>
 </div>
 <h3 class="subsec-title" data-nav="The lookback window and its limit">The lookback window, and the limit that separates rules from files</h3>
 <p>Now the constraint that decides when rules are the wrong tool entirely, and it contradicts something you have believed since the opening of this module.</p>

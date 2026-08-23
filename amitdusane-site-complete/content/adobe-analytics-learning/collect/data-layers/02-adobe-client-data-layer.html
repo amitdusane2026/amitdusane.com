@@ -92,16 +92,14 @@ weight: 2
 </div>
 <p>Still just page and user. Two add-to-cart events have happened, and the current state shows neither product. So where did those two events go, and this is the question you were probably asking yourself the entire last section: if the state only holds the present, why keep a history at all?</p>
 
-<div class="shot-box shot-pending">
+<div class="shot-box">
     <div class="shot-title">getState, and what the event did not write into it</div>
     <div class="shot-frame">
-        <p class="shot-brief">FILE     aal_module05_section02_ss1.png
-SCREEN   Browser DevTools > Console, after a push, running adobeDataLayer.getState()
-STATE    The console showing the getState result expanded, with page and user present.
-INCLUDE  The command and its returned object together. The absence of the event payload is the point, so do not crop it out.
-EXCLUDE  Real values.
-WHY      The section's whole argument is that eventInfo never lands in state. The console is where a reader can verify that themselves rather than take it on trust.</p>
+        <img src="/img/adobe-client-data-layer-getstate.webp" width="697" height="767" loading="lazy"
+             alt="A browser console showing two commands and their results. The first, adobeDataLayer, returns an array of ten objects. Each carries an event key: ctaClick, Page_View, Login_Popup_Load, three entries of xdm_page-rendered, another ctaClick, two of xdm_cta_click, and a final ctaClick. Three of them also carry a tenant key that has been blurred out. Below the array the object's own members are listed: addEventListener, getState, length of 10, push, removeEventListener and version 2.0.2. The second command, adobeDataLayer.getState(), returns a single object containing page, account, cta, doNotFormatPageName set to true and web, with no event key anywhere in it. The web branch is expanded to show webInteraction with name content-clicked and type other, and webPageDetails with name landing and pageViews value 1.">
+        <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
     </div>
+    <div class="shot-note">Read the two results against each other, because the gap between them is the whole argument. The array above holds ten entries and every one carries an <code>event</code> key naming what happened. The object below, returned by <code>getState()</code>, holds page, account, cta and web, and no <code>event</code> anywhere in it. That is not a display quirk. State is only what the pushes left behind; the event that carried them is not part of it, which is why a rule reading state alone can never tell you what just happened.</div>
 </div>
 <h3 class="subsec-title">Where the history actually earns its keep</h3>
 <p>Here is the honest answer, and it is worth being precise about, because it is easy to oversell. The data layer's history is not a database. Adobe Analytics and CJA store your history for the long term downstream, that is their job, not the data layer's. The log in the browser is something narrower and genuinely useful: it is working memory for the current session, and it earns its place in exactly three situations.</p>

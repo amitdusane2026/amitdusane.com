@@ -87,16 +87,14 @@ weight: 2
 
 <p>Because "overwrite" is a single action with three faces, the skill is not memorizing action names, it is choosing the source. Feeding it a fixed string sets a value, feeding it another variable copies one field into another, and feeding it a combination builds a compound dimension. The mirror image of Read access applies to all three actions: you can only act on a variable you have Write access to, so an action can touch only the variables your permissions let you change.</p>
 
-<div class="shot-box shot-pending">
+<div class="shot-box">
     <div class="shot-title">A processing rule, condition and action together</div>
     <div class="shot-frame">
-        <p class="shot-brief">FILE     aal_module08_section02_ss1.png
-SCREEN   Analytics > Admin > Report Suites > Edit Settings > General > Processing Rules, one rule open
-STATE    A configured rule showing an IF condition and a THEN action, with the rule set to save.
-INCLUDE  The condition row and the action row in one frame, plus the Add Rule control so the reader sees where rules come from.
-EXCLUDE  Client variable names.
-WHY      All four sections of the module point at this one screen. One screenshot serves the whole module, and it is placed where the anatomy is being explained.</p>
+        <img src="/img/adobe-analytics-processing-rules-builder.webp" width="1212" height="767" loading="lazy"
+             alt="The Processing Rules builder in Adobe Analytics, with tabs for Processing Order and Rule Sets. Rule number 1 is open and titled Populate prop2 with Page URL. Under the heading If All of the following are true sits one condition: Custom Insight 2 (Prop2) is not set, with an Add Condition control beneath it. Under Then do the following sits one action: Overwrite value of Custom Insight 2 (Prop2) With Page URL. Under Otherwise do the following sits a second action: Overwrite value of Custom Insight 3 (Prop3) With Page URL. At the bottom a free-text field labelled Reason for rule reads: Record who requested the rule and what it depends on. An Add Rule control and Save and Cancel buttons sit below.">
+        <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
     </div>
+    <div class="shot-note">The whole anatomy in one frame: a numbered rule, one condition, one action, and an Otherwise branch most people never notice is there. The field worth stopping on is the last one. <strong>Reason for rule</strong> is free text, it changes nothing at processing time, and it is the only place in Adobe Analytics that will ever tell a future colleague why this rule exists. Leave it empty and the rule becomes undeletable, because nobody will dare remove something whose purpose no one can reconstruct.</div>
 </div>
 <h3 class="subsec-title">Order is logic, not layout</h3>
 <p>Rules run from the top, starting at rule 1, and every hit passes through every rule. There is no early exit: a rule cannot say "if this one matched, skip the rest." That single fact has two consequences that catch people out. Because every hit reaches every rule, each rule's condition has to be specific enough that it ignores the hits it was never meant to touch. And because the rules run in sequence, an earlier rule can change the ground a later rule stands on. If rule 1 overwrites <code>eVar3</code>, the original value of <code>eVar3</code> is gone by the time rule 2 looks at it. A rule that needs the original value must sit above the rule that overwrites it. Order here is not cosmetic ordering in a list, it is the execution order of your logic.</p>

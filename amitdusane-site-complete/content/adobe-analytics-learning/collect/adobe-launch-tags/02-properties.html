@@ -32,16 +32,14 @@ weight: 2
 </ul>
 <p>Each of these has a section of its own in this module. What matters here is the boundary itself: this is the full contents of one property, and none of it reaches into the property next door.</p>
 
-<div class="shot-box shot-pending">
+<div class="shot-box">
     <div class="shot-title">A property, and everything hanging off it</div>
     <div class="shot-frame">
-        <p class="shot-brief">FILE     aal_module06_section02_ss1.png
-SCREEN   experience.adobe.com > Data Collection > Tags > open a property
-STATE    The property open on its overview, with the left navigation showing Extensions, Data Elements, Rules, Publishing Flow, Environments.
-INCLUDE  The full left navigation in one frame. That list is the shape of the whole module.
-EXCLUDE  Any client property name.
-WHY      The section explains what a property holds. The navigation is that list, already written by Adobe.</p>
+        <img src="/img/adobe-launch-tags-property-overview.webp" width="1431" height="649" loading="lazy"
+             alt="An open property in Adobe Experience Platform Data Collection. The far-left navigation lists Tags, App Surfaces, Datastreams, Event Forwarding, Extension Management, Monitoring and Assurance under Data Collection, then Places, Schemas and Identities. A second column holds the property's own navigation, grouped under headings: PROPERTY with Property Overview and Property Search, AUTHORING with Rules, Data Elements and Extensions, PUBLISHING with Publishing Flow, Environments and Hosts, and INSIGHTS with Audit Events. The main area shows Property Info reading Library Pending approval None, Production last published at and Production last build by both blurred out, and Extension updates available None. The organisation name in the header and the property name in the breadcrumb are blurred.">
+        <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
     </div>
+    <div class="shot-note">The second column is this module's table of contents, and Adobe wrote it: Rules, Data Elements, Extensions, then Publishing Flow, Environments, Hosts. The grouping is doing work too: AUTHORING is what you build, PUBLISHING is how it escapes. A brand-new property that contains nothing still carries all nine of these, because the container is identical whether you have one rule or four hundred.</div>
 </div>
 <h3 class="subsec-title">Why property design matters</h3>
 <p>Because a property is sealed in this way, with its own extensions, rules, data elements, publishing flow, and its own set of permissions, deciding how to split an implementation into properties is one of the more consequential architectural calls you will make. Draw too many and you end up maintaining the same rules and data elements in parallel across them, where they quietly drift out of sync. Draw too few and unrelated teams share one publishing flow and one permission set, and start colliding over each other's work. The structure that holds up is the one that mirrors how the organisation is actually divided, by site, by brand, by team, or by region, so that the people who own a thing are the people allowed to change it. Adobe's own guidance lands in the same place: structure your properties to match how you actually work, not the other way round.</p>

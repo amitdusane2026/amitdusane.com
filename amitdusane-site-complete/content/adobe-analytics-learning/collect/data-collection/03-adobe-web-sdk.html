@@ -70,16 +70,14 @@ weight: 3
     </svg>
 </div>
 
-<div class="shot-box shot-pending">
-    <div class="shot-title">A datastream, and the three products one hit can feed</div>
+<div class="shot-box">
+    <div class="shot-title">A datastream, and the products one hit can feed</div>
     <div class="shot-frame">
-        <p class="shot-brief">FILE     aal_module04_section03_ss1.png
-SCREEN   experience.adobe.com > Data Collection > Datastreams > open one
-STATE    A datastream open with its service cards visible: Adobe Analytics, Experience Platform, and any others configured.
-INCLUDE  The service list, with the Analytics service showing its report suite mapping if it is configured.
-EXCLUDE  The datastream ID if it belongs to a real property. Training only.
-WHY      The section argues the Web SDK sends once and the datastream fans it out. This is the fan-out, and it exists nowhere in Analytics itself.</p>
+        <img src="/img/adobe-experience-platform-datastream-services.webp" width="1426" height="705" loading="lazy"
+             alt="The Datastreams screen in Adobe Experience Platform Data Collection. A left navigation lists Tags, App Surfaces, Datastreams, Event Forwarding, Extension Management, Monitoring, Assurance, then Places, Schemas and Identities. The organisation name in the header and the datastream name in the breadcrumb are both blurred out. The open datastream is titled webSite and is marked Dev. A table headed Service Name and Status lists four services, every one of them Enabled: Adobe Analytics, Adobe Target, Adobe Audience Manager and Adobe Experience Platform. A right-hand panel offers Edit, Edit Mapping, Bot Detection, Delete and Copy Datastream, above fields for Datastream ID, Mapping Schema, Created By, Last Modified By and Last Modified On, all of which are blurred out.">
+        <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
     </div>
+    <div class="shot-note">Four services, all enabled, all fed by the same request. The Web SDK sends one hit to the Edge and this list is what decides who receives a copy of it. The thing worth sitting with is where this screen lives: nothing inside Adobe Analytics shows it, links to it, or hints that it exists. An implementation can look finished from inside Analytics while the decision about which other products are being fed the same data was taken on a screen the analytics team never opens.</div>
 </div>
 <h3 class="subsec-title">The honest catch: Analytics is still frozen</h3>
 <p>Here is where most "Web SDK is the future" explanations quietly skip a step, and you should not. Suppose you point the Web SDK at Adobe Analytics. Your data leaves as clean, flexible XDM, but the moment it reaches the Edge on its way to Analytics, the Edge translates it back into the shape Analytics has always understood: the same props, eVars, events, and report suites as always. Which means the data lands in Analytics in exactly the same fixed structure as before.</p>

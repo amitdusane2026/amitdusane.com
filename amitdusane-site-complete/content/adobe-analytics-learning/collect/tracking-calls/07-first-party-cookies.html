@@ -95,16 +95,14 @@ Set-Cookie: FPID=123e4567-e89b-42d3-9456-426614174000;
 # so the Edge Network reads this cookie and seeds the ECID from it.</pre></div>
 </div>
 
-<div class="shot-box shot-pending">
+<div class="shot-box">
     <div class="shot-title">A cookie, and the expiry date that decides everything</div>
     <div class="shot-frame">
-        <p class="shot-brief">FILE     aal_module07_section07_ss1.png
-SCREEN   Browser DevTools > Application > Cookies, the Adobe identity cookie selected
-STATE    The cookie table with the identity cookie row selected and the Expires column clearly readable.
-INCLUDE  The Name, Domain and Expires columns in one frame. Expires is the whole point.
-EXCLUDE  Real cookie values. The value column can be cropped or the row chosen from a training site.
-WHY      The section is about durability, and durability is a date in a table. Everything else in the section is argument; this is the evidence.</p>
+        <img src="/img/adobe-analytics-amcv-cookie-expiry.webp" width="1433" height="614" loading="lazy"
+             alt="Browser developer tools open on the Application tab, with Cookies expanded in the left Storage list and three cookie domains beneath it, all blurred out. The cookie table is filtered to the word adobe and shows two rows. The first is named AMCV underscore, then a blurred organisation identifier, then AdobeOrg; its value is blurred, its path is a single slash, and its Expires column reads 2027-09-27T15:38:35.371Z with a size of 280. The second is named AMCVS underscore, the same blurred identifier, then AdobeOrg; its value is 1, its path is a slash, and its Expires column reads Session with a size of 42.">
+        <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
     </div>
+    <div class="shot-note">Two cookies, one letter apart in name, and the Expires column is the entire difference between them. <code>AMCV_</code> carries a date more than two years out; <code>AMCVS_</code> says Session and is gone when the tab closes. That is the whole argument of this section rendered as a table: the identifier that survives is the one with a date on it, and every claim about returning visitors, long consideration cycles and repeat purchase rests on that single column being what you think it is.</div>
 </div>
 <h3 class="subsec-title">The trade-offs, and the mistake</h3>
 <p>Durability is not free. An FPID means your engineering team owns server-side cookie logic, has to coordinate it with your consent flow so the identifier is only set when it should be, and has to validate that returning visitors really do keep a stable identity. That is more responsibility than letting the library set a cookie for you. The judgment is worth making deliberately: the more your business depends on recognizing returning visitors, long consideration cycles, subscriptions, high-value purchases, the more that server-side effort pays for itself, and the less it matters for a site where almost everyone converts in a single session.</p>

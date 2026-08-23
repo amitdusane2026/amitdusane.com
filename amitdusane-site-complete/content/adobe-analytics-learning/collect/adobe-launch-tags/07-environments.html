@@ -73,16 +73,14 @@ weight: 7
     <p>Browser caching is deliberately switched off for development and staging environments, so every visitor refetches the library every time. That is exactly what you want while developing, you always see the latest build, but it is the opposite of what a high-traffic production page needs. Using a development or staging embed code in a production context means no caching at scale, which is both slow and wasteful. Production pages get the production embed, always.</p>
 </div>
 
-<div class="shot-box shot-pending">
-    <div class="shot-title">Three environments, three different embed codes</div>
+<div class="shot-box">
+    <div class="shot-title">The embed code, and how little of it says which environment</div>
     <div class="shot-frame">
-        <p class="shot-brief">FILE     aal_module06_section07_ss1.png
-SCREEN   Inside a property > Environments, with one environment's Install dialog open
-STATE    The environment list with the install code dialog open over it, showing the script tag.
-INCLUDE  The environment names behind and the embed code in front, so the pairing is obvious.
-EXCLUDE  The actual property ID in the embed code. Blur is not allowed here, so use a training property whose ID is safe to publish.
-WHY      The section warns that pasting the wrong code sends production traffic into dev. The three codes look nearly identical, and that is exactly why.</p>
+        <img src="/img/adobe-launch-tags-embed-code-environment.webp" width="685" height="562" loading="lazy"
+             alt="The Web Install Instructions dialog inside a Tags property. At the top, Environment reads Development and Environment ID shows the two letters EN followed by a value that has been blurred out, with a copy button beside it. Below, a panel headed Load Library Asynchronously has its toggle switched on, and an instruction reads: paste this code inside the head tag of your document. Under it a Standard field holds a script tag beginning script src equals https colon slash slash assets dot adobedtm dot com slash, with the rest of the path blurred out, and a copy button beside it. Text underneath points to the Adobe Experience Cloud Debugger extension with links for Chrome and FireFox, and a Close button sits bottom right.">
+        <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
     </div>
+    <div class="shot-note">The word Development appears once, at the top of the dialog, and it never reaches your site. The only thing that does is the script tag, and the environment is not named anywhere inside it. The entire difference between development and production is a hash buried in that URL. Both identifiers are blurred here, which turns out to make the point better than showing them would: they are the same length, the same shape and the same everything, so a copy taken from the wrong dialog fails silently and there is nothing on the page you could have checked it against.</div>
 </div>
 <h3 class="subsec-title">You cannot edit staging or production directly</h3>
 <p>One last point ties this back to publishing. You do all your real editing in development, because a library in any later stage is a fixed snapshot. If something is wrong in <strong>staging</strong>, you reject the library back to development, fix it there, and send it through again. If something is wrong in <strong>production</strong>, you cannot edit it in place either; you create a new corrected library and publish it over the old one, or republish a previous known-good library to roll back. The environments are where builds land; the changes themselves always happen in development.</p>

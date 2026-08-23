@@ -88,16 +88,14 @@ weight: 2
 <p>Two things are worth taking from that. The address is mostly not yours: the fixed path, the hit source, the library version and the cache buster are all added for you, and the report suite is the only part of the address you decided. Everything you actually chose to measure sits in the second half, after the question mark, which is why a debugging session usually starts there.</p>
 <p>The version segment repays a second look, because it is the fastest way to find something nobody knew was still running. It names the library that built the request, so a <code>JS-</code> prefix is AppMeasurement and an <code>H.</code> prefix is the far older H-code library it replaced. Find an <code>H.</code> version on a site that migrated years ago and you have found a hardcoded library still firing from a template nobody remembers owning, which is not a thing any amount of reading the tag manager would have told you.</p>
 
-<div class="shot-box shot-pending">
+<div class="shot-box">
     <div class="shot-title">Code Manager, and why the library has a version</div>
     <div class="shot-frame">
-        <p class="shot-brief">FILE     aal_module04_section02_ss1.png
-SCREEN   Analytics > Admin > All admin > Code manager
-STATE    The Code Manager list showing the available downloads and their versions.
-INCLUDE  The version number and the JavaScript download row. The date column if present.
-EXCLUDE  Nothing sensitive here, but check the org name in the header.
-WHY      The section explains AppMeasurement is a file you host. Seeing the download screen makes it a file rather than an abstraction.</p>
+        <img src="/img/adobe-analytics-code-manager-appmeasurement.webp" width="1416" height="413" loading="lazy"
+             alt="The Code Manager screen in Adobe Analytics, headed Adobe Experience Cloud Client Libraries. Explanatory paragraphs above the table note that the Web SDK and Mobile SDK are part of Experience Edge, that AppMeasurement is Adobe Analytics' historical JavaScript collection library which does not use the Edge, and that Adobe recommends implementing through Launch. A four-row table follows with columns for AppMeasurement Library Platform, Version plus Release Notes, Documentation, and Link slash Download. The rows are Adobe Experience Platform Launch (JavaScript), Adobe Experience Platform Web SDK (JavaScript), Adobe Experience Platform Mobile SDK for iOS, Android and React, and Adobe Analytics AppMeasurement (JavaScript). Each row offers a Release Notes link, a Documentation link and a download Link.">
+        <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
     </div>
+    <div class="shot-note">Four libraries on one page, and AppMeasurement is the last row. The column that matters is the one on the right: Link slash Download. That is the whole argument of this section made concrete: the library is a file you take away and host yourself, so the version running on your site is whichever one somebody downloaded on the day they set it up, and nothing on this screen or any other will ever tell you it has aged.</div>
 </div>
 <h3 class="subsec-title">The s object: what packs the pixel</h3>
 <p>So what assembles all that data and stuffs it into the request? A single object that lives on the page, named <code>s</code> by convention. Everything AppMeasurement does revolves around it. You write values into its fields, and when you fire a tracking call, AppMeasurement reads those fields, builds the pixel request, and sends it.</p>
@@ -202,16 +200,14 @@ s.linkTrackEvents = s.apl(s.linkTrackEvents, "event5", ",", ",", 1);</pre></div>
 <p>First, reconciliation. A clean link name gives you a stable thing to QA and debug against. When a number looks wrong, a well-named Custom Link report is often where you confirm whether the hit fired at all and what it carried.</p>
 <p>Second, keep your link names low in variety. The Custom Link report is a dimension like any other, and every dimension has a ceiling on how many unique values it will track in a month before the rest get swept into a single "Low-Traffic" bucket and effectively lost. It is a myth that custom links are exempt from this. What protects you is not the dimension, it is your own restraint: a small, controlled set of meaningful names stays comfortably under the ceiling, while dumping a raw URL or a unique string into the name on every click will blow past it. Name links by what they mean, not by where they happen to point.</p>
 
-<div class="shot-box shot-pending">
-    <div class="shot-title">One page view beacon, as the browser actually sends it</div>
+<div class="shot-box">
+    <div class="shot-title">One beacon, as the browser actually sends it</div>
     <div class="shot-frame">
-        <p class="shot-brief">FILE     aal_module04_section02_ss2.png
-SCREEN   Browser DevTools > Network, filtered to the Adobe collection request, Payload or Query String panel open
-STATE    A single page-view request selected, with its query parameters expanded in the right-hand panel.
-INCLUDE  The request name in the left list and the decoded parameters on the right: pageName, the eVars, the events. Both panels in one frame.
-EXCLUDE  Any real page URLs, order IDs or values from a production site. Capture from the training property.
-WHY      The section says the pixel is where the variables go. Reading the actual parameter list is the moment that stops being a metaphor.</p>
+        <img src="/img/adobe-analytics-tracking-beacon-devtools.webp" width="781" height="767" loading="lazy"
+             alt="Browser developer tools open on the Network tab, filtered to b slash ss so only Adobe collection requests are listed. Two requests appear in the left panel, both beginning with s and a long number followed by AQB=1. The first is selected and the Payload tab is open beside it, headed Query String Parameters with View source and View URL-encoded buttons. The decoded parameters run down the panel: AQB, ndh and pf each set to 1, then t and mid blurred out, aamlh 12, ce UTF-8, cdp 3, pageName Home-Show, g and cc blurred, ch Home-Show, events event78, c1 and v1 Home-Show, c2 and v2 blurred out, c3 Home-Show, then v8, v9, v15, v40, c46 blurred, v77 set to NA, v112 blurred, pe set to lnk_o and pev2 set to link clicked.">
+        <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
     </div>
+    <div class="shot-note">None of these names are the names you configure. <code>c1</code> is prop1, <code>v1</code> is eVar1, and <code>events</code> carries a bare <code>event78</code> with nothing to say what it means. Read the last two lines and you can also tell what kind of hit this is: <code>pe=lnk_o</code> makes it a link-tracking call rather than a page view, and <code>pev2</code> carries the link name. That gap between the wire and the interface is why a variable can look perfectly configured in Adobe and still arrive empty, and why reading a beacon is its own skill.</div>
 </div>
 <h3 class="subsec-title">The last piece: how a pixel becomes a report</h3>
 <p>You now know how a hit leaves the page. But a hit landing on Adobe's servers is not yet a report, and the gap between those two things is where the whole picture finally clicks together.</p>
