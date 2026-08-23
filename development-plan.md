@@ -511,7 +511,9 @@ Raised while reviewing M14 §1 against the competitive field. It is the single l
 
 **3. Zoom uses native browser capability, no JavaScript.** The image is wrapped in a plain link to the full-size file, with a zoom icon supplied in CSS for discoverability. Tapping hands off to the browser's own image viewer, which already provides pinch-zoom, panning and scrolling on every phone and is maintained by the browser vendor. Deliberately not a JS lightbox: the learning world already carries one dead JS control (the search button), and the `<a>` wrapper is forward-compatible, so a lightbox can be added later without re-editing a single section.
 
-**4. Naming.** `aal_module14_section01_ss1.png`. Lowercase, underscores, `aal` for Adobe Analytics Learning, **module and section numbers zero-padded to two digits** so 116 sections sort correctly. The same string is the file name, the slot's `data-shot` id, the grep target and the guard target.
+**4. Naming. ~~`aal_module14_section01_ss1.png`, zero-padded so 116 sections sort correctly.~~ Superseded 24 Aug 2026.** All 34 shipped files were renamed to describe **what the picture shows**: `adobe-analytics-evar-allocation-expiration.webp`, `adobe-launch-tags-publishing-flow.webp`. Lowercase, hyphens, no module or section numbers, product prefix where it is not Adobe Analytics itself.
+
+The old scheme optimised for sorting and grep. Neither turned out to matter — a shot appears in exactly one section, so the section file *is* the index — while the filename is a genuine image-search ranking signal that `aal_module03_section02_ss1` threw away entirely. Renamed before launch deliberately: after indexing it would cost a redirect per image. Convention and the full mapping live in `screenshot-briefs.md`.
 
 **5. Location and format.** Files live in `amitdusane-site-complete/static/img/`, which does not exist yet and needs creating. There is no `assets/` directory in this project and Hugo's image pipeline is not in use (`Processed images | 0`). Amit captures and saves **PNG**; conversion to WebP happens on the way in, so no generation loss and nothing for him to think about.
 

@@ -20,7 +20,11 @@ Add `-crop x<height>+0+0 +repage` before `-resize` to trim page bleed off the bo
 **Always lossless, never lossy.** Measured on the first two shots: lossless WebP is 64% smaller than PNG at RMSE 0, pixel for pixel identical. Lossy `-quality 85` is 82% smaller but introduces about 1% error, concentrated on high-contrast edges, which is exactly where interface text lives. Readers zoom into these to read Adobe's labels. The extra ~70KB across a section is not worth softening that.
 
 **`hugo --gc` does not delete a stale file from `public/`.** After changing a format or a filename, remove `public/` and rebuild, or the old copy lingers and every size measurement is wrong.
-**Naming:** `aal_module<NN>_section<NN>_ss<N>.png`, lowercase, numbers zero-padded to two digits.
+**Naming (changed 24 Aug 2026):** name the file for **what the picture shows**, not for where it sits. Lowercase, hyphens, no module or section numbers: `adobe-analytics-evar-allocation-expiration.webp`, `adobe-launch-tags-publishing-flow.webp`, `adobe-analytics-amcv-cookie-expiry.webp`.
+
+The old scheme was `aal_module<NN>_section<NN>_ss<N>`, which sorted nicely and told a crawler nothing. A filename is a real ranking signal in image search, and this site is likely to be the only current, privacy-cleaned source of Adobe Analytics interface screenshots at this scale, so the names should carry the words somebody would actually search. Lead with the product where it is not Adobe Analytics itself — `adobe-launch-tags-`, `adobe-experience-platform-`, `adobe-client-data-layer-`.
+
+Rename before publication, never after: once a URL is indexed, changing it costs a redirect. Traceability now comes from the checklist table below and from the fact that each shot appears in exactly one section.
 
 **Before every capture:** browser zoom at 100% (`Ctrl+0`), the same window width every time, Adobe's light theme, and never so narrow that Workspace collapses its left rail.
 
@@ -50,7 +54,7 @@ Add `-crop x<height>+0+0 +repage` before `-resize` to trim page bleed off the bo
 
 ---
 
-**`aal_module14_section01_ss1.png` — the whole screen**
+**`adobe-analytics-analysis-workspace-interface.png` — the whole screen**
 
 - **Goes in:** "What you are actually looking at", directly under the schematic diagram, so the map and the territory sit together.
 - **Screen:** Workspace, any project with one panel and a populated freeform table.
@@ -62,7 +66,7 @@ Add `-crop x<height>+0+0 +repage` before `-resize` to trim page bleed off the bo
 
 ---
 
-**`aal_module14_section01_ss2.png` — the left rail and its four colors**
+**`adobe-analytics-workspace-data-dictionary.png` — the left rail and its four colors**
 
 - **Goes in:** "Four colors, and they are the fastest thing on the screen", under the color table.
 - **Screen:** Workspace, left rail, Components tab selected.
@@ -126,38 +130,38 @@ demo site only, nothing identifying in a URL, a value or a cookie.
 
 | # | Section | File | Screen |
 |---|---|---|---|
-| 1 | M1 §1 What Is Adobe Analytics | `aal_module01_section01_ss1` | Experience Cloud app switcher |
-| 2 | M1 §5 Account Structure | `aal_module01_section05_ss1` | Admin Console, product profile permissions |
-| 3 | M2 §1 What Are Report Suites | `aal_module02_section01_ss1` | Report Suite Manager list |
-| 4 | M2 §3 Virtual Report Suites | `aal_module02_section03_ss1` | VRS builder with its segment |
-| 5 | M2 §4 Report Suite Settings | `aal_module02_section04_ss1` | Edit Settings menu, fully expanded |
-| 6 | M2 §7 Privacy and Data Retention | `aal_module02_section07_ss1` | Data governance labelling |
-| 7 | M3 §1 Props | `aal_module03_section01_ss1` | Traffic Variables list |
-| 8 | M3 §2 eVars | `aal_module03_section02_ss1` | **Allocation and expiration dropdowns** |
-| 9 | M3 §3 Events | `aal_module03_section03_ss1` | Success Events, the Type dropdown |
-| 10 | M4 §2 AppMeasurement | `aal_module04_section02_ss1` | Code Manager |
-| 11 | M4 §2 AppMeasurement | `aal_module04_section02_ss2` | **DevTools Network, one beacon decoded** |
-| 12 | M4 §3 Web SDK | `aal_module04_section03_ss1` | A datastream and its services |
-| 13 | M5 §1 What Is a Data Layer | `aal_module05_section01_ss1` | **Console, data layer expanded** |
-| 14 | M5 §2 ACDL | `aal_module05_section02_ss1` | Console, `getState()` |
-| 15 | M6 §2 Properties | `aal_module06_section02_ss1` | Property navigation |
-| 16 | M6 §3 Extensions | `aal_module06_section03_ss1` | Extension catalog |
-| 17 | M6 §4 Data Elements | `aal_module06_section04_ss1` | Builder with its option checkboxes |
-| 18 | M6 §5 Rules | `aal_module06_section05_ss1` | **One rule, all three parts** |
-| 19 | M6 §6 Publishing Workflow | `aal_module06_section06_ss1` | The four columns |
-| 20 | M6 §7 Environments | `aal_module06_section07_ss1` | Embed code dialog |
-| 21 | M7 §3 Server Calls and Billing | `aal_module07_section03_ss1` | Server Call Usage |
-| 22 | M7 §5 ECID | `aal_module07_section05_ss1` | ECID extension config |
-| 23 | M7 §7 First-Party Cookies | `aal_module07_section07_ss1` | **DevTools, the Expires column** |
-| 24 | M8 §2 Conditions and Actions | `aal_module08_section02_ss1` | Processing Rules builder |
-| 25 | M10 §2 Channel Configuration | `aal_module10_section02_ss1` | Marketing Channel Manager |
-| 26 | M10 §3 Channel Processing Rules | `aal_module10_section03_ss1` | The waterfall, numbered |
-| 27 | M11 §3 Classification Sets | `aal_module11_section03_ss1` | A set and its three tabs |
-| 28 | M11 §4 Importing | `aal_module11_section04_ss1` | Schema Preview before upload |
-| 29 | M11 §5 Rule Builder | `aal_module11_section05_ss1` | **Test rule set, both panels** |
-| 30 | M12 §2 Building Calculated Metrics | `aal_module12_section02_ss1` | The canvas with a formula |
-| 31 | M13 §2 Segment Containers | `aal_module13_section02_ss1` | A container nested in a container |
-| 32 | M13 §4 Sequential Segments | `aal_module13_section04_ss1` | The THEN join and its window |
+| 1 | M1 §1 What Is Adobe Analytics | `adobe-experience-cloud-app-switcher` | Experience Cloud app switcher |
+| 2 | M1 §5 Account Structure | `adobe-analytics-product-profile-permissions` | Admin Console, product profile permissions |
+| 3 | M2 §1 What Are Report Suites | `adobe-analytics-report-suite-manager` | Report Suite Manager list |
+| 4 | M2 §3 Virtual Report Suites | ~~dropped~~ | VRS builder — never captured, placeholder removed 23 Aug |
+| 5 | M2 §4 Report Suite Settings | `adobe-analytics-report-suite-edit-settings-menu` | Edit Settings menu, fully expanded |
+| 6 | M2 §7 Privacy and Data Retention | ~~dropped~~ | Data governance labelling — never captured, placeholder removed 23 Aug |
+| 7 | M3 §1 Props | `adobe-analytics-traffic-variables-props` | Traffic Variables list |
+| 8 | M3 §2 eVars | `adobe-analytics-evar-allocation-expiration` | **Allocation and expiration dropdowns** |
+| 9 | M3 §3 Events | `adobe-analytics-success-event-type-dropdown` | Success Events, the Type dropdown |
+| 10 | M4 §2 AppMeasurement | `adobe-analytics-code-manager-appmeasurement` | Code Manager |
+| 11 | M4 §2 AppMeasurement | `adobe-analytics-tracking-beacon-devtools` | **DevTools Network, one beacon decoded** |
+| 12 | M4 §3 Web SDK | `adobe-experience-platform-datastream-services` | A datastream and its services |
+| 13 | M5 §1 What Is a Data Layer | `adobe-analytics-data-layer-console-digitaldata` | **Console, data layer expanded** |
+| 14 | M5 §2 ACDL | `adobe-client-data-layer-getstate` | Console, `getState()` |
+| 15 | M6 §2 Properties | `adobe-launch-tags-property-overview` | Property navigation |
+| 16 | M6 §3 Extensions | `adobe-launch-tags-extension-catalog` | Extension catalog |
+| 17 | M6 §4 Data Elements | `adobe-launch-tags-data-element-builder` | Builder with its option checkboxes |
+| 18 | M6 §5 Rules | `adobe-launch-tags-rule-events-conditions-actions` | **One rule, all three parts** |
+| 19 | M6 §6 Publishing Workflow | `adobe-launch-tags-publishing-flow` | The four columns |
+| 20 | M6 §7 Environments | `adobe-launch-tags-embed-code-environment` | Embed code dialog |
+| 21 | M7 §3 Server Calls and Billing | ~~dropped~~ | Server Call Usage — never captured, placeholder removed 24 Aug |
+| 22 | M7 §5 ECID | `adobe-experience-cloud-id-service-extension` | ECID extension config |
+| 23 | M7 §7 First-Party Cookies | `adobe-analytics-amcv-cookie-expiry` | **DevTools, the Expires column** |
+| 24 | M8 §2 Conditions and Actions | `adobe-analytics-processing-rules-builder` | Processing Rules builder |
+| 25 | M10 §2 Channel Configuration | `adobe-analytics-marketing-channel-manager` | Marketing Channel Manager |
+| 26 | M10 §3 Channel Processing Rules | `adobe-analytics-marketing-channel-processing-rules` | The waterfall, numbered |
+| 27 | M11 §3 Classification Sets | `adobe-analytics-classification-sets` | A set and its three tabs |
+| 28 | M11 §4 Importing | `adobe-analytics-classification-import-schema` | Schema Preview before upload |
+| 29 | M11 §5 Rule Builder | `adobe-analytics-classification-rule-builder` | **Test rule set, both panels** |
+| 30 | M12 §2 Building Calculated Metrics | `adobe-analytics-calculated-metric-builder` | The canvas with a formula |
+| 31 | M13 §2 Segment Containers | `adobe-analytics-segment-containers` | A container nested in a container |
+| 32 | M13 §4 Sequential Segments | `adobe-analytics-sequential-segment-builder` | The THEN join and its window |
 
 **Access to confirm before capture day.** Some briefs need entitlements the training account may
 not have: a Tags property with the Analytics and ECID extensions installed (shots 15 to 20, 22), a
