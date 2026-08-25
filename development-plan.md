@@ -922,18 +922,121 @@ got nothing. M9 VISTA has none by design — there is no customer-facing screen.
 
 ### What the next session should know
 
-- **Amit is capturing the 32 screenshots.** When they arrive they need converting
-  to lossless WebP and wiring in, replacing each `shot-pending` box.
 - **`ask@amitdusane.com` exists** on Namecheap Private Email. MX, SPF and DKIM are
   correct — DKIM is under the non-standard selector `privateemail._domainkey`,
-  which is easy to mistake for missing. **DMARC is still absent**, and mail to
-  Gmail was landing in spam; a `p=none` record plus sending reputation is the fix.
+  which is easy to mistake for missing. **DMARC is still absent** (verified again
+  25 Aug), and mail to Gmail was landing in spam; a `p=none` record plus sending
+  reputation is the fix.
 - **The About page still has no contact block**, and the wording about
   availability for work is Amit's call, deliberately left alone.
-- **31 files carry `shot-pending`.** The pre-merge guard means none can reach
-  `main` until filled or removed.
+- **The migration world has no working contact trigger.** `author.js` builds the
+  overlay on every world, but both triggers are created by `world-learning.js`,
+  which only loads on the learning world. Flagged, not fixed.
 - The reading-progress hairline came up again and was declined again. It is
   `REJ-03`, and the reasoning still holds: the spine already shows position by
   heading, which is better than a bar. The one thin spot is mobile, where the
   spine is a drawer — if it ever matters, the fix is the page-nav button carrying
   progress, not a fourth piece of scroll-driven chrome.
+
+---
+
+## The mobile session, 25 August 2026
+
+Started as one complaint — a screenshot too large on a phone — and ended with a
+property of the whole learning world: **on a phone the reader scrolls only
+vertically.** Nobody set that as an objective. It fell out of fixing one thing
+properly and then asking each time whether the fix generalised.
+
+### What was wrong, and why it mattered more than it looked
+
+31 of the 113 tables ran wider than the 339px a phone gives the column, the worst
+hiding 41% of itself. The find that justified the whole day came from asking
+*which* column was falling off. It was the same column every time: **Data layer
+path**, **Include it?**, **Forgiven?**, **Best for**, **Why**, **Where to look**,
+**Durability**. Tables put the label on the left and the verdict on the right, so
+horizontal cut-off does not remove a random 40% — **it removes the judgment**, and
+leaves the reference data Adobe already publishes.
+
+And a cut-off table does not look broken, it looks complete. There is no scrollbar
+on touch. The reader forms a conclusion and leaves with a wrong answer rather than
+a partial one. That is the site's own silent-failure theme, sitting in the
+furniture. It was reaching the majority of readers: production GA shows **over 60%
+of traffic on mobile**.
+
+### The order of levers, which was measured rather than guessed
+
+Fitting a table has three levers and they are not equal. On the worst table,
+cutting type 14.5px → 12px bought **18px**; cutting horizontal padding 12px → 6px
+bought **48px**. Once identifiers break, a column is its longest *segment* plus its
+padding, and padding is a large share of a narrow column. So the ladder is
+**breaks → padding → type**, each rung climbed only if the table still does not fit.
+Result: 111 of 113 fit, **110 keeping full size**, only 3 needing any type change.
+
+Breaks are logical, never arbitrary. `overflow-wrap:anywhere` was tried first and
+rejected on sight — it fits every table by breaking words mid-syllable. The
+replacement inserts `<wbr>` at separators (`. _ : / \ = & ? ; , | + -`) and at
+camelCase boundaries, so `digitalData.page.pageInfo.name` comes apart at its dots
+and `linkDownloadFileTypes` at its capitals. **`<wbr>` not a zero-width space**: a
+ZWSP is a real character that rides into the clipboard, and on a site where people
+copy variable names out of tables that hands them a string that looks right and is
+not.
+
+Amit set the floor: **12px, and no lower**. Two tables sit on it and still scroll
+by about 20px. Both are four columns of ordinary prose with nothing left to break;
+`hyphens:auto` was tested and does not help, because hyphenation opportunities do
+not feed min-content in table layout — the same reason `overflow-wrap:break-word`
+moved the worst table 576px → 576px while `anywhere` moved it to 339px.
+
+### Figures, and two bugs the pilot had been hiding
+
+The ECID diagram-zoom pilot went site-wide: 126 diagrams and 43 screenshots, each
+with a control and a hint. Dropping the `diagram-zoomable` and `code-wrap` marker
+classes rather than stamping them into 183 places meant **the whole roll-out was
+two files and zero content edits**.
+
+The roll-out exposed what one page could not. The JS-inserted `.diagram-frame`
+wrapper had silently broken every `.diagram-box > svg` selector, and those rules
+are CMP-12 — so the `--diagram-min` floor had quietly disappeared. On screen a
+figure rendered 614px instead of 700 at 1280px, scaling authored 11px text to
+9.6px. **On paper it was worse**: the print rule that releases the floor also
+stopped matching, which would have run every printed diagram off the page edge.
+
+M02 §2 turned out to be the corpus's only **mixed figure**, an svg timeline plus
+three HTML bars. The frame took the svg alone, so the border enclosed the timeline
+and left the bars outside it, and expanding showed half the figure. The frame now
+takes everything from the svg to the end of the box.
+
+A rotation experiment for wide diagrams on portrait phones was built, measured,
+and **removed at Amit's call** — the whole diagram fitted and stayed readable, but
+asking a reader to turn their phone is a worse deal than a swipe. Recorded because
+the measurements are sound and the conclusion still stands: you cannot show a
+700×130 drawing whole *and* readable on a 390px portrait screen.
+
+### Print, where three defects were closed
+
+1. **The `.print-doc` layout-cell leak** — see trap twelve in `CLAUDE.md`. Written
+   as `.print-doc td`, a rule meant for content tables restyled the entire page.
+2. **`.path-title` printed pale lavender on white** from dark mode, because its
+   colour is a hardcoded hex rather than a token.
+3. **Content tables had no vertical rules at all** — only `border-bottom`. Fine on
+   screen, unreadable on paper once cells wrap. They now print a full grid.
+
+### Components
+
+Six `.comparison-grid` placements were three different things: bare on three
+pages, wrapped in `.compare-card` on one, inside a `diagram-content` figure on two.
+The component now carries its own card in tokens. `.compare-card` is deleted, and
+with it a hardcoded `background:#ffffff` that rendered a **white slab in dark mode**.
+
+### The state at close
+
+Verified across 144 pages in both themes, 22,222 elements each: **no figure,
+screenshot or code block scrolls sideways anywhere.** Two tables scroll ~20px at
+the type floor, and two pages carry a 5–7px page-level drift from chrome
+(`.wf-rail` on data-layer-design, `.lhead` on glossary) — both pre-existing,
+both inspected by Amit and judged acceptable.
+
+**32 sections remain unwritten** and that is still the front that matters:
+M15 Attribution 4, M16 Activity Map 4, M17 Data Feeds 4, M18 Data Warehouse 4,
+M19 SDR 6, M20 Testing & Debugging 5, M21 CJA 5. M15 §4 still needs its title
+coined. Launch target is **end of September**.

@@ -213,3 +213,11 @@ Platform	chrome		Floating controls share one centre axis (--fab-axis)	Feature	st
 Platform	chrome		Pocket map tab vertical at every width	Feature	static/chrome.css	NA	NA	NA	NA	NA	NA	Yes	No	No
 Platform	chrome		"Ask Amit": overlay, spine entry, arriving bar	Feature	layouts/_default/baseof.html	NA	NA	NA	NA	NA	NA	Yes	No	No
 Platform	infrastructure		author.js and search.js given ?v= content hashes (trap 4)	Feature	layouts/_default/baseof.html	NA	NA	NA	NA	NA	NA	Yes	No	No
+Platform	presentation		Diagram zoom and figure hint on every figure, 126 diagrams and 43 screenshots	Feature	static/world-learning.js	NA	NA	NA	NA	NA	NA	Yes	No	No
+Platform	presentation		Figures fit the phone; CMP-12 --diagram-min floor moved to the JS-inserted .diagram-frame, screen and print	Feature	static/world-learning.css	NA	NA	NA	NA	NA	NA	Yes	No	No
+Platform	presentation		Mixed figure, svg plus HTML bars, framed and expanded as one drawing	Feature	static/world-learning.js	NA	NA	NA	NA	NA	NA	Yes	No	No
+Platform	presentation		Comparison grid unified across six placements, .compare-card and its hardcoded white removed	Feature	static/world-learning.css	NA	NA	NA	NA	NA	NA	Yes	No	No
+Platform	presentation		Code blocks wrap rather than scroll on a phone	Feature	static/world-learning.css	NA	NA	NA	NA	NA	NA	Yes	No	No
+Platform	presentation		Tables fit a phone: separator and camelCase breaks, then padding, then type against a 12px floor	Feature	static/world-learning.js	NA	NA	NA	NA	NA	NA	Yes	No	No
+Platform	presentation		Print: full cell grid on content tables, and the .print-doc layout-cell leak that restyled the whole page	Feature	static/world-learning.css	NA	NA	NA	NA	NA	NA	Yes	No	No
+Platform	presentation		Print: path-title kept its dark-mode colour on white paper	Feature	static/world-learning.css	NA	NA	NA	NA	NA	NA	Yes	No	No

@@ -674,7 +674,6 @@ body.world-learning .welcome-btn:hover{background:var(--accent2);text-decoration
   .path-box{padding:12px 14px}
   body.world-learning .lcontent .path{padding:2px 7px}
   .ref-box{padding:12px 13px}
-  .diagram-box{padding:var(--sp-md) var(--sp-sm)}
 }
 /* Print: mirror the lesson into a document with a repeating author header and
    footer (matching the migration guide's print template), and hide the live app. */
@@ -754,8 +753,9 @@ body.world-learning .welcome-btn:hover{background:var(--accent2);text-decoration
      every diagram at the page edge and silently lose the right-hand side of
      it. Print lets the figure scale down instead -- which is fine, because
      print resolution is several times the screen and small type survives it. */
-  .print-doc .diagram-box{overflow:visible !important}
-  .print-doc .diagram-box > svg,.print-doc .diagram-content > svg{min-width:0 !important;max-width:100% !important}
+  .print-doc .diagram-box,.print-doc .diagram-frame{overflow:visible !important}
+  .print-doc .diagram-box > svg,.print-doc .diagram-frame > svg,.print-doc .diagram-content > svg{min-width:0 !important;max-width:100% !important}
+  .print-doc .diagram-frame-mixed > div{min-width:0 !important}
   .print-doc .diagram-box > .diagram-title{position:static !important}
   .print-doc .info-box,.print-doc .warn-box,.print-doc .pro-tip,.print-doc .ref-box,.print-doc .path-box,.print-doc .tbl-wrap,.print-doc .diagram-box,.print-doc .code-block,.print-doc .dothis,.print-doc .flow-horizontal{break-inside:avoid;page-break-inside:avoid;box-shadow:none !important}
   .print-doc a[href]{color:#ba2142;text-decoration:none}
@@ -767,6 +767,24 @@ body.world-learning .welcome-btn:hover{background:var(--accent2);text-decoration
      parentheses. */
   .print-doc .ref-box a[href^="http"]::after{content:" (" attr(href) ")";font-size:8pt;font-weight:400;color:#4b5563;word-break:break-all}
   .print-doc .path{background:#CECBF6;color:#3C3489;padding:3px 9px;border-radius:4px;font-family:Consolas,monospace;font-size:13px}
+  /* The path-box heading, printed from dark mode, came out #CECBF6 on white:
+     a pale lavender wash where a heading should be. It is the same trap the
+     diagram palette note above describes, and the reason it survived the
+     token reset is that this colour is not a token -- [data-theme="dark"]
+     .path-title sets the hex directly, so forcing --text* back to light does
+     nothing for it.
+
+     Why this one and not its neighbours: the dark rule for .path is written
+     as [data-theme="dark"] body.world-learning .lcontent .path, and the print
+     document copies the article into #printBody, which is NOT inside
+     .lcontent -- so that rule stops matching and the chips print correctly.
+     .path-title carries no such ancestor, matches anywhere, and followed the
+     page onto paper. It is the only rule of its kind that does: the other
+     five dark hardcoded colours all belong to chrome that is never copied.
+
+     !important because the dark rule sits ~400 lines later in the file at
+     equal specificity, and source order would otherwise decide it. */
+  .print-doc .path-title{color:#534AB7 !important}
   .hm-arrow{display:none !important}
   .hm-row-mod,.hm-row-sec{display:none !important}
   .hm-tagline .tl-b{display:inline !important}
@@ -784,6 +802,57 @@ body.world-learning .welcome-btn:hover{background:var(--accent2);text-decoration
   }
   .print-doc .dothis-steps > li::after{background:#e2e8f0}
   .print-doc .dothis{border:1px solid #cbd5e1}
+  /* --bg3 is forced white on paper, so the two options lose the tint that
+     separates them and the card prints as one block of running text. A
+     hairline keeps a comparison looking like a comparison. */
+  .print-doc .comp-item{border:1px solid #cbd5e1}
+
+  /* TABLES ON PAPER.
+     On screen a cell is separated from the one beside it by white space and
+     nothing else -- the only rule drawn is border-bottom, so there are no
+     vertical lines at all. That survives on screen because a reader can see
+     the whole row at once and the column widths are generous. On paper it
+     falls apart: the page is narrower, cells wrap onto two and three lines,
+     and with no line between them the wrapped text of one column reads as a
+     continuation of its neighbour. Which is exactly the report -- values
+     mixing, no way to tell where a column ends.
+
+     So paper gets a real grid. Every cell is boxed, the outer edge is drawn
+     a shade darker so the table reads as one object, and the header keeps
+     its tint. --border is #e2e8f0 on paper, which is too faint to separate
+     anything at this size, so these are set in ink rather than in the token.
+
+     EVERY selector here goes through .tbl-wrap, and that is not tidiness, it
+     is the whole correctness of the block. .print-doc is itself a <table>:
+     a layout table whose thead cell carries the running header, whose tfoot
+     cell carries the footer, and whose single tbody cell holds the ENTIRE
+     article. So `.print-doc td` is not "a table cell in the content", it is
+     the page. Written that way this block drew a border around the whole
+     sheet, boxed the header, and set the complete article to 8.5pt -- which
+     is exactly the "print looks completely different" report, and none of it
+     was anything to do with tables. */
+  .print-doc .tbl-wrap{border:1px solid #94a3b8 !important;border-radius:0 !important;overflow:visible !important}
+  .print-doc .tbl-wrap table{width:100% !important;border-collapse:collapse !important;font-size:8.5pt !important}
+  .print-doc .tbl-wrap th,.print-doc .tbl-wrap td{
+    border:1px solid #cbd5e1 !important;
+    padding:5px 7px !important;
+    font-size:8.5pt !important;
+    vertical-align:top !important;
+    overflow-wrap:break-word !important;
+    word-break:normal !important;
+  }
+  /* Paper cannot scroll, so a token with no separator in it has to be allowed
+     to break somewhere rather than push the column off the sheet. The <wbr>
+     breaks the script inserts are preferred over this wherever they exist,
+     so a dotted path still comes apart at its dots and this only catches what
+     nothing else can. */
+  .print-doc .tbl-wrap td{overflow-wrap:anywhere !important}
+  .print-doc .tbl-wrap th{background:#f1f5f9 !important;border-color:#94a3b8 !important;color:#334155 !important}
+  /* Column widths are deliberately left to the browser. table-layout:fixed
+     was tried here and removed: it divides the width evenly, which flatters
+     a four-column grid and cramps a two-column table whose first column is a
+     key and whose second is a paragraph. The reported problem was cells
+     running together, and that is the borders' job, not the layout's. */
   .print-doc .dothis-hdr{background:#f1f5f9}
   @page{margin:14mm}
 }
@@ -1042,6 +1111,13 @@ body.world-learning .lcontent .ref-box li{margin-bottom:4px;font-size:var(--fs-s
    the stylesheet claimed 26px. Trap 7, second form, in the wild. */
 @media(max-width:880px){
   .path-ico,.warn-ico,.info-ico,.tip-ico,.ref-ico{width:26px;height:26px;background-size:15px}
+  /* Table fitting moved to world-learning.js, which breaks long identifiers
+     at their separators and only then steps the type down, per table and
+     against a floor. This block briefly carried `overflow-wrap:anywhere`
+     instead: it made every table fit, but by breaking words mid-syllable
+     wherever the line happened to run out, which reads badly. Nothing to
+     declare here now -- the fallback when the script does not run is the
+     .tbl-wrap scroller, which is what it has always been. */
 }
 body.world-learning .lcontent .path-box p{margin:5px 0;font-size:var(--fs-sm)}
 body.world-learning .lcontent .path{background:#CECBF6;padding:3px 9px;border-radius:4px;font-family:Consolas,monospace;font-size:var(--fs-code);color:#3C3489}
@@ -1072,19 +1148,84 @@ body.world-learning .lcontent .path{background:#CECBF6;padding:3px 9px;border-ra
    The 69 HTML/CSS layouts are untouched -- they are real DOM text, they
    reflow, and they were never the problem.
    --------------------------------------------------------------------------- */
-.diagram-box{
+/* 24 Aug 2026: the figure's chrome was rebuilt, matching what screenshots got
+   on 21 Aug. It arrived in three passes and the end state is what matters.
+
+   The padding is gone. A figure used to sit in a card with its own
+   background, border, radius and roughly 60px of padding, with the caption
+   fenced off by a second rule underneath it -- decoration competing with the
+   drawing, and a good part of the column spent on framing. Every figure now
+   gets the full column width.
+
+   The ground and a hairline edge stayed. Stripping the card outright dropped
+   the drawing onto --bg1, the page's grey, which read as a hole rather than
+   as a surface.
+
+   The edge is an OUTLINE, not a border, and that is the point of it: an
+   outline is painted outside the box model and takes part in no layout at
+   all, so the figure keeps every pixel. A 1px border would have quietly taken
+   2px of content width off each of the 131 figures. outline-offset:-1px pulls
+   it just inside the edge so it reads as a border, and it follows the radius.
+
+   And the chrome sits on the DRAWING, not on the box, so the caption stays
+   outside the frame exactly as .shot-title sits outside .shot-frame. On the
+   box it enclosed the caption too, which fenced a heading inside a panel and
+   read as a title bar rather than as a figure caption.
+
+   One consequence to know: 137 shapes across 43 sections fill with
+   var(--card), the same value this surface uses, so their interiors are
+   invisible and they read by their strokes alone. That is the long-standing
+   look; the alternative was the grey ground, and --bg2 resolves to the same
+   value in both themes, so there is no third option. */
+/* The figure hint. Scoped through .lcontent because `body.world-learning
+   .lcontent p` is (0,2,2) and a bare .fig-hint at (0,1,0) loses to it, which
+   is trap 7 and would have rendered this at body size. The media query sits
+   after the base rule for the same reason in its second form: equal
+   specificity, source order decides. */
+body.world-learning .lcontent p.fig-hint{display:none}
+@media(max-width:880px){
+  body.world-learning .lcontent p.fig-hint{
+    display:block;margin:0 0 var(--sp-xs);
+    font-size:var(--fs-micro);color:var(--text3);line-height:1.45;
+  }
+  body.world-learning .lcontent p.fig-hint[hidden]{display:none}
+}
+
+.diagram-box{margin:var(--sp-xl) 0}
+/* .diagram-frame is JS-inserted around every drawing, mirroring .shot-frame.
+   It takes the chrome and provides the positioning context the zoom control
+   needs.
+
+   Wrapping has a consequence that is easy to miss and cost a measurement to
+   find: it breaks every `.diagram-box > svg` and `.diagram-box:has(> svg)`
+   selector below, because the svg is no longer a direct child. Those rules
+   are CMP-12 -- the --diagram-min floor and the scroller that goes with it --
+   so the frame has to take that role over or the floor silently disappears.
+   Measured on M07 s5 at 1280px before this line existed: the figure rendered
+   at 614px rather than 700, scaling authored 11px text to 9.6px. The
+   .diagram-box rules below are kept as the no-JS fallback, where the svg is
+   still a direct child and they still apply. */
+.diagram-frame{position:relative;overflow-x:auto;overscroll-behavior-x:contain}
+.diagram-frame > svg{min-width:var(--diagram-min)}
+/* Set by the wrapper when the drawing is not an svg alone. One figure in the
+   corpus is mixed -- M02 s2 pairs an svg timeline with three HTML bars -- and
+   its labels rendered flush against the outline without this. */
+.diagram-frame-mixed{padding:var(--sp-sm)}
+/* The svg holds --diagram-min and the frame scrolls to it, but a block child
+   sizes to the frame's CONTENT box rather than to an overflowing sibling, so
+   the bars stopped 110px short of the timeline they annotate and the figure
+   came apart as soon as the reader scrolled. One figure scrolls as one thing. */
+.diagram-frame-mixed > div{min-width:var(--diagram-min)}
+.diagram-frame,
+.diagram-box > svg,
+.diagram-box > .diagram-content{
   background:var(--card);
-  border:1px solid var(--border);
   border-radius:4px;
-  padding:var(--sp-lg) var(--sp-md);
-  margin:var(--sp-xl) 0;
+  outline:1px solid var(--border);
+  outline-offset:-1px;
 }
 .diagram-title{font-weight:700;color:var(--text1);font-size:var(--fs-label)}
-body.world-learning .lcontent .diagram-title{
-  margin:0 0 var(--sp-md);
-  padding-bottom:var(--sp-xs);
-  border-bottom:1px solid var(--border);
-}
+body.world-learning .lcontent .diagram-title{margin:0 0 var(--sp-md)}
 /* margin:auto centres when there is room and does NOT clip when there is not,
    which justify-content:center does. */
 .diagram-content{display:flex;overflow-x:auto;overscroll-behavior-x:contain}
@@ -1099,6 +1240,52 @@ body.world-learning .lcontent .diagram-title{
 .diagram-box > svg,.diagram-content > svg{min-width:var(--diagram-min)}
 .diagram-box:has(> svg) > .diagram-title{position:sticky;left:0}
 
+/* Diagram zoom, on every drawing in the world. The control is
+   DESKTOP-INVISIBLE by default and switched on only inside the mobile query
+   below, because on a wide screen the figure fits and the scroll never has
+   to happen. */
+.diagram-zoom-btn{display:none}
+/* This query has to sit AFTER the display:none above, not up in the main 880
+   block, because the two rules carry identical specificity and source order
+   decides. Written the other way round it silently did nothing: trap 7's
+   second form, and it caught this change too. */
+@media(max-width:880px){
+  /* On a phone a zoomable figure FITS, and the button is what makes that
+     affordable. CMP-12 holds --diagram-min everywhere else because a figure
+     that cannot be read and cannot be enlarged is worse than one that
+     scrolls; once there is a way to open it at authored size, shrinking to
+     the column is the better trade. Horizontal scrolling inside a page is
+     awkward, easy to miss, and left roughly 390px of every figure silently
+     off-screen. The reader now sees the whole shape, and taps to read it. */
+  .diagram-box{overflow-x:hidden}
+  .diagram-frame{overflow-x:hidden}
+  .diagram-frame > svg{min-width:0;width:100%}
+  .diagram-frame-mixed > div{min-width:0}
+  /* Same corner, same size, same everything as .shot-zoom-btn. The control
+     used to sit in the caption row because .diagram-box is a scroller and an
+     absolutely positioned child scrolled away with the figure; wrapped in
+     .diagram-frame, which does not scroll on a phone, that constraint is gone
+     and the two components can finally agree. */
+  .diagram-zoom-btn{
+    position:absolute;top:8px;right:8px;
+    display:flex;align-items:center;justify-content:center;
+    width:30px;height:30px;padding:0;font-size:15px;line-height:1;
+    border:1px solid var(--border);border-radius:6px;
+    background:var(--card);color:var(--text2);cursor:pointer;
+  }
+  .diagram-zoom-btn[hidden]{display:none}
+  /* Code wraps rather than scrolling. Measured across all 502 code lines in
+     the learning world: 70% already fit a phone, 30% pass 45 characters and
+     the longest in the corpus is 85, so the worst case is two lines. Shrinking
+     the type would have penalised every line to rescue under a third of them,
+     and horizontal scrolling makes code awkward to select and copy. */
+  .code-block .code-body > pre{
+    white-space:pre-wrap;
+    overflow-wrap:break-word;
+    overflow-x:visible;
+  }
+}
+
 .author-quote{background:var(--accent-light);border-left:3px solid var(--accent);padding:16px 20px;margin:20px 0;border-radius:0 6px 6px 0}
 .author-quote p{font-size:14px;color:var(--text1);font-style:italic;margin:0}
 
@@ -1108,7 +1295,22 @@ body.world-learning .lcontent .diagram-title{
 .glossary-term{font-weight:600;color:var(--accent);margin-bottom:4px;font-size:var(--fs-sm)}
 .glossary-def{font-size:var(--fs-sm);color:var(--text1);line-height:1.6}
 
-.comparison-grid{display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap}
+/* The component carries its own card, so it looks the same wherever it is
+   used. It was three different things across six placements: bare on three
+   pages, wrapped in a .compare-card on one, and inside a .diagram-content
+   figure on two. Identical markup, three appearances, and the bare one read
+   as unfinished next to the others.
+
+   Tokens rather than fixed colours, which also puts the border on paper:
+   print forces --card and --border to their light values, so the card comes
+   through without a print rule of its own. */
+.comparison-grid{
+  display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap;
+  background:var(--card);border:1px solid var(--border);border-radius:8px;
+  padding:var(--sp-md);margin:var(--sp-lg) 0;
+}
+/* Inside a figure that already carries the chrome: one border, never two. */
+.diagram-content > .comparison-grid{background:none;border:0;padding:0;margin:0}
 .comp-item{background:var(--bg3);padding:16px 24px;border-radius:8px;text-align:center;min-width:150px}
 .comp-label{font-weight:600;color:var(--text1);margin-bottom:6px}
 .comp-desc{font-size:12px;color:var(--text3)}
@@ -1279,8 +1481,11 @@ body.world-learning .lcontent .diagram-title{
 }
 
 /* ITEM 10 — comparison as a framed white card, two darker panels inside */
-.section .compare-card{background:#ffffff;border:1px solid var(--border,#e2e8f0);border-radius:14px;padding:20px;box-shadow:0 1px 3px rgba(15,23,42,.06);margin:24px 0}
-.section .compare-card .comparison-grid{margin:0}
+/* .compare-card is gone. It was the wrapper that gave ONE of the six
+   comparison grids a card, and it hardcoded background:#ffffff, so in dark
+   mode that section carried a white slab with dark-backed options sitting on
+   it. The card now belongs to .comparison-grid itself, in tokens, which
+   removes both the inconsistency and the hardcoded colour. */
 
 /* soft callout (items 11,12) retained */
 .section .callout-soft{margin:18px 0;padding:12px 20px;text-align:center;border:1px dashed var(--accent,#ba2142);border-radius:10px;background:transparent;font-size:15px;font-weight:600;color:var(--accent2,#951833)}
@@ -1378,6 +1583,31 @@ body.world-learning .lcontent .diagram-title{
    phone, where panning is expected; height:auto keeps the ratio, and nothing
    here constrains height, so the overlay cannot distort either. */
 .shot-ov-scroll img{display:block;margin:0 auto;max-width:none;height:auto}
+/* The [hidden] guard is not optional once an author rule sets display on the
+   same element. `display:block` above is (0,1,1) and the UA's [hidden] rule is
+   (0,1,0), so the attribute loses and img.hidden = true silently does nothing.
+   Without this the srcless image sat above every expanded diagram showing its
+   alt text and a broken-image icon -- invisible in light mode, because alt
+   text paints in dark ink on the overlay's near-black ground, and obvious the
+   moment the theme flipped. */
+.shot-ov-scroll img[hidden]{display:none}
+/* The ground under a cloned diagram MUST follow the theme, and hardcoding
+   #fff here was a live bug. Every figure paints itself from --card, --text1
+   and the --dia-* tokens, so in dark mode the artwork resolves to its dark
+   palette; dropping that onto a fixed white card produced pale, washed-out
+   shapes that looked like a rendering fault. The overlay backdrop is
+   near-black in both themes, so the card carries a border to keep its edge
+   findable once it is dark-on-dark.
+
+   This is the same lesson as --code-chrome-ink, arrived at from the opposite
+   direction: there a token had to stop following the theme because its
+   surface was fixed, here a surface has to start following the theme because
+   its contents do. What matters is that ground and ink agree. */
+.shot-ov-svg{
+  margin:0 auto;width:max-content;border-radius:4px;padding:14px;
+  background:var(--card);border:1px solid var(--border);
+}
+.shot-ov-svg[hidden]{display:none}
 .shot-ov-close{position:fixed;top:12px;right:14px;z-index:2;width:38px;height:38px;padding:0;border:1px solid rgba(255,255,255,.28);border-radius:8px;background:rgba(15,23,42,.85);color:#fff;font-size:20px;line-height:1;cursor:pointer}
 .shot-ov-hint{position:fixed;top:20px;left:16px;z-index:2;color:rgba(255,255,255,.72);font-size:12px;font-weight:600}
 body.shot-ov-open{overflow:hidden}
@@ -1395,6 +1625,13 @@ body.shot-ov-open{overflow:hidden}
 @media print{
   .shot-zoom-btn{display:none !important}
   .shot-ov{display:none !important}
+  /* Screen-only affordances must not reach paper. The diagram control and the
+     expand hint both did: the hint had no print rule at all, and the diagram
+     button never got the line its screenshot counterpart above has had since
+     the shot-box work. A printed page was showing a floating magnifier and an
+     instruction to tap it. */
+  .diagram-zoom-btn{display:none !important}
+  .fig-hint{display:none !important}
   /* Keep a screenshot and its note on one page. This used to fight the
      on-screen height caps; there are none now, and paper reads the same true
      size the screen does, so a figure arrives here already the right shape
