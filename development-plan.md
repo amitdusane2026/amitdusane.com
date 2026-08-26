@@ -1040,3 +1040,201 @@ both inspected by Amit and judged acceptable.
 M15 Attribution 4, M16 Activity Map 4, M17 Data Feeds 4, M18 Data Warehouse 4,
 M19 SDR 6, M20 Testing & Debugging 5, M21 CJA 5. M15 §4 still needs its title
 coined. Launch target is **end of September**.
+
+---
+
+## M15 Attribution Models, 26 August 2026 — WRITTEN, §1 SIGNED OFF
+
+Four sections written from scratch. The module also produced the first real
+correction to how I write for this site since the M14 voice calibration, and one
+architectural ruling that closes a question I raised twice and got wrong twice.
+
+### The ruling that matters most: shape versus analyze
+
+I flagged M10 §4 Channel Attribution as duplicating M15, twice, and recommended
+trimming it. **Amit rejected that, and his reasoning is better than mine.**
+
+Marketing channels and attribution are not the same kind of thing, and the site's
+own category structure already says so. **Marketing channel rules shape the data.**
+They run at collection time and hardcode a channel value into the hit,
+permanently, which is why M10 sits in `/shape/`. **Attribution changes nothing.**
+It re-reads the same stored data every time the report runs and answers
+differently as you move the settings, which is why M15 sits in `/analyze/`.
+
+So attribution appearing in both modules is the architecture working, not drift.
+M10 needs a full attribution discussion because a marketing channels module is
+incomplete without one. A learner arriving at M15 later understands why it was
+raised there and is being treated properly here. Amit's phrase: let attribution
+sit in Marketing Channels as the junior brother.
+
+**This question is closed. Do not propose the trim again.** It looks like
+duplication to any mechanical check, and it is not.
+
+### Amit's larger claim about the module, which is the identity of M15
+
+His reading, and it is worth holding on to: **this is the first treatment he has
+seen that writes about attribution on its own rather than as a sub-topic of
+marketing channels.** Search the internet and attribution is always discussed as
+a channel feature. It is in fact a distinct concept in data analytics and it
+carries value by itself.
+
+The CJA design supports this more strongly than the claim itself does. **The two
+swap places in CJA.** In Adobe Analytics, marketing channels get a whole
+subsystem (Channel Manager, a rules engine, engagement periods, and the First and
+Last Touch Channel dimensions with frozen models) and attribution arrived later
+as a report-time toggle. In CJA there is no Channel Manager: marketing channels
+become a derived field, one of many, while attribution is promoted to a
+**component setting held on the metric in the data view**, so it applies wherever
+that metric is used. Attribution moved into the semantic model. Channels moved
+out of admin.
+
+Two details confirm it. CJA's attribution containers are Session, Person, and in
+B2B, Global Account, Accounts, Opportunity and Buying Group. Attributing credit
+to a buying group has nothing to do with media at all. And the CJA lookback
+reaches 13 months in B2B, against the hard 90 day ceiling in Analytics that M15
+§3 spends a heading working around.
+
+**One precision worth keeping.** Adobe *does* state the general framing, once:
+the attribution overview says a touch point can be any dimension, metric, channel
+or event. Then every tutorial, and the Attribution Panel documentation itself,
+demonstrates only the channel case. The fact is documented and never taught.
+That gap is what M15 exists to fill.
+
+**Consequence for M21.** CJA gets a natural spine from this: the things Analytics
+treats as fixed, including where attribution lives, are the things CJA moves.
+That is a better opening than defining what CJA is. §1 and §4 of M15 each carry a
+short forward-looking mention of CJA, deliberately unlinked because M21's
+sections have no `description` yet. **Add the links the day M21 ships.**
+
+### The language correction, and why my own checks passed while failing the reader
+
+The first draft was conceptually right and hard to read. Amit's diagnosis: it
+reads like a movie script, where the first pass does not land, the second does,
+and the third makes you admire the sentence construction. His test is the one
+already in `CLAUDE.md` and I was not applying it at sentence level: **you are
+sitting with a colleague who knows nothing about the topic, explaining it.**
+
+The sentence he picked out is the whole diagnosis:
+
+> Sitting immediately above the window in every one of the three places
+> attribution is configured is a control that can silently overrule it, and its
+> two options are not two flavours of the same thing.
+
+Subordinate clause in front, subject delayed to the end, a metaphor closing it.
+Everything to admire, nothing to understand on first read. It became:
+
+> Just above the lookback window there is a second setting called the container.
+> It has two options, Visit and Visitor, and picking the wrong one can cancel
+> your window without telling you.
+
+**The measurable failure, and it is a lesson about the verification itself.**
+`CLAUDE.md` says to measure paragraph medians against M13 §1. I did, and passed.
+Paragraph length was never the problem. Nothing in the check measured sentence
+difficulty, so the draft cleared every gate while being hard to read.
+
+| | Sentence median | Over 30 words |
+|---|---|---|
+| First draft | 23 to 25 words | 22 to 26% |
+| After rewrite | 12 to 15 words | 4 to 8% |
+| M13 §1 benchmark | 12 words | 10% |
+
+**Add sentence median to the voice check, not just paragraph median.** Target the
+low teens, and treat anything over about 34 words as needing a split.
+
+Amit also ruled against three things that had crept in and that the existing
+guidance arguably invites: **typical hook openers, dramatic one-sentence pauses,
+and cause-and-effect rhetorical chains.** Openers are now plain situations told
+the way you would tell a colleague, with no staging.
+
+### Diagrams carry labels. The prose does the explaining.
+
+Second correction, and it was a genuine misuse of the component. The figures had
+become a second place to write prose. One carried 24 text elements including full
+explanatory sentences under the drawing. **If a diagram has to be explained, the
+content does that work, not the diagram.** Labels, and at most one short line of
+takeaway.
+
+Text elements per section after the fix: 24 to 16, 38 to 25 across two figures,
+18 to 13, 15 to 11. Heights came down with them, 300 to 216 and 276 to 232, so
+the figures also stopped being things to scroll past. Amit rated the M15 §3
+lookback timeline the best figure on the site, and the fix did not touch what
+makes it work.
+
+### The closing-heading formula, found by Amit and only half fixed
+
+Every M15 section closed on "What you have now". He caught it as a pattern a
+clever learner would spot, and the count was worse than it looked: **18 sections
+in the corpus close on that phrase, and 12 of them are in the two modules I
+wrote.** M14 uses it on 9 of its 10 sections. M13 Segments, by contrast, never
+uses it once and names every closer after that section's own conclusion.
+
+`CLAUDE.md` offers "What you have now" as the first of three example phrasings.
+An example became a default. M15's four closers are now specific to their own
+content: "Credit is shared, not measured", "Three shapes, and two rules
+underneath them", "The window decides what exists", "Consistency beats a perfect
+model".
+
+**M14's nine are still there.** It is signed off, so it was left alone. If it is
+ever done, the fix is nine headings and touches no prose.
+
+Related, and left alone deliberately: all four walkthroughs open "Follow along:",
+as M14's nine do. That reads as furniture rather than a tic, the same as every
+`path-box` saying "Where to find it in Adobe Analytics". Flagged to Amit, no
+change requested.
+
+### Facts established against Experience League
+
+- **Report-time attribution ignores eVar allocation and expiration entirely.** It
+  rebuilds persistence from the raw hits across the lookback window. Verified in
+  two Adobe sources. The corollary nobody states: **a prop can be attributed**,
+  and gains a 90 day memory it never had at collection time.
+- **Attribution is unsupported on**: all calculated metrics, Unique Visitors,
+  Visits, Occurrences, Page Views, A4T metrics, Time Spent, Bounces, Bounce Rate,
+  Entries, Exits, Pages Not Found, Searches, Single Page Visits, Single Access.
+  Amit's field note is that every practitioner hits this wall and finds the
+  option missing. The reason is that a page view is not an achievement anybody
+  competed to cause, so there is no credit to divide. This is an unlearning and
+  it is now its own heading in §1.
+- **Calculated metrics being on that list catches people twice.** Attribution is
+  set on the metrics *inside* the definition, never on the finished calculated
+  metric, which also buries the model where no column reader can see it.
+- Two-touch-point journeys collapse the positional models: U-shaped to 50/50,
+  J-curve to 75/25. A single touch point takes 100% under every model. The
+  lookback ceiling is 90 days and Custom Time does not lift it.
+- **Days Before First Purchase** and **Time Prior to Event** are the two
+  dimensions that turn the lookback window from an opinion into a measurement.
+
+### STILL OPEN: M03 §2 eVars contradicts M15 §1
+
+`foundations/variables/02-evars-conversion-variables.html` closes by arguing that
+report-time attribution can overrule allocation but never expiration, and advises
+spending the design argument on expiration. **That is wrong for the Workspace
+case it is describing**, per the finding above. It remains correct for classic
+reports, feeds and warehouse extracts.
+
+M15 §1 links to that page for where the settings live, so **a reader following
+the link is currently contradicted.** It needs one paragraph rewritten. Amit has
+not ruled on it; it is signed-off content and was not touched.
+
+### A component fact nobody had discovered
+
+`.pro-tip`, `.info-box` and `.warn-box` are **single-paragraph components**. Their
+paragraphs are set to `margin:0` in the stylesheet, so a second `<p>` renders
+butted against the first with a zero pixel gap. A scan of all 117 sections
+confirms none has ever held more than one. `.path-box` is the exception at
+`5px`. Put continuation prose after the box, in normal flow.
+
+### Where the module stands
+
+§1 read end to end by Amit and **signed off**. §2, §3 and §4 written and verified
+but not yet read by him. Six screenshot placeholders carry full briefs and are
+mirrored into `screenshot-briefs.md` as shots 33 to 38.
+
+Verified throughout: 219 pages, div balanced, zero dashes, zero first person,
+zero contractions, all internal and Adobe links resolving, no horizontal overflow
+at 375px in either theme, every diagram colour at 5.71:1 or better in dark, all
+30 spine labels rendering whole with no `data-nav` overrides needed.
+
+**28 sections remain unwritten**: M16 Activity Map 4, M17 Data Feeds 4,
+M18 Data Warehouse 4, M19 SDR 6, M20 Testing and Debugging 5, M21 CJA 5.
+Launch target is still **end of September**.

@@ -2,11 +2,263 @@
 slug: "attribution-models-compared"
 title: "Attribution Models Compared"
 seotitle: "Adobe Analytics Attribution Models Compared"
-published: 2026-07-18
-lastmod: 2026-07-18
+published: 2026-08-25
+lastmod: 2026-08-25
+description: "Eleven models, but only three shapes underneath them. The exact split each one uses, and the two rules that cancel your choice on most rows."
 type: lesson
 modulenum: 15
 sectionnum: 2
 weight: 2
 ---
-<p>This section is not yet written.</p>
+<p>An agency emails to ask why their channel is down 40% in the report you sent on Friday. Their spend has not changed.</p>
+
+<p>You check the date range. Same. The report suite. Same. The segment. Same. The data has not been reprocessed, because the quarter closed three weeks ago. Eventually you find the difference: Friday's version was rebuilt by a colleague who left the attribution model on the default, and the earlier one was on first touch. The agency's performance did not move at all. A drop-down created and destroyed 40% of their apparent contribution.</p>
+
+<p>This happens because Adobe gives you eleven rules for splitting the same number, and most companies have never agreed which one they use. Knowing what each rule does is how you have that conversation properly.</p>
+
+<h3 class="subsec-title">Eleven models, but only three shapes</h3>
+<p>The list of models is long enough to look like eleven slightly different flavours, and it is hard to hold in your head that way. It gets much easier once you see that they are really three shapes.</p>
+
+<p>The first shape gives the whole sale to one touch point and nothing to the others. Last touch, first touch and same touch all do this. They differ only in which touch point they pick.</p>
+
+<p>The second shape takes one sale and cuts it into pieces that add back up to one sale. Linear cuts evenly. U-shaped and the two J curves cut by position. Time decay cuts by how recent each touch was. Custom cuts by weights you type in.</p>
+
+<p>The third shape does not cut anything. Participation gives the whole sale to every touch point that appeared. Five channels in one journey produce five whole sales in the report. The column is not a share of anything.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">Three shapes, and the third one is not a split at all</div>
+    <svg viewBox="0 0 700 190" style="width:100%;height:auto;display:block" role="img"
+         aria-label="Three panels, each showing one sale split among three channels. Winner takes all gives the whole bar to one channel. Shared by position cuts the single bar into three pieces that add up to one sale. Everyone gets all of it draws three full length bars, one per channel, adding up to three hundred per cent.">
+      <text x="20" y="24" style="fill:var(--text1,#0f172a);font-size:14px;font-weight:700">Winner takes all</text>
+      <text x="20" y="42" style="fill:var(--text3,#5d6b7e);font-size:11px">last, first, same touch</text>
+      <rect x="20" y="56" width="200" height="22" rx="3" style="fill:var(--dia-b,#2563eb)"/>
+      <text x="20" y="98" style="fill:var(--text2,#475569);font-size:11px">one channel takes 100%</text>
+      <text x="20" y="120" style="fill:var(--success-ink,#0a6e50);font-size:11px;font-weight:600">Adds up to one sale</text>
+
+      <line x1="240" y1="50" x2="240" y2="140" style="stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
+
+      <text x="262" y="24" style="fill:var(--text1,#0f172a);font-size:14px;font-weight:700">Shared by position</text>
+      <text x="262" y="42" style="fill:var(--text3,#5d6b7e);font-size:11px">linear, U, J, inverse J, time decay, custom</text>
+      <rect x="262" y="56" width="200" height="22" rx="3" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
+      <rect x="262" y="56" width="80" height="22" style="fill:var(--dia-b,#2563eb)"/>
+      <rect x="342" y="56" width="40" height="22" style="fill:var(--dia-c,#10b981)"/>
+      <rect x="382" y="56" width="80" height="22" rx="3" style="fill:var(--dia-e,#7c3aed)"/>
+      <text x="262" y="98" style="fill:var(--text2,#475569);font-size:11px">40% / 20% / 40%</text>
+      <text x="262" y="120" style="fill:var(--success-ink,#0a6e50);font-size:11px;font-weight:600">Adds up to one sale</text>
+
+      <line x1="482" y1="50" x2="482" y2="140" style="stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
+
+      <text x="504" y="24" style="fill:var(--text1,#0f172a);font-size:14px;font-weight:700">Everyone gets all of it</text>
+      <text x="504" y="42" style="fill:var(--warning-ink,#8a5700);font-size:11px">participation</text>
+      <rect x="504" y="56" width="176" height="16" rx="3" style="fill:var(--dia-b,#2563eb)"/>
+      <rect x="504" y="76" width="176" height="16" rx="3" style="fill:var(--dia-c,#10b981)"/>
+      <rect x="504" y="96" width="176" height="16" rx="3" style="fill:var(--dia-e,#7c3aed)"/>
+      <text x="504" y="120" style="fill:var(--warning-ink,#8a5700);font-size:11px;font-weight:600">Adds up to three sales</text>
+
+      <line x1="20" y1="156" x2="680" y2="156" style="stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
+      <text x="20" y="180" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">Only the first two shapes can be added up.</text>
+    </svg>
+</div>
+
+<p>Remembering the three shapes is worth more than memorising eleven names, because the shape decides whether a model can answer your question.</p>
+
+<p>If the number will be used to split a budget, you need a shape whose pieces add up to one sale, or your percentages will not add up to 100 either. If you want to know which channels a buyer saw at any point, you need the third shape. The other two will give you a confident answer to a question you did not ask.</p>
+
+<h3 class="subsec-title">Every model and the exact split it uses</h3>
+<p>With the shapes in place, the full list is something to look up rather than learn. The splits below are exact. The third column is the question each model is really built for, which is usually narrower than how people use it.</p>
+
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>Model</th><th>The split, exactly</th><th>The question it answers</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Last Touch</strong></td><td>100% to the most recent touch point. This is the default when no model is chosen.</td><td>What was in front of them when they bought?</td></tr>
+            <tr><td><strong>First Touch</strong></td><td>100% to the earliest touch point inside the window.</td><td>What brought them in?</td></tr>
+            <tr><td><strong>Same Touch</strong></td><td>100% only if the touch point is on the same hit as the sale. Otherwise nothing gets credit.</td><td>What converted them on the spot?</td></tr>
+            <tr><td><strong>Linear</strong></td><td>Equal shares to every touch point.</td><td>Who was involved, and how often?</td></tr>
+            <tr><td><strong>Participation</strong></td><td>100% to every touch point. Repeats are counted once. Totals are meant to exceed the real sales count.</td><td>Which channels appeared at all?</td></tr>
+            <tr><td><strong>U-Shaped</strong></td><td>40% first, 40% last, the other 20% shared by the middle.</td><td>Who found them and who closed them?</td></tr>
+            <tr><td><strong>J-Curve</strong></td><td>60% last, 20% first, the other 20% shared by the middle.</td><td>Same, but closing counts for more.</td></tr>
+            <tr><td><strong>Inverse J</strong></td><td>60% first, 20% last, the other 20% shared by the middle.</td><td>Same, but finding counts for more.</td></tr>
+            <tr><td><strong>Time Decay</strong></td><td>Older touches count for less, on a curve. You set the half-life. Default is 7 days.</td><td>How fast should a touch fade as it ages?</td></tr>
+            <tr><td><strong>Custom</strong></td><td>Weights you choose for first, middle and last. Adobe scales them to 100% whatever you type.</td><td>What does this business actually believe?</td></tr>
+            <tr><td><strong>Algorithmic</strong></td><td>Worked out from the data instead of by a fixed rule, using the Harsanyi Dividend. Adds up to 100%.</td><td>What does the data suggest on its own?</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<p>Two of those are worth a second look. Same touch seems pointless until you need it. It is the only model that refuses to credit a journey, so it is the honest choice for impulse purchases. It also tells you how much of your volume involved no earlier touch at all.</p>
+
+<p>Custom is not an escape hatch for people who dislike the other ten. It is how you write down a belief the business already holds. If your marketing director thinks the opener is worth roughly twice the closer, custom is where that goes.</p>
+
+<h3 class="subsec-title">Two rules that cancel the model you picked</h3>
+<p>This changes how you read every attributed report, and it is barely mentioned anywhere.</p>
+
+<p>A model only has work to do when there is more than one touch point to split between. If a sale has one touch point inside the window, that touch point gets 100% of it and your model makes no difference at all. First touch, last touch, U-shaped, algorithmic: same answer every time.</p>
+
+<p>If a sale has two touch points, the position-based models have no middle to give the middle share to, so they fall back to simpler splits. U-shaped becomes 50 and 50. J-curve becomes 75 to the last and 25 to the first. Inverse J is the same the other way round.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">Your model does nothing on one touch point and something simpler on two</div>
+    <svg viewBox="0 0 700 200" style="width:100%;height:auto;display:block" role="img"
+         aria-label="Three columns showing how the U-shaped model behaves as touch points increase. With one touch point it gives one hundred per cent and every model matches. With two it falls back to fifty and fifty. With three or more the intended forty, twenty, forty split appears.">
+      <text x="20" y="24" style="fill:var(--text1,#0f172a);font-size:14px;font-weight:700">One touch point</text>
+      <rect x="20" y="42" width="200" height="24" rx="3" style="fill:var(--dia-b,#2563eb)"/>
+      <text x="120" y="84" text-anchor="middle" style="fill:var(--dia-b-ink,#1d4ed8);font-size:12.5px;font-weight:700">100%</text>
+      <text x="20" y="110" style="fill:var(--danger-ink,#a4161a);font-size:11px;font-weight:600">Your choice is ignored</text>
+
+      <line x1="240" y1="36" x2="240" y2="130" style="stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
+
+      <text x="262" y="24" style="fill:var(--text1,#0f172a);font-size:14px;font-weight:700">Two touch points</text>
+      <rect x="262" y="42" width="98" height="24" rx="3" style="fill:var(--dia-b,#2563eb)"/>
+      <rect x="364" y="42" width="98" height="24" rx="3" style="fill:var(--dia-e,#7c3aed)"/>
+      <text x="311" y="84" text-anchor="middle" style="fill:var(--dia-b-ink,#1d4ed8);font-size:12.5px;font-weight:700">50%</text>
+      <text x="413" y="84" text-anchor="middle" style="fill:var(--dia-e-ink,#5b21b6);font-size:12.5px;font-weight:700">50%</text>
+      <text x="262" y="110" style="fill:var(--text2,#475569);font-size:11px">U-shaped falls back. No middle to pay</text>
+
+      <line x1="482" y1="36" x2="482" y2="130" style="stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
+
+      <text x="504" y="24" style="fill:var(--text1,#0f172a);font-size:14px;font-weight:700">Three or more</text>
+      <rect x="504" y="42" width="70" height="24" rx="3" style="fill:var(--dia-b,#2563eb)"/>
+      <rect x="576" y="42" width="32" height="24" style="fill:var(--dia-c,#10b981)"/>
+      <rect x="610" y="42" width="70" height="24" rx="3" style="fill:var(--dia-e,#7c3aed)"/>
+      <text x="539" y="84" text-anchor="middle" style="fill:var(--dia-b-ink,#1d4ed8);font-size:12.5px;font-weight:700">40%</text>
+      <text x="592" y="84" text-anchor="middle" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px;font-weight:700">20%</text>
+      <text x="645" y="84" text-anchor="middle" style="fill:var(--dia-e-ink,#5b21b6);font-size:12.5px;font-weight:700">40%</text>
+      <text x="504" y="110" style="fill:var(--success-ink,#0a6e50);font-size:11px;font-weight:600">Now your model applies</text>
+
+      <line x1="20" y1="150" x2="680" y2="150" style="stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
+      <text x="20" y="174" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">Most rows in a real report sit in the first column.</text>
+    </svg>
+</div>
+
+<p>Now think about what that means in a real report. Most dimensions have a long tail of rows with a handful of sales each, and many of those sales had a single touch point. So on a large share of the rows in front of you, the model named in the column header is doing nothing, and the number would be the same under any of the eleven. The movement you see when you switch models comes almost entirely from the top few rows, where journeys are long enough for the split to matter.</p>
+
+<div class="pro-tip">
+    <div class="pro-tip-hdr"><span class="tip-ico"></span>If two models agree, check your journey length before celebrating</div>
+    <p>Somebody builds a first touch and a last touch column, sees almost no difference, and decides attribution does not matter for this business. Usually they have found something else: most sales in that report have one touch point inside the window. That is worth knowing, but it is a fact about journey length or about a window set too short, not a fact about models. Widen the window and run the comparison again. If the columns separate, the old window was hiding the journey. If they still agree at 90 days, your customers really do buy on a single touch, and the marketing team should hear that.</p>
+</div>
+
+<h3 class="subsec-title">Participation asks a different question</h3>
+<p>Participation sits in the same drop-down as the others and behaves nothing like them. That mismatch breaks more reports than the rest of the list put together.</p>
+
+<p>Under every other model, one sale produces one sale's worth of credit spread across the table. Under participation, one sale produces as many sales' worth of credit as there were touch points, because each one gets the whole thing. A journey through four channels adds four orders to a report describing one real order.</p>
+
+<p>That is not a bug to work around. It is the definition. Participation answers "which channels appeared in journeys that ended in a sale", not "who deserves the credit", and no other model can answer it.</p>
+
+<div class="warn-box">
+    <div class="warn-hdr"><span class="warn-ico"></span>Never divide by a participation metric</div>
+    <p>Participation totals are bigger than your real sales count, so any calculated metric using one as a denominator gives you a rate that is quietly wrong. Use one as a numerator against a normal denominator and you can get a conversion rate above 100%. Nothing warns you. The metric builds, the column renders, and the percentage sits there looking like a percentage. The same goes for putting a participation number on a slide next to a revenue total, where the two look comparable and are not. Use participation for ranking and overlap, and keep it out of every ratio.</p>
+</div>
+
+<h3 class="subsec-title">Time decay and custom need a number from you</h3>
+<p>Two models ask you to supply a number, and almost nobody changes either default.</p>
+
+<p>Time decay gives more credit to recent touches and less to older ones, then scales the result so the pieces still add up to one sale. How fast the credit drops off is set by the half-life, which is the time it takes for a touch to be worth half as much. Adobe ships it at 7 days.</p>
+
+<p>Seven days is not right for any particular business. If your customers decide in an afternoon, a 7 day half-life treats a three day old touch as almost fresh, so the model is not really punishing age at all. If your customers take two months, anything older than a fortnight is worth almost nothing, so the closing channels take everything and you get last touch in disguise. Set the half-life from your real buying cycle, which is measured in <a href="/adobe-analytics-learning/analyze/attribution-models/lookback-windows/">Lookback Windows</a>.</p>
+
+<p>Custom lets you type the weights for first, middle and last yourself, and the numbers do not have to add up to anything. Type 5, 1 and 4 and Adobe turns that into 50%, 10% and 40%. So you can hold the conversation in whatever units the business thinks in, including a plain ratio like "the opener is worth about twice the closer", and convert afterwards.</p>
+
+<h3 class="subsec-title">Algorithmic, and when not to use it</h3>
+<p>Algorithmic is the only model that does not impose a shape. Instead of applying a fixed rule, it works out each touch point's contribution from the journeys in your data, using something called the Harsanyi Dividend.</p>
+
+<p>That comes from game theory, and it is a general version of the Shapley value, which won Lloyd Shapley a Nobel Prize in economics. The problem it was built for is this one: several people work together to produce a result, they contribute different amounts, and the reward has to be divided in a way everyone accepts. Attribution turns out to be a version of a problem economists had already spent decades on, which tells you it is genuinely hard rather than a matter of taste.</p>
+
+<p>It is the strongest model in the list and it is still not the safe default. Three reasons, all easy to check first.</p>
+
+<p>It only differs from the other models when journeys have several touch points, so on a report full of single touch sales it agrees with everything else. It cannot run against summary-level data sources, because those have no visitor ID and therefore no journey. And its output cannot be explained by quoting a rule. When a stakeholder asks why their channel moved, the honest answer is that the data implied it, which is a hard thing to defend in a meeting.</p>
+
+<h3 class="subsec-title">Compare two models and read the gap</h3>
+<p>When people meet eleven models, they usually try to work out which one is right, adopt it, and stop thinking about the rest. It is more useful to treat any single model as one view and to read the gap between two of them as the result.</p>
+
+<p>A channel with far more first touch orders than last touch orders is an opener. Its job is finding people who did not know you, and judging it on closing will get it cut. A channel with far more last touch than first touch is a closer, which is what email and retargeting nearly always turn out to be. Asking it to prove it acquires customers will get it cut just as unfairly.</p>
+
+<p>Neither of those facts shows up in one column. Both are obvious the moment the two sit side by side.</p>
+
+<p>The same trick works elsewhere. Participation against linear separates channels that turn up everywhere from channels that turn up rarely and matter when they do. A short window against a long one separates fast sales from slow ones. In each case the useful number is the difference, and a report showing only one model has thrown that away.</p>
+
+<h3 class="subsec-title">Follow along: build the comparison</h3>
+<p>Adobe has a panel that does the whole comparison for you, and most people who use attribution every day have never opened it. Both approaches are worth knowing: the panel for exploring, the table for the report you actually send out.</p>
+
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>Several models at once, then one table you can hand over</span></div>
+    <ol class="dothis-steps">
+        <li class="ds-group">Part one, explore with the panel</li>
+        <li>
+            <span class="ds-do">In a Workspace project, drag <code>Panels</code> <span class="ds-sep">&rsaquo;</span> <code>Attribution</code> onto an empty area.</span>
+        </li>
+        <li>
+            <span class="ds-do">Drop in a success metric and a dimension. <code>Orders</code> and <code>Marketing Channel</code> will do.</span>
+            <span class="ds-see">Any dimension works here. Internal search term or product category will be more interesting.</span>
+        </li>
+        <li>
+            <span class="ds-do">Pick three models rather than one: <code>First Touch</code>, <code>Last Touch</code> and <code>Participation</code>. Set the container to <code>Visitor</code> and the window to <code>90 days</code>, then <code>Build</code>.</span>
+            <span class="ds-see">Three is the useful number. Two shows you a gap. Three shows whether the gap is about position or about presence.</span>
+        </li>
+        <li>
+            <span class="ds-do">Look at the overlap diagram before the bar chart.</span>
+            <span class="ds-see">It shows which channels appear together in the same journeys. No ranked list can tell you that.</span>
+        </li>
+        <li class="ds-group">Part two, keep what you found</li>
+        <li>
+            <span class="ds-do">Build a plain freeform table underneath, with the same dimension in rows and the metric in columns, duplicated twice.</span>
+        </li>
+        <li>
+            <span class="ds-do">Set the three columns to first touch, last touch and participation, using the same window, and rename each header to carry its model.</span>
+            <span class="ds-see">The panel is for you. This table is for whoever opens the project next.</span>
+        </li>
+        <li>
+            <span class="ds-do">Add a fourth column as a calculated metric: first touch orders minus last touch orders.</span>
+            <span class="ds-see">Positive rows are openers, negative rows are closers. This column usually settles more arguments than the rest of the table.</span>
+        </li>
+    </ol>
+    <p class="dothis-end">There is nothing else to set up. The panel builds its own charts and cannot be edited afterwards, so treat it as a place to explore and rebuild it when you want something different. The table beside it is the version that lasts.</p>
+</div>
+
+<div class="shot-box shot-pending">
+    <div class="shot-title">The same channels ranked three different ways</div>
+    <div class="shot-frame">
+        <p class="shot-brief">FILE     adobe-analytics-attribution-panel-model-comparison.webp
+SCREEN   Analysis Workspace &gt; Attribution panel, after Build
+STATE    A built Attribution panel with three models selected (first touch, last touch, participation), showing the comparison bar chart and the table beneath it, where the same rows carry clearly different values per model.
+INCLUDE  The model names as labels, and at least four dimension rows where the ranking differs between models. The participation column visibly totalling more, if it is in frame.
+EXCLUDE  Client channel names. The training account's own channel names are fine.
+WHY      The section argues that the gap between models is the finding. That is unconvincing in prose and obvious in a picture of one screen carrying three different values for the same rows.</p>
+    </div>
+</div>
+
+<div class="shot-box shot-pending">
+    <div class="shot-title">Which channels turned up in the same journeys</div>
+    <div class="shot-frame">
+        <p class="shot-brief">FILE     adobe-analytics-attribution-overlap-diagram.webp
+SCREEN   Analysis Workspace &gt; Attribution panel &gt; Overlap diagram
+STATE    The Venn-style overlap diagram from a built Attribution panel, showing three top dimension items and where they intersect.
+INCLUDE  All three circles and the labelled intersections, with the item names readable.
+EXCLUDE  Panel chrome beyond what is needed to show this sits inside the panel.
+WHY      Overlap answers a question no ranked table can, and readers are unlikely to have seen it, because it only exists inside this panel.</p>
+    </div>
+</div>
+
+<h3 class="subsec-title">Three shapes, and two rules underneath them</h3>
+<p>Eleven models come down to three shapes. One gives the sale to a single touch point. One cuts the sale into pieces that add back up to one. Participation gives the whole sale to everybody, so it is not a split at all and must never go into a ratio.</p>
+
+<p>Within the cutting shape the differences are about position. Two models ask you for a number, and the 7 day half-life on time decay is the one most worth changing. Algorithmic works the split out from your data instead of imposing it, which makes it the most defensible and the hardest to explain.</p>
+
+<p>Underneath all of them are two rules that decide more of your report than the model does. One touch point takes everything whatever you picked, and two touch points fall back to simpler splits. So if a comparison shows almost no movement, that is usually telling you how long your journeys are, and a different model will not fix it.</p>
+
+<p>Which leaves the setting that has been deciding what counts as a touch point in every example here. A sale can only be split among the touch points the model can see, and how far back it may look is a separate choice from the model. Get it wrong and a well chosen model reports on a journey it can barely see. <a href="/adobe-analytics-learning/analyze/attribution-models/lookback-windows/">Lookback Windows</a> covers what the window does, why it is not the same as your report's date range, and how to measure the right one.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Analytics</div>
+    <p>Analytics &gt; <span class="path">Workspace</span>. The full model list appears in three places: <span class="path">Column settings</span> on a metric column in a freeform table, the metric settings inside the calculated metric builder, and the <span class="path">Attribution</span> panel, which is the only one that shows several models at once.</p>
+    <p>Add the Attribution panel from the <span class="path">Panels</span> icon in the left rail. Its charts are generated when you press <span class="path">Build</span> and cannot be changed afterwards, so rebuild rather than edit.</p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/analyze/analysis-workspace/attribution/models" target="_blank">Adobe Docs: Attribution Models and Settings</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/analyze/analysis-workspace/attribution/algorithmic" target="_blank">Adobe Docs: Algorithmic Attribution</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/analyze/analysis-workspace/panels/attribution" target="_blank">Adobe Docs: The Attribution Panel</a></li>
+    </ul>
+</div>

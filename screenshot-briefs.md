@@ -172,3 +172,36 @@ needed rather than work around it.
 **The bolded rows are the ones that carry the most weight.** If capture time runs short, those
 eight are the ones to do first: each of them shows a control the section spends a whole heading
 arguing about, and which is nearly invisible in the interface.
+
+---
+
+## M15 Attribution Models — briefed 25 Aug 2026, 6 shots, none captured
+
+Six placeholders sit in the content as `shot-box shot-pending` blocks, each carrying its own
+brief. Every one of them needs a report suite with a conversion metric and a multi-touch
+dimension; the Adobe training account should cover all six with no additional entitlement, since
+attribution is a Workspace feature rather than a licensed add-on.
+
+**Two of the six are the ones that matter.** Shot 33 is the only screen in the module that shows
+the three controls together, and a reader cannot act on any of these four sections until they
+have found it. Shot 34 is the evidence for the module's central claim, that the disagreement
+between models is the finding, which is unconvincing in prose and immediate in a picture.
+
+| # | Section | File | Screen |
+|---|---|---|---|
+| 33 | M15 §1 What Is Attribution | `adobe-analytics-attribution-column-settings` | **Column settings: model, container, window** |
+| 34 | M15 §2 Models Compared | `adobe-analytics-attribution-panel-model-comparison` | **Attribution panel, three models at once** |
+| 35 | M15 §2 Models Compared | `adobe-analytics-attribution-overlap-diagram` | The overlap Venn from the panel |
+| 36 | M15 §3 Lookback Windows | `adobe-analytics-attribution-none-row` | A large None row beside real channels |
+| 37 | M15 §3 Lookback Windows | `adobe-analytics-attribution-lookback-window-options` | The window drop-down, open, with the container above it |
+| 38 | M15 §4 Choosing a Model | `adobe-analytics-calculated-metric-attribution-settings` | A metric named for its own model |
+
+**Setup needed before capture day.** Shots 34 and 35 need a report suite where journeys actually
+contain several touch points, or the panel builds and shows almost nothing; the training account
+should be checked for this before the session rather than during it. Shot 36 needs a dimension
+and window combination that produces a visibly large None row, which is easiest to force by
+setting a deliberately short lookback.
+
+**Naming note.** All six lead with `adobe-analytics-attribution-` except 38, which leads with the
+component it shows. Attribution is the search term in five of them and the calculated metric
+builder is the search term in the sixth.

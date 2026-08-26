@@ -2,11 +2,208 @@
 slug: "lookback-windows"
 title: "Lookback Windows"
 seotitle: "Attribution Lookback Windows in Adobe Analytics"
-published: 2026-07-18
-lastmod: 2026-07-18
+published: 2026-08-25
+lastmod: 2026-08-25
+description: "The window decides which touch points exist at all. Why it is not your report's date range, what the None row means, and how to measure the right one."
 type: lesson
 modulenum: 15
 sectionnum: 3
 weight: 3
 ---
-<p>This section is not yet written.</p>
+<p>A subscription business runs its first attribution report in January. Paid social comes out badly. It sits below organic search, below email and below Direct, bringing in about 4% of new subscriptions while taking about 20% of the budget. Two people rebuild the report and get the same answer.</p>
+
+<p>Paid social is cut in February. Nobody objects, because the number was clear and had been checked twice.</p>
+
+<p>By April new subscriptions are down 11%, and the drop is among people who had never visited the site before. The channel that was contributing nothing had been bringing in the top of the funnel all along.</p>
+
+<p>The report was not wrong about what it measured. It was set to a 30 day lookback window, and the typical subscriber in that business took 68 days from first visit to paying. For most of those journeys the paid social click happened before the window opened, so the model never saw it. A touch point the model cannot see does not exist.</p>
+
+<h3 class="subsec-title">The window is not your report's date range</h3>
+<p>Most people meet the lookback window and assume it filters the report, as if it means "only count recent touches". It is closer to the opposite. The window lets attribution reach backwards, outside your report's date range, to find touch points the report is not otherwise showing you.</p>
+
+<p>Take a report covering January. Someone subscribes on 5 January, so that sale is inside your date range and counts once in your total. With a 30 day window, the model then walks back from that sale to 6 December and collects every hit where your dimension had a value. Most of what it finds happened in December.</p>
+
+<p>Those December touch points get credit inside a report headed January, even though December is not in your date range. A normal report of the same period would never mention them. So the date range decides which sales are counted, and the window decides how far back the credit for those sales can travel.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">The date range picks the sales. The window decides how far back their credit reaches.</div>
+    <svg viewBox="0 0 700 232" style="width:100%;height:auto;display:block" role="img"
+         aria-label="A timeline from November to the end of January. The report date range covers January and is shaded. A purchase sits on 5 January. A thirty day lookback window is drawn as a bracket running back from that purchase to 6 December. Three touch points sit inside the bracket, two of them in December. An earlier touch on 20 November sits outside the bracket and is marked as not seen.">
+      <defs>
+        <marker id="m15s3tip" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" style="fill:var(--dia-d,#f59e0b)"/></marker>
+      </defs>
+
+      <rect x="400" y="70" width="280" height="76" rx="4" style="fill:var(--dia-a-soft,rgba(186,33,66,.10));stroke:var(--dia-a,#ba2142);stroke-width:1.4"/>
+      <text x="540" y="62" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:12.5px;font-weight:600">Report date range: January</text>
+
+      <line x1="30" y1="120" x2="680" y2="120" style="stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+
+      <text x="40" y="164" style="fill:var(--text3,#5d6b7e);font-size:11px">20 Nov</text>
+      <text x="196" y="164" style="fill:var(--text3,#5d6b7e);font-size:11px">6 Dec</text>
+      <text x="300" y="164" style="fill:var(--text3,#5d6b7e);font-size:11px">14 Dec</text>
+      <text x="404" y="164" style="fill:var(--text3,#5d6b7e);font-size:11px">1 Jan</text>
+      <text x="452" y="164" style="fill:var(--text3,#5d6b7e);font-size:11px">5 Jan</text>
+
+      <circle cx="52" cy="120" r="7" style="fill:none;stroke:var(--text3,#5d6b7e);stroke-width:1.6;stroke-dasharray:3 2"/>
+      <circle cx="212" cy="120" r="7" style="fill:var(--dia-b,#2563eb)"/>
+      <circle cx="312" cy="120" r="7" style="fill:var(--dia-c,#10b981)"/>
+      <circle cx="416" cy="120" r="7" style="fill:var(--dia-e,#7c3aed)"/>
+      <rect x="452" y="107" width="26" height="26" rx="4" style="fill:var(--dia-a,#ba2142)"/>
+
+      <text x="52" y="100" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">Social</text>
+      <text x="212" y="100" text-anchor="middle" style="fill:var(--dia-b-ink,#1d4ed8);font-size:11px">Paid</text>
+      <text x="312" y="100" text-anchor="middle" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px">Email</text>
+      <text x="416" y="100" text-anchor="middle" style="fill:var(--dia-e-ink,#5b21b6);font-size:11px">Organic</text>
+      <text x="465" y="100" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:11px;font-weight:600">buys</text>
+
+      <text x="52" y="184" text-anchor="middle" style="fill:var(--danger-ink,#a4161a);font-size:11px;font-weight:600">not seen</text>
+
+      <line x1="465" y1="196" x2="212" y2="196" style="stroke:var(--dia-d,#f59e0b);stroke-width:1.6" marker-end="url(#m15s3tip)"/>
+      <line x1="465" y1="188" x2="465" y2="204" style="stroke:var(--dia-d,#f59e0b);stroke-width:1.6"/>
+      <line x1="212" y1="188" x2="212" y2="204" style="stroke:var(--dia-d,#f59e0b);stroke-width:1.6"/>
+      <text x="338" y="222" text-anchor="middle" style="fill:var(--dia-d-ink,#8a5700);font-size:12.5px;font-weight:600">30 day lookback window</text>
+    </svg>
+</div>
+
+<p>The 20 November touch in that picture is not counted as small, and it is not flagged as missing. It is simply absent, and every share in that row is worked out as though it never happened. Widen the window to 60 days and it comes back, changing all the numbers without any data changing.</p>
+
+<p>The same thing happens in the other direction. A touch point that comes after the sale gets nothing, because credit only ever flows backwards. So a channel that ran a big campaign in the last week of January will look weak in a January report if most January sales happened before the campaign started. It will then appear to work in February. That is not a delay in the data.</p>
+
+<h3 class="subsec-title">The container can cancel your window</h3>
+<p>Just above the lookback window there is a second setting called the container. It has two options, Visit and Visitor, and picking the wrong one can cancel your window without telling you.</p>
+
+<p>Visitor means the model can look across all of that person's visits. This is what you want for most attribution questions, because a journey that runs over several weeks runs over several visits by definition.</p>
+
+<p>Visit means the model only looks inside the single visit where the sale happened. Credit is shared among touch points from that one session and nothing else. That is a fair question to ask, but it is a much narrower one.</p>
+
+<p>Here is the part that catches people. If you choose Visit, Adobe locks the lookback window to your reporting window, and the 90 days you carefully set stops doing anything. No warning appears. The report looks normal. A setting that reads "U-shaped, Visit, 90 days" looks deliberate, and the 90 days in it is doing nothing at all.</p>
+
+<div class="warn-box">
+    <div class="warn-hdr"><span class="warn-ico"></span>Visit plus a long window is the most common wasted setting in attribution</div>
+    <p>If you want multi-touch attribution over a real buying journey, the container has to be Visitor. When you inherit somebody else's project, check the container before you check the model. A Visit-scoped report looks plausible, disagrees with the Visitor version of itself, and keeps the window setting on screen as evidence that somebody thought about it. The giveaway is that first touch and last touch give you nearly the same numbers, because inside one visit most sales have very few touch points.</p>
+</div>
+
+<h3 class="subsec-title">The None row tells you if the window is too short</h3>
+<p>Every attributed report has a row called None, and most people filter it out before presenting. It is the most useful row on the page.</p>
+
+<p>None holds the sales that had no touch point for that dimension inside the window. Some of those really are unattributable, like a first-time visitor who arrived with nothing captured. But a big None row on a channel report usually means something more specific: your journeys are longer than your window. The touch points exist and were collected correctly. The model is just not allowed to reach them.</p>
+
+<p>So you can use None as a test. Build the same report at 30 days and at 90 days and watch that row.</p>
+
+<p>If None drops a lot as the window widens, the shorter window was hiding real journeys, and anything you concluded from it was based on part of the evidence. If None barely moves, the window was already long enough, and those sales are unattributable for some other reason. That is usually a gap in your implementation rather than a problem with the report.</p>
+
+<div class="shot-box shot-pending">
+    <div class="shot-title">The row most people delete before presenting</div>
+    <div class="shot-frame">
+        <p class="shot-brief">FILE     adobe-analytics-attribution-none-row.webp
+SCREEN   Analysis Workspace &gt; freeform table with an attributed metric column
+STATE    A freeform table breaking a channel or campaign dimension by an attributed conversion metric, sorted so the None row is visible with a large value beside it, ideally in the top few rows.
+INCLUDE  The None row with its number and percentage bar, at least four real dimension rows for comparison, and the column header showing the attributed metric name.
+EXCLUDE  Client channel names.
+WHY      Readers need to recognise this row in their own reports. Seeing a large None sitting among real channels makes the argument faster than a paragraph does.</p>
+    </div>
+</div>
+
+<h3 class="subsec-title">Measure your buying cycle, then set the window</h3>
+<p>The window is usually chosen in a meeting, based on how long people feel customers take to decide. It does not have to be. Adobe ships two dimensions that answer the question directly, and hardly anyone uses either.</p>
+
+<p>Days Before First Purchase gives you the number of days between a visitor's first arrival and their first purchase. It fills in automatically wherever the purchase event is implemented. Put it in rows, put Orders in the column, and your real buying cycle is on screen.</p>
+
+<p>Time Prior to Event does the same job at a finer grain. It gives you the time between the first hit of a visit and a success event, in buckets from under a minute up to more than fifteen hours. Use it when the decision happens inside one session rather than across weeks.</p>
+
+<p>Read the spread, not the average. Buying cycles are nearly always lopsided: a big group decides quickly and a long tail takes months, so the average sits somewhere neither group actually is. What you want is a percentile. A window covering roughly 80% to 90% of your sales catches most real journeys without stretching so far that old touches start collecting credit they did not earn.</p>
+
+<div class="pro-tip">
+    <div class="pro-tip-hdr"><span class="tip-ico"></span>One window for the whole business is usually wrong</div>
+    <p>Most companies have several buying cycles that have nothing to do with each other. Somebody replacing a phone charger decides in four minutes. Somebody buying a laptop from the same site takes six weeks. The enterprise contract on the same domain takes a quarter and involves four people. Run all three through one 30 day window and the report is too generous to the first, about right for the second, and blind to the third. Break the cycle down by product category or customer type before you set anything, and expect to end up with two or three windows rather than one. It also answers the person who says attribution is arbitrary, because you can show where the number came from.</p>
+</div>
+
+<h3 class="subsec-title">Ninety days is the limit</h3>
+<p>The window setting offers the reporting window, 14, 30, 60 and 90 days, and a custom option that takes minutes, hours, days, weeks, months or quarters. The custom option makes it look as though you can go further, since quarters are on the list and nothing refuses a bigger number. You cannot. Attribution reaches back 90 days at most, and asking for more gives you 90.</p>
+
+<p>This is a real limit, so it deserves a straight answer rather than a clever one. Plenty of businesses have a buying cycle of five or six months. Enterprise software, mortgages, cars and higher education all do. In those cases attribution cannot see the start of the journey, and no combination of settings will change that. What you can do is change the question.</p>
+
+<p>The first option is to attribute an earlier conversion instead of the final one. A trial signup, a brochure download, a quote request or a test drive booking are all real events, they sit much closer to the acquisition touches, and attributing them at 90 days works. You then measure what brings people to the trial, and separately what turns a trial into a contract. That answers the original question in two honest halves.</p>
+
+<p>The second option is to go back to collection-time persistence, which is the thing report-time attribution otherwise frees you from. Give an eVar a long expiration and it holds its value against the visitor in the processed data. A normal report of that eVar against the sale will then credit it, however far back the touch happened.</p>
+
+<p>It gives you first touch or last touch only, it is fixed at whatever was chosen before the data was collected, and it cannot be changed retrospectively. For a journey longer than 90 days it is also the only thing that works, which is the real reason expiration still deserves a proper design conversation in a long-cycle business. Those settings are covered in <a href="/adobe-analytics-learning/foundations/variables/evars-conversion-variables/">eVars (Conversion Variables)</a>.</p>
+
+<h3 class="subsec-title">Follow along: size the window from your data</h3>
+<p>This takes about fifteen minutes and gives you a number you can defend, which is a better position than most teams argue from. The first two steps are worth doing even if you never change the window.</p>
+
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>Measure the cycle, then test the window on the None row</span></div>
+    <ol class="dothis-steps">
+        <li class="ds-group">Part one, find the real cycle</li>
+        <li>
+            <span class="ds-do">Build a freeform table with <code>Days Before First Purchase</code> in the rows and <code>Orders</code> in the column, over at least a quarter.</span>
+            <span class="ds-see">If the purchase event is implemented, this dimension is already filled in and needs no setup.</span>
+        </li>
+        <li>
+            <span class="ds-do">Add a percentage column and read down it until the running total passes 80%.</span>
+            <span class="ds-see">That day count is your candidate window. Note the middle value too. The gap between them tells you how lopsided your cycle is.</span>
+        </li>
+        <li>
+            <span class="ds-do">Break the same dimension down by <code>Product Category</code> or a customer type dimension.</span>
+            <span class="ds-see">Expect the answer to split. Two or three windows for two or three cycles is the right outcome.</span>
+        </li>
+        <li class="ds-group">Part two, test it on the None row</li>
+        <li>
+            <span class="ds-do">Build a table with <code>Marketing Channel</code> in rows and <code>Orders</code> in columns, duplicated three times.</span>
+        </li>
+        <li>
+            <span class="ds-do">Set all three columns to the same model and to <code>Visitor</code>, with windows of <code>30 days</code>, <code>60 days</code> and <code>90 days</code>.</span>
+            <span class="ds-see">Keep the model the same. The window is the only thing changing.</span>
+        </li>
+        <li>
+            <span class="ds-do">Find the <code>None</code> row and read it across the three columns.</span>
+            <span class="ds-see">This is the whole test. If None falls sharply from left to right, the shorter windows were hiding journeys.</span>
+        </li>
+        <li>
+            <span class="ds-do">Now read across two or three real channels, especially display or paid social.</span>
+            <span class="ds-see">Openers grow as the window widens. Closers stay flat, because their touches were always close to the sale.</span>
+        </li>
+        <li>
+            <span class="ds-do">Check where None settles against the percentile you found in part one.</span>
+            <span class="ds-see">The two should roughly agree. If None is still falling at 90 days, your cycle is longer than attribution can see.</span>
+        </li>
+    </ol>
+    <p class="dothis-end">There is nothing else to set up. One dimension for the cycle, three columns that differ only by window, and one row read across them. You end up with a window you chose from evidence, which is also the one that survives being questioned.</p>
+</div>
+
+<div class="shot-box shot-pending">
+    <div class="shot-title">Every window on offer, including the one that looks unlimited</div>
+    <div class="shot-frame">
+        <p class="shot-brief">FILE     adobe-analytics-attribution-lookback-window-options.webp
+SCREEN   Analysis Workspace &gt; Column settings, with the Lookback window drop-down open
+STATE    The lookback window drop-down expanded, showing Reporting window, 14 days, 30 days, 60 days, 90 days and Custom Time. The Container set to Visitor should be visible above it.
+INCLUDE  The full open list, and the Container setting above it in the same frame so the relationship between the two is clear.
+EXCLUDE  Nothing sensitive appears here. Crop tightly to the setting rather than the whole screen.
+WHY      Two of the section's points are about this one control: Custom Time looks unlimited and stops at 90 days, and the container directly above it can cancel everything below. Showing them together is the point of the crop.</p>
+    </div>
+</div>
+
+<h3 class="subsec-title">The window decides what exists</h3>
+<p>The lookback window is not a filter on your report. It lets credit travel backwards out of your report's date range, and the touch points it finds are often in months your report does not cover. A touch point outside the window is not reduced or flagged. It is absent, and every share is worked out as though it never happened.</p>
+
+<p>The container above the window can cancel it, because Visit locks the lookback to your reporting window while leaving your setting on screen. The None row measures all of this, and watching it move as you widen the window is the cheapest test in this module.</p>
+
+<p>Days Before First Purchase and Time Prior to Event turn the window from an opinion into a percentile, and that usually turns out to be two or three different cycles hiding behind one average. Ninety days is a real ceiling. If your cycle is longer, attribute an earlier conversion instead of pretending the ceiling can be argued with.</p>
+
+<p>What is left is the decision itself, and it is not really an analysis decision. Once you understand the models and have measured the window, three questions are left. Which combination does your company agree to report on? Who is allowed to change it? And how will somebody reading a number in six months know which rule produced it? <a href="/adobe-analytics-learning/analyze/attribution-models/choosing-an-attribution-model/">Choosing an Attribution Model</a> covers that, including the conversation with finance.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Analytics</div>
+    <p>The container and lookback settings sit together under the model, in all three places attribution is set: <span class="path">Column settings</span> on a freeform table metric, the metric settings in the calculated metric builder, and the <span class="path">Attribution</span> panel. A metric built in the calculated metric builder defaults to last touch with a 30 day window.</p>
+    <p><span class="path">Days Before First Purchase</span> and <span class="path">Time Prior to Event</span> are standard dimensions in the components list. They need no setup beyond having the success event implemented.</p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/analyze/analysis-workspace/attribution/models" target="_blank">Adobe Docs: Attribution Containers and Lookback Windows</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/dimensions/days-before-first-purchase" target="_blank">Adobe Docs: Days Before First Purchase</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/dimensions/time-prior-to-event" target="_blank">Adobe Docs: Time Prior to Event</a></li>
+    </ul>
+</div>

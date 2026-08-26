@@ -1,11 +1,209 @@
 ---
 slug: "choosing-an-attribution-model"
 title: "Choosing an Attribution Model"
-published: 2026-07-18
-lastmod: 2026-07-18
+seotitle: "Choosing an Attribution Model in Adobe Analytics"
+published: 2026-08-25
+lastmod: 2026-08-25
+description: "There is no correct model, but there is a correct way to choose one. How to pick it, defend it, and stop the number changing every time somebody rebuilds it."
 type: lesson
 modulenum: 15
 sectionnum: 4
 weight: 4
 ---
-<p>This section is not yet written.</p>
+<p>A company has two dashboards. The marketing team built one on first touch with a 90 day window, because their job is acquisition. The ecommerce team built the other on the default, because nobody told them there was a default to change.</p>
+
+<p>Both are called Orders by Channel. Both go out weekly. Both are correct. They disagree about paid search by a factor of three.</p>
+
+<p>A new commercial director asks which one is right. The honest answer is that both are, and that is the worst thing anybody can say in that meeting. It sounds like dodging the question, and it suggests the analytics team cannot count.</p>
+
+<p>Nobody picked the wrong model here. The company never asked anyone to pick one, so two teams each made their own choice and neither was wrong to.</p>
+
+<h3 class="subsec-title">Pick one model for reporting, use the rest to investigate</h3>
+<p>The most useful thing to understand about this choice is that consistency matters more than correctness.</p>
+
+<p>A business that has reported on last touch for three years, badly matched to its long buying cycle, still knows whether this quarter beat the last one and still sees when a channel breaks. A business that reports on whatever model the analyst preferred that week knows nothing. Any change in any number could be a change in performance or a change in the rule, and there is no way to tell them apart afterwards.</p>
+
+<p>So this is a governance decision before it is an analysis one. Choose one model and one window. Write them down. Apply them to everything that trends over time or feeds a target. Change them only on purpose, with an annotation marking the date. Every other model stays available and gets used all the time, but for investigating rather than reporting, and anything you produce that way carries the name of the model that produced it.</p>
+
+<p>For the house model itself, here is where to start.</p>
+
+<p>If most sales happen in one or two touches, keep last touch. The None row and a first-against-last comparison will already have told you this. Last touch reconciles, everyone understands it, and a cleverer model would be sharing out credit that is not there to share.</p>
+
+<p>If journeys are long and cross several channels, move to U-shaped at a measured window with Visitor scope. It credits the two moments you can act on, finding and closing, without claiming to know what the middle did.</p>
+
+<p>Use linear only where the touches really are equal, which is rarer than it sounds and mostly describes repeated engagement rather than marketing. And keep algorithmic out of the house position. Not because it is worse, but because a number nobody can explain in a meeting will not survive its first challenge.</p>
+
+<div class="info-box">
+    <div class="info-hdr"><span class="info-ico"></span>These are starting points, not permanent answers</div>
+    <p>Adopt one, run it for two quarters, then look at what it kept getting wrong. The model is a statement about what your business believes creates value, and nobody outside the room knows that better than the people in it. What does not change with experience is the discipline around it: one model for reporting, named on every number, changed only on purpose.</p>
+</div>
+
+<h3 class="subsec-title">Three questions that pick the model for you</h3>
+<p>Model selection turns into a philosophical discussion very easily, and philosophical discussions with six people from three departments do not end. Three factual questions cut it short, and you can answer all three from reports.</p>
+
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>Ask this</th><th>Where to find the answer</th><th>What it decides</th></tr></thead>
+        <tbody>
+            <tr><td><strong>How long is the cycle?</strong></td><td>Days Before First Purchase, read as a spread rather than an average</td><td>The window, and whether a multi-touch model has anything to work with</td></tr>
+            <tr><td><strong>How many touches does a typical sale have?</strong></td><td>First touch against last touch in the same table. Little movement means short journeys</td><td>Whether to bother. One or two touches makes last touch the honest choice</td></tr>
+            <tr><td><strong>What is the number for?</strong></td><td>The decision it feeds: a budget split, channel targets, a board slide</td><td>Whether the shares have to add up, which rules participation in or out</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<p>The third question gets skipped most and matters most. A number used to split a budget has to come from a model whose shares add up to one sale, or the percentages you hand to finance will not add up to 100. A number telling a brand team which channels appear in successful journeys should come from participation, and forcing it into a model that adds up will answer a question nobody asked.</p>
+
+<p>Deciding what the number is for takes a minute and removes most of the disagreement, because most arguments about models are really two people describing two different jobs.</p>
+
+<h3 class="subsec-title">Some channels open, some channels close</h3>
+<p>Picking one reporting model creates one predictable unfairness, and it is worth heading off before a channel owner finds it and takes it personally.</p>
+
+<p>Whatever model you choose will favour one kind of channel. Last touch flatters everything that closes and starves everything that introduces. First touch does the opposite. U-shaped is kinder to both ends and unfair to anything whose contribution is genuinely in the middle, which is where most content marketing sits. That is not a fault in the model. It is what picking a rule means. It becomes a problem only when a channel's budget is decided by a number that was never meant to describe that channel's job.</p>
+
+<p>The fix is a second number, and it is one subtraction. Build first touch orders and last touch orders on the same dimension and window, subtract the second from the first, and rank the result.</p>
+
+<p>Channels with a big positive number are openers. They do the expensive work of reaching people who had never heard of you. Channels with a big negative number are closers. They convert demand that already existed. Both are necessary and they are not comparable to each other. Cut your openers because they close badly and you will feel it a quarter later.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">One subtraction separates the channels that find people from the ones that close them</div>
+    <svg viewBox="0 0 700 196" style="width:100%;height:auto;display:block" role="img"
+         aria-label="A horizontal axis showing first touch orders minus last touch orders. Display and paid social sit on the positive side, labelled openers. Organic search sits near zero. Email and direct sit on the negative side, labelled closers.">
+      <line x1="40" y1="118" x2="660" y2="118" style="stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <line x1="350" y1="60" x2="350" y2="150" style="stroke:var(--text3,#5d6b7e);stroke-width:1.2;stroke-dasharray:4 3"/>
+      <text x="350" y="52" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">0</text>
+
+      <text x="60" y="34" style="fill:var(--dia-c-ink,#0a6e50);font-size:14px;font-weight:700">Openers</text>
+      <text x="60" y="52" style="fill:var(--text3,#5d6b7e);font-size:11px">more first touch than last</text>
+
+      <text x="640" y="34" text-anchor="end" style="fill:var(--dia-e-ink,#5b21b6);font-size:14px;font-weight:700">Closers</text>
+      <text x="640" y="52" text-anchor="end" style="fill:var(--text3,#5d6b7e);font-size:11px">more last touch than first</text>
+
+      <rect x="70" y="104" width="106" height="28" rx="6" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.4"/>
+      <text x="123" y="123" text-anchor="middle" style="fill:var(--dia-c-ink,#0a6e50);font-size:12.5px;font-weight:600">Display</text>
+
+      <rect x="188" y="104" width="118" height="28" rx="6" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.4"/>
+      <text x="247" y="123" text-anchor="middle" style="fill:var(--dia-c-ink,#0a6e50);font-size:12.5px;font-weight:600">Paid social</text>
+
+      <rect x="308" y="104" width="118" height="28" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="367" y="123" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12.5px;font-weight:600">Organic</text>
+
+      <rect x="452" y="104" width="94" height="28" rx="6" style="fill:var(--dia-e-soft,rgba(124,58,237,.10));stroke:var(--dia-e,#7c3aed);stroke-width:1.4"/>
+      <text x="499" y="123" text-anchor="middle" style="fill:var(--dia-e-ink,#5b21b6);font-size:12.5px;font-weight:600">Email</text>
+
+      <rect x="558" y="104" width="94" height="28" rx="6" style="fill:var(--dia-e-soft,rgba(124,58,237,.10));stroke:var(--dia-e,#7c3aed);stroke-width:1.4"/>
+      <text x="605" y="123" text-anchor="middle" style="fill:var(--dia-e-ink,#5b21b6);font-size:12.5px;font-weight:600">Direct</text>
+
+      <line x1="40" y1="164" x2="660" y2="164" style="stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
+      <text x="40" y="186" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">First touch orders minus last touch orders</text>
+    </svg>
+</div>
+
+<p>Direct sitting at the far right of that picture is normal, and it usually means Direct is collecting credit for demand that something else created.</p>
+
+<h3 class="subsec-title">Do not try to match attribution to the order system</h3>
+<p>Within about a month of your first credible attribution report, somebody in finance will put it next to the order system and ask why they do not match. How you handle that decides whether the next year includes a data quality project that finds nothing.</p>
+
+<p>They are not supposed to match. The order system records transactions, which are facts, and it is the record of how many orders exist and what they were worth. The attributed report records shares of those transactions, split by a rule. No setting will make a rule agree with a ledger.</p>
+
+<p>Under last touch the totals happen to line up, which is comforting and slightly dangerous. It teaches everyone that reconciliation is normal, so the first move to a multi-touch model looks like a data problem.</p>
+
+<p>Say the harder version early, because it saves a lot of wasted work. If analytics is being used as the book-keeping system for revenue, something has gone wrong that attribution will not fix. The two systems will differ for healthy reasons that have nothing to do with attribution. Consent and tracking prevention remove hits. Cancellations and returns are handled differently. Test orders and internal traffic are filtered in one place and not the other. Attribution then splits whatever survived all that.</p>
+
+<p>The framing that works with finance is simple. The order system tells you how much money there was. Analytics tells you what caused it. A company needs both, from the systems built to give them.</p>
+
+<div class="warn-box">
+    <div class="warn-hdr"><span class="warn-ico"></span>Have this conversation before the first multi-touch report goes out</div>
+    <p>Moving from last touch to any multi-touch model changes every channel number on the same day. If people discover that rather than being told, they will read it as a fault. Send the comparison first, showing both models over the same closed quarter, name the date you are switching, and put an annotation on the affected projects so the step in the trend line is explained inside the tool. The analysis takes an afternoon. Skipping it is how a correct improvement gets rolled back by people who were not warned.</p>
+</div>
+
+<h3 class="subsec-title">Write the decision down where people will find it</h3>
+<p>A decision that lives in one analyst's head is a habit, not a standard, and habits leave when people do. The two dashboards at the top of this page were not built by careless people. They were built by two teams who had nothing to read.</p>
+
+<p>Four places are worth using, and together they take under an hour.</p>
+
+<p>The metric name is the most effective, because it travels with the number into exports, slides and forwarded emails read by people who will never open Workspace. A calculated metric called Orders, U-shaped, 60 day, Visitor cannot be misread. One called Orders can.</p>
+
+<p>The project description is second, holding the house standard and the date it was adopted. An annotation on the switchover date is third, and it is the only one of the four that appears attached to the point on the trend line where the numbers moved. The fourth is your implementation documentation, where the reasoning belongs and not just the setting, because the next person needs to know the cycle was measured at 68 days and where that came from.</p>
+
+<p>Curating your components so people find the approved metrics is what makes the standard hold in practice, and that is covered in <a href="/adobe-analytics-learning/analyze/analysis-workspace/curation-and-templates/">Curation and Templates</a>. Naming conventions, and the habit of building a small deliberate set of metrics rather than a sprawling one, belong to <a href="/adobe-analytics-learning/analyze/calculated-metrics/calculated-metrics-best-practices/">Calculated Metrics Best Practices</a>. All of it applies here. Attributed metrics multiply faster than any other kind.</p>
+
+<h3 class="subsec-title">Follow along: build the standard set</h3>
+<p>The output of this decision should be a few named objects rather than a document nobody reads. Built once, they make the standard the easiest thing to use, which is the only way a standard survives a deadline.</p>
+
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>Four metrics and one project that make the house model the default</span></div>
+    <ol class="dothis-steps">
+        <li class="ds-group">Part one, the approved metrics</li>
+        <li>
+            <span class="ds-do">In <code>Components</code> <span class="ds-sep">&rsaquo;</span> <code>Calculated metrics</code>, create the house metric. Drag in your success event, open its settings, and set the model, container and window you chose.</span>
+            <span class="ds-see">Name it with all three: <code>Orders, U-shaped, 60 day, Visitor</code>.</span>
+        </li>
+        <li>
+            <span class="ds-do">Fill in the description field: why this model, the measured cycle behind the window, and the date it was adopted.</span>
+            <span class="ds-see">This shows on hover throughout Workspace, so it is the documentation people read by accident.</span>
+        </li>
+        <li>
+            <span class="ds-do">Create two diagnostic metrics beside it, first touch and last touch on the same window.</span>
+            <span class="ds-see">Name them the same way. These are for comparing, not for reporting.</span>
+        </li>
+        <li>
+            <span class="ds-do">Create a fourth: first touch orders minus last touch orders.</span>
+            <span class="ds-see">Call it <code>Opener or closer, 60 day</code>. Positive is an opener. This one metric settles most channel arguments.</span>
+        </li>
+        <li class="ds-group">Part two, make it the easy option</li>
+        <li>
+            <span class="ds-do">Build one project holding the house table, the opener and closer ranking, and an Attribution panel for exploring.</span>
+            <span class="ds-see">Put the house standard and its adoption date in the project description.</span>
+        </li>
+        <li>
+            <span class="ds-do">Curate the project so those four metrics are the ones a reader can reach, then share it as a template.</span>
+            <span class="ds-see">Curation is what stops the next person dragging in a plain Orders and quietly going back to the default.</span>
+        </li>
+        <li>
+            <span class="ds-do">Add an annotation on the date the standard was adopted, scoped to the affected report suite.</span>
+            <span class="ds-see">In a year this will be the only thing that explains the step in the trend line.</span>
+        </li>
+    </ol>
+    <p class="dothis-end">There is nothing else to set up. Four metrics, one project, one annotation. Everything beyond this is investigation, and investigation can use any model it likes as long as it says which one.</p>
+</div>
+
+<div class="shot-box shot-pending">
+    <div class="shot-title">A metric that carries its own rule in its name</div>
+    <div class="shot-frame">
+        <p class="shot-brief">FILE     adobe-analytics-calculated-metric-attribution-settings.webp
+SCREEN   Analytics &gt; Components &gt; Calculated metrics &gt; builder, with attribution set on a metric in the definition
+STATE    The builder with a success metric in the definition canvas and its attribution settings open, showing model, container and lookback window. The title field should read something like "Orders, U-shaped, 60 day, Visitor" and the description should be filled in.
+INCLUDE  The title and description fields plus the three attribution settings, in one frame, with the metric visible in the definition canvas.
+EXCLUDE  Client metric names in the left-hand component list.
+WHY      The section's practical point is that the name and description are where a decision survives its author. Showing a properly named metric makes that concrete, and it is the one screen a reader can copy directly.</p>
+    </div>
+</div>
+
+<h3 class="subsec-title">Consistency beats a perfect model</h3>
+<p>Attribution splits the credit for a sale using a rule, because the data records what happened and never why. The rule works on dimension values sitting on hits inside a window it is allowed to reach back through. So your implementation decides what attribution can ever see, and the window decides what exists.</p>
+
+<p>Eleven models come down to three shapes, two of which add up and one of which does not. Underneath them, one touch point takes everything whatever you picked, and two touch points fall back to simpler splits. The window is something to measure from your buying cycle rather than argue about, and it stops at 90 days.</p>
+
+<p>The choice itself is a governance decision dressed as an analysis one. One model and one window for anything that trends, every other model available for investigating, the model named on every number that leaves the building, and changes made deliberately with an annotation. Get that right with an average model and your reporting works. Get it wrong with the perfect model and nobody can check anything.</p>
+
+<p>The habit worth keeping outlasts this product. When two people disagree about an attributed number, they are almost never disagreeing about data. Stop defending the number and ask each of them what they think creates value. That conversation is the actual work. The tool just applies whatever you agree.</p>
+
+<p>It is worth knowing that the tool moves too. In Customer Journey Analytics these same models sit on the metric rather than on the report, and the ninety day ceiling is not the same ceiling. The settings change. Knowing that a model is a rule you chose, that the window decides what exists, and that somebody has to write the decision down, does not.</p>
+
+<p>Marketing channels are where most of this gets applied, and they have their own rules about which channel is allowed to claim a visitor in the first place, decided at collection time before any model runs. <a href="/adobe-analytics-learning/shape/marketing-channels/channel-attribution/">Channel Attribution</a> covers that case, including why the Marketing Channel dimension leaves every model open to you while First Touch Channel and Last Touch Channel have already decided for you.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Analytics</div>
+    <p>Analytics &gt; <span class="path">Components</span> &gt; <span class="path">Calculated metrics</span> is where a house model becomes an object other people can use. Attribution is set per metric inside the builder, on the metric in the definition, not on the calculated metric as a whole.</p>
+    <p>Annotations are created in Workspace from the <span class="path">Components</span> panel, or by selecting a point on a trended chart. Curation and template sharing sit under <span class="path">Share</span> in the project menu.</p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/analyze/analysis-workspace/attribution/best-practices" target="_blank">Adobe Docs: Attribution Best Practices</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/calculated-metrics/calcmetric-workflow/m-metric-type-alloc" target="_blank">Adobe Docs: Metric Type and Attribution in Calculated Metrics</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/analyze/analysis-workspace/attribution/overview" target="_blank">Adobe Docs: Attribution Overview</a></li>
+    </ul>
+</div>

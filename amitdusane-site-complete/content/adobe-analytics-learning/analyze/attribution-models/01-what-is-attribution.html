@@ -2,11 +2,235 @@
 slug: "what-is-attribution"
 title: "What Is Attribution"
 seotitle: "What Is Attribution in Adobe Analytics"
-published: 2026-07-18
-lastmod: 2026-07-18
+published: 2026-08-25
+lastmod: 2026-08-25
+description: "Three teams report three different order counts and all of them are right. What attribution actually does, and why the numbers never match finance."
 type: lesson
 modulenum: 15
 sectionnum: 1
 weight: 1
 ---
-<p>This section is not yet written.</p>
+<p>Three teams present numbers for the same quarter. The email team says email drove 4,000 orders. Paid search says it drove 3,500. Display says 900. Add those up and you get 8,400. Then the finance director says the company took 5,000 orders in total.</p>
+
+<p>Nobody has made a mistake. All four numbers came out of the same data and all four are correct.</p>
+
+<p>The problem is that three of those numbers are not measurements. They are opinions about who caused the orders, and each team used a different opinion without saying so. Until somebody explains that, the meeting cannot move forward.</p>
+
+<h3 class="subsec-title">There is no field in the data for why</h3>
+<p>Adobe Analytics records what people did. Each hit carries the page name, the browser, the campaign code if you captured one, the marketing channel if your rules set one, and on the hit that matters, the purchase and its value.</p>
+
+<p>Look at every hit a visitor ever sent and you can see everything they did and when they did it. What you cannot see is why they bought. There is no field for it. No analytics tool has one, because the reason sits inside the person and a tag on a web page cannot read it.</p>
+
+<p>So Adobe does not guess. It gives you a set of rules for splitting the credit for a sale among the things that happened before it, and it asks you to pick one of those rules. The rule you pick is the attribution model.</p>
+
+<p>That is worth saying plainly. Attribution does not measure influence. It shares out credit using a rule you chose.</p>
+
+<p>A restaurant that pools its tips has the same problem. The total tips for the evening are a fact and anyone can count them. How you split that total between the waiter, the chef, the person on the door and the one carrying plates is not a fact. It is a rule the restaurant agrees in advance. No split is the true one. Some are fair, some are clearly unfair, and the restaurants that never agreed a rule are the ones where staff argue every night.</p>
+
+<p>Attribution works the same way. The sale is the fact. The split is the rule.</p>
+
+<h3 class="subsec-title">A touch point is just a value on a hit</h3>
+<p>Before the models make sense, you need to know what they actually work on. Most people assume something cleverer is going on than really is.</p>
+
+<p>Attribution works on one dimension at a time. You pick the dimension and you pick the success metric. Then for each sale, Adobe looks back through that visitor's hits, finds every hit where your dimension had a value, and splits the sale among those values using your model.</p>
+
+<p>That is the whole thing. Each value it finds is called a touch point. There is no judgement of how persuasive an advert was, and nothing statistical unless you choose the algorithmic model.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">The data holds values on hits. The model turns those values into shares of one sale.</div>
+    <svg viewBox="0 0 700 216" style="width:100%;height:auto;display:block" role="img"
+         aria-label="Two panels. On the left, eight hits along a timeline. Three of them carry a marketing channel value: Paid Search on day one, Email on day nine, Social on day twenty. The other five carry nothing. A purchase happens on day thirty. On the right, those three values become three touch points, and one sale is split between them.">
+      <defs>
+        <marker id="m15s1arrow" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" style="fill:var(--text3,#5d6b7e)"/></marker>
+      </defs>
+
+      <text x="20" y="26" style="fill:var(--text1,#0f172a);font-size:14px;font-weight:700">What the data holds</text>
+
+      <line x1="20" y1="92" x2="330" y2="92" style="stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
+
+      <circle cx="34" cy="92" r="7" style="fill:var(--dia-b,#2563eb)"/>
+      <circle cx="72" cy="92" r="4" style="fill:none;stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <circle cx="110" cy="92" r="4" style="fill:none;stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <circle cx="148" cy="92" r="7" style="fill:var(--dia-c,#10b981)"/>
+      <circle cx="186" cy="92" r="4" style="fill:none;stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <circle cx="224" cy="92" r="7" style="fill:var(--dia-e,#7c3aed)"/>
+      <circle cx="262" cy="92" r="4" style="fill:none;stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <rect x="292" y="79" width="26" height="26" rx="4" style="fill:var(--dia-a,#ba2142)"/>
+
+      <text x="34" y="72" text-anchor="middle" style="fill:var(--dia-b-ink,#1d4ed8);font-size:11px">Paid</text>
+      <text x="148" y="72" text-anchor="middle" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px">Email</text>
+      <text x="224" y="72" text-anchor="middle" style="fill:var(--dia-e-ink,#5b21b6);font-size:11px">Social</text>
+      <text x="305" y="72" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:11px;font-weight:600">buys</text>
+
+      <text x="34" y="114" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">d1</text>
+      <text x="148" y="114" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">d9</text>
+      <text x="224" y="114" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">d20</text>
+      <text x="305" y="114" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">d30</text>
+
+      <text x="97" y="140" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">small dots: no value set</text>
+
+      <line x1="344" y1="92" x2="374" y2="92" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4;stroke-dasharray:5 4" marker-end="url(#m15s1arrow)"/>
+
+      <text x="392" y="26" style="fill:var(--text1,#0f172a);font-size:14px;font-weight:700">What the model does</text>
+
+      <rect x="392" y="58" width="88" height="36" rx="6" style="fill:var(--dia-b-soft,rgba(37,99,235,.10));stroke:var(--dia-b,#2563eb);stroke-width:1.4"/>
+      <text x="436" y="81" text-anchor="middle" style="fill:var(--dia-b-ink,#1d4ed8);font-size:12.5px;font-weight:600">Paid Search</text>
+
+      <rect x="492" y="58" width="88" height="36" rx="6" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.4"/>
+      <text x="536" y="81" text-anchor="middle" style="fill:var(--dia-c-ink,#0a6e50);font-size:12.5px;font-weight:600">Email</text>
+
+      <rect x="592" y="58" width="88" height="36" rx="6" style="fill:var(--dia-e-soft,rgba(124,58,237,.10));stroke:var(--dia-e,#7c3aed);stroke-width:1.4"/>
+      <text x="636" y="81" text-anchor="middle" style="fill:var(--dia-e-ink,#5b21b6);font-size:12.5px;font-weight:600">Social</text>
+
+      <text x="392" y="120" style="fill:var(--text2,#475569);font-size:11px">one sale, split three ways</text>
+
+      <rect x="392" y="128" width="288" height="18" rx="3" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
+      <rect x="392" y="128" width="96" height="18" rx="3" style="fill:var(--dia-b,#2563eb)"/>
+      <rect x="488" y="128" width="96" height="18" style="fill:var(--dia-c,#10b981)"/>
+      <rect x="584" y="128" width="96" height="18" style="fill:var(--dia-e,#7c3aed)"/>
+
+      <line x1="20" y1="172" x2="680" y2="172" style="stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
+      <text x="20" y="196" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">The touch point is the value, not the advert.</text>
+    </svg>
+</div>
+
+<p>Two things follow from this, and both are more useful than any comparison of models.</p>
+
+<p>The first is that attribution can only share credit between values you actually collected. Say a visitor sees a billboard, talks to a colleague about it, and searches for your brand a week later. Nothing about the billboard arrives with them. There is no touch point for it, so it gets no credit, and no setting anywhere in Adobe will change that. Attribution depends on your implementation. That is why a module about reporting keeps pointing back at collection.</p>
+
+<p>The second is more useful day to day. A touch point is only a dimension value, so attribution is not limited to marketing. Internal search terms, on-site promotions, product categories, page names and login state are all dimensions, and you can run a model against any of them. You can ask which internal search terms lead to purchases, counting every search a buyer ran rather than only the last one. It takes the same two clicks as a channel report, and hardly anyone tries it.</p>
+
+<div class="pro-tip">
+    <div class="pro-tip-hdr"><span class="tip-ico"></span>Attribution is not a marketing channels feature</div>
+    <p>Almost every example of attribution you will ever see uses Marketing Channel, so most people file the whole thing under marketing reporting. That is worth unlearning early. The two grew up together and they are used together constantly, but nothing actually ties them. A model needs a dimension and a success event, and it does not care what the dimension is about. Some of the most useful attribution work in a business has nothing to do with media spend: which internal search terms buyers used before they bought, which product category they browsed first, which on-site promotion they saw three visits ago. Nobody is competing for that credit, which is probably why nobody has ever asked for the report.</p>
+</div>
+
+<p>Adobe seems to have reached the same conclusion. In Customer Journey Analytics the two swap places. Attribution becomes a setting held on the metric itself, and marketing channels become one defined field among many rather than a subsystem with its own admin screens. How that works is a subject for another product and another day. It is worth knowing here because it tells you which of the two ideas is the bigger one.</p>
+
+<h3 class="subsec-title">Attribution does not work on page views or visits</h3>
+<p>This is where most people hit their first wall, and the interface gives them nothing to work with.</p>
+
+<p>Open the column settings on a Page Views column and the attribution option is simply not there. The same goes for Visits, Unique Visitors, Occurrences, Entries, Exits, Bounces, Bounce Rate, Time Spent, Searches, Single Page Visits and Single Access. The feature you have just been reading about looks like it is missing or switched off.</p>
+
+<p>It is not missing. It does not apply, and the reason is worth sitting with, because it says what attribution actually is.</p>
+
+<p>Attribution shares out credit for something that was achieved. A purchase, a lead, a subscription, a download. Somebody wanted it to happen, and several things may have helped cause it. A page view is not an achievement. Nobody competed to cause it. The visitor either arrived carrying a marketing channel or they did not, and there is no credit sitting there waiting to be divided.</p>
+
+<p>So when a stakeholder asks for first touch attribution on visits, the honest answer is that the question has no meaning, not that the tool cannot do it. That is a more useful answer, and it usually leads to working out what they actually wanted to know.</p>
+
+<div class="warn-box">
+    <div class="warn-hdr"><span class="warn-ico"></span>Calculated metrics are on that list too, and they catch people twice</div>
+    <p>You cannot apply a model to a finished calculated metric either. The setting is not offered on it. Instead you set attribution on the individual metrics inside the definition, while you are building it. So a calculated metric can be attributed, but only from the inside, and only by whoever opens the builder. If you inherit one and want it on a different model, you have to go into the definition and change it, or copy it and build a second version. It also means the model is buried where nobody reading the column will ever see it, which is the strongest argument there is for putting the model in the metric's name.</p>
+</div>
+
+<h3 class="subsec-title">Adobe ignores your eVar settings when it attributes</h3>
+<p>This part surprises people who have been configuring report suites for years, and it changes where you should spend your design time.</p>
+
+<p>Normally, persistence is a property of the variable. You give an eVar an expiration and an allocation setting, and Adobe carries its value forward from hit to hit as the data is processed. A prop gets none of that. It describes the hit it was set on and is gone by the next one. Both behaviours are fixed at collection time. Those settings are covered in <a href="/adobe-analytics-learning/foundations/variables/evars-conversion-variables/">eVars (Conversion Variables)</a>.</p>
+
+<p>Attribution does not use any of that. When a model runs, Adobe goes back to the hits, reads the values that were actually set on them, and does its own carrying forward across the lookback window you chose. Your eVar's allocation setting is ignored. Your eVar's expiration setting is ignored. The window you set in the report replaces both of them, and you can set a different window in the next report.</p>
+
+<div class="info-box">
+    <div class="info-hdr"><span class="info-ico"></span>This means you can attribute a prop</div>
+    <p>Attribution rebuilds persistence from the raw hits, so it does not care whether the dimension was designed to persist. Take a prop set once on a landing page, one that has been useless for conversion reporting since the day it went live. Give it first touch attribution with a 90 day window and it behaves as though it had always been an eVar. If your implementation has a prop somebody has always wished was an eVar, this is worth trying. The fix is a report setting, not a change to your tags.</p>
+</div>
+
+<p>There is a limit to this, and it catches people out.</p>
+
+<div class="warn-box">
+    <div class="warn-hdr"><span class="warn-ico"></span>Expiration still applies everywhere outside Analysis Workspace</div>
+    <p>Attribution models only exist in Analysis Workspace. Classic reports, the reporting API, data feeds and warehouse extracts all read the processed data, where your eVar's expiration and allocation work exactly as they always did. So an eVar set to expire on the visit can be attributed across 90 days inside Workspace and is still visit-scoped everywhere else. Two teams reading the same variable through different tools will get different numbers, and neither of them has done anything wrong.</p>
+</div>
+
+<h3 class="subsec-title">Why these numbers never match the order system</h3>
+<p>Now the meeting at the top of this page can be answered properly.</p>
+
+<p>The 5,000 orders in the finance system are real sales. The 4,000 email orders are not 4,000 sales. They are email's share of those same 5,000 sales, worked out using whichever model that team had selected.</p>
+
+<p>Under last touch, each sale is given whole to one channel, so the channel numbers add up to 5,000 and everything reconciles. That is why last touch is the default and why many companies never notice the problem. Under participation, every channel involved gets 100% of the sale, so the numbers are meant to add up to far more than 5,000. A room that adds them up has misread the model, not found an error.</p>
+
+<p>Two smaller effects widen the gap. If a hit carries several values for the same dimension, which is what a list variable does, each value gets the same credit while the report total counts the sale once. And every report has a None row holding sales that had no touch point at all inside the window. None is a real answer and it is covered in <a href="/adobe-analytics-learning/analyze/attribution-models/lookback-windows/">Lookback Windows</a>.</p>
+
+<p>So build one habit early. An attributed number is not a count of something that happened. It is a share, worked out under a rule you picked. Asking it to agree with the order system is like asking the tip split to agree with the bill.</p>
+
+<h3 class="subsec-title">Always say which model and which window</h3>
+<p>Because the model is a choice and the window is a choice, a number quoted without both of them cannot be checked by anyone.</p>
+
+<p>"4,000 email orders" is not something a colleague can agree or disagree with. "4,000 email orders, last touch, 30 day visitor window" is. They can reproduce it, argue with the choice, and compare it to next quarter. It is also easier to defend, because the argument becomes about the rule rather than about whether your team can count.</p>
+
+<p>In practice this means putting the model and the window in the metric's name or the panel description, not just in your head. A metric called Orders will confuse whoever opens the project in six months. A metric called Orders, first touch, 30 day will not.</p>
+
+<h3 class="subsec-title">Follow along: turn one column into two</h3>
+<p>Ten minutes in a real report suite makes this concrete. Any report suite with a conversion metric and a channel or campaign dimension will do.</p>
+
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>The same orders, credited two ways, side by side</span></div>
+    <ol class="dothis-steps">
+        <li>
+            <span class="ds-do">Build a freeform table with <code>Marketing Channel</code> in the rows and <code>Orders</code> in the column. Set the date range to a full quarter.</span>
+            <span class="ds-see">This is the default report, and the default is last touch. Note the top three channels.</span>
+        </li>
+        <li>
+            <span class="ds-do">Right click the <code>Orders</code> column header and choose <code>Duplicate column</code>.</span>
+        </li>
+        <li>
+            <span class="ds-do">Open <code>Column settings</code> on the second column, tick <code>Use non-default attribution model</code>, and choose <code>First Touch</code>.</span>
+            <span class="ds-see">Two more settings appear below the model. You will use them in the next step.</span>
+        </li>
+        <li>
+            <span class="ds-do">Set the container to <code>Visitor</code> and the lookback window to <code>90 days</code>. Apply.</span>
+            <span class="ds-see">Visitor lets the model look across several visits. Without it, a journey that spans weeks is invisible.</span>
+        </li>
+        <li>
+            <span class="ds-do">Rename both columns so each one carries its model. Double click the header to rename.</span>
+            <span class="ds-see"><code>Orders, last touch</code> and <code>Orders, first touch, 90 day</code>. Takes two seconds and saves the next person a lot of guessing.</span>
+        </li>
+        <li>
+            <span class="ds-do">Compare the two columns instead of reading either one on its own.</span>
+            <span class="ds-see">Channels that get bigger from left to right are finding new customers. Channels that shrink are closing them. Direct usually shrinks a lot.</span>
+        </li>
+        <li>
+            <span class="ds-do">Swap the dimension for <code>Internal Search Term</code> or <code>Product Category</code> and leave the columns alone.</span>
+            <span class="ds-see">It still works, because a touch point is only a dimension value. Most people never try this.</span>
+        </li>
+    </ol>
+    <p class="dothis-end">There is nothing else to set up. A model, a container and a window on one column gives you the whole comparison. The rest of this module is about choosing those three well, not about a different mechanism.</p>
+</div>
+
+<div class="shot-box shot-pending">
+    <div class="shot-title">The three settings that decide the answer</div>
+    <div class="shot-frame">
+        <p class="shot-brief">FILE     adobe-analytics-attribution-column-settings.webp
+SCREEN   Analysis Workspace &gt; freeform table &gt; column header right click &gt; Column settings
+STATE    The Column settings panel open on a metric column, with "Use non-default attribution model" ticked so the three settings below it are visible and active.
+INCLUDE  The tick box, the Attribution model drop-down showing its selected value, the Container set to Visitor, and the Lookback window, all four in one frame.
+EXCLUDE  Client report suite names and any client dimension names in the table behind the panel.
+WHY      A reader cannot do anything in this module until they have found this panel. Nothing on a default table hints that these settings exist, so showing them once saves a lot of hunting.</p>
+    </div>
+</div>
+
+<h3 class="subsec-title">Credit is shared, not measured</h3>
+<p>Attribution exists because the data records what happened but never records why. Credit for a sale has to be shared out using a rule, not discovered by measurement. The rule works on one dimension at a time, treats every value found on a hit inside the lookback window as a touch point, and splits the sale between those touch points.</p>
+
+<p>Two things about that are worth carrying out of here, because both go against what people assume. It works on any dimension, not just marketing channels. And it only works on success events, which is why the setting is missing when you try it on page views or visits.</p>
+
+<p>Adobe rebuilds persistence from the raw hits when a model runs. That is why your eVar settings are ignored inside Workspace, why you can attribute a prop, and why these numbers are shares rather than counts.</p>
+
+<p>The habit that matters most is the tip pool one. When two people disagree about an attributed number, they are usually not disagreeing about the data. They are disagreeing about the rule, and that is a decision the business is allowed to make and has probably never been asked to make.</p>
+
+<p>Next come the rules themselves. Adobe gives you eleven, they split credit in quite different ways, and two of them will quietly override your choice on more rows than you would expect. <a href="/adobe-analytics-learning/analyze/attribution-models/attribution-models-compared/">Attribution Models Compared</a> covers all of them, including the one that is not really a split at all.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Analytics</div>
+    <p>Attribution is set in Analysis Workspace, not in Admin. In a freeform table, right click a metric column header, choose <span class="path">Column settings</span>, then tick <span class="path">Use non-default attribution model</span> to reveal the model, container and lookback settings.</p>
+    <p>The same three settings appear in the calculated metric builder, on any metric in the definition, and in the <span class="path">Attribution</span> panel, which compares several models at once. Adobe called this feature Attribution IQ when it launched, and that name still appears in older tutorials.</p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/analyze/analysis-workspace/attribution/overview" target="_blank">Adobe Docs: Attribution Overview</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/analyze/analysis-workspace/attribution/faq" target="_blank">Adobe Docs: Attribution FAQ</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/analyze/analysis-workspace/visualizations/freeform-table/column-row-settings/column-settings" target="_blank">Adobe Docs: Freeform Table Column Settings</a></li>
+    </ul>
+</div>
