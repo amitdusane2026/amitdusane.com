@@ -51,6 +51,44 @@ weight: 2
 
 <p>Adding a dimension adds rows, and it does not add them, it multiplies them. One dimension with 400,000 values gives you 400,000 rows. Break it down by product category with 200 values and you are asking for every combination that actually occurred, which can easily be several million rows. Add day granularity across a quarter and you have multiplied again by ninety.</p>
 
+<div class="diagram-box">
+    <div class="diagram-title">A metric adds a column. A dimension multiplies the rows.</div>
+    <svg viewBox="0 0 700 214" style="width:100%;height:auto;display:block" role="img"
+         aria-label="Two panels. On the left, adding metrics widens a table from one column to four while the row count stays at four hundred thousand. On the right, adding a second dimension and then daily granularity takes the row count from four hundred thousand to eighty million to seven point two billion.">
+      <text x="20" y="26" style="fill:var(--text1,#0f172a);font-size:14px;font-weight:700">Add a metric</text>
+      <text x="20" y="44" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px">the table gets wider</text>
+
+      <rect x="20" y="60" width="46" height="70" rx="3" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.4"/>
+      <rect x="70" y="60" width="46" height="70" rx="3" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.4"/>
+      <rect x="120" y="60" width="46" height="70" rx="3" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.4"/>
+      <rect x="170" y="60" width="46" height="70" rx="3" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.4"/>
+
+      <text x="20" y="150" style="fill:var(--text2,#475569);font-size:11px">4 columns</text>
+      <text x="20" y="172" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">400,000 rows</text>
+      <text x="20" y="192" style="fill:var(--success-ink,#0a6e50);font-size:11px;font-weight:600">unchanged</text>
+
+      <line x1="250" y1="40" x2="250" y2="196" style="stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
+
+      <text x="280" y="26" style="fill:var(--text1,#0f172a);font-size:14px;font-weight:700">Add a dimension</text>
+      <text x="280" y="44" style="fill:var(--danger-ink,#a4161a);font-size:11px">the table gets longer, fast</text>
+
+      <rect x="280" y="60" width="110" height="18" rx="3" style="fill:var(--dia-b,#2563eb)"/>
+      <text x="404" y="74" style="fill:var(--text2,#475569);font-size:11px">search term</text>
+      <text x="600" y="74" style="fill:var(--text1,#0f172a);font-size:11px;font-weight:600">400,000</text>
+
+      <rect x="280" y="88" width="200" height="18" rx="3" style="fill:var(--dia-b,#2563eb)"/>
+      <text x="494" y="102" style="fill:var(--text2,#475569);font-size:11px">+ category</text>
+      <text x="600" y="102" style="fill:var(--text1,#0f172a);font-size:11px;font-weight:600">80 million</text>
+
+      <rect x="280" y="116" width="300" height="18" rx="3" style="fill:var(--dia-b,#2563eb)"/>
+      <text x="600" y="130" style="fill:var(--danger-ink,#a4161a);font-size:11px;font-weight:600">7.2 billion</text>
+      <text x="280" y="152" style="fill:var(--text2,#475569);font-size:11px">+ daily granularity, over a quarter</text>
+
+      <line x1="20" y1="196" x2="680" y2="196" style="stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
+      <text x="280" y="192" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">Be generous with metrics. Be mean with dimensions.</text>
+    </svg>
+</div>
+
 <p>So the rule of thumb is to be generous with metrics and mean with dimensions. Metrics are cheap. Every dimension you add should be one you will actually group by or filter on when the file lands somewhere else.</p>
 
 <div class="pro-tip">

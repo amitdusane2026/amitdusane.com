@@ -57,6 +57,50 @@ weight: 3
 
 <p><code>Activity Map Link By Region</code> keeps them apart, because it combines the link name with the region it sat in. Now you can see that the footer version gets almost everything and the header version is barely used, which is an actual finding somebody can act on.</p>
 
+<div class="diagram-box">
+    <div class="diagram-title">Link merges the same name. Link By Region keeps it apart.</div>
+    <svg viewBox="0 0 700 210" style="width:100%;height:auto;display:block" role="img"
+         aria-label="On the left, three Contact us links in the header, footer and support page collapse into one row of thirty thousand under Activity Map Link. On the right, Activity Map Link By Region splits the same clicks into header two thousand, footer twenty six thousand and support two thousand.">
+      <text x="20" y="26" style="fill:var(--text1,#0f172a);font-size:14px;font-weight:700">Activity Map Link</text>
+
+      <rect x="20" y="44" width="90" height="26" rx="4" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
+      <text x="65" y="61" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">header</text>
+      <rect x="20" y="76" width="90" height="26" rx="4" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
+      <text x="65" y="93" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">footer</text>
+      <rect x="20" y="108" width="90" height="26" rx="4" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
+      <text x="65" y="125" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">support</text>
+
+      <line x1="116" y1="57" x2="146" y2="83" style="stroke:var(--text3,#5d6b7e);stroke-width:1.2"/>
+      <line x1="116" y1="89" x2="146" y2="89" style="stroke:var(--text3,#5d6b7e);stroke-width:1.2"/>
+      <line x1="116" y1="121" x2="146" y2="95" style="stroke:var(--text3,#5d6b7e);stroke-width:1.2"/>
+
+      <rect x="152" y="72" width="150" height="34" rx="6" style="fill:var(--dia-d-soft,rgba(245,158,11,.14));stroke:var(--dia-d,#f59e0b);stroke-width:1.6"/>
+      <text x="227" y="93" text-anchor="middle" style="fill:var(--dia-d-ink,#8a5700);font-size:12.5px;font-weight:600">Contact us  30,000</text>
+      <text x="152" y="128" style="fill:var(--danger-ink,#a4161a);font-size:11px;font-weight:600">one row, no answer</text>
+
+      <line x1="340" y1="40" x2="340" y2="150" style="stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
+
+      <text x="368" y="26" style="fill:var(--text1,#0f172a);font-size:14px;font-weight:700">Activity Map Link By Region</text>
+
+      <rect x="368" y="44" width="240" height="26" rx="4" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.4"/>
+      <text x="382" y="61" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px">header : Contact us</text>
+      <text x="620" y="61" style="fill:var(--text2,#475569);font-size:11px">2,000</text>
+
+      <rect x="368" y="76" width="240" height="26" rx="4" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.4"/>
+      <text x="382" y="93" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px">footer : Contact us</text>
+      <text x="620" y="93" style="fill:var(--text1,#0f172a);font-size:11px;font-weight:700">26,000</text>
+
+      <rect x="368" y="108" width="240" height="26" rx="4" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.4"/>
+      <text x="382" y="125" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px">support : Contact us</text>
+      <text x="620" y="125" style="fill:var(--text2,#475569);font-size:11px">2,000</text>
+
+      <text x="368" y="152" style="fill:var(--success-ink,#0a6e50);font-size:11px;font-weight:600">the footer is doing the work</text>
+
+      <line x1="20" y1="172" x2="680" y2="172" style="stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
+      <text x="20" y="196" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">Same clicks. One dimension hides the finding.</text>
+    </svg>
+</div>
+
 <p>Any time a link appears in more than one place, and most navigation does, this is the dimension to reach for. It is also the one that makes a good region setup pay off, which is the argument for fixing region names when they are generated nonsense.</p>
 
 <h3 class="subsec-title">Clicks are popularity, not value</h3>

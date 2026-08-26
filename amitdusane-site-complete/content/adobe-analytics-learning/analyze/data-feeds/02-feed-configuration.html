@@ -48,6 +48,38 @@ weight: 2
 
 <p>So a feed offers an option for late-arriving hits, with a lookback window that decides how far back Adobe will go to catch them. The window can be set very wide indeed, up to three years.</p>
 
+<div class="diagram-box">
+    <div class="diagram-title">A hit can arrive days after it happened</div>
+    <svg viewBox="0 0 700 206" style="width:100%;height:auto;display:block" role="img"
+         aria-label="A timeline across four days. Hits land on Monday. A processing delay follows, then Monday's file is cut. On Wednesday a hit that happened on Monday finally arrives from a mobile app that was offline. A lookback window arrow reaches back from Wednesday to Monday to catch it.">
+      <defs>
+        <marker id="m17s2a" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" style="fill:var(--dia-d,#f59e0b)"/></marker>
+      </defs>
+
+      <line x1="40" y1="88" x2="660" y2="88" style="stroke:var(--border,#e2e8f0);stroke-width:1.6"/>
+
+      <text x="90" y="118" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">Mon</text>
+      <text x="300" y="118" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">Tue</text>
+      <text x="540" y="118" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">Wed</text>
+
+      <circle cx="60" cy="88" r="6" style="fill:var(--dia-b,#2563eb)"/>
+      <circle cx="90" cy="88" r="6" style="fill:var(--dia-b,#2563eb)"/>
+      <circle cx="120" cy="88" r="6" style="fill:var(--dia-b,#2563eb)"/>
+      <text x="90" y="68" text-anchor="middle" style="fill:var(--dia-b-ink,#1d4ed8);font-size:11px">hits happen</text>
+
+      <rect x="196" y="75" width="26" height="26" rx="4" style="fill:var(--dia-c,#10b981)"/>
+      <text x="209" y="68" text-anchor="middle" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px;font-weight:600">file cut</text>
+      <text x="209" y="142" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">after the delay</text>
+
+      <circle cx="540" cy="88" r="6" style="fill:var(--dia-d,#f59e0b)"/>
+      <text x="540" y="68" text-anchor="middle" style="fill:var(--dia-d-ink,#8a5700);font-size:11px;font-weight:600">a Monday hit lands</text>
+      <text x="540" y="142" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">app was offline</text>
+
+      <line x1="540" y1="164" x2="90" y2="164" style="stroke:var(--dia-d,#f59e0b);stroke-width:1.6" marker-end="url(#m17s2a)"/>
+      <text x="315" y="184" text-anchor="middle" style="fill:var(--dia-d-ink,#8a5700);font-size:12.5px;font-weight:600">lookback window</text>
+    </svg>
+</div>
+
 <p>The decision is about what the receiving system does with a correction. If your pipeline can reprocess a day when new rows arrive for it, switch late hits on and pick a window that matches your real app behaviour. If your pipeline appends and never revisits, late hits will produce duplicates or silently disagree with Adobe's own reporting, and you need to decide which of those you prefer before turning it on rather than after.</p>
 
 <div class="warn-box">

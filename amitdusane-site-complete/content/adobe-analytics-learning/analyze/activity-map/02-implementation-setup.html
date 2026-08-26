@@ -52,6 +52,40 @@ weight: 2
 &lt;a href="/pricing" id="s_objectID=hero-pricing-cta"&gt;Learn more&lt;/a&gt;</pre></div>
 </div>
 
+<div class="diagram-box">
+    <div class="diagram-title">Adobe guesses a name. s_objectID stops it guessing.</div>
+    <svg viewBox="0 0 700 204" style="width:100%;height:auto;display:block" role="img"
+         aria-label="Two routes from a clicked element to a link name. The upper route reads the visible text, or the input value, or the image alt, producing names like Learn more, blank, or a changing price. The lower route reads s_objectID and produces a fixed name, hero-pricing-cta.">
+      <defs>
+        <marker id="m18s2a" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" style="fill:var(--text3,#5d6b7e)"/></marker>
+      </defs>
+
+      <rect x="20" y="76" width="110" height="44" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="75" y="103" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">the element</text>
+
+      <line x1="140" y1="90" x2="180" y2="56" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#m18s2a)"/>
+      <line x1="140" y1="108" x2="180" y2="146" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#m18s2a)"/>
+
+      <text x="192" y="30" style="fill:var(--danger-ink,#a4161a);font-size:11px;font-weight:600">derived, if nothing overrides it</text>
+      <rect x="192" y="40" width="130" height="30" rx="4" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
+      <text x="257" y="59" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">visible text</text>
+      <rect x="332" y="40" width="110" height="30" rx="4" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
+      <text x="387" y="59" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">input value</text>
+      <rect x="452" y="40" width="90" height="30" rx="4" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
+      <text x="497" y="59" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">image alt</text>
+
+      <text x="560" y="59" style="fill:var(--danger-ink,#a4161a);font-size:11px">"Learn more"</text>
+      <text x="560" y="76" style="fill:var(--danger-ink,#a4161a);font-size:11px">blank, or a price</text>
+
+      <text x="192" y="126" style="fill:var(--success-ink,#0a6e50);font-size:11px;font-weight:600">explicit</text>
+      <rect x="192" y="136" width="180" height="30" rx="4" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.6"/>
+      <text x="282" y="155" text-anchor="middle" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px;font-weight:600">s_objectID</text>
+      <text x="392" y="155" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px">hero-pricing-cta</text>
+
+      <text x="20" y="194" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">One name you chose beats three Adobe guessed.</text>
+    </svg>
+</div>
+
 <p>You do not do this for every link, which would put you back in the situation Activity Map was invented to avoid. You do it for the links that matter: primary calls to action, navigation elements you compare against each other, and anything whose label is generic, empty or changeable.</p>
 
 <p>Twenty or thirty named elements on a large site is usually enough to turn the reports from interesting to usable, and it is a conversation with front-end developers rather than an analytics project.</p>

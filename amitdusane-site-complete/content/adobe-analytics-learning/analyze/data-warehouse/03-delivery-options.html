@@ -43,6 +43,32 @@ weight: 3
 
 <p><strong>The manifest file.</strong> This is a small companion file listing the file name, its size, and the number of records. It is delivered last, after the data itself. That ordering is the point: if the manifest is there, the transfer finished. Without it, a process reading the bucket has no reliable way to know whether it is looking at a complete file or one still being written.</p>
 
+<div class="diagram-box">
+    <div class="diagram-title">The manifest arrives last, which is what makes it useful</div>
+    <svg viewBox="0 0 700 196" style="width:100%;height:auto;display:block" role="img"
+         aria-label="A timeline of a delivery. The request runs, then the data file begins writing, then the data file completes, then the manifest arrives. A marker shows that a pipeline reading at the second step gets a partial file, and reading after the manifest gets a complete one.">
+      <line x1="40" y1="96" x2="660" y2="96" style="stroke:var(--border,#e2e8f0);stroke-width:1.6"/>
+
+      <circle cx="90" cy="96" r="7" style="fill:var(--dia-b,#2563eb)"/>
+      <text x="90" y="76" text-anchor="middle" style="fill:var(--dia-b-ink,#1d4ed8);font-size:11px">request runs</text>
+
+      <circle cx="290" cy="96" r="7" style="fill:var(--dia-d,#f59e0b)"/>
+      <text x="290" y="76" text-anchor="middle" style="fill:var(--dia-d-ink,#8a5700);font-size:11px">file appears</text>
+      <text x="290" y="124" text-anchor="middle" style="fill:var(--danger-ink,#a4161a);font-size:11px;font-weight:600">still writing</text>
+      <text x="290" y="142" text-anchor="middle" style="fill:var(--danger-ink,#a4161a);font-size:11px">read here: partial day</text>
+
+      <circle cx="470" cy="96" r="7" style="fill:var(--dia-d,#f59e0b)"/>
+      <text x="470" y="76" text-anchor="middle" style="fill:var(--dia-d-ink,#8a5700);font-size:11px">file complete</text>
+
+      <rect x="580" y="83" width="26" height="26" rx="4" style="fill:var(--dia-c,#10b981)"/>
+      <text x="593" y="76" text-anchor="middle" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px;font-weight:600">manifest</text>
+      <text x="593" y="124" text-anchor="middle" style="fill:var(--success-ink,#0a6e50);font-size:11px;font-weight:600">read here: complete</text>
+
+      <line x1="40" y1="160" x2="660" y2="160" style="stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
+      <text x="40" y="182" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">Trigger on the manifest, not on the data file.</text>
+    </svg>
+</div>
+
 <p><strong>Send an empty file when there is no data.</strong> Off by default, and worth switching on for anything automated. A day with no matching data produces nothing at all, and a pipeline cannot tell the difference between no data and no delivery. An empty file with the right name says the request ran and found nothing, which is a real answer.</p>
 
 <p>The remaining options matter less but are worth knowing. Files are delivered as CSV or as a Tableau extract. Data Warehouse compresses anything over 1 MB automatically, and you can force compression for everything. A digital signature file lets a recipient verify the file has not been altered. You can add comment lines at the top of the file, which is helpful for humans and a nuisance for parsers, so leave it off for anything automated.</p>

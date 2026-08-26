@@ -1474,3 +1474,50 @@ not substitute research for them.**
 This is the same principle as the working agreement in `CLAUDE.md`: content is
 written from Amit's notes when he supplies them, and the gotchas and scars are
 the raw material only he has. M19 is the strongest case of it on the whole site.
+
+### Figures, after Amit's review of M16, M17 and M18 (26 August 2026)
+
+Three observations, all measurable and all correct.
+
+**The new modules were 41 to 45% shorter than M15.** M15 sections average 1,703
+prose words; M16 averaged 1,004, M17 1,017, M18 936. Amit's instruction was not
+to pad them, so the length was left alone and the dryness treated as a figure
+problem instead, which is what it mostly was.
+
+**Figure density had collapsed.** M15 carries 5 figures across 4 sections. M16
+had 2, M17 had 2, M18 had 1. **Eight of the twelve new sections had no figure at
+all**, so they read as a wall of prose. This was an overcorrection: after the
+"diagrams are too text heavy" note on M15, I stripped text out of figures and
+also stopped drawing them.
+
+**Some figures were still descriptive.** The measurable test is the longest text
+string inside a figure. M15's figures top out at 9 to 11 words. The new ones
+carried 13, 14 and 19-word explanatory sentences, and the Data Warehouse §1
+figure had **three stacked at the bottom**, which is a paragraph inside a diagram.
+
+**Fixed:** every descriptive line trimmed to a label or one short takeaway, and
+seven figures added so all twelve sections carry one. Every figure now maxes at
+9 words, matching M15.
+
+The seven added, each drawn because prose is bad at that particular idea:
+
+| Section | Figure |
+|---|---|
+| M16 §2 | Metrics widen the table, dimensions multiply it: 400,000 to 80 million to 7.2 billion |
+| M16 §3 | The delivery timeline, showing the manifest arriving last |
+| M17 §2 | A Monday hit arriving on Wednesday, and the lookback window reaching back for it |
+| M17 §4 | The four exclusion filters as a shrinking cascade |
+| M18 §2 | Derived name against `s_objectID`, as two routes from one element |
+| M18 §3 | Link merging three regions into one row, against Link By Region keeping them apart |
+| M18 §4 | Three views, no page reload, all reporting as the entry page |
+
+**The durable rule, and it is now measurable rather than a matter of taste:**
+a figure carries labels plus at most one short takeaway line. **Nothing inside a
+figure should exceed about 10 words.** If an idea needs a sentence, it belongs in
+the prose. Check it with a one-line grep over `<text>` contents rather than by
+eye, because the drift is gradual and every individual line looks reasonable.
+
+Verified after the change: 219 pages, all 12 diagram-box counts matching between
+source and build, no overflow at 375px, every diagram text colour 5.71:1 or
+better in dark, figure heights 180 to 224 with at least 10px below the last
+baseline, no hardcoded hex, no presentation-attribute fills.

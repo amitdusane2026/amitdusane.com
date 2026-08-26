@@ -38,6 +38,41 @@ weight: 4
 
 <p>So a visitor who lands on the home page and moves through three views without a browser reload can produce clicks that all report as having happened on the home page. The link names are right. The region names are right. The page is wrong, and nothing in the report indicates it.</p>
 
+<div class="diagram-box">
+    <div class="diagram-title">No page load means no new page value</div>
+    <svg viewBox="0 0 700 200" style="width:100%;height:auto;display:block" role="img"
+         aria-label="A visitor moves through three views without a browser reload. They land on home, then go to search results, then to a product page. Clicks on all three views report against the page value home, because only the first view triggered a page load.">
+      <defs>
+        <marker id="m18s4a" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" style="fill:var(--text3,#5d6b7e)"/></marker>
+      </defs>
+
+      <rect x="20" y="44" width="150" height="46" rx="6" style="fill:var(--dia-b-soft,rgba(37,99,235,.10));stroke:var(--dia-b,#2563eb);stroke-width:1.6"/>
+      <text x="95" y="64" text-anchor="middle" style="fill:var(--dia-b-ink,#1d4ed8);font-size:12.5px;font-weight:600">home</text>
+      <text x="95" y="81" text-anchor="middle" style="fill:var(--dia-b-ink,#1d4ed8);font-size:11px">page load</text>
+
+      <line x1="180" y1="67" x2="216" y2="67" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#m18s4a)"/>
+      <text x="198" y="55" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">no reload</text>
+
+      <rect x="226" y="44" width="150" height="46" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="301" y="70" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12.5px;font-weight:600">search results</text>
+
+      <line x1="386" y1="67" x2="422" y2="67" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#m18s4a)"/>
+      <text x="404" y="55" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">no reload</text>
+
+      <rect x="432" y="44" width="150" height="46" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="507" y="70" text-anchor="middle" style="fill:var(--text2,#475569);font-size:12.5px;font-weight:600">product</text>
+
+      <line x1="95" y1="112" x2="95" y2="136" style="stroke:var(--dia-b,#2563eb);stroke-width:1.2"/>
+      <line x1="301" y1="112" x2="301" y2="136" style="stroke:var(--danger-ink,#a4161a);stroke-width:1.2;stroke-dasharray:4 3"/>
+      <line x1="507" y1="112" x2="507" y2="136" style="stroke:var(--danger-ink,#a4161a);stroke-width:1.2;stroke-dasharray:4 3"/>
+
+      <rect x="20" y="136" width="562" height="30" rx="4" style="fill:var(--dia-a-soft,rgba(186,33,66,.10));stroke:var(--dia-a,#ba2142);stroke-width:1.4"/>
+      <text x="301" y="155" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:12.5px;font-weight:600">Activity Map Page = home, for all three</text>
+
+      <text x="20" y="190" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">Link and region stay right. The page is wrong.</text>
+    </svg>
+</div>
+
 <p>The damage depends on how you use the data. A report on <code>Activity Map Link</code> alone is unaffected. Anything that breaks down by page, which is most of the useful analysis, is quietly misattributed.</p>
 
 <div class="warn-box">

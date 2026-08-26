@@ -27,6 +27,31 @@ weight: 4
 
 <p><strong>For orders, drop rows where <code>duplicate_purchase</code> is 1.</strong> Adobe already identified these as repeat submissions of the same purchase, usually from somebody refreshing a confirmation page.</p>
 
+<div class="diagram-box">
+    <div class="diagram-title">Adobe counts what is left after four filters</div>
+    <svg viewBox="0 0 700 224" style="width:100%;height:auto;display:block" role="img"
+         aria-label="A cascade of shrinking bars. All rows in the file is the widest. Removing excluded hits shortens it, then removing background hits, then removing data source uploads, then removing duplicate purchases. What remains is labelled the rows Adobe counted.">
+      <rect x="20" y="30" width="560" height="24" rx="3" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="34" y="47" style="fill:var(--text1,#0f172a);font-size:11px;font-weight:600">every row in the file</text>
+      <text x="600" y="47" style="fill:var(--text3,#5d6b7e);font-size:11px">too many</text>
+
+      <rect x="20" y="64" width="470" height="24" rx="3" style="fill:var(--dia-b-soft,rgba(37,99,235,.10));stroke:var(--dia-b,#2563eb);stroke-width:1.4"/>
+      <text x="34" y="81" style="fill:var(--dia-b-ink,#1d4ed8);font-size:11px">exclude_hit = 0</text>
+
+      <rect x="20" y="98" width="430" height="24" rx="3" style="fill:var(--dia-b-soft,rgba(37,99,235,.10));stroke:var(--dia-b,#2563eb);stroke-width:1.4"/>
+      <text x="34" y="115" style="fill:var(--dia-b-ink,#1d4ed8);font-size:11px">customer_perspective = 1</text>
+
+      <rect x="20" y="132" width="400" height="24" rx="3" style="fill:var(--dia-b-soft,rgba(37,99,235,.10));stroke:var(--dia-b,#2563eb);stroke-width:1.4"/>
+      <text x="34" y="149" style="fill:var(--dia-b-ink,#1d4ed8);font-size:11px">hit_source not 5, 7, 8, 9</text>
+
+      <rect x="20" y="166" width="380" height="24" rx="3" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.6"/>
+      <text x="34" y="183" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px;font-weight:600">duplicate_purchase = 0</text>
+      <text x="420" y="183" style="fill:var(--success-ink,#0a6e50);font-size:11px;font-weight:600">what Adobe counted</text>
+
+      <text x="20" y="214" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">Skip these and every number you produce is inflated.</text>
+    </svg>
+</div>
+
 <p>Apply those four and the gap between your count and the report closes most of the way. Skip them and every number you produce will be quietly inflated, in a way nobody downstream can detect, because an inflated number looks exactly like a good month.</p>
 
 <h3 class="subsec-title">Counting the things Workspace counts for you</h3>
