@@ -1521,3 +1521,28 @@ Verified after the change: 219 pages, all 12 diagram-box counts matching between
 source and build, no overflow at 375px, every diagram text colour 5.71:1 or
 better in dark, figure heights 180 to 224 with at least 10px below the last
 baseline, no hardcoded hex, no presentation-attribute fills.
+
+### A collision detector for figures (26 August 2026)
+
+Amit spotted by eye that the M16 §1 figure had a label sitting on top of two
+boxes. He was right: the "same shape" label on the dashed connector rendered 59
+units wide, and the gap between the two boxes it sat between is 42.
+
+That label was mine, added when the connector moved during the text trim. It is
+the kind of fault no existing check catches. The source is valid, the build is
+clean, contrast passes, nothing overflows, and the figure still measures within
+every rule in `diagram-spec.html`.
+
+**There is now an automated check for it.** Render each figure into a detached
+node, call `getBBox()` on every `text` and `rect`, then flag two things: any two
+text elements whose boxes overlap, and any text overlapping a rect whose centre
+is not inside that rect. The second condition is what separates a label sitting
+correctly inside its own box from one colliding with somebody else's.
+
+Verified by re-injecting the removed label and confirming the detector flagged
+exactly the two boxes Amit saw. All 12 figures in M16, M17 and M18 pass.
+
+**Run it after drawing or moving anything inside a figure.** Arithmetic on
+coordinates is not enough: rendered text width depends on the font and cannot be
+predicted from the number of characters, which is precisely how this one got
+through.
