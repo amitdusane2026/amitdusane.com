@@ -1238,3 +1238,34 @@ at 375px in either theme, every diagram colour at 5.71:1 or better in dark, all
 **28 sections remain unwritten**: M16 Activity Map 4, M17 Data Feeds 4,
 M18 Data Warehouse 4, M19 SDR 6, M20 Testing and Debugging 5, M21 CJA 5.
 Launch target is still **end of September**.
+
+### Closing headings, the rest of the corpus (26 August 2026)
+
+Amit's ruling after the M15 fix: **do not make it a rule in either direction.**
+Keep "What you have now" wherever it earns its place, repeat it where that makes
+sense, introduce other repeatable phrasings freely, and write a bespoke heading
+where the section deserves one. Give justice to the section, not to the rule.
+
+The problem was never the phrase. It was repetition inside a stretch a reader
+actually traverses. So the fix was scoped by that test rather than applied
+everywhere.
+
+**M14 Analysis Workspace, 9 of 10 sections.** Seven now carry a heading naming
+their own conclusion: "A tool that refuses nothing", "Read the arrangement
+before the number", "Every chart is a drawing of a table", "The suspicion this
+teaches", "Calibrate it before you trust it", "The dull part decides whether it
+gets used", "The whole of the handover problem". §2 and §6 keep "What you have
+now" deliberately, spaced apart, because both blocks really are an inventory of
+what the section built.
+
+**M02 Report Suites §6 and §7 were adjacent**, which is the only other place a
+reader meets it twice in a row. §7 became "All three fail quietly", which is the
+section's own through-line and fits the silence theme better than the generic
+heading did.
+
+**Four singletons were left alone** on purpose: M06 §8, M05 §4, M07 §5, M10 §3.
+One use inside a module is invisible and the heading is a good one.
+
+Seven uses remain across the corpus, never more than two in a module and never
+adjacent. Verified that no internal link anywhere targets a `#what-you-have-now`
+anchor, so renaming broke nothing; the learning world is unpublished in any case.

@@ -145,7 +145,7 @@ weight: 7
 
 <p>None of that is exhaustive, and it does not need to be. Step 4 is the one worth doing on your own data, because a small metric flagging six times in ninety days is the single fastest way to understand why teams stop trusting automated monitoring.</p>
 
-<h3 class="subsec-title">What you have now</h3>
+<h3 class="subsec-title">Calibrate it before you trust it</h3>
 <p>Anomaly detection builds a picture of what a metric normally does, using a training window that already understands weekends, seasonality and trend, and flags the points that fall outside it. The technique changes with granularity, the window changes with it, and none of it knows anything about releases, campaigns or tracking changes, which means a flag is always a prompt to look and never a conclusion. Contribution analysis takes a daily anomaly and searches every dimension at once to say where the movement came from, which is a genuine time saving and still stops one step short of why.</p>
 
 <p>The habit worth taking is the calibration rather than the feature. Point it at a few metrics that matter, learn how noisy each of them really is, and set expectations from that rather than from the assumption that a flag means something is broken. A monitoring system a team believes is worth more than one that is technically more sensitive, because the second one gets ignored within a month.</p>
