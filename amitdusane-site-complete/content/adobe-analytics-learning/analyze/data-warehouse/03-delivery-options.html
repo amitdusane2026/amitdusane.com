@@ -36,6 +36,16 @@ weight: 3
     </table>
 </div>
 
+<p>It is worth knowing why FTP fell out of favour, because the reason is also what you gain by moving off it.</p>
+
+<p>The first part is the obvious one. Plain FTP sends everything unencrypted, including the username and password, so anyone positioned between the two ends can read the file and help themselves to the credentials. That alone settles it.</p>
+
+<p>The second part matters more day to day, and it is about ownership. An FTP site is a shared folder with one set of credentials. Whoever holds them can read everything in it, write anything, and delete anything, and there is no way to say that one system may read while another may only write. Everyone gets the same door key.</p>
+
+<p>Cloud storage turns that around. The bucket belongs to you and sits inside your own security model, so you grant specific permissions to specific identities: this pipeline may read, that process may write, nobody may delete. You also inherit the encryption, logging and key rotation your organisation already runs everywhere else, rather than maintaining a password on a server somebody set up years ago.</p>
+
+<p>So moving off FTP is not really a protocol upgrade. It moves the destination inside your own perimeter, where your existing controls already apply.</p>
+
 <h3 class="subsec-title">Report options are small settings with large effects</h3>
 <p>The Report options tab looks like formatting preferences. Three of them decide whether an automated process can use the file at all.</p>
 
@@ -86,6 +96,12 @@ weight: 3
 <p>When you do schedule, match the frequency to the decision the file feeds, not to how often the data changes. Data changes constantly. A monthly finance reconciliation needs a monthly file. Sending it weekly means four times the files, four times the storage, and no extra information for the person receiving it.</p>
 
 <p>Also give the schedule a start date that is far enough ahead to be sure the first run is right. A daily request that starts tomorrow gives you one night to discover a mistake.</p>
+
+<p>Two things about scheduling are not obvious from the form, and both stop you saving a request rather than warning you afterwards.</p>
+
+<p>The first is that the date range and the schedule are coupled. Pick a custom date range on the General settings tab and the scheduling options switch off. That is deliberate rather than a fault: a scheduled request needs a rolling period such as Last month, because a fixed set of dates would deliver the same data every time it ran. If you want a schedule, pick one of the presets.</p>
+
+<p>The second is that a notification address is not optional once you deliver anywhere other than email. Choose cloud storage and leave the notification field empty and the request will not save. It is worth treating as a feature rather than an obstacle, because a file going to a bucket has nobody watching it, which is exactly when somebody needs to hear that a run failed.</p>
 
 <div class="warn-box">
     <div class="warn-hdr"><span class="warn-ico"></span>Up to 72 hours is a real number, not a worst case somebody invented</div>

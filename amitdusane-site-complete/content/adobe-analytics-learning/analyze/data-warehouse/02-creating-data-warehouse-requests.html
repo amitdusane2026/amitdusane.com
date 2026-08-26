@@ -101,6 +101,8 @@ weight: 2
 
 <p>Set it to none and you get one set of totals for the whole period. Set it to daily and every row is repeated for every day in the range, so a request covering ninety days becomes ninety times larger. Weekly and monthly sit in between.</p>
 
+<p>One thing about the date range itself surprises people who live in Analysis Workspace. Data Warehouse does not accept the date range components you have built there. It offers its own list of presets, things like Yesterday, Last 7 days, This month and Last month, plus a custom range you enter yourself. The carefully named ranges your team uses in every Workspace project are simply not on the menu here, so the period has to be described again in this form's own terms.</p>
+
 <p>Pick it from what the receiving system needs, not from a feeling that more detail is safer. If the file feeds a dashboard that shows monthly totals, daily granularity is ninety times the rows for no benefit. If somebody downstream needs to build their own trend, you need the daily rows and there is no way around it.</p>
 
 <h3 class="subsec-title">Segments work, with conditions</h3>
