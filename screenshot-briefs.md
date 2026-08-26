@@ -266,3 +266,103 @@ could be identified from its layout.
 a report where the top link is called "Learn more" with 90,000 clicks. If the
 training account's data is too clean to show that, a real pattern from any site
 with repeated generic link text will do, provided the values are not identifying.
+
+---
+
+## Capture day: all 13 outstanding shots, grouped by where you have to be
+
+Modules 15 to 18 are content-reviewed and signed off by Amit (26 Aug 2026).
+**Screenshots are the only thing blocking QA on all sixteen sections.**
+
+The per-shot briefs stay where they are, in the page files and in the module
+sections above. This list exists so capture day is one pass per screen rather
+than thirteen trips around the interface. Full brief for each is in its own
+`shot-pending` block in the content file named.
+
+### Group A — Analysis Workspace, freeform tables (5 shots, one sitting)
+
+All five are a freeform table plus, in two cases, the column settings panel
+opened on top of it. Build one table and most of these fall out of it.
+
+| # | File | Needs |
+|---|---|---|
+| 33 | `adobe-analytics-attribution-column-settings` | Column settings open, non-default attribution ticked, all three controls visible |
+| 37 | `adobe-analytics-attribution-lookback-window-options` | Same panel, lookback drop-down open, container visible above it |
+| 36 | `adobe-analytics-attribution-none-row` | A visibly large None row beside real channels |
+| 39 | `adobe-analytics-low-traffic-row` | A visibly large Low Traffic row on a high cardinality dimension |
+| 44 | `adobe-analytics-activity-map-link-dimension` | Activity Map Link ranked, with generic or blank names near the top |
+
+**Set up before this sitting.** Shot 36 wants a short lookback so None is large;
+force it rather than hoping. Shot 39 wants a dimension with genuinely high
+cardinality and may need a busy month chosen deliberately. Shot 44 wants a messy
+report, not a tidy one, so pick a period where generic link text is visible.
+
+### Group B — Analysis Workspace, Attribution panel (2 shots, one sitting)
+
+Both come from a single built panel, so build it once and take both.
+
+| # | File | Needs |
+|---|---|---|
+| 34 | `adobe-analytics-attribution-panel-model-comparison` | Three models selected, rows ranking differently between them |
+| 35 | `adobe-analytics-attribution-overlap-diagram` | The Venn overlap, three items, intersections labelled |
+
+**Set up before this sitting.** The panel needs a report suite where journeys
+really do contain several touch points. On thin data it builds and shows almost
+nothing, and there is no way to fake it at capture time. Worth checking the
+training account for this before the session rather than during it.
+
+### Group C — Components, calculated metric builder (1 shot)
+
+| # | File | Needs |
+|---|---|---|
+| 38 | `adobe-analytics-calculated-metric-attribution-settings` | Attribution set on a metric inside the definition, title and description filled in |
+
+The title should read like `Orders, U-shaped, 60 day, Visitor` and the
+description should be filled, because the section's argument is that the name and
+description are where a decision survives its author.
+
+### Group D — Tools, Data Warehouse (2 shots, one sitting)
+
+| # | File | Needs |
+|---|---|---|
+| 40 | `adobe-analytics-data-warehouse-build-report` | Build your report tab, a breakdown indented under a dimension, a segment applied |
+| 41 | `adobe-analytics-data-warehouse-report-options` | Report options tab with the three tick boxes on: date range in name, manifest, empty file |
+
+Both are tabs of the same request form, so build one request and move between
+tabs rather than starting twice.
+
+### Group E — Admin, Data feeds (1 shot)
+
+| # | File | Needs |
+|---|---|---|
+| 42 | `adobe-analytics-data-feed-column-selection` | Data structure section, columns selected including `post_` ones, template control visible |
+
+### Group F — Outside Adobe (2 shots, and these are the awkward ones)
+
+| # | File | Needs |
+|---|---|---|
+| 43 | `adobe-analytics-data-feed-post-columns` | A real `hit_data.tsv` row shown with its column names, in a terminal, editor or spreadsheet |
+| 45 | `adobe-analytics-activity-map-overlay` | The Activity Map extension running over a live page |
+
+**43 needs a delivered feed file to exist**, and a row where a raw column and its
+`post_` counterpart visibly differ, which usually means finding a hit where an
+eVar persisted from an earlier hit. Choose a row with harmless values rather than
+blurring anything, and do not use a real production visitor ID.
+
+**45 is the only brief on the site that photographs a rendered web page.** It
+must be the Adobe demo or training property. No customer page, and no page
+identifiable from its layout.
+
+### The two that carry the most weight
+
+If capture time runs short, **33 and 45** are the ones to do first. Shot 33 is
+the only screen showing the three attribution controls together, and a reader
+cannot act on any of module 15 until they have found it. Shot 45 is the version
+of Activity Map everybody has heard of and many readers have never seen.
+
+### Naming, as a reminder
+
+Save as PNG, archive the original under the same name in `screenshot-originals/`
+outside the site folder, then convert into `static/img/` as lossless WebP. The
+file names above are final and already referenced in the content, so they must
+not change.

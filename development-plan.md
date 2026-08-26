@@ -1546,3 +1546,30 @@ exactly the two boxes Amit saw. All 12 figures in M16, M17 and M18 pass.
 coordinates is not enough: rendered text width depends on the font and cannot be
 predicted from the number of characters, which is precisely how this one got
 through.
+
+### Modules 15 to 18: content signed off, screenshots are the only blocker (26 Aug 2026)
+
+Amit has now read all four modules. **Content is approved with no edits on 16, 17
+and 18**, and 15 was approved after the plain-language rewrite and the three
+practical corrections from his own product testing.
+
+**All sixteen sections remain `Content QA'd? = No`, and that is correct.** His
+rule: QA is not complete until the screenshots are in. Nothing gets marked until
+the images land.
+
+**One flag corrected.** M15 §1 had been set to QA'd and Final on the strength of
+his "finalized" comment about the prose. That predates his rule about
+screenshots, and §1 still has a pending shot, so it has been put back to No. The
+tracker now says what it should: 100 sections written, 84 QA'd, 32 outstanding.
+
+**13 shots outstanding across the four modules**, briefed in the page files and
+listed in `screenshot-briefs.md` as shots 33 to 45. That file now also carries a
+capture-day list grouping all 13 by where in the interface they are taken, so the
+session is one pass per screen rather than thirteen trips around the product.
+Five come from one Workspace freeform table, two from a single built Attribution
+panel, two from one Data Warehouse request form, and two are not Adobe screens at
+all.
+
+Three need data set up before capture rather than during it: the Attribution
+panel needs journeys with several touch points or it builds almost nothing, and
+the None and Low Traffic shots both need data that actually produces a large row.
