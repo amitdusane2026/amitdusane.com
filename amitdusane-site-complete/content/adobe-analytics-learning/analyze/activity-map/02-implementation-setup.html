@@ -1,58 +1,177 @@
 ---
 slug: "implementation-setup"
 title: "Implementation and Setup"
-published: 2026-07-15
-lastmod: 2026-07-15
+seotitle: "Activity Map Implementation and Setup in Adobe Analytics"
+published: 2026-08-26
+lastmod: 2026-08-26
+description: "How Adobe works out a link name, what to do when that name is useless, and the elements it silently refuses to track at all."
 type: lesson
 modulenum: 18
 sectionnum: 2
 weight: 2
 ---
-<p>Activity Map requires enabling the module in your implementation and installing the browser extension.</p>
-                <h3 class="subsec-title">Implementation Requirements</h3>
-                <div class="tbl-wrap">
-                    <table>
-                        <thead><tr><th>Method</th><th>Requirement</th></tr></thead>
-                        <tbody>
-                            <tr><td><strong>AppMeasurement</strong></td><td>Activity Map module enabled (included by default in recent versions)</td></tr>
-                            <tr><td><strong>Web SDK</strong></td><td>clickCollectionEnabled: true in configuration</td></tr>
-                            <tr><td><strong>Adobe Launch</strong></td><td>Enable "Link Tracking" in Adobe Analytics extension</td></tr>
-                        </tbody>
-                    </table>
-                </div>
+<p>Somebody opens their first Activity Map report and finds the top link on the site is called <code>Learn more</code>, with 90,000 clicks. Underneath it is <code>&gt;</code> with 40,000, and below that an empty value with 25,000.</p>
 
-                <h3 class="subsec-title">Browser Extension</h3>
-                <ul>
-                    <li><strong>Chrome:</strong> Install from Chrome Web Store</li>
-                    <li><strong>Firefox:</strong> Install from Firefox Add-ons</li>
-                    <li><strong>Edge:</strong> Install from Microsoft Edge Add-ons</li>
-                </ul>
+<p>All three numbers are correct. None of them is useful. There are forty different <code>Learn more</code> links across the site, the arrow is a carousel control that appears on every page, and the empty row is a set of icons with no text in them at all.</p>
 
-                <h3 class="subsec-title">AppMeasurement Configuration</h3>
-                <div class="code-block">
-                    <div class="code-hdr"><span class="code-lang">JavaScript</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-                    <div class="code-body"><pre>// Activity Map is enabled by default in AppMeasurement 2.x
-// To explicitly enable or configure:
+<p>The tracking is working exactly as designed. The names are the problem, and names are decided by the markup rather than by Adobe.</p>
 
-s.ActivityMap = {
-    // Link tracking settings
-    linkExclusions: '',      // CSS selectors to exclude
-    regionExclusions: '',    // Regions to exclude
-    linkMethod: 's_objectID' // Method to identify links
-};
+<h3 class="subsec-title">Switching it on is the easy part</h3>
+<p>Three things have to be true before any data arrives, and on most implementations they already are.</p>
 
-// For custom link identification, use s_objectID
-&lt;a href="page.html" id="nav-link" 
-   onclick="s_objectID='custom_link_name';"&gt;Click Here&lt;/a&gt;</pre></div>
-                </div>
-                <div class="info-box">
-                    <div class="info-hdr"><span class="info-ico"></span>Permissions Required</div>
-                    <p>Users need the "Activity Map" permission in Adobe Analytics to use the tool. Admins can grant this via Admin Console → User Management → Permission Groups.</p>
-                </div>
-                <div class="ref-box">
-                    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
-                    <ul>
-                        <li><a href="https://experienceleague.adobe.com/docs/analytics/analyze/activity-map/activitymap-getting-started/activitymap-getting-started-admins/activitymap-enable.html" target="_blank">Adobe Docs: Getting Started with Activity Map</a></li>
-                    </ul>
-                </div>
-            
+<p><strong>The report suite has Activity Map enabled.</strong> It is a report suite setting, alongside the others covered in <a href="/adobe-analytics-learning/foundations/report-suites/report-suite-settings/">Report Suite Settings</a>.</p>
+
+<p><strong>The collection code includes the Activity Map module.</strong> In a traditional AppMeasurement deployment, that is <code>AppMeasurement_Module_ActivityMap</code> inside your AppMeasurement file. If you deploy through Tags, the Analytics extension has a setting for it. With Web SDK, collection is controlled by <code>clickCollectionEnabled</code>, which is on unless somebody turned it off.</p>
+
+<p><strong>People have permission to see the dimensions.</strong> Granted per product profile in the Admin Console. The overlay additionally needs the Activity Map tool permission and the browser extension.</p>
+
+<p>None of that is the work. The work is everything that decides what the names look like.</p>
+
+<h3 class="subsec-title">How Adobe decides what a link is called</h3>
+<p>When somebody clicks, the code inspects the element and takes the first usable name it can find. Broadly, it uses the visible text of the element, or the <code>value</code> attribute on an input, or the alt text of an image where that is what was clicked.</p>
+
+<p>That works beautifully for a link that says <code>Download the annual report</code> and badly for everything else. Three patterns produce unusable names, and every large site has all three.</p>
+
+<p><strong>Repeated generic text.</strong> Forty links called <code>Learn more</code> collapse into one row with a large number and no meaning. The dimension cannot tell you which one, because as far as the page was concerned they have the same name.</p>
+
+<p><strong>No text at all.</strong> Icon buttons, image links without alt text, and controls built out of styled elements produce blank or nonsense values.</p>
+
+<p><strong>Text that changes.</strong> A link labelled with a price, a count, or a personalised name generates a new dimension value every time it renders, which fragments one link into thousands of rows.</p>
+
+<h3 class="subsec-title">Name the important links yourself</h3>
+<p>The fix is <code>s_objectID</code>, and it is the highest value thing in this module.</p>
+
+<p>Setting that attribute on an element overrides the derived name completely. The link reports under the name you chose, consistently, regardless of what its visible text says or whether that text changes.</p>
+
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">Giving a link a stable name</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>&lt;!-- Derived name: "Learn more". Same as 39 other links. --&gt;
+&lt;a href="/pricing"&gt;Learn more&lt;/a&gt;
+
+&lt;!-- Explicit name, stable forever --&gt;
+&lt;a href="/pricing" id="s_objectID=hero-pricing-cta"&gt;Learn more&lt;/a&gt;</pre></div>
+</div>
+
+<p>You do not do this for every link, which would put you back in the situation Activity Map was invented to avoid. You do it for the links that matter: primary calls to action, navigation elements you compare against each other, and anything whose label is generic, empty or changeable.</p>
+
+<p>Twenty or thirty named elements on a large site is usually enough to turn the reports from interesting to usable, and it is a conversation with front-end developers rather than an analytics project.</p>
+
+<div class="pro-tip">
+    <div class="pro-tip-hdr"><span class="tip-ico"></span>Agree a naming convention before anybody adds the first one</div>
+    <p>The value of an explicit name is that it stays the same across releases and reads clearly in a report next to a thousand derived names. That only holds if everybody follows one pattern. Something like area, then element, then purpose, in lower case with hyphens, gives you names that sort together and are obvious a year later. Agreeing it takes ten minutes and retrofitting it does not, because renaming an element later splits its history into two dimension values with no indication in the report that they are the same thing.</p>
+</div>
+
+<h3 class="subsec-title">Regions come from the id attribute</h3>
+<p>Region is the second half of the picture and it is what makes the data readable at a glance. It answers where on the page the click happened: header, hero, main navigation, footer.</p>
+
+<p>Adobe fills it by walking up from the clicked element until it finds an ancestor with an <code>id</code> attribute, and using that id as the region name. Which means the quality of your region data is entirely decided by whether your page has meaningful ids on its structural containers.</p>
+
+<p>Sites built with sensible markup get this for free. Sites where ids are generated by a framework get regions called things like <code>ember1423</code>, which change on every build and are worthless. If that is your situation, <code>ActivityMap.regionIDAttribute</code> lets you point Adobe at a different attribute instead, so you can use a stable custom attribute rather than the framework's generated ids.</p>
+
+<h3 class="subsec-title">What it will not track, whatever you do</h3>
+<p>Several things produce no data at all, silently, and one of them catches modern sites constantly.</p>
+
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>Not tracked</th><th>Why</th><th>What to do</th></tr></thead>
+        <tbody>
+            <tr><td><code>&lt;button type="button"&gt;</code></td><td>Excluded by design</td><td>Track it with a manual link call</td></tr>
+            <tr><td>Anchors with no valid <code>href</code></td><td>Nothing to follow</td><td>Give it an href, or track manually</td></tr>
+            <tr><td>Inputs without a <code>src</code></td><td>Nothing to name it by</td><td>Use <code>s_objectID</code></td></tr>
+            <tr><td>Anything seen but not clicked</td><td>It records clicks only</td><td>Nothing. This is the boundary of the feature</td></tr>
+            <tr><td>Non-link elements</td><td>Not clickable in the markup sense</td><td>Manual link tracking</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="warn-box">
+    <div class="warn-hdr"><span class="warn-ico"></span>Modern component libraries produce exactly the elements Activity Map ignores</div>
+    <p>A React or Vue site built from a component library is full of <code>&lt;button type="button"&gt;</code> elements and anchors with no href, because navigation is handled in JavaScript rather than by the browser. Both are invisible to Activity Map. The reports still populate, because plenty of ordinary links remain, so nothing looks broken. What actually happens is that the most important interactive elements on the newest parts of the site are missing from a report that appears complete, and nobody notices because there is no empty row to point at. If your site is a single page application, assume this is happening and go and check specific components rather than trusting the ranked list.</p>
+</div>
+
+<h3 class="subsec-title">Exclusions keep the noise down</h3>
+<p>Two settings remove things you do not want counted.</p>
+
+<p><code>ActivityMap.linkExclusions</code> filters out clicks whose link name matches what you list. Useful for controls that appear on every page and swamp the report without telling you anything, such as carousel arrows or pagination.</p>
+
+<p><code>ActivityMap.regionExclusions</code> does the same for regions. Useful when a framework generates a region name that changes constantly and fills your dimension with values that mean nothing.</p>
+
+<p>Both are worth using deliberately and sparingly. An exclusion is invisible in the report afterwards, so somebody looking at the data in a year has no way to know that a category of click was removed, unless it is written down somewhere they will find.</p>
+
+<h3 class="subsec-title">Follow along: check what your own pages produce</h3>
+<p>Twenty minutes, and it usually surfaces at least one thing worth fixing.</p>
+
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>Find the links your reports cannot name</span></div>
+    <ol class="dothis-steps">
+        <li class="ds-group">Part one, look at the names you already have</li>
+        <li>
+            <span class="ds-do">Build a freeform table with <code>Activity Map Link</code> in the rows and <code>Occurrences</code> in the column, over a month.</span>
+        </li>
+        <li>
+            <span class="ds-do">Read the top twenty rows and mark any that are generic, blank, or obviously the same element appearing many times.</span>
+            <span class="ds-see"><code>Learn more</code>, <code>Next</code>, <code>&gt;</code>, and empty rows are the usual suspects.</span>
+        </li>
+        <li>
+            <span class="ds-do">Break down one generic row by <code>Activity Map Page</code>.</span>
+            <span class="ds-see">This tells you how many different places share that one name, which is the size of the problem.</span>
+        </li>
+        <li class="ds-group">Part two, look at the regions</li>
+        <li>
+            <span class="ds-do">Put <code>Activity Map Region</code> in a table on its own.</span>
+            <span class="ds-see">If you see generated ids that look like machine output, your regions are coming from framework ids and need <code>regionIDAttribute</code> pointed elsewhere.</span>
+        </li>
+        <li class="ds-group">Part three, check what is missing</li>
+        <li>
+            <span class="ds-do">Open your most important page and inspect its primary call to action in browser developer tools.</span>
+            <span class="ds-see">If it is a <code>&lt;button type="button"&gt;</code> or an anchor with no href, it is not being tracked at all.</span>
+        </li>
+        <li>
+            <span class="ds-do">Search your Activity Map Link dimension for that element's text to confirm.</span>
+            <span class="ds-see">Absent from the report confirms it. This is the finding worth taking to a developer.</span>
+        </li>
+        <li>
+            <span class="ds-do">Write a short list of elements to give an <code>s_objectID</code>, using one naming convention.</span>
+            <span class="ds-see">Twenty or thirty is plenty. Start with anything you would put in a report for a stakeholder.</span>
+        </li>
+    </ol>
+    <p class="dothis-end">There is nothing to configure in Adobe for any of this. The report suite setting is either on or off, and everything that decides data quality lives in the markup of your own site.</p>
+</div>
+
+<div class="shot-box shot-pending">
+    <div class="shot-title">What a report looks like before anybody names anything</div>
+    <div class="shot-frame">
+        <p class="shot-brief">FILE     adobe-analytics-activity-map-link-dimension.webp
+SCREEN   Analysis Workspace &gt; freeform table with Activity Map Link in rows and Occurrences in the column
+STATE    A ranked list of Activity Map Link values including at least one generic repeated name such as "Learn more" or "Next", and ideally a blank or symbol-only row, so the naming problem is visible.
+INCLUDE  The dimension name in the header, at least eight ranked rows with their numbers and percentage bars.
+EXCLUDE  Client link names and page names that identify a customer.
+WHY      The section opens on a report full of unusable names. Seeing a real ranked list with generic values at the top makes the problem concrete, and it is what a reader will find when they first open the dimension themselves.</p>
+    </div>
+</div>
+
+<h3 class="subsec-title">The markup decides the report</h3>
+<p>Turning Activity Map on takes three settings that are usually already correct. Everything that decides whether the data is worth reading happens in the HTML of your own site.</p>
+
+<p>Link names are derived from visible text, input values and alt text, which fails for generic labels, empty icons and text that changes. <code>s_objectID</code> overrides the derived name and is the single most valuable change you can make, applied to twenty or thirty important elements rather than everywhere. Agree the naming convention first, because renaming later splits the history.</p>
+
+<p>Regions come from the nearest ancestor id, so framework-generated ids give you meaningless regions and <code>regionIDAttribute</code> is the way out. Exclusions remove noise and are invisible afterwards, so write them down.</p>
+
+<p>And some things are never tracked whatever you do, including <code>&lt;button type="button"&gt;</code> and anchors without an href, which is exactly what a modern component library produces. The report will look complete while the newest parts of your site are missing from it.</p>
+
+<p>With names worth reading, the question becomes what to do with them. There are two quite different ways to look at this data, one on top of the live page and one in a report, and they suit different questions and different audiences. <a href="/adobe-analytics-learning/analyze/activity-map/using-activity-map/">Using Activity Map</a> covers both.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Analytics</div>
+    <p>The report suite switch is at Analytics &gt; <span class="path">Admin</span> &gt; <span class="path">Report Suites</span> &gt; select suite &gt; <span class="path">Edit Settings</span> &gt; <span class="path">General</span> &gt; <span class="path">Activity Map</span>.</p>
+    <p>Everything else is in your implementation rather than in Adobe. The module lives in AppMeasurement or is switched on in the Analytics extension in Tags. <span class="path">s_objectID</span>, <span class="path">regionIDAttribute</span>, <span class="path">linkExclusions</span> and <span class="path">regionExclusions</span> are all set in code or in your tag management configuration.</p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/analyze/activity-map/getting-started" target="_blank">Adobe Docs: Getting Started with Activity Map</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/implementation/vars/config-vars/activitymap-regionidattribute" target="_blank">Adobe Docs: ActivityMap.regionIDAttribute</a></li>
+        <li><a href="https://experienceleague.adobe.com/docs/analytics/analyze/activity-map/troubleshoot-data-collection.html" target="_blank">Adobe Docs: Troubleshoot Activity Map Data Collection</a></li>
+    </ul>
+</div>

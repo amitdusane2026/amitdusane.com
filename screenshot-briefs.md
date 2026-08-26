@@ -243,3 +243,26 @@ ID should not be a real production identifier.
 judgment and arithmetic with no screen behind them. M17 §1 carries the request
 to row figure, which does that section's teaching better than a screenshot of a
 text file would.
+
+---
+
+## M18 Activity Map — briefed 26 Aug 2026, 2 shots, none captured
+
+Only two, and both are in the middle sections. §1 carries the click-to-dimensions
+figure, which teaches that section better than a picture would, and §4 is
+judgment with no Adobe screen behind it.
+
+| # | Section | File | Screen |
+|---|---|---|---|
+| 44 | M18 §2 Implementation and Setup | `adobe-analytics-activity-map-link-dimension` | A ranked link list full of unusable names |
+| 45 | M18 §3 Using Activity Map | `adobe-analytics-activity-map-overlay` | **The overlay drawn on a live page** |
+
+**Shot 45 needs care about which site is on screen.** It is the only brief on the
+site that photographs a rendered web page rather than an Adobe interface, so it
+must be the Adobe demo or training property. No customer page, and no page that
+could be identified from its layout.
+
+**Shot 44 wants a genuinely messy report**, not a tidy one. The section opens on
+a report where the top link is called "Learn more" with 90,000 clicks. If the
+training account's data is too clean to show that, a real pattern from any site
+with repeated generic link text will do, provided the values are not identifying.

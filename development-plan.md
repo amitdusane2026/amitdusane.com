@@ -1378,9 +1378,99 @@ multi-paragraph callout boxes.
 
 ### Where this leaves the section
 
-**Written: 96 of 116 sections.** 20 remain: M18 Activity Map 4, M19 SDR 6,
+**Written: 100 of 116 sections.** 16 remain: M19 SDR 6,
 M20 Testing and Debugging 5, M21 CJA 5.
 
 M15 is written and awaiting Amit's screenshots before QA sign-off; only §1 is
 signed off so far. M16 and M17 are written and unread. Launch target is still
 **end of September**.
+
+---
+
+## M18 Activity Map, 26 August 2026 — WRITTEN
+
+Four sections, written in the same pass as M16 and M17 and in the same style.
+Amit has not read M16, M17 or M18 yet; all three are written and unreviewed. He
+asked for M18 to be completed while he worked on other things.
+
+### The spine, and the unlearning that carries the module
+
+The obvious framing for Activity Map is "the click overlay", and that framing is
+what makes most implementations of it useless. The module is built on the
+opposite claim: **the overlay is the shop window and the four dimensions are the
+product.**
+
+`Activity Map Link`, `Activity Map Region`, `Activity Map Page` and
+`Activity Map Link By Region` are ordinary dimensions. They segment, trend, break
+down and take conversion metrics like anything else. The overlay can do none of
+that. Most teams install the extension, look at a page, and never once put the
+dimension into a report where it could be compared.
+
+**Web SDK proves the point better than any argument.** Web SDK collects Activity
+Map data through `clickCollectionEnabled`, on by default, so all four dimensions
+populate normally. The browser overlay is **not supported on Web SDK at all.** So
+a migration keeps every piece of analysis and deletes the picture. That matters
+for this site specifically, given the migration world sitting next door.
+
+### The two findings worth keeping
+
+**Single page applications break the page dimension.** Activity Map watches for
+DOM changes rather than page loads, which is what lets it work at all on a modern
+site. What it does not do is re-establish which page it is on: clicks on views
+reached without a browser reload are attributed to the page value from when the
+view first loaded. Link and region names stay correct. The page is wrong and
+nothing in the report says so. Any page-level breakdown on an SPA is suspect, and
+the workaround is explicit `s_objectID` names carrying their own context.
+
+**`<button type="button">` is never tracked.** Nor are anchors without a valid
+href, nor inputs without a src. That is precisely what a React or Vue component
+library produces, so on a modern site the most important interactive elements can
+be missing from a report that looks complete. There is no empty row to notice.
+
+### Where the data quality actually comes from
+
+Not from Adobe. Link names are derived from the markup: visible text, input
+value, or image alt. That fails three ways on every large site, and all three are
+in the module: repeated generic text (forty links called "Learn more" collapse
+into one row), no text at all (icon buttons), and text that changes (prices,
+counts, personalised labels fragment one link into thousands of values).
+
+`s_objectID` overrides the derived name and is the highest-value change
+available. Twenty or thirty named elements is enough. Regions come from the
+nearest ancestor `id`, so framework-generated ids produce worthless regions and
+`regionIDAttribute` is the way out.
+
+### Verified
+
+219 pages. 116 sections source-to-build checked, 0 mismatched. All 26 headings
+render whole in the spine, none truncated. 12 internal links resolve. No overflow
+at 375px including the code block and the five-row element table. In dark mode
+the only `--on-accent` text sits on a `--dia-b` fill at 7.02:1, and 5.17:1 in
+light. Sentence medians 13 to 15 words. Read times 7 to 9 minutes.
+
+Two screenshot briefs, shots 44 and 45. §1 and §4 get none: §1's figure does that
+section's teaching, and §4 is judgment with no screen behind it.
+
+---
+
+## M19 SDR is deliberately NOT to be drafted
+
+**Amit's instruction, 26 August 2026, and it is a hard stop.**
+
+Do not write the Solution Design Reference module from market standards or from
+Adobe's suggested format. There are generic SDR templates circulating and Adobe
+suggests one, and drafting from those would produce exactly the generic content
+this site exists to avoid.
+
+**Amit built SDR templates while he was at Adobe. They were widely adopted and
+became de facto standards, and he has searched and cannot find them published
+anywhere.** He holds them and wants the module treated carefully on that basis.
+
+So M19 waits for his material. A future session that reads the tracker, sees six
+unwritten SDR sections and starts drafting would be actively destroying the one
+thing that makes that module worth publishing. **Ask him for the templates; do
+not substitute research for them.**
+
+This is the same principle as the working agreement in `CLAUDE.md`: content is
+written from Amit's notes when he supplies them, and the gotchas and scars are
+the raw material only he has. M19 is the strongest case of it on the whole site.

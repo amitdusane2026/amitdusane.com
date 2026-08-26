@@ -1,67 +1,145 @@
 ---
 slug: "using-activity-map"
 title: "Using Activity Map"
-published: 2026-07-15
-lastmod: 2026-07-15
+seotitle: "Using Activity Map in Adobe Analytics"
+published: 2026-08-26
+lastmod: 2026-08-26
+description: "The overlay on the live page and the dimensions in Workspace answer different questions. Which to reach for, and what Live mode cannot do."
 type: lesson
 modulenum: 18
 sectionnum: 3
 weight: 3
 ---
-<p>Once installed, Activity Map provides several views and tools for analyzing link clicks.</p>
-                <h3 class="subsec-title">Main Views</h3>
-                <div class="tbl-wrap">
-                    <table>
-                        <thead><tr><th>View</th><th>Description</th><th>Use Case</th></tr></thead>
-                        <tbody>
-                            <tr><td><strong>Overlay Mode</strong></td><td>Bubbles displayed on page links</td><td>Visual click analysis</td></tr>
-                            <tr><td><strong>Bubble Mode</strong></td><td>Gradient bubbles showing rank</td><td>Quick identification of popular links</td></tr>
-                            <tr><td><strong>Gainer/Loser</strong></td><td>Links with biggest changes</td><td>Trend identification</td></tr>
-                            <tr><td><strong>Top Links</strong></td><td>Ranked list of all links</td><td>Detailed link comparison</td></tr>
-                            <tr><td><strong>Page Details</strong></td><td>Page-level metrics</td><td>Overall page performance</td></tr>
-                        </tbody>
-                    </table>
-                </div>
+<p>There are two quite different experiences of Activity Map, and people tend to know only one of them.</p>
 
-                <h3 class="subsec-title">Metrics Available</h3>
-                <ul>
-                    <li><strong>Link Clicks:</strong> Total clicks on each link</li>
-                    <li><strong>Link Clicks %:</strong> Percentage of total page clicks</li>
-                    <li><strong>Region Clicks:</strong> Clicks within page regions</li>
-                    <li><strong>Link Rank:</strong> Position relative to other links</li>
-                    <li><strong>Time on Page:</strong> Average time spent (page details)</li>
-                </ul>
+<p>The first is the overlay. You install a browser extension, open your own website, switch it on, and numbers appear on top of the page you are looking at. It is immediate, it needs no report building, and it is the version everybody demonstrates.</p>
 
-                <h3 class="subsec-title">Filtering Options</h3>
-                <div class="code-block">
-                    <div class="code-hdr"><span class="code-lang">Activity Map Filters</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-                    <div class="code-body"><pre>Date Ranges:
-├── Real-time (last 15 min)
-├── Today
-├── Yesterday
-├── Last 7 days
-├── Last 14 days
-└── Last 30 days
+<p>The second is four dimensions in a components list. It looks like nothing at all and it is where the actual analysis happens.</p>
 
-Segments:
-├── Apply any Adobe Analytics segment
-├── Filter to specific visitor groups
-└── Compare segment behavior
+<h3 class="subsec-title">Two ways to look at the same four dimensions</h3>
+<p>Both views read the same data. Nothing is collected for one and not the other. The difference is entirely in what each one lets you ask.</p>
 
-Metrics:
-├── Link Clicks (default)
-├── Page Views
-├── Time Spent
-└── Custom events (if configured)</pre></div>
-                </div>
-                <div class="pro-tip">
-                    <div class="pro-tip-hdr"><span class="tip-ico"></span>Pro Tip</div>
-                    <p>Use the "Compare" feature to see how link clicks changed between two time periods. This is invaluable for measuring the impact of page redesigns or A/B tests.</p>
-                </div>
-                <div class="ref-box">
-                    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
-                    <ul>
-                        <li><a href="https://experienceleague.adobe.com/docs/analytics/analyze/activity-map/activitymap-reporting-analytics.html" target="_blank">Adobe Docs: Activity Map Links Report</a></li>
-                    </ul>
-                </div>
-            
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th></th><th>The overlay</th><th>Workspace</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Shows you</strong></td><td>Numbers drawn on the live page</td><td>Rows in a table</td></tr>
+            <tr><td><strong>Best for</strong></td><td>A conversation in front of a page</td><td>Anything you need to compare or prove</td></tr>
+            <tr><td><strong>Segments</strong></td><td>Not in Live mode</td><td>Yes, any segment</td></tr>
+            <tr><td><strong>Virtual report suites</strong></td><td>Not in Live mode</td><td>Yes</td></tr>
+            <tr><td><strong>Trends over time</strong></td><td>No</td><td>Yes</td></tr>
+            <tr><td><strong>Conversion metrics</strong></td><td>No</td><td>Yes, any metric</td></tr>
+            <tr><td><strong>Needs</strong></td><td>Extension, tool permission, a live page</td><td>Ordinary Workspace access</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<p>Reading that table, the division of labour is obvious. Use the overlay to show somebody something. Use Workspace to decide anything.</p>
+
+<h3 class="subsec-title">The overlay, and what Live mode cannot do</h3>
+<p>The overlay runs as a browser extension in Chrome, Edge or Firefox. It needs the Activity Map tool permission and access to the dimensions, both granted per product profile, so it is common for an analyst to have Workspace access and no overlay.</p>
+
+<p>Once running, it draws each tracked link's activity onto the page as you browse it, so you see the ranking in place rather than as a list of names you have to picture.</p>
+
+<p>That in-place quality is the whole value, and it is genuinely persuasive in a room. A designer arguing that the hero button is the important one can be shown, on their own page, that the third item in the navigation gets four times the clicks. No table achieves that in the same number of seconds.</p>
+
+<p>Live mode has real limits, and they are the reason it cannot be your analysis tool. Segments do not work in it, so you cannot look at one audience. It does not work with virtual report suites, so if your reporting is built on one, the overlay is showing you a different population from your dashboards. And some links are not ranked at all, typically ones inside menus that are hidden until you interact with them.</p>
+
+<div class="info-box">
+    <div class="info-hdr"><span class="info-ico"></span>The overlay shows the page as it is now, and the data as it was</div>
+    <p>This catches people after a redesign. The overlay draws numbers onto whatever page is currently in your browser, using data collected over the period you selected. If the page changed last week, you are looking at old click data positioned on a new layout, and elements that did not exist then simply have nothing. It is not wrong, but it invites a wrong reading, because everything on screen looks like it belongs together. After any redesign, either shorten the date range to the period since launch or accept that you are comparing two different pages.</p>
+</div>
+
+<h3 class="subsec-title">Link by Region is the one people miss</h3>
+<p>Three of the four dimensions are self-explanatory. The fourth is the one that answers the questions people actually have.</p>
+
+<p><code>Activity Map Link</code> on its own tells you a link called <code>Contact us</code> was clicked 30,000 times. That link is in the header, in the footer, and on the support page, and the dimension has merged all three.</p>
+
+<p><code>Activity Map Link By Region</code> keeps them apart, because it combines the link name with the region it sat in. Now you can see that the footer version gets almost everything and the header version is barely used, which is an actual finding somebody can act on.</p>
+
+<p>Any time a link appears in more than one place, and most navigation does, this is the dimension to reach for. It is also the one that makes a good region setup pay off, which is the argument for fixing region names when they are generated nonsense.</p>
+
+<h3 class="subsec-title">Clicks are popularity, not value</h3>
+<p>The most common mistake with this data is treating the ranked list as a ranking of importance.</p>
+
+<p>A link near the top of a page, in the navigation, or repeated on every template will collect enormous numbers because of where it is. That tells you about placement. It says nothing about whether the people who clicked it went on to do anything worth doing.</p>
+
+<p>The correction is one column. Put a conversion metric beside occurrences and the list usually reorders. A link with a tenth of the clicks and five times the order rate is the more valuable element, and it is invisible in the overlay, which only knows about clicks.</p>
+
+<p>This is the single strongest argument for working in Workspace rather than on the page. The overlay can show what is popular. Only a report can show what works.</p>
+
+<h3 class="subsec-title">Follow along: read one page both ways</h3>
+<p>Half an hour, and the point is to feel the difference rather than to produce anything.</p>
+
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>The same page, on the page and in a table</span></div>
+    <ol class="dothis-steps">
+        <li class="ds-group">Part one, on the page</li>
+        <li>
+            <span class="ds-do">Install the Activity Map extension, sign in, and open a page you know well on your own site.</span>
+            <span class="ds-see">If the extension shows nothing, check the tool permission before assuming the data is missing.</span>
+        </li>
+        <li>
+            <span class="ds-do">Set a sensible date range and read the ranking in place.</span>
+            <span class="ds-see">Note the top three elements. Note anything that surprises you, because that is the finding.</span>
+        </li>
+        <li>
+            <span class="ds-do">Try to view it for one audience, for example new visitors only.</span>
+            <span class="ds-see">You cannot. This is Live mode's limit and the reason for part two.</span>
+        </li>
+        <li class="ds-group">Part two, in a table</li>
+        <li>
+            <span class="ds-do">In Workspace, put <code>Activity Map Page</code> in rows, find that page, and break it down by <code>Activity Map Link By Region</code>.</span>
+            <span class="ds-see">Use Link By Region rather than Link, so repeated navigation items stay separate.</span>
+        </li>
+        <li>
+            <span class="ds-do">Add a conversion metric beside occurrences.</span>
+            <span class="ds-see">Compare the two orderings. Where they disagree is where the interesting conversation is.</span>
+        </li>
+        <li>
+            <span class="ds-do">Apply the segment you could not apply in the overlay.</span>
+            <span class="ds-see">New against returning usually moves the ranking more than people expect.</span>
+        </li>
+        <li>
+            <span class="ds-do">Trend the top element over the last quarter.</span>
+            <span class="ds-see">If something was redesigned in that period, you should be able to see it.</span>
+        </li>
+    </ol>
+    <p class="dothis-end">There is nothing to configure. The overlay for showing, the table for deciding, and the same four dimensions underneath both.</p>
+</div>
+
+<div class="shot-box shot-pending">
+    <div class="shot-title">Click numbers drawn onto the page itself</div>
+    <div class="shot-frame">
+        <p class="shot-brief">FILE     adobe-analytics-activity-map-overlay.webp
+SCREEN   The Activity Map browser extension active over a live web page
+STATE    The overlay switched on over a page with several tracked links visible, showing the ranked numbers or coloured indicators in place on the page, plus the extension's own control panel with the date range and mode visible.
+INCLUDE  Enough of the page for a reader to see the numbers sitting on real page elements, and the extension controls showing the selected date range.
+EXCLUDE  Any client website. Use the Adobe training or demo site so no customer page is identifiable.
+WHY      This is the version of Activity Map everybody has heard of and many readers have never seen. The whole argument of the section is that this view is persuasive and limited, and the picture is what makes the first half of that obvious.</p>
+    </div>
+</div>
+
+<h3 class="subsec-title">Show the overlay, decide in the report</h3>
+<p>The overlay and the four dimensions read the same data and suit different jobs. The overlay puts numbers on a real page, which is unbeatable for showing somebody something they did not believe. It cannot segment, it does not work with virtual report suites, it cannot trend, and it knows nothing about conversion.</p>
+
+<p>Workspace does all of those and looks like nothing. That is where the analysis belongs.</p>
+
+<p>Reach for Link By Region whenever a link appears in more than one place, which is most navigation, because plain Link merges them and hides the answer. And put a conversion metric next to the click count every time, because a ranked list of clicks is a ranking of placement rather than of value.</p>
+
+<p>What remains is the judgment around all of it: which questions this data answers honestly, where it quietly misleads, and what a single page application does to it. <a href="/adobe-analytics-learning/analyze/activity-map/activity-map-best-practices/">Activity Map Best Practices</a> covers those, including the one structural problem that has no clean fix.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Analytics</div>
+    <p>The four dimensions are in the components list in Analytics &gt; <span class="path">Workspace</span>. Search for <span class="path">Activity Map</span> and all four appear together.</p>
+    <p>The overlay is a browser extension for Chrome, Edge or Firefox, installed from the browser's own extension store and signed in with your Adobe credentials. It requires the <span class="path">Analytics Tools &gt; Activity Map</span> permission and access to the Activity Map dimensions, both set per product profile in the Admin Console.</p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/analyze/activity-map/getting-started" target="_blank">Adobe Docs: Getting Started with Activity Map</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/dimensions/activity-map-region" target="_blank">Adobe Docs: Activity Map Region</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/analyze/activity-map/faq" target="_blank">Adobe Docs: Activity Map FAQ</a></li>
+    </ul>
+</div>

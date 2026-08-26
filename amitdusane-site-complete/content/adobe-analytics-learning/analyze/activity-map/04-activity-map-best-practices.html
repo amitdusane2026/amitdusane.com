@@ -1,63 +1,131 @@
 ---
 slug: "activity-map-best-practices"
 title: "Activity Map Best Practices"
-published: 2026-07-15
-lastmod: 2026-07-15
+seotitle: "Activity Map Best Practices in Adobe Analytics"
+published: 2026-08-26
+lastmod: 2026-08-26
+description: "What this data answers honestly, where it misleads, what single page apps do to it, and why a Web SDK migration should be planned around it."
 type: lesson
 modulenum: 18
 sectionnum: 4
 weight: 4
 ---
-<p>Get the most out of Activity Map with these tips and solutions to common issues.</p>
-                <h3 class="subsec-title">Best Practices</h3>
-                <ul>
-                    <li><strong>Use s_objectID:</strong> Implement custom link IDs for consistent tracking</li>
-                    <li><strong>Define regions:</strong> Use HTML5 landmarks or data attributes for region tracking</li>
-                    <li><strong>Exclude navigation:</strong> Filter out persistent nav links to focus on content</li>
-                    <li><strong>Combine with Workspace:</strong> Export data for deeper analysis</li>
-                    <li><strong>Regular reviews:</strong> Check Activity Map monthly for UX insights</li>
-                </ul>
+<p>Activity Map is the cheapest data in Adobe Analytics. Nobody instruments it, nobody maintains it, and it accumulates whether or not anyone is looking.</p>
 
-                <h3 class="subsec-title">Common Issues & Solutions</h3>
-                <div class="tbl-wrap">
-                    <table>
-                        <thead><tr><th>Issue</th><th>Cause</th><th>Solution</th></tr></thead>
-                        <tbody>
-                            <tr><td><strong>No data showing</strong></td><td>Module not enabled</td><td>Verify AppMeasurement includes Activity Map</td></tr>
-                            <tr><td><strong>Links not tracked</strong></td><td>Dynamic content</td><td>Implement s_objectID for dynamic links</td></tr>
-                            <tr><td><strong>Wrong link names</strong></td><td>Duplicate link text</td><td>Use unique s_objectID values</td></tr>
-                            <tr><td><strong>Extension not working</strong></td><td>Permissions</td><td>Check user has Activity Map permission</td></tr>
-                            <tr><td><strong>Overlays misaligned</strong></td><td>Page changes after load</td><td>Click "Refresh" to realign overlays</td></tr>
-                        </tbody>
-                    </table>
-                </div>
+<p>Cheap data invites lazy questions, and this data has a narrow honest range with a lot of plausible-looking answers just outside it. Knowing where that edge is turns out to be most of using it well.</p>
 
-                <h3 class="subsec-title">Link Identification Hierarchy</h3>
-                <div class="code-block">
-                    <div class="code-hdr"><span class="code-lang">How Activity Map Identifies Links</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-                    <div class="code-body"><pre>Activity Map uses this priority order to name links:
+<h3 class="subsec-title">The questions it answers, and the ones it does not</h3>
+<p>It answers three kinds of question properly.</p>
 
-1. s_objectID (if set via onclick)
-2. Link text content
-3. Alt text (for image links)
-4. Title attribute
-5. href attribute (fallback)
+<p><strong>Which of these competing elements do people use?</strong> Three calls to action on a page, four items in a navigation, two routes to the same destination. This is what it was built for and it is very good at it.</p>
 
-Best Practice: Always use s_objectID for:
-- Links with identical text ("Learn More", "Click Here")
-- Dynamic/JavaScript links
-- Image-only links
-- Links that change frequently</pre></div>
-                </div>
+<p><strong>Did a design change move behaviour?</strong> Trend a link before and after a release. As long as the element kept its name, this is clean evidence.</p>
 
-                <div class="warn-box">
-                    <div class="warn-hdr"><span class="warn-ico"></span>Privacy Considerations</div>
-                    <p>Activity Map tracks link clicks which may include personally identifiable information if links contain user data. Review your implementation to ensure PII is not captured in link tracking.</p>
-                </div>
-                <div class="ref-box">
-                    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
-                    <ul>
-                        <li><a href="https://experienceleague.adobe.com/docs/analytics/analyze/activity-map/activitymap-faq.html" target="_blank">Adobe Docs: Activity Map FAQ</a></li>
-                    </ul>
-                </div>
-            
+<p><strong>Is anybody using this at all?</strong> A feature somebody fought for that turns out to get forty clicks a month is a real finding, and a cheap one.</p>
+
+<p>Three questions it cannot answer, however confident the report looks.</p>
+
+<p><strong>What proportion of people who saw it clicked it?</strong> It has no idea who saw anything. You must supply a denominator, and page views of the containing page is an approximation rather than an answer.</p>
+
+<p><strong>Why did people not click?</strong> There is no data about non-clicks, so every explanation is a story somebody made up.</p>
+
+<p><strong>Where were people looking?</strong> Different question, different tool. Clicks are not attention.</p>
+
+<h3 class="subsec-title">Single page apps break the page dimension</h3>
+<p>This is the structural problem, it has no clean fix, and it affects a growing share of sites.</p>
+
+<p>Activity Map watches the page for changes rather than waiting for a reload, which is what lets it work on a modern site at all. What it does not do is re-establish which page it is on. New content that appears without a page load is attributed to the page dimension value from when the view first loaded.</p>
+
+<p>So a visitor who lands on the home page and moves through three views without a browser reload can produce clicks that all report as having happened on the home page. The link names are right. The region names are right. The page is wrong, and nothing in the report indicates it.</p>
+
+<p>The damage depends on how you use the data. A report on <code>Activity Map Link</code> alone is unaffected. Anything that breaks down by page, which is most of the useful analysis, is quietly misattributed.</p>
+
+<div class="warn-box">
+    <div class="warn-hdr"><span class="warn-ico"></span>Check this before building anything on the page dimension</div>
+    <p>The test takes ten minutes. Pick a journey on your site that moves between views without a full page load, click something distinctive on the second or third view, then find that click in the Activity Map Link dimension and break it down by Activity Map Page. If it reports against the page you started on rather than the one you were actually looking at, every page-level Activity Map report in your organisation is affected. The practical response is to lean on <code>Activity Map Link By Region</code> and on explicit <code>s_objectID</code> names that carry their own context, rather than trusting the page breakdown. Naming an element <code>checkout-step2-continue</code> survives this problem entirely, which is another argument for explicit names on anything that matters.</p>
+</div>
+
+<h3 class="subsec-title">Plan for losing the overlay</h3>
+<p>Any organisation moving from AppMeasurement to Web SDK should know this before the migration rather than after.</p>
+
+<p>Web SDK collects Activity Map data. The setting is on by default and the four dimensions keep populating exactly as before, so every report, segment and dashboard built on them continues to work.</p>
+
+<p>The browser overlay does not work with Web SDK. It is not a configuration problem to solve, it is not supported.</p>
+
+<p>Which matters more than it sounds, because of who uses which half. Analysts live in Workspace and lose nothing. Designers, product managers and content teams often only ever used the overlay, and for them the feature disappears entirely on migration day. If nobody warned them, that lands as analytics being broken.</p>
+
+<p>The answer is to say so early and to move those people onto reports before the migration, not after. A saved project showing the pages they care about, broken down by link and region, does the same job and survives the change.</p>
+
+<h3 class="subsec-title">Keep the dimension readable</h3>
+<p>Three habits, and the first is worth more than the other two together.</p>
+
+<p><strong>Name the elements that matter, to a convention.</strong> Twenty or thirty <code>s_objectID</code> values covering primary calls to action and key navigation is enough to make the reports usable. One naming pattern, agreed once, applied by whoever builds the front end. Renaming later splits the history, so it is worth getting right before the first one ships.</p>
+
+<p><strong>Document your exclusions.</strong> Link and region exclusions are invisible in the report. Somebody looking at the data next year cannot tell that a whole category of click was removed. Write down what is excluded and why, somewhere the next analyst will actually find it.</p>
+
+<p><strong>Re-check after every significant release.</strong> A front-end change can rename links, change region ids, or convert an anchor into a button that is no longer tracked at all. None of that produces an error. The report simply becomes less true, and it does so quietly.</p>
+
+<div class="pro-tip">
+    <div class="pro-tip-hdr"><span class="tip-ico"></span>Put the health check in the release process, not in the analytics backlog</div>
+    <p>The failure mode with this data is never dramatic. Nothing breaks, no alert fires, and the report keeps rendering with slightly wrong numbers for months. Because there is no incident, it never becomes urgent enough to schedule, which is why almost every mature implementation has Activity Map data nobody quite trusts. The fix is to attach the check to something that already happens: when a template changes, somebody confirms the important elements still report under the same names. Five minutes, tied to an event that occurs anyway, is the only version of this that gets done.</p>
+</div>
+
+<h3 class="subsec-title">Follow along: an Activity Map health check</h3>
+<p>Half an hour, once a quarter or after a significant release. This is the routine worth handing to somebody else.</p>
+
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>Five checks that keep the data honest</span></div>
+    <ol class="dothis-steps">
+        <li>
+            <span class="ds-do">Put <code>Activity Map Link</code> in a table over the last month and read the top twenty rows.</span>
+            <span class="ds-see">Look for new generic names, new blanks, and names that fragmented into near-duplicates after a release.</span>
+        </li>
+        <li>
+            <span class="ds-do">Check that your named elements are still reporting under their <code>s_objectID</code> values.</span>
+            <span class="ds-see">Search the dimension for each convention prefix. A missing one means a developer removed the attribute.</span>
+        </li>
+        <li>
+            <span class="ds-do">Put <code>Activity Map Region</code> in a table and look for machine-generated ids.</span>
+            <span class="ds-see">New framework ids appearing means a component was rebuilt and the region setup needs revisiting.</span>
+        </li>
+        <li>
+            <span class="ds-do">Run the single page application test: click something on a second view and check which page it reports against.</span>
+            <span class="ds-see">If it reports the entry page, avoid page breakdowns and rely on explicit names instead.</span>
+        </li>
+        <li>
+            <span class="ds-do">Open your most important template and inspect its primary call to action.</span>
+            <span class="ds-see">Confirm it is still an anchor with an href or a tracked button, and not a <code>&lt;button type="button"&gt;</code> that vanished from the data.</span>
+        </li>
+        <li>
+            <span class="ds-do">Write the result down, even when everything passed.</span>
+            <span class="ds-see">A dated note saying the check ran and found nothing is what lets somebody trust the data without repeating the work.</span>
+        </li>
+    </ol>
+    <p class="dothis-end">There is nothing to configure. Five checks against your own reports and one look at your own markup, tied to something that already happens in the release cycle.</p>
+</div>
+
+<h3 class="subsec-title">Free data still needs a decision</h3>
+<p>Activity Map costs nothing to collect and accumulates whether anybody uses it, which is exactly why it needs more judgment than data somebody had to fight for. It answers which competing element people use, whether a change moved behaviour, and whether anything is being used at all. It cannot give you a rate without a denominator you supply, cannot explain a non-click, and knows nothing about attention.</p>
+
+<p>Single page applications attribute clicks to the page value from when the view first loaded, which quietly breaks page-level breakdowns and is best worked around with explicit names that carry their own context.</p>
+
+<p>Web SDK keeps the dimensions and loses the overlay, so a migration removes the feature entirely for the people who only ever used the picture. Move them onto reports first.</p>
+
+<p>And the whole thing rests on names that came from your own markup, so it degrades silently with every front-end release unless somebody checks.</p>
+
+<p>What Activity Map gives you for free is a name for every link somebody happened to click. What it cannot do is measure something on your terms: a specific interaction, named how you want it, carrying the variables you choose, fired when you decide it matters. That is deliberate instrumentation, and <a href="/adobe-analytics-learning/collect/tracking-calls/link-tracking/">Link Tracking</a> is where it is done. The two are complements rather than alternatives, and knowing which to reach for is the practical skill.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Analytics</div>
+    <p>All four dimensions live in the components list in Analytics &gt; <span class="path">Workspace</span>. Everything in this section is done there, in reports, rather than in an admin screen.</p>
+    <p>The report suite switch is at Analytics &gt; <span class="path">Admin</span> &gt; <span class="path">Report Suites</span> &gt; <span class="path">Edit Settings</span> &gt; <span class="path">General</span> &gt; <span class="path">Activity Map</span>. Exclusions and named elements are set in your implementation, not in Adobe.</p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/analyze/activity-map/faq" target="_blank">Adobe Docs: Activity Map FAQ</a></li>
+        <li><a href="https://experienceleague.adobe.com/docs/analytics/analyze/activity-map/troubleshoot-data-collection.html" target="_blank">Adobe Docs: Troubleshoot Activity Map Data Collection</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/implementation/vars/config-vars/activitymap-regionexclusions" target="_blank">Adobe Docs: ActivityMap.regionExclusions</a></li>
+    </ul>
+</div>
