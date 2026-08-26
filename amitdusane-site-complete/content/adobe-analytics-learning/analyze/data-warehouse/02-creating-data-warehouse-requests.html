@@ -1,62 +1,158 @@
 ---
 slug: "creating-data-warehouse-requests"
 title: "Creating Data Warehouse Requests"
-published: 2026-07-15
-lastmod: 2026-07-15
+seotitle: "Creating a Data Warehouse Request in Adobe Analytics"
+published: 2026-08-26
+lastmod: 2026-08-26
+description: "You are describing a table you will not see for hours, to a system that asks no questions. Six tabs, and the mistakes that only surface on delivery."
 type: lesson
 modulenum: 16
 sectionnum: 2
 weight: 2
 ---
-<p>Data Warehouse requests are built by selecting dimensions, metrics, segments, and date ranges, then choosing a delivery method.</p>
-                <h3 class="subsec-title">Request Components</h3>
-                <div class="tbl-wrap">
-                    <table>
-                        <thead><tr><th>Component</th><th>Description</th><th>Limits</th></tr></thead>
-                        <tbody>
-                            <tr><td><strong>Date Range</strong></td><td>Time period for data extraction</td><td>Up to 36 months historical</td></tr>
-                            <tr><td><strong>Dimensions</strong></td><td>Breakdown attributes</td><td>Multiple levels supported</td></tr>
-                            <tr><td><strong>Metrics</strong></td><td>Quantitative measurements</td><td>Most standard + custom events</td></tr>
-                            <tr><td><strong>Segments</strong></td><td>Filter data subset</td><td>Must be DW-compatible</td></tr>
-                            <tr><td><strong>Granularity</strong></td><td>Time breakdown level</td><td>Hour, Day, Week, Month, Year</td></tr>
-                        </tbody>
-                    </table>
-                </div>
+<p>Most first requests are wrong in the same way. Somebody asks for a quarter of data, and rather than work out what they need, the person building it adds every dimension that might be useful and every metric anybody has ever asked for. It seems safe. If it is all in there, nobody has to wait another three days.</p>
 
-                <h3 class="subsec-title">Building a Request</h3>
-                <div class="code-block">
-                    <div class="code-hdr"><span class="code-lang">Example Request Structure</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-                    <div class="code-body"><pre>Request Name: Monthly Campaign Performance Export
+<p>The file arrives two days later at several gigabytes, with a row for every combination of six dimensions. Nobody can open it in a spreadsheet. The one number the manager wanted is in there somewhere, spread across eleven thousand rows that need summing first.</p>
 
-Date Range: Last Month
-Granularity: Day
+<p>Building a good request is mostly about resisting that instinct. You are not exporting data. You are describing one specific table.</p>
 
-Dimensions (Rows):
-├── Marketing Channel
-├── Tracking Code
-└── Device Type
+<h3 class="subsec-title">A request is a table you describe blind</h3>
+<p>The difference from Workspace is worth naming, because it changes how you should think while building.</p>
 
-Metrics (Columns):
-├── Visits
-├── Orders
-├── Revenue
-└── Units
+<p>In Workspace you build by looking. You drag something in, see what comes back, and adjust. The report is a conversation, and being roughly right on the first attempt is fine because the second attempt costs you four seconds.</p>
 
-Segment: Purchasers Only
+<p>A Data Warehouse request has no second attempt inside the same day. You describe the table completely, submit it, and find out whether you were right when the file lands. So the work moves to the front. Before you open the request form, you should be able to say what one row of the finished file represents.</p>
 
-Delivery: SFTP to data-warehouse.company.com
-Format: CSV
-Schedule: Monthly on 3rd day</pre></div>
-                </div>
+<p>That single sentence is the most useful discipline in this module. "One row is one search term, for one product category, for one day." If you cannot say it, you are not ready to build the request, and adding more dimensions will not help.</p>
 
-                <div class="warn-box">
-                    <div class="warn-hdr"><span class="warn-ico"></span>Segment Compatibility</div>
-                    <p>Not all segments work in Data Warehouse. Segments using sequential logic, certain dimensions (like time-based), or hit containers with visit/visitor metrics may be incompatible. Check the compatibility icon in the segment builder.</p>
-                </div>
-                <div class="ref-box">
-                    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
-                    <ul>
-                        <li><a href="https://experienceleague.adobe.com/docs/analytics/export/data-warehouse/create-request/dw-request-build.html" target="_blank">Adobe Docs: Create Data Warehouse Request</a></li>
-                    </ul>
-                </div>
-            
+<h3 class="subsec-title">Six tabs, and what each one decides</h3>
+<p>Tools &gt; Data Warehouse &gt; Add opens a form with six sections. They are not equally important and the middle two do most of the work.</p>
+
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>Tab</th><th>What it decides</th><th>Watch out for</th></tr></thead>
+        <tbody>
+            <tr><td><strong>General settings</strong></td><td>Request name, report suite, date range</td><td>The name is what you will search for in a year. Make it describe the contents.</td></tr>
+            <tr><td><strong>Build your report</strong></td><td>Metrics, dimensions, breakdowns and segments. The table itself.</td><td>Every extra dimension multiplies rows. This is where files get out of hand.</td></tr>
+            <tr><td><strong>Report destination</strong></td><td>Where the finished file is sent</td><td>Covered in Delivery Options.</td></tr>
+            <tr><td><strong>Report options</strong></td><td>File name, format, compression, manifest, row count</td><td>Covered in Delivery Options.</td></tr>
+            <tr><td><strong>Scheduling options</strong></td><td>One-off, or a repeating schedule</td><td>Only scheduled requests can be edited later. This one has real consequences.</td></tr>
+            <tr><td><strong>Notification email</strong></td><td>Who hears that it succeeded or failed</td><td>Put a shared inbox here, not one person.</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<p>The scheduling point deserves flagging early because it is not obvious and it cannot be undone. A request you set up as a one-off cannot be edited afterwards. If you got a dimension wrong, you build a new request from scratch. A scheduled request can be opened and changed, so people who work with Data Warehouse regularly tend to schedule almost everything, even things they expect to run once.</p>
+
+<h3 class="subsec-title">Dimensions multiply, metrics do not</h3>
+<p>This is the arithmetic that decides whether your file is useful or unusable, and it is easy to get wrong because nothing warns you.</p>
+
+<p>Adding a metric adds a column. Ten metrics is ten columns and the file is barely any longer.</p>
+
+<p>Adding a dimension adds rows, and it does not add them, it multiplies them. One dimension with 400,000 values gives you 400,000 rows. Break it down by product category with 200 values and you are asking for every combination that actually occurred, which can easily be several million rows. Add day granularity across a quarter and you have multiplied again by ninety.</p>
+
+<p>So the rule of thumb is to be generous with metrics and mean with dimensions. Metrics are cheap. Every dimension you add should be one you will actually group by or filter on when the file lands somewhere else.</p>
+
+<div class="pro-tip">
+    <div class="pro-tip-hdr"><span class="tip-ico"></span>Test the shape on one day before you ask for a quarter</div>
+    <p>Build the request exactly as you want it, but set the date range to a single day, and send it to email. It usually comes back quickly and it tells you three things you cannot learn any other way: whether the columns are the ones you expected, whether the row count is in the range you assumed, and whether the values look sane. Multiply that row count by the number of days you actually want and you know the size of the real file before you commit three days to producing it. This one habit prevents most of the wasted requests in this module.</p>
+</div>
+
+<h3 class="subsec-title">Granularity is a dimension wearing a different name</h3>
+<p>The date granularity setting looks like a formatting choice and behaves like a dimension.</p>
+
+<p>Set it to none and you get one set of totals for the whole period. Set it to daily and every row is repeated for every day in the range, so a request covering ninety days becomes ninety times larger. Weekly and monthly sit in between.</p>
+
+<p>Pick it from what the receiving system needs, not from a feeling that more detail is safer. If the file feeds a dashboard that shows monthly totals, daily granularity is ninety times the rows for no benefit. If somebody downstream needs to build their own trend, you need the daily rows and there is no way around it.</p>
+
+<h3 class="subsec-title">Segments work, with conditions</h3>
+<p>You can apply segments to a request, and this is usually the right way to narrow it. A segment for purchasers is better than exporting everybody and filtering later.</p>
+
+<p>The condition is that segments have to be compatible with Data Warehouse, and not all of them are. A definition that runs perfectly in Workspace can be refused here, usually because it mixes container scopes in a way this engine cannot process, or uses a sequential construction, or contains a component Data Warehouse does not support. The rule underneath is simple: anything unsupported in a request is also unsupported in a segment applied to that request.</p>
+
+<p>Segment compatibility is flagged in the segment builder itself, and the mechanics are covered in <a href="/adobe-analytics-learning/analyze/segments/segment-types-sharing/">Segment Types and Sharing</a>. The practical habit is to check compatibility when you build the segment rather than discovering it here.</p>
+
+<div class="warn-box">
+    <div class="warn-hdr"><span class="warn-ico"></span>Calculated metrics are refused, and this is where plans collapse</div>
+    <p>Data Warehouse does not accept calculated metrics at all. Not some of them, none of them. Teams whose entire reporting vocabulary is built on calculated metrics discover this at the point of building the export, after the export has been promised. There are two ways out and both need deciding early. Either export the underlying metrics and rebuild the calculation in whatever system receives the file, which is usually correct and means the definition now lives in two places, or accept that this particular number cannot come from Data Warehouse. Whichever you choose, write down where the definition now lives, because a formula that exists in two systems will drift.</p>
+</div>
+
+<h3 class="subsec-title">Follow along: build a request that fits</h3>
+<p>This builds a real request end to end, sized so that it comes back quickly. Stop before the destination tab, which the next section covers properly.</p>
+
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>One search term, one category, one day</span></div>
+    <ol class="dothis-steps">
+        <li class="ds-group">Part one, decide before you click</li>
+        <li>
+            <span class="ds-do">Write down, in one sentence, what a single row of your finished file will represent.</span>
+            <span class="ds-see">For this exercise: one row is one search term, for one product category, for one day.</span>
+        </li>
+        <li class="ds-group">Part two, build it</li>
+        <li>
+            <span class="ds-do">Go to <code>Tools</code> <span class="ds-sep">&rsaquo;</span> <code>Data Warehouse</code> and choose <code>Add</code>.</span>
+        </li>
+        <li>
+            <span class="ds-do">On <code>General settings</code>, name it so the contents are obvious, pick your report suite, and set the date range to <strong>one day</strong>.</span>
+            <span class="ds-see">Something like <code>search-term-by-category-daily</code>. Avoid names like <code>test</code> and <code>DW request 3</code>.</span>
+        </li>
+        <li>
+            <span class="ds-do">On <code>Build your report</code>, add <code>Orders</code> and <code>Revenue</code> as metrics.</span>
+            <span class="ds-see">Metrics are columns. Two or ten makes little difference to the file size.</span>
+        </li>
+        <li>
+            <span class="ds-do">Add <code>Internal Search Term</code> as your dimension, then add <code>Product Category</code> as a breakdown underneath it.</span>
+            <span class="ds-see">This is the step that decides the row count. Two dimensions, not six.</span>
+        </li>
+        <li>
+            <span class="ds-do">Apply a segment if you have a compatible one. A purchasers segment is a good test.</span>
+            <span class="ds-see">If the segment is greyed out or refused, that is the compatibility rule, not a fault.</span>
+        </li>
+        <li>
+            <span class="ds-do">Set granularity to <code>Daily</code>, then set the destination to email and submit.</span>
+            <span class="ds-see">Email is fine for a one day test file. Anything larger belongs in cloud storage.</span>
+        </li>
+        <li class="ds-group">Part three, read what comes back</li>
+        <li>
+            <span class="ds-do">When the file arrives, check the columns against your sentence from part one, and count the rows.</span>
+            <span class="ds-see">Multiply that row count by the number of days you really want. That is the size of the real request.</span>
+        </li>
+    </ol>
+    <p class="dothis-end">There is nothing else to configure on the reporting side. A date range, some metrics, one or two dimensions, and a segment. Everything after this is about where the file goes and how often, which is the next section.</p>
+</div>
+
+<div class="shot-box shot-pending">
+    <div class="shot-title">The tab where the table is actually decided</div>
+    <div class="shot-frame">
+        <p class="shot-brief">FILE     adobe-analytics-data-warehouse-build-report.webp
+SCREEN   Analytics &gt; Tools &gt; Data Warehouse &gt; Add &gt; Build your report tab
+STATE    The Build your report tab with at least two metrics added, one dimension with a breakdown beneath it, and a segment applied, so the nesting is visible.
+INCLUDE  The metrics area, the dimension with its breakdown showing the indent, the segment area, and the six tab names down the side or across the top so a reader can see where they are in the form.
+EXCLUDE  Client report suite names and any client dimension values.
+WHY      This is the one screen where the shape of the file is decided, and the breakdown indent is the thing that multiplies rows. Readers need to recognise it before they build their first request.</p>
+    </div>
+</div>
+
+<h3 class="subsec-title">Say what one row is, then build</h3>
+<p>A Data Warehouse request is a table described in advance to a system that will not ask you anything and will not let you adjust once it starts. The work belongs at the front, and the test is whether you can say in one sentence what a single row of the result represents.</p>
+
+<p>Metrics are columns and cost you almost nothing. Dimensions are rows and multiply, and granularity is another dimension in disguise. Segments are the right way to narrow a request, as long as the definition is compatible. Calculated metrics are refused outright, which is the constraint most likely to force a redesign, so check for it before anything is promised.</p>
+
+<p>Schedule requests even when you expect them to run once, because a one-off cannot be edited afterwards and a scheduled one can.</p>
+
+<p>What is left is the half of the form this section skipped. A finished table has to arrive somewhere a person or a system can actually use, in a format they can read, often on a repeating cycle nobody has to remember. <a href="/adobe-analytics-learning/analyze/data-warehouse/delivery-options/">Delivery Options</a> covers destinations, file formats, scheduling, and the small settings that decide whether an automated pipeline works or breaks quietly.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Analytics</div>
+    <p>Analytics &gt; <span class="path">Tools</span> &gt; <span class="path">Data Warehouse</span> &gt; <span class="path">Add</span>. The form opens on <span class="path">General settings</span> and the tabs run in order through Build your report, Report destination, Report options, Scheduling options and Notification email.</p>
+    <p>Existing requests are listed on the same Data Warehouse page with their status. Only requests configured to run on a schedule can be opened and edited; a completed one-off request can be copied but not changed.</p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/docs/analytics/export/data-warehouse/t-dw-create-request.html?lang=en" target="_blank">Adobe Docs: Create a Data Warehouse Request</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/export/data-warehouse/segment-compatibility" target="_blank">Adobe Docs: Data Warehouse Segment Compatibility</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/export/data-warehouse/data-warehouse-requests-manage" target="_blank">Adobe Docs: Manage Data Warehouse Requests</a></li>
+    </ul>
+</div>

@@ -1,78 +1,138 @@
 ---
 slug: "processing-data-feeds"
 title: "Processing Data Feeds"
-published: 2026-07-15
-lastmod: 2026-07-15
+seotitle: "Processing Adobe Analytics Data Feeds"
+published: 2026-08-26
+lastmod: 2026-08-26
+description: "Counting raw rows is easy. Getting the same answer as Adobe is not. The rows to discard, the metrics to rebuild, and why the gap is the lesson."
 type: lesson
 modulenum: 17
 sectionnum: 4
 weight: 4
 ---
-<p>Working with Data Feeds requires understanding how to parse, join, and analyze the raw data.</p>
-                <h3 class="subsec-title">Common Processing Steps</h3>
-                <div class="code-block">
-                    <div class="code-hdr"><span class="code-lang">ETL Pipeline Example</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-                    <div class="code-body"><pre>1. DOWNLOAD & EXTRACT
-   - Download files from delivery location
-   - Extract from gzip compression
-   - Validate manifest file counts
+<p>The first thing anybody does with a data feed is count the rows and compare the number to Analysis Workspace.</p>
 
-2. PARSE HIT DATA
-   - Read hit_data.tsv with column headers
-   - Handle tab-delimited format
-   - Convert Unix timestamps to datetime
+<p>It never matches. The raw count is always higher, sometimes by a few per cent and sometimes by a great deal. The usual reaction is to assume the feed is wrong, or that the report is wrong, or that somebody has misconfigured something.</p>
 
-3. JOIN LOOKUP TABLES
-   - Match browser IDs to browser names
-   - Match geo IDs to country/region names
-   - Join custom event names
+<p>Nothing is wrong. Adobe does not count every row, and the rows it discards are marked in the file. Working out which ones, and why, is most of what processing a feed involves.</p>
 
-4. FILTER & CLEAN
-   - Remove bot traffic (exclude_hit > 0)
-   - Filter test/internal traffic
-   - Handle null/empty values
+<h3 class="subsec-title">The rows you have to throw away</h3>
+<p>Four filters do nearly all the work of making raw rows agree with reporting.</p>
 
-5. TRANSFORM
-   - Parse products string into rows
-   - Calculate visit-level aggregations
-   - Build visitor profiles
+<p><strong>Keep only rows where <code>exclude_hit</code> is 0.</strong> This is the big one. Adobe marks rows it excluded from reporting for a range of reasons, including bot filtering and IP exclusions, and it hands them to you anyway. Reporting never counted them.</p>
 
-6. LOAD
-   - Insert into data warehouse
-   - Update analytics database
-   - Trigger downstream processes</pre></div>
-                </div>
+<p><strong>Keep only rows where <code>customer_perspective</code> is 1.</strong> Unless you specifically want mobile background hits, which most analysis does not.</p>
 
-                <h3 class="subsec-title">Best Practices</h3>
-                <ul>
-                    <li><strong>Idempotent processing:</strong> Design to handle re-processing same files</li>
-                    <li><strong>Monitor delivery:</strong> Alert on missing or late feeds</li>
-                    <li><strong>Validate row counts:</strong> Compare to manifest file</li>
-                    <li><strong>Archive raw files:</strong> Keep originals before processing</li>
-                    <li><strong>Handle late data:</strong> Adobe may redeliver corrected files</li>
-                </ul>
+<p><strong>Drop rows where <code>hit_source</code> is 5, 7, 8 or 9.</strong> These are data source uploads rather than hits your site sent, and mixing them with live traffic double counts.</p>
 
-                <div class="pro-tip">
-                    <div class="pro-tip-hdr"><span class="tip-ico"></span>Pro Tip</div>
-                    <p>Create a "visitor_id" column by concatenating visid_high and visid_low. This gives you a unique visitor identifier for joining across hits and building visitor-level tables.</p>
-                </div>
+<p><strong>For orders, drop rows where <code>duplicate_purchase</code> is 1.</strong> Adobe already identified these as repeat submissions of the same purchase, usually from somebody refreshing a confirmation page.</p>
 
-                <div class="code-block">
-                    <div class="code-hdr"><span class="code-lang">SQL: Create Visitor ID</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-                    <div class="code-body"><pre>-- Concatenate visitor ID components
-SELECT 
-    CONCAT(visid_high, '-', visid_low) as visitor_id,
-    visit_num,
-    hit_time_gmt,
-    post_pagename,
-    post_evar1
-FROM hit_data
-WHERE exclude_hit = 0  -- Exclude bot traffic</pre></div>
-                </div>
-                <div class="ref-box">
-                    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
-                    <ul>
-                        <li><a href="https://experienceleague.adobe.com/docs/analytics/export/analytics-data-feed/data-feed-overview.html" target="_blank">Adobe Docs: Data Feeds</a></li>
-                    </ul>
-                </div>
-            
+<p>Apply those four and the gap between your count and the report closes most of the way. Skip them and every number you produce will be quietly inflated, in a way nobody downstream can detect, because an inflated number looks exactly like a good month.</p>
+
+<h3 class="subsec-title">Counting the things Workspace counts for you</h3>
+<p>Standard metrics have to be rebuilt from the rows, and the recipes are worth knowing even if you never write one, because they show you what a metric actually is.</p>
+
+<p><strong>Page views.</strong> Count rows that have a value in <code>post_pagename</code> or <code>post_page_url</code>. This one is close to what people expect.</p>
+
+<p><strong>Unique visitors.</strong> Concatenate <code>post_visid_high</code> and <code>post_visid_low</code>, then count distinct values. Both halves, always. One half alone will merge unrelated people.</p>
+
+<p><strong>Visits.</strong> This is where it stops being obvious. Concatenate the visitor ID pair with <code>visit_num</code> and <code>visit_start_time_gmt</code>, then count distinct combinations. The visit start time is in there because visit numbers can repeat in rare cases, and without it two separate visits occasionally collapse into one.</p>
+
+<p><strong>Events.</strong> The <code>post_event_list</code> column holds comma separated numbers. Split it, then join each number to <code>event.tsv</code> to find out which event it was. Counting an event means counting rows whose event list contains its number.</p>
+
+<p><strong>Revenue.</strong> Parse it out of <code>post_product_list</code>, which packs product, category, quantity and price into one delimited string, then sum after removing duplicate purchases.</p>
+
+<div class="info-box">
+    <div class="info-hdr"><span class="info-ico"></span>A visit is not a thing in the data. It is a rule applied to rows.</div>
+    <p>This is the idea worth carrying out of the whole module. There is no visit stored anywhere in Adobe Analytics. A visit is what you get when you group rows by visitor and visit number, and that grouping was decided by rules about inactivity timeouts and session boundaries that somebody at Adobe wrote down. The same is true of unique visitors, of revenue, and of every other number in every report you have ever presented. None of them exists until something counts. Seeing that once is what changes how you argue about numbers, because it moves the question from whether a number is right to which rule produced it.</p>
+</div>
+
+<h3 class="subsec-title">Your first count will still not match, and that is informative</h3>
+<p>Even with the filters applied and the metrics built correctly, small differences remain. The common causes are worth knowing, because each one sends you somewhere different.</p>
+
+<p><strong>Late-arriving hits.</strong> Adobe keeps updating a day as stragglers come in. Your file was cut at a moment. Recent days will differ and older days will settle. This is the first thing to check and it explains most small gaps.</p>
+
+<p><strong>Time zones.</strong> The feed uses GMT. Your report suite has its own time zone. A day boundary in one is not a day boundary in the other, so a daily comparison can be off by several hours of traffic at both ends.</p>
+
+<p><strong>Virtual report suites.</strong> Feeds run against the parent suite, never a virtual one. If the dashboard you are comparing against sits on a virtual report suite, you are comparing two different populations. This is covered in <a href="/adobe-analytics-learning/foundations/report-suites/virtual-report-suites/">Virtual Report Suites</a>.</p>
+
+<p><strong>Raw columns instead of post_ columns.</strong> If somebody built the pipeline on the unprefixed columns, persistence and processing rules were never applied, and the numbers will disagree in ways that look random.</p>
+
+<div class="warn-box">
+    <div class="warn-hdr"><span class="warn-ico"></span>Reconcile once, at the start, and write down what you found</div>
+    <p>Every feed pipeline should be reconciled against Adobe reporting before anybody trusts it, on a closed period rather than on recent days, for two or three metrics people actually use. Doing that once takes an afternoon and gives you a documented gap you can explain. Skipping it means the first person to notice a discrepancy discovers it in front of stakeholders, at which point the whole warehouse loses credibility rather than the one metric that was wrong. Record the reconciliation and the residual difference somewhere the next person will find, because they will ask the same question and nobody will remember the answer.</p>
+</div>
+
+<h3 class="subsec-title">Where feeds actually go</h3>
+<p>Three destinations account for nearly all feed pipelines, and the shape of the work differs in each.</p>
+
+<p><strong>A warehouse or lake of your own.</strong> The rows are loaded into tables and queried alongside everything else the business holds. This is where joining Adobe behaviour to orders, customers and cost data actually happens, and it is the main reason feeds exist.</p>
+
+<p><strong>Customer Journey Analytics.</strong> Adobe's own newer product consumes hit-level data rather than finished reports. Worth noticing: when Adobe built the next generation, it went back to this layer rather than to the reporting layer above it.</p>
+
+<p><strong>Data science.</strong> Sequence and propensity work needs individual events in order, which is what the file is. The filters above still apply, and they matter more here, because a model trained on excluded hits learns from traffic that was never real.</p>
+
+<h3 class="subsec-title">Follow along: reconcile one day</h3>
+<p>This is the exercise that makes somebody trustworthy with feed data. Pick a closed day at least a week old so late hits have settled.</p>
+
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>Make raw rows agree with the report</span></div>
+    <ol class="dothis-steps">
+        <li class="ds-group">Part one, the naive count</li>
+        <li>
+            <span class="ds-do">Count every row in one day's hit data file, with no filtering at all.</span>
+            <span class="ds-see">Write the number down. It is going to be too high.</span>
+        </li>
+        <li>
+            <span class="ds-do">Build the same day in Workspace with <code>Occurrences</code> and note that number too.</span>
+            <span class="ds-see">The gap between the two is what the filters are about to explain.</span>
+        </li>
+        <li class="ds-group">Part two, filter properly</li>
+        <li>
+            <span class="ds-do">Keep only rows where <code>exclude_hit</code> is 0 and <code>customer_perspective</code> is 1, and drop <code>hit_source</code> values of 5, 7, 8 and 9.</span>
+            <span class="ds-see">Count again after each filter rather than all at once. You learn which one was responsible.</span>
+        </li>
+        <li class="ds-group">Part three, rebuild two real metrics</li>
+        <li>
+            <span class="ds-do">Count distinct <code>post_visid_high</code> plus <code>post_visid_low</code> and compare to Unique Visitors for that day.</span>
+        </li>
+        <li>
+            <span class="ds-do">Count distinct visitor ID plus <code>visit_num</code> plus <code>visit_start_time_gmt</code> and compare to Visits.</span>
+            <span class="ds-see">Try it without the visit start time as well, and see whether it changes. On most data it barely does, which is why people leave it out and are occasionally wrong.</span>
+        </li>
+        <li class="ds-group">Part four, explain the remainder</li>
+        <li>
+            <span class="ds-do">If a gap remains, check the report suite time zone against GMT, and confirm the dashboard is not on a virtual report suite.</span>
+            <span class="ds-see">Those two explain most of what survives the filters.</span>
+        </li>
+        <li>
+            <span class="ds-do">Write down the final numbers, the filters used, and the residual difference.</span>
+            <span class="ds-see">This document is what lets the next person trust the pipeline without repeating the exercise.</span>
+        </li>
+    </ol>
+    <p class="dothis-end">There is nothing to configure. Four filters, two metrics, and one written record of the result. That record is the deliverable, more than the pipeline is.</p>
+</div>
+
+<h3 class="subsec-title">Nothing here is free</h3>
+<p>Raw rows do not become numbers by themselves. Adobe discards rows before it counts, and it marks them for you in <code>exclude_hit</code>, <code>customer_perspective</code>, <code>hit_source</code> and <code>duplicate_purchase</code>. Miss those and every figure you produce is inflated in a way nobody downstream can see.</p>
+
+<p>The metrics people take for granted have to be rebuilt. Unique visitors is a concatenation of two columns. A visit is a grouping of three or four. Revenue is parsed out of a delimited string. Each of them is a rule somebody wrote, applied to rows, and none of them exists in the data until something counts.</p>
+
+<p>That is the reason to know this layer even if you never build a pipeline. Every number in every report is the output of rules like these, applied to rows like these. Once you have seen a visit assembled out of four columns, you stop treating reported numbers as facts and start treating them as results, which is the more accurate and more useful way to hold them.</p>
+
+<p>It also puts the earlier modules in their place. The tracking call decided what arrived. Processing rules and VISTA decided what the post_ columns say, and the difference between the two versions of a column is those rules made visible. If you want to change what lands in a feed, that is where the change is made, and <a href="/adobe-analytics-learning/shape/processing-rules/what-are-processing-rules/">What Are Processing Rules</a> is where those decisions live.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Analytics</div>
+    <p>Nothing in this section happens in the Adobe interface. The work is in whatever reads the file: a warehouse, a notebook, a pipeline.</p>
+    <p>The one Adobe screen worth having open is Analytics &gt; <span class="path">Admin</span> &gt; <span class="path">Data feeds</span> &gt; <span class="path">Jobs</span>, which confirms which deliveries actually ran. Before investigating a number, confirm the day you are reconciling was delivered completely.</p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/export/analytics-data-feed/data-feed-contents/datafeeds-calculate" target="_blank">Adobe Docs: Calculate Metrics from Data Feeds</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/export/analytics-data-feed/data-feed-contents/datafeeds-reference" target="_blank">Adobe Docs: Data Column Reference</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/experience-cloud-kcs/kbarticles/ka-20916" target="_blank">Adobe Docs: Workspace and Data Feed Page Views Differ</a></li>
+    </ul>
+</div>

@@ -1,46 +1,167 @@
 ---
 slug: "data-feeds-overview"
 title: "Data Feeds Overview"
-published: 2026-07-15
-lastmod: 2026-07-15
+seotitle: "Adobe Analytics Data Feeds Overview"
+published: 2026-08-26
+lastmod: 2026-08-26
+description: "Every tracking call your site sends becomes one row in a text file. This is the layer every number in Adobe Analytics is built from."
 type: lesson
 modulenum: 17
 sectionnum: 1
 weight: 1
 ---
-<p>Data Feeds provide raw, hit-level data exported from Adobe Analytics. Unlike Data Warehouse which aggregates data, Data Feeds deliver every single hit with all associated variables.</p>
-                <h3 class="subsec-title">Key Characteristics</h3>
-                <ul>
-                    <li><strong>Hit-level granularity:</strong> Every page view, click, and event as individual rows</li>
-                    <li><strong>Complete data:</strong> All variables collected, including those not in UI</li>
-                    <li><strong>Automated delivery:</strong> Scheduled exports to FTP, SFTP, or cloud storage</li>
-                    <li><strong>Hourly or daily:</strong> Choose delivery frequency based on needs</li>
-                    <li><strong>Historical backfill:</strong> Request past data when setting up new feeds</li>
-                </ul>
-                <div class="diagram-box">
-                    <div class="diagram-title">Data Export Comparison</div>
-                    <div class="diagram-content">
-                        <div class="comparison-grid">
-                            <div class="comp-item">
-                                <div class="comp-label">Data Warehouse</div>
-                                <div class="comp-desc">Aggregated • On-demand • Flexible dimensions</div>
-                            </div>
-                            <div class="comp-vs">vs</div>
-                            <div class="comp-item">
-                                <div class="comp-label">Data Feeds</div>
-                                <div class="comp-desc">Hit-level • Automated • All columns</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="path-box">
-                    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to Find</div>
-                    <p>Admin Console → <span class="path">Data Feeds</span></p>
-                </div>
-                <div class="ref-box">
-                    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
-                    <ul>
-                        <li><a href="https://experienceleague.adobe.com/docs/analytics/export/analytics-data-feed/data-feed-overview.html" target="_blank">Adobe Docs: Data Feeds Overview</a></li>
-                    </ul>
-                </div>
-            
+<p>Two people disagree about a number. The analyst says the report is right and the tag must be firing twice. The developer says the tag is fine and something is wrong with the reporting. Both have looked at their own tools and both are confident.</p>
+
+<p>There is a place where that argument ends. It is a text file, it has one row for every server call your site has ever sent, and the hit they are arguing about is in it.</p>
+
+<p>That file is a data feed, and it is the bottom of the stack. Everything else in Adobe Analytics is built on top of it.</p>
+
+<h3 class="subsec-title">One row for every server call your site sends</h3>
+<p>A data feed is the raw hit data, exported. Each row in the main file is a single server call. Not a visit, not a session, not a summary of anything. One call.</p>
+
+<p>Which means the tracking calls covered earlier in this curriculum have a physical destination you can look at. When a page loads and AppMeasurement sends its request, that request becomes a row. When somebody clicks a tracked link and a link call goes out, that becomes another row. The mechanics of those calls are in <a href="/adobe-analytics-learning/collect/tracking-calls/page-view-tracking/">Page View Tracking</a> and <a href="/adobe-analytics-learning/collect/tracking-calls/link-tracking/">Link Tracking</a>. This is where they land.</p>
+
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">One page view, as it leaves the browser</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>https://yourco.sc.omtrdc.net/b/ss/yourrsid/1/...
+    ?pageName=Product%20Detail
+    &amp;v1=blue%20running%20shoes
+    &amp;events=scView
+    &amp;products=%3B12345
+    &amp;g=https%3A%2F%2Fwww.example.com%2Fshoes%2F12345</pre></div>
+</div>
+
+<p>Every one of those parameters has a column waiting for it. The page name lands in a page name column, the eVar lands in an eVar column, the event lands in the event list, the products string lands in a product list column, and the page URL lands in its own column. The row is wide, often several hundred columns, and most of them are empty on any given hit.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">The request leaves the browser. The row is what it becomes.</div>
+    <svg viewBox="0 0 700 214" style="width:100%;height:auto;display:block" role="img"
+         aria-label="On the left, a tracking request with parameters for page name, eVar 1, events, products and page URL. An arrow leads to the right, where the same values sit in named columns of one row in hit_data.tsv: post_pagename, post_evar1, post_event_list, post_product_list and post_page_url.">
+      <defs>
+        <marker id="m17s1a" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" style="fill:var(--text3,#5d6b7e)"/></marker>
+      </defs>
+
+      <text x="20" y="26" style="fill:var(--text1,#0f172a);font-size:14px;font-weight:700">The request</text>
+
+      <rect x="20" y="44" width="228" height="130" rx="6" style="fill:var(--dia-b-soft,rgba(37,99,235,.10));stroke:var(--dia-b,#2563eb);stroke-width:1.4"/>
+      <text x="36" y="68" style="fill:var(--dia-b-ink,#1d4ed8);font-size:11px">pageName=Product Detail</text>
+      <text x="36" y="90" style="fill:var(--dia-b-ink,#1d4ed8);font-size:11px">v1=blue running shoes</text>
+      <text x="36" y="112" style="fill:var(--dia-b-ink,#1d4ed8);font-size:11px">events=scView</text>
+      <text x="36" y="134" style="fill:var(--dia-b-ink,#1d4ed8);font-size:11px">products=;12345</text>
+      <text x="36" y="156" style="fill:var(--dia-b-ink,#1d4ed8);font-size:11px">g=example.com/shoes/12345</text>
+
+      <line x1="258" y1="108" x2="296" y2="108" style="stroke:var(--text3,#5d6b7e);stroke-width:1.6" marker-end="url(#m17s1a)"/>
+      <text x="277" y="98" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">one hit</text>
+
+      <text x="310" y="26" style="fill:var(--text1,#0f172a);font-size:14px;font-weight:700">One row in hit_data.tsv</text>
+
+      <rect x="310" y="44" width="370" height="130" rx="6" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.4"/>
+      <text x="326" y="68" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px">post_pagename</text>
+      <text x="326" y="90" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px">post_evar1</text>
+      <text x="326" y="112" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px">post_event_list</text>
+      <text x="326" y="134" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px">post_product_list</text>
+      <text x="326" y="156" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px">post_page_url</text>
+
+      <text x="530" y="68" style="fill:var(--text2,#475569);font-size:11px">Product Detail</text>
+      <text x="530" y="90" style="fill:var(--text2,#475569);font-size:11px">blue running shoes</text>
+      <text x="530" y="112" style="fill:var(--text2,#475569);font-size:11px">201</text>
+      <text x="530" y="134" style="fill:var(--text2,#475569);font-size:11px">;12345</text>
+      <text x="530" y="156" style="fill:var(--text2,#475569);font-size:11px">example.com/shoes/...</text>
+
+      <text x="20" y="200" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">Plus several hundred more columns, nearly all of them empty on this hit.</text>
+    </svg>
+</div>
+
+<h3 class="subsec-title">Where every number you argue about comes from</h3>
+<p>This is the reason the module matters, and it is worth being direct about it.</p>
+
+<p>Every number you have ever presented from Adobe Analytics was produced by counting and grouping these rows. A visit is a set of rows sharing a visitor ID and a visit number. A unique visitor is a distinct visitor ID across a period. Revenue is parsed out of the product list column and added up. An attributed order is one of these rows, credited to a value found on an earlier row.</p>
+
+<p>Nothing else is happening. There is no separate store of visits somewhere, no second copy of revenue. There are rows, and there are rules for counting them.</p>
+
+<p>Once you have seen that, reports stop being magic and start being arithmetic you could check. That is a different relationship with the tool, and it is the main thing this module is for.</p>
+
+<p>It also settles the argument at the top of this section in about ten minutes. If the tag fired twice, there are two rows. If the tag fired once and the report shows two, the counting rules are doing something you have not understood yet. Either way, somebody can now point at evidence rather than at their own tool.</p>
+
+<h3 class="subsec-title">Raw data is not the same as useful data</h3>
+<p>It is worth saying plainly, because the word raw carries a promise it does not keep.</p>
+
+<p>Nobody opens a data feed to answer a business question. The file has several hundred columns, no header row, numeric codes instead of names in many places, and one row per hit rather than per anything a person cares about. A single busy day can run to tens of gigabytes. There is nothing in it you can read.</p>
+
+<p>Getting the raw data does not get you closer to an answer. It moves you further from one, because everything Adobe was doing for you now has to be done by you, correctly, before you have a number at all.</p>
+
+<p>So the value of this module is not that you will start exporting feeds. Most people never will. The value is that you now know what sits underneath, which changes how you read every report above it and gives you somewhere to go when two tools disagree.</p>
+
+<div class="info-box">
+    <div class="info-hdr"><span class="info-ico"></span>There are real jobs that need it, and they have a shape in common</div>
+    <p>Feeds earn their place when the work genuinely cannot happen inside Adobe. Feeding Customer Journey Analytics or your own warehouse, where the raw hits are the input. Data science work that needs sequences of individual events rather than totals. Stitching Adobe identity to your own customer records. Validating an implementation against what was actually received rather than what a report displays. Every one of those has the same shape: something outside Adobe is going to do the counting, so it needs the uncounted rows. If your job does not have that shape, a Data Warehouse request is almost certainly the better tool.</p>
+</div>
+
+<h3 class="subsec-title">What people actually use it for</h3>
+<p>Four uses cover nearly all of it.</p>
+
+<p><strong>Loading into a warehouse or lake.</strong> The feed lands in cloud storage, a pipeline reads it, and the hits become tables the business queries alongside everything else it holds. This is the most common use by volume.</p>
+
+<p><strong>Feeding Customer Journey Analytics.</strong> Adobe's own newer product takes the raw hit data rather than the finished reports, which tells you something about which layer is considered the real one.</p>
+
+<p><strong>Data science.</strong> Sequence models, propensity scoring, path analysis beyond what the interface offers. All of it needs individual events in order, which is exactly what the feed is.</p>
+
+<p><strong>Validation and debugging.</strong> The narrowest use and the one most people benefit from. When something looks wrong, the feed shows what was actually received, with no processing opinion applied on top. It answers questions that no report can, because a report is already the answer to a different question.</p>
+
+<h3 class="subsec-title">Follow along: find your own hit in the raw data</h3>
+<p>If your organisation already has a feed running, this takes about fifteen minutes and it is the single most useful exercise in the module. If you do not have one, read it anyway, then come back after the next section.</p>
+
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>Send a hit you can recognise, then go and find it</span></div>
+    <ol class="dothis-steps">
+        <li>
+            <span class="ds-do">Pick a page on a test or training property and note the exact time you load it, to the minute.</span>
+            <span class="ds-see">Use a value you can search for later. A search term nobody else would type works well.</span>
+        </li>
+        <li>
+            <span class="ds-do">Note your own visitor ID before you start.</span>
+            <span class="ds-see">The ECID is readable in the browser. Capturing it is covered in the ECID section of the tracking calls module.</span>
+        </li>
+        <li>
+            <span class="ds-do">Wait for the next feed delivery, then open the hit data file for that day.</span>
+            <span class="ds-see">Daily feeds arrive after the day closes. Do not expect it within the hour unless the feed is hourly.</span>
+        </li>
+        <li>
+            <span class="ds-do">Search the file for your visitor ID, or for the unusual value you sent.</span>
+            <span class="ds-see">Command line tools handle this far better than a spreadsheet. The file is too large for Excel.</span>
+        </li>
+        <li>
+            <span class="ds-do">Read across the row you find and count how many columns actually have a value in them.</span>
+            <span class="ds-see">It will be a small fraction of the total. This is normal and it is what a wide sparse table looks like.</span>
+        </li>
+        <li>
+            <span class="ds-do">Now find the row for the page you loaded immediately afterwards.</span>
+            <span class="ds-see">Same visitor ID, next row in time. That pair of rows is what a visit is made of.</span>
+        </li>
+    </ol>
+    <p class="dothis-end">There is nothing to configure. The exercise exists to make one idea physical: the thing you did in a browser became a row, and everything reported about you was counted from rows like it.</p>
+</div>
+
+<h3 class="subsec-title">The bottom of the stack</h3>
+<p>A data feed is the raw hit data with one row per server call. The tracking request that leaves a browser becomes a row, its parameters land in named columns, and every report in Adobe Analytics is produced by counting and grouping those rows.</p>
+
+<p>Knowing that is worth more than having the file. Raw data is not more useful than a report, it is less useful, because none of the work has been done yet. What it gives you is a floor to stand on: somewhere to check what was really received when two tools or two people disagree.</p>
+
+<p>The jobs that genuinely need feeds all have the same shape, which is that something outside Adobe is going to do the counting. Warehouses, CJA, data science, and implementation validation.</p>
+
+<p>Which raises the practical question of how the file gets to you at all. A feed is a standing instruction rather than a one-off request, it runs on a cycle you choose, and several of its settings are decided once and are awkward to change afterwards. <a href="/adobe-analytics-learning/analyze/data-feeds/feed-configuration/">Feed Configuration</a> covers setting one up.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Analytics</div>
+    <p>Analytics &gt; <span class="path">Admin</span> &gt; <span class="path">Data feeds</span> lists every feed for the report suites you can see, along with a <span class="path">Jobs</span> tab showing the individual deliveries each feed has produced.</p>
+    <p>If no feeds exist yet, the page offers a <span class="path">Create data feed</span> button. Access is restricted, so the menu item may not appear at all depending on your permissions.</p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/export/analytics-data-feed/data-feed-overview" target="_blank">Adobe Docs: Analytics Data Feed Overview</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/export/analytics-data-feed/data-feed-contents/datafeeds-contents" target="_blank">Adobe Docs: Data Feed Contents</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/export/analytics-data-feed/df-manage-feeds" target="_blank">Adobe Docs: Manage Data Feeds</a></li>
+    </ul>
+</div>

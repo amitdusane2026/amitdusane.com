@@ -1,47 +1,179 @@
 ---
 slug: "data-warehouse-overview"
 title: "Data Warehouse Overview"
-published: 2026-07-15
-lastmod: 2026-07-15
+seotitle: "Adobe Analytics Data Warehouse Overview"
+published: 2026-08-26
+lastmod: 2026-08-26
+description: "Workspace stops at Low Traffic and a truncated list. Data Warehouse does not. What the name means literally, and what you give up to get it."
 type: lesson
 modulenum: 16
 sectionnum: 1
 weight: 1
 ---
-<p>Data Warehouse is Adobe Analytics' tool for extracting raw, unsampled data in bulk. It's designed for large-scale data exports and complex queries that aren't possible in standard reporting interfaces.</p>
-                <h3 class="subsec-title">Key Characteristics</h3>
-                <ul>
-                    <li><strong>Unsampled data:</strong> Always returns 100% of data, never sampled</li>
-                    <li><strong>Bulk export:</strong> Handle millions of rows in a single request</li>
-                    <li><strong>Flexible delivery:</strong> Email, FTP, SFTP, cloud storage destinations</li>
-                    <li><strong>Scheduled reports:</strong> Automate recurring data extracts</li>
-                    <li><strong>Extended breakdowns:</strong> More breakdown levels than Workspace</li>
-                    <li><strong>Historical data:</strong> Access data going back to implementation start</li>
-                </ul>
-                <div class="diagram-box">
-                    <div class="diagram-title">Data Warehouse vs Workspace</div>
-                    <div class="diagram-content">
-                        <div class="comparison-grid">
-                            <div class="comp-item">
-                                <div class="comp-label">Workspace</div>
-                                <div class="comp-desc">Interactive • Visual • May sample • Fast</div>
-                            </div>
-                            <div class="comp-vs">vs</div>
-                            <div class="comp-item">
-                                <div class="comp-label">Data Warehouse</div>
-                                <div class="comp-desc">Bulk export • Raw data • Unsampled • Queued</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="path-box">
-                    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to Find</div>
-                    <p>Adobe Analytics → <span class="path">Tools → Data Warehouse</span></p>
-                </div>
-                <div class="ref-box">
-                    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
-                    <ul>
-                        <li><a href="https://experienceleague.adobe.com/docs/analytics/export/data-warehouse/data-warehouse.html" target="_blank">Adobe Docs: Data Warehouse Overview</a></li>
-                    </ul>
-                </div>
-            
+<p>A merchandising manager asks for something reasonable. She wants every internal search term that led to a purchase last quarter, broken down by the product category that was bought, so she can see which words people use for which products.</p>
+
+<p>You build it in Analysis Workspace. The table comes back with a few hundred rows and then a row called Low Traffic holding a large number, and the breakdown underneath it is empty. Your site had roughly four hundred thousand distinct search terms last quarter. Most of them are inside that one row and you cannot get them out.</p>
+
+<p>Nothing is broken. Workspace is doing what it is built to do, which is answer questions on screen in a second or two. The request needs a different tool.</p>
+
+<h3 class="subsec-title">The question the interface cannot answer</h3>
+<p>There are three walls in interactive reporting, and a request usually hits one of them rather than all three.</p>
+
+<p>The first is Low Traffic. When a dimension collects more than two million unique values in a report suite in a calendar month, Adobe stops storing them separately and buckets the rest under a single Low Traffic row. Search terms, page URLs, product IDs and campaign codes all reach that number on a busy site. The values are not lost, but the report cannot show them to you individually.</p>
+
+<p>The second is size. A report has to render, and a table with four hundred thousand rows is not a table anybody can read or a browser can draw. So the interface truncates, and truncation is a decision made for you.</p>
+
+<p>The third is time. An interactive report has to come back while you wait. Anything that would take twenty minutes to calculate cannot be offered as a button.</p>
+
+<p>Data Warehouse removes all three, and it removes them by giving up the thing that caused them. It does not run while you wait.</p>
+
+<h3 class="subsec-title">Why it is called a warehouse, literally</h3>
+<p>The name is not marketing, and it is worth taking at face value, because the metaphor is exact and it predicts how the tool behaves.</p>
+
+<p>Think about a real warehouse and how you get anything out of it. You do not walk in and browse. There are no displays, no aisles arranged for you to wander, and nobody expects you to change your mind halfway. You send an order in advance, listing exactly what you want and how much. Somebody picks it. A lorry brings it to you. What arrives is a pallet, not a shelf you can look at.</p>
+
+<p>Now compare that to a shop. You walk in, you look around, you pick things up, you put them back. The shop is arranged for browsing, so it holds a limited amount of each thing, and everything you can see is everything there is.</p>
+
+<p>Analysis Workspace is the shop. Data Warehouse is the warehouse. You describe an order in advance, Adobe picks it offline, and a file is delivered to you. You never see it on screen, you cannot change your mind halfway through, and what arrives is a file rather than a view.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">You order from a warehouse. You do not walk around it.</div>
+    <svg viewBox="0 0 700 236" style="width:100%;height:auto;display:block" role="img"
+         aria-label="Two panels joined by a dashed connector. On the left, a warehouse: you send an order, someone picks it, it arrives at your door, and you never walk the aisles. On the right, Adobe Data Warehouse: you define a request, Adobe runs it offline, a file lands in your storage, and you never see it on screen.">
+      <defs>
+        <marker id="m16s1a" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" style="fill:var(--text3,#5d6b7e)"/></marker>
+      </defs>
+
+      <text x="20" y="26" style="fill:var(--text1,#0f172a);font-size:14px;font-weight:700">A warehouse</text>
+
+      <rect x="20" y="46" width="90" height="36" rx="6" style="fill:var(--dia-d-soft,rgba(245,158,11,.14));stroke:var(--dia-d,#f59e0b);stroke-width:1.4"/>
+      <text x="65" y="69" text-anchor="middle" style="fill:var(--dia-d-ink,#8a5700);font-size:12.5px;font-weight:600">An order</text>
+
+      <line x1="112" y1="64" x2="132" y2="64" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#m16s1a)"/>
+
+      <rect x="140" y="46" width="90" height="36" rx="6" style="fill:var(--dia-d-soft,rgba(245,158,11,.14));stroke:var(--dia-d,#f59e0b);stroke-width:1.4"/>
+      <text x="185" y="69" text-anchor="middle" style="fill:var(--dia-d-ink,#8a5700);font-size:12.5px;font-weight:600">Someone picks</text>
+
+      <line x1="232" y1="64" x2="252" y2="64" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#m16s1a)"/>
+
+      <rect x="260" y="46" width="90" height="36" rx="6" style="fill:var(--dia-d-soft,rgba(245,158,11,.14));stroke:var(--dia-d,#f59e0b);stroke-width:1.4"/>
+      <text x="305" y="69" text-anchor="middle" style="fill:var(--dia-d-ink,#8a5700);font-size:12.5px;font-weight:600">Delivered</text>
+
+      <text x="20" y="106" style="fill:var(--text2,#475569);font-size:11px">You never walk the aisles</text>
+
+      <line x1="350" y1="140" x2="380" y2="140" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4;stroke-dasharray:5 4"/>
+
+      <text x="392" y="26" style="fill:var(--text1,#0f172a);font-size:14px;font-weight:700">Adobe Data Warehouse</text>
+
+      <rect x="392" y="46" width="88" height="36" rx="6" style="fill:var(--dia-a-soft,rgba(186,33,66,.10));stroke:var(--dia-a,#ba2142);stroke-width:1.4"/>
+      <text x="436" y="69" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:12.5px;font-weight:600">A request</text>
+
+      <line x1="482" y1="64" x2="500" y2="64" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#m16s1a)"/>
+
+      <rect x="508" y="46" width="80" height="36" rx="6" style="fill:var(--dia-a-soft,rgba(186,33,66,.10));stroke:var(--dia-a,#ba2142);stroke-width:1.4"/>
+      <text x="548" y="69" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:12.5px;font-weight:600">Run offline</text>
+
+      <line x1="590" y1="64" x2="608" y2="64" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#m16s1a)"/>
+
+      <rect x="616" y="46" width="64" height="36" rx="6" style="fill:var(--dia-a-soft,rgba(186,33,66,.10));stroke:var(--dia-a,#ba2142);stroke-width:1.4"/>
+      <text x="648" y="69" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:12.5px;font-weight:600">A file</text>
+
+      <text x="392" y="106" style="fill:var(--text2,#475569);font-size:11px">You never see it on screen</text>
+
+      <line x1="20" y1="150" x2="680" y2="150" style="stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
+
+      <text x="20" y="176" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">Analysis Workspace is the shop. Everything on the shelf is everything there is.</text>
+      <text x="20" y="200" style="fill:var(--text2,#475569);font-size:11px">Bulk storage, ordered in advance, delivered elsewhere. That is the whole metaphor.</text>
+      <text x="20" y="222" style="fill:var(--text3,#5d6b7e);font-size:11px">It also explains every limit: no browsing, no changing your mind, and a wait.</text>
+    </svg>
+</div>
+
+<p>Hold that picture, because it answers most questions about the tool before you ask them. Why can you not click into a Data Warehouse result? Because it is a pallet on a lorry. Why does it take hours? Because somebody has to go and pick it. Why does it not care that your dimension has four hundred thousand values? Because a warehouse stores in bulk and nobody has to fit it on a shelf.</p>
+
+<h3 class="subsec-title">It is not a data warehouse in the modern sense</h3>
+<p>If you have worked anywhere near data engineering, the name will mislead you, and it is better to clear that up now than to discover it in a planning meeting.</p>
+
+<p>A data warehouse in the industry sense is a database you connect to. Snowflake, BigQuery, Redshift. You point a tool at it, write SQL, and query it as often as you like. Adobe's Data Warehouse is not that. There is no connection string, no SQL, no table you can query, and no live link for a BI tool to sit on top of.</p>
+
+<p>What it is instead is a request-and-delivery service. You describe one table, Adobe builds that one table, and it sends you the file. If you want a different table, you make a different request and wait again.</p>
+
+<div class="info-box">
+    <div class="info-hdr"><span class="info-ico"></span>The name comes from where the data sits, not from what you can do to it</div>
+    <p>Adobe holds a separate copy of your data, built for bulk retrieval rather than for fast interactive reporting. That copy is the warehouse. Data Warehouse the feature is the order desk in front of it. The name describes the storage, and most people hear it as describing an interface, which is where the confusion starts. If somebody in a meeting says they want to connect Tableau directly to Adobe Data Warehouse, that is the misunderstanding, and the answer is that Data Warehouse delivers files which Tableau can then read.</p>
+</div>
+
+<h3 class="subsec-title">What you give up to get it</h3>
+<p>The trade is real and it catches people out, usually late, when the request has already been promised to somebody.</p>
+
+<p>You give up speed. A request can take up to 72 hours to process, and that is a documented ceiling rather than a worst case somebody invented. Most requests are much faster, but you cannot promise a stakeholder a number this afternoon.</p>
+
+<p>You give up calculated metrics entirely. Data Warehouse will not accept them, which is a problem when your whole reporting vocabulary is built on them. This is treated properly in <a href="/adobe-analytics-learning/analyze/calculated-metrics/what-are-calculated-metrics/">What Are Calculated Metrics</a>, and it is the single most common reason a planned export has to be redesigned.</p>
+
+<p>You give up interactivity. There is no clicking into a row, no changing the date range to check something, no visualizations. You get the table you asked for, exactly as you described it.</p>
+
+<p>And some components behave differently or are unavailable. Visits in Data Warehouse excludes visits from non-persistent cookies, so it does not match the Visits you see elsewhere; Visits All Visitors is the closer equivalent. Segments have their own compatibility rules, covered in <a href="/adobe-analytics-learning/analyze/segments/segment-types-sharing/">Segment Types and Sharing</a>.</p>
+
+<div class="warn-box">
+    <div class="warn-hdr"><span class="warn-ico"></span>A number from Data Warehouse will not always match the same number on screen</div>
+    <p>This is the discrepancy that starts arguments, and it is usually not an error. Visits is defined differently here. Unspecified means something different when you segment on classified values: in Workspace it means a value that was never classified, and in Data Warehouse it means a value that was classified as Unspecified. Neither tool is wrong. They are answering with slightly different definitions, and if you hand somebody a spreadsheet that disagrees with their dashboard without saying why, they will conclude the data is broken rather than that the definitions differ.</p>
+</div>
+
+<h3 class="subsec-title">Follow along: find your own Low Traffic wall</h3>
+<p>This takes five minutes and it is worth doing before you build a single request, because it turns Data Warehouse from an abstract export tool into the answer to a problem you have seen.</p>
+
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>Watch a normal report run out of room</span></div>
+    <ol class="dothis-steps">
+        <li>
+            <span class="ds-do">In Analysis Workspace, build a freeform table with <code>Internal Search Term</code> in the rows and <code>Orders</code> in the column. Use a full month.</span>
+            <span class="ds-see">If you do not have internal search, use <code>Page URL</code> or a product ID dimension. You want something with a lot of distinct values.</span>
+        </li>
+        <li>
+            <span class="ds-do">Sort by the metric and scroll to the bottom of the list.</span>
+            <span class="ds-see">Look for a row called <code>Low Traffic</code>. On a busy site it is usually there and often large.</span>
+        </li>
+        <li>
+            <span class="ds-do">Try to break that row down by another dimension.</span>
+            <span class="ds-see">Nothing useful comes back. The individual values behind it were never stored separately, so there is nothing to break down.</span>
+        </li>
+        <li>
+            <span class="ds-do">Now check how many rows the table is actually showing you against how many the dimension really has.</span>
+            <span class="ds-see">The gap between those two numbers is the reason this module exists.</span>
+        </li>
+    </ol>
+    <p class="dothis-end">There is nothing to configure here. The point is to see the wall once, in your own data, so the rest of the module is about solving a problem rather than learning a feature.</p>
+</div>
+
+<div class="shot-box shot-pending">
+    <div class="shot-title">The row that holds everything you cannot see</div>
+    <div class="shot-frame">
+        <p class="shot-brief">FILE     adobe-analytics-low-traffic-row.webp
+SCREEN   Analysis Workspace &gt; freeform table on a high cardinality dimension
+STATE    A freeform table with a high cardinality dimension in rows and a conversion metric in the column, sorted so the Low Traffic row is visible with a substantial number beside it.
+INCLUDE  The Low Traffic row with its value and percentage bar, and several real dimension rows above or below it for comparison. The dimension name in the column header.
+EXCLUDE  Client search terms or page names that identify a customer.
+WHY      This is the problem the whole module solves. A reader who has never noticed the Low Traffic row does not know they have the problem, and the row is easy to scroll past because it looks like just another value.</p>
+    </div>
+</div>
+
+<h3 class="subsec-title">Order it, do not browse it</h3>
+<p>Data Warehouse exists for the request that interactive reporting cannot serve: too many rows, too many unique values, or too much calculation to do while somebody waits. It removes those limits by running offline and delivering a file instead of a screen.</p>
+
+<p>The name is literal and it is the most useful thing to remember. A warehouse stores in bulk, takes orders in advance, and delivers. It is not somewhere you browse, and it is not a database you can query. The cost of that is speed, interactivity, calculated metrics, and a handful of components that behave differently enough to start an argument if nobody explains them.</p>
+
+<p>Which means the quality of a Data Warehouse request is decided before you submit it. You are describing a table you will not see for hours, to a system that will not ask you any questions, and you cannot adjust it once it is running. <a href="/adobe-analytics-learning/analyze/data-warehouse/creating-data-warehouse-requests/">Creating Data Warehouse Requests</a> covers how to describe one properly, and the mistakes that only show up when the file finally arrives.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Analytics</div>
+    <p>Analytics &gt; <span class="path">Tools</span> &gt; <span class="path">Data Warehouse</span> opens the request manager, which lists every request in the login company and their status. <span class="path">Add</span> starts a new one.</p>
+    <p>Access is controlled per user group, so the menu entry may not be there at all. If it is missing, that is a permissions question for whoever administers your product profiles rather than a sign the feature is not licensed.</p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/export/data-warehouse/data-warehouse" target="_blank">Adobe Docs: Data Warehouse Overview</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/export/data-warehouse/component-support" target="_blank">Adobe Docs: Component Support in Data Warehouse</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/technotes/low-traffic" target="_blank">Adobe Docs: Low Traffic Values</a></li>
+    </ul>
+</div>

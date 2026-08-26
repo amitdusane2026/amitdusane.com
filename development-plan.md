@@ -1037,7 +1037,7 @@ the type floor, and two pages carry a 5–7px page-level drift from chrome
 both inspected by Amit and judged acceptable.
 
 **32 sections remain unwritten** and that is still the front that matters:
-M15 Attribution 4, M16 Activity Map 4, M17 Data Feeds 4, M18 Data Warehouse 4,
+M15 Attribution 4, M16 Data Warehouse 4, M17 Data Feeds 4, M18 Activity Map 4,
 M19 SDR 6, M20 Testing & Debugging 5, M21 CJA 5. M15 §4 still needs its title
 coined. Launch target is **end of September**.
 
@@ -1235,8 +1235,8 @@ zero contractions, all internal and Adobe links resolving, no horizontal overflo
 at 375px in either theme, every diagram colour at 5.71:1 or better in dark, all
 30 spine labels rendering whole with no `data-nav` overrides needed.
 
-**28 sections remain unwritten**: M16 Activity Map 4, M17 Data Feeds 4,
-M18 Data Warehouse 4, M19 SDR 6, M20 Testing and Debugging 5, M21 CJA 5.
+**28 sections remain unwritten**: M16 Data Warehouse 4, M17 Data Feeds 4,
+M18 Activity Map 4, M19 SDR 6, M20 Testing and Debugging 5, M21 CJA 5.
 Launch target is still **end of September**.
 
 ### Closing headings, the rest of the corpus (26 August 2026)
@@ -1269,3 +1269,118 @@ One use inside a module is invisible and the heading is a good one.
 Seven uses remain across the corpus, never more than two in a module and never
 adjacent. Verified that no internal link anywhere targets a `#what-you-have-now`
 anchor, so renaming broke nothing; the learning world is unpublished in any case.
+
+---
+
+## M16 Data Warehouse and M17 Data Feeds, 26 August 2026 — WRITTEN
+
+Eight sections, written back to back, and the first modules on this site that are
+about **features rather than ideas**. Amit set that distinction explicitly: M15
+was philosophy and answering hard questions in a meeting, and these two have to
+make somebody comfortable operating a thing.
+
+### CORRECTION: the module numbers in this plan were wrong
+
+Two earlier entries in this document said "M16 Activity Map, M17 Data Feeds,
+M18 Data Warehouse". **The shipped code says otherwise, the code wins, and both
+entries have been corrected in place:**
+
+| Module | Number, per `_index.md` and `hugo.toml` |
+|---|---|
+| Attribution Models | 15 |
+| **Data Warehouse** | **16** |
+| **Data Feeds** | **17** |
+| **Activity Map** | **18** |
+
+The error came from reading the tracker's row order rather than `modulenum`. Amit
+called Data Warehouse "module 16" and was right. **Activity Map is M18 and is
+still unwritten.**
+
+### The spine each module was given
+
+**Data Warehouse: explain the name literally.** Amit's instruction, and it turned
+out to be the best organising idea available. A real warehouse is not somewhere
+you browse. You send an order in advance, somebody picks it, and it is delivered
+to you in bulk. Analysis Workspace is the shop, where everything on the shelf is
+everything there is. That metaphor predicts every limit of the tool before a
+reader meets it: no clicking into a result, a wait measured in hours, and total
+indifference to how many rows you asked for.
+
+The counterweight sits right after it, because the name misleads anyone with a
+data engineering background: **Adobe's Data Warehouse is not a data warehouse in
+the modern sense.** No connection string, no SQL, no table to query, no live link
+for a BI tool. It is a request and delivery service in front of a bulk copy. The
+name describes the storage, and people hear it as describing an interface.
+
+**Data Feeds: the image request is literally one row.** Amit's line, and it is the
+spine of the module. Everything the curriculum has taught about collection lands
+here as rows, and every number ever argued about was produced by counting them.
+The module connects collection to presentation, which no other section does.
+
+His second instruction was equally important and unusual: **be honest that raw
+data has little direct value.** Nobody answers a business question by opening a
+file with several hundred columns and no header row. The value is knowing the
+layer exists, which changes how a reader holds every report above it and gives
+them somewhere to go when two tools disagree. That is written as its own heading
+rather than softened.
+
+### The strongest teaching idea the research turned up
+
+**The `post_` prefix is the processing chain made visible.** Many fields appear
+twice in a feed: `evar1` holds what the browser sent, `post_evar1` holds what
+Adobe made of it. Everything server side lives in the gap between them: VISTA,
+processing rules, persistence, currency conversion. Compare two columns on one
+row and you can see exactly what a processing rule did.
+
+That makes the feed the best implementation debugging instrument in the product,
+and it pays off M08 and M09 years after a reader met them. Adobe documents the
+prefix in a reference table and never draws the conclusion.
+
+**Second finding, for M17 §4:** reproducing standard metrics from raw rows is
+genuinely hard, and that is the proof of Amit's "raw data is not free value"
+point. A visit is a distinct combination of four columns. Unique visitors is a
+concatenation of two. Matching Adobe at all requires discarding rows by
+`exclude_hit`, `customer_perspective`, `hit_source` and `duplicate_purchase`.
+None of that is obvious and all of it is documented in one place nobody reads.
+
+### Continuity the corpus had already promised
+
+`props-traffic-variables` already told readers that "every server call your site
+sends becomes one row (the full structure is Data Feeds)". `appmeasurement-library`
+promised that identity stitching "gets unpacked in Data Feeds". Both promises are
+now paid off. `classifications-overview` had already established that classified
+values reach Data Warehouse but not feeds, which became a real reason to choose
+one export over the other rather than a fact stated twice.
+
+### Shape of the writing, against M15
+
+Feature modules came out shorter and more practical, which is correct. Read times
+are 7 to 9 minutes against M15's 10 to 14. Sentence medians 10 to 15 words,
+matching M15 and M13 §1. Every section carries a `dothis` walkthrough, including
+the two with no Adobe screen at all, because the exercise is the point in both:
+find your own Low Traffic wall, and find your own hit in the raw data.
+
+Closing headings are all specific and none repeats: "Order it, do not browse it",
+"Say what one row is, then build", "A file nobody collects is not a report",
+"Complete, classified, and delivered elsewhere", "The bottom of the stack",
+"A feed is a standing instruction", "The raw row is the source of truth",
+"Nothing here is free".
+
+### Verified
+
+219 pages. 116 sections source-to-build checked, 0 mismatched. All 51 headings
+render whole in the spine or cut cleanly at a joint; none truncates and none
+needed a `data-nav` override. No horizontal overflow at 375px, including the nine
+row column reference table, which fits at full type because the mobile machinery
+breaks `post_visid_high` at its underscores. Every diagram colour measures
+5.71:1 or better in dark. Zero dashes, zero first person, zero contractions, no
+multi-paragraph callout boxes.
+
+### Where this leaves the section
+
+**Written: 96 of 116 sections.** 20 remain: M18 Activity Map 4, M19 SDR 6,
+M20 Testing and Debugging 5, M21 CJA 5.
+
+M15 is written and awaiting Amit's screenshots before QA sign-off; only §1 is
+signed off so far. M16 and M17 are written and unread. Launch target is still
+**end of September**.

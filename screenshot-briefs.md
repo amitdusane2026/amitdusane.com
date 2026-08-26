@@ -205,3 +205,41 @@ setting a deliberately short lookback.
 **Naming note.** All six lead with `adobe-analytics-attribution-` except 38, which leads with the
 component it shows. Attribution is the search term in five of them and the calculated metric
 builder is the search term in the sixth.
+
+---
+
+## M16 Data Warehouse and M17 Data Feeds — briefed 26 Aug 2026, 5 shots, none captured
+
+Fewer shots than the modules before them, on purpose. Both modules are about a
+file rather than a screen, and three of their sections have no Adobe interface to
+photograph at all. The briefs below are only where seeing the real screen teaches
+something the prose cannot.
+
+**Two of these need no Adobe entitlement beyond a report suite**, but shot 41
+needs a feed that has actually delivered, and shot 43 needs a real delivered
+file rather than an Adobe screen.
+
+| # | Section | File | Screen |
+|---|---|---|---|
+| 39 | M16 §1 Data Warehouse Overview | `adobe-analytics-low-traffic-row` | **A large Low Traffic row beside real values** |
+| 40 | M16 §2 Creating Requests | `adobe-analytics-data-warehouse-build-report` | Build your report, with a breakdown indented |
+| 41 | M16 §3 Delivery Options | `adobe-analytics-data-warehouse-report-options` | The three tick boxes that keep a pipeline honest |
+| 42 | M17 §2 Feed Configuration | `adobe-analytics-data-feed-column-selection` | Column selection and the template control |
+| 43 | M17 §3 Data Feed Contents | `adobe-analytics-data-feed-post-columns` | **A raw column and its post_ column on one row** |
+
+**Shot 39 is the most important of the five.** The whole Data Warehouse module
+exists because of that row, and a reader who has never noticed it does not know
+they have the problem. It needs a report suite with a genuinely high cardinality
+dimension, so the training account may need a busy month chosen deliberately.
+
+**Shot 43 is not an Adobe screen.** It is a real data feed row displayed with its
+column names, in a terminal, editor or spreadsheet. It needs a delivered file to
+exist, and it needs a row where a raw column and its `post_` counterpart visibly
+differ, which usually means finding a hit where an eVar persisted from an earlier
+hit. Choose a row with harmless values rather than blurring anything; the visitor
+ID should not be a real production identifier.
+
+**Nothing is briefed for M16 §4, M17 §1 or M17 §4.** M16 §4 and M17 §4 are
+judgment and arithmetic with no screen behind them. M17 §1 carries the request
+to row figure, which does that section's teaching better than a screenshot of a
+text file would.

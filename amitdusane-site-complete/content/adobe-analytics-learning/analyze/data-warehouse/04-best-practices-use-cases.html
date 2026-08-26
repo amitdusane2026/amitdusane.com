@@ -1,74 +1,163 @@
 ---
 slug: "best-practices-use-cases"
 title: "Best Practices and Use Cases"
-published: 2026-07-15
-lastmod: 2026-07-15
+seotitle: "Data Warehouse Best Practices and Use Cases"
+published: 2026-08-26
+lastmod: 2026-08-26
+description: "When Data Warehouse is the right tool, when it is a slow way to answer an easy question, and how it differs from the raw feed underneath it."
 type: lesson
 modulenum: 16
 sectionnum: 4
 weight: 4
 ---
-<p>Use Data Warehouse effectively by understanding its strengths and optimal use cases.</p>
-                <h3 class="subsec-title">When to Use Data Warehouse</h3>
-                <div class="tbl-wrap">
-                    <table>
-                        <thead><tr><th>Use Case</th><th>Why Data Warehouse</th></tr></thead>
-                        <tbody>
-                            <tr><td><strong>Data lake ingestion</strong></td><td>Bulk export to Snowflake, BigQuery, Redshift</td></tr>
-                            <tr><td><strong>Finance reconciliation</strong></td><td>Unsampled revenue data for accounting</td></tr>
-                            <tr><td><strong>Custom attribution</strong></td><td>Raw data for external attribution models</td></tr>
-                            <tr><td><strong>ML/AI training</strong></td><td>Historical data for model development</td></tr>
-                            <tr><td><strong>Compliance audits</strong></td><td>Complete data records for regulatory needs</td></tr>
-                            <tr><td><strong>High-cardinality reports</strong></td><td>Product-level data without sampling</td></tr>
-                        </tbody>
-                    </table>
-                </div>
+<p>Somebody asks for last month's revenue by marketing channel. An analyst builds a Data Warehouse request, schedules it, and tells the person it will arrive tomorrow.</p>
 
-                <h3 class="subsec-title">When NOT to Use Data Warehouse</h3>
-                <ul>
-                    <li><strong>Real-time analysis:</strong> Data Warehouse is queued, not instant</li>
-                    <li><strong>Interactive exploration:</strong> Use Workspace for ad-hoc analysis</li>
-                    <li><strong>Small datasets:</strong> Overkill for simple reports</li>
-                    <li><strong>Visualizations:</strong> DW exports raw data, not charts</li>
-                </ul>
+<p>That report takes about forty seconds to build in Analysis Workspace, on screen, with the numbers visible while the two of them are still talking. The export added a day to a question that had no size problem, no row problem and no automation behind it.</p>
 
-                <h3 class="subsec-title">Performance Tips</h3>
-                <div class="code-block">
-                    <div class="code-hdr"><span class="code-lang">Optimization Guidelines</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-                    <div class="code-body"><pre>1. LIMIT DATE RANGES
-   ✓ Request 1 month at a time vs. 12 months
-   ✓ Use scheduling for recurring needs
+<p>Knowing what Data Warehouse is for is mostly about knowing what it is not for, because it is the tool people reach for whenever the word export is spoken.</p>
 
-2. MINIMIZE DIMENSIONS
-   ✓ Only include dimensions you'll actually use
-   ✓ Avoid high-cardinality dimensions when possible
+<h3 class="subsec-title">Three ways out, and they are not interchangeable</h3>
+<p>Adobe gives you three ways to get data out, and they sit at different points on the same line. The line runs from data that has been shaped and summarised for you, to data that has been shaped for nobody.</p>
 
-3. USE SEGMENTS WISELY
-   ✓ Filter at request level, not post-export
-   ✓ Simpler segments process faster
+<div class="diagram-box">
+    <div class="diagram-title">The same data, at three levels of shaping</div>
+    <svg viewBox="0 0 700 210" style="width:100%;height:auto;display:block" role="img"
+         aria-label="A line running from shaped and summarised on the left to raw on the right. Analysis Workspace sits on the left, Data Warehouse in the middle, Data Feeds on the right. Beneath each, a note: a view on screen, a file you ordered, every server call.">
+      <line x1="40" y1="118" x2="660" y2="118" style="stroke:var(--border,#e2e8f0);stroke-width:1.6"/>
 
-4. SCHEDULE OFF-PEAK
-   ✓ Avoid month-end when others request
-   ✓ Early morning slots process faster
+      <text x="40" y="34" style="fill:var(--text3,#5d6b7e);font-size:11px">summarised for you</text>
+      <text x="660" y="34" text-anchor="end" style="fill:var(--text3,#5d6b7e);font-size:11px">shaped for nobody</text>
 
-5. MONITOR QUEUE
-   ✓ Check request status regularly
-   ✓ Cancel stuck or unnecessary requests</pre></div>
-                </div>
+      <rect x="40" y="56" width="150" height="44" rx="6" style="fill:var(--dia-b-soft,rgba(37,99,235,.10));stroke:var(--dia-b,#2563eb);stroke-width:1.4"/>
+      <text x="115" y="76" text-anchor="middle" style="fill:var(--dia-b-ink,#1d4ed8);font-size:12.5px;font-weight:600">Analysis Workspace</text>
+      <text x="115" y="92" text-anchor="middle" style="fill:var(--dia-b-ink,#1d4ed8);font-size:11px">a view on screen</text>
+      <circle cx="115" cy="118" r="6" style="fill:var(--dia-b,#2563eb)"/>
 
-                <div class="warn-box">
-                    <div class="warn-hdr"><span class="warn-ico"></span>Request Limits</div>
-                    <ul>
-                        <li>Processing time varies: minutes to hours depending on complexity</li>
-                        <li>Large requests may be queued behind others</li>
-                        <li>Extremely large requests (billions of rows) may timeout</li>
-                        <li>Scheduled reports count against your organization's queue</li>
-                    </ul>
-                </div>
-                <div class="ref-box">
-                    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
-                    <ul>
-                        <li><a href="https://experienceleague.adobe.com/docs/analytics/export/data-warehouse/data-warehouse-requests-manage.html" target="_blank">Adobe Docs: Manage Data Warehouse Requests</a></li>
-                    </ul>
-                </div>
-            
+      <rect x="270" y="56" width="150" height="44" rx="6" style="fill:var(--dia-a-soft,rgba(186,33,66,.10));stroke:var(--dia-a,#ba2142);stroke-width:1.4"/>
+      <text x="345" y="76" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:12.5px;font-weight:600">Data Warehouse</text>
+      <text x="345" y="92" text-anchor="middle" style="fill:var(--dia-a-ink,#951833);font-size:11px">a file you ordered</text>
+      <circle cx="345" cy="118" r="6" style="fill:var(--dia-a,#ba2142)"/>
+
+      <rect x="500" y="56" width="160" height="44" rx="6" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.4"/>
+      <text x="580" y="76" text-anchor="middle" style="fill:var(--dia-c-ink,#0a6e50);font-size:12.5px;font-weight:600">Data Feeds</text>
+      <text x="580" y="92" text-anchor="middle" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px">every server call</text>
+      <circle cx="580" cy="118" r="6" style="fill:var(--dia-c,#10b981)"/>
+
+      <text x="115" y="146" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">answers now</text>
+      <text x="345" y="146" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">answers in hours</text>
+      <text x="580" y="146" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">answers nothing by itself</text>
+
+      <line x1="40" y1="166" x2="660" y2="166" style="stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
+      <text x="40" y="190" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">Further right means more work for you and fewer of Adobe's decisions baked in.</text>
+    </svg>
+</div>
+
+<p>Reading that line the right way is most of the decision. Moving right does not get you better data. It gets you less finished data, and everything Adobe was doing for you becomes your job.</p>
+
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>Reach for</th><th>When</th><th>Because</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Analysis Workspace</strong></td><td>A person wants an answer</td><td>It is instant, interactive, and takes calculated metrics</td></tr>
+            <tr><td><strong>Data Warehouse</strong></td><td>A system wants a complete table, or the row count is too big for a report</td><td>No Low Traffic in most cases, unlimited rows, delivered as a file</td></tr>
+            <tr><td><strong>Data Feeds</strong></td><td>You need the individual hits, or you are rebuilding the data somewhere else</td><td>One row per server call, nothing summarised</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<h3 class="subsec-title">What Data Warehouse is genuinely best at</h3>
+<p>Four jobs, and it is better than the alternatives at all of them.</p>
+
+<p><strong>Long-tail dimensions in full.</strong> Every search term, every product ID, every campaign code, with nothing bucketed into Low Traffic. This is the reason the tool exists and no other export gives you the same thing with the values already grouped and counted.</p>
+
+<p><strong>Joining Adobe data to something else.</strong> Store visits and offline sales, CRM records, cost data from an ad platform, a product margin table. The join happens in your system, and Data Warehouse gives you an aggregated table with a key you can join on rather than millions of raw hits you would have to summarise first.</p>
+
+<p><strong>Feeding a BI tool or a warehouse of your own.</strong> A scheduled request landing in cloud storage on a fixed cycle is a perfectly good input to a pipeline. It is not a live connection, and it does not need to be for most reporting.</p>
+
+<p><strong>Classified values in bulk.</strong> This one is easy to miss and it is a real advantage. Data Warehouse carries classification values, so a request can return the friendly campaign name rather than the tracking code. The raw feed does not do that, as <a href="/adobe-analytics-learning/shape/classifications/classifications-overview/">Classifications Overview</a> explains. If you need classified data outside Adobe, this is the export that has it.</p>
+
+<div class="info-box">
+    <div class="info-hdr"><span class="info-ico"></span>Scheduled requests cannot run against a virtual report suite</div>
+    <p>Data Feeds and scheduled Data Warehouse requests both run against the parent report suite, never against a virtual one. This surprises teams who have built their whole reporting on a virtual report suite and assume the export will inherit its filters. It will not, and the export will quietly contain data the virtual suite was designed to exclude. The workaround is to rebuild the virtual suite's filter as a segment and apply that segment to the request, provided the definition is compatible. The mechanics are in <a href="/adobe-analytics-learning/foundations/report-suites/virtual-report-suites/">Virtual Report Suites</a>.</p>
+</div>
+
+<h3 class="subsec-title">Requests that should not have been requests</h3>
+<p>Three patterns come up repeatedly, and all three are somebody using an export to avoid a conversation.</p>
+
+<p>The first is the request that answers a question the interface already answers. Revenue by channel, orders by campaign, visits by device. If it fits on a screen and nobody needs it in a file, building an export adds a day and removes the ability to ask a follow-up question.</p>
+
+<p>The second is the export as a substitute for analysis. Somebody wants a number, so they are given every number and left to find it. This is very common and it looks generous. What it actually does is move the analysis onto a person who has less context than you and no way to check their answer.</p>
+
+<p>The third is the standing request nobody reads. A weekly file has been landing in a bucket for two years, feeding a dashboard that was decommissioned eighteen months ago. It costs storage, it costs processing, and it will keep running until somebody looks.</p>
+
+<div class="warn-box">
+    <div class="warn-hdr"><span class="warn-ico"></span>An export is a permanent commitment made in about four minutes</div>
+    <p>Setting up a scheduled request takes a few minutes and creates something that will run every week until a person deliberately stops it. Nobody owns it, nobody reviews it, and the person who built it will change role. The cost is not the processing, it is that the estate slowly fills with files whose purpose nobody can explain, which makes it impossible to tell which exports matter when something eventually breaks. Give every scheduled request a name that says what it feeds and a notification address that belongs to a team, and put a note somewhere that says why it exists and who asked for it.</p>
+</div>
+
+<h3 class="subsec-title">Look after them, because they outlive their authors</h3>
+<p>Three habits, and none of them is technical.</p>
+
+<p>Name requests for the thing they feed, not for the data they contain. A request called <code>finance-monthly-revenue-reconciliation</code> tells the next person what breaks if they stop it. One called <code>revenue-export-2</code> does not.</p>
+
+<p>Point notifications at a shared inbox. Failure notices sent to an individual stop being read the week that individual changes team, and a failing scheduled request is completely silent to everybody else.</p>
+
+<p>Review the list once or twice a year. Open the Data Warehouse page, read down the requests, and for each one ask what would notice if it stopped. Anything nobody can answer for is a candidate to switch off.</p>
+
+<h3 class="subsec-title">Follow along: audit what is already running</h3>
+<p>Most companies that have had Adobe Analytics for a few years have requests running that nobody can account for. This takes twenty minutes and it is usually the most valuable thing in this module for an established implementation.</p>
+
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>Find out what is running and who it is for</span></div>
+    <ol class="dothis-steps">
+        <li>
+            <span class="ds-do">Open <code>Tools</code> <span class="ds-sep">&rsaquo;</span> <code>Data Warehouse</code> and list every scheduled request.</span>
+            <span class="ds-see">Note the name, the schedule, the destination and the notification address for each one.</span>
+        </li>
+        <li>
+            <span class="ds-do">For each request, write one sentence saying what would break if it stopped tomorrow.</span>
+            <span class="ds-see">If you cannot write the sentence, that request is your candidate list.</span>
+        </li>
+        <li>
+            <span class="ds-do">Check where each one delivers, and whether anything is still reading that location.</span>
+            <span class="ds-see">Buckets outlive pipelines. A file arriving somewhere nobody reads is the most common finding.</span>
+        </li>
+        <li>
+            <span class="ds-do">Check the notification addresses for people who have left.</span>
+            <span class="ds-see">This is where silent failures come from. Replace them with a shared inbox.</span>
+        </li>
+        <li>
+            <span class="ds-do">For anything you are keeping, confirm the manifest and empty-file options are switched on.</span>
+            <span class="ds-see">Older requests predate the habit and usually have neither.</span>
+        </li>
+        <li>
+            <span class="ds-do">Stop the ones nobody can account for, rather than deleting them.</span>
+            <span class="ds-see">Stopping is reversible and somebody will surface within a month if it mattered.</span>
+        </li>
+    </ol>
+    <p class="dothis-end">There is nothing to build here. A list, a sentence per request, and the discipline to switch off what nobody can explain. Doing it once a year keeps the estate readable.</p>
+</div>
+
+<h3 class="subsec-title">Complete, classified, and delivered elsewhere</h3>
+<p>Data Warehouse is for a complete table that a system needs, not for a number a person wants. Its real strengths are the long tail with nothing bucketed, classified values outside Adobe, and a scheduled file landing where a pipeline can collect it. Its weaknesses are the wait, the rigidity, and the flat refusal of calculated metrics.</p>
+
+<p>The most common mistake is not misconfiguring a request. It is building one at all for a question the screen already answers, or handing somebody every number because working out which number they needed would have taken a conversation.</p>
+
+<p>And the requests you build will outlive you in the role, so name them for what they feed, notify a team rather than a person, and read the list once a year.</p>
+
+<p>One thing this module has taken for granted throughout is that Adobe hands you data already grouped and counted. Rows arrive summarised, visits are already visits, and a search term already has its orders attached. Underneath all of that sits the layer where none of it has happened yet: every single server call your site has ever sent, one per row, in the order they arrived. <a href="/adobe-analytics-learning/analyze/data-feeds/data-feeds-overview/">Data Feeds Overview</a> opens that layer, and it is where the tracking calls from earlier in this curriculum finally reappear as rows you can look at.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Analytics</div>
+    <p>Analytics &gt; <span class="path">Tools</span> &gt; <span class="path">Data Warehouse</span> lists every request in the login company, with its schedule and status. This is the page to audit.</p>
+    <p>A scheduled request can be opened, edited or stopped from here. A completed one-off cannot be edited, though it can be copied as the starting point for a new request.</p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/export/data-warehouse/data-warehouse-requests-manage" target="_blank">Adobe Docs: Manage Data Warehouse Requests</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/export/data-warehouse/component-support" target="_blank">Adobe Docs: Component Support in Data Warehouse</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/export/home" target="_blank">Adobe Docs: Analytics Export Guide</a></li>
+    </ul>
+</div>

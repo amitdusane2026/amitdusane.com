@@ -1,54 +1,162 @@
 ---
 slug: "feed-configuration"
 title: "Feed Configuration"
-published: 2026-07-15
-lastmod: 2026-07-15
+seotitle: "Configuring an Adobe Analytics Data Feed"
+published: 2026-08-26
+lastmod: 2026-08-26
+description: "A feed is a standing instruction, not a one-off request. Interval, columns, late hits and destination, and which of them are painful to change later."
 type: lesson
 modulenum: 17
 sectionnum: 2
 weight: 2
 ---
-<p>Setting up a Data Feed involves configuring the feed details, selecting columns, and specifying delivery options.</p>
-                <h3 class="subsec-title">Configuration Steps</h3>
-                <div class="flow">
-                    <div class="flow-step">1. Name & Report Suite</div>
-                    <span class="flow-arrow">→</span>
-                    <div class="flow-step">2. Delivery Interval</div>
-                    <span class="flow-arrow">→</span>
-                    <div class="flow-step">3. Destination</div>
-                    <span class="flow-arrow">→</span>
-                    <div class="flow-step">4. Column Selection</div>
-                    <span class="flow-arrow">→</span>
-                    <div class="flow-step">5. Activate</div>
-                </div>
+<p>A Data Warehouse request is an order. You ask for a table, it arrives, and the transaction is finished.</p>
 
-                <h3 class="subsec-title">Delivery Intervals</h3>
-                <div class="tbl-wrap">
-                    <table>
-                        <thead><tr><th>Interval</th><th>Delivery Time</th><th>Best For</th></tr></thead>
-                        <tbody>
-                            <tr><td><strong>Hourly</strong></td><td>~2 hours after hour ends</td><td>Near real-time pipelines, streaming</td></tr>
-                            <tr><td><strong>Daily</strong></td><td>~2-4 hours after day ends</td><td>Standard ETL, daily reporting</td></tr>
-                        </tbody>
-                    </table>
-                </div>
+<p>A feed is not an order. It is a standing instruction that keeps running, delivering a file every day or every hour, until somebody deliberately stops it. Nobody looks at it again once it works, which is why the settings you choose on the first afternoon tend to be the settings you live with for years.</p>
 
-                <h3 class="subsec-title">Destination Options</h3>
-                <ul>
-                    <li><strong>FTP/SFTP:</strong> Traditional file transfer to your servers</li>
-                    <li><strong>Amazon S3:</strong> Direct delivery to AWS buckets</li>
-                    <li><strong>Google Cloud Platform:</strong> Delivery to GCS buckets</li>
-                    <li><strong>Azure Blob Storage:</strong> Delivery to Azure containers</li>
-                </ul>
+<p>Two of them are genuinely hard to change later, so it is worth knowing which before you start.</p>
 
-                <div class="info-box">
-                    <div class="info-hdr"><span class="info-ico"></span>Multiple Feeds</div>
-                    <p>You can create multiple feeds for the same report suite with different configurations - for example, one hourly feed for real-time dashboards and one daily feed for your data warehouse.</p>
-                </div>
-                <div class="ref-box">
-                    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
-                    <ul>
-                        <li><a href="https://experienceleague.adobe.com/docs/analytics/export/analytics-data-feed/create-feed.html" target="_blank">Adobe Docs: Create Data Feed</a></li>
-                    </ul>
-                </div>
-            
+<h3 class="subsec-title">Five groups of settings, and two that matter most</h3>
+<p>Admin &gt; Data feeds &gt; Create data feed opens a form in five parts.</p>
+
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>Section</th><th>What it sets</th><th>Change it later?</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Details</strong></td><td>Name, tags, description</td><td>Easily. Name it for what consumes it.</td></tr>
+            <tr><td><strong>Data formatting</strong></td><td>Compression, packaging, manifest, late hits</td><td>Yes, but downstream parsers may care</td></tr>
+            <tr><td><strong>Data structure</strong></td><td>Report suite and the column list</td><td>Adding columns changes the file shape</td></tr>
+            <tr><td><strong>Schedule</strong></td><td>Interval, processing delay, start and end</td><td>Yes, but history is not re-cut</td></tr>
+            <tr><td><strong>Destination</strong></td><td>Cloud account and location, notifications</td><td>Yes</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<p>The two that deserve real thought are the interval and the column list. Both feel like small choices while you are clicking and both are awkward to undo once a pipeline depends on them.</p>
+
+<h3 class="subsec-title">Daily, hourly, or every fifteen minutes</h3>
+<p>Daily is the default and it is right for most work. The file arrives after the day closes and contains everything that happened in it.</p>
+
+<p>Hourly delivers at the end of each hour. It is the right choice when something downstream genuinely acts within the day: an operational dashboard, a near-real-time model, an alerting system. Fifteen minute intervals exist as well, arranged through Adobe rather than switched on yourself.</p>
+
+<p>The trap is choosing hourly because it sounds better. Hourly means twenty-four times as many files, twenty-four times as many things that can fail overnight, and a pipeline that has to handle partial days and stitch them together. If the report built on it is read once each morning, all of that cost buys nothing.</p>
+
+<p>There is also a processing delay setting, which holds the feed back by a number of hours before it runs. That sounds like a disadvantage and is often useful. Hits can arrive late, and a delay gives stragglers time to land before the file is cut.</p>
+
+<h3 class="subsec-title">Late hits, and the window that catches them</h3>
+<p>Hits do not always arrive on the day they happened. A mobile app collects events offline and sends them when the device reconnects, which can be days later. Server-side calls retry. Timestamped hits carry their own event time rather than the time they were received.</p>
+
+<p>So a feed offers an option for late-arriving hits, with a lookback window that decides how far back Adobe will go to catch them. The window can be set very wide indeed, up to three years.</p>
+
+<p>The decision is about what the receiving system does with a correction. If your pipeline can reprocess a day when new rows arrive for it, switch late hits on and pick a window that matches your real app behaviour. If your pipeline appends and never revisits, late hits will produce duplicates or silently disagree with Adobe's own reporting, and you need to decide which of those you prefer before turning it on rather than after.</p>
+
+<div class="warn-box">
+    <div class="warn-hdr"><span class="warn-ico"></span>A feed and a report can disagree for a completely legitimate reason</div>
+    <p>Adobe's own reporting keeps updating a day as late hits arrive. A feed file for that day was cut at a moment in time and does not change afterwards unless you have configured it to. So a Workspace number for last Tuesday can grow after the Tuesday file was delivered, and the two will not match. Neither is wrong. If somebody compares a warehouse table built from feeds against a dashboard and finds a small gap on recent days, this is the first thing to check, well before anybody starts looking for a bug in the pipeline.</p>
+</div>
+
+<h3 class="subsec-title">Choose columns deliberately, then save the template</h3>
+<p>A feed can carry every available column or only the ones you name. There are several hundred to choose from.</p>
+
+<p>The instinct is to take everything, on the same logic as the oversized Data Warehouse request: it is all there, so nobody has to come back. It is a more defensible instinct here, because adding a column later does not backfill it into files already delivered, so anything you leave out is genuinely missing from history.</p>
+
+<p>Against that, every column costs storage and transfer, and a few hundred unnecessary columns across a year of daily files is real money and real processing time. The sensible middle is to take the columns you can name a use for, plus the identity, timing and exclusion columns you will need whatever happens, and then to save that selection as a template so the next feed matches it.</p>
+
+<p>Templates are the part people skip. A company with six feeds built by four people over three years has six different column sets, and every downstream job has to handle its own. Saving and reusing one template costs nothing on the day and prevents that entirely.</p>
+
+<div class="pro-tip">
+    <div class="pro-tip-hdr"><span class="tip-ico"></span>Take the plumbing columns even when nobody has asked for them</div>
+    <p>Some columns are not interesting in themselves and are needed for almost every calculation you will ever run. The visitor ID pair, the visit number, the visit start time, the hit time, and the exclusion columns that tell you which rows Adobe itself would not count. Leave those out and you cannot reproduce a single standard metric, which you will discover months later when somebody asks why the warehouse disagrees with Workspace. They are cheap, they are the same on every feed, and they belong in the template. The section on processing feeds shows exactly what each of them is doing.</p>
+</div>
+
+<h3 class="subsec-title">Formatting, packaging and the manifest</h3>
+<p>The remaining settings are quick, and two of them matter to whoever consumes the file.</p>
+
+<p>Compression is Gzip or Zip. Packaging is either a single file or multiple files split into chunks of about two gigabytes. Splitting is usually right for a busy report suite, because a single enormous file is harder for a pipeline to move and impossible to retry cheaply.</p>
+
+<p>The manifest is the same idea as in Data Warehouse. It lists the file names, sizes, and record counts, and it is delivered last. That ordering is what lets an automated process know the delivery finished rather than guessing. You can also ask for a manifest even on days with no data, which is how a pipeline distinguishes a quiet day from a failed one.</p>
+
+<p>Two smaller options are worth switching on. Replacing operating system strings strips newlines and tabs out of values, which otherwise break a tab separated file in ways that are genuinely painful to debug. Dynamic lookups deliver the carrier, mobile and operating system lookup tables alongside the data.</p>
+
+<h3 class="subsec-title">Follow along: create a feed</h3>
+<p>This builds a feed end to end. If you are working in a training account, set an end date so it stops on its own.</p>
+
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>A daily feed, named for what reads it</span></div>
+    <ol class="dothis-steps">
+        <li class="ds-group">Part one, the identity of the feed</li>
+        <li>
+            <span class="ds-do">Go to <code>Admin</code> <span class="ds-sep">&rsaquo;</span> <code>Data feeds</code> and choose <code>Create data feed</code>.</span>
+        </li>
+        <li>
+            <span class="ds-do">Name it for the system that will read it, and use the description to say who asked for it and why.</span>
+            <span class="ds-see">Something like <code>warehouse-daily-hits-prod</code>. The description is the only documentation that travels with the feed.</span>
+        </li>
+        <li class="ds-group">Part two, the two decisions that stick</li>
+        <li>
+            <span class="ds-do">Under <code>Schedule</code>, choose <code>Daily</code> unless something downstream genuinely acts within the day.</span>
+            <span class="ds-see">Add a processing delay of a few hours so late hits have time to land before the file is cut.</span>
+        </li>
+        <li>
+            <span class="ds-do">Under <code>Data structure</code>, pick the report suite and then build your column list.</span>
+            <span class="ds-see">Include the identity, timing and exclusion columns even if nobody has asked for them.</span>
+        </li>
+        <li>
+            <span class="ds-do">Save the column selection as a template before you move on.</span>
+            <span class="ds-see">The next feed anyone builds should start from this rather than from a blank list.</span>
+        </li>
+        <li class="ds-group">Part three, formatting and delivery</li>
+        <li>
+            <span class="ds-do">Under <code>Data formatting</code>, choose a compression format, switch on the manifest, and switch on replacing operating system strings.</span>
+            <span class="ds-see">Choose multiple files if the suite is busy. Two gigabyte chunks move and retry far better than one huge file.</span>
+        </li>
+        <li>
+            <span class="ds-do">Decide on late-arriving hits, and set the lookback window to match how your apps actually behave.</span>
+            <span class="ds-see">Only switch this on if the receiving pipeline can reprocess a day it has already loaded.</span>
+        </li>
+        <li>
+            <span class="ds-do">Under <code>Destination</code>, connect the cloud account, set the location, and put a shared inbox in the notification field.</span>
+        </li>
+        <li>
+            <span class="ds-do">Set a start date a few days out, then check the <code>Jobs</code> tab after the first run.</span>
+            <span class="ds-see">Jobs shows each delivery individually, which is where you look when somebody says a file is missing.</span>
+        </li>
+    </ol>
+    <p class="dothis-end">There is nothing else to configure. Interval, columns, formatting, destination. The feed now runs on its own until somebody stops it, which is exactly why the name and description were worth the extra minute.</p>
+</div>
+
+<div class="shot-box shot-pending">
+    <div class="shot-title">Choosing what the file will contain</div>
+    <div class="shot-frame">
+        <p class="shot-brief">FILE     adobe-analytics-data-feed-column-selection.webp
+SCREEN   Analytics &gt; Admin &gt; Data feeds &gt; Create data feed &gt; Data structure section
+STATE    The column selection interface with a report suite chosen and a set of columns added, showing both the available column list and the selected list, plus the template control if it is visible.
+INCLUDE  The selected columns list with post_ prefixed columns visible in it, the search or filter for available columns, and the template save or apply control.
+EXCLUDE  Client report suite names.
+WHY      Column selection is one of the two decisions that are painful to reverse, and the template control that prevents six feeds drifting apart is easy to miss on this screen.</p>
+    </div>
+</div>
+
+<h3 class="subsec-title">A feed is a standing instruction</h3>
+<p>Everything about configuring a feed follows from the fact that it keeps running. The name and description are the only documentation that travels with it, the notification address needs to belong to a team, and the settings you pick on day one are the ones somebody inherits.</p>
+
+<p>Daily suits almost everything. Hourly is for something that genuinely acts within the day and costs twenty-four times the operational surface. A processing delay is usually worth having. Late-arriving hits are only safe if whatever reads the file can reprocess a day it has already loaded.</p>
+
+<p>Take the columns you can justify plus the plumbing columns you will always need, and save the selection as a template so the estate does not drift. Switch on the manifest, split large deliveries into chunks, and strip operating system strings so a stray newline cannot break a tab separated file.</p>
+
+<p>What none of that tells you is what is actually inside the delivery when it lands. It is not one file, several of the columns are numeric codes that mean nothing on their own, and the most important convention in the whole format is a four letter prefix. <a href="/adobe-analytics-learning/analyze/data-feeds/data-feed-contents/">Data Feed Contents</a> takes the delivery apart.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Analytics</div>
+    <p>Analytics &gt; <span class="path">Admin</span> &gt; <span class="path">Data feeds</span>, then <span class="path">Create data feed</span>. The form runs through Details, Data formatting, Data structure, Schedule and Destination.</p>
+    <p>The <span class="path">Jobs</span> tab on the same page lists every individual delivery a feed has produced, with its status. That is the page to open when a file has not arrived, before anybody starts investigating the destination.</p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/export/analytics-data-feed/create-feed" target="_blank">Adobe Docs: Create a Data Feed</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/export/analytics-data-feed/df-manage-jobs" target="_blank">Adobe Docs: Manage Data Feed Jobs</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/export/analytics-data-feed/troubleshooting" target="_blank">Adobe Docs: Troubleshoot Data Feeds</a></li>
+    </ul>
+</div>

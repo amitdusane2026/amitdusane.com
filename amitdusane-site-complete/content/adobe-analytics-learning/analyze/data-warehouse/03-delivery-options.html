@@ -1,60 +1,144 @@
 ---
 slug: "delivery-options"
 title: "Delivery Options"
-published: 2026-07-15
-lastmod: 2026-07-15
+seotitle: "Data Warehouse Delivery Options in Adobe Analytics"
+published: 2026-08-26
+lastmod: 2026-08-26
+description: "Where the file goes, how often, and the small settings that decide whether an automated pipeline works or fails without telling anyone."
 type: lesson
 modulenum: 16
 sectionnum: 3
 weight: 3
 ---
-<p>Data Warehouse supports multiple delivery destinations for flexibility in data workflows.</p>
-                <h3 class="subsec-title">Delivery Methods</h3>
-                <div class="tbl-wrap">
-                    <table>
-                        <thead><tr><th>Method</th><th>Best For</th><th>Configuration</th></tr></thead>
-                        <tbody>
-                            <tr><td><strong>Email</strong></td><td>Small files, ad-hoc requests</td><td>Email address, file size limit ~10MB</td></tr>
-                            <tr><td><strong>FTP</strong></td><td>Legacy systems</td><td>Host, port, credentials, path</td></tr>
-                            <tr><td><strong>SFTP</strong></td><td>Secure transfers</td><td>Host, port, credentials, SSH key</td></tr>
-                            <tr><td><strong>Amazon S3</strong></td><td>AWS data pipelines</td><td>Bucket, region, access keys</td></tr>
-                            <tr><td><strong>Google Cloud</strong></td><td>GCP data pipelines</td><td>Bucket, service account</td></tr>
-                            <tr><td><strong>Azure Blob</strong></td><td>Azure data pipelines</td><td>Container, SAS token</td></tr>
-                        </tbody>
-                    </table>
-                </div>
+<p>A finance team gets a monthly export by email. It works for a year. Then the business grows, the file passes the size the mail server will accept, and the email stops arriving. Nobody notices for six weeks, because a report that does not arrive looks exactly like a quiet month.</p>
 
-                <h3 class="subsec-title">File Formats</h3>
-                <ul>
-                    <li><strong>CSV:</strong> Comma-separated, universal compatibility</li>
-                    <li><strong>TSV:</strong> Tab-separated, handles commas in data</li>
-                </ul>
+<p>Delivery is the half of a Data Warehouse request that people configure quickly and then never think about again. It is also the half that decides whether the thing keeps working when you are not watching.</p>
 
-                <h3 class="subsec-title">Scheduling Options</h3>
-                <div class="code-block">
-                    <div class="code-hdr"><span class="code-lang">Schedule Configurations</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-                    <div class="code-body"><pre>One-time: Run once immediately or at scheduled time
+<h3 class="subsec-title">Five destinations, and email is not one of the good ones</h3>
+<p>Adobe recommends five destinations: Amazon S3, Google Cloud Platform, Azure RBAC, Azure SAS, and email. The older FTP and SFTP options still exist and are no longer recommended.</p>
 
-Recurring Options:
-├── Hourly: Every X hours
-├── Daily: Every X days at specific time
-├── Weekly: Specific day(s) of week
-├── Monthly: Specific day of month
-└── Yearly: Specific date annually
+<p>Cloud storage is the right answer for anything that runs on a schedule or feeds another system. S3 needs a bucket name, an access key ID and a secret key. Azure Blob needs a container, an account and a key. Google Cloud is configured the same way. Once set up, the file lands somewhere a pipeline can pick it up without a human in the loop.</p>
 
-Advanced:
-├── Start/End dates for schedule
-├── Delivery window preferences
-└── Failure notification emails</pre></div>
-                </div>
-                <div class="pro-tip">
-                    <div class="pro-tip-hdr"><span class="tip-ico"></span>Pro Tip</div>
-                    <p>For daily reports, schedule delivery for early morning (e.g., 6 AM) to ensure previous day's data is fully processed. Adobe Analytics data processing typically completes by 2-4 AM.</p>
-                </div>
-                <div class="ref-box">
-                    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
-                    <ul>
-                        <li><a href="https://experienceleague.adobe.com/docs/analytics/export/data-warehouse/create-request/dw-request-report-destinations.html" target="_blank">Adobe Docs: Data Warehouse Destinations</a></li>
-                    </ul>
-                </div>
-            
+<p>Email is right for one thing: a file a person is going to open. A one-off test, a small extract somebody asked for once, a sanity check on a new request. It is the fastest way to see whether you built the table correctly.</p>
+
+<p>Email is wrong for everything else, and the failure at the top of this section is the reason. Mail systems have size limits you do not control, they are not designed to be a data transport, and the failure mode is silence. A pipeline built on email works until the volume grows.</p>
+
+<div class="tbl-wrap">
+    <table>
+        <thead><tr><th>Destination</th><th>Use it for</th><th>What it needs</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Amazon S3</strong></td><td>Anything scheduled or automated</td><td>Bucket name, access key ID, secret key</td></tr>
+            <tr><td><strong>Google Cloud Platform</strong></td><td>Same, where the estate is on Google</td><td>Bucket and credentials</td></tr>
+            <tr><td><strong>Azure RBAC / Azure SAS</strong></td><td>Same, where the estate is on Azure</td><td>Container, account, key</td></tr>
+            <tr><td><strong>Email</strong></td><td>Tests, one-offs, small files a person opens</td><td>An address, and a file under the mail limit</td></tr>
+            <tr><td><strong>FTP / SFTP</strong></td><td>Existing pipelines only. Not recommended for new work.</td><td>Host, username, password</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<h3 class="subsec-title">Report options are small settings with large effects</h3>
+<p>The Report options tab looks like formatting preferences. Three of them decide whether an automated process can use the file at all.</p>
+
+<p><strong>File name, and appending the date range.</strong> A scheduled request writes to the same destination every time. If every delivery has the same name, each one overwrites the last, and you have one file instead of a history. Switching on the option to append the report date range gives you names like the report period, so files accumulate in order and a pipeline can pick up the newest by name.</p>
+
+<p><strong>The manifest file.</strong> This is a small companion file listing the file name, its size, and the number of records. It is delivered last, after the data itself. That ordering is the point: if the manifest is there, the transfer finished. Without it, a process reading the bucket has no reliable way to know whether it is looking at a complete file or one still being written.</p>
+
+<p><strong>Send an empty file when there is no data.</strong> Off by default, and worth switching on for anything automated. A day with no matching data produces nothing at all, and a pipeline cannot tell the difference between no data and no delivery. An empty file with the right name says the request ran and found nothing, which is a real answer.</p>
+
+<p>The remaining options matter less but are worth knowing. Files are delivered as CSV or as a Tableau extract. Data Warehouse compresses anything over 1 MB automatically, and you can force compression for everything. A digital signature file lets a recipient verify the file has not been altered. You can add comment lines at the top of the file, which is helpful for humans and a nuisance for parsers, so leave it off for anything automated.</p>
+
+<div class="pro-tip">
+    <div class="pro-tip-hdr"><span class="tip-ico"></span>Manifest on, empty file on, date in the name. Every scheduled request.</div>
+    <p>These three settings are the difference between a pipeline that fails loudly and one that fails silently, and all three are one click each. The date in the file name stops deliveries overwriting each other. The manifest tells the receiving process the file is complete. The empty file distinguishes a quiet day from a broken request. None of them helps anybody reading a file by hand, which is exactly why they get skipped, and the skipping only shows up months later when somebody asks why the numbers stopped.</p>
+</div>
+
+<h3 class="subsec-title">Scheduling, and the setting you cannot change later</h3>
+<p>A request either runs once or runs on a schedule, and the choice has a consequence beyond convenience.</p>
+
+<p>A scheduled request can be opened and edited afterwards. A one-off request cannot. If you build a one-off and get a dimension wrong, your only option is to build the whole request again. That is why experienced users schedule almost everything, including requests they expect to run a single time, and simply stop the schedule afterwards.</p>
+
+<p>When you do schedule, match the frequency to the decision the file feeds, not to how often the data changes. Data changes constantly. A monthly finance reconciliation needs a monthly file. Sending it weekly means four times the files, four times the storage, and no extra information for the person receiving it.</p>
+
+<p>Also give the schedule a start date that is far enough ahead to be sure the first run is right. A daily request that starts tomorrow gives you one night to discover a mistake.</p>
+
+<div class="warn-box">
+    <div class="warn-hdr"><span class="warn-ico"></span>Up to 72 hours is a real number, not a worst case somebody invented</div>
+    <p>Adobe states that a request can take up to 72 hours to process, and complexity and volume both push it towards that end. Most requests are far quicker, which is precisely the trap: people build a mental model from a small test that returned in ten minutes and then promise a stakeholder a quarterly export by the end of the day. Build the delay into whatever you commit to, and if a request is genuinely urgent, ask whether a narrower version answers the question well enough today. A scheduled request that has been running for a month has already solved this problem, which is another argument for scheduling early rather than requesting on demand.</p>
+</div>
+
+<h3 class="subsec-title">Follow along: set up a delivery that survives you</h3>
+<p>This turns the request from the previous section into something that runs on its own and can be picked up by another system. If you do not have cloud storage credentials to hand, do the first part and read the second.</p>
+
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>A scheduled request, delivered where a pipeline can find it</span></div>
+    <ol class="dothis-steps">
+        <li class="ds-group">Part one, the options that make it usable</li>
+        <li>
+            <span class="ds-do">Open your request and go to <code>Report options</code>. Set a file name that describes the contents, and switch on <code>Append report date range to file name</code>.</span>
+            <span class="ds-see">Each delivery now has its own name. Without this, every run overwrites the one before.</span>
+        </li>
+        <li>
+            <span class="ds-do">Switch on <code>Send a manifest file</code> and <code>Send an empty file when there is no data</code>.</span>
+            <span class="ds-see">The manifest arrives last and confirms the transfer completed. The empty file proves the request ran on a quiet day.</span>
+        </li>
+        <li>
+            <span class="ds-do">Leave <code>Beginning of report comments</code> empty for anything automated.</span>
+            <span class="ds-see">Comment lines sit above the header row and break a lot of parsers.</span>
+        </li>
+        <li class="ds-group">Part two, the destination</li>
+        <li>
+            <span class="ds-do">Go to <code>Report destination</code> and choose your cloud storage provider rather than email.</span>
+            <span class="ds-see">S3 wants a bucket, an access key ID and a secret key. Azure wants a container, account and key.</span>
+        </li>
+        <li>
+            <span class="ds-do">On <code>Scheduling options</code>, set a repeating schedule matched to the decision the file feeds, and set the start date at least a few days out.</span>
+            <span class="ds-see">Scheduling also keeps the request editable, which a one-off never is.</span>
+        </li>
+        <li>
+            <span class="ds-do">On <code>Notification email</code>, use a shared inbox or a distribution list.</span>
+            <span class="ds-see">Failure notices sent to one person stop being read the week that person changes role.</span>
+        </li>
+        <li class="ds-group">Part three, prove it</li>
+        <li>
+            <span class="ds-do">Wait for the first delivery and check three things: the file name carries its date range, the manifest arrived, and the record count in the manifest matches the rows in the file.</span>
+            <span class="ds-see">If those three hold, the pipeline can be trusted to a machine.</span>
+        </li>
+    </ol>
+    <p class="dothis-end">There is nothing else to set up. Destination, three report options, a schedule and a shared notification address. Everything past this is deciding whether a Data Warehouse request was the right tool at all.</p>
+</div>
+
+<div class="shot-box shot-pending">
+    <div class="shot-title">The three switches that keep a pipeline honest</div>
+    <div class="shot-frame">
+        <p class="shot-brief">FILE     adobe-analytics-data-warehouse-report-options.webp
+SCREEN   Analytics &gt; Tools &gt; Data Warehouse &gt; request &gt; Report options tab
+STATE    The Report options tab with a file name filled in, "Append report date range to file name" ticked, "Send a manifest file" ticked, and "Send an empty file when there is no data" ticked.
+INCLUDE  The file name field and all three ticked options in one frame, plus the file format choice if it fits.
+EXCLUDE  Client naming conventions in the file name field; use a generic descriptive name.
+WHY      The section argues these three settings decide whether automation works. They are visually unremarkable tick boxes buried in a formatting tab, which is exactly why they get skipped, so showing where they sit is the point.</p>
+    </div>
+</div>
+
+<h3 class="subsec-title">A file nobody collects is not a report</h3>
+<p>Cloud storage for anything scheduled, email only for tests and small extracts a person will open by hand. The older FTP options work and should not be chosen for new pipelines.</p>
+
+<p>Three options in the formatting tab do most of the work of making a delivery reliable. Put the date range in the file name so deliveries do not overwrite each other. Send the manifest so a receiving process knows the transfer finished. Send an empty file so a quiet day cannot be mistaken for a broken request.</p>
+
+<p>Schedule rather than run once, because scheduled requests stay editable and one-offs never do. Match the frequency to the decision, not to the data. Send failure notices to a shared inbox. And plan for up to 72 hours, because the small test that came back in ten minutes is not the guide.</p>
+
+<p>All of which assumes the request should exist. Data Warehouse is slow, rigid, and refuses calculated metrics, so a good part of the skill is knowing when to reach for it and when the answer is somewhere else entirely. <a href="/adobe-analytics-learning/analyze/data-warehouse/best-practices-use-cases/">Best Practices and Use Cases</a> covers what it is genuinely good at, the requests that should never have been exports, and how it differs from the other export in this phase.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Analytics</div>
+    <p>Analytics &gt; <span class="path">Tools</span> &gt; <span class="path">Data Warehouse</span>, then open a request. <span class="path">Report destination</span>, <span class="path">Report options</span>, <span class="path">Scheduling options</span> and <span class="path">Notification email</span> are the last four tabs of the form.</p>
+    <p>Cloud storage credentials are entered on the destination tab and are stored with the request. Changing a key later means opening every request that uses it, so it is worth recording which requests point at which bucket.</p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/export/data-warehouse/dw-create-request/dw-request-report-destinations" target="_blank">Adobe Docs: Configure a Report Destination</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/export/data-warehouse/dw-create-request/dw-request-report-options" target="_blank">Adobe Docs: Configure Report Options</a></li>
+        <li><a href="https://experienceleague.adobe.com/docs/analytics/export/data-warehouse/delivery-time.html?lang=en" target="_blank">Adobe Docs: Data Warehouse Delivery Times</a></li>
+    </ul>
+</div>
