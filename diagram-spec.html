@@ -156,6 +156,8 @@ footer{border-top:1px solid var(--line);padding-top:16px;font-size:12.5px;color:
       <tr><td><code>11</code></td><td>400</td><td>Annotations, leaf labels, units, asides. <strong>The floor.</strong></td></tr>
     </tbody>
   </table></div>
+  <div class="no"><b>A figure carries labels, never sentences.</b> Nothing inside a figure should exceed about <b>10 words</b>. M13 and M15 top out at 9 to 11; drift begins when a diagram starts carrying 13, 14 and 19-word explanations, and Data Warehouse &sect;1 once had three stacked at the bottom, which is a paragraph wearing a drawing. If an idea needs a sentence it belongs in the prose. Check it with a grep over <code>&lt;text&gt;</code> contents rather than by eye, because every individual line looks reasonable and the drift is gradual. <i>Added 26 August 2026, after Amit flagged it on modules 16 to 18.</i></div>
+
   <div class="no"><b>Nothing below 11.</b> The corpus currently has 141 places at 8 to 10.5px, 16 of them under the legibility floor for any handset. They are known and they are not a precedent.</div>
   <div class="card">
     <h3>A box has to be tall enough for the lines in it</h3>
@@ -307,6 +309,14 @@ footer{border-top:1px solid var(--line);padding-top:16px;font-size:12.5px;color:
 
 <section>
   <div class="cat"><span class="cat-id">08</span><h2>Revision history</h2></div>
+  <div class="card">
+    <h3>26 August 2026 &mdash; two rules added from module 15 to 18 review</h3>
+    <ul class="chk">
+      <li><strong>Text inside a figure is capped at about 10 words.</strong> See section 03. Amit&rsquo;s note was that the infographics were becoming descriptive; the measurable test is the longest string inside the drawing, and it had reached 19 words.</li>
+      <li><strong>Figure density is part of the standard, not just figure quality.</strong> After the text was trimmed out of figures, the next three modules were written with almost none: eight of twelve sections had no figure at all, and the pages read as a wall of prose. Stripping text from figures must not become an argument for drawing fewer. Every section should carry at least one figure unless the subject genuinely has nothing spatial, relational or comparative in it.</li>
+      <li><strong>Overlaps are checked programmatically now, not by eye.</strong> Render each figure detached, call <code>getBBox()</code> on every <code>text</code> and <code>rect</code>, and flag text overlapping other text, or text overlapping a rect whose centre it does not sit inside. Coordinate arithmetic is not enough: rendered text width depends on the font and cannot be predicted from character count, which is exactly how a 59-unit label ended up sitting in a 42-unit gap.</li>
+    </ul>
+  </div>
   <div class="card">
     <h3>20 August 2026 &mdash; after cycle 14, the last</h3>
     <ul class="chk">

@@ -31,7 +31,7 @@ GitHub: `amitdusane2026/amitdusane.com`. Two branches, and the difference is loa
 
 **Never push or merge to `main` without Amit saying so explicitly, in that session.** There is no staging environment: `main` is the live site.
 
-The reason this matters right now: 24 learning sections still read "This section is not yet written." They are on `develop`, invisible to the world. Merged to `main` they become publicly indexable.
+The reason this matters right now: 16 learning sections still read "This section is not yet written," and all 21 module landing pages are front matter with no body at all. They are on `develop`, invisible to the world. Merged to `main` they become publicly indexable.
 
 The Adobe Analytics Learning section has never been published. `amitdusane.com/adobe-analytics-learning/` currently returns 404, by design, until the section is finished.
 
@@ -158,6 +158,12 @@ rm -rf amitdusane-site-complete/public && hugo --gc --source amitdusane-site-com
 
 Then crawl the built HTML, not the source. Source passing every check proves nothing; the bug lives in the interaction between source and build.
 
+**The page count is not enough, and on 26 Aug 2026 it missed a real fault.** A build reported 219 pages and success while silently writing stale content into two pages, with a file timestamp *newer* than the source. The cause was a `hugo server` running against the same tree while `hugo --gc` ran. Nothing flagged it. Amit found it by reading the site, which is the expensive way.
+
+**So compare source against build, not just the count.** Extract the `h3.subsec-title` text from every section source and from its built page and compare. It takes seconds and it is the only check that catches a build that lies about having succeeded. Any mismatch means the build output cannot be trusted anywhere, not just on the page that flagged.
+
+**Only one `hugo server` may run against this tree, and never while a build runs.** Two servers plus a CLI build is what corrupted it. `.claude/launch.json` now defines exactly one server, on port 1313. If a preview looks stale, stop every hugo process, `rm -rf public`, rebuild, then start one server; do not debug the CSS.
+
 ---
 
 ## What this site is for, and why anyone would return to it
@@ -242,6 +248,22 @@ The second is an extended scenario or analogy carried through the whole section,
 
 **Measure a draft against M13 §1 and M11 §2 before declaring it done.** Median paragraph in the sixties or seventies, beats at roughly one per section, not one per heading.
 
+**Paragraph median is not sufficient, and on 26 Aug 2026 it passed while the writing failed.** M15 cleared it and Amit still had to read sentences two and three times. His diagnosis: it read like a movie script, where the first pass does not land, the second does, and the third makes you admire the construction. The fault was at sentence level, which nothing was measuring.
+
+**So measure sentence median too. Target the low teens, and treat anything over about 34 words as needing a split.** M13 §1 sits at a median of 12 with 10% of sentences over 30 words. M15's first draft sat at 23 to 25 with a quarter over 30, and reads completely differently after the rewrite despite saying the same things.
+
+**The sentence he picked out is the whole diagnosis**, and the shape recurs: a subordinate clause in front, the subject delayed to the end, and a figure of speech closing it.
+
+> Sitting immediately above the window in every one of the three places attribution is configured is a control that can silently overrule it, and its two options are not two flavours of the same thing.
+
+became
+
+> Just above the lookback window there is a second setting called the container. It has two options, Visit and Visitor, and picking the wrong one can cancel your window without telling you.
+
+**Put the subject at the front. One idea per sentence. Say the thing before explaining it.** The test is the colleague sitting next to you who knows nothing about the topic: praise should come from being understood, never from the construction.
+
+**Amit also ruled out three habits the guidance below can otherwise invite** (26 Aug 2026): staged dramatic openers, one-sentence pauses used for effect, and cause-and-effect rhetorical chains. Openers are still situations, told plainly, with no build-up.
+
 The problem is structural rather than stylistic, and six habits fix it:
 
 1. **Openers are unfolding situations with people and time passing**, never aphorisms. M13 §1 opens on three requests across one working day before any summary lands. "Nobody has ever been persuaded by a table" is the failure mode.
@@ -316,7 +338,7 @@ Full specifications, including when each is earned, are in `content-component-ru
 
 | Component | Structure |
 |---|---|
-| `warn-box` | `> .warn-hdr + p`. Icon must be `⚠️` with the U+FE0F variation selector |
+| `warn-box` | `> .warn-hdr + p`. Icon is `<span class="warn-ico"></span>`, a drawn tile. No emoji |
 | `info-box` | `> .info-hdr + p` |
 | `pro-tip` | `> .pro-tip-hdr + p` |
 | `path-box` | `> .path-title > .path-ico + text, then p`. `path-ico` is an empty span |
@@ -326,6 +348,8 @@ Full specifications, including when each is earned, are in `content-component-ru
 | `diagram-box` | `> .diagram-title` then inline `<svg>` directly, or `.diagram-content` wrapping a layout component |
 | `cards` | `> .card` (or `a.card`) `> .card-icon + .card-title + .card-desc` |
 | `shot-box` | `> .shot-title + .shot-frame` (holding the `<img>` and a `button.shot-zoom-btn`) `+ .shot-note`. Product screenshots |
+
+**`pro-tip`, `info-box` and `warn-box` hold exactly one paragraph.** Their `p` is set to `margin:0`, so a second one renders butted against the first with no gap. A scan of all 117 sections on 26 Aug 2026 found none had ever held two. `path-box` is the exception at `5px`. Put continuation prose after the box, in normal flow.
 
 **A screenshot is never wrapped in a link and never redacted.** The image carries `pointer-events:none`; only the zoom button opens anything, and it opens an overlay in the same tab that `world-learning.js` builds. Crop to the feature rather than the screen, because the image area is about 290px on a phone. Every shot earns a `shot-note` that points at something, and if none can be written the shot is not earned. Two per section is plenty. Capture from the Adobe training account with a harmless dimension so there is nothing to hide; blur is not redaction. **Name the file for what the picture shows, not for where it sits** (changed 24 Aug 2026): `static/img/adobe-analytics-evar-allocation-expiration.webp`, lowercase, hyphens, no module or section numbers. A filename is a real ranking signal in image search and the old `aal_module<NN>_section<NN>_ss<N>` scheme told a crawler nothing. Rename before publication, never after. Originals archived under the same name in `screenshot-originals/`, outside the site folder.
 

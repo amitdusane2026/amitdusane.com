@@ -1607,3 +1607,77 @@ expected rather than wrong.
 
 The screenshot programme is closed and the pre-merge guard is satisfied: no
 `shot-pending` and no `data-newblock` anywhere in content.
+
+---
+
+## Session close, 30 August 2026
+
+The largest single day on the project. **16 sections written, reviewed, corrected
+and signed off**, taking the corpus from 84 to 100 of 116.
+
+### What shipped
+
+**Four modules, in curriculum order.** M15 Attribution Models, M16 Data Warehouse,
+M17 Data Feeds, M18 Activity Map. All 16 sections are `created`, `QA'd` and
+`final`. 18 of 21 modules are now complete and no module is half-finished.
+
+**Eight screenshots**, blurred, metadata-stripped, archived and live. The
+screenshot programme is closed at 51 across the site.
+
+**Both pre-merge guards are satisfied for the first time**: no `shot-pending` and
+no `data-newblock` anywhere in content.
+
+### The three corrections that changed how the work is done
+
+**Plain language, and the check that was measuring the wrong thing.** Paragraph
+median passed while Amit had to read sentences three times. Sentence median was
+23 to 25 words against M13 §1's 12. Both measurements are now in `CLAUDE.md`
+under Voice, with the before-and-after sentence that diagnosed it.
+
+**Figures carry labels, not sentences**, capped at about 10 words. Then the
+overcorrection: after text was stripped out of figures, the next three modules
+were written with almost none, and eight of twelve sections had no figure at all.
+Both rules are now in `diagram-spec.html` with a revision entry.
+
+**Closing headings had become a formula.** "What you have now" closed 18 sections,
+12 of them in the two modules written by me. M14's nine and M15's four were
+renamed to name each section's own conclusion; seven scattered uses were left,
+because one use inside a module is invisible.
+
+### Facts established, all verified against Experience League
+
+Report-time attribution ignores eVar allocation and expiration entirely, so a
+prop can be attributed. Attribution is unsupported on traffic metrics and on
+calculated metrics as a whole. Data Warehouse takes its name from bulk storage
+and is not a queryable database. Data feed `post_` columns are the processing
+chain made visible. Activity Map's overlay is unsupported on Web SDK while the
+dimensions keep working.
+
+Amit's own testing added four Data Warehouse corrections the documentation does
+not carry, including that a custom date range disables scheduling and that a
+cloud destination makes the notification address mandatory.
+
+### Still open, and the first three are short
+
+1. **M11 §1's warn-box goes stale on 31 August 2026.** One day away.
+2. **M03 §2 contradicts M15 §1** on whether attribution can overrule eVar
+   expiration. One paragraph, on a page M15 §1 links to.
+3. **The home page has no route into the learning section.** One `.tcard`.
+4. **27 landing pages**, 21 of them front matter with no body. Amit has said
+   these are mine to write without his input; he will QA them.
+5. **16 sections**: M20 Testing 5 and M21 CJA 5 are mine. **M19 SDR 6 is blocked
+   on Amit's own templates and must not be drafted from market generics.**
+
+### Open question, deliberately unresolved
+
+Data Warehouse delivery frequency. Amit is certain from experience that Yearly is
+not offered and the ceiling is Quarterly. Adobe's scheduling page, read twice
+with different prompts, lists Hourly, Daily, Weekly, Monthly, Yearly and contains
+"Quarterly" nowhere. Nothing about frequency was written into the content, so
+neither claim is published. **Do not add the frequency list from Adobe's docs
+without asking him**, because his product testing outranks the page.
+
+### Next session
+
+Take the M11 expiry and the M03 §2 contradiction first, both short and both
+already late, then M20 Testing and Debugging.
