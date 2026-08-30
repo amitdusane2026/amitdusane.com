@@ -1573,3 +1573,37 @@ all.
 Three need data set up before capture rather than during it: the Attribution
 panel needs journeys with several touch points or it builds almost nothing, and
 the None and Low Traffic shots both need data that actually produces a large row.
+
+### Modules 15 to 18 signed off, 30 August 2026
+
+Amit has signed off all 16 sections. Every one now reads `Content created = Yes`,
+`Content QA'd = Yes`, `Final result = Yes`.
+
+**The corpus is at 100 of 116 sections written, and all 100 are signed off.**
+There is no longer any gap between written and QA'd; the two numbers have
+converged for the first time. 16 sections remain, all of them unwritten:
+M19 SDR 6, M20 Testing and Debugging 5, M21 CJA 5.
+
+**The duplicate seotitle in M11 is not a defect and should not be re-raised.**
+The SEO audit flagged that the Classifications module landing and Classifications
+Overview share "Classifications in Adobe Analytics". Amit's ruling: one of the two
+is a landing page, landing pages are not written yet, and nothing on them has been
+reviewed. Their titles and descriptions will be set when the landing pages are
+done, which happens after the remaining sections. Until then, any SEO check will
+keep finding collisions between landings and their first section, and that is
+expected rather than wrong.
+
+**What that leaves before launch**, none of it section writing:
+
+- 16 sections across M19, M20, M21. M19 is blocked on Amit's SDR templates.
+- 27 landing pages: 21 module landings that are front matter only with no body
+  at all, 5 category landings, and the glossary.
+- The home page has no route into the learning section. `layouts/index.html`
+  carries one `.tcard` pointing at the migration guide and does not contain the
+  string `adobe-analytics-learning` anywhere.
+- M11 §1's deprecation warn-box goes stale on 31 August 2026.
+- M03 §2 still contradicts M15 §1 on whether attribution can overrule eVar
+  expiration.
+
+The screenshot programme is closed and the pre-merge guard is satisfied: no
+`shot-pending` and no `data-newblock` anywhere in content.
