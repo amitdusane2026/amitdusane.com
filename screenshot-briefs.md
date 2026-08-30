@@ -513,3 +513,62 @@ training account cannot produce the data the shot needs:
 
 All three briefs remain recoverable from git history if a suitable account ever
 turns up. **Two placeholders remain, both in Activity Map.**
+
+---
+
+## Activity Map ships with no screenshots, 30 Aug 2026
+
+Amit's decision, and the reason is worth recording because it is not a scheduling
+problem that will resolve later.
+
+**Activity Map cannot be captured at all.** It is not available in the Adobe
+training account. Showing the overlay needs a live site with the collection code
+deployed, and there is no such site to use. The one working implementation he has
+access to belongs to a client, and photographing it would identify them
+immediately. All three routes are closed.
+
+Both placeholders are removed. **The module ships with zero screenshots.**
+
+| # | File | Status |
+|---|---|---|
+| 44 | `adobe-analytics-activity-map-link-dimension` | **dropped, cannot be captured** |
+| 45 | `adobe-analytics-activity-map-overlay` | **dropped, cannot be captured** |
+
+**The module holds up without them**, and this was checked rather than assumed.
+All four sections carry a figure: the click becoming four dimensions, the derived
+name against `s_objectID`, Link merging three regions against Link By Region
+keeping them apart, and the single page application attributing three views to
+one page value. Section 3 also carries the overlay-versus-Workspace comparison as
+a table, which is what that section actually argues. No prose anywhere assumes a
+picture the reader cannot see.
+
+Activity Map now joins **M9 VISTA Rules** as a module with no screenshots. The
+reasons differ: VISTA has none because there is no customer-facing screen to
+photograph, and Activity Map has none because the screen exists and cannot be
+reached safely. The outcome is the same and both are legitimate.
+
+---
+
+## The screenshot programme is closed
+
+**51 screenshots shipped across the learning world. Zero placeholders remain.**
+
+`grep -rl shot-pending amitdusane-site-complete/content/` returns nothing, which
+means the pre-merge guard in `CLAUDE.md` is satisfied for the first time and no
+content blocks a merge to `main`.
+
+Five briefs were written and never captured, all for reasons outside anybody's
+control:
+
+| Brief | Section | Why not |
+|---|---|---|
+| `attribution-none-row` | M15 §3 | Training account cannot produce a large None row |
+| `low-traffic-row` | M16 §1 | Training account cannot produce a large Low Traffic row |
+| `data-feed-post-columns` | M17 §3 | Needs a delivered feed file and a publishable row |
+| `activity-map-link-dimension` | M18 §2 | Activity Map not available in the training account |
+| `activity-map-overlay` | M18 §3 | Needs a live implementation; the only one is a client's |
+
+Every one of those briefs stays recoverable from git history. If a suitable
+account ever becomes available, the sections can take them without any other
+change, because in each case the prose and the figures were written to stand on
+their own.
