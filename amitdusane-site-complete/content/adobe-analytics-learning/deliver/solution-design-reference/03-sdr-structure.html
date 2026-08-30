@@ -2,11 +2,169 @@
 slug: "sdr-structure"
 title: "SDR Structure"
 seotitle: "SDR Structure for Adobe Analytics"
-published: 2026-07-18
-lastmod: 2026-07-18
+description: "One solution, one ID, and a block of rows beneath it. The seven columns of an SDR, and why requirements rarely map one to one."
+published: 2026-08-30
+lastmod: 2026-08-30
 type: lesson
 modulenum: 19
 sectionnum: 3
 weight: 3
 ---
-<p>This section is not yet written.</p>
+<p>The requirements are signed. Thirty-six rows, four objectives, six things ruled out, phases agreed. Everybody in the room understood that document, which is what made it signable.</p>
+
+<p>Now something has to be designed, and the question is what a design of an analytics implementation even looks like on a page. It is not a diagram. It is not a list of variables. It is a set of blocks, one per thing the site will do, and the shape of a block is the whole grammar of the document.</p>
+
+<h3 class="subsec-title">One solution, one ID, and a block of rows beneath it</h3>
+<p>A solution is one thing that happens on the site and everything that goes out when it happens. A product is added to the cart. A search is run. An order completes. Each of those gets an identifier, a line describing it, and then a row for every variable and every event the moment needs.</p>
+
+<p>The first row of the block carries the identity: the solution ID, the requirement IDs it answers, the component of the site, and the plain sentence. Every row after it is blank in those four columns and carries one variable. Read down and you see the whole moment. Read across the top row and you see what it is for.</p>
+
+<div class="tbl-wrap">
+<table>
+<thead>
+<tr><th>Solution ID</th><th>Requirement ID</th><th>Component</th><th>Requirement</th><th>Variable</th><th>Name</th><th>Details</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>KES-S005</strong></td><td>KES-R003</td><td>Cart</td><td>A product is added to the cart from the product page</td><td>pageName</td><td>Page</td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td>eVar17</td><td>Cart Addition Source</td><td>Product Page, Quick View, Room Set, Wishlist, Reorder</td></tr>
+<tr><td></td><td></td><td></td><td></td><td>products</td><td>Product</td><td>Includes quantity and price</td></tr>
+<tr><td></td><td></td><td></td><td></td><td>eVar12 (M)</td><td>Product Colour</td><td>Charcoal, Oatmeal, Sage</td></tr>
+<tr><td></td><td></td><td></td><td></td><td>scAdd</td><td>Cart Additions</td><td>Adobe reserved event</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>Five rows, and a business reader can follow every one of them. They asked to know what goes in the cart and where it was added from. The answer is sitting there: the product, the source, the colour, and a count. Nobody had to explain what an eVar is for that sentence to land.</p>
+
+<p>Compare that with the same information in an inventory. eVar17 would sit in a list between eVar16 and eVar18, and its neighbours would be Listing Type and Delivery Option, two things it has nothing to do with. The block puts the variables that fire together next to each other, which is the only arrangement that matches how the site actually behaves.</p>
+
+<h3 class="subsec-title">The seven columns, and what each one is for</h3>
+<p>Seven columns carry the design. Adding an eighth is common and usually fine. Removing one of these is where documents start failing.</p>
+
+<div class="tbl-wrap">
+<table>
+<thead>
+<tr><th>Column</th><th>Holds</th><th>The job it does</th></tr>
+</thead>
+<tbody>
+<tr><td>Solution ID</td><td>KES-S005</td><td>The handle everything else uses. Quoted in the technical document, in every test result, and in every status call</td></tr>
+<tr><td>Requirement ID</td><td>KES-R003, or STD</td><td>Traces back to who asked. STD marks a solution every site needs and nobody requests</td></tr>
+<tr><td>Solution component</td><td>Cart</td><td>Groups solutions that share a shape, so a reader can find the checkout without reading the search</td></tr>
+<tr><td>Requirement</td><td>One sentence</td><td>The row a business reader recognises. Without it the block is unreviewable</td></tr>
+<tr><td>Variable or event</td><td>eVar17, scAdd, event4 (M n)</td><td>The slot. Notation in brackets carries the technical setting: (M) merchandising, (n) numeric</td></tr>
+<tr><td>Name</td><td>Cart Addition Source</td><td>The report name, agreed here rather than invented during the build. This is what appears in Workspace</td></tr>
+<tr><td>Details and examples</td><td>Product Page, Quick View, Room Set</td><td>The format and real values. This column stops a developer and an analyst reading the same word differently</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>The last column earns its place more often than it looks. A row that says eVar17 is Cart Addition Source is agreement in appearance only. One person pictures Product Page and the other pictures PDP. Neither of them discovers the difference until a report holds three values where there should be one.</p>
+
+<h3 class="subsec-title">Requirements and solutions do not map one to one</h3>
+<p>The neat picture is one requirement, one solution, one ID pair. It happens often and it is not the interesting case. Four patterns come up on every project, and the reason the two documents have separate numbering is that they have to.</p>
+
+<div class="tbl-wrap">
+<table>
+<thead>
+<tr><th>Pattern</th><th>Example</th><th>Why it happens</th></tr>
+</thead>
+<tbody>
+<tr><td>One to one</td><td>KES-R011 discount codes becomes KES-S014</td><td>The request describes one moment on the site. Most rows are this</td></tr>
+<tr><td>One requirement, several solutions</td><td>KES-R003 add to cart becomes KES-S005 and KES-S006</td><td>The customer sees one action. A product page and a quick view overlay are two builds</td></tr>
+<tr><td>Several requirements, one solution</td><td>KES-R007 and KES-R012 both become KES-S010</td><td>The delivery step and the delivery option happen in the same instant, so one call carries both</td></tr>
+<tr><td>No requirement at all</td><td>KES-S001 global page load, marked STD</td><td>Nobody asks for a page view. Every implementation needs one and it is the largest solution in the document</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>That last row is worth sitting with. The single biggest block in any SDR is the one that fires on every page, carrying page name, section, category, login state, customer ID and the timing events. No business person will ever request it, because it is not a question about the business. Leave it out and every other solution in the document collapses, because they all inherit from it.</p>
+
+<div class="info-box">
+    <div class="info-hdr"><span class="info-ico"></span>The variable that turns up in every block is the sign it is working</div>
+    <p>Once a document is finished, one or two variables will appear in almost every solution. Page name is in all twenty-four blocks of the worked example. Login status is in most. That repetition looks like waste in a spreadsheet and it is the opposite: it is the record that every moment on the site carries its context. The variable map at the back is where you see that pattern in one view, and that is one of the things <a href="/adobe-analytics-learning/deliver/solution-design-reference/variable-mapping/">Variable Mapping</a> is for.</p>
+</div>
+
+<h3 class="subsec-title">Sheets are themes, not chapters</h3>
+<p>Split the solutions across sheets by what they are about, not by the order they were written. Global variables. Commerce. Engagement. Configuration. A person wanting to know how the checkout works opens one sheet and finds every checkout solution together.</p>
+
+<p>Themes also make the phasing visible. When Phase 2 arrives with filters, sorting and reviews, most of it lands on one or two sheets, and the sheets that carry the money are untouched. Ordering by requirement number instead would scatter Phase 2 through the whole document.</p>
+
+<h3 class="subsec-title">The things nobody put in the BRD but every implementation needs</h3>
+<p>Some of what an implementation requires never appears as a requirement, because it is a setting rather than a behaviour. It still has to be designed, agreed and tested, so it belongs in the SDR with an ID like everything else.</p>
+
+<p>The report suites, production and development. The time zone and the currency, both of which are set once and cannot be changed later without rewriting history. The internal URL filters, without which every internal link arrives as a referring site. Bot filtering. The <a href="/adobe-analytics-learning/shape/marketing-channels/marketing-channel-processing-rules/">marketing channel rules</a>, where the order of the rules decides the answer. The <a href="/adobe-analytics-learning/shape/classifications/classifications-overview/">classifications</a> that turn a campaign code into a campaign name somebody can read. Any <a href="/adobe-analytics-learning/shape/processing-rules/what-are-processing-rules/">processing rule</a> that shapes a value after collection.</p>
+
+<p>And one more that deserves its own sheet: the product string. It is not a variable, it is a structure with fixed positions, and eleven of the twenty-four solutions in the worked example depend on it. Define it once, with an example, and every block that uses it can point at the definition instead of repeating it.</p>
+
+<h3 class="subsec-title">Where the design stops being negotiable</h3>
+<p>The BRD carried a rough sketch of dimensions and metrics, deliberately loose, so that a business reader could picture the report. The SDR is where that sketch becomes a decision. Five variables means five. One counter event and one numeric event means exactly that, and the numeric one is currency.</p>
+
+<p>This is the moment to be precise, because everything downstream inherits it. The technical document turns each row into an instruction. The test plan checks each row. The report suite gets configured from the variable map. A row left vague here becomes a question in the build, and a question in the build becomes a guess.</p>
+
+<p>It is also the last cheap moment. Changing a design in a spreadsheet costs a row. Changing it after the rules are built and the data layer is written costs two teams a week.</p>
+
+<h3 class="subsec-title">The change log is part of the document, not a courtesy</h3>
+<p>Add a sheet with four columns: date, version, the IDs affected, and what changed. Then write in it every single time something moves. It takes twenty seconds and it is the sheet people read most in month six.</p>
+
+<p>The reason is that numbers change and nobody remembers why. Cart additions look different from March onward, and the log says that KES-S006 was added on 24 March because the quick view overlay was not covered. That is a two-second answer to a question that otherwise costs an afternoon.</p>
+
+<p>The log also has a use nobody expects: recording things that were considered and dropped. A slot reserved for a cart value event and then abandoned should be written down, with its reason. Otherwise somebody assigns that event next year and then finds old data sitting in it.</p>
+
+<h3 class="subsec-title">Laying out the SDR</h3>
+<p>Build the first block carefully and the rest are the same shape. Most of the work is in deciding, not in typing.</p>
+
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>Turn a signed requirement list into a design</span></div>
+    <ol class="dothis-steps">
+        <li class="ds-group">Part one, the frame</li>
+        <li>
+            <span class="ds-do">Create the seven columns, and write the definition of each one into the header cell as a comment.</span>
+            <span class="ds-see">The document then explains itself. Anyone opening it in two years gets the column definitions without asking you.</span>
+        </li>
+        <li>
+            <span class="ds-do">Create the sheets by theme, plus Configuration, Product String, Variable Map and Change Log.</span>
+            <span class="ds-see">Four themes is typical for a retail site. A publisher would have different ones. The four support sheets are the same everywhere.</span>
+        </li>
+        <li class="ds-group">Part two, the design</li>
+        <li>
+            <span class="ds-do">Write the global page load solution first, as KES-S001 or its equivalent, marked STD.</span>
+            <span class="ds-see">It is the largest block and everything else inherits from it. Getting it right first stops the same twelve variables being redesigned in every later block.</span>
+        </li>
+        <li>
+            <span class="ds-do">Work through the requirements in order, writing one block per moment on the site.</span>
+            <span class="ds-see">When one requirement needs two moments, write two blocks with two IDs. When two requirements happen in one instant, write one block carrying both requirement IDs.</span>
+        </li>
+        <li>
+            <span class="ds-do">Fill in the details column with real example values, not descriptions of values.</span>
+            <span class="ds-see">Charcoal, Oatmeal, Sage beats "the colour of the product" every time. Examples are what make two people agree.</span>
+        </li>
+        <li class="ds-group">Part three, the back of the document</li>
+        <li>
+            <span class="ds-do">Define the product string on its own sheet, position by position, with a worked example for one product and for two.</span>
+            <span class="ds-see">Include what an empty position looks like. A missing element still holds its place, and that is the single most common product string fault.</span>
+        </li>
+        <li>
+            <span class="ds-do">Add the configuration solutions with their own IDs: report suites, time zone, currency, URL filters, channels, classifications.</span>
+            <span class="ds-see">They get tested and signed off like anything else. A configuration item with no ID is one nobody checks.</span>
+        </li>
+        <li>
+            <span class="ds-do">Fill the variable map from the blocks, then read it back the other way to catch a slot used twice for two different things.</span>
+            <span class="ds-see">This pass finds real mistakes. It is much easier to see a collision in the map than in forty separate blocks.</span>
+        </li>
+    </ol>
+    <p class="dothis-end">There is nothing else to lay out. Seven columns, sheets by theme, four support sheets, and one block per moment. None of that is a ceiling. A site with an app alongside it will want a platform column. A multi-brand programme will want a sheet per brand. Add either when the project has one.</p>
+</div>
+
+<h3 class="subsec-title">The document a developer has not read yet</h3>
+<p>What exists at this point is a complete design that a business reader can approve. Every moment on the site has a block. Every block has an ID, a requirement behind it, and a list of what goes out. The configuration is written down. The product string is defined once. Nothing in it assumes knowledge of the tag manager, and that is deliberate, because the person signing it does not have any.</p>
+
+<p>Which means it also cannot be built from. Nothing here says which rule fires, what the direct call is named, which object on the page holds the colour, or what has to happen before what. That layer is the technical document, and the useful discovery is that it is not a new document at all. <a href="/adobe-analytics-learning/deliver/solution-design-reference/developer-instructions/">Developer Instructions</a> covers the eight columns that get added to the right of these seven. It also covers why two audiences sharing one file is the point rather than a compromise.</p>
+
+<div class="ref-box">
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/implementation/prepare/solution-design" target="_blank">Adobe Docs: Create a solution design document</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/admin/admin-tools/manage-report-suites/edit-report-suite/conversion-variables/conversion-var-admin" target="_blank">Adobe Docs: Conversion variables (eVar)</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/implementation/vars/page-vars/products" target="_blank">Adobe Docs: The products variable</a></li>
+    </ul>
+</div>

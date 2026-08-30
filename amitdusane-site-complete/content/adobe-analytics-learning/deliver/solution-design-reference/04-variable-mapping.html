@@ -2,11 +2,133 @@
 slug: "variable-mapping"
 title: "Variable Mapping"
 seotitle: "Variable Mapping in an Adobe Analytics SDR"
-published: 2026-07-18
-lastmod: 2026-07-18
+description: "The variable list, given the job it can actually do. Every slot including the empty ones, and why your copy will drift from the live one."
+published: 2026-08-30
+lastmod: 2026-08-30
 type: lesson
 modulenum: 19
 sectionnum: 4
 weight: 4
 ---
-<p>This section is not yet written.</p>
+<p>Six months after launch, a new analyst joins and is asked to add tracking for a gift registry. They need a spare eVar. They open Admin, look down the conversion variables, and eVar41 through eVar250 are all empty and unnamed. So they take eVar41.</p>
+
+<p>Three weeks later somebody discovers eVar41 was quietly reserved for a loyalty tier that ships next quarter, agreed in a meeting nobody wrote down. The two uses are now mixed in one report, and the only clean fix is a third variable and a note explaining the first six months.</p>
+
+<p>A variable map prevents that, and it is the one job the inventory does better than anything else. It just has to be built to answer the question somebody actually has, which is not what is eVar17.</p>
+
+<h3 class="subsec-title">The map answers a different question from the design</h3>
+<p>The blocks at the front of the document are organised by moments on the site, which is right for designing and right for review. They are useless for two other questions that come up constantly. What is free? And where else is this variable used?</p>
+
+<p>Both are answered by turning the design inside out. List every slot the report suite has, in order, and against each one put its report name, its settings, and the solutions that populate it. The map is a reverse index of the design, generated from it. It is the only view where a variable used by nine solutions looks different from one used by a single solution.</p>
+
+<div class="tbl-wrap">
+<table>
+<thead>
+<tr><th>Conversion variable</th><th>Report name</th><th>Setting</th><th>Used by</th></tr>
+</thead>
+<tbody>
+<tr><td>eVar16</td><td>Listing Type</td><td>Most Recent, Visit</td><td>KES-S003</td></tr>
+<tr><td>eVar17</td><td>Cart Addition Source</td><td>Most Recent, Visit</td><td>KES-S005, KES-S006</td></tr>
+<tr><td>eVar18</td><td>Delivery Option</td><td>Most Recent, Visit</td><td>KES-S010, KES-S012</td></tr>
+<tr><td>eVar19</td><td>Payment Method</td><td>Most Recent, Visit</td><td>KES-S011, KES-S012, KES-S013</td></tr>
+<tr><td>eVar20</td><td>Order ID</td><td>Most Recent, Page View</td><td>KES-S012</td></tr>
+<tr><td>eVar21</td><td>Discount Code</td><td>Most Recent, Visit</td><td>KES-S014</td></tr>
+<tr><td>eVar37</td><td></td><td></td><td></td></tr>
+<tr><td>eVar38</td><td></td><td></td><td></td></tr>
+</tbody>
+</table>
+</div>
+
+<p>The last column is what lifts this above a list. Somebody proposing to change how Payment Method is set can see immediately that three solutions write to it, and that one of them is the order. That is a change with consequences, and the map says so before anybody touches a rule.</p>
+
+<h3 class="subsec-title">Show every slot, not only the used ones</h3>
+<p>The instinct is to list the thirty-six variables in use and stop. Do the opposite. List all of them, up to whatever the contract provides, and leave the unused rows empty.</p>
+
+<p>Adobe allows up to 75 traffic variables, up to 250 conversion variables and up to 1000 success events. How many of each you actually have depends on the contract. So the first thing to do with the map is delete the rows the report suite does not have. A free row on that sheet then means genuinely free, rather than possibly free and possibly beyond your allowance.</p>
+
+<p>The empty rows are the useful part. They are what the analyst in the opening was looking for and did not find. They are also where a reservation gets recorded. A slot with a name, no settings, and a note saying held for loyalty tier is a slot nobody takes by accident.</p>
+
+<div class="warn-box">
+    <div class="warn-hdr"><span class="warn-ico"></span>A retired variable is not a free variable</div>
+    <p>When something stops being used, do not blank the row. Historical data sits in that slot forever. Reassign it and one report holds two different things either side of a date, with nothing in the interface to warn anyone. Mark it retired, name what it used to hold, and record when it stopped. Only reuse a slot when the old data is genuinely past the retention period and somebody has said so out loud.</p>
+</div>
+
+<h3 class="subsec-title">Technical settings belong here, and nowhere else</h3>
+<p>Allocation, expiration, merchandising, whether a prop has pathing turned on, whether an event counts or sums, whether it holds currency. All of it lives in the map. None of it belongs in the design blocks at the front, where it would put configuration detail in front of a business reader who cannot use it.</p>
+
+<p>The design blocks carry a compressed hint instead, in brackets after the slot name. eVar12 (M) is merchandising. event18 (n) is numeric. event4 (M n) is a numeric merchandising event. That is enough for a technical reader skimming a block, and the full settings are one sheet away.</p>
+
+<p>Two of those settings deserve a moment, because they are decisions rather than defaults. Allocation decides which value gets the credit when a visitor touches several. Most Recent is the usual answer. Original Value is right when the question is what started something. Banner Name in the worked example uses Original Value on purpose, because the interesting question is which banner brought somebody in, not which one they clicked last. Expiration decides how long a value keeps earning credit, and Visit is the safe default. Merchandising variables expire on purchase, so a product attribute stops applying the moment the product is bought.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where these settings live in Adobe Analytics</div>
+    <p>Analytics &gt; <span class="path">Admin &gt; Report Suites</span>, select the suite, then <span class="path">Edit Settings</span>. Conversion variables and their allocation, expiration and merchandising sit under <span class="path">Conversion &gt; Conversion Variables</span>. Events and their type sit under <span class="path">Conversion &gt; Success Events</span>. Props and their pathing sit under <span class="path">Traffic &gt; Traffic Variables</span>. The map in your document is a copy of these three screens plus the intent behind them.</p>
+</div>
+
+<h3 class="subsec-title">The product string is a structure, not a variable</h3>
+<p>One row on the map says products, and that row is doing far more work than any other. The products variable is a string with fixed positions, separated by semicolons. It carries the category, the product, the quantity, the price, any numeric events bound to that product, and any merchandising variables bound to it.</p>
+
+<p>A single row cannot describe that, so give it a sheet. Define each position, say what carries it, give a real example, and say what breaks when it is wrong. Then show a two-product string, because comma separation between products is where people go wrong, and show an empty position, because a missing element still holds its place.</p>
+
+<p>Eleven of the twenty-four solutions in the worked example depend on that definition. Writing it once and pointing at it is the difference between one clear rule and eleven slightly different descriptions of the same thing.</p>
+
+<h3 class="subsec-title">Your copy will drift from the live one</h3>
+<p>The map in the document is a copy. The live version is in Admin, it is maintained by the product, and it is always right about settings. Yours will fall behind, because somebody will change an expiration in the interface at four in the afternoon and not open the spreadsheet.</p>
+
+<p>That is worth being honest about rather than pretending otherwise. Two things keep it usable. Name one person who owns the map, in the document, by role if not by name. And be clear about which copy is authoritative for what. Admin is the truth for what a setting currently is. The document is the truth for why it was chosen and who relies on it. Those are different facts and only one of them is in the product.</p>
+
+<div class="pro-tip">
+    <div class="pro-tip-hdr"><span class="tip-ico"></span>Reconcile on a fixed date, not when somebody notices</div>
+    <p>Put a quarterly reconciliation in the calendar and give it thirty minutes. Export the conversion variables from Admin, put them beside the map, and look only for differences. The ones you find are usually small and occasionally alarming, and either way the fix costs minutes at that size. A map nobody has reconciled for two years is one nobody trusts, and an untrusted map sends the next analyst straight back to guessing.</p>
+</div>
+
+<h3 class="subsec-title">Filling the variable map</h3>
+<p>Do this after the design blocks are written, never before. A map built first becomes a shopping list, and the design ends up shaped by what was already allocated.</p>
+
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>Build the map from the design, then read it back</span></div>
+    <ol class="dothis-steps">
+        <li>
+            <span class="ds-do">List every slot the report suite has, in three blocks side by side: traffic, conversion, events.</span>
+            <span class="ds-see">Delete the rows beyond your contract before anything else, so a free row means free.</span>
+        </li>
+        <li>
+            <span class="ds-do">Put the reserved variables at the top of each block: pageName and channel, campaign and products, purchase and the cart events.</span>
+            <span class="ds-see">They behave differently from numbered slots and Adobe already decides what they mean. Listing them stops somebody designing a custom event for a cart add.</span>
+        </li>
+        <li>
+            <span class="ds-do">Fill in the report name and settings for every slot the design uses, and leave the rest empty.</span>
+            <span class="ds-see">Settings, not descriptions. Most Recent, Visit. Product Syntax Merchandising, expires on Purchase. Counter. Currency.</span>
+        </li>
+        <li>
+            <span class="ds-do">Add a Used By column and fill it with the solution IDs that populate each slot.</span>
+            <span class="ds-see">This falls out of the design blocks. It is also the check: a slot with no solution against it is either a mistake or a reservation, and both need an explanation.</span>
+        </li>
+        <li>
+            <span class="ds-do">Read the map top to bottom looking for two different things sharing one slot, and for the same thing occupying two.</span>
+            <span class="ds-see">Both are common in a first draft and both are nearly invisible in the design blocks, because the blocks are forty screens apart.</span>
+        </li>
+        <li>
+            <span class="ds-do">Record reservations and retirements in the empty rows, with a date and a reason.</span>
+            <span class="ds-see">This is the sheet that stops the gift registry problem. An empty row that says held for loyalty tier is not empty.</span>
+        </li>
+    </ol>
+    <p class="dothis-end">There is nothing else to the map. Every slot, the settings, and who uses it. Extend it where the estate needs more. A suite with list variables, a second currency, or deep classifications each want a block of their own. A large estate wants a column naming which report suites share a definition.</p>
+</div>
+
+<h3 class="subsec-title">Why the map goes at the back</h3>
+<p>Position in the document is an argument about what the document is for. A map at the front says this is an inventory with some notes attached. A map at the back says this is a design, and here is the reference material it produced.</p>
+
+<p>That ordering also matches how the document gets used. In review, nobody opens the map. In build, everybody does. During a change six months later, the map is the first sheet somebody checks and the design blocks are what they read next. Front to back, the document runs from why to what, and the map is the last stop before the work becomes instructions.</p>
+
+<p>Those instructions are the next layer. The design says a colour is bound to the product. The map says eVar12 is merchandising. Neither tells a developer which object on the page holds the value, or when to populate it. <a href="/adobe-analytics-learning/deliver/solution-design-reference/developer-instructions/">Developer Instructions</a> covers the columns that answer that, and the ordering rule that prevents the most common failure in any implementation.</p>
+
+<div class="ref-box">
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/admin/admin-tools/manage-report-suites/edit-report-suite/conversion-variables/conversion-var-admin" target="_blank">Adobe Docs: Conversion variables (eVar)</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/admin/admin-tools/manage-report-suites/edit-report-suite/conversion-variables/merchandising-evars" target="_blank">Adobe Docs: Merchandising eVars and product finding methods</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/admin/admin-tools/manage-report-suites/edit-report-suite/traffic-variables/traffic-var" target="_blank">Adobe Docs: Traffic variables (prop)</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/implementation/vars/page-vars/products" target="_blank">Adobe Docs: The products variable</a></li>
+    </ul>
+</div>

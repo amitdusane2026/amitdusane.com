@@ -1681,3 +1681,100 @@ without asking him**, because his product testing outranks the page.
 
 Take the M11 expiry and the M03 §2 contradiction first, both short and both
 already late, then M20 Testing and Debugging.
+
+---
+
+## Session close, 30 August 2026 (second session)
+
+**Module 19, Solution Design Reference, written in full.** Six sections, from
+Amit's own account of how he rebuilt the BRD, SDR and TSD during his years at
+Adobe, plus five real client workbooks supplied as reference.
+
+### What shipped
+
+**Six sections**, all `Content created = Yes`, all awaiting Amit's QA.
+What Is an SDR, Business Requirements Document, SDR Structure, Variable Mapping,
+Developer Instructions, Validation and Sign-off. **The corpus is at 106 of 116
+sections written.** M19 is no longer blocked; only M20 Testing 5 and M21 CJA 5
+remain unwritten.
+
+**Five downloadable workbooks**, built with Excel automation and published to
+`static/templates/`. A fictional online homeware retailer, Kestrel and Co.,
+carried through all six sections: BRD with 36 requirements and an out-of-scope
+sheet, SDR with 24 solutions and 11 configuration items, TSD, validation report
+across three cycles, and a project plan. Roughly 250KB in total.
+
+**`.dl-box`, the site's first downloadable-file component.** The second
+site-level component after `.lupdated`, recorded in the rulebook. Neutral card
+ground rather than a tint, because every tint on the site says something about
+the prose beside it and this one hands over an object. Contrast measured in both
+themes: 4.81 to 17.85, all passing AA.
+
+### The decision that made the module possible
+
+The five client workbooks are real Adobe consulting deliverables for a named
+listed company, carrying that client's complete implementation design, live data
+layer paths and frank internal assessments of their development team. They could
+not be screenshotted, and the site's own rule is that a screenshot is never
+redacted. **Amit's ruling: build one fictional company and carry it through.**
+
+That decision solved a second problem at the same time. The rebuilt workbooks are
+the downloadable templates, so one piece of work serves the figures and the
+downloads. **No screenshots were taken; the document excerpts are HTML tables**,
+which reflow on a phone where a spreadsheet capture would not.
+
+**The central claim of the module is literally true in the artifacts**: the SDR
+is exactly the TSD's first seven columns, verified row by row across all 58 rows
+of the Commerce sheet. Both files are generated from one source so they cannot
+drift.
+
+### Also ruled, and it shapes every section
+
+Amit's story is the input, not the content. **No first person, no mention of
+Adobe as an employer, no claim that this format became standard delivery
+documentation anywhere.** The documents argue for themselves through their own
+coherence. That boundary holds across all six sections.
+
+### Facts verified against Experience League
+
+Adobe's own solution design guidance recommends four fields: implementation
+status, variable name, the Analytics variable it maps to, and the logic that sets
+it. That is the inventory, precisely described, and it is quoted fairly in M19 §1
+before the gap is named. A downloadable template does exist. Report suites carry
+up to 75 traffic variables, up to 250 conversion variables and up to 1000 custom
+events, all contract-dependent; the variable map workbook was rebuilt to those
+maxima. Every one of the 13 external links in the module returns 200.
+
+### Two corrections against the code
+
+**The practical walkthrough is a `dothis` block, not a `code-block`.** `.dothis`
+is in 51 content files with two documented body shapes, and neither `CLAUDE.md`
+nor the rulebook had ever recorded it. Both corrected.
+
+**The screenshot naming row in the rulebook was still specifying
+`aal_module14_section01_ss1.png`**, a scheme replaced on 24 August and absent
+from all 51 files in `static/img/`. Corrected.
+
+### One trap fired, and the page-count check caught it
+
+Dating the first section `2026-08-31` dropped it from the build silently. This
+machine runs IST, five and a half hours ahead of UTC, so from 18:30 local the
+local date is already tomorrow while Hugo's build clock is not. The build
+reported success and the count went 219 to 218. **Date front matter from
+`date -u`.** Added to `CLAUDE.md` as the everyday form of trap five.
+
+### Still open
+
+1. **M11 §1's deprecation warn-box.** Now expired, and still the first thing to
+   do. Re-verify against Experience League and rewrite in past tense.
+2. **M03 §2 contradicts M15 §1** on whether attribution can overrule eVar
+   expiration. One paragraph.
+3. **M20 Testing and Debugging, 5 sections.** Then M21 CJA, 5 sections.
+4. **27 landing pages.** All 21 module landings are `_index.md` with front matter
+   and no body. **They must be converted to `_index.html` before bodies are
+   written**, because Goldmark strips raw HTML from Markdown here and every
+   component would silently vanish.
+5. **The home page has no route into the learning section.** One `.tcard`.
+6. **M19 needs Amit's QA**, including a read of the five workbooks.
+
+Nothing pushed. `origin/develop` is still on `fa87694`; production untouched.

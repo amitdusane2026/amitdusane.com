@@ -2,11 +2,204 @@
 slug: "what-is-an-sdr"
 title: "What Is an SDR"
 seotitle: "What Is a Solution Design Reference (SDR)"
-published: 2026-07-18
-lastmod: 2026-07-18
+description: "An SDR is not a list of variables. It is the design that shows how a business request becomes a report, held together by an ID that survives to sign-off."
+published: 2026-08-30
+lastmod: 2026-08-30
 type: lesson
 modulenum: 19
 sectionnum: 1
 weight: 1
 ---
-<p>This section is not yet written.</p>
+<p>A requirement arrives that reads like one line. Track the forms on the site. Before touching anything you ask for the implementation's SDR, because there is no sense rebuilding what already exists, and a spreadsheet comes back with three tabs in it. One tab lists the props, one lists the eVars, one lists the events. Every row is filled in and every row is correct. eVar24 is Form Name. event30 is Form Start. event31 is Form Submission. The expirations are stated, the allocations are stated, nothing is missing.</p>
+
+<p>And none of it answers the question. Which forms are covered, and which are not? Where does the start fire, on the first keystroke or on the page load that shows the form? Is a submission the click on the button, or the server accepting the data? Does the newsletter box in the footer count as a form at all? The document lists what exists in the report suite. It describes nothing about how any of it works, and how it works is the only thing you came for.</p>
+
+<p>So you open the tag manager and read the rules instead, reconstructing the design by reading the build. The document written to describe the design turned out to be unable to describe it.</p>
+
+<h3 class="subsec-title">What usually arrives when you ask for an SDR</h3>
+<p>What arrives is an inventory. A row for each variable, a report name, a few technical settings, sometimes a sentence about where the value comes from. It is a perfectly reasonable object and it is not wrong about anything. Somebody built it carefully, and in most implementations somebody has kept it more or less current, which is more than can be said for a lot of project documentation.</p>
+
+<p>The trouble is what an inventory can and cannot be asked. It answers questions of the form <em>what is eVar24</em>. Every real question runs the other way. How does form tracking work on this site. What happens when a customer adds the same product twice. Why does the checkout count more people than the cart. Those questions start from behaviour and look for the variables, and an inventory is indexed the wrong way round to answer any of them.</p>
+
+<p>There is a second problem, quieter and more awkward. That same list already exists inside Adobe Analytics. Open Admin, open the report suite, open the conversion variables, and there are the names, the allocations and the expirations, live and correct, maintained by the product rather than by a person. A document whose entire content is a worse copy of a screen anyone with access can open has to justify itself somehow, and mostly it does not try.</p>
+
+<div class="info-box">
+    <div class="info-hdr"><span class="info-ico"></span>The inventory still has a job, just not this one</div>
+    <p>None of this makes the variable list worthless. It is genuinely needed, by people without Admin access, by anyone deciding which slot to use next, and by the design conversation itself. What it cannot do is carry the design. It belongs inside the SDR, near the back, doing one job well, and that is what <a href="/adobe-analytics-learning/deliver/solution-design-reference/variable-mapping/">Variable Mapping</a> is about.</p>
+</div>
+
+<h3 class="subsec-title">An architect does not hand you a count of bricks</h3>
+<p>Think about what happens when somebody has a house built. The architect comes back after a few weeks with drawings. Here is the plan of the ground floor. The kitchen sits at the back, where the morning light lands. The stairs come off the hall rather than the living room, so nobody walks through a conversation to get to bed. This wall is where the extension will attach in five years, if it is ever wanted. The client stands over the drawing, imagines walking through it, and says yes, or says the study is in the wrong place.</p>
+
+<p>Now imagine the architect had instead handed over a list. Fourteen doors. Nine windows, of which two are casement. Four thousand bricks, sixty bags of cement, one hundred and ten metres of copper pipe. Every figure accurate, every figure necessary, and the list will be needed when the order goes to the builders' merchant. But nobody can sign it, because nobody can see the house in it. You cannot tell from that list whether the front door opens into the kitchen.</p>
+
+<p>Both documents describe the same building. Only one of them is a design. The bill of quantities is derived from the drawing and never the other way around, and if the two ever disagree it is the drawing that is right, because the drawing is where the thinking happened.</p>
+
+<p>An SDR is the drawing. Solution Design Reference is a plain description of the job, and the word doing the work is the middle one.</p>
+
+<h3 class="subsec-title" data-nav="Three documents, three audiences">Three documents, three audiences, three different questions</h3>
+<p>A design cannot be the only document, because a design does not record what was asked for and it does not tell a developer what to type. Three documents cover the ground, and the reason there are three is that three different people need three different things and none of them will read the other two.</p>
+
+<p>The business tells you what they want, in their words, and needs to recognise their own request when they read it back. That is the <strong>Business Requirements Document</strong>. You decide how each request will be answered, and that decision has to be reviewable by somebody who does not write code. That is the <strong>Solution Design Reference</strong>. Then the site developer needs to know which object to populate, with what, and in what order, and cares about nothing else on the page. That is the <strong>Technical Specification Document</strong>.</p>
+
+<div class="tbl-wrap">
+<table>
+<thead>
+<tr><th>Document</th><th>Answers</th><th>Written for</th><th>Signed by</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>BRD</strong><br>Business Requirements</td><td>What does the business want to know?</td><td>Marketing, ecommerce, analysts, whoever asked</td><td>The business, before design starts</td></tr>
+<tr><td><strong>SDR</strong><br>Solution Design Reference</td><td>How will each of those be answered?</td><td>The same people, plus whoever inherits this in two years</td><td>The business, before build starts</td></tr>
+<tr><td><strong>TSD</strong><br>Technical Specification</td><td>What exactly does someone build?</td><td>The site developer and the analytics developer</td><td>The technical team, before build starts</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>Notice what is not in that table. There is no document for the person running the project, because the plan is a separate thing, and no document for the person testing, because the test results are a separate thing. Both of those exist here too, and both of them are covered in <a href="/adobe-analytics-learning/deliver/solution-design-reference/validation-and-sign-off/">Validation and Sign-off</a>. What matters at this point is the shape of the middle three: a request, a design, an instruction.</p>
+
+<h3 class="subsec-title">The ID that runs from a request to a sign-off</h3>
+<p>Three documents sitting in three files are three documents. What turns them into one thing is that every requirement is given an identifier the moment it is written down, and that identifier is never reused, never renumbered, and never dropped. A request from the business becomes KES-R003. The design that answers it becomes KES-S005. The build instruction carries KES-S005. The test result is a row keyed on KES-S005. The sign-off is against KES-S005.</p>
+
+<p>The prefix is there because programmes have more than one brand in them, and a retailer running three websites will have three requirement sets that would otherwise all start at R001. It looks like bureaucracy for the sake of it, right up to the first status call where somebody asks whether the thing about cart sources ever got fixed, and the answer is a sentence rather than a meeting.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">One identifier, four documents</div>
+    <svg viewBox="0 0 700 250" style="width:100%;height:auto;display:block" role="img"
+         aria-label="A single business requirement, KES-R003, know what is added to the cart and from where, splits into two solutions in the SDR: KES-S005 for the product page and KES-S006 for the quick view overlay. Each carries its own identifier forward into the technical document as a build instruction, and forward again into the validation report as a tested and signed result. The identifier is the same in all four documents.">
+      <defs>
+        <marker id="sdr1a" markerWidth="8" markerHeight="8" refX="6.5" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" style="fill:var(--dia-a,#ba2142)"/></marker>
+      </defs>
+
+      <text x="16" y="20" style="fill:var(--text3,#5d6b7e);font-size:11px;font-weight:700">BRD</text>
+      <text x="196" y="20" style="fill:var(--text3,#5d6b7e);font-size:11px;font-weight:700">SDR</text>
+      <text x="386" y="20" style="fill:var(--text3,#5d6b7e);font-size:11px;font-weight:700">TSD</text>
+      <text x="566" y="20" style="fill:var(--text3,#5d6b7e);font-size:11px;font-weight:700">VALIDATION</text>
+
+      <line x1="16" y1="28" x2="684" y2="28" style="stroke:var(--border,#e2e8f0);stroke-width:1"/>
+
+      <rect x="16" y="88" width="150" height="72" rx="6" style="fill:var(--card,#ffffff);stroke:var(--dia-a,#ba2142);stroke-width:1.8"/>
+      <text x="28" y="110" style="fill:var(--dia-a,#ba2142);font-size:12px;font-weight:700">KES-R003</text>
+      <text x="28" y="130" style="fill:var(--text2,#475569);font-size:11px">Know what is added</text>
+      <text x="28" y="146" style="fill:var(--text2,#475569);font-size:11px">to the cart, and from where</text>
+
+      <path d="M166 118 C182 118 182 74 194 74" style="fill:none;stroke:var(--dia-a,#ba2142);stroke-width:1.6" marker-end="url(#sdr1a)"/>
+      <path d="M166 130 C182 130 182 174 194 174" style="fill:none;stroke:var(--dia-a,#ba2142);stroke-width:1.6" marker-end="url(#sdr1a)"/>
+
+      <rect x="200" y="48" width="156" height="54" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="212" y="70" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700">KES-S005</text>
+      <text x="212" y="89" style="fill:var(--text2,#475569);font-size:11px">Add to cart, product page</text>
+
+      <rect x="200" y="148" width="156" height="54" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="212" y="170" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700">KES-S006</text>
+      <text x="212" y="189" style="fill:var(--text2,#475569);font-size:11px">Add to cart, quick view</text>
+
+      <line x1="356" y1="75" x2="384" y2="75" style="stroke:var(--dia-a,#ba2142);stroke-width:1.6" marker-end="url(#sdr1a)"/>
+      <line x1="356" y1="175" x2="384" y2="175" style="stroke:var(--dia-a,#ba2142);stroke-width:1.6" marker-end="url(#sdr1a)"/>
+
+      <rect x="390" y="48" width="156" height="54" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="402" y="70" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700">KES-S005</text>
+      <text x="402" y="89" style="fill:var(--text2,#475569);font-size:11px">Cart source = Product Page</text>
+
+      <rect x="390" y="148" width="156" height="54" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="402" y="170" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:700">KES-S006</text>
+      <text x="402" y="189" style="fill:var(--text2,#475569);font-size:11px">Cart source = Quick View</text>
+
+      <line x1="546" y1="75" x2="574" y2="75" style="stroke:var(--dia-a,#ba2142);stroke-width:1.6" marker-end="url(#sdr1a)"/>
+      <line x1="546" y1="175" x2="574" y2="175" style="stroke:var(--dia-a,#ba2142);stroke-width:1.6" marker-end="url(#sdr1a)"/>
+
+      <rect x="580" y="48" width="104" height="54" rx="6" style="fill:var(--card,#ffffff);stroke:var(--dia-a,#ba2142);stroke-width:1.8"/>
+      <text x="592" y="70" style="fill:var(--dia-a,#ba2142);font-size:12px;font-weight:700">KES-S005</text>
+      <text x="592" y="89" style="fill:var(--text2,#475569);font-size:11px">Passed, signed</text>
+
+      <rect x="580" y="148" width="104" height="54" rx="6" style="fill:var(--card,#ffffff);stroke:var(--dia-a,#ba2142);stroke-width:1.8"/>
+      <text x="592" y="170" style="fill:var(--dia-a,#ba2142);font-size:12px;font-weight:700">KES-S006</text>
+      <text x="592" y="189" style="fill:var(--text2,#475569);font-size:11px">Passed, signed</text>
+
+      <text x="16" y="238" style="fill:var(--text3,#5d6b7e);font-size:11px">One request, two solutions, because a cart addition from an overlay is a different build from one on a product page.</text>
+    </svg>
+</div>
+
+<p>One request became two solutions there, which is normal and is the reason the two identifiers are separate rather than shared. Adding to the cart from a product page and adding from a quick view overlay are the same event to a customer. To a developer they are two different builds. The day the quick view stops working you want a row that says so, rather than a cart number that is quietly ten per cent low.</p>
+
+<h3 class="subsec-title">Why this lives in a spreadsheet and not in a document</h3>
+<p>The format is not a matter of taste, and the argument for it is short. An implementation project changes constantly. Requirements get reprioritised. A solution turns out to need a second rule. A page load call becomes a direct call because the data layer is not ready in time. Every one of those changes has to land in the documentation on the day it happens, or the documentation stops being true.</p>
+
+<p>In a word processor document, a change means finding the paragraph that describes the thing, rewriting it, then finding the other three places that mentioned it. In a spreadsheet a change means editing a row. You can filter to Phase 1 and see the whole phase. You can sort by owner. You can add a column when the project needs something the template never had, which happens on every project. You can hand the same file to a business reader and a developer and let each of them look at different columns.</p>
+
+<p>None of that is available in a hundred-page technical document, and that shape of document has a worse problem than editing cost, covered in <a href="/adobe-analytics-learning/deliver/solution-design-reference/developer-instructions/">Developer Instructions</a>: nobody reads it. Every meeting still begins with somebody explaining the thing the document already explained.</p>
+
+<h3 class="subsec-title">What the standard template gives you, and what it leaves out</h3>
+<p>Adobe publishes an SDR template and a page of guidance on how to use it, and it is worth knowing exactly what that guidance recommends, because it is the definition most people are working from. The suggested columns are implementation status, variable name, the Analytics variable it is mapped to, and a description of the logic that sets it.</p>
+
+<p>Those four fields are the inventory, described precisely. There is no requirement in them, so there is nothing tying a variable back to a person who asked for something. There is no identifier, so nothing can be traced across documents. There is no solution, so two rules that populate the same eVar for different reasons look identical. There is no phase, no priority, no owner, and no place to say that a thing was tried and dropped.</p>
+
+<p>This is not carelessness on Adobe's part. They sell to every customer in every industry, from a bank with four hundred variables to a charity with nine. The template can only be the part common to all of them, and that part is the variable list. Everything that makes a design a design is the part that differs per project, and a vendor cannot ship that. Which is exactly why it falls to you, and why doing it properly is the difference between being the person who configures the tool and the person the project depends on.</p>
+
+<div class="pro-tip">
+    <div class="pro-tip-hdr"><span class="tip-ico"></span>Start from the requirement, not from the variable</div>
+    <p>If you are ever unsure whether something belongs in an SDR, ask which column it would sit in. A fact about eVar24 belongs in the map at the back. A fact about how form tracking works belongs in a solution row near the front, and it will bring three or four variables with it. The document is organised by what the business wanted, which is why the business can read it.</p>
+</div>
+
+<h3 class="subsec-title">Starting one from nothing</h3>
+<p>The first version takes an afternoon, and most of the afternoon goes on the requirements rather than the design. Build it in this order, because each step depends on the one above it.</p>
+
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>Set up the three documents so the identifiers hold</span></div>
+    <ol class="dothis-steps">
+        <li>
+            <span class="ds-do">Open a spreadsheet, not a word processor. One workbook per document, three workbooks in total.</span>
+            <span class="ds-see">Name them so the version is in the filename. Version 1.0 signed and version 1.0 with four unrecorded edits in it are the same file to everyone except the person who made the edits.</span>
+        </li>
+        <li>
+            <span class="ds-do">Pick a prefix for the property, two to four letters, and write every requirement into the BRD with a number that starts at 001 and never gets reused.</span>
+            <span class="ds-see">Do this before writing a single variable name. Renumbering later means finding every reference in three other documents, and that is how a chain gets quietly broken.</span>
+        </li>
+        <li>
+            <span class="ds-do">In the SDR, give each sheet a theme rather than a chapter. Global variables, commerce, engagement, configuration.</span>
+            <span class="ds-see">Themes match how people ask questions. Somebody wanting to know how the checkout works opens one sheet, not five.</span>
+        </li>
+        <li>
+            <span class="ds-do">Write one solution as a block: an ID row carrying the requirement, then one row beneath it for every variable and event the solution needs.</span>
+            <span class="ds-see">This is the whole grammar of the document, and it is covered in detail in <a href="/adobe-analytics-learning/deliver/solution-design-reference/sdr-structure/">SDR Structure</a>. Get one block right and the other forty are the same shape.</span>
+        </li>
+        <li>
+            <span class="ds-do">Put the variable map on its own sheet at the back, listing every slot the report suite has, not only the ones in use.</span>
+            <span class="ds-see">The empty rows are the point. They are what stops the next person burning eVar 40 on something trivial.</span>
+        </li>
+        <li>
+            <span class="ds-do">Add a change log sheet now, while it is empty, with columns for date, version, affected IDs and what changed.</span>
+            <span class="ds-see">A log started on the day of the first change has already lost the first change. Nobody ever adds one retrospectively and gets it right.</span>
+        </li>
+        <li>
+            <span class="ds-do">Write the definition of each column into the header cell as a comment.</span>
+            <span class="ds-see">The document then explains itself to whoever opens it in two years, which is usually not you, and is sometimes you having forgotten.</span>
+        </li>
+    </ol>
+    <p class="dothis-end">There is nothing else to set up. Three workbooks, one identifier scheme, one sheet layout repeated. Treat that as the floor rather than the ceiling: every project adds a column or a sheet that its own situation demands, and the ones that hold up are the ones worth keeping for the next project.</p>
+</div>
+
+<div class="dl-box">
+    <div class="dl-title"><span class="dl-ico" aria-hidden="true"></span>The five workbooks, filled in and ready to strip</div>
+    <p>A worked set for a fictional online homeware retailer, Kestrel and Co., used as the example throughout this module. They are complete rather than blank, because an empty grid teaches nothing and a filled one can be emptied in a minute. Delete the rows, keep the shape.</p>
+    <ul class="dl-list">
+        <li><a href="/templates/adobe-analytics-business-requirements-document-template.xlsx" download><span class="dl-name">Business Requirements Document</span><span class="dl-meta">XLSX &middot; 4 sheets &middot; 36 requirements</span></a></li>
+        <li><a href="/templates/adobe-analytics-solution-design-reference-template.xlsx" download><span class="dl-name">Solution Design Reference</span><span class="dl-meta">XLSX &middot; 8 sheets &middot; 35 solutions</span></a></li>
+        <li><a href="/templates/adobe-analytics-technical-specification-document-template.xlsx" download><span class="dl-name">Technical Specification Document</span><span class="dl-meta">XLSX &middot; 9 sheets &middot; the SDR plus 8 columns</span></a></li>
+        <li><a href="/templates/adobe-analytics-validation-report-template.xlsx" download><span class="dl-name">Validation Report</span><span class="dl-meta">XLSX &middot; 2 sheets &middot; 3 test cycles</span></a></li>
+        <li><a href="/templates/adobe-analytics-implementation-project-plan-template.xlsx" download><span class="dl-name">Implementation Project Plan</span><span class="dl-meta">XLSX &middot; 2 sheets &middot; 21 activities</span></a></li>
+    </ul>
+</div>
+
+<h3 class="subsec-title">Where the design actually gets made</h3>
+<p>So the thing to carry out of this section is small. An SDR is a design document, and it is organised by what somebody asked for rather than by what the report suite contains. The variable list belongs in it and belongs at the back. Every row carries an identifier, and that identifier is what lets a sentence spoken in a meeting in March be traced to a signed test result in June.</p>
+
+<p>That leaves the question of where the identifiers come from in the first place. They are assigned before any design exists, in the document that records only what the business wants and deliberately says nothing about how it will be done. <a href="/adobe-analytics-learning/deliver/solution-design-reference/business-requirements-document/">Business Requirements Document</a> covers how that one is built, why a trivial-sounding request and an enormous one get written down the same way, and how to record the things you are not going to do.</p>
+
+<div class="ref-box">
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/implementation/prepare/solution-design" target="_blank">Adobe Docs: Create a solution design document</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics-learn/tutorials/implementation/implementation-basics/creating-and-maintaining-an-sdr" target="_blank">Adobe Docs: Create and maintain a Solution Design Reference</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics-learn/tutorials/administration/admin-tips/download-the-adobe-analytics-implementation-playbook" target="_blank">Adobe Docs: Adobe Analytics implementation playbook</a></li>
+    </ul>
+</div>

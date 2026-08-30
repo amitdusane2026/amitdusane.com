@@ -2,11 +2,155 @@
 slug: "validation-and-sign-off"
 title: "Validation and Sign-off"
 seotitle: "Analytics Implementation Validation and Sign-off"
-published: 2026-07-18
-lastmod: 2026-07-18
+description: "Testing against solution IDs rather than against the site. Four statuses, dated cycles kept in the row, named owners, and how a project reaches an honest yes."
+published: 2026-08-30
+lastmod: 2026-08-30
 type: lesson
 modulenum: 19
 sectionnum: 6
 weight: 6
 ---
-<p>This section is not yet written.</p>
+<p>The build is done and the first test cycle starts on a Thursday. By lunchtime it is clear that a lot of it does not work. Direct calls firing twice. A quantity arriving as the cart total. Payment methods coming through as gateway codes. A customer ID sitting in the data layer as a plain email address, which stops the testing entirely while somebody is telephoned.</p>
+
+<p>Twenty-six of the twenty-eight things tested have something wrong with them. Two were right first time.</p>
+
+<p>That is a completely normal first cycle, and it is not a sign that anything has gone badly. What decides whether the project survives it is whether every one of those findings lands somewhere it can be tracked, or whether it lands in a chat thread.</p>
+
+<h3 class="subsec-title">Test against the ID, not against the site</h3>
+<p>The instinct is to write a test plan from scratch: a list of pages, a list of things to click, a column for what happened. It produces findings nobody can act on, because a finding attached to a page is not attached to a requirement, and nobody can tell whether it matters.</p>
+
+<p>The test document is the solution list. One row per solution ID, the requirement sentence copied across so the row reads on its own, and then the findings. Nothing is invented and nothing is renumbered.</p>
+
+<p>Everything follows from that. Coverage is countable, because the rows are the design. A finding is unambiguous, because it names a solution rather than a page. And the question anybody asks in a status call, which is whether a particular thing works yet, is answered by reading one row.</p>
+
+<h3 class="subsec-title">Four statuses, and the useful one is Ignored</h3>
+<p>Pass and fail is not enough, because most of what happens in testing is neither.</p>
+
+<div class="tbl-wrap">
+<table>
+<thead>
+<tr><th>Status</th><th>Means</th><th>What it needs alongside it</th></tr>
+</thead>
+<tbody>
+<tr><td>Passed</td><td>Behaves as the design says, with evidence captured</td><td>Nothing. This is the only status that closes cleanly</td></tr>
+<tr><td>Partly passed</td><td>The main case works. A named part does not</td><td>The exact part that does not, an owner, and a date</td></tr>
+<tr><td>Failed</td><td>Does not work</td><td>An owner and a date. Never left without both</td></tr>
+<tr><td>Ignored</td><td>Dropped from this phase by agreement</td><td>A reason, who agreed it, and when</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>Ignored is the status that makes the document honest. In the worked example the form tracking solution is dropped. The direct call identifiers were wrong, the form component belongs to a third party, and their next release lands after go-live. Three cycles confirmed nothing had changed. It goes out of Phase 1, in writing, with the reason and the date and the name of who agreed.</p>
+
+<p>Compare that with the alternative, which is silence. The form solution stays on the list, nobody mentions it, go-live happens, and in October somebody builds a report on form completions and finds nothing there. At that point the implementation looks unreliable, and the argument about whether it was ever delivered has no evidence on either side.</p>
+
+<div class="info-box">
+    <div class="info-hdr"><span class="info-ico"></span>A dropped requirement is a decision, and decisions are allowed</div>
+    <p>Nothing about analytics documentation is meant to force every requirement into production. Projects have dates and third parties have release windows, and the correct answer is often to cut something. What the document does is make sure the cut is a decision somebody made, rather than something that happened. Anyone can then find out later what was cut and why. Partly passed and Ignored are how a project stays truthful about itself.</p>
+</div>
+
+<h3 class="subsec-title">Keep the cycles in the row, dated</h3>
+<p>Findings go in one cell per solution, newest at the bottom, each prefixed with its date. Never overwrite the previous finding.</p>
+
+<p>The reason is that a fix moving a problem looks exactly like a fix solving it, until the history is in front of you. One row from the worked example, in full:</p>
+
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">Findings, KES-S011, payment step completed</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>22 May: Payment method arrives as the gateway code rather than the name.
+29 May: Names correct for card and PayPal, still a code for Klarna.
+04 Jun: All five correct.</pre></div>
+</div>
+
+<p>Three lines, and they say something no single status could. The fix was partial, the gap was one payment provider, and it took a third cycle. Somebody reading this in a year, wondering why April data has codes in it, gets their answer without asking anyone.</p>
+
+<p>It also protects you. When somebody says a thing was reported as fixed two weeks ago, the row shows what was actually observed on that date. That is usually more precise than anybody's memory.</p>
+
+<h3 class="subsec-title">Evidence is a screenshot, not an assertion</h3>
+<p>Capture what the call actually carried. A screenshot of the network request or the debugger output, saved against the solution ID, taken at the moment it passed.</p>
+
+<p>This costs a few seconds per solution and it settles arguments permanently. It is also the only defence against the most awkward situation in implementation work, which is a thing that passed testing and is wrong in production. With evidence you can say precisely what was seen on staging, and the conversation becomes about what changed between the two environments. Without it, the conversation is about whether the testing was any good.</p>
+
+<h3 class="subsec-title">Name who is blocking, in a column</h3>
+<p>Every open finding gets an owner and a date. Two columns, filled in during the cycle rather than afterwards.</p>
+
+<p>This is the part people avoid, because writing a client's name against a failure feels like blame. It is the opposite. An unowned finding stays open by default and gets rediscovered every cycle, and the third time it appears somebody starts asking why the implementation is taking so long. An owned finding with a date is a piece of work somebody is doing.</p>
+
+<p>Be even-handed about it. In the worked example, most of the fixes are ours and some are theirs, and a couple sit with a third party neither of us controls. The document records who, not who is at fault, and once that is established nobody minds their name being in the column.</p>
+
+<h3 class="subsec-title">Sign-off is theirs to give, and it has to be recorded</h3>
+<p>A row is not finished when you think it works. It is finished when the client says so, in the sign-off column, next to the solution ID.</p>
+
+<p>That distinction matters more at the end of a project than during it. Twenty-six of twenty-eight signed, one failure with an owner, one dropped by agreement, and a summary saying so. There is no argument to have, because the numbers are in a document both sides filled in as they went. The alternative is a closing meeting where success is a matter of opinion. Opinions at the end of a long project tend to be shaped by whatever went wrong most recently.</p>
+
+<h3 class="subsec-title">The plan that says who owes what, and when</h3>
+<p>One more document, and it is not a delivery artifact so much as the thing that stops the others from being late. A plan: every activity, an owner, what it produces, start and end dates, estimated hours, and a status.</p>
+
+<p>Two parts of it earn their place. The deliverable column, because a run of activities producing nothing is a warning worth seeing early. And an assumptions sheet, which is where the dependencies get written down before they become excuses. The data layer is being built by the client. Three test cycles are included and a fourth is a change request. The staging payment gateway has to be able to fail on demand, or the payment failure solution cannot be tested at all.</p>
+
+<p>Those sentences cost nothing in week one. In week nine, when the gateway turns out not to fail on demand, they are the difference between a renegotiation and an argument.</p>
+
+<h3 class="subsec-title">Running a validation cycle</h3>
+<p>A cycle on a mid-sized implementation is a day of testing and two or three days of fixes. Three cycles is a realistic plan, and the third one is short.</p>
+
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>Turn a build into a signed result</span></div>
+    <ol class="dothis-steps">
+        <li class="ds-group">Part one, set up</li>
+        <li>
+            <span class="ds-do">Build the tracker from the solution list: one row per solution ID, with the requirement sentence copied across.</span>
+            <span class="ds-see">Include the configuration solutions. Marketing channel rules and classifications fail as often as anything else and are easier to forget.</span>
+        </li>
+        <li>
+            <span class="ds-do">Get the hard-to-produce test data arranged before the cycle, not during it.</span>
+            <span class="ds-see">A failed payment, a valid discount code, a search that returns nothing, an order with ten products. Each one is half a day of waiting if it is not ready.</span>
+        </li>
+        <li class="ds-group">Part two, the cycle</li>
+        <li>
+            <span class="ds-do">Work down the rows in order, exercising each solution and reading what the call actually carried.</span>
+            <span class="ds-see">In order, so that coverage is countable. Testing the interesting ones first is how the boring ones go untested.</span>
+        </li>
+        <li>
+            <span class="ds-do">Write each finding into the row with today's date in front of it, leaving the previous findings where they are.</span>
+            <span class="ds-see">Be specific about what was wrong. Quantity was 2 when one product was added beats quantity incorrect.</span>
+        </li>
+        <li>
+            <span class="ds-do">Capture evidence against each solution that passes.</span>
+            <span class="ds-see">The call, or the debugger view, saved with the solution ID in the filename. Seconds now, arguments avoided later.</span>
+        </li>
+        <li>
+            <span class="ds-do">Set an owner and a date on every row that is not Passed, before the cycle is circulated.</span>
+            <span class="ds-see">Before, not after. An owner assigned in the review meeting is an owner chosen by whoever was quietest.</span>
+        </li>
+        <li class="ds-group">Part three, close it</li>
+        <li>
+            <span class="ds-do">Decide the exceptions explicitly: what is accepted as it is, and what is dropped from this phase.</span>
+            <span class="ds-see">Each with a reason and a date. This is the conversation that makes go-live possible, and it needs to happen in a meeting rather than by inference.</span>
+        </li>
+        <li>
+            <span class="ds-do">Count the statuses onto a summary sheet and write a one-line recommendation.</span>
+            <span class="ds-see">Twenty-four passed, two partly, one failed, one dropped. Proceed. That is a sentence a decision-maker can act on without reading twenty-eight rows.</span>
+        </li>
+        <li>
+            <span class="ds-do">Get the sign-off column filled in by the client, row by row.</span>
+            <span class="ds-see">Row by row is the point. A single signature on a covering email is not the same thing and will not survive a disagreement.</span>
+        </li>
+    </ol>
+    <p class="dothis-end">There is nothing else to a validation cycle. One row per solution, dated findings, evidence, owners, exceptions and a signature. Go further where the stakes are higher. A regulated business will want the tester named on each row. A large programme will want the cycle repeated on production rather than a single check.</p>
+</div>
+
+<h3 class="subsec-title">How you know the project succeeded</h3>
+<p>At the end there is a number, and it comes out of the documents rather than out of anyone's judgement. So many solutions signed, so many carrying an agreed exception, so many dropped and why. Every one of those traces back through a solution ID to a requirement ID to a sentence somebody said in a workshop in March.</p>
+
+<p>That is the whole reason the chain exists. Not tidiness, and not process for its own sake. A project that can answer <em>did we deliver what was asked for</em> with a count, rather than an impression, can be handed over. It can be inherited, audited and defended. One that cannot will be re-litigated every time a number looks strange.</p>
+
+<p>Nothing in this module argues that the documents are the work. The work is the implementation. The documents make the implementation legible to the six or seven people who each need to understand it differently. They also let somebody who was never in the room pick it up two years later and be right about it.</p>
+
+<p>What all of this assumes is that you can see what a call actually carried, which is a skill of its own and the subject of a whole module. <a href="/adobe-analytics-learning/deliver/testing-debugging/debugging-tools-overview/">Testing and Debugging</a> covers the tools that show you the hit and how to read one. It also covers how to tell a data layer fault from a rule fault, when both look identical from the outside.</p>
+
+<div class="ref-box">
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/implementation/launch/validate-publish-prod" target="_blank">Adobe Docs: Validate your implementation and publish to production</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/experience-platform/debugger/home" target="_blank">Adobe Docs: Experience Platform Debugger</a></li>
+    </ul>
+</div>

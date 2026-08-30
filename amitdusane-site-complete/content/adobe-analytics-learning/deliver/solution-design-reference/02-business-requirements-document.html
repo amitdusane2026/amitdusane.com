@@ -2,11 +2,147 @@
 slug: "business-requirements-document"
 title: "Business Requirements Document"
 seotitle: "Business Requirements Document (BRD) for Analytics"
-published: 2026-07-18
-lastmod: 2026-07-18
+description: "The document that records what the business wants and refuses to say how it will be done. Requirement IDs, phases, out of scope, and real sign-off."
+published: 2026-08-30
+lastmod: 2026-08-30
 type: lesson
 modulenum: 19
 sectionnum: 2
 weight: 2
 ---
-<p>This section is not yet written.</p>
+<p>Two requests land in the same discovery workshop, twenty minutes apart. Somebody from the content team says they would like to know which browsers people use. Somebody from ecommerce wants the customers who filled a cart and did not buy. Identified, so the retargeting agency can email them.</p>
+
+<p>The first one is a dimension that arrives on its own, free, whether anybody asks for it or not. The second one needs a full commerce build, a hashed customer identifier, a consent basis that may not exist, and probably a second Adobe product. One is an afternoon, and the other is most of a quarter.</p>
+
+<p>Both go into the document, worded the way they were said, with nothing to mark one as small and the other as enormous. That restraint is the discipline the whole document runs on, and it is harder than it sounds.</p>
+
+<h3 class="subsec-title">Record what they want, never how you will do it</h3>
+<p>The temptation, when a request arrives that you already know how to solve, is to write down the solution. The browser one is a single line. Adobe collects browser automatically, so why not note that and move on. Do it once and the habit spreads. By requirement twenty the document has become a design, badly, written before anybody had time to think.</p>
+
+<p>Keeping solutions out is not tidiness. It protects the review. A business reader can look at a page of plainly worded requests and answer. Yes, that is what we want. Or no, you have misunderstood us. Ask the same reader to review a document full of eVar assignments and they stop reading. It has stopped being about them. The design comes later, gets its own document, and gets its own signature. That is <a href="/adobe-analytics-learning/deliver/solution-design-reference/sdr-structure/">SDR Structure</a>.</p>
+
+<h3 class="subsec-title">Do not size a requirement while you are collecting it</h3>
+<p>You will know, as you write it down, that the browser request is trivial and the retargeting one is not. That knowledge is useful later, in estimating and in phasing, and it is actively harmful in the room. Meet a requirement with a comment about how easy or how hard it is, and the person who raised it starts editing themselves. The next thing they were going to say does not get said.</p>
+
+<p>The other half of the same rule is more uncomfortable. Requests arrive that make no sense, or that are not analytics at all. Somebody asks for a delivery cost calculator on the product page. Somebody wants the website revenue to match the finance ledger to the penny. Write both down. The calculator is a website feature and it goes to the right team because you recorded it. The ledger reconciliation is a genuine misunderstanding of what the tool is. Correcting it means having it written down where it can be discussed. Dismiss it in a meeting and it returns in three months, raised by somebody who was not there.</p>
+
+<div class="warn-box">
+    <div class="warn-hdr"><span class="warn-ico"></span>Analytics is not a book-keeping system, and saying so early saves a year</div>
+    <p>An analytics platform counts what a browser managed to send. A finance system counts what the bank settled. Blocked calls, ad blockers, abandoned sessions and refunds mean the two will never agree, and no amount of implementation work will make them. Every hour spent chasing that gap is an hour not spent on a question the data can actually answer. Say it in the first week, put it in the document, and the order system stays the book of record where it belongs.</p>
+</div>
+
+<h3 class="subsec-title">The requirements they cannot ask for</h3>
+<p>Most organisations buying analytics do not know what is possible, which means the requirements they give you are the ones they already imagined. Nobody in the workshop will ask you to track site errors. Nobody asks for page performance timings. Nobody asks for login state on every report, so that signed-in behaviour can be separated from anonymous. Nobody asks to be able to tell a footer link from a main menu link.</p>
+
+<p>Those are yours to propose. Build a standing list for each kind of business you work with. A retailer, a telecoms operator and a publisher have different obvious gaps. The list gets sharper every project. Bring five or six to the workshop, explain what each one answers, and let them choose. In practice most get accepted, because they are the things people wish they had after six months of reporting.</p>
+
+<p>Mark them in the document as recommended rather than requested. It costs one column. In eight months somebody will ask why error tracking is in scope when nobody remembers asking for it, and the honest answer is sitting there.</p>
+
+<div class="pro-tip">
+    <div class="pro-tip-hdr"><span class="tip-ico"></span>This column is the difference between taking an order and giving advice</div>
+    <p>Anybody can write down what they were told in a room. Arriving with the five things this business will want in six months, and being right, is the part they are paying for. It is also the cheapest credibility available on a project, because it happens in week one before you have delivered anything else.</p>
+</div>
+
+<h3 class="subsec-title">Give every requirement an ID before you give it anything else</h3>
+<p>Number them the moment they are written down, before any grouping, before any estimate. A short prefix for the property and a running number: KES-R001, KES-R002, on to KES-R036. The prefix exists because programmes have more than one brand in them. A retail group running three websites would otherwise have three requirement sets all beginning at R001. Every conversation then turns into a question about which R001 you mean.</p>
+
+<p>Two rules make the numbering worth having. Never reuse a number, and never renumber. A requirement that gets dropped keeps its ID and gets a status. That ID is quoted in the design, in the technical document and in the test results, and pulling it out leaves four holes. Numbers are cheap. Reaching KES-R100 on a project with sixty requirements is completely normal and is a record of what happened.</p>
+
+<h3 class="subsec-title">Objectives are derived, not collected</h3>
+<p>Nobody in a workshop announces a business objective. They ask for thirty specific things, and the objectives are visible in the pile once it is complete. Group them and four or five appear: track business performance, understand customer behaviour, measure whether the site itself works, measure marketing, protect the quality of the data.</p>
+
+<p>Write those at the front and tag every requirement with the one it serves. This does two jobs. It gives a senior reader who will never read thirty rows a page they can approve. It also exposes the imbalance in the request list. Twenty-two requirements against business performance and one against data quality is a real finding, and it is invisible until the requirements are grouped.</p>
+
+<h3 class="subsec-title">Sketch the report before you promise the requirement</h3>
+<p>Every requirement is eventually answered by a report, and a report is a set of dimensions and a set of metrics. So put two columns in the document and fill them in roughly. Somebody wants to know about browser usage: the dimensions column says Browser, the metrics column says Visits. Somebody wants to know which discount codes cost the most: dimensions Discount Code and Product, metrics Discount Applications and Discount Value.</p>
+
+<p>These are sketches and not commitments, and the exact variables are settled later in the design. What they do is let a business reader look at a row and picture the thing they will eventually be handed. Sign-off on a plain list of sentences is a formality that people give without thinking. Sign-off on a row that shows roughly the table they will get is a real decision. It is where somebody says that is not what they meant.</p>
+
+<div class="tbl-wrap">
+<table>
+<thead>
+<tr><th>Column</th><th>What it holds</th><th>What goes wrong without it</th></tr>
+</thead>
+<tbody>
+<tr><td>Requirement ID</td><td>KES-R014, permanent and never reused</td><td>Nothing can be traced. Every status call becomes a discussion about which request is meant</td></tr>
+<tr><td>Business objective</td><td>The objective this serves, derived from the pile</td><td>No senior reader can approve the scope without reading every row</td></tr>
+<tr><td>Technical objective</td><td>The part of the site or the mechanism</td><td>Requirements that share a solution look unrelated</td></tr>
+<tr><td>Requirement</td><td>What was asked for, in their words</td><td>The business does not recognise their own request and cannot sign it</td></tr>
+<tr><td>Raised by</td><td>Business, or recommended by you</td><td>In eight months nobody can say why an unrequested item is in scope</td></tr>
+<tr><td>Dimensions and metrics</td><td>The rough shape of the answering report</td><td>Sign-off becomes a formality rather than a decision</td></tr>
+<tr><td>Priority and phase</td><td>Set by the business, in writing</td><td>Scope arguments happen in build, when they are expensive</td></tr>
+<tr><td>Sign-off</td><td>Signed, queried, or blank</td><td>Nobody can say what was actually agreed</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3 class="subsec-title">What arrives free, and what has to be built</h3>
+<p>A point worth making explicitly, in the document, in its own paragraph: a standard implementation delivers a lot before anybody writes a requirement. Browser, device, operating system, screen size, country, referring domain, time on site, entries and exits, the basic page view count. Those need a correctly configured report suite and a working page load call, and nothing else.</p>
+
+<p>Everything specific to the business is custom: what a product is, what counts as a conversion, what a form completion means. That distinction decides which requirements need a design at all. It is also the fastest way to stop somebody paying for something they were going to get anyway. Say which of the two each requirement falls into and the scope shrinks honestly.</p>
+
+<h3 class="subsec-title">Phases are a scope decision, made early and in writing</h3>
+<p>Thirty-six requirements will not fit in the time available. That is normal, and it is not a failure of the workshop. Split them, rather than quietly dropping the ones at the bottom. Phase 1 carries everything needed to answer how the business is performing, because that is what pays for the project. Phase 2 carries the behavioural depth: filters, sorting, image galleries, reviews, wishlists.</p>
+
+<p>Let the business set the priority and the phase, and record who set it. Your job is the estimate, not the choice. Once those two columns are filled in and signed, a whole category of argument disappears. Why is the sorting requirement not live? The answer is a row rather than a memory.</p>
+
+<h3 class="subsec-title">Building the BRD sheet</h3>
+<p>An afternoon of drafting after the workshop, then two rounds of review. Build it in this order, because the parts depend on each other.</p>
+
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>Turn a workshop into a document somebody can sign</span></div>
+    <ol class="dothis-steps">
+        <li class="ds-group">Part one, capture</li>
+        <li>
+            <span class="ds-do">Write every request into a row, in the words it was asked in, with no editing and no sizing.</span>
+            <span class="ds-see">Including the ones that are not analytics and the ones that cannot be done. They are dealt with in part two, not by leaving them out.</span>
+        </li>
+        <li>
+            <span class="ds-do">Number them with a property prefix and a running number, starting at 001.</span>
+            <span class="ds-see">Do this before grouping or sorting anything. An ID assigned after a sort is an ID that encodes an ordering nobody will remember.</span>
+        </li>
+        <li>
+            <span class="ds-do">Add your recommended requirements, and mark them as recommended in their own column.</span>
+            <span class="ds-see">Errors, performance, login state on every hit, footer and header navigation. Five or six is plenty and most will be accepted.</span>
+        </li>
+        <li class="ds-group">Part two, shape</li>
+        <li>
+            <span class="ds-do">Move everything that cannot be delivered onto an Out of Scope sheet, each with a reason and what it would take.</span>
+            <span class="ds-see">A reason, never a refusal. The delivery calculator goes to the website team. The ledger reconciliation gets a sentence about what analytics counts.</span>
+        </li>
+        <li>
+            <span class="ds-do">Group what remains, name the four or five objectives that fall out, and tag every row with one.</span>
+            <span class="ds-see">Look at the counts per objective before moving on. A lopsided distribution is a finding worth raising in the review.</span>
+        </li>
+        <li>
+            <span class="ds-do">Fill in the rough dimensions and metrics for each row.</span>
+            <span class="ds-see">Rough is the correct level. Product, Product Category, Cart Additions. Naming eVars here is starting the design in the wrong document.</span>
+        </li>
+        <li class="ds-group">Part three, agree</li>
+        <li>
+            <span class="ds-do">Walk the document with the business, and let them set priority and phase on every row.</span>
+            <span class="ds-see">Expect a third of it to move to a later phase. That is the meeting working, not the meeting going badly.</span>
+        </li>
+        <li>
+            <span class="ds-do">Add the change log sheet, record the version, and get the sign-off column filled in.</span>
+            <span class="ds-see">A row left blank in that column is a row nobody agreed to, and it will surface in testing.</span>
+        </li>
+    </ol>
+    <p class="dothis-end">There is nothing else in a BRD. Requirements, objectives, out of scope, priority, phase, sign-off and a log. None of that is a ceiling. A regulated business will want a data-protection column. A large programme will want the requesting team named. Add them when the project asks.</p>
+</div>
+
+<h3 class="subsec-title">What this buys you when the project changes</h3>
+<p>Six weeks into the build, somebody asks for wishlist tracking. It was never in the workshop, it is not in the document, and it is a perfectly reasonable thing to want. Without a signed BRD that request is a conversation. Conversations like it are how a project quietly grows by a third while everyone agrees that nobody added anything.</p>
+
+<p>With a signed BRD it is a change request. It gets an ID, an estimate and a decision. The decision is made by the person paying, not by whoever happened to be on the call. Nothing about that is obstructive; it is simply the difference between a scope somebody agreed to and a scope that happened. The document is not there to say no. It is there so that yes means something.</p>
+
+<p>Once it is signed, the requirements stop being sentences and start being the input to a design. Every one of those IDs is about to be answered by one or more solutions, each with an identifier of its own. That mapping is rarely one to one. <a href="/adobe-analytics-learning/deliver/solution-design-reference/sdr-structure/">SDR Structure</a> covers how a requirement becomes a block of rows, and why some solutions have no requirement behind them at all.</p>
+
+<div class="ref-box">
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/implementation/prepare/solution-design" target="_blank">Adobe Docs: Create a solution design document</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics-learn/tutorials/administration/admin-tips/download-the-adobe-analytics-implementation-playbook" target="_blank">Adobe Docs: Adobe Analytics implementation playbook</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/implementation/prepare/data-layer" target="_blank">Adobe Docs: Create a data layer</a></li>
+    </ul>
+</div>

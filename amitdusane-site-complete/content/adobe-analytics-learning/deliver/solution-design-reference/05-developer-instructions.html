@@ -2,11 +2,193 @@
 slug: "developer-instructions"
 title: "Developer Instructions"
 seotitle: "Writing Developer Instructions in an SDR"
-published: 2026-07-18
-lastmod: 2026-07-18
+description: "The technical document is the SDR with eight more columns, not a second document. Rule types, data elements, and the one ordering rule that matters."
+published: 2026-08-30
+lastmod: 2026-08-30
 type: lesson
 modulenum: 19
 sectionnum: 5
 weight: 5
 ---
-<p>This section is not yet written.</p>
+<p>The traditional technical document for an analytics implementation is a book. A chapter per requirement, written in prose, with headings and diagrams and a table of contents. A hundred and fifty pages is normal. Two hundred happens.</p>
+
+<p>It takes a week to write. Then a page load call has to become a direct call, and the change lands in four chapters, three of which cross-reference each other. Another week goes on finding and rewriting them, and the implementation work that week is an hour.</p>
+
+<p>And nobody reads it. Every walkthrough with the development team still starts from nothing, with somebody talking through what the document already said. The book was written for an audience that turned out not to exist.</p>
+
+<h3 class="subsec-title">Why the technical document was the one that failed</h3>
+<p>The failure is not about writing quality. It is about the shape of the thing against the shape of the work.</p>
+
+<p>An implementation changes continuously, in small pieces, each affecting one moment on the site. Prose spreads one moment across paragraphs, and paragraphs across chapters, so a small change touches several places that have to stay consistent with each other. The cost of a change is not proportional to its size, and that is what makes the document lose the race.</p>
+
+<p>The second failure is the reader. A developer building a data layer needs to know which object to populate on the product page, in what format, and when. They need about eight lines. Handing them two hundred pages containing those eight lines somewhere is the same as handing them nothing, and they will do the sensible thing and ask for a call instead.</p>
+
+<h3 class="subsec-title">Extend the SDR instead of writing a second document</h3>
+<p>The design already has a row for every variable in every moment. The instruction for building that moment belongs on the same row.</p>
+
+<p>So the technical document is the SDR with eight columns added to the right. Same solution IDs, same requirement IDs, same blocks, same order. Copy the file, add the columns, fill them in. Nothing is restated, because nothing was moved.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">One row, two audiences</div>
+    <svg viewBox="0 0 700 320" style="width:100%;height:auto;display:block" role="img"
+         aria-label="A single row of fifteen columns split into two groups. The left group of seven columns is the signed Solution Design Reference: solution ID, requirement ID, solution component, requirement, variable or event, name, and details and examples. The right group of eight columns is added to make the technical document: data layer or tool code, rule type, rule name, rule condition, data element, developer instructions, product data layer, and custom code. The business reads the left group, the build team reads the right.">
+      <rect x="16" y="46" width="330" height="238" rx="8" style="fill:var(--card,#ffffff);stroke:var(--dia-a,#ba2142);stroke-width:1.8"/>
+      <rect x="354" y="46" width="330" height="238" rx="8" style="fill:var(--card,#ffffff);stroke:var(--dia-c,#10b981);stroke-width:1.8"/>
+
+      <rect x="16" y="46" width="330" height="30" rx="8" style="fill:var(--dia-a,#ba2142)"/>
+      <rect x="16" y="66" width="330" height="10" style="fill:var(--dia-a,#ba2142)"/>
+      <rect x="354" y="46" width="330" height="30" rx="8" style="fill:var(--dia-c,#10b981)"/>
+      <rect x="354" y="66" width="330" height="10" style="fill:var(--dia-c,#10b981)"/>
+
+      <text x="32" y="66" style="fill:#ffffff;font-size:12.5px;font-weight:700">The SDR, seven columns, already signed</text>
+      <text x="370" y="66" style="fill:#ffffff;font-size:12.5px;font-weight:700">Eight columns added for the build</text>
+
+      <text x="32" y="100" style="fill:var(--text3,#5d6b7e);font-size:11px">Read by the business</text>
+      <text x="370" y="100" style="fill:var(--text3,#5d6b7e);font-size:11px">Read by the build team</text>
+
+      <text x="32" y="128" style="fill:var(--text1,#0f172a);font-size:11.5px">Solution ID</text>
+      <text x="32" y="150" style="fill:var(--text1,#0f172a);font-size:11.5px">Requirement ID</text>
+      <text x="32" y="172" style="fill:var(--text1,#0f172a);font-size:11.5px">Solution component</text>
+      <text x="32" y="194" style="fill:var(--text1,#0f172a);font-size:11.5px">Requirement</text>
+      <text x="32" y="216" style="fill:var(--text1,#0f172a);font-size:11.5px">Variable or event</text>
+      <text x="32" y="238" style="fill:var(--text1,#0f172a);font-size:11.5px">Name</text>
+      <text x="32" y="260" style="fill:var(--text1,#0f172a);font-size:11.5px">Details and examples</text>
+
+      <text x="370" y="128" style="fill:var(--text1,#0f172a);font-size:11.5px">Data layer or tool code</text>
+      <text x="370" y="150" style="fill:var(--text1,#0f172a);font-size:11.5px">Rule type</text>
+      <text x="370" y="172" style="fill:var(--text1,#0f172a);font-size:11.5px">Rule name</text>
+      <text x="370" y="194" style="fill:var(--text1,#0f172a);font-size:11.5px">Rule condition</text>
+      <text x="370" y="216" style="fill:var(--text1,#0f172a);font-size:11.5px">Data element</text>
+      <text x="370" y="238" style="fill:var(--text1,#0f172a);font-size:11.5px">Developer instructions</text>
+      <text x="370" y="260" style="fill:var(--text1,#0f172a);font-size:11.5px">Product data layer</text>
+      <text x="370" y="282" style="fill:var(--text1,#0f172a);font-size:11.5px">Custom code</text>
+
+      <text x="16" y="26" style="fill:var(--text2,#475569);font-size:12px;font-weight:700">KES-S005 is one row, and it is the same row in both documents.</text>
+      <text x="16" y="308" style="fill:var(--text3,#5d6b7e);font-size:11px">Nothing on the left is restated on the right, because nothing was moved.</text>
+    </svg>
+</div>
+
+<p>The gain is not the saved typing, although a week is a week. It is that the two documents can no longer disagree. There is no second description of what KES-S005 does, so there is no way for one of them to go stale while the other is updated.</p>
+
+<h3 class="subsec-title">The columns that turn a design into instructions</h3>
+<p>Eight columns, and each one answers a question a builder actually has.</p>
+
+<div class="tbl-wrap">
+<table>
+<thead>
+<tr><th>Column</th><th>Holds</th><th>The question it answers</th></tr>
+</thead>
+<tbody>
+<tr><td>Data layer or tool code</td><td><code>digitalData.cart.source</code>, or <code>s.getNewRepeat(30)</code></td><td>Where does this value come from? A site object, or code inside the tag manager?</td></tr>
+<tr><td>Rule type</td><td>Page load, event based, direct call</td><td>What kind of rule fires this?</td></tr>
+<tr><td>Rule name</td><td>Cart Add</td><td>What is the rule called, exactly, including case? This is the name in the tag manager</td></tr>
+<tr><td>Rule condition</td><td><code>cart_add</code></td><td>What makes it fire? A page condition, an element selector, or a direct call string</td></tr>
+<tr><td>Data element</td><td>Cart Source</td><td>Which data element holds this? One per site object, so a rename is one edit</td></tr>
+<tr><td>Developer instructions</td><td>Several lines of plain English</td><td>What does the site developer do? This is the only column they read</td></tr>
+<tr><td>Product data layer</td><td>The product objects this solution needs</td><td>Which product fields must be set? Separated because eleven solutions share them</td></tr>
+<tr><td>Custom code</td><td>A pointer to the code sheet</td><td>Does this need code rather than configuration, and why?</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>Only the first row of a block carries the rule columns, in the same way the design does. The variable rows beneath it carry their own data layer path and their own data element, and leave the rest empty. A rule is a property of the moment, not of each variable in it.</p>
+
+<h3 class="subsec-title">Two developers, and only one of them should read your column</h3>
+<p>An implementation is built by two different people who often do not work for the same organisation. A site developer writes the data layer, populating objects on the page. An analytics developer works in the <a href="/adobe-analytics-learning/collect/adobe-launch-tags/rules/">tag manager</a>, building the rules and <a href="/adobe-analytics-learning/collect/adobe-launch-tags/data-elements/">data elements</a> that read those objects.</p>
+
+<p>They need different columns and they need to be told which. The site developer reads Developer Instructions and Product Data Layer, and nothing else. The rule name, the rule type and the data element name are none of their business, and reading them only raises questions about a system they do not have access to.</p>
+
+<p>Colour the header row to say so. In the worked example the seven inherited columns are one colour and the eight new ones another, and the instruction given with the file is one sentence: the first colour is what the business signs, the second is what the build team uses, and the site developer only needs the one column that is named for them. That sentence saves more time than the document does.</p>
+
+<h3 class="subsec-title">Say what must happen first, every single time</h3>
+<p>One instruction repeats on almost every row, and it prevents more faults than everything else in the document combined. Populate the data layer objects before firing the call.</p>
+
+<p>The reason is that a rule reads the page at the instant it fires. A direct call sent before the objects are set will go out with empty values, and nothing anywhere reports an error. The rule fired. The call was sent. Adobe accepted it. The report is simply thinner than it should be, and it looks like a collection problem rather than an ordering one.</p>
+
+<p>The same trap has a page load version that is worse, because it depends on timing rather than on order in the code. A product page rendered by the server can fill its product objects from a script that runs after the page load rule has already fired. On a fast connection it works. On a slow one it works. On the machine of whoever tests it, it usually works, and then a proportion of real product views arrive empty forever.</p>
+
+<div class="warn-box">
+    <div class="warn-hdr"><span class="warn-ico"></span>If the data layer is not ready at page load, stop using a page load rule</div>
+    <p>The fix is not to add a delay, and it is not to poll for the object. Change the rule to a direct call and have the site fire it once the objects are set. The site knows when its own data is ready and the tag manager never will. In the worked example this exact change was made to the product view solution after the first test cycle, and the change log records why, which is what stops somebody changing it back.</p>
+</div>
+
+<h3 class="subsec-title">One instruction per row is what makes a change cheap</h3>
+<p>The instruction column is prose, and it is the only prose in the document. Keep each one to a handful of lines: what to populate, what to call, and in what order. Here is one, verbatim.</p>
+
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">Developer instructions, KES-S005</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>Set the cart source to Product Page, update the product objects with
+the chosen colour and quantity, then call:
+
+  _satellite.track('cart_add');
+
+Quantity is the quantity being added, not the quantity now in the cart.
+
+Notes:
+1. Populate the data layer objects before the direct call.
+2. Also populate the product objects listed in the next column.</pre></div>
+</div>
+
+<p>Nine lines, and a developer can build from them without a call. Notice what is not there. No explanation of what an eVar is, no rationale, no reference to the requirement. Those all exist, one column to the left, for a reader who wants them.</p>
+
+<p>The economy of this shape shows up on the day something changes. A direct call gets renamed, and that is one cell. A product field is added, and that is one cell. The change log gets a line naming the solution ID. Nothing else in the document has to be touched, and nothing else can quietly fall out of step.</p>
+
+<h3 class="subsec-title">What else has to be written down before any of it works</h3>
+<p>Rules do not run in a vacuum, so two more sheets belong in the technical document. One for the platform: which extensions are installed, the report suite for each environment, the tracking server, the identity service, which plugins are loaded and where. One for custom code, holding the four or five places the implementation genuinely needs code rather than configuration.</p>
+
+<p>Write the reason next to each piece of code, not only the code. A guard that stops a refreshed order confirmation sending a second purchase looks like clutter to somebody tidying up next year. With one line saying what it prevents, it survives.</p>
+
+<h3 class="subsec-title">Extending the SDR into a TSD</h3>
+<p>An afternoon, if the design is finished. If it is not, this step will find out.</p>
+
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>Add eight columns and a walkthrough, and stop writing a book</span></div>
+    <ol class="dothis-steps">
+        <li>
+            <span class="ds-do">Copy the signed SDR to a new file, name it as the technical document version 1.0, and change nothing on the left.</span>
+            <span class="ds-see">The first seven columns should stay identical to the signed version, cell for cell. If they drift, the business signed something that no longer exists.</span>
+        </li>
+        <li>
+            <span class="ds-do">Add the eight columns and colour the two header groups differently.</span>
+            <span class="ds-see">Then say what the colours mean, once, in the walkthrough and in the file. A colour nobody explained is decoration.</span>
+        </li>
+        <li>
+            <span class="ds-do">For each block, decide the rule type first, then name the rule and its condition.</span>
+            <span class="ds-see">Direct call for anything the site has to trigger. Page load only when the values are genuinely present at page load. Event based when the tag manager can recognise the element itself.</span>
+        </li>
+        <li>
+            <span class="ds-do">Give every data layer object exactly one data element, and reference the element in the rules rather than the raw path.</span>
+            <span class="ds-see">A renamed object is then one edit. Read the path directly in twelve rules and it is twelve edits, and the twelfth gets missed.</span>
+        </li>
+        <li>
+            <span class="ds-do">Write the developer instruction for each block, ending with the ordering note.</span>
+            <span class="ds-see">Plain English, a handful of lines, and the exact call to make. Repeat the ordering note on every block even though it is the same words. It is the one that gets forgotten.</span>
+        </li>
+        <li>
+            <span class="ds-do">Add the platform sheet and the custom code sheet.</span>
+            <span class="ds-see">Extensions, report suites per environment, plugins, the consent gate. Then each piece of code with the reason it exists beside it.</span>
+        </li>
+        <li>
+            <span class="ds-do">Walk it through with both developers in one session, and tell each of them which columns are theirs.</span>
+            <span class="ds-see">One session, not one per team. Most of the questions are about the seam between them, and the seam only gets discussed when both are in the room.</span>
+        </li>
+    </ol>
+    <p class="dothis-end">There is nothing else to write. Eight columns, two support sheets and one walkthrough. Add to it where the estate is bigger. A site with a mobile app alongside it needs a second set of technical columns, because an app has no data layer and the instructions are entirely different.</p>
+</div>
+
+<h3 class="subsec-title">What a developer can now do without you</h3>
+<p>What exists now is one file, fifteen columns wide, where a business reader sees the seven they signed and a builder sees the eight that tell them what to make. Every row still carries the identifier that goes back to a sentence somebody said in a workshop.</p>
+
+<p>The build can start, and it will not be right first time. Direct calls will fire twice. A quantity will arrive as the cart total. A payment method will come through as a gateway code rather than a name. That is normal, and none of it is a documentation failure, because the way faults get found is a test cycle that checks the build against the design, row by row, using the same identifiers.</p>
+
+<p><a href="/adobe-analytics-learning/deliver/solution-design-reference/validation-and-sign-off/">Validation and Sign-off</a> covers how that cycle is run and recorded, why four statuses are better than pass and fail, and how a project reaches the point where somebody can say honestly whether it worked.</p>
+
+<div class="ref-box">
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/implementation/prepare/data-layer" target="_blank">Adobe Docs: Create a data layer</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/experience-platform/tags/extensions/client/analytics/overview" target="_blank">Adobe Docs: Adobe Analytics extension</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/experience-platform/tags/ui/rules" target="_blank">Adobe Docs: Rules in Adobe Experience Platform Tags</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/experience-platform/tags/ui/data-elements" target="_blank">Adobe Docs: Data elements in Adobe Experience Platform Tags</a></li>
+    </ul>
+</div>

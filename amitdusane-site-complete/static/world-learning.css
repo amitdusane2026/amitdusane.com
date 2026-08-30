@@ -757,7 +757,14 @@ body.world-learning .welcome-btn:hover{background:var(--accent2);text-decoration
   .print-doc .diagram-box > svg,.print-doc .diagram-frame > svg,.print-doc .diagram-content > svg{min-width:0 !important;max-width:100% !important}
   .print-doc .diagram-frame-mixed > div{min-width:0 !important}
   .print-doc .diagram-box > .diagram-title{position:static !important}
-  .print-doc .info-box,.print-doc .warn-box,.print-doc .pro-tip,.print-doc .ref-box,.print-doc .path-box,.print-doc .tbl-wrap,.print-doc .diagram-box,.print-doc .code-block,.print-doc .dothis,.print-doc .flow-horizontal{break-inside:avoid;page-break-inside:avoid;box-shadow:none !important}
+  .print-doc .info-box,.print-doc .warn-box,.print-doc .pro-tip,.print-doc .ref-box,.print-doc .path-box,.print-doc .dl-box,.print-doc .tbl-wrap,.print-doc .diagram-box,.print-doc .code-block,.print-doc .dothis,.print-doc .flow-horizontal{break-inside:avoid;page-break-inside:avoid;box-shadow:none !important}
+  /* A download link cannot be clicked off paper, so it prints as an address
+     somebody can type. Same reasoning as the ref-box rule below, but these
+     hrefs are root-relative, so the host has to be written in. */
+  .print-doc .dl-list a{display:block !important;background:transparent !important;border:none !important;padding:2px 0 !important}
+  .print-doc .dl-name{color:#ba2142 !important}
+  .print-doc .dl-list a[href]::after{content:" - amitdusane.com" attr(href);font-size:8pt;font-weight:400;color:#4b5563;word-break:break-all}
+  .print-doc .dl-meta{display:none !important}
   .print-doc a[href]{color:#ba2142;text-decoration:none}
   .print-doc .ref-box a[href]{color:#10b981}
   /* CMP-10. On paper a link is just coloured text, and the ref-box is the
@@ -1069,6 +1076,39 @@ body.world-learning .lcontent .ref-box li{margin-bottom:4px;font-size:var(--fs-s
 .ref-box a{color:var(--success);text-decoration:none}
 .ref-box a:hover{text-decoration:underline}
 
+/* ==========================================================================
+   .dl-box, 31 August 2026. The site's first downloadable asset.
+
+   Rule 1 of the rulebook allows a site-level component added once, wired
+   into the layout and recorded. This is the second, after .lupdated. It
+   exists because Module 19 is the one place where the artifact IS the
+   payload: a reader who leaves with a working SDR workbook has something no
+   amount of prose replaces.
+
+   It is deliberately NOT a tinted alert box. Every tinted box on this site
+   says something about the prose beside it -- warn, info, tip, and the
+   ref-box handing the reader to Adobe. This one hands the reader an object,
+   so it is built on the neutral card ground that .flow already uses, and
+   the accent appears only on the icon tile and the file names. Crimson was
+   available as a tint and rejected: .pro-tip already owns crimson, and two
+   crimson boxes on one page stop meaning two different things.
+
+   Both list rules are scoped through .lcontent because
+   `body.world-learning .lcontent li` is (0,2,2) and beats a bare `.dl-list
+   li` outright. Trap 7. The anchor is display:flex on a block li, which is
+   what lets the name and the meta line sit apart without a nested grid. */
+.dl-box{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:18px 20px;margin:var(--sp-xl) 0}
+.dl-title{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--text1);margin-bottom:10px;font-size:var(--fs-label)}
+.dl-ico{background-color:#ba2142;background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23ffffff%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M21%2015v4a2%202%200%200%201-2%202H5a2%202%200%200%201-2-2v-4%22%2F%3E%3Cpath%20d%3D%22M7%2010l5%205%205-5%22%2F%3E%3Cpath%20d%3D%22M12%2015V3%22%2F%3E%3C%2Fsvg%3E")}
+body.world-learning .lcontent .dl-box p{font-size:var(--fs-sm);color:var(--text2);margin:0 0 14px}
+.dl-list{list-style:none;margin:0;padding:0}
+body.world-learning .lcontent .dl-list li{margin:0 0 8px;font-size:var(--fs-sm)}
+body.world-learning .lcontent .dl-list li:last-child{margin-bottom:0}
+body.world-learning .lcontent .dl-list a{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;text-decoration:none;background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:11px 14px;transition:border-color .15s,background .15s}
+body.world-learning .lcontent .dl-list a:hover{border-color:var(--accent);background:var(--accent-light)}
+.dl-name{font-weight:600;color:var(--accent)}
+.dl-meta{color:var(--text3);font-size:var(--fs-meta);margin-left:auto}
+
 .path-box{background:rgba(167,139,250,.12);border:1px solid rgba(167,139,250,.35);border-radius:8px;padding:16px 18px;margin:var(--sp-lg) 0}
 .path-title{display:flex;align-items:center;gap:10px;font-weight:700;color:#534AB7;margin-bottom:10px;font-size:var(--fs-label)}
 .path-ico{flex:none;width:30px;height:30px;border-radius:7px;background:#534AB7 url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23ffffff%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M9%2011a3%203%200%201%200%206%200a3%203%200%200%200%20-6%200%22%2F%3E%3Cpath%20d%3D%22M17.657%2016.657l-4.243%204.243a2%202%200%200%201%20-2.827%200l-4.244%20-4.243a8%208%200%201%201%2011.314%200z%22%2F%3E%3C%2Fsvg%3E") center/17px no-repeat}
@@ -1097,7 +1137,7 @@ body.world-learning .lcontent .ref-box li{margin-bottom:4px;font-size:var(--fs-s
    Retires a documented trap with them: the warning emoji depended on the
    U+FE0F variation selector, and without it some platforms rendered a
    monochrome glyph. A tile has no such dependency. */
-.warn-ico,.info-ico,.tip-ico,.ref-ico{flex:none;width:30px;height:30px;border-radius:7px;background-repeat:no-repeat;background-position:center;background-size:17px}
+.warn-ico,.info-ico,.tip-ico,.ref-ico,.dl-ico{flex:none;width:30px;height:30px;border-radius:7px;background-repeat:no-repeat;background-position:center;background-size:17px}
 .warn-ico{background-color:#8a5700;background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23ffffff%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M10.36%203.59%202.26%2017.12A1.91%201.91%200%200%200%203.9%2020h16.2a1.91%201.91%200%200%200%201.64-2.88L13.63%203.6a1.91%201.91%200%200%200-3.27%200z%22%2F%3E%3Cpath%20d%3D%22M12%209v4%22%2F%3E%3Cpath%20d%3D%22M12%2017h.01%22%2F%3E%3C%2Fsvg%3E")}
 .info-ico{background-color:#1d4ed8;background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23ffffff%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2212%22%20r%3D%229%22%2F%3E%3Cpath%20d%3D%22M12%208h.01%22%2F%3E%3Cpath%20d%3D%22M11%2012h1v4h1%22%2F%3E%3C%2Fsvg%3E")}
 .tip-ico{background-color:#ba2142;background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23ffffff%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2210%22%20r%3D%225.2%22%2F%3E%3Cpath%20d%3D%22M9.8%2017h4.4%22%2F%3E%3Cpath%20d%3D%22M10.6%2019.6h2.8%22%2F%3E%3C%2Fsvg%3E")}
@@ -1110,7 +1150,9 @@ body.world-learning .lcontent .ref-box li{margin-bottom:4px;font-size:var(--fs-s
    carried the same dead rule since August: it measured 30px at 390 while
    the stylesheet claimed 26px. Trap 7, second form, in the wild. */
 @media(max-width:880px){
-  .path-ico,.warn-ico,.info-ico,.tip-ico,.ref-ico{width:26px;height:26px;background-size:15px}
+  .path-ico,.warn-ico,.info-ico,.tip-ico,.ref-ico,.dl-ico{width:26px;height:26px;background-size:15px}
+  .dl-box{padding:14px 15px}
+  body.world-learning .lcontent .dl-list a{padding:10px 12px}
   /* Table fitting moved to world-learning.js, which breaks long identifiers
      at their separators and only then steps the type down, per table and
      against a floor. This block briefly carried `overflow-wrap:anywhere`
