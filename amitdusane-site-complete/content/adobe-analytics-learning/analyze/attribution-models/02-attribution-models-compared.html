@@ -215,28 +215,24 @@ weight: 2
     <p class="dothis-end">There is nothing else to set up. The panel builds its own charts and cannot be edited afterwards, so treat it as a place to explore and rebuild it when you want something different. The table beside it is the version that lasts.</p>
 </div>
 
-<div class="shot-box shot-pending">
+<div class="shot-box">
     <div class="shot-title">The same channels ranked three different ways</div>
     <div class="shot-frame">
-        <p class="shot-brief">FILE     adobe-analytics-attribution-panel-model-comparison.webp
-SCREEN   Analysis Workspace &gt; Attribution panel, after Build
-STATE    A built Attribution panel with three models selected (first touch, last touch, participation), showing the comparison bar chart and the table beneath it, where the same rows carry clearly different values per model.
-INCLUDE  The model names as labels, and at least four dimension rows where the ranking differs between models. The participation column visibly totalling more, if it is in frame.
-EXCLUDE  Client channel names. The training account's own channel names are fine.
-WHY      The section argues that the gap between models is the finding. That is unconvincing in prose and obvious in a picture of one screen carrying three different values for the same rows.</p>
+        <img src="/img/adobe-analytics-attribution-panel-model-comparison.webp" width="1500" height="893" loading="lazy"
+             alt="A built Attribution panel. A summary tile on the left reads 125. Beside it a bar chart compares three models across four dimension items, with three coloured bars per item whose heights differ sharply. Beneath, a comparison table carries three column groups, each headed Last Touch, First Touch and Participation, all with Visitor and 30 Days. Reading across one row the values are 47 at 37.6 per cent, 2 at 1.6 per cent and 77 at 61.6 per cent. Another row reads 5 at 4 per cent, 108 at 86.4 per cent and 108 at 86.4 per cent. The metric names, dimension values and report suite name are blurred out.">
+        <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
     </div>
+    <div class="shot-note">Read one row across the three model columns rather than down any one of them. The last row goes from 5 under last touch to 108 under first touch, which is the same clicks and the same period, reordered by nothing but the rule. That gap is the finding, and no single column contains it.</div>
 </div>
 
-<div class="shot-box shot-pending">
+<div class="shot-box">
     <div class="shot-title">Which channels turned up in the same journeys</div>
     <div class="shot-frame">
-        <p class="shot-brief">FILE     adobe-analytics-attribution-overlap-diagram.webp
-SCREEN   Analysis Workspace &gt; Attribution panel &gt; Overlap diagram
-STATE    The Venn-style overlap diagram from a built Attribution panel, showing three top dimension items and where they intersect.
-INCLUDE  All three circles and the labelled intersections, with the item names readable.
-EXCLUDE  Panel chrome beyond what is needed to show this sits inside the panel.
-WHY      Overlap answers a question no ranked table can, and readers are unlikely to have seen it, because it only exists inside this panel.</p>
+        <img src="/img/adobe-analytics-attribution-overlap-diagram.webp" width="1500" height="454" loading="lazy"
+             alt="Two panels side by side. On the left, Channel overlap, described as the number of times a conversion was influenced by multiple channels. Three legend blocks sit above counts of 108, 125 and 125, and below them three circles drawn almost entirely on top of one another. On the right, Touchpoints per journey, a histogram of unique visitors against the number of touches, with bars at one, seven and twenty five or more. The legend text and the histogram axis label are blurred out.">
+        <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
     </div>
+    <div class="shot-note">The three circles sitting almost exactly on top of each other is the answer, not a rendering fault. These journeys touched the same channels nearly every time, which is why the counts are 108, 125 and 125 rather than three separate populations. A ranked list cannot show you that.</div>
 </div>
 
 <h3 class="subsec-title">Three shapes, and two rules underneath them</h3>

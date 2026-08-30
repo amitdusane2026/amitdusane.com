@@ -92,18 +92,6 @@ weight: 3
 
 <p>If None drops a lot as the window widens, the shorter window was hiding real journeys, and anything you concluded from it was based on part of the evidence. If None barely moves, the window was already long enough, and those sales are unattributable for some other reason. That is usually a gap in your implementation rather than a problem with the report.</p>
 
-<div class="shot-box shot-pending">
-    <div class="shot-title">The row most people delete before presenting</div>
-    <div class="shot-frame">
-        <p class="shot-brief">FILE     adobe-analytics-attribution-none-row.webp
-SCREEN   Analysis Workspace &gt; freeform table with an attributed metric column
-STATE    A freeform table breaking a channel or campaign dimension by an attributed conversion metric, sorted so the None row is visible with a large value beside it, ideally in the top few rows.
-INCLUDE  The None row with its number and percentage bar, at least four real dimension rows for comparison, and the column header showing the attributed metric name.
-EXCLUDE  Client channel names.
-WHY      Readers need to recognise this row in their own reports. Seeing a large None sitting among real channels makes the argument faster than a paragraph does.</p>
-    </div>
-</div>
-
 <h3 class="subsec-title">Measure your buying cycle, then set the window</h3>
 <p>The window is usually chosen in a meeting, based on how long people feel customers take to decide. It does not have to be. Adobe ships two dimensions that answer the question directly, and hardly anyone uses either.</p>
 
@@ -172,16 +160,14 @@ WHY      Readers need to recognise this row in their own reports. Seeing a large
     <p class="dothis-end">There is nothing else to set up. One dimension for the cycle, three columns that differ only by window, and one row read across them. You end up with a window you chose from evidence, which is also the one that survives being questioned.</p>
 </div>
 
-<div class="shot-box shot-pending">
+<div class="shot-box">
     <div class="shot-title">Every window on offer, including the one that looks unlimited</div>
     <div class="shot-frame">
-        <p class="shot-brief">FILE     adobe-analytics-attribution-lookback-window-options.webp
-SCREEN   Analysis Workspace &gt; Column settings, with the Lookback window drop-down open
-STATE    The lookback window drop-down expanded, showing Reporting window, 14 days, 30 days, 60 days, 90 days and Custom Time. The Container set to Visitor should be visible above it.
-INCLUDE  The full open list, and the Container setting above it in the same frame so the relationship between the two is clear.
-EXCLUDE  Nothing sensitive appears here. Crop tightly to the setting rather than the whole screen.
-WHY      Two of the section's points are about this one control: Custom Time looks unlimited and stops at 90 days, and the container directly above it can cancel everything below. Showing them together is the point of the crop.</p>
+        <img src="/img/adobe-analytics-attribution-lookback-window-options.webp" width="1500" height="889" loading="lazy"
+             alt="The Column attribution model dialog with the Lookback window drop-down open. The list reads Reporting window, 14 Days, 30 Days with a tick beside it, 60 Days, 90 Days, and Custom Time. Above the open list sit the Model control set to First Touch and the Container control set to Visitors. Behind the dialog a freeform table is visible with its metric name and dimension values blurred out.">
+        <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
     </div>
+    <div class="shot-note">Custom Time at the bottom is the one that misleads. It accepts minutes, hours, days, weeks, months and quarters, so the list reads as though the window has no ceiling. It stops at 90 days whatever you enter. Note also the Container directly above: set that to Visit and everything in this open list stops applying.</div>
 </div>
 
 <h3 class="subsec-title">The window decides what exists</h3>

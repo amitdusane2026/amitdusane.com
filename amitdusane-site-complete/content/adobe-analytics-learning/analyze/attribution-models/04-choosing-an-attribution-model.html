@@ -168,16 +168,14 @@ weight: 4
     <p class="dothis-end">There is nothing else to set up. Four metrics, one project, one annotation. Everything beyond this is investigation, and investigation can use any model it likes as long as it says which one.</p>
 </div>
 
-<div class="shot-box shot-pending">
-    <div class="shot-title">A metric that carries its own rule in its name</div>
+<div class="shot-box">
+    <div class="shot-title">Attribution is set on the metric inside the definition</div>
     <div class="shot-frame">
-        <p class="shot-brief">FILE     adobe-analytics-calculated-metric-attribution-settings.webp
-SCREEN   Analytics &gt; Components &gt; Calculated metrics &gt; builder, with attribution set on a metric in the definition
-STATE    The builder with a success metric in the definition canvas and its attribution settings open, showing model, container and lookback window. The title field should read something like "Orders, U-shaped, 60 day, Visitor" and the description should be filled in.
-INCLUDE  The title and description fields plus the three attribution settings, in one frame, with the metric visible in the definition canvas.
-EXCLUDE  Client metric names in the left-hand component list.
-WHY      The section's practical point is that the name and description are where a decision survives its author. Showing a properly named metric makes that concrete, and it is the one screen a reader can copy directly.</p>
+        <img src="/img/adobe-analytics-calculated-metric-attribution-settings.webp" width="1500" height="672" loading="lazy"
+             alt="The calculated metric builder. Format is set to Percent with one decimal place. The definition canvas holds two metrics with a division operator between them, each with a gear icon beside it. Over the top sits the Column attribution model dialog, showing Model set to Last Touch, Container set to Visitors and Lookback window set to 30 Days. On the right, Metric type is set to Standard, and under Attribution the box Use non-default attribution model is ticked, with Last Touch, Visitor and 30 Days shown beneath it next to an Edit link. The metric names in the summary and the definition are blurred out.">
+        <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
     </div>
+    <div class="shot-note">The gear sits on the metric inside the definition, not on the calculated metric as a whole. That is the trap: attribution here belongs to each component of the formula, so a metric built by somebody else can carry a model you cannot see from the column header, and changing it means opening the definition.</div>
 </div>
 
 <h3 class="subsec-title">Consistency beats a perfect model</h3>

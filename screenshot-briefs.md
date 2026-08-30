@@ -366,3 +366,52 @@ Save as PNG, archive the original under the same name in `screenshot-originals/`
 outside the site folder, then convert into `static/img/` as lossless WebP. The
 file names above are final and already referenced in the content, so they must
 not change.
+
+---
+
+## M15 capture, 30 Aug 2026 — 5 of 6 shipped
+
+Amit captured and supplied five of the six M15 shots. All five are blurred,
+archived and live in the sections.
+
+| # | File | Status |
+|---|---|---|
+| 33 | `adobe-analytics-attribution-column-settings` | shipped |
+| 34 | `adobe-analytics-attribution-panel-model-comparison` | shipped |
+| 35 | `adobe-analytics-attribution-overlap-diagram` | shipped |
+| 36 | `adobe-analytics-attribution-none-row` | **not captured, placeholder removed** |
+| 37 | `adobe-analytics-attribution-lookback-window-options` | shipped |
+| 38 | `adobe-analytics-calculated-metric-attribution-settings` | shipped |
+
+**Shot 36 could not be reproduced.** It needed a report suite whose data
+produces a visibly large None row, and the training account did not have it. The
+`shot-pending` block has been removed from M15 §3 rather than left in the file,
+because a placeholder cannot ship and it would block the merge to `main`. The
+section's prose on the None row is unaffected and stands on its own. If a suitable
+report suite turns up later, the brief above is recoverable from git history.
+
+**Shot 38 differs from its brief and the note was rewritten to match.** The brief
+asked for the title and description fields filled in, to make the naming argument.
+The capture shows the definition canvas and the attribution dialog instead, which
+carries a better point: the gear sits on the metric *inside* the definition, so a
+model can be buried where no column header reveals it. The note now says that.
+
+### Blurring applied
+
+Report suite name, metric names and dimension values in all five, at Amit's
+instruction, even though the training account values are generic. Regions were
+identified by reading each image, blurred with ImageMagick at `-blur 0x18`, and
+each result was re-read to confirm before conversion.
+
+**What was deliberately left sharp**, because it is the teaching content: model
+names, the Model / Container / Lookback window controls, the open lookback list,
+the numbers and percentages in the comparison table, the overlap counts, and the
+"Use non-default attribution model" tick box.
+
+**One thing to know for the next capture.** The chart axis labels in the
+Attribution panel are dimension values too, and they sit well away from the table.
+They were missed on the first pass and caught on review. Check axis labels, not
+just table cells.
+
+**Archived originals are the blurred versions**, matching the existing convention
+in `screenshot-originals/`, which is tracked in git. Raw captures are not kept.
