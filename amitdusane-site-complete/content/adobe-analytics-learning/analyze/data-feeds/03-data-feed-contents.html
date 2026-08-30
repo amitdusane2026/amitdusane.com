@@ -147,18 +147,6 @@ weight: 3
     <p class="dothis-end">There is nothing to configure. A header file, one row, and three lookups. Doing it once makes every column reference afterwards obvious rather than abstract.</p>
 </div>
 
-<div class="shot-box shot-pending">
-    <div class="shot-title">A raw column and its post_ column on the same hit</div>
-    <div class="shot-frame">
-        <p class="shot-brief">FILE     adobe-analytics-data-feed-post-columns.webp
-SCREEN   A data feed hit_data.tsv row displayed with its column names, in a text editor, terminal or spreadsheet
-STATE    One hit shown as name and value pairs, cropped to a handful of columns that includes at least one eVar where the raw column is empty or different and the post_ column carries a value.
-INCLUDE  The raw column and its post_ counterpart adjacent or clearly labelled, plus hit_time_gmt and the visitor ID columns for context.
-EXCLUDE  Real visitor IDs and any values identifying a customer. Use the training account, and blur nothing; choose a row with harmless values instead.
-WHY      The gap between a raw column and a post_ column is the section's central idea and the best debugging tool in the product. Seeing it on one real row makes the point instantly; describing it in prose does not.</p>
-    </div>
-</div>
-
 <h3 class="subsec-title">The raw row is the source of truth</h3>
 <p>A delivery is three things: the hit data with one row per server call, the lookup tables that decode its numeric columns, and a manifest that arrives last and tells you the transfer completed. Trigger on the manifest, never on the data file.</p>
 

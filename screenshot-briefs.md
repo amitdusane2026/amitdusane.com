@@ -478,3 +478,38 @@ stripped as well.
 filesystem rather than from the file. They are not embedded metadata and they
 reappear on any copy. Scan the bytes for chunk names instead of trusting that
 output.
+
+---
+
+## M17 closed without its second shot, 30 Aug 2026
+
+Amit's decision: no further Data Feeds screenshots are coming. The remaining
+placeholder has been removed and the module is closed at one shot.
+
+| # | File | Status |
+|---|---|---|
+| 42 | `adobe-analytics-data-feed-column-selection` | shipped |
+| 43 | `adobe-analytics-data-feed-post-columns` | **dropped, not captured** |
+
+Shot 43 was always the hardest brief on the site. It is not an Adobe screen: it
+needed a delivered `hit_data.tsv`, a row where a raw column and its `post_`
+counterpart visibly differ, and values harmless enough to publish. That is a lot
+of preconditions for one picture.
+
+**The section does not suffer for it.** M17 §3 already carries the `post_` figure,
+which draws the raw column, the processing band and the post column as one
+movement, and that teaches the idea better than a screenshot of a text file
+would have. The prose was checked after removal: nothing refers to a missing
+image.
+
+### Running total after this
+
+Three placeholders have now been dropped for the same underlying reason, that the
+training account cannot produce the data the shot needs:
+
+- `adobe-analytics-attribution-none-row` (M15 §3), needs a large None row
+- `adobe-analytics-low-traffic-row` (M16 §1), needs a large Low Traffic row
+- `adobe-analytics-data-feed-post-columns` (M17 §3), needs a delivered feed file
+
+All three briefs remain recoverable from git history if a suitable account ever
+turns up. **Two placeholders remain, both in Activity Map.**
