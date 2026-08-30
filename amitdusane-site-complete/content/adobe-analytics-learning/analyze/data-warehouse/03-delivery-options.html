@@ -149,16 +149,14 @@ weight: 3
     <p class="dothis-end">There is nothing else to set up. Destination, three report options, a schedule and a shared notification address. Everything past this is deciding whether a Data Warehouse request was the right tool at all.</p>
 </div>
 
-<div class="shot-box shot-pending">
+<div class="shot-box">
     <div class="shot-title">The three switches that keep a pipeline honest</div>
     <div class="shot-frame">
-        <p class="shot-brief">FILE     adobe-analytics-data-warehouse-report-options.webp
-SCREEN   Analytics &gt; Tools &gt; Data Warehouse &gt; request &gt; Report options tab
-STATE    The Report options tab with a file name filled in, "Append report date range to file name" ticked, "Send a manifest file" ticked, and "Send an empty file when there is no data" ticked.
-INCLUDE  The file name field and all three ticked options in one frame, plus the file format choice if it fits.
-EXCLUDE  Client naming conventions in the file name field; use a generic descriptive name.
-WHY      The section argues these three settings decide whether automation works. They are visually unremarkable tick boxes buried in a formatting tab, which is exactly why they get skipped, so showing where they sit is the point.</p>
+        <img src="/img/adobe-analytics-data-warehouse-report-options.webp" width="1500" height="872" loading="lazy"
+             alt="The Report options tab of a Data Warehouse request. A File name field reads Report. Append report date range to file name is switched on. Report format offers CSV, selected, or Tableau TDE, and Send report as compressed file is off. Under Report contents, Return all rows is on and the report comments box is empty. Under Additional options, Sort by metrics is off, Send a manifest file is on, Send a digital signature file is off, and Send an empty file when there is no data is on. The report suite selector on the left is blurred out.">
+        <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
     </div>
+    <div class="shot-note">Three of these toggles decide whether a machine can use the delivery: append the date range, send a manifest, send an empty file. They sit among formatting options that look equally important and are not, which is exactly why they get skipped. Note the comments box left empty, which is right for anything automated.</div>
 </div>
 
 <h3 class="subsec-title">A file nobody collects is not a report</h3>

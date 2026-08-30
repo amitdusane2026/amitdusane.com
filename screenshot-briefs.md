@@ -415,3 +415,66 @@ just table cells.
 
 **Archived originals are the blurred versions**, matching the existing convention
 in `screenshot-originals/`, which is tracked in git. Raw captures are not kept.
+
+---
+
+## M16 and M17 partial capture, 30 Aug 2026
+
+Amit supplied two Data Warehouse shots and one Data Feeds shot, already blurred
+by him. All three are live.
+
+| # | File | Status |
+|---|---|---|
+| 39 | `adobe-analytics-low-traffic-row` | **not captured, placeholder removed** |
+| 40 | `adobe-analytics-data-warehouse-build-report` | shipped |
+| 41 | `adobe-analytics-data-warehouse-report-options` | shipped |
+| 42 | `adobe-analytics-data-feed-column-selection` | shipped |
+
+**No extra blurring was needed and none was applied.** Amit had already blurred
+the report suite selector and the segment name in all three. Everything else
+visible is Adobe's own out-of-the-box component naming: Page Views, Cart
+Additions, Checkouts, Mobile Device Type, Browser, Page, and feed column names
+like `accept_language` and `browser_height`. Those strings are identical in every
+Adobe implementation and carry no trace of any account. Blurring them would have
+destroyed the point of each shot: the breakdown indent in 40, the three toggles
+in 41, and the 1187-against-2 column ratio in 42.
+
+**Shot 39 could not be reproduced**, same reason as the M15 None row shot: it
+needs a report suite whose data yields a visibly large Low Traffic row. Its
+placeholder is removed. The prose in M16 §1 is unaffected.
+
+**Shot 42 differs from its brief and its note was rewritten.** The brief asked
+for `post_` columns among the selected list. The capture shows `browser` and
+`browser_height` instead, but it does show the template controls, which is the
+part the section actually argues about, so the note leads on the 1187 to 2 ratio
+and on Save as template.
+
+### Metadata, from Amit's instruction on 30 Aug 2026
+
+**Every published image and every archived original is now metadata-free**, and
+this is now the standing rule.
+
+The audit found something worth recording. Amit's own captures were clean. The
+contamination came from **my own ImageMagick blur step**: writing a PNG makes
+ImageMagick add a `tEXt` chunk holding `date:create` and `date:timestamp`, plus a
+`tIME` chunk. `-strip` removes the `tEXt` but **ImageMagick writes a fresh `tIME`
+on every PNG write**, so `-strip` alone is not enough.
+
+The working recipe, for any PNG written from now on:
+
+```
+magick IN.png -strip -define png:exclude-chunk=tEXt,zTXt,iTXt,tIME,eXIf,date OUT.png
+```
+
+WebP output takes `-strip` and comes out clean.
+
+Verified across the whole library: 51 published WebP files carry no EXIF, XMP or
+ICC, and 51 archived PNGs carry no `tEXt`, `iTXt`, `zTXt`, `eXIf` or `tIME`. Four
+older archived originals from earlier sessions were carrying chunks and have been
+stripped as well.
+
+**Note the `date:create` trap when auditing.** `magick identify -verbose` prints
+`date:create` and `date:modify` for every file, and those are read from the
+filesystem rather than from the file. They are not embedded metadata and they
+reappear on any copy. Scan the bytes for chunk names instead of trusting that
+output.

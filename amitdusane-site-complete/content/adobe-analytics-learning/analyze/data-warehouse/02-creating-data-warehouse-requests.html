@@ -161,16 +161,14 @@ weight: 2
     <p class="dothis-end">There is nothing else to configure on the reporting side. A date range, some metrics, one or two dimensions, and a segment. Everything after this is about where the file goes and how often, which is the next section.</p>
 </div>
 
-<div class="shot-box shot-pending">
+<div class="shot-box">
     <div class="shot-title">The tab where the table is actually decided</div>
     <div class="shot-frame">
-        <p class="shot-brief">FILE     adobe-analytics-data-warehouse-build-report.webp
-SCREEN   Analytics &gt; Tools &gt; Data Warehouse &gt; Add &gt; Build your report tab
-STATE    The Build your report tab with at least two metrics added, one dimension with a breakdown beneath it, and a segment applied, so the nesting is visible.
-INCLUDE  The metrics area, the dimension with its breakdown showing the indent, the segment area, and the six tab names down the side or across the top so a reader can see where they are in the form.
-EXCLUDE  Client report suite names and any client dimension values.
-WHY      This is the one screen where the shape of the file is decided, and the breakdown indent is the thing that multiplies rows. Readers need to recognise it before they build their first request.</p>
+        <img src="/img/adobe-analytics-data-warehouse-build-report.webp" width="1500" height="669" loading="lazy"
+             alt="The New Data Warehouse request form, on the Build your report tab. The six tabs run across the top: General settings, Build your report, Report destination, Report options, Scheduling options and Notification email. A components rail on the left lists dimensions and metrics. In the report area a segment chip sits at the top, then three metrics side by side as columns: Page Views, Cart Additions and Checkouts. Below them three dimensions are stacked with increasing indentation: Mobile Device Type, then Browser, then Page. The report suite selector and the segment name are blurred out.">
+        <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
     </div>
+    <div class="shot-note">Look at the indentation on the three dimensions rather than the metrics. Each step in means another breakdown, and every one of them multiplies the row count. Three metrics side by side cost you three columns. Three dimensions stacked like this is where a file becomes unusable.</div>
 </div>
 
 <h3 class="subsec-title">Say what one row is, then build</h3>
