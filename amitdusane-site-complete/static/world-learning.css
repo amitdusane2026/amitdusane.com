@@ -1120,12 +1120,19 @@ body.world-learning .lcontent p.mdocs-strip{font-size:var(--fs-meta); line-heigh
   font-size:var(--fs-micro); font-weight:700; letter-spacing:.04em; color:var(--text1);
 }
 .mdocs-card ul{list-style:none; margin:0; padding:0}
-.mdocs-card li{margin:0}
-.mdocs-card a{
-  display:block; padding:4px 0; text-decoration:none;
-  font-size:var(--fs-meta); font-weight:600; color:var(--accent); line-height:1.3;
+/* The card lives inside .wf-rail, so `.wf-rail li` and `.wf-rail a::before`
+   both reach it and it arrived numbered 01 to 05 like a heading list. Those
+   numbers belong to the spine, where they mean position on the page; on a
+   list of five files they mean nothing and cost a third of the card's width.
+   Scoped through .wf-rail so this beats the spine rules on specificity rather
+   than on source order, which is the trap two doors down. */
+.wf-rail .mdocs-card li{margin:0; counter-increment:none}
+.wf-rail .mdocs-card a{
+  display:block; gap:0; padding:4px 0; text-decoration:none;
+  font-size:var(--fs-meta); font-weight:600; color:var(--accent); line-height:1.35;
 }
-.mdocs-card a:hover{text-decoration:underline}
+.wf-rail .mdocs-card a::before{content:none; display:none}
+.wf-rail .mdocs-card a:hover{color:var(--accent); background:none; text-decoration:underline}
 
 /* ==========================================================================
    .dl-box, 31 August 2026. The site's first downloadable asset.
