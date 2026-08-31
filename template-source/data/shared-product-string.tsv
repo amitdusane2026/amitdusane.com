@@ -1,0 +1,17 @@
+#TAB	blue
+#TITLE	Product String - defined once, because eleven solutions depend on it
+#WIDTHS	10	26	22	30	38	46
+#FREEZE	6
+#FILLS	orange	orange	orange	orange	orange	orange
+#COMMENTS	The position in the semicolon separated string. Position is fixed. An empty position still needs its semicolon.	What sits in this position.	The variable or event that carries it.	Where the value comes from.	A real value.	What goes wrong when this position is filled in badly.
+Position	Element	Carried by	Source	Example	What breaks if this is wrong
+1	Category	Product category	digitalData.product[].category	Furniture	Adobe treats this as a separate reporting dimension. Leaving it empty is allowed. Filling it inconsistently is not, because the same product then appears under two categories.
+2	Product ID	products	digitalData.product[].id	KES-SOF-ALD-3S	This is the product identity for the life of the report suite. Send the SKU the business uses, never the display name, and never a name that changes when marketing rewrites it.
+3	Quantity	products	digitalData.product[].quantity	1	Quantity is what is being added or bought in this event, not what is in the cart. Sending the cart total on every add is the most common way a Units figure ends up three times too high.
+4	Price	products	digitalData.product[].price	899.00	Total price for the line, meaning unit price multiplied by quantity, before discount. Not the unit price when quantity is more than one.
+5	Events	event4, event5	digitalData.product[].discount	event4=120.00	Numeric and currency events bound to this product. Separated by a pipe when there is more than one. This is the only way a discount can be reported per product.
+6	Merchandising eVars	eVar12, eVar13, eVar14, eVar15	digitalData.product[].colour, .material, .stockStatus, .findingMethod	eVar12=Charcoal|eVar13=Velvet	Bound to the product, so they survive to the order. Set as product syntax merchandising in the report suite, never as a plain eVar, or the binding never happens.
+
+	Full example, one product	KES-S012 order confirmation	Furniture;KES-SOF-ALD-3S;1;899.00;event4=120.00;eVar12=Charcoal|eVar13=Velvet
+	Full example, two products	Comma separates products	Furniture;KES-SOF-ALD-3S;1;899.00;event4=120.00;eVar12=Charcoal,Kitchen;KES-KIT-BRD-01;2;58.00;;eVar12=Oak
+	Empty positions	A missing element still holds its place	Furniture;KES-SOF-ALD-3S;1;899.00;;eVar12=Charcoal

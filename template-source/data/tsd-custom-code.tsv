@@ -1,0 +1,11 @@
+#TAB	green
+#TITLE	Custom code - the four places this implementation needs code rather than configuration
+#WIDTHS	14	26	26	100
+#FREEZE	4
+#FILLS	green	green	green	green
+#COMMENTS	The solution this code belongs to.	Where the code lives.	When it runs.	The code, and the reason it exists. A reader who cannot see the reason will delete it during the next clean up.
+Solution ID	Where	When	What it does and why
+KES-S012	Purchase rule, custom code action	Before the Analytics call	Guards against a repeated order. The payment gateway can return the customer to the confirmation view more than once, and each return would send another purchase. Set a flag in session storage keyed on the order ID, check it before sending, and stop the rule when the flag is already there. Without this, refreshing the confirmation page doubles the order.
+KES-S008	Cart view rule, custom code action	Building the product string	Joins the cart array into a product string. One entry per product, comma separated, in the order the cart shows them. A single entry holding several IDs reports as one product that does not exist in the catalogue, which is the most common product string fault and it looks like a data problem rather than a code problem.
+KES-S015	Internal search rule, condition	Deciding whether a search was null	Sets the null search event only when the result count is exactly zero. A count that arrives as an empty string, or as the text "0", or as undefined, is not zero, and each of the three fails differently. Compare against a number after an explicit conversion.
+KES-S001	Analytics extension, custom code	On every hit	Loads the four plugins and sets the three plugin driven variables. It runs before every rule, so a fault here is a fault on every hit rather than on one page.

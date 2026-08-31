@@ -13,6 +13,7 @@ Adobe Analytics/                     <- working directory, supporting docs live 
 ├── design-plan.html                 <- CLOSED record of design decisions, not a work queue
 ├── diagram-spec.html                <- the drawing standard, and the redraw programme
 ├── diagram-check.js                 <- the per-figure pass, automated. Paste once, call per page
+├── template-source/                 <- the source the five downloadable workbooks are BUILT from
 └── amitdusane-site-complete/        <- the Hugo site, website files ONLY
 ```
 
@@ -60,6 +61,7 @@ So whenever something written here is made wrong, narrower, or redundant by a la
 | `completion-tracker.tsv` | Which pages are written, QA'd, SEO-complete | Deciding what to work on |
 | `site-architecture.md` | The four section shapes, what carries between them, world mechanics, the roadmap, hosting at scale | Starting a new section, designing a new world, or deciding what a section inherits |
 | `development-plan.md` | Phases, status, what is next | Deciding what to work on |
+| `template-source/README.md` | How the five downloadable workbooks are built, and how the M19 screenshots are captured | Changing anything in a template, or reshooting a spreadsheet |
 
 **Read the relevant one; do not work from memory or from this summary.**
 

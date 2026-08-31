@@ -1,0 +1,27 @@
+KES-S001	STD, KES-R027, KES-R036	Global variables	Every page load on the website	pageName	Page		digitalData.page.pageInfo.pageName	Page Load	Global Page Load	Page bottom	Page Name	Populate these objects in the page head, before the tag manager library loads. The library reads them as the page load rule fires, so an object that arrives later arrives too late and the value goes out empty. Objects required on every page: digitalData.page.pageInfo.pageName, .pageType, .siteSection, .categoryL1, .categoryL2, .categoryL3, digitalData.user.loginStatus, digitalData.user.customerId, digitalData.user.ecid.		
+				eVar1	Page Name	Home, Sofas and Armchairs, Product - Aldwych 3 Seat Sofa	digitalData.page.pageInfo.pageName				Page Name			
+				prop1	Page Name	Same value as eVar1. Traffic reporting and pathing.	digitalData.page.pageInfo.pageName				Page Name			
+				prop2	Page URL	Full URL including protocol and host	window.location.href				Page URL			
+				eVar2	Page URL	Full URL including protocol and host	window.location.href				Page URL			
+				channel	Site Section	Home, Furniture, Kitchen, Bedding, Help, Account	digitalData.page.pageInfo.siteSection				Site Section			
+				prop3	Page Type	Home, Listing, Product, Cart, Checkout, Account, Content, Error	digitalData.page.pageInfo.pageType				Page Type			
+				prop4	Previous Page	Set by plugin, not by the data layer	s.getPreviousValue(s.pageName,'gpv_pn')				Not applicable			
+				eVar3	Product Category L1	Furniture	digitalData.page.pageInfo.categoryL1				Category L1			
+				eVar4	Product Category L2	Sofas and Armchairs	digitalData.page.pageInfo.categoryL2				Category L2			
+				eVar5	Product Category L3	3 Seat Sofas	digitalData.page.pageInfo.categoryL3				Category L3			
+				eVar6	Experience Cloud ID	Set by the identity service, not by the site	s.getVisitorID				Not applicable			
+				eVar7	Customer ID	SHA-256 of the account email, lower case, trimmed. Never the raw address.	digitalData.user.customerId				Customer ID	Hash on the server. The raw email address must never reach the data layer.		
+				eVar8	Login Status	Signed In, Anonymous	digitalData.user.loginStatus				Login Status			
+				eVar9	Platform	Website	Set as a constant in the tag manager				Not applicable			
+				eVar10	New or Repeat Visitor	New, Repeat	s.getNewRepeat(30)				Not applicable			
+				eVar11	Time Parting	Day of week, hour of day, in Europe/London	s.getTimeParting('Europe/London')				Not applicable			
+				campaign	Campaign Code	Only populated when the landing URL carries cid	Query string parameter cid				Campaign Code			
+				event1	Page View	Counts once per page load	Fires on every page load rule				Not applicable			
+				event2 (n)	Page Load Time	Milliseconds, from the performance timing API	s._pltLoadTime				Not applicable			
+				event3 (n)	Performance Instances	Set to 1 whenever a timing was captured, so an average can be built	Set to 1 alongside event2				Not applicable			
+KES-S002	STD	Global variables	Every virtual page load on the website, where the cart and checkout change the view without loading a page	pageName	Page		digitalData.page.pageInfo.pageName	Direct Call	Virtual Page Load	virtual_page_load	Page Name	The cart and checkout are built as a single page application, so the browser loads a page once and then changes the view. The page load rule cannot see those changes. Update the page objects first, then call _satellite.track('virtual_page_load'). Do not fire this on the first load, because the page load rule has already covered it.		
+				eVar1	Page Name	Checkout - Delivery, Checkout - Payment	digitalData.page.pageInfo.pageName				Page Name			
+				prop1	Page Name	Same value as eVar1	digitalData.page.pageInfo.pageName				Page Name			
+				prop3	Page Type	Checkout	digitalData.page.pageInfo.pageType				Page Type			
+				eVar8	Login Status	Signed In, Anonymous	digitalData.user.loginStatus				Login Status			
+				event1	Page View	Counts once per virtual page load	Fires on the direct call				Not applicable			

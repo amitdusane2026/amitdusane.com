@@ -1,0 +1,56 @@
+KES-S003	KES-R001	Product listing	A product is clicked on a listing page	pageName	Page		digitalData.page.pageInfo.pageName	Direct Call	Product Click	product_click	Page Name	Update the product objects for the clicked product, then call _satellite.track('product_click'). Populate the product objects first. A direct call fired before the objects are set will send an empty product.	digitalData.product[].id, .category, .colour, .material, .stockStatus	
+				eVar16	Listing Type	Category Listing, Search Results, Room Set, Recently Viewed	digitalData.page.listingType				Listing Type			
+				products	Product	Category and product ID only. No price on a click.	digitalData.product[]				Product String			
+				eVar12 (M)	Product Colour	Charcoal, Oatmeal, Sage	digitalData.product[].colour				Product Colour			
+				event12	Product Clicks	Counts once per click	Fires on the direct call				Not applicable			
+KES-S004	KES-R002	Product detail	A product detail page is viewed	pageName	Page		digitalData.page.pageInfo.pageName	Direct Call	Product View	product_view	Page Name	The product page is server rendered but the product objects are filled by a later script, so the page load rule can fire before they exist. Set the product objects, then call _satellite.track('product_view').	digitalData.product[].id, .category, .price, .colour, .material, .stockStatus	
+				eVar15 (M)	Product Finding Method	Search, Category Listing, Room Set, Recommendation, External	digitalData.product[].findingMethod				Finding Method			
+				products	Product	Full product string including price	digitalData.product[]				Product String			
+				eVar13 (M)	Product Material	Linen, Velvet, Oak, Stainless Steel	digitalData.product[].material				Product Material			
+				eVar14 (M)	Product Stock Status	In Stock, Out of Stock, Made to Order	digitalData.product[].stockStatus				Product Stock Status			
+				prodView	Product Views	Adobe reserved event. Counts a product detail view.	Fires on the direct call				Not applicable			
+KES-S005	KES-R003	Cart	A product is added to the cart from the product page	pageName	Page		digitalData.page.pageInfo.pageName	Direct Call	Cart Add	cart_add	Page Name	Set the cart source to Product Page, update the product objects with the chosen colour and quantity, then call _satellite.track('cart_add'). Quantity is the quantity being added, not the quantity now in the cart.	digitalData.product[].id, .category, .price, .quantity, .colour, .material	
+				eVar17	Cart Addition Source	Product Page, Quick View, Room Set, Wishlist, Reorder	digitalData.cart.source				Cart Source			
+				products	Product	Includes quantity and price	digitalData.product[]				Product String			
+				scAdd	Cart Additions	Adobe reserved event	Fires on the direct call				Not applicable			
+KES-S006	KES-R003	Product listing	A product is added to the cart from the quick view overlay, without leaving the listing	pageName	Page		digitalData.page.pageInfo.pageName	Direct Call	Cart Add	cart_add	Page Name	The same rule serves this solution. Set the cart source to Quick View, update the product objects, then call _satellite.track('cart_add'). The overlay does not change the page, so the page objects stay as they are.	digitalData.product[].id, .category, .price, .quantity, .colour, .material	
+				eVar17	Cart Addition Source	Quick View	digitalData.cart.source				Cart Source			
+				products	Product	Includes quantity and price	digitalData.product[]				Product String			
+				scAdd	Cart Additions	Adobe reserved event	Fires on the direct call				Not applicable			
+KES-S007	KES-R004	Cart	A product is removed from the cart	pageName	Page		digitalData.page.pageInfo.pageName	Direct Call	Cart Remove	cart_remove	Page Name	Update the product objects to hold only the product being removed, then call _satellite.track('cart_remove'). Do not send the whole cart.	digitalData.product[].id, .category, .price, .quantity	
+				products	Product	The removed product only	digitalData.product[]				Product String			
+				scRemove	Cart Removals	Adobe reserved event	Fires on the direct call				Not applicable			
+KES-S008	KES-R005	Cart	The cart page is viewed	pageName	Page		digitalData.page.pageInfo.pageName	Direct Call	Cart View	cart_view	Page Name	Populate the product objects with every product in the cart as an array, then call _satellite.track('cart_view'). Each product needs its own entry. One entry holding several IDs will report as a single product that does not exist.	digitalData.product[] as an array, one entry per product	
+				products	Product	Every product in the cart, comma separated	digitalData.product[]				Product String			
+				event4 (M n)	Discount Value	Currency. The discount carried by each product.	digitalData.product[].discount				Product Discount			
+				scView	Cart Views	Adobe reserved event	Fires on the direct call				Not applicable			
+KES-S009	KES-R006	Checkout	The checkout is started	pageName	Page		digitalData.page.pageInfo.pageName	Direct Call	Checkout Start	checkout_start	Page Name	Fire when the customer leaves the cart for the first checkout step. Carry the full cart. Fire it once, on the transition. Firing it again when the customer moves back and forward through the steps will inflate the checkout count.	digitalData.product[] as an array, one entry per product	
+				products	Product	Every product in the cart	digitalData.product[]				Product String			
+				scCheckout	Checkouts	Adobe reserved event	Fires on the direct call				Not applicable			
+KES-S010	KES-R007, KES-R012	Checkout	The delivery step is completed, and the delivery option is known	pageName	Page		digitalData.page.pageInfo.pageName	Direct Call	Checkout Delivery	checkout_delivery	Page Name	Fire when the customer confirms the delivery step and moves to payment. Set the delivery option before the call. When the option is showroom collection, also set the showroom.	digitalData.product[] as an array, one entry per product	
+				eVar18	Delivery Option	Standard, Express, Named Day, Showroom Collection	digitalData.checkout.deliveryOption				Delivery Option			
+				eVar32	Showroom	Only when the option is Showroom Collection	digitalData.checkout.showroom				Showroom			
+				products	Product	Every product in the cart	digitalData.product[]				Product String			
+				event5 (n)	Delivery Charge	Currency. Zero is a real value and must be sent as zero.	digitalData.checkout.deliveryCharge				Delivery Charge			
+				event7	Delivery Step Completions	Counts once per completion	Fires on the direct call				Not applicable			
+KES-S011	KES-R008	Checkout	The payment step is completed, and the payment method is known	pageName	Page		digitalData.page.pageInfo.pageName	Direct Call	Checkout Payment	checkout_payment	Page Name	Fire when the customer confirms the payment method, before the gateway takes over. This is the last event the site controls, so anything the order needs and the gateway will not return has to be set here.	digitalData.product[] as an array, one entry per product	
+				eVar19	Payment Method	Card, PayPal, Klarna, Gift Card, Finance	digitalData.checkout.paymentMethod				Payment Method			
+				products	Product	Every product in the cart	digitalData.product[]				Product String			
+				event8	Payment Step Completions	Counts once per completion	Fires on the direct call				Not applicable			
+KES-S012	KES-R009, KES-R032, KES-R034	Order	An order is completed	pageName	Page		digitalData.page.pageInfo.pageName	Direct Call	Purchase	purchase	Page Name	Fire once, on the order confirmation view, and only when the order object holds an order ID. The gateway can return the customer to this view more than once, so guard the call on a flag that is set the first time and checked before firing.	digitalData.product[] as an array, one entry per product	Guard against a repeated order. See the Custom Code sheet.
+				eVar20	Order ID	The order number shown to the customer	digitalData.transaction.orderId				Order ID			
+				eVar19	Payment Method	Card, PayPal, Klarna, Gift Card, Finance	digitalData.checkout.paymentMethod				Payment Method			
+				eVar18	Delivery Option	Standard, Express, Named Day, Showroom Collection	digitalData.checkout.deliveryOption				Delivery Option			
+				products	Product	Every product ordered, with quantity and price	digitalData.product[]				Product String			
+				event4 (M n)	Discount Value	Currency. Per product.	digitalData.product[].discount				Product Discount			
+				purchase	Orders, Units, Revenue	Adobe reserved event. Revenue comes from the product string, not from a separate value.	Fires on the direct call				Not applicable			
+KES-S013	KES-R010	Order	A payment fails	pageName	Page		digitalData.page.pageInfo.pageName	Direct Call	Payment Failure	payment_failure	Page Name	Fire when the gateway returns a failure and the customer is shown a failure message. Set the reason to the message the customer sees, not the gateway error code, unless the two are the same.	digitalData.product[] as an array, one entry per product	
+				eVar22	Payment Failure Reason	Card Declined, Insufficient Funds, Gateway Timeout, Address Mismatch, Cancelled by Customer	digitalData.checkout.failureReason				Failure Reason			
+				eVar19	Payment Method	Card, PayPal, Klarna, Gift Card, Finance	digitalData.checkout.paymentMethod				Payment Method			
+				products	Product	Every product in the cart	digitalData.product[]				Product String			
+				event9	Payment Failures	Counts once per failure	Fires on the direct call				Not applicable			
+				event10 (n)	Revenue at Risk	Currency. The order value that failed.	digitalData.checkout.orderValue				Order Value			
+KES-S014	KES-R011	Promotions	A discount code is applied	pageName	Page		digitalData.page.pageInfo.pageName	Direct Call	Discount Applied	discount_applied	Page Name	Fire only when the code is accepted. A rejected code is not a discount application. If the business later wants rejected codes, that is a change request and a second solution.	digitalData.product[] as an array, one entry per product	
+				eVar21	Discount Code	SPRING25, TRADE10, WELCOME	digitalData.cart.discountCode				Discount Code			
+				products	Product	Every product in the cart	digitalData.product[]				Product String			
+				event11	Discount Applications	Counts once per accepted code	Fires on the direct call				Not applicable			

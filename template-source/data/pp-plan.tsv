@@ -1,0 +1,31 @@
+#TAB	blue
+#TITLE	Kestrel and Co. Website - Analytics Implementation Plan - Phase 1
+#WIDTHS	6	52	20	38	14	14	14	14
+#FREEZE	4
+#TEXTCOLS	5	6
+#FILTER	1
+#FILLS	orange	orange	orange	orange	orange	orange	orange	orange
+#COMMENTS		What happens. One line, and it names an outcome rather than an activity where it can.	Who does it. Where two names appear, the first one owns it.	What exists at the end of it that did not exist before. Blank means it produces no artifact, which is fine, but a run of blanks is a warning.	Planned start.	Planned end.	Estimated hours. The total is what the project was sold on.	Not started, In progress, Done or Blocked.
+No	Activity	Owner	Deliverable	Start	End	Hours	Status
+1	Discovery workshop with business, ecommerce and marketing	Analytics team, Kestrel business team	Requirement notes	02 Mar	03 Mar	12	Done
+2	Draft the business requirements	Analytics team	BRD version 1.0 draft	04 Mar	09 Mar	16	Done
+3	Review and prioritise, agree phases	Analytics team, Kestrel business team		10 Mar	13 Mar	8	Done
+4	Sign off the BRD	Kestrel business team	BRD version 1.0 signed	16 Mar	16 Mar	2	Done
+5	Design the solution	Analytics team	SDR version 1.0	17 Mar	20 Mar	24	Done
+6	SDR review and revisions	Analytics team, Kestrel business team	SDR version 1.2	23 Mar	09 Apr	12	Done
+7	Sign off the SDR	Kestrel business team	SDR version 1.2 signed	14 Apr	14 Apr	2	Done
+8	Extend the SDR into technical instructions	Analytics team	TSD version 1.0	15 Apr	16 Apr	20	Done
+9	Walkthrough with the development team	Analytics team, Kestrel web dev		11 May	11 May	4	Done
+10	Data layer development	Kestrel web dev		20 Apr	15 May	0	Done
+11	Tag manager build, development environment	Analytics team		20 Apr	15 May	40	Done
+12	Report suite configuration	Analytics team		20 Apr	24 Apr	8	Done
+13	Validation cycle 1, staging	Analytics team, Kestrel QA	Validation Report, cycle 1	22 May	22 May	12	Done
+14	Fixes from cycle 1	Analytics team, Kestrel web dev		25 May	28 May	16	Done
+15	Validation cycle 2, staging	Analytics team, Kestrel QA	Validation Report, cycle 2	29 May	29 May	10	Done
+16	Fixes from cycle 2	Analytics team, Kestrel web dev		01 Jun	03 Jun	12	Done
+17	Validation cycle 3, staging	Analytics team, Kestrel QA	Validation Report, cycle 3	04 Jun	04 Jun	8	Done
+18	Publish to production	Analytics team		11 Jun	11 Jun	4	Not started
+19	Production check, one cycle	Analytics team, Kestrel QA	Production validation note	12 Jun	13 Jun	8	Not started
+20	Two starter Workspace projects and a handover session	Analytics team	Workspace projects, handover pack	16 Jun	18 Jun	16	Not started
+21	Phase 1 patch: sign out, form tracking, Named Day view	Analytics team, Kestrel web dev		23 Jun	30 Jun	12	Blocked
+				Total hours		246

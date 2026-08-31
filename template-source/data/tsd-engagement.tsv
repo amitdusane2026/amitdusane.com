@@ -1,0 +1,50 @@
+#TAB	green
+#TITLE	Engagement - search, account, navigation, forms, showrooms and errors
+#FREEZE	4
+#WIDTHS	14	20	18	38	16	24	32	34	14	20	20	20	90	44	40
+#FILLS	orange	orange	orange	orange	orange	orange	orange	green	green	green	green	green	green	green	green
+#COMMENTS	Unique and permanent. Quoted in the technical document, in every test result and in every status call until the project closes. Never renumber one.	The requirement or requirements from the BRD that this solution answers. STD means every implementation needs this and nobody asked for it.	The part of the site or the mechanism. Groups solutions that share a shape.	What is being solved, in one line, written so a business reader recognises their own request.	The variable or event that will carry the value. (M) is merchandising. (n) is numeric. (M n) is a numeric merchandising event.	The report name the variable will carry. Agreed here, because this is what the business will see in Workspace.	The format and a real example value. Enough that a developer and an analyst read the same meaning.		How the value is populated: a data layer object set by the site, or code inside the tag manager.	Page load, event based or direct call.	The rule name in the tag manager. It matches this exactly, including case.	Page load = the page condition. Event based = the element. Direct call = the identifier string.	The data element that holds this value. One element per data layer object, never the raw path inside a rule.	Instructions to the site developer. This is the only column they need to read. Everything they must populate, and the order it must happen in.	The product objects this solution needs, listed separately because eleven solutions share them.	Where custom code is required. The code itself is on the Custom Code sheet.
+Solution ID	Requirement ID	Solution Component	Requirement	Variable / Event	Name	Details and example values	Data layer object or tool code	Rule type	Rule name	Rule condition	Data element	Developer instructions	Product data layer	Custom code
+KES-S015	KES-R021, KES-R022	Internal search	A search is run on the site, whether or not it returns anything	pageName	Page		digitalData.page.pageInfo.pageName	Direct Call	Internal Search	internal_search	Page Name	Set the search term and the result count, then call _satellite.track('internal_search'). Send the term exactly as the customer typed it, in lower case, with leading and trailing spaces removed and nothing else changed. Send the result count as a number. Zero is a real result count and must be sent as zero, because that is what makes a null search visible.		
+				eVar23	Search Term	oak dining table, sofa bed, cushion	digitalData.search.term				Search Term			
+				prop5	Search Term	Same value as eVar23. Pathing between searches.	digitalData.search.term				Search Term			
+				eVar24	Search Results Bucket	Set by a processing rule from the result count: None, 1 to 5, 6 to 20, Over 20	Derived from event18				Not applicable			
+				event15	Searches	Counts once per search	Fires on the direct call				Not applicable			
+				event16	Null Searches	Set only when the result count is zero	Rule condition on digitalData.search.resultCount				Search Result Count			
+				event18 (n)	Search Results Returned	The number of results, as a number	digitalData.search.resultCount				Search Result Count			
+KES-S016	KES-R023	Internal search	A search result is clicked, and its position in the list is known	pageName	Page		digitalData.page.pageInfo.pageName	Direct Call	Search Result Click	search_result_click	Page Name	Set the result position, keep the search term from the search that produced the list, update the product objects for the clicked product, then call _satellite.track('search_result_click'). Position counts from 1 and is the position on screen, including any promoted results.	digitalData.product[].id, .category	
+				eVar25	Search Result Position	1, 2, 3	digitalData.search.resultPosition				Search Result Position			
+				eVar23	Search Term	The term that produced this list	digitalData.search.term				Search Term			
+				products	Product	The clicked product	digitalData.product[]				Product String			
+				event17	Search Result Clicks	Counts once per click	Fires on the direct call				Not applicable			
+KES-S017	KES-R024	Account	A customer signs in	pageName	Page		digitalData.page.pageInfo.pageName	Direct Call	Sign In	sign_in	Page Name	Set the sign in method and the hashed customer ID, update the login status to Signed In, then call _satellite.track('sign_in'). Fire only on a successful sign in. A failed attempt is not a sign in and has no requirement behind it.		
+				eVar26	Sign In Method	Email and Password, Google, Apple, Magic Link	digitalData.user.signInMethod				Sign In Method			
+				eVar7	Customer ID	SHA-256 of the account email	digitalData.user.customerId				Customer ID			
+				eVar8	Login Status	Signed In	digitalData.user.loginStatus				Login Status			
+				event19	Sign Ins	Counts once per successful sign in	Fires on the direct call				Not applicable			
+KES-S018	KES-R025	Account	A new customer registers	pageName	Page		digitalData.page.pageInfo.pageName	Direct Call	Registration	registration	Page Name	Fire when the account is created, not when the form is opened. Set the registration method and the hashed customer ID before the call.		
+				eVar27	Registration Method	Email and Password, Google, Apple, At Checkout	digitalData.user.registrationMethod				Registration Method			
+				eVar7	Customer ID	SHA-256 of the account email	digitalData.user.customerId				Customer ID			
+				event20	Registrations	Counts once per account created	Fires on the direct call				Not applicable			
+KES-S019	KES-R026	Account	A customer signs out	pageName	Page		digitalData.page.pageInfo.pageName	Direct Call	Sign Out	sign_out	Page Name	Call _satellite.track('sign_out') before the session is cleared. Once the page reloads as anonymous the sign out is no longer visible to the tag manager.		
+				event21	Sign Outs	Counts once per sign out	Fires on the direct call				Not applicable			
+KES-S020	KES-R013	Home page	A home page banner is clicked	pageName	Page		digitalData.page.pageInfo.pageName	Direct Call	Banner Click	banner_click	Page Name	Set the banner name and its position, then call _satellite.track('banner_click'). Position is the slot on the page, counted from the top, and it is set by the page rather than by the campaign. The same banner in a different slot must report a different position.		
+				eVar28	Banner Name	Spring Sale Hero, New In Kitchen, Trade Account Promo	digitalData.banner.name				Banner Name			
+				eVar29	Banner Position	1, 2, 3	digitalData.banner.position				Banner Position			
+				event13	Banner Clicks	Counts once per click	Fires on the direct call				Not applicable			
+KES-S021	KES-R014, KES-R015	Navigation	A navigation link is clicked, anywhere in the header, the main menu or the footer	pageName	Page		digitalData.page.pageInfo.pageName	Direct Call	Navigation Click	navigation_click	Page Name	One rule covers the header, the main menu and the footer. Set the navigation level so the three can be told apart in reporting, and set the item to the full path the customer clicked, joined with a colon.		
+				eVar30	Navigation Item	Furniture:Sofas and Armchairs:3 Seat Sofas, Footer:Delivery Information	digitalData.navigation.item				Navigation Item			
+				eVar31	Navigation Level	Header, Main Menu, Footer	digitalData.navigation.level				Navigation Level			
+				event14	Navigation Clicks	Counts once per click	Fires on the direct call				Not applicable			
+KES-S022	KES-R029	Showrooms	A showroom is looked up	pageName	Page		digitalData.page.pageInfo.pageName	Direct Call	Showroom Lookup	showroom_lookup	Page Name	Fire when a showroom result is shown, not when the search box is opened. Set the showroom and the city the customer searched for, which is not always the city the showroom is in.		
+				eVar32	Showroom	Kestrel Guildford, Kestrel Leeds City	digitalData.showroom.name				Showroom			
+				eVar33	Showroom City	The city the customer searched for	digitalData.showroom.searchCity				Showroom City			
+				event25	Showroom Lookups	Counts once per lookup	Fires on the direct call				Not applicable			
+KES-S023	KES-R030, KES-R031	Forms	A form is started, and a form is submitted. One solution covers every form on the site.	pageName	Page		digitalData.page.pageInfo.pageName	Direct Call	Form Start, Form Submit	form_start, form_submit	Page Name	Two calls, one solution. Set the form name, then call _satellite.track('form_start') when the customer first types into any field, and _satellite.track('form_submit') when the submission is accepted. Fire the start once per form per page view, not once per field. Use the same form name in both calls, or the two numbers cannot be compared.		
+				eVar34	Form Name	Trade Account Application, Contact Us, Newsletter Signup	digitalData.form.name				Form Name			
+				event22	Form Starts	Counts once per form started	Fires on form_start				Not applicable			
+				event23	Form Submissions	Counts once per form accepted	Fires on form_submit				Not applicable			
+KES-S024	KES-R035	Errors	An error is shown to the customer	pageName	Page		digitalData.page.pageInfo.pageName	Direct Call	Error	error	Page Name	Set the error type and the detail, then call _satellite.track('error'). The detail is the message the customer sees. A page not found must also carry the URL that was not found, because the error is useless without it.		
+				eVar35	Error Type	Page Not Found, Payment Gateway, Form Validation, Server Error	digitalData.error.type				Error Type			
+				eVar36	Error Detail	The message shown, or the URL that was not found	digitalData.error.detail				Error Detail			
+				event24	Errors	Counts once per error shown	Fires on the direct call				Not applicable			

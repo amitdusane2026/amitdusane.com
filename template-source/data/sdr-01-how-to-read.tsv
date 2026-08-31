@@ -1,0 +1,22 @@
+#TAB	grey
+#TITLE	How to read this document
+#WIDTHS	26	96
+#FREEZE	4
+#FILLS	orange	orange
+Column	What it holds
+Solution ID	Unique and permanent. It is quoted in the technical document, in every test result, and in every status call until the project closes. Never renumber one.
+Requirement ID	The requirement or requirements from the BRD that this solution answers. One solution can answer several. One requirement can need several solutions. STD means this is a standard piece of any implementation that nobody asked for and every site needs.
+Solution Component	The part of the site or the mechanism. It groups solutions that share a shape.
+Requirement	What is being solved, in one line. Written so a business reader recognises their own request.
+Variable / Event	The Adobe Analytics variable or event that will carry the value. (M) means the variable is set as merchandising. (n) means the event is numeric. (c) means the event is a currency event.
+Name	The report name the variable will carry. This is what the business will see in Workspace, so it is agreed here and not later.
+Details and example values	The format and a real example. Enough that a developer and an analyst read the same meaning.
+	
+Sheets	
+Global Variables	The variables that go out on every hit, and the two page load solutions that carry them.
+Commerce	Everything from a product click to an order or a failed payment.
+Engagement	Search, account, forms, navigation, showrooms and errors.
+Configuration	The parts of the implementation that are settings rather than rules: report suites, marketing channels, classifications, filters.
+Product String	The structure of the products variable, defined once because eight solutions depend on it.
+Variable Map	Every slot in the report suite, used and unused. Consult it before assigning anything new.
+Change Log	Every change made after version 1.0, dated, with the IDs it touched.

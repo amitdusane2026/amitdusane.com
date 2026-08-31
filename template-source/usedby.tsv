@@ -1,0 +1,76 @@
+campaign	Campaign Code	KES-S001
+channel	Site Section	KES-S001
+eVar1	Page Name	KES-S001, KES-S002
+eVar10	New or Repeat Visitor	KES-S001
+eVar11	Time Parting	KES-S001
+eVar12	Product Colour	KES-S003
+eVar13	Product Material	KES-S004
+eVar14	Product Stock Status	KES-S004
+eVar15	Product Finding Method	KES-S004
+eVar16	Listing Type	KES-S003
+eVar17	Cart Addition Source	KES-S005, KES-S006
+eVar18	Delivery Option	KES-S010, KES-S012
+eVar19	Payment Method	KES-S011, KES-S012, KES-S013
+eVar2	Page URL	KES-S001
+eVar20	Order ID	KES-S012
+eVar21	Discount Code	KES-S014
+eVar22	Payment Failure Reason	KES-S013
+eVar23	Search Term	KES-S015, KES-S016
+eVar24	Search Results Bucket	KES-S015
+eVar25	Search Result Position	KES-S016
+eVar26	Sign In Method	KES-S017
+eVar27	Registration Method	KES-S018
+eVar28	Banner Name	KES-S020
+eVar29	Banner Position	KES-S020
+eVar3	Product Category L1	KES-S001
+eVar30	Navigation Item	KES-S021
+eVar31	Navigation Level	KES-S021
+eVar32	Showroom	KES-S010, KES-S022
+eVar33	Showroom City	KES-S022
+eVar34	Form Name	KES-S023
+eVar35	Error Type	KES-S024
+eVar36	Error Detail	KES-S024
+eVar4	Product Category L2	KES-S001
+eVar5	Product Category L3	KES-S001
+eVar6	Experience Cloud ID	KES-S001
+eVar7	Customer ID	KES-S001, KES-S017, KES-S018
+eVar8	Login Status	KES-S001, KES-S002, KES-S017
+eVar9	Platform	KES-S001
+event1	Page View	KES-S001, KES-S002
+event10	Revenue at Risk	KES-S013
+event11	Discount Applications	KES-S014
+event12	Product Clicks	KES-S003
+event13	Banner Clicks	KES-S020
+event14	Navigation Clicks	KES-S021
+event15	Searches	KES-S015
+event16	Null Searches	KES-S015
+event17	Search Result Clicks	KES-S016
+event18	Search Results Returned	KES-S015
+event19	Sign Ins	KES-S017
+event2	Page Load Time	KES-S001
+event20	Registrations	KES-S018
+event21	Sign Outs	KES-S019
+event22	Form Starts	KES-S023
+event23	Form Submissions	KES-S023
+event24	Errors	KES-S024
+event25	Showroom Lookups	KES-S022
+event3	Performance Instances	KES-S001
+event4	Discount Value	KES-S008, KES-S012
+event5	Delivery Charge	KES-S010
+event7	Delivery Step Completions	KES-S010
+event8	Payment Step Completions	KES-S011
+event9	Payment Failures	KES-S013
+pageName	Page	KES-S001, KES-S002, KES-S003, KES-S004, KES-S005, KES-S006, KES-S007, KES-S008, KES-S009, KES-S010, KES-S011, KES-S012, KES-S013, KES-S014, KES-S015, KES-S016, KES-S017, KES-S018, KES-S019, KES-S020, KES-S021, KES-S022, KES-S023, KES-S024
+prodView	Product Views	KES-S004
+products	Product	KES-S003, KES-S004, KES-S005, KES-S006, KES-S007, KES-S008, KES-S009, KES-S010, KES-S011, KES-S012, KES-S013, KES-S014, KES-S016
+prop1	Page Name	KES-S001, KES-S002
+prop2	Page URL	KES-S001
+prop3	Page Type	KES-S001, KES-S002
+prop4	Previous Page	KES-S001
+prop5	Search Term	KES-S015
+purchase	Orders, Units, Revenue	KES-S012
+scAdd	Cart Additions	KES-S005, KES-S006
+scCheckout	Checkouts	KES-S009
+scRemove	Cart Removals	KES-S007
+scView	Cart Views	KES-S008
+event6	Cart Add Value	

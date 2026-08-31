@@ -1925,3 +1925,79 @@ M19 shipped with five downloadable workbooks, thirty-four screenshots, ten
 figures, the module-downloads furniture, and provenance stamped into every
 file. The two standing exceptions for the module -- no ref-box, and screenshot
 density above the usual cap -- are recorded in the rulebook.
+
+---
+
+## Session close, 30-31 August 2026: Module 19 complete
+
+**M19 Solution Design Reference is written, revised, illustrated and signed
+off.** The corpus stands at **106 of 116 sections (91.4%)** and **19 of 21
+modules (90.5%)**. Four of the five phases are finished; everything outstanding
+sits in Deliver.
+
+### What shipped
+
+Six sections, 15,514 words. **Five downloadable workbooks**, generated rather
+than hand-built. **Thirty-four screenshots** and **ten figures**. Two new pieces
+of site furniture. Provenance stamped into every downloadable file.
+
+### The three decisions that shaped it
+
+**The client documents could not be published.** They are real Adobe consulting
+deliverables for a named listed company. Amit's ruling was to build one
+fictional company and carry it through, which also produced the downloadable
+templates: one piece of work serving the examples and the downloads.
+
+**His story is input, not content.** No first person, no naming Adobe as an
+employer, no claim that this format became standard delivery documentation
+anywhere. The documents argue for themselves.
+
+**No ref-box anywhere in the module.** Adobe is the last word on the technology
+and has no standing on how to run a project. Recorded in the rulebook with the
+screenshot-density exception, because an undocumented exception is one a future
+session helpfully undoes.
+
+### What the revision rounds actually fixed
+
+Roughly half the work after the first draft was correcting defects I had
+shipped, not improving the module. Green error triangles from forcing every
+cell to text format. Screenshots at full column width because I broke the
+site's own 23 August sizing convention. The downloads card numbered 01 to 05
+because `.wf-rail a::before` reached it. Every comment on a sheet opening at
+once from the wrong constant. A screenshot wedged inside a `dothis` block.
+
+**Amit caught every one by looking at a rendered page. None was caught by a
+build, a page count or the figure checker.** That pattern is now two memories.
+
+The other half was his judgment changing the module: the documents became
+furniture on every section, the fictional company is introduced before it is
+used, the project-management theme is stated once and landed six times, and
+every walkthrough starts from the downloaded file rather than teaching
+spreadsheet mechanics.
+
+### Corrections against the code, all recorded in the rulebook
+
+The walkthrough component is `dothis`, not `code-block`, and was in 51 files
+already. `.shot-frame` has no height cap and has not for some time. Screenshot
+filenames changed to descriptive names on 24 August. The rulebook's own date
+stamp had not moved since July.
+
+### Also built
+
+`.dl-box`, `.mdocs-strip` and `.mdocs-card` for module downloads, `.tbl-hint`
+for tables that still scroll on a phone, and `template-source/` at the project
+root holding everything the workbooks are built from, with a README covering
+the three Excel toolchain failures that cost real time.
+
+### Next session
+
+**Ten sections remain, in two unblocked modules**: M20 Testing and Debugging 5,
+M21 CJA 5. M20 is the natural next step — M19 §6 already hands off to it, and
+the Kestrel validation findings are ready-made worked examples for it.
+
+Still open beyond that: **M11 §1's deprecation warn-box, now expired**; the
+M03 §2 contradiction with M15 §1; **27 landing pages**, which are a larger block
+of work than the ten remaining sections and are what holds all-content
+completion at 74.3%; and the home page card into the learning section.
+
+Nothing pushed. `origin/develop` remains on `fa87694`; production untouched.

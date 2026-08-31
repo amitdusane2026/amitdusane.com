@@ -1,0 +1,15 @@
+#TAB	green
+#TITLE	Platform setup - what is installed and configured in the tag manager, before any rule works
+#WIDTHS	14	26	34	46	52
+#FREEZE	4
+#FILLS	green	green	green	green	green
+#COMMENTS	Platform items carry solution IDs too, so they can be tested and signed off like anything else.	What is installed or configured.	The setting.	The value.	Why, and what breaks without it.
+Solution ID	Item	Setting	Value	Why
+KES-S034	Adobe Analytics extension	Report suite, development	kestrelandcodev	Set per environment. A rule promoted to production with a development suite still in it will send live traffic to the wrong place and nothing will look wrong until somebody checks.
+KES-S034	Adobe Analytics extension	Report suite, production	kestrelandcoprod
+KES-S034	Adobe Analytics extension	Tracking server	metrics.kestrelandco.example	First party collection domain. Set before launch. Changing it afterwards starts every visitor again.
+KES-S034	Experience Cloud ID extension	Organisation ID	Supplied by Adobe	The identity service has to load before the Analytics call, which the extension order handles automatically. Adding it after launch resets every visitor.
+KES-S035	Adobe Analytics extension	Custom code, plugins	getPreviousValue, getNewRepeat, getTimeParting, getPercentPageViewed	Loaded once, in the extension, not per rule. Four plugins carry six global variables.
+KES-S036	Core extension	Direct call rules	Twenty two identifiers, listed on the solution sheets	Every identifier is lower case with underscores. The identifier is a string match and a capital letter in the wrong place fails silently.
+KES-S037	Data elements	Custom code and data layer paths	Forty one elements, named on the solution sheets	One data element per data layer object. Never read the object directly inside a rule, because then the same path is written in twelve places and a rename becomes twelve edits.
+KES-S038	Consent	Analytics rules gated on consent	Only fire when the consent object allows analytics	Without the gate the first hit goes out before the customer has answered, which is the one hit that matters legally.

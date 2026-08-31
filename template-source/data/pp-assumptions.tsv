@@ -1,0 +1,16 @@
+#TAB	red
+#TITLE	Assumptions and dependencies - the things that will move the date if they are not true
+#WIDTHS	10	100	22
+#FREEZE	4
+#FILLS	orange	orange	orange
+No	Assumption or dependency	Owner
+A1	The plan covers the website only. The applications are out of scope and are listed on the BRD Out of Scope sheet.	Analytics team
+A2	Data layer development is done by Kestrel web dev. Twenty working days are assigned. This is the single activity most likely to move the go live date, because nothing else can be tested until it exists.	Kestrel web dev
+A3	Three validation cycles on staging and one check on production. A fourth cycle would need a change request.	Analytics team, Kestrel QA
+A4	Kestrel QA provide a tester for each cycle. Validation with one person takes twice as long and finds less.	Kestrel QA
+A5	Staging behaves like production, including the payment gateway in test mode. A gateway that cannot fail on demand makes the payment failure solution untestable.	Kestrel web dev
+A6	Test data exists for the cases that are hard to produce: a failed payment, a discount code, a null search, an order with more than ten products.	Kestrel QA
+A7	Hours for meetings and administration are not in the plan and are logged separately.	Analytics team
+A8	Two Workspace projects and one handover session are included. Ongoing reporting support is not.	Analytics team
+A9	The form component is owned by a third party with its own release window. Any change to it is outside the dates in this plan.	Kestrel web dev
+A10	Consent must be answered before analytics fires. The consent tool and its categories are already live and are not being changed by this project.	Kestrel web dev

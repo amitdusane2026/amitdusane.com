@@ -1,0 +1,12 @@
+#TAB	grey
+#TITLE	Change Log
+#WIDTHS	8	14	12	16	72
+#FREEZE	4
+#TEXTCOLS	2	3
+#FILLS	orange	orange	orange	orange	orange
+No	Date	Version	Affected IDs	What changed and why
+1	02 Mar 2026	1.0 draft	-	First draft circulated after the discovery workshop.
+2	09 Mar 2026	1.0 draft	KES-R015, KES-R026, KES-R027, KES-R035, KES-R036	Five recommended requirements added. None of these were asked for. All five were accepted.
+3	11 Mar 2026	1.0 draft	KES-R016 to KES-R020, KES-R028, KES-R031	Moved to Phase 2 after the effort estimate. Agreed on the call of 11 March.
+4	13 Mar 2026	1.0 draft	KES-X001 to KES-X006	Out of Scope sheet added. Four items came out of the requirements list, two were raised in the workshop and had nowhere else to live.
+5	16 Mar 2026	1.0	All	Signed off by the Kestrel business team except KES-R018, which is queried and stays in Phase 2.

@@ -1,0 +1,14 @@
+#TAB	grey
+#TITLE	Change Log - every change after version 1.0, dated, with the IDs it touched
+#WIDTHS	8	14	12	30	80
+#FREEZE	4
+#TEXTCOLS	2	3
+#FILLS	green	green	green	green	green
+No	Date	Version	Affected IDs	What changed and why
+1	16 Apr 2026	1.0	All	First version. The seven business columns are the signed off SDR version 1.2, unchanged. Eight technical columns added to the right of them.
+2	23 Apr 2026	1.1	KES-S004	Changed from a page load rule to a direct call. The product objects are filled by a script that runs after the page load rule fires, so the rule was sending an empty product on every product page. Nothing errored. The product report was simply thin and nobody could say why.
+3	23 Apr 2026	1.1	KES-S008, KES-S012	Custom code added to build the product string from the cart array. The first build sent one entry holding several IDs, which reported as a single product that does not exist.
+4	28 Apr 2026	1.1	KES-S012	Duplicate order guard added. Refreshing the confirmation page was sending a second purchase.
+5	06 May 2026	1.2	KES-S015	Null search condition rewritten. The result count arrives from the site as a string, so a comparison against the number zero never matched and no null search was ever recorded.
+6	06 May 2026	1.2	KES-S038	Consent gate added across every rule. Raised in review, not in the requirements.
+7	11 May 2026	1.2	All	Walked through with the development team. This is the version the build is being tested against.

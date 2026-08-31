@@ -1,0 +1,13 @@
+#TAB	red
+#TITLE	Out of Scope - agreed and recorded, so that it is not asked for again in build
+#WIDTHS	14	46	72	20
+#FREEZE	4
+#FILLS	orange	orange	orange	orange
+#COMMENTS	Out of scope items keep an ID for the same reason requirements do. They get quoted in status calls.	What was asked for, in the words it was asked in.	Why it is not in this engagement. A reason, never a refusal.	What would have to happen for this to become possible.
+Item ID	What was asked for	Why it is not in this scope	What it would take
+KES-X001	Recognise the same person across their phone, laptop and tablet	This needs an identity decision and a consent decision before it needs an analytics decision. Neither has been made, and making them inside an implementation project would make the project late.	A signed identity and consent position, then a separate piece of work using the identity service.
+KES-X002	Include orders taken by the call centre	There is no web interaction to measure. These orders exist only in the order system.	A scheduled import of offline orders, matched on order ID.
+KES-X003	Export a list of customers who abandoned a cart, so marketing can email them	Individual customer records are not what this platform is for, and the consent position does not currently allow it.	An audience platform, plus a consent basis that covers it.
+KES-X004	Reconcile website revenue with the finance ledger to the penny	Analytics counts what a browser managed to send. Finance counts what the bank settled. They will never agree, and treating one as the book of record for the other creates work that never ends.	Nothing. This is the wrong tool for that question, and the order system remains the book of record.
+KES-X005	Build a delivery cost calculator on the product page	This is a website feature and not an analytics requirement. It is recorded here so that it reaches the right team rather than being lost.	A request to the website product team. Once built, tracking it is a small change request.
+KES-X006	Track the iOS and Android applications	The applications are on a separate release cycle and have no data layer. Bringing them into this phase would put the website date at risk.	A separate mobile implementation, once the applications are ready.

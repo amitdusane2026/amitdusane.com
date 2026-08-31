@@ -1,0 +1,63 @@
+#TAB	orange
+#TITLE	Commerce - from a product click to an order or a failed payment
+#FREEZE	4
+#WIDTHS	14	20	20	46	16	26	46
+#FILLS	orange	orange	orange	orange	orange	orange	orange
+#COMMENTS	Unique and permanent. Quoted in the technical document, in every test result and in every status call until the project closes. Never renumber one.	The requirement or requirements from the BRD that this solution answers. STD means every implementation needs this and nobody asked for it.	The part of the site or the mechanism. Groups solutions that share a shape.	What is being solved, in one line, written so a business reader recognises their own request.	The variable or event that will carry the value. (M) is merchandising. (n) is numeric. (M n) is a numeric merchandising event.	The report name the variable will carry. Agreed here, because this is what the business will see in Workspace.	The format and a real example value. Enough that a developer and an analyst read the same meaning.
+Solution ID	Requirement ID	Solution Component	Requirement	Variable / Event	Name	Details and example values
+KES-S003	KES-R001	Product listing	A product is clicked on a listing page	pageName	Page	
+				eVar16	Listing Type	Category Listing, Search Results, Room Set, Recently Viewed
+				products	Product	Category and product ID only. No price on a click.
+				eVar12 (M)	Product Colour	Charcoal, Oatmeal, Sage
+				event12	Product Clicks	Counts once per click
+KES-S004	KES-R002	Product detail	A product detail page is viewed	pageName	Page	
+				eVar15 (M)	Product Finding Method	Search, Category Listing, Room Set, Recommendation, External
+				products	Product	Full product string including price
+				eVar13 (M)	Product Material	Linen, Velvet, Oak, Stainless Steel
+				eVar14 (M)	Product Stock Status	In Stock, Out of Stock, Made to Order
+				prodView	Product Views	Adobe reserved event. Counts a product detail view.
+KES-S005	KES-R003	Cart	A product is added to the cart from the product page	pageName	Page	
+				eVar17	Cart Addition Source	Product Page, Quick View, Room Set, Wishlist, Reorder
+				products	Product	Includes quantity and price
+				scAdd	Cart Additions	Adobe reserved event
+KES-S006	KES-R003	Product listing	A product is added to the cart from the quick view overlay, without leaving the listing	pageName	Page	
+				eVar17	Cart Addition Source	Quick View
+				products	Product	Includes quantity and price
+				scAdd	Cart Additions	Adobe reserved event
+KES-S007	KES-R004	Cart	A product is removed from the cart	pageName	Page	
+				products	Product	The removed product only
+				scRemove	Cart Removals	Adobe reserved event
+KES-S008	KES-R005	Cart	The cart page is viewed	pageName	Page	
+				products	Product	Every product in the cart, comma separated
+				event4 (M n)	Discount Value	Currency. The discount carried by each product.
+				scView	Cart Views	Adobe reserved event
+KES-S009	KES-R006	Checkout	The checkout is started	pageName	Page	
+				products	Product	Every product in the cart
+				scCheckout	Checkouts	Adobe reserved event
+KES-S010	KES-R007, KES-R012	Checkout	The delivery step is completed, and the delivery option is known	pageName	Page	
+				eVar18	Delivery Option	Standard, Express, Named Day, Showroom Collection
+				eVar32	Showroom	Only when the option is Showroom Collection
+				products	Product	Every product in the cart
+				event5 (n)	Delivery Charge	Currency. Zero is a real value and must be sent as zero.
+				event7	Delivery Step Completions	Counts once per completion
+KES-S011	KES-R008	Checkout	The payment step is completed, and the payment method is known	pageName	Page	
+				eVar19	Payment Method	Card, PayPal, Klarna, Gift Card, Finance
+				products	Product	Every product in the cart
+				event8	Payment Step Completions	Counts once per completion
+KES-S012	KES-R009, KES-R032, KES-R034	Order	An order is completed	pageName	Page	
+				eVar20	Order ID	The order number shown to the customer
+				eVar19	Payment Method	Card, PayPal, Klarna, Gift Card, Finance
+				eVar18	Delivery Option	Standard, Express, Named Day, Showroom Collection
+				products	Product	Every product ordered, with quantity and price
+				event4 (M n)	Discount Value	Currency. Per product.
+				purchase	Orders, Units, Revenue	Adobe reserved event. Revenue comes from the product string, not from a separate value.
+KES-S013	KES-R010	Order	A payment fails	pageName	Page	
+				eVar22	Payment Failure Reason	Card Declined, Insufficient Funds, Gateway Timeout, Address Mismatch, Cancelled by Customer
+				eVar19	Payment Method	Card, PayPal, Klarna, Gift Card, Finance
+				products	Product	Every product in the cart
+				event9	Payment Failures	Counts once per failure
+				event10 (n)	Revenue at Risk	Currency. The order value that failed.
+KES-S014	KES-R011	Promotions	A discount code is applied	pageName	Page	
+				eVar21	Discount Code	SPRING25, TRADE10, WELCOME
+				products	Product	Every product in the cart
+				event11	Discount Applications	Counts once per accepted code

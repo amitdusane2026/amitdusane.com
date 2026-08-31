@@ -1,0 +1,15 @@
+#TAB	grey
+#TITLE	Change Log - every change after version 1.0, dated, with the IDs it touched
+#WIDTHS	8	14	12	30	80
+#FREEZE	4
+#TEXTCOLS	2	3
+#FILLS	orange	orange	orange	orange	orange
+#COMMENTS			The version this change produced.	Which solutions moved. This is what a reader checks when a number changes and nobody remembers why.	What changed and why. The why is the part that is worth writing.
+No	Date	Version	Affected IDs	What changed and why
+1	20 Mar 2026	1.0	All	First version, built from BRD version 1.0. Twenty four solutions and eleven configuration items.
+2	24 Mar 2026	1.1	KES-S006	Added. The quick view overlay adds to the cart without leaving the listing page, which the single cart add solution did not cover. Same requirement, second solution.
+3	24 Mar 2026	1.1	event6	Withdrawn. Cart Add Value was going to be a separate event until the product string turned out to carry the price already. The slot is left named rather than blank so that nobody assigns it and then wonders why an old export has data in it.
+4	26 Mar 2026	1.1	KES-S010	Delivery option and showroom collection folded in from KES-R012. One step, one call, two requirements.
+5	02 Apr 2026	1.2	KES-S015	Search Results Bucket added as eVar24, set by a processing rule rather than by the site. The raw count is a number and makes an unusable report.
+6	09 Apr 2026	1.2	KES-S023	Newsletter signup, KES-R031, mapped onto the existing form solution rather than a new one. It is a form. It arrives in Phase 2 with no build work beyond a form name.
+7	14 Apr 2026	1.2	All	Signed off by the Kestrel business team. Build starts against this version.

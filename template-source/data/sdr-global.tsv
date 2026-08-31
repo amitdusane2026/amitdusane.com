@@ -1,0 +1,34 @@
+#TAB	orange
+#TITLE	Global Variables - the variables that go out on every hit
+#FREEZE	4
+#WIDTHS	14	20	20	46	16	26	46
+#FILLS	orange	orange	orange	orange	orange	orange	orange
+#COMMENTS	Unique and permanent. Quoted in the technical document, in every test result and in every status call until the project closes. Never renumber one.	The requirement or requirements from the BRD that this solution answers. STD means every implementation needs this and nobody asked for it.	The part of the site or the mechanism. Groups solutions that share a shape.	What is being solved, in one line, written so a business reader recognises their own request.	The variable or event that will carry the value. (M) is merchandising. (n) is numeric. (M n) is a numeric merchandising event.	The report name the variable will carry. Agreed here, because this is what the business will see in Workspace.	The format and a real example value. Enough that a developer and an analyst read the same meaning.
+Solution ID	Requirement ID	Solution Component	Requirement	Variable / Event	Name	Details and example values
+KES-S001	STD, KES-R027, KES-R036	Global variables	Every page load on the website	pageName	Page	
+				eVar1	Page Name	Home, Sofas and Armchairs, Product - Aldwych 3 Seat Sofa
+				prop1	Page Name	Same value as eVar1. Traffic reporting and pathing.
+				prop2	Page URL	Full URL including protocol and host
+				eVar2	Page URL	Full URL including protocol and host
+				channel	Site Section	Home, Furniture, Kitchen, Bedding, Help, Account
+				prop3	Page Type	Home, Listing, Product, Cart, Checkout, Account, Content, Error
+				prop4	Previous Page	Set by plugin, not by the data layer
+				eVar3	Product Category L1	Furniture
+				eVar4	Product Category L2	Sofas and Armchairs
+				eVar5	Product Category L3	3 Seat Sofas
+				eVar6	Experience Cloud ID	Set by the identity service, not by the site
+				eVar7	Customer ID	SHA-256 of the account email, lower case, trimmed. Never the raw address.
+				eVar8	Login Status	Signed In, Anonymous
+				eVar9	Platform	Website
+				eVar10	New or Repeat Visitor	New, Repeat
+				eVar11	Time Parting	Day of week, hour of day, in Europe/London
+				campaign	Campaign Code	Only populated when the landing URL carries cid
+				event1	Page View	Counts once per page load
+				event2 (n)	Page Load Time	Milliseconds, from the performance timing API
+				event3 (n)	Performance Instances	Set to 1 whenever a timing was captured, so an average can be built
+KES-S002	STD	Global variables	Every virtual page load on the website, where the cart and checkout change the view without loading a page	pageName	Page	
+				eVar1	Page Name	Checkout - Delivery, Checkout - Payment
+				prop1	Page Name	Same value as eVar1
+				prop3	Page Type	Checkout
+				eVar8	Login Status	Signed In, Anonymous
+				event1	Page View	Counts once per virtual page load

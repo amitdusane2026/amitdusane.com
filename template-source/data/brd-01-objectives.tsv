@@ -1,0 +1,20 @@
+#TAB	orange
+#TITLE	Kestrel and Co. - Business Requirements Document - Objectives and Scope
+#WIDTHS	16	34	78
+#FREEZE	5
+#FILLS	orange	orange	orange
+Objective ID	Business Objective	What this means for Kestrel and Co.
+KBO-01	Track business performance	Know what sells, what is abandoned, what revenue is lost at payment, and which products carry the discount.
+KBO-02	Understand customer behaviour	Know how people find a product, what they search for, whether they sign in, and where they give up.
+KBO-03	Measure website effectiveness	Know whether the navigation, the banners, the filters and the imagery are doing the job they were built for.
+KBO-04	Measure marketing activity	Know which campaigns and which channels bring visits, and which of them bring orders.
+KBO-05	Protect data quality	Know when the site is throwing errors, when pages are slow, and when collection itself has stopped working.
+		
+In scope	Kestrel and Co. responsive website (www.kestrelandco.example), desktop and mobile browser.	
+In scope	One production report suite and one development report suite.	
+In scope	Implementation through the existing tag management property.	
+Out of scope	iOS and Android applications. Listed separately on the Out of Scope sheet with reasons.	
+Out of scope	Point of sale and call centre orders. Listed separately on the Out of Scope sheet with reasons.	
+		
+Phase 1	Everything needed to answer how the business is performing. Signed off before build starts.	
+Phase 2	Behavioural depth: filtering, sorting, reviews, wishlist, imagery. Scoped after Phase 1 is live.	

@@ -1,0 +1,76 @@
+eVar1	Most Recent, Visit
+eVar2	Most Recent, Visit
+eVar3	Most Recent, Visit
+eVar4	Most Recent, Visit
+eVar5	Most Recent, Visit
+eVar6	Most Recent, Visit
+eVar7	Most Recent, Visit
+eVar8	Most Recent, Visit
+eVar9	Most Recent, Visit
+eVar10	Most Recent, Visit
+eVar11	Most Recent, Page View
+eVar12	Product Syntax Merchandising, expires on Purchase
+eVar13	Product Syntax Merchandising, expires on Purchase
+eVar14	Product Syntax Merchandising, expires on Purchase
+eVar15	Product Syntax Merchandising, expires on Purchase
+eVar16	Most Recent, Visit
+eVar17	Most Recent, Visit
+eVar18	Most Recent, Visit
+eVar19	Most Recent, Visit
+eVar20	Most Recent, Page View
+eVar21	Most Recent, Visit
+eVar22	Most Recent, Visit
+eVar23	Most Recent, Visit
+eVar24	Most Recent, Visit
+eVar25	Most Recent, Page View
+eVar26	Most Recent, Visit
+eVar27	Most Recent, Visit
+eVar28	Original Value, Visit
+eVar29	Original Value, Visit
+eVar30	Most Recent, Visit
+eVar31	Most Recent, Visit
+eVar32	Most Recent, Visit
+eVar33	Most Recent, Visit
+eVar34	Most Recent, Visit
+eVar35	Most Recent, Page View
+eVar36	Most Recent, Page View
+event1	Counter
+event2	Numeric
+event3	Counter
+event4	Currency, merchandising
+event5	Currency
+event7	Counter
+event8	Counter
+event9	Counter
+event10	Currency
+event11	Counter
+event12	Counter
+event13	Counter
+event14	Counter
+event15	Counter
+event16	Counter
+event17	Counter
+event18	Numeric
+event19	Counter
+event20	Counter
+event21	Counter
+event22	Counter
+event23	Counter
+event24	Counter
+event25	Counter
+prop1	Enable pathing
+prop2	No pathing
+prop3	Enable pathing
+prop4	No pathing
+prop5	Enable pathing
+pageName	Reserved
+channel	Reserved
+campaign	Reserved. Most Recent, Visit
+products	Reserved
+purchase	Reserved
+prodView	Reserved
+scAdd	Reserved
+scRemove	Reserved
+scView	Reserved
+scCheckout	Reserved
+event6	Withdrawn in version 1.1, see the Change Log

@@ -1,0 +1,17 @@
+#TAB	grey
+#TITLE	Summary - Phase 1 as at 04 June 2026
+#WIDTHS	26	12	72
+#FREEZE	4
+#FILLS	orange	orange	orange
+Status	Count	What it means here
+Passed	24	Behaves as the SDR says, across three cycles, with evidence captured.
+Partly passed	2	Works for the main case. A named part does not, and the part is written down with an owner and a date.
+Failed	1	Does not work. KES-S019 sign out. Still open with Kestrel and Co.
+Ignored	1	Dropped from this phase by agreement, with a reason and a date. KES-S023 form tracking.
+
+Total solutions tested	28	Twenty four rules and four configuration items.
+Cycles run	3	22 May, 29 May, 04 June. All on staging.
+Faults found in cycle 1	26	Of twenty eight solutions tested, two were correct first time.
+Faults still open	4	Two exceptions accepted, one failure, one solution dropped.
+
+Go live recommendation	Proceed	Twenty six of twenty eight solutions are usable. The two that are not are written down, owned and dated, so nobody discovers them in a report in August and calls the whole implementation unreliable.

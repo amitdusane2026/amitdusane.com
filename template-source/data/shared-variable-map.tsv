@@ -1,0 +1,1013 @@
+#TAB	grey
+#TITLE	Variable Map - 75 props, 250 eVars and 1000 events are the contract maxima. Yours may be fewer. Delete the rows your report suite does not have, so that a free slot on this sheet is genuinely free.
+#WIDTHS	12	26	30	34	3	12	26	34	34	3	12	26	22	34
+#FREEZE	5
+#COMMENTS				Solutions that populate this slot. Empty means the slot is free.				Solutions that populate this slot. Empty means the slot is free.					Solutions that populate this slot. Empty means the slot is free.
+#FILLS	orange	orange	orange	orange	grey	orange	orange	orange	orange	grey	orange	orange	orange	orange
+Traffic variable	Report name	Setting	Used by		Conversion variable	Report name	Setting	Used by		Event	Report name	Type	Used by
+pageName	Page	Reserved	KES-S001, KES-S002, KES-S003, KES-S004, KES-S005, KES-S006, KES-S007, KES-S008, KES-S009, KES-S010, KES-S011, KES-S012, KES-S013, KES-S014, KES-S015, KES-S016, KES-S017, KES-S018, KES-S019, KES-S020, KES-S021, KES-S022, KES-S023, KES-S024		campaign	Campaign Code	Reserved. Most Recent, Visit	KES-S001		purchase	Orders, Units, Revenue	Reserved	KES-S012
+channel	Site Section	Reserved	KES-S001		products	Product	Reserved	KES-S003, KES-S004, KES-S005, KES-S006, KES-S007, KES-S008, KES-S009, KES-S010, KES-S011, KES-S012, KES-S013, KES-S014, KES-S016		prodView	Product Views	Reserved	KES-S004
+prop1	Page Name	Enable pathing	KES-S001, KES-S002		eVar1	Page Name	Most Recent, Visit	KES-S001, KES-S002		scAdd	Cart Additions	Reserved	KES-S005, KES-S006
+prop2	Page URL	No pathing	KES-S001		eVar2	Page URL	Most Recent, Visit	KES-S001		scRemove	Cart Removals	Reserved	KES-S007
+prop3	Page Type	Enable pathing	KES-S001, KES-S002		eVar3	Product Category L1	Most Recent, Visit	KES-S001		scView	Cart Views	Reserved	KES-S008
+prop4	Previous Page	No pathing	KES-S001		eVar4	Product Category L2	Most Recent, Visit	KES-S001		scCheckout	Checkouts	Reserved	KES-S009
+prop5	Search Term	Enable pathing	KES-S015		eVar5	Product Category L3	Most Recent, Visit	KES-S001		event1	Page View	Counter	KES-S001, KES-S002
+prop6					eVar6	Experience Cloud ID	Most Recent, Visit	KES-S001		event2	Page Load Time	Numeric	KES-S001
+prop7					eVar7	Customer ID	Most Recent, Visit	KES-S001, KES-S017, KES-S018		event3	Performance Instances	Counter	KES-S001
+prop8					eVar8	Login Status	Most Recent, Visit	KES-S001, KES-S002, KES-S017		event4	Discount Value	Currency, merchandising	KES-S008, KES-S012
+prop9					eVar9	Platform	Most Recent, Visit	KES-S001		event5	Delivery Charge	Currency	KES-S010
+prop10					eVar10	New or Repeat Visitor	Most Recent, Visit	KES-S001		event6	Cart Add Value	Withdrawn in version 1.1, see the Change Log	
+prop11					eVar11	Time Parting	Most Recent, Page View	KES-S001		event7	Delivery Step Completions	Counter	KES-S010
+prop12					eVar12	Product Colour	Product Syntax Merchandising, expires on Purchase	KES-S003		event8	Payment Step Completions	Counter	KES-S011
+prop13					eVar13	Product Material	Product Syntax Merchandising, expires on Purchase	KES-S004		event9	Payment Failures	Counter	KES-S013
+prop14					eVar14	Product Stock Status	Product Syntax Merchandising, expires on Purchase	KES-S004		event10	Revenue at Risk	Currency	KES-S013
+prop15					eVar15	Product Finding Method	Product Syntax Merchandising, expires on Purchase	KES-S004		event11	Discount Applications	Counter	KES-S014
+prop16					eVar16	Listing Type	Most Recent, Visit	KES-S003		event12	Product Clicks	Counter	KES-S003
+prop17					eVar17	Cart Addition Source	Most Recent, Visit	KES-S005, KES-S006		event13	Banner Clicks	Counter	KES-S020
+prop18					eVar18	Delivery Option	Most Recent, Visit	KES-S010, KES-S012		event14	Navigation Clicks	Counter	KES-S021
+prop19					eVar19	Payment Method	Most Recent, Visit	KES-S011, KES-S012, KES-S013		event15	Searches	Counter	KES-S015
+prop20					eVar20	Order ID	Most Recent, Page View	KES-S012		event16	Null Searches	Counter	KES-S015
+prop21					eVar21	Discount Code	Most Recent, Visit	KES-S014		event17	Search Result Clicks	Counter	KES-S016
+prop22					eVar22	Payment Failure Reason	Most Recent, Visit	KES-S013		event18	Search Results Returned	Numeric	KES-S015
+prop23					eVar23	Search Term	Most Recent, Visit	KES-S015, KES-S016		event19	Sign Ins	Counter	KES-S017
+prop24					eVar24	Search Results Bucket	Most Recent, Visit	KES-S015		event20	Registrations	Counter	KES-S018
+prop25					eVar25	Search Result Position	Most Recent, Page View	KES-S016		event21	Sign Outs	Counter	KES-S019
+prop26					eVar26	Sign In Method	Most Recent, Visit	KES-S017		event22	Form Starts	Counter	KES-S023
+prop27					eVar27	Registration Method	Most Recent, Visit	KES-S018		event23	Form Submissions	Counter	KES-S023
+prop28					eVar28	Banner Name	Original Value, Visit	KES-S020		event24	Errors	Counter	KES-S024
+prop29					eVar29	Banner Position	Original Value, Visit	KES-S020		event25	Showroom Lookups	Counter	KES-S022
+prop30					eVar30	Navigation Item	Most Recent, Visit	KES-S021		event26			
+prop31					eVar31	Navigation Level	Most Recent, Visit	KES-S021		event27			
+prop32					eVar32	Showroom	Most Recent, Visit	KES-S010, KES-S022		event28			
+prop33					eVar33	Showroom City	Most Recent, Visit	KES-S022		event29			
+prop34					eVar34	Form Name	Most Recent, Visit	KES-S023		event30			
+prop35					eVar35	Error Type	Most Recent, Page View	KES-S024		event31			
+prop36					eVar36	Error Detail	Most Recent, Page View	KES-S024		event32			
+prop37					eVar37					event33			
+prop38					eVar38					event34			
+prop39					eVar39					event35			
+prop40					eVar40					event36			
+prop41					eVar41					event37			
+prop42					eVar42					event38			
+prop43					eVar43					event39			
+prop44					eVar44					event40			
+prop45					eVar45					event41			
+prop46					eVar46					event42			
+prop47					eVar47					event43			
+prop48					eVar48					event44			
+prop49					eVar49					event45			
+prop50					eVar50					event46			
+prop51					eVar51					event47			
+prop52					eVar52					event48			
+prop53					eVar53					event49			
+prop54					eVar54					event50			
+prop55					eVar55					event51			
+prop56					eVar56					event52			
+prop57					eVar57					event53			
+prop58					eVar58					event54			
+prop59					eVar59					event55			
+prop60					eVar60					event56			
+prop61					eVar61					event57			
+prop62					eVar62					event58			
+prop63					eVar63					event59			
+prop64					eVar64					event60			
+prop65					eVar65					event61			
+prop66					eVar66					event62			
+prop67					eVar67					event63			
+prop68					eVar68					event64			
+prop69					eVar69					event65			
+prop70					eVar70					event66			
+prop71					eVar71					event67			
+prop72					eVar72					event68			
+prop73					eVar73					event69			
+prop74					eVar74					event70			
+prop75					eVar75					event71			
+					eVar76					event72			
+					eVar77					event73			
+					eVar78					event74			
+					eVar79					event75			
+					eVar80					event76			
+					eVar81					event77			
+					eVar82					event78			
+					eVar83					event79			
+					eVar84					event80			
+					eVar85					event81			
+					eVar86					event82			
+					eVar87					event83			
+					eVar88					event84			
+					eVar89					event85			
+					eVar90					event86			
+					eVar91					event87			
+					eVar92					event88			
+					eVar93					event89			
+					eVar94					event90			
+					eVar95					event91			
+					eVar96					event92			
+					eVar97					event93			
+					eVar98					event94			
+					eVar99					event95			
+					eVar100					event96			
+					eVar101					event97			
+					eVar102					event98			
+					eVar103					event99			
+					eVar104					event100			
+					eVar105					event101			
+					eVar106					event102			
+					eVar107					event103			
+					eVar108					event104			
+					eVar109					event105			
+					eVar110					event106			
+					eVar111					event107			
+					eVar112					event108			
+					eVar113					event109			
+					eVar114					event110			
+					eVar115					event111			
+					eVar116					event112			
+					eVar117					event113			
+					eVar118					event114			
+					eVar119					event115			
+					eVar120					event116			
+					eVar121					event117			
+					eVar122					event118			
+					eVar123					event119			
+					eVar124					event120			
+					eVar125					event121			
+					eVar126					event122			
+					eVar127					event123			
+					eVar128					event124			
+					eVar129					event125			
+					eVar130					event126			
+					eVar131					event127			
+					eVar132					event128			
+					eVar133					event129			
+					eVar134					event130			
+					eVar135					event131			
+					eVar136					event132			
+					eVar137					event133			
+					eVar138					event134			
+					eVar139					event135			
+					eVar140					event136			
+					eVar141					event137			
+					eVar142					event138			
+					eVar143					event139			
+					eVar144					event140			
+					eVar145					event141			
+					eVar146					event142			
+					eVar147					event143			
+					eVar148					event144			
+					eVar149					event145			
+					eVar150					event146			
+					eVar151					event147			
+					eVar152					event148			
+					eVar153					event149			
+					eVar154					event150			
+					eVar155					event151			
+					eVar156					event152			
+					eVar157					event153			
+					eVar158					event154			
+					eVar159					event155			
+					eVar160					event156			
+					eVar161					event157			
+					eVar162					event158			
+					eVar163					event159			
+					eVar164					event160			
+					eVar165					event161			
+					eVar166					event162			
+					eVar167					event163			
+					eVar168					event164			
+					eVar169					event165			
+					eVar170					event166			
+					eVar171					event167			
+					eVar172					event168			
+					eVar173					event169			
+					eVar174					event170			
+					eVar175					event171			
+					eVar176					event172			
+					eVar177					event173			
+					eVar178					event174			
+					eVar179					event175			
+					eVar180					event176			
+					eVar181					event177			
+					eVar182					event178			
+					eVar183					event179			
+					eVar184					event180			
+					eVar185					event181			
+					eVar186					event182			
+					eVar187					event183			
+					eVar188					event184			
+					eVar189					event185			
+					eVar190					event186			
+					eVar191					event187			
+					eVar192					event188			
+					eVar193					event189			
+					eVar194					event190			
+					eVar195					event191			
+					eVar196					event192			
+					eVar197					event193			
+					eVar198					event194			
+					eVar199					event195			
+					eVar200					event196			
+					eVar201					event197			
+					eVar202					event198			
+					eVar203					event199			
+					eVar204					event200			
+					eVar205					event201			
+					eVar206					event202			
+					eVar207					event203			
+					eVar208					event204			
+					eVar209					event205			
+					eVar210					event206			
+					eVar211					event207			
+					eVar212					event208			
+					eVar213					event209			
+					eVar214					event210			
+					eVar215					event211			
+					eVar216					event212			
+					eVar217					event213			
+					eVar218					event214			
+					eVar219					event215			
+					eVar220					event216			
+					eVar221					event217			
+					eVar222					event218			
+					eVar223					event219			
+					eVar224					event220			
+					eVar225					event221			
+					eVar226					event222			
+					eVar227					event223			
+					eVar228					event224			
+					eVar229					event225			
+					eVar230					event226			
+					eVar231					event227			
+					eVar232					event228			
+					eVar233					event229			
+					eVar234					event230			
+					eVar235					event231			
+					eVar236					event232			
+					eVar237					event233			
+					eVar238					event234			
+					eVar239					event235			
+					eVar240					event236			
+					eVar241					event237			
+					eVar242					event238			
+					eVar243					event239			
+					eVar244					event240			
+					eVar245					event241			
+					eVar246					event242			
+					eVar247					event243			
+					eVar248					event244			
+					eVar249					event245			
+					eVar250					event246			
+										event247			
+										event248			
+										event249			
+										event250			
+										event251			
+										event252			
+										event253			
+										event254			
+										event255			
+										event256			
+										event257			
+										event258			
+										event259			
+										event260			
+										event261			
+										event262			
+										event263			
+										event264			
+										event265			
+										event266			
+										event267			
+										event268			
+										event269			
+										event270			
+										event271			
+										event272			
+										event273			
+										event274			
+										event275			
+										event276			
+										event277			
+										event278			
+										event279			
+										event280			
+										event281			
+										event282			
+										event283			
+										event284			
+										event285			
+										event286			
+										event287			
+										event288			
+										event289			
+										event290			
+										event291			
+										event292			
+										event293			
+										event294			
+										event295			
+										event296			
+										event297			
+										event298			
+										event299			
+										event300			
+										event301			
+										event302			
+										event303			
+										event304			
+										event305			
+										event306			
+										event307			
+										event308			
+										event309			
+										event310			
+										event311			
+										event312			
+										event313			
+										event314			
+										event315			
+										event316			
+										event317			
+										event318			
+										event319			
+										event320			
+										event321			
+										event322			
+										event323			
+										event324			
+										event325			
+										event326			
+										event327			
+										event328			
+										event329			
+										event330			
+										event331			
+										event332			
+										event333			
+										event334			
+										event335			
+										event336			
+										event337			
+										event338			
+										event339			
+										event340			
+										event341			
+										event342			
+										event343			
+										event344			
+										event345			
+										event346			
+										event347			
+										event348			
+										event349			
+										event350			
+										event351			
+										event352			
+										event353			
+										event354			
+										event355			
+										event356			
+										event357			
+										event358			
+										event359			
+										event360			
+										event361			
+										event362			
+										event363			
+										event364			
+										event365			
+										event366			
+										event367			
+										event368			
+										event369			
+										event370			
+										event371			
+										event372			
+										event373			
+										event374			
+										event375			
+										event376			
+										event377			
+										event378			
+										event379			
+										event380			
+										event381			
+										event382			
+										event383			
+										event384			
+										event385			
+										event386			
+										event387			
+										event388			
+										event389			
+										event390			
+										event391			
+										event392			
+										event393			
+										event394			
+										event395			
+										event396			
+										event397			
+										event398			
+										event399			
+										event400			
+										event401			
+										event402			
+										event403			
+										event404			
+										event405			
+										event406			
+										event407			
+										event408			
+										event409			
+										event410			
+										event411			
+										event412			
+										event413			
+										event414			
+										event415			
+										event416			
+										event417			
+										event418			
+										event419			
+										event420			
+										event421			
+										event422			
+										event423			
+										event424			
+										event425			
+										event426			
+										event427			
+										event428			
+										event429			
+										event430			
+										event431			
+										event432			
+										event433			
+										event434			
+										event435			
+										event436			
+										event437			
+										event438			
+										event439			
+										event440			
+										event441			
+										event442			
+										event443			
+										event444			
+										event445			
+										event446			
+										event447			
+										event448			
+										event449			
+										event450			
+										event451			
+										event452			
+										event453			
+										event454			
+										event455			
+										event456			
+										event457			
+										event458			
+										event459			
+										event460			
+										event461			
+										event462			
+										event463			
+										event464			
+										event465			
+										event466			
+										event467			
+										event468			
+										event469			
+										event470			
+										event471			
+										event472			
+										event473			
+										event474			
+										event475			
+										event476			
+										event477			
+										event478			
+										event479			
+										event480			
+										event481			
+										event482			
+										event483			
+										event484			
+										event485			
+										event486			
+										event487			
+										event488			
+										event489			
+										event490			
+										event491			
+										event492			
+										event493			
+										event494			
+										event495			
+										event496			
+										event497			
+										event498			
+										event499			
+										event500			
+										event501			
+										event502			
+										event503			
+										event504			
+										event505			
+										event506			
+										event507			
+										event508			
+										event509			
+										event510			
+										event511			
+										event512			
+										event513			
+										event514			
+										event515			
+										event516			
+										event517			
+										event518			
+										event519			
+										event520			
+										event521			
+										event522			
+										event523			
+										event524			
+										event525			
+										event526			
+										event527			
+										event528			
+										event529			
+										event530			
+										event531			
+										event532			
+										event533			
+										event534			
+										event535			
+										event536			
+										event537			
+										event538			
+										event539			
+										event540			
+										event541			
+										event542			
+										event543			
+										event544			
+										event545			
+										event546			
+										event547			
+										event548			
+										event549			
+										event550			
+										event551			
+										event552			
+										event553			
+										event554			
+										event555			
+										event556			
+										event557			
+										event558			
+										event559			
+										event560			
+										event561			
+										event562			
+										event563			
+										event564			
+										event565			
+										event566			
+										event567			
+										event568			
+										event569			
+										event570			
+										event571			
+										event572			
+										event573			
+										event574			
+										event575			
+										event576			
+										event577			
+										event578			
+										event579			
+										event580			
+										event581			
+										event582			
+										event583			
+										event584			
+										event585			
+										event586			
+										event587			
+										event588			
+										event589			
+										event590			
+										event591			
+										event592			
+										event593			
+										event594			
+										event595			
+										event596			
+										event597			
+										event598			
+										event599			
+										event600			
+										event601			
+										event602			
+										event603			
+										event604			
+										event605			
+										event606			
+										event607			
+										event608			
+										event609			
+										event610			
+										event611			
+										event612			
+										event613			
+										event614			
+										event615			
+										event616			
+										event617			
+										event618			
+										event619			
+										event620			
+										event621			
+										event622			
+										event623			
+										event624			
+										event625			
+										event626			
+										event627			
+										event628			
+										event629			
+										event630			
+										event631			
+										event632			
+										event633			
+										event634			
+										event635			
+										event636			
+										event637			
+										event638			
+										event639			
+										event640			
+										event641			
+										event642			
+										event643			
+										event644			
+										event645			
+										event646			
+										event647			
+										event648			
+										event649			
+										event650			
+										event651			
+										event652			
+										event653			
+										event654			
+										event655			
+										event656			
+										event657			
+										event658			
+										event659			
+										event660			
+										event661			
+										event662			
+										event663			
+										event664			
+										event665			
+										event666			
+										event667			
+										event668			
+										event669			
+										event670			
+										event671			
+										event672			
+										event673			
+										event674			
+										event675			
+										event676			
+										event677			
+										event678			
+										event679			
+										event680			
+										event681			
+										event682			
+										event683			
+										event684			
+										event685			
+										event686			
+										event687			
+										event688			
+										event689			
+										event690			
+										event691			
+										event692			
+										event693			
+										event694			
+										event695			
+										event696			
+										event697			
+										event698			
+										event699			
+										event700			
+										event701			
+										event702			
+										event703			
+										event704			
+										event705			
+										event706			
+										event707			
+										event708			
+										event709			
+										event710			
+										event711			
+										event712			
+										event713			
+										event714			
+										event715			
+										event716			
+										event717			
+										event718			
+										event719			
+										event720			
+										event721			
+										event722			
+										event723			
+										event724			
+										event725			
+										event726			
+										event727			
+										event728			
+										event729			
+										event730			
+										event731			
+										event732			
+										event733			
+										event734			
+										event735			
+										event736			
+										event737			
+										event738			
+										event739			
+										event740			
+										event741			
+										event742			
+										event743			
+										event744			
+										event745			
+										event746			
+										event747			
+										event748			
+										event749			
+										event750			
+										event751			
+										event752			
+										event753			
+										event754			
+										event755			
+										event756			
+										event757			
+										event758			
+										event759			
+										event760			
+										event761			
+										event762			
+										event763			
+										event764			
+										event765			
+										event766			
+										event767			
+										event768			
+										event769			
+										event770			
+										event771			
+										event772			
+										event773			
+										event774			
+										event775			
+										event776			
+										event777			
+										event778			
+										event779			
+										event780			
+										event781			
+										event782			
+										event783			
+										event784			
+										event785			
+										event786			
+										event787			
+										event788			
+										event789			
+										event790			
+										event791			
+										event792			
+										event793			
+										event794			
+										event795			
+										event796			
+										event797			
+										event798			
+										event799			
+										event800			
+										event801			
+										event802			
+										event803			
+										event804			
+										event805			
+										event806			
+										event807			
+										event808			
+										event809			
+										event810			
+										event811			
+										event812			
+										event813			
+										event814			
+										event815			
+										event816			
+										event817			
+										event818			
+										event819			
+										event820			
+										event821			
+										event822			
+										event823			
+										event824			
+										event825			
+										event826			
+										event827			
+										event828			
+										event829			
+										event830			
+										event831			
+										event832			
+										event833			
+										event834			
+										event835			
+										event836			
+										event837			
+										event838			
+										event839			
+										event840			
+										event841			
+										event842			
+										event843			
+										event844			
+										event845			
+										event846			
+										event847			
+										event848			
+										event849			
+										event850			
+										event851			
+										event852			
+										event853			
+										event854			
+										event855			
+										event856			
+										event857			
+										event858			
+										event859			
+										event860			
+										event861			
+										event862			
+										event863			
+										event864			
+										event865			
+										event866			
+										event867			
+										event868			
+										event869			
+										event870			
+										event871			
+										event872			
+										event873			
+										event874			
+										event875			
+										event876			
+										event877			
+										event878			
+										event879			
+										event880			
+										event881			
+										event882			
+										event883			
+										event884			
+										event885			
+										event886			
+										event887			
+										event888			
+										event889			
+										event890			
+										event891			
+										event892			
+										event893			
+										event894			
+										event895			
+										event896			
+										event897			
+										event898			
+										event899			
+										event900			
+										event901			
+										event902			
+										event903			
+										event904			
+										event905			
+										event906			
+										event907			
+										event908			
+										event909			
+										event910			
+										event911			
+										event912			
+										event913			
+										event914			
+										event915			
+										event916			
+										event917			
+										event918			
+										event919			
+										event920			
+										event921			
+										event922			
+										event923			
+										event924			
+										event925			
+										event926			
+										event927			
+										event928			
+										event929			
+										event930			
+										event931			
+										event932			
+										event933			
+										event934			
+										event935			
+										event936			
+										event937			
+										event938			
+										event939			
+										event940			
+										event941			
+										event942			
+										event943			
+										event944			
+										event945			
+										event946			
+										event947			
+										event948			
+										event949			
+										event950			
+										event951			
+										event952			
+										event953			
+										event954			
+										event955			
+										event956			
+										event957			
+										event958			
+										event959			
+										event960			
+										event961			
+										event962			
+										event963			
+										event964			
+										event965			
+										event966			
+										event967			
+										event968			
+										event969			
+										event970			
+										event971			
+										event972			
+										event973			
+										event974			
+										event975			
+										event976			
+										event977			
+										event978			
+										event979			
+										event980			
+										event981			
+										event982			
+										event983			
+										event984			
+										event985			
+										event986			
+										event987			
+										event988			
+										event989			
+										event990			
+										event991			
+										event992			
+										event993			
+										event994			
+										event995			
+										event996			
+										event997			
+										event998			
+										event999			
+										event1000			

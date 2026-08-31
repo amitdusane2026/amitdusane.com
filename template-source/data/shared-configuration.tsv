@@ -1,0 +1,18 @@
+#TAB	blue
+#TITLE	Configuration - the parts of the implementation that are settings rather than rules
+#WIDTHS	14	18	26	46	26	52
+#FREEZE	4
+#FILLS	orange	orange	orange	orange	orange	orange
+#COMMENTS	Configuration carries solution IDs for the same reason a rule does. It gets tested and it gets signed off.	The requirement behind it. STD means every implementation needs this and nobody asks for it.	What is being set.	The value it is set to.	Where the setting lives.	Why it is set this way, and what breaks if it is not.
+Solution ID	Requirement ID	Setting	Set to	Where it is set	Why
+KES-S025	STD	Production report suite	kestrelandcoprod	Admin, Report Suites	One production suite for the website. A second suite for development, which is where every rule is proved before it is published.
+KES-S026	STD	Development report suite	kestrelandcodev	Admin, Report Suites	Never point a development environment at the production suite. There is no way to take test data back out afterwards.
+KES-S027	STD	Time zone	Europe/London	Admin, Report Suites, General Account Settings	Set once, at the start. Changing it later moves every historical hit into a different day and cannot be undone.
+KES-S028	STD	Currency	GBP	Admin, Report Suites, General Account Settings	Revenue arrives in pounds. A suite set to a different currency converts silently and the numbers will look plausible and be wrong.
+KES-S029	STD	Internal URL filters	kestrelandco.example, www.kestrelandco.example, staging.kestrelandco.example	Admin, Report Suites, General, Internal URL Filters	Without these every internal link looks like a referring site, and the referrer reports fill with your own domain.
+KES-S030	STD	Bot filtering	IAB bot list enabled	Admin, Report Suites, General, Bot Rules	On before launch, not after the first month looks strange.
+KES-S031	KES-R033	Marketing channel processing rules	Paid Search, Natural Search, Email, Affiliate, Social, Display, Direct, Internal, Referring Domains	Admin, Marketing Channels	Rule order decides the answer. The first rule that matches wins, so the paid rules have to sit above the natural ones.
+KES-S032	KES-R032	Campaign code classifications	Campaign Name, Campaign Owner, Channel, Start Date, End Date	Admin, Report Suites, Conversion, Classifications	The campaign code is what the URL can carry. Everything a human wants to read about that campaign arrives by classification.
+KES-S033	KES-R021	Search results bucket processing rule	Sets eVar24 from event18: None, 1 to 5, 6 to 20, Over 20	Admin, Report Suites, Processing Rules	The raw result count is a number and makes a useless report. The bucket is what anyone actually asks for.
+KES-S034	STD	Experience Cloud identity service	Enabled through the tag manager extension	Tag manager, Extensions	Set up before the first rule is published. Adding it later starts every returning visitor again as a new one.
+KES-S035	STD	Plugins	getPreviousValue, getNewRepeat, getTimeParting, getPercentPageViewed	Tag manager, Analytics extension, Custom Code	Four plugins carry six of the global variables. They load once, in the extension, not per rule.

@@ -1,0 +1,50 @@
+#TAB	orange
+#TITLE	Engagement - search, account, navigation, forms, showrooms and errors
+#FREEZE	4
+#WIDTHS	14	20	20	46	16	26	46
+#FILLS	orange	orange	orange	orange	orange	orange	orange
+#COMMENTS	Unique and permanent. Quoted in the technical document, in every test result and in every status call until the project closes. Never renumber one.	The requirement or requirements from the BRD that this solution answers. STD means every implementation needs this and nobody asked for it.	The part of the site or the mechanism. Groups solutions that share a shape.	What is being solved, in one line, written so a business reader recognises their own request.	The variable or event that will carry the value. (M) is merchandising. (n) is numeric. (M n) is a numeric merchandising event.	The report name the variable will carry. Agreed here, because this is what the business will see in Workspace.	The format and a real example value. Enough that a developer and an analyst read the same meaning.
+Solution ID	Requirement ID	Solution Component	Requirement	Variable / Event	Name	Details and example values
+KES-S015	KES-R021, KES-R022	Internal search	A search is run on the site, whether or not it returns anything	pageName	Page	
+				eVar23	Search Term	oak dining table, sofa bed, cushion
+				prop5	Search Term	Same value as eVar23. Pathing between searches.
+				eVar24	Search Results Bucket	Set by a processing rule from the result count: None, 1 to 5, 6 to 20, Over 20
+				event15	Searches	Counts once per search
+				event16	Null Searches	Set only when the result count is zero
+				event18 (n)	Search Results Returned	The number of results, as a number
+KES-S016	KES-R023	Internal search	A search result is clicked, and its position in the list is known	pageName	Page	
+				eVar25	Search Result Position	1, 2, 3
+				eVar23	Search Term	The term that produced this list
+				products	Product	The clicked product
+				event17	Search Result Clicks	Counts once per click
+KES-S017	KES-R024	Account	A customer signs in	pageName	Page	
+				eVar26	Sign In Method	Email and Password, Google, Apple, Magic Link
+				eVar7	Customer ID	SHA-256 of the account email
+				eVar8	Login Status	Signed In
+				event19	Sign Ins	Counts once per successful sign in
+KES-S018	KES-R025	Account	A new customer registers	pageName	Page	
+				eVar27	Registration Method	Email and Password, Google, Apple, At Checkout
+				eVar7	Customer ID	SHA-256 of the account email
+				event20	Registrations	Counts once per account created
+KES-S019	KES-R026	Account	A customer signs out	pageName	Page	
+				event21	Sign Outs	Counts once per sign out
+KES-S020	KES-R013	Home page	A home page banner is clicked	pageName	Page	
+				eVar28	Banner Name	Spring Sale Hero, New In Kitchen, Trade Account Promo
+				eVar29	Banner Position	1, 2, 3
+				event13	Banner Clicks	Counts once per click
+KES-S021	KES-R014, KES-R015	Navigation	A navigation link is clicked, anywhere in the header, the main menu or the footer	pageName	Page	
+				eVar30	Navigation Item	Furniture:Sofas and Armchairs:3 Seat Sofas, Footer:Delivery Information
+				eVar31	Navigation Level	Header, Main Menu, Footer
+				event14	Navigation Clicks	Counts once per click
+KES-S022	KES-R029	Showrooms	A showroom is looked up	pageName	Page	
+				eVar32	Showroom	Kestrel Guildford, Kestrel Leeds City
+				eVar33	Showroom City	The city the customer searched for
+				event25	Showroom Lookups	Counts once per lookup
+KES-S023	KES-R030, KES-R031	Forms	A form is started, and a form is submitted. One solution covers every form on the site.	pageName	Page	
+				eVar34	Form Name	Trade Account Application, Contact Us, Newsletter Signup
+				event22	Form Starts	Counts once per form started
+				event23	Form Submissions	Counts once per form accepted
+KES-S024	KES-R035	Errors	An error is shown to the customer	pageName	Page	
+				eVar35	Error Type	Page Not Found, Payment Gateway, Form Validation, Server Error
+				eVar36	Error Detail	The message shown, or the URL that was not found
+				event24	Errors	Counts once per error shown

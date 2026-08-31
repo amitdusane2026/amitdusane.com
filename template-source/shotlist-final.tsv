@@ -1,0 +1,34 @@
+adobe-analytics-solution-design-reference-template.xlsx	How to Read This	A3:B8	s1-sheet-guide	 	 	 	B=36
+adobe-analytics-solution-design-reference-template.xlsx	Commerce	A3:C10	s1-column-comment	A3	B5:C8
+adobe-analytics-business-requirements-document-template.xlsx	Requirements	A3:C12	s2-requirement-rows
+adobe-analytics-business-requirements-document-template.xlsx	Requirements	D3:E21	s2-raised-by	 	 	 	 	5:14
+adobe-analytics-business-requirements-document-template.xlsx	Requirements	A3:B6	s2-objective-tag
+adobe-analytics-business-requirements-document-template.xlsx	Requirements	F3:G7	s2-dimensions-metrics
+adobe-analytics-business-requirements-document-template.xlsx	Requirements	A3:J6	s2-priority-phase-signoff	 	 	B,C,D,E,F,G
+adobe-analytics-business-requirements-document-template.xlsx	Out of Scope	A3:B7	s2-out-of-scope
+adobe-analytics-business-requirements-document-template.xlsx	Change Log	B3:E9	s2-change-log	 	 	C,D	E=48
+adobe-analytics-solution-design-reference-template.xlsx	Commerce	A3:C10	s3-block-identity
+adobe-analytics-solution-design-reference-template.xlsx	Commerce	E3:F10	s3-block-variables
+adobe-analytics-solution-design-reference-template.xlsx	Commerce	E3:G8	s3-details-column	 	 	F	G=34
+adobe-analytics-solution-design-reference-template.xlsx	Commerce	A3:B14	s3-many-to-one	 	 	 	 	5:10
+adobe-analytics-solution-design-reference-template.xlsx	Global Variables	A3:B6	s3-std-marker
+adobe-analytics-solution-design-reference-template.xlsx	Configuration	A3:C9	s3-configuration	 	 	B
+adobe-analytics-solution-design-reference-template.xlsx	Variable Map	F3:I12	s4-map-used	 	 	H
+adobe-analytics-solution-design-reference-template.xlsx	Variable Map	F38:I52	s4-map-free	 	 	H
+adobe-analytics-solution-design-reference-template.xlsx	Variable Map	F3:H10	s4-map-settings	 	 	G
+adobe-analytics-solution-design-reference-template.xlsx	Product String	A3:C9	s4-product-string
+adobe-analytics-solution-design-reference-template.xlsx	Product String	A11:D14	s4-product-string-example	 	 	B,C	D=52
+adobe-analytics-technical-specification-document-template.xlsx	Commerce	F3:I9	s5-column-seam	 	 	G
+adobe-analytics-technical-specification-document-template.xlsx	Commerce	M3:M6	s5-developer-instruction	 	 	 	M=44
+adobe-analytics-technical-specification-document-template.xlsx	Commerce	I3:L7	s5-rule-columns	 	 	K
+adobe-analytics-technical-specification-document-template.xlsx	Commerce	A3:B8	s5-same-ids
+adobe-analytics-technical-specification-document-template.xlsx	Custom Code	A3:C6	s5-custom-code
+adobe-analytics-technical-specification-document-template.xlsx	Platform Setup	A3:C7	s5-platform-setup
+adobe-analytics-validation-report-template.xlsx	Tracker	A3:C9	s6-tracker-rows
+adobe-analytics-validation-report-template.xlsx	Tracker	A3:C29	s6-four-statuses	 	 	B	 	8:20,23:25,27:28
+adobe-analytics-validation-report-template.xlsx	Tracker	A3:F8	s6-findings-and-owner	 	 	B,C,E	D=34
+adobe-analytics-validation-report-template.xlsx	Tracker	A3:E13	s6-exception-agreed	 	 	B,C,D	E=44	5:9
+adobe-analytics-validation-report-template.xlsx	Tracker	A3:H10	s6-signoff-column	 	 	B,C,D,E,F,G
+adobe-analytics-validation-report-template.xlsx	Summary	A3:B11	s6-summary
+adobe-analytics-implementation-project-plan-template.xlsx	Plan	B3:D9	s6-plan-owners	 	 	 	B=40
+adobe-analytics-implementation-project-plan-template.xlsx	Assumptions	B3:C7	s6-assumptions	 	 	 	B=56

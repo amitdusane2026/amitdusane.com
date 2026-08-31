@@ -1,0 +1,44 @@
+#TAB	orange
+#TITLE	Kestrel and Co. - Business Requirements - Website - Version 1.0
+#WIDTHS	14	20	22	52	12	46	34	9	9	11
+#FREEZE	4
+#FILTER	1
+#FILLS	orange	orange	orange	orange	orange	orange	orange	orange	orange	orange
+#COMMENTS	Unique and permanent. Quoted in the SDR, the technical document, every test result and every status call.	The business objective this requirement serves. Derived from the requirements, not collected.	The part of the site or the mechanism involved. Groups requirements that will share a solution.	What the business asked for, in the words they used. Never how it will be built.	Business = asked for by Kestrel and Co. Recommended = proposed by us because they could not know to ask.	The rough shape of the report that will answer this. Enough for the business to sign off.	The counts and values this requirement needs.	High, Medium or Low, set by Kestrel and Co.	The release this requirement belongs to.	Signed, Queried or blank. Filled in by Kestrel and Co.
+Requirement ID	Business Objective	Technical Objective	Requirement	Raised By	Reporting Dimensions	Reporting Metrics	Priority	Phase	Sign-off
+KES-R001	KBO-01	Product listing	Know which products people click on from a listing page, and from which listing	Business	Product, Product Category, Page Name, Listing Type	Product Clicks	High	Phase 1	Signed
+KES-R002	KBO-01	Product detail	Know which products are viewed in detail, and how the visitor got to them	Business	Product, Product Category, Product Finding Method	Product Views	High	Phase 1	Signed
+KES-R003	KBO-01	Cart	Know what is added to the cart, and from which part of the site it was added	Business	Product, Cart Addition Source, Page Name	Cart Additions, Cart Add Value	High	Phase 1	Signed
+KES-R004	KBO-01	Cart	Know what is taken back out of the cart	Business	Product, Page Name	Cart Removals	Medium	Phase 1	Signed
+KES-R005	KBO-01	Cart	Know how many people reach the cart, and what is in it when they do	Business	Product, Product Category	Cart Views, Cart Value	High	Phase 1	Signed
+KES-R006	KBO-01	Checkout	Know how many people start the checkout	Business	Product, Page Name	Checkouts	High	Phase 1	Signed
+KES-R007	KBO-01	Checkout	Know how many people complete the delivery step	Business	Product, Delivery Option	Delivery Step Completions	High	Phase 1	Signed
+KES-R008	KBO-01	Checkout	Know which payment methods are chosen, and which are abandoned	Business	Payment Method, Product	Payment Step Completions	High	Phase 1	Signed
+KES-R009	KBO-01	Order	Know every completed order, its value, its contents and how it was paid for	Business	Product, Order ID, Payment Method, Delivery Option	Orders, Units, Revenue	High	Phase 1	Signed
+KES-R010	KBO-01	Order	Know when a payment fails and why, so the revenue we nearly took is visible	Business	Payment Method, Failure Reason, Product	Payment Failures, Revenue at Risk	High	Phase 1	Signed
+KES-R011	KBO-01	Promotions	Know which discount codes are used and what they cost us	Business	Discount Code, Product	Discount Applications, Discount Value	High	Phase 1	Signed
+KES-R012	KBO-01	Checkout	Know which delivery option customers choose, including showroom collection	Business	Delivery Option, Showroom	Delivery Step Completions, Orders	Medium	Phase 1	Signed
+KES-R013	KBO-03	Home page	Know which home page banners are clicked, and where on the page they sat	Business	Banner Name, Banner Position, Page Name	Banner Clicks	Medium	Phase 1	Signed
+KES-R014	KBO-03	Navigation	Know how the main navigation is used, down to the category chosen	Business	Navigation Item, Navigation Level, Page Name	Navigation Clicks	Medium	Phase 1	Signed
+KES-R015	KBO-03	Navigation	Know which footer links are used	Recommended	Navigation Item, Page Name	Navigation Clicks	Low	Phase 1	Signed
+KES-R016	KBO-03	Product listing	Know which filters are applied on a listing page, and to what value	Business	Filter Name, Filter Value, Page Name	Filter Applications	Medium	Phase 2	Signed
+KES-R017	KBO-03	Product listing	Know how listings are sorted	Business	Sort Option, Page Name	Sort Applications	Low	Phase 2	Signed
+KES-R018	KBO-03	Inspiration	Know how the room set galleries are used and whether they lead to products	Business	Room Set Name, Product	Room Set Interactions, Product Clicks	Medium	Phase 2	Queried
+KES-R019	KBO-03	Product detail	Know whether people use the image gallery and the 360 degree view	Business	Product, Image Interaction Type	Image Interactions	Low	Phase 2	Signed
+KES-R020	KBO-03	Reviews	Know how often reviews are read and written	Business	Product, Review Rating	Review Reads, Review Submissions	Low	Phase 2	Signed
+KES-R021	KBO-02	Internal search	Know what people search for on the site, and how many results they get	Business	Search Term, Search Results Bucket	Searches	High	Phase 1	Signed
+KES-R022	KBO-02	Internal search	Know which searches return nothing at all	Business	Search Term	Null Searches	High	Phase 1	Signed
+KES-R023	KBO-02	Internal search	Know which search results get clicked, and where in the list they sat	Business	Search Term, Product, Result Position	Search Result Clicks	Medium	Phase 1	Signed
+KES-R024	KBO-02	Account	Know when a customer signs in, and by which method	Business	Sign In Method, Page Name	Sign Ins	High	Phase 1	Signed
+KES-R025	KBO-02	Account	Know when a new customer registers	Business	Registration Method, Page Name	Registrations	High	Phase 1	Signed
+KES-R026	KBO-02	Account	Know when a customer signs out	Recommended	Page Name	Sign Outs	Low	Phase 1	Signed
+KES-R027	KBO-02	Account	Be able to split every report by whether the visitor was signed in	Recommended	Login Status	All metrics	High	Phase 1	Signed
+KES-R028	KBO-02	Wishlist	Know what is added to the wishlist	Business	Product, Page Name	Wishlist Additions	Low	Phase 2	Signed
+KES-R029	KBO-02	Showrooms	Know which showrooms people look up, and from which city	Business	Showroom, City, County	Showroom Lookups	Medium	Phase 1	Signed
+KES-R030	KBO-02	Forms	Know how many trade account applications are started and how many are finished	Business	Form Name, Page Name	Form Starts, Form Submissions	High	Phase 1	Signed
+KES-R031	KBO-02	Forms	Know how many people sign up to the newsletter	Business	Form Name, Page Name	Form Starts, Form Submissions	Low	Phase 2	Signed
+KES-R032	KBO-04	Campaigns	Know which campaign brought a visit to the site	Business	Campaign Code, Campaign Name, Campaign Owner	Visits, Orders, Revenue	High	Phase 1	Signed
+KES-R033	KBO-04	Channels	Group all traffic into channels such as paid search, email and social	Business	Marketing Channel, Channel Detail	Visits, Orders, Revenue	High	Phase 1	Signed
+KES-R034	KBO-04	Campaigns	Know which email sends and which affiliates produced revenue	Business	Campaign Name, Marketing Channel	Orders, Revenue	High	Phase 1	Signed
+KES-R035	KBO-05	Errors	Know when the site shows an error, including pages not found and gateway errors	Recommended	Error Type, Error Detail, Page Name	Errors	High	Phase 1	Signed
+KES-R036	KBO-05	Performance	Know how long pages take to load for real customers	Recommended	Page Name, Page Type	Page Load Time, Performance Instances	Medium	Phase 1	Signed
