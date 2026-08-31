@@ -1910,3 +1910,18 @@ the stylesheet. Adding a cap would have changed 51 signed-off pages to solve a
 problem nobody has.
 
 M19 is now complete apart from Amit's QA.
+
+### M19 signed off, 30 August 2026
+
+Amit signed off content and SEO for all six sections. Every one now reads
+`Content created = Yes`, `Content QA'd = Yes`, `Final result = Yes`, with both
+SEO columns Yes.
+
+**The corpus stands at 106 of 116 sections written and signed off**, and
+**19 of 21 modules are complete**. Ten sections remain, in two modules:
+M20 Testing and Debugging 5, M21 CJA 5. Neither is blocked.
+
+M19 shipped with five downloadable workbooks, thirty-four screenshots, ten
+figures, the module-downloads furniture, and provenance stamped into every
+file. The two standing exceptions for the module -- no ref-box, and screenshot
+density above the usual cap -- are recorded in the rulebook.
