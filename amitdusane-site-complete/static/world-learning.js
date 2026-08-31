@@ -1057,6 +1057,23 @@
      does not fit. */
   var PAD_STEPS = ['', '8px 8px', '7px 6px'];
 
+  /* The hint is a SIBLING of the scroller, never a child of it. Anything
+     inside .tbl-wrap scrolls away with the table, so a hint placed there is
+     gone by the time the reader needs to be told it can come back. */
+  function hint(box, on) {
+    var prev = box.previousElementSibling,
+        has = prev && prev.classList && prev.classList.contains('tbl-hint');
+    if (on && !has) {
+      var p = document.createElement('p');
+      p.className = 'tbl-hint';
+      p.setAttribute('aria-hidden', 'true');   /* the table is already reachable */
+      p.textContent = 'Scroll sideways to see the rest of this table';
+      box.parentNode.insertBefore(p, box);
+    } else if (!on && has) {
+      prev.parentNode.removeChild(prev);
+    }
+  }
+
   /* Per table, because the trouble varies: most of the 31 were over by less
      than 60px and settle on the first rung, while a handful were over by more
      than 150px. Sizing every table to the worst case would punish 82 that
@@ -1074,6 +1091,7 @@
          for a phone must give its space back on the way to a wider window. */
       tbl.style.fontSize = '';
       pad('');
+      hint(box, false);
       if (!mobile || !over()) return;
 
       for (var p = 1; p < PAD_STEPS.length; p++) {
@@ -1087,7 +1105,14 @@
       }
       /* If it still does not fit at the floor, it scrolls. That is the
          deliberate end of the ladder rather than a failure: the floor exists
-         so a table cannot be made to fit by becoming unreadable. */
+         so a table cannot be made to fit by becoming unreadable.
+
+         What it does need is to SAY so. A table cut off at the right edge of a
+         phone looks like a broken table, not a scrollable one, because the
+         scrollbar only appears once you are already dragging it. So the one
+         case the ladder cannot fix gets a line above it telling the reader
+         what to do. */
+      if (over()) hint(box, true);
     });
   }
 

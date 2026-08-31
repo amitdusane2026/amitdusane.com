@@ -1038,6 +1038,25 @@ body.world-learning .lcontent .dothis code{background:var(--bg3);border:1px soli
 }
 
 .tbl-wrap{overflow-x:auto;margin:var(--sp-lg) 0;border:1px solid var(--border);border-radius:6px}
+/* Inserted by world-learning.js, and only on the tables that still overflow
+   at the bottom of the fitting ladder. A phone cuts a wide table off at the
+   right edge with no scrollbar showing until the reader already drags it, so
+   it reads as broken rather than scrollable. The rule below is a second guard:
+   even if the class survived a resize to desktop, it would not show there. */
+.tbl-hint{display:none}
+@media(max-width:880px){
+  body.world-learning .lcontent p.tbl-hint{
+    display:flex; align-items:center; gap:6px;
+    margin:var(--sp-lg) 0 calc(var(--sp-xs) * -1);
+    font-size:var(--fs-micro); color:var(--text3); line-height:1.4;
+  }
+  body.world-learning .lcontent p.tbl-hint::before{
+    content:""; flex:none; width:13px; height:13px;
+    background:no-repeat center/13px url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%235d6b7e%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M5%2012h14%22%2F%3E%3Cpath%20d%3D%22M13%206l6%206-6%206%22%2F%3E%3C%2Fsvg%3E");
+  }
+  .tbl-hint + .tbl-wrap{margin-top:var(--sp-sm)}
+}
+@media print{ .tbl-hint{display:none !important} }
 body.world-learning .lcontent table{width:100%;border-collapse:collapse;font-size:var(--fs-sm)}
 body.world-learning .lcontent th,body.world-learning .lcontent td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--border)}
 body.world-learning .lcontent th{background:var(--bg3);font-weight:600;font-size:var(--fs-meta);color:var(--text2);text-transform:uppercase;letter-spacing:var(--label-ls)}
