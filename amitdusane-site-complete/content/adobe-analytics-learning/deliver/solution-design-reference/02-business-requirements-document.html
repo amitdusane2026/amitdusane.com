@@ -23,10 +23,30 @@ weight: 2
 
 <p>Keeping solutions out is not tidiness. It protects the review. A business reader can look at a page of plainly worded requests and answer. Yes, that is what we want. Or no, you have misunderstood us. Ask the same reader to review a document full of eVar assignments and they stop reading. It has stopped being about them. The design comes later, gets its own document, and gets its own signature. That is <a href="/adobe-analytics-learning/deliver/solution-design-reference/sdr-structure/">SDR Structure</a>.</p>
 
+<div class="shot-box">
+    <div class="shot-title">Six requests, and nothing marking one as bigger</div>
+    <div class="shot-frame">
+        <img src="/img/adobe-analytics-brd-requirement-rows.webp" width="1400" height="1056" loading="lazy"
+             alt="The Requirements sheet of a Business Requirements Document, showing three columns headed Requirement ID, Business Objective and Technical Objective, with orange header fills. Nine rows run in sequence from KES-R001 to KES-R009, each carrying an objective code such as KBO-01 and a technical objective such as Product listing, Product detail, Cart, Checkout and Order.">
+        <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
+    </div>
+    <div class="shot-note">Nine consecutive identifiers, and nothing in the sheet says which of them will take an afternoon and which will take a month. That absence is deliberate. Estimating happens later, in a different column, after everything has been collected.</div>
+</div>
+
 <h3 class="subsec-title">Do not size a requirement while you are collecting it</h3>
 <p>You will know, as you write it down, that the browser request is trivial and the retargeting one is not. That knowledge is useful later, in estimating and in phasing, and it is actively harmful in the room. Meet a requirement with a comment about how easy or how hard it is, and the person who raised it starts editing themselves. The next thing they were going to say does not get said.</p>
 
 <p>The other half of the same rule is more uncomfortable. Requests arrive that make no sense, or that are not analytics at all. Somebody asks for a delivery cost calculator on the product page. Somebody wants the website revenue to match the finance ledger to the penny. Write both down. The calculator is a website feature and it goes to the right team because you recorded it. The ledger reconciliation is a genuine misunderstanding of what the tool is. Correcting it means having it written down where it can be discussed. Dismiss it in a meeting and it returns in three months, raised by somebody who was not there.</p>
+
+<div class="shot-box">
+    <div class="shot-title">The things you are not doing get identifiers too</div>
+    <div class="shot-frame">
+        <img src="/img/adobe-analytics-brd-out-of-scope-sheet.webp" width="1400" height="1055" loading="lazy"
+             alt="The Out of Scope sheet of a Business Requirements Document, headed Out of Scope, agreed and recorded so that it is not asked for again in build. Two columns, Item ID and What was asked for, list KES-X001 recognise the same person across their phone, laptop and tablet, KES-X002 include orders taken by the call centre, KES-X003 export a list of customers who abandoned a cart, and KES-X004 reconcile website revenue with the finance ledger to the penny.">
+        <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
+    </div>
+    <div class="shot-note">The identifiers are the point. <strong>KES-X004</strong> can be quoted in a status call the same way a requirement can, which is what stops the ledger question being raised for a third time by somebody who missed the first two answers.</div>
+</div>
 
 <div class="warn-box">
     <div class="warn-hdr"><span class="warn-ico"></span>Analytics is not a book-keeping system, and saying so early saves a year</div>
@@ -39,6 +59,16 @@ weight: 2
 <p>Those are yours to propose. Build a standing list for each kind of business you work with. A retailer, a telecoms operator and a publisher have different obvious gaps. The list gets sharper every project. Bring five or six to the workshop, explain what each one answers, and let them choose. In practice most get accepted, because they are the things people wish they had after six months of reporting.</p>
 
 <p>Mark them in the document as recommended rather than requested. It costs one column. In eight months somebody will ask why error tracking is in scope when nobody remembers asking for it, and the honest answer is sitting there.</p>
+
+<div class="shot-box">
+    <div class="shot-title">One column separates asked for from proposed</div>
+    <div class="shot-frame">
+        <img src="/img/adobe-analytics-brd-raised-by-column.webp" width="1400" height="885" loading="lazy"
+             alt="Two columns of the Requirements sheet, headed Requirement and Raised By. Rows list requirements including knowing which home page banners are clicked, how the main navigation is used, and which footer links are used. The Raised By column reads Business against most rows and Recommended against the footer links row. The row numbers jump, showing that rows in between have been collapsed.">
+        <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
+    </div>
+    <div class="shot-note">One word in one column, and it is the one people leave out. Eight months from now somebody will ask why footer tracking is in scope when nobody remembers requesting it, and <strong>Recommended</strong> is the whole answer.</div>
+</div>
 
 <div class="pro-tip">
     <div class="pro-tip-hdr"><span class="tip-ico"></span>This column is the difference between taking an order and giving advice</div>
@@ -178,6 +208,16 @@ weight: 2
 
 <h3 class="subsec-title">What this buys you when the project changes</h3>
 <p>Six weeks into the build, somebody asks for wishlist tracking. It was never in the workshop, it is not in the document, and it is a perfectly reasonable thing to want. Without a signed BRD that request is a conversation. Conversations like it are how a project quietly grows by a third while everyone agrees that nobody added anything.</p>
+
+<div class="shot-box">
+    <div class="shot-title">Five entries, and every one names why</div>
+    <div class="shot-frame">
+        <img src="/img/adobe-analytics-brd-change-log.webp" width="1400" height="851" loading="lazy"
+             alt="The Change Log sheet of a Business Requirements Document, with two columns headed Date and What changed and why. Five dated entries run from a first draft circulated after the discovery workshop, through five recommended requirements being added, several requirements moving to Phase 2 after the effort estimate, the Out of Scope sheet being added, and sign-off by the client with one requirement left queried.">
+        <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
+    </div>
+    <div class="shot-note">Read the third entry. Requirements moved to Phase 2 on a named date, after an effort estimate, and the entry says which ones. That is the row somebody opens in October wanting to know why sorting is not live, and it answers them without a meeting.</div>
+</div>
 
 <p>With a signed BRD it is a change request. It gets an ID, an estimate and a decision. The decision is made by the person paying, not by whoever happened to be on the call. Nothing about that is obstructive; it is simply the difference between a scope somebody agreed to and a scope that happened. The document is not there to say no. It is there so that yes means something.</p>
 

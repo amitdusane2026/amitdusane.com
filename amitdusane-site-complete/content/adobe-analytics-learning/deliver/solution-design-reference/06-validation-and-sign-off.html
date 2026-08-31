@@ -23,6 +23,16 @@ weight: 6
 
 <p>The test document is the solution list. One row per solution ID, the requirement sentence copied across so the row reads on its own, and then the findings. Nothing is invented and nothing is renumbered.</p>
 
+<div class="shot-box">
+    <div class="shot-title">The test document is the solution list, copied across</div>
+    <div class="shot-frame">
+        <img src="/img/adobe-analytics-validation-tracker-rows.webp" width="1400" height="783" loading="lazy"
+             alt="The Tracker sheet of a validation report, with three columns headed Solution ID, Requirement and Status. Rows run in sequence from KES-S001 every page load on the website, through KES-S002 every virtual page load in the cart and checkout, KES-S003 a product is clicked on a listing page, and onward. The Status column reads Passed on most rows and Partly passed on one.">
+        <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
+    </div>
+    <div class="shot-note">Nothing here was invented for testing. The identifiers and the sentences are copied from the design, which is what makes coverage countable: every row of the SDR either appears here with a status or is missing, and missing is visible.</div>
+</div>
+
 <p>Everything follows from that. Coverage is countable, because the rows are the design. A finding is unambiguous, because it names a solution rather than a page. And the question anybody asks in a status call, which is whether a particular thing works yet, is answered by reading one row.</p>
 
 <h3 class="subsec-title">Four statuses, and the useful one is Ignored</h3>
@@ -40,6 +50,16 @@ weight: 6
 <tr><td>Ignored</td><td>Dropped from this phase by agreement</td><td>A reason, who agreed it, and when</td></tr>
 </tbody>
 </table>
+</div>
+
+<div class="shot-box">
+    <div class="shot-title">All four statuses, in one column, in one phase</div>
+    <div class="shot-frame">
+        <img src="/img/adobe-analytics-validation-four-statuses.webp" width="968" height="1560" loading="lazy"
+             alt="Two columns of the Tracker sheet, headed Solution ID and Status. The visible rows show KES-S001 Passed, KES-S002 Partly passed, KES-S003 and KES-S004 Passed, then KES-S018 Passed, KES-S019 Failed, KES-S023 Ignored and KES-S032 Passed. The jumps in the identifiers show that rows in between have been collapsed.">
+        <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
+    </div>
+    <div class="shot-note">Read the Status column on its own. A real phase produces a mixture, and a report where every row says Passed is a report nobody in the room will believe, including the person who wrote it.</div>
 </div>
 
 <p>Ignored is the status that makes the document honest. In the worked example the form tracking solution is dropped. The direct call identifiers were wrong, the form component belongs to a third party, and their next release lands after go-live. Three cycles confirmed nothing had changed. It goes out of Phase 1, in writing, with the reason and the date and the name of who agreed.</p>
@@ -61,6 +81,16 @@ weight: 6
     <div class="code-body"><pre>22 May: Payment method arrives as the gateway code rather than the name.
 29 May: Names correct for card and PayPal, still a code for Klarna.
 04 Jun: All five correct.</pre></div>
+</div>
+
+<div class="shot-box">
+    <div class="shot-title">Three cycles inside one cell, and an owner beside it</div>
+    <div class="shot-frame">
+        <img src="/img/adobe-analytics-validation-dated-findings.webp" width="1400" height="1937" loading="lazy"
+             alt="Three columns of the Tracker sheet, headed Solution ID, Findings by cycle and Action on. Each findings cell holds several dated lines, one per test cycle, dated 22 May, 29 May and 04 June, describing what was observed on each date. The Action on column is blank on most rows and names the client on one.">
+        <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
+    </div>
+    <div class="shot-note">Three dates stacked in a single cell, oldest at the top, and a name in the last column against the one still open. That shape is deliberate: a fix that moved a problem and a fix that solved it produce identical statuses, and only the history tells them apart.</div>
 </div>
 
 <p>Three lines, and they say something no single status could. The fix was partial, the gap was one payment provider, and it took a third cycle. Somebody reading this in a year, wondering why April data has codes in it, gets their answer without asking anyone.</p>
@@ -126,6 +156,16 @@ weight: 6
 <p>A row is not finished when you think it works. It is finished when the client says so, in the sign-off column, next to the solution ID.</p>
 
 <p>That distinction matters more at the end of a project than during it. Twenty-six of twenty-eight signed, one failure with an owner, one dropped by agreement, and a summary saying so. There is no argument to have, because the numbers are in a document both sides filled in as they went. The alternative is a closing meeting where success is a matter of opinion. Opinions at the end of a long project tend to be shaped by whatever went wrong most recently.</p>
+
+<div class="shot-box">
+    <div class="shot-title">The whole phase as four numbers</div>
+    <div class="shot-frame">
+        <img src="/img/adobe-analytics-validation-summary-counts.webp" width="1208" height="952" loading="lazy"
+             alt="The Summary sheet of a validation report, headed Summary, Phase 1 as at 04 June 2026. Two columns headed Status and Count list Passed 24, Partly passed 2, Failed 1 and Ignored 1, followed by rows giving total solutions tested 28, cycles run 3, faults found in cycle 1 26, and faults still open 4.">
+        <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
+    </div>
+    <div class="shot-note">Twenty-six faults found in the first cycle, out of twenty-eight solutions tested. Putting that number on the summary rather than hiding it is what makes the recommendation underneath it credible.</div>
+</div>
 
 <h3 class="subsec-title">The plan that says who owes what, and when</h3>
 <p>One more document, and it is not a delivery artifact so much as the thing that stops the others from being late. A plan: every activity, an owner, what it produces, start and end dates, estimated hours, and a status.</p>

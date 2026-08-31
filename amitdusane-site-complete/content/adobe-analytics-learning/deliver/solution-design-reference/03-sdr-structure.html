@@ -36,6 +36,26 @@ weight: 3
 </table>
 </div>
 
+<div class="shot-box">
+    <div class="shot-title">The identity is on the first row and nowhere else</div>
+    <div class="shot-frame">
+        <img src="/img/adobe-analytics-sdr-solution-block-identity.webp" width="1400" height="719" loading="lazy"
+             alt="Three columns of a Solution Design Reference sheet, headed Solution ID, Requirement ID and Solution Component. The row for KES-S003 is filled across all three, carrying requirement KES-R001 and the component Product listing. The four rows beneath it are completely blank. Then KES-S004 begins, filled across all three again, with the component Product detail.">
+        <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
+    </div>
+    <div class="shot-note">The blank rows are doing the work. They are not missing data, they are what tells a reader that everything between KES-S003 and KES-S004 belongs to one moment on the site. Where the identifier reappears is where the next moment starts.</div>
+</div>
+
+<div class="shot-box">
+    <div class="shot-title">And the variables sit underneath it, in order</div>
+    <div class="shot-frame">
+        <img src="/img/adobe-analytics-sdr-solution-block-variables.webp" width="1328" height="876" loading="lazy"
+             alt="Two columns of the same sheet, headed Variable slash Event and Name. The rows list pageName as Page, eVar16 as Listing Type, products as Product, eVar12 marked M as Product Colour, and event12 as Product Clicks, then the next block begins with pageName as Page again.">
+        <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
+    </div>
+    <div class="shot-note">The third column is the one that gets dropped from most documents and the one that prevents most arguments. <strong>Charcoal, Oatmeal, Sage</strong> is not decoration: it is what stops a developer sending hex codes and an analyst expecting names.</div>
+</div>
+
 <p>Five rows, and a business reader can follow every one of them. They asked to know what goes in the cart and where it was added from. The answer is sitting there: the product, the source, the colour, and a count. Nobody had to explain what an eVar is for that sentence to land.</p>
 
 <p>Compare that with the same information in an inventory. eVar17 would sit in a list between eVar16 and eVar18, and its neighbours would be Listing Type and Delivery Option, two things it has nothing to do with. The block puts the variables that fire together next to each other, which is the only arrangement that matches how the site actually behaves.</p>
@@ -148,6 +168,16 @@ weight: 3
 <p>The report suites, production and development. The time zone and the currency, both of which are set once and cannot be changed later without rewriting history. The internal URL filters, without which every internal link arrives as a referring site. Bot filtering. The <a href="/adobe-analytics-learning/shape/marketing-channels/marketing-channel-processing-rules/">marketing channel rules</a>, where the order of the rules decides the answer. The <a href="/adobe-analytics-learning/shape/classifications/classifications-overview/">classifications</a> that turn a campaign code into a campaign name somebody can read. Any <a href="/adobe-analytics-learning/shape/processing-rules/what-are-processing-rules/">processing rule</a> that shapes a value after collection.</p>
 
 <p>And one more that deserves its own sheet: the product string. It is not a variable, it is a structure with fixed positions, and eleven of the twenty-four solutions in the worked example depend on it. Define it once, with an example, and every block that uses it can point at the definition instead of repeating it.</p>
+
+<div class="shot-box">
+    <div class="shot-title">Settings get identifiers, exactly like rules do</div>
+    <div class="shot-frame">
+        <img src="/img/adobe-analytics-sdr-configuration-sheet.webp" width="1268" height="1256" loading="lazy"
+             alt="The Configuration sheet of a Solution Design Reference, subtitled the parts of the implementation that are settings rather than rules. Two columns headed Solution ID and Setting list KES-S025 production report suite, KES-S026 development report suite, KES-S027 time zone, KES-S028 currency, KES-S029 internal URL filters and KES-S030 bot filtering.">
+        <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
+    </div>
+    <div class="shot-note">Six settings, six identifiers, and almost every requirement column says <strong>STD</strong>. Nobody asked for a time zone. Set it wrong and every historical hit lands on a different day, permanently, which is why it gets an identifier and a test result like anything else.</div>
+</div>
 
 <h3 class="subsec-title">Where the design stops being negotiable</h3>
 <p>The BRD carried a rough sketch of dimensions and metrics, deliberately loose, so that a business reader could picture the report. The SDR is where that sketch becomes a decision. Five variables means five. One counter event and one numeric event means exactly that, and the numeric one is currency.</p>

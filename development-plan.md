@@ -1866,3 +1866,47 @@ redact for the first time on the site, because the documents are our own.
 
 The rest of the queue is unchanged: M11 §1's expired warn-box, the M03 §2
 contradiction, M20 Testing, M21 CJA, 27 landing pages, and the home page card.
+
+### M19 pass two, 30 August 2026: the screenshots
+
+Nineteen screenshots across the six sections, three or four per section, the
+first on the site taken from our own documents rather than an Adobe screen.
+
+**They are cell-range exports, not desktop captures.** Excel copies a selected
+range as a picture and it is exported through a temporary chart, so each image
+is exactly the cells wanted, with no window chrome, no cursor, no ribbon and no
+Excel version tell. They are reproducible: the whole set rebuilds from a
+tab-separated shot list naming book, sheet, range and output name.
+
+**The real constraint was legibility, not framing.** A spreadsheet row is wide,
+and a first pass produced images whose text rendered at about 7px in the site's
+736px column. The working number, now recorded in the rulebook: **a capture
+wider than roughly 2100px native lands under 10px of rendered text.** Three
+techniques fixed it, and none of them shrinks the image:
+
+- **Hide the columns that are not the subject.** Showing Solution ID beside
+  Findings, with the four columns between them collapsed, is what a person
+  actually does when reading a wide sheet.
+- **Reflow a long text column** by narrowing it for the capture. Nothing is
+  hidden; the cell wraps taller.
+- **Hide rows in the middle**, so a header and a distant row appear together.
+  Excel's own doubled gridline shows the sheet continues, and the identifiers
+  jumping from KES-S004 to KES-S018 say so again.
+
+Every shot now renders at 9.5px of text or better, most between 10 and 22.
+
+**Two shots were wrong before they were caught.** The four-statuses shot claimed
+all four statuses while its range only reached Partly passed, and the findings
+shot described an Exception column that had been hidden. Both were reshot. Every
+one of the nineteen alt texts was then rewritten against the image that actually
+shipped, because an alt describing a column the reader cannot see is worse than
+no alt at all.
+
+**A third correction against the code.** The rulebook said `.shot-frame` caps
+height at 360px desktop and 260px mobile. It carries no `max-height` at all, and
+the tallest of the 51 existing screenshots already renders at about 1020px. The
+intent behind the row still holds and is now enforced by the crop rather than by
+the stylesheet. Adding a cap would have changed 51 signed-off pages to solve a
+problem nobody has.
+
+M19 is now complete apart from Amit's QA.

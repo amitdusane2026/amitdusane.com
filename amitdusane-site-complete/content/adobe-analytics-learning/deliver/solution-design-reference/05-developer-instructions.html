@@ -65,6 +65,16 @@ weight: 5
     </svg>
 </div>
 
+<div class="shot-box">
+    <div class="shot-title">The colour changes, and that is the whole instruction</div>
+    <div class="shot-frame">
+        <img src="/img/adobe-analytics-tsd-column-colour-seam.webp" width="1400" height="593" loading="lazy"
+             alt="Three columns of the technical document, at the point where the header fill changes from orange to green. The orange header reads Name. The two green headers read Data layer object or tool code and Rule type. Beneath them, rows pair Page with digitalData.page.pageInfo.pageName and Direct Call, Listing Type with digitalData.page.listingType, Product with digitalData.product in square brackets, and Product Colour with digitalData.product.colour.">
+        <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
+    </div>
+    <div class="shot-note">Everything left of the seam is the document the business signed, unchanged. Everything right of it was added for the build. One sentence at the walkthrough tells each audience which colour is theirs, and that sentence saves more time than the document does.</div>
+</div>
+
 <p>The gain is not the saved typing, although a week is a week. It is that the two documents can no longer disagree. There is no second description of what KES-S005 does, so there is no way for one of them to go stale while the other is updated.</p>
 
 <h3 class="subsec-title">The columns that turn a design into instructions</h3>
@@ -126,6 +136,16 @@ Notes:
 2. Also populate the product objects listed in the next column.</pre></div>
 </div>
 
+<div class="shot-box">
+    <div class="shot-title">One cell, and it is the only one they read</div>
+    <div class="shot-frame">
+        <img src="/img/adobe-analytics-tsd-developer-instruction-cell.webp" width="1370" height="716" loading="lazy"
+             alt="A single column of the technical document, headed Developer instructions in green. The cell beneath it holds several lines of plain English: update the product objects for the clicked product, then call underscore satellite dot track with the identifier product underscore click; populate the product objects first; and a note that a direct call fired before the objects are set will send an empty product.">
+        <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
+    </div>
+    <div class="shot-note">Notice what is absent. No explanation of what an eVar is, no rationale, no reference to the requirement. All of that exists five columns to the left, for a reader who wants it. This cell is written for somebody who does not.</div>
+</div>
+
 <p>Nine lines, and a developer can build from them without a call. Notice what is not there. No explanation of what an eVar is, no rationale, no reference to the requirement. Those all exist, one column to the left, for a reader who wants them.</p>
 
 <p>The economy of this shape shows up on the day something changes. A direct call gets renamed, and that is one cell. A product field is added, and that is one cell. The change log gets a line naming the solution ID. Nothing else in the document has to be touched, and nothing else can quietly fall out of step.</p>
@@ -134,6 +154,16 @@ Notes:
 
 <h3 class="subsec-title">What else has to be written down before any of it works</h3>
 <p>Rules do not run in a vacuum, so two more sheets belong in the technical document. One for the platform: which extensions are installed, the report suite for each environment, the tracking server, the identity service, which plugins are loaded and where. One for custom code, holding the four or five places the implementation genuinely needs code rather than configuration.</p>
+
+<div class="shot-box">
+    <div class="shot-title">Code with the reason it exists beside it</div>
+    <div class="shot-frame">
+        <img src="/img/adobe-analytics-tsd-custom-code-sheet.webp" width="1400" height="594" loading="lazy"
+             alt="The Custom Code sheet of the technical document, subtitled the four places this implementation needs code rather than configuration. Three columns headed Solution ID, Where and When list KES-S012 in the purchase rule custom code action, running before the Analytics call, and KES-S008 in the cart view rule, running while the product string is built.">
+        <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
+    </div>
+    <div class="shot-note">Four rows is the whole sheet, and each one carries a solution identifier. Code that cannot be traced to a solution is code somebody deletes during a tidy-up, and the duplicate-order guard is exactly the kind of thing that looks like clutter until the day it stops working.</div>
+</div>
 
 <p>Write the reason next to each piece of code, not only the code. A guard that stops a refreshed order confirmation sending a second purchase looks like clutter to somebody tidying up next year. With one line saying what it prevents, it survives.</p>
 

@@ -224,3 +224,4 @@ Platform	presentation		Print: path-title kept its dark-mode colour on white pape
 Platform	presentation		dl-box: the site's first downloadable-file component, on neutral ground rather than a tint	Feature	static/world-learning.css	NA	NA	NA	NA	NA	NA	Yes	No	No
 Platform	presentation		Five worked Kestrel and Co. workbooks published as downloadable templates	Feature	amitdusane-site-complete/static/templates/	NA	NA	NA	NA	NA	NA	Yes	No	No
 Platform	presentation		Module downloads as furniture: a strip under the byline and a card pinned to the top of the in-page spine, on every section of a module that declares files	Feature	layouts/partials/moduledocs.html	NA	NA	NA	NA	NA	NA	Yes	No	No
+Platform	presentation		M19 screenshots: nineteen cell-range exports from the Kestrel workbooks, the first shots on the site taken from our own documents	Feature	amitdusane-site-complete/static/img/	NA	NA	NA	NA	NA	NA	Yes	No	No

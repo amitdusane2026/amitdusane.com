@@ -41,6 +41,16 @@ weight: 4
 </table>
 </div>
 
+<div class="shot-box">
+    <div class="shot-title">The used slots, and who is relying on each one</div>
+    <div class="shot-frame">
+        <img src="/img/adobe-analytics-variable-map-used-slots.webp" width="1400" height="925" loading="lazy"
+             alt="Three columns of the Variable Map sheet, headed Conversion variable, Report name and Used by. Rows list campaign as Campaign Code, products as Product, then eVar1 Page Name, eVar2 Page URL and further slots. The Used by column lists solution identifiers, some rows naming a single solution and others naming several.">
+        <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
+    </div>
+    <div class="shot-note">Compare the Used by column down the rows. A slot naming one solution and a slot naming five are different kinds of risk, and that difference is invisible in the design blocks because those blocks sit screens apart on four different sheets.</div>
+</div>
+
 <p>The last column is what lifts this above a list. Somebody proposing to change how Payment Method is set can see immediately that three solutions write to it, and that one of them is the order. That is a change with consequences, and the map says so before anybody touches a rule.</p>
 
 <div class="diagram-box">
@@ -90,6 +100,16 @@ weight: 4
 
 <p>The empty rows are the useful part. They are what the analyst in the opening was looking for and did not find. They are also where a reservation gets recorded. A slot with a name, no settings, and a note saying held for loyalty tier is a slot nobody takes by accident.</p>
 
+<div class="shot-box">
+    <div class="shot-title">And the empty rows, which are the useful part</div>
+    <div class="shot-frame">
+        <img src="/img/adobe-analytics-variable-map-free-slots.webp" width="1400" height="731" loading="lazy"
+             alt="The same three columns of the Variable Map sheet, further down. The Conversion variable column continues in sequence with eVar35, eVar36, eVar37 and onward, but the Report name and Used by columns are entirely blank from eVar37 downward, showing a long run of unassigned slots.">
+        <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
+    </div>
+    <div class="shot-note">This is what the analyst in the opening needed and did not have. Everything from eVar37 down is genuinely free, and the sheet says so in a way that Admin cannot, because Admin shows an unnamed slot and a reserved slot identically.</div>
+</div>
+
 <div class="warn-box">
     <div class="warn-hdr"><span class="warn-ico"></span>A retired variable is not a free variable</div>
     <p>When something stops being used, do not blank the row. Historical data sits in that slot forever. Reassign it and one report holds two different things either side of a date, with nothing in the interface to warn anyone. Mark it retired, name what it used to hold, and record when it stopped. Only reuse a slot when the old data is genuinely past the retention period and somebody has said so out loud.</p>
@@ -111,6 +131,16 @@ weight: 4
 <p>One row on the map says products, and that row is doing far more work than any other. The products variable is a string with fixed positions, separated by semicolons. It carries the category, the product, the quantity, the price, any numeric events bound to that product, and any merchandising variables bound to it.</p>
 
 <p>A single row cannot describe that, so give it a sheet. Define each position, say what carries it, give a real example, and say what breaks when it is wrong. Then show a two-product string, because comma separation between products is where people go wrong, and show an empty position, because a missing element still holds its place.</p>
+
+<div class="shot-box">
+    <div class="shot-title">Six positions, and what breaks at each one</div>
+    <div class="shot-frame">
+        <img src="/img/adobe-analytics-product-string-positions.webp" width="1400" height="1371" loading="lazy"
+             alt="The Product String sheet, subtitled defined once because eleven solutions depend on it. Three columns headed Position, Element and Carried by list position 1 Category, position 2 Product ID carried by products, position 3 Quantity, position 4 Price, position 5 Events carried by event4 and event5, and position 6 Merchandising eVars carried by eVar12 through eVar15.">
+        <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
+    </div>
+    <div class="shot-note">Position three is the one worth staring at. Quantity means what is being added in this event, not what is now in the cart, and sending the cart total there is the single most common way a Units figure ends up three times too high.</div>
+</div>
 
 <p>Eleven of the twenty-four solutions in the worked example depend on that definition. Writing it once and pointing at it is the difference between one clear rule and eleven slightly different descriptions of the same thing.</p>
 
