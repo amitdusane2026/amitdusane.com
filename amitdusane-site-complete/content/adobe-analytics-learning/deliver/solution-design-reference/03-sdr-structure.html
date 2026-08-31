@@ -14,6 +14,8 @@ weight: 3
 
 <p>Now something has to be designed, and the question is what a design of an analytics implementation even looks like on a page. It is not a diagram. It is not a list of variables. It is a set of blocks, one per thing the site will do, and the shape of a block is the whole grammar of the document.</p>
 
+<p>Open the second workbook beside this page and go to the <b>Commerce</b> sheet. The block described below is KES-S005, near the top, and every claim made about it here is one you can check against the rows in front of you.</p>
+
 <h3 class="subsec-title">One solution, one ID, and a block of rows beneath it</h3>
 <p>A solution is one thing that happens on the site and everything that goes out when it happens. A product is added to the cart. A search is run. An order completes. Each of those gets an identifier, a line describing it, and then a row for every variable and every event the moment needs.</p>
 
@@ -84,6 +86,57 @@ weight: 3
     <p>Once a document is finished, one or two variables will appear in almost every solution. Page name is in all twenty-four blocks of the worked example. Login status is in most. That repetition looks like waste in a spreadsheet and it is the opposite: it is the record that every moment on the site carries its context. The variable map at the back is where you see that pattern in one view, and that is one of the things <a href="/adobe-analytics-learning/deliver/solution-design-reference/variable-mapping/">Variable Mapping</a> is for.</p>
 </div>
 
+<div class="diagram-box">
+    <div class="diagram-title">Four shapes a requirement can take</div>
+    <svg viewBox="0 0 700 220" style="width:100%;height:auto;display:block" role="img"
+         aria-label="Four panels showing how requirements map to solutions. One to one: a single requirement joins a single solution. One requirement to two solutions: the same request needs two separate builds. Two requirements to one solution: two requests happen in the same instant and one call carries both. And a solution with no requirement above it at all, marked STD, which is the global page load that every site needs and nobody asks for.">
+      <defs>
+        <marker id="sdr3a" markerWidth="7" markerHeight="7" refX="5.6" refY="3.5" orient="auto"><path d="M0 0 L7 3.5 L0 7 Z" style="fill:var(--text3,#5d6b7e)"/></marker>
+      </defs>
+
+      <text x="16" y="18" style="fill:var(--text3,#5d6b7e);font-size:11px;font-weight:700">Requirement</text>
+      <text x="16" y="150" style="fill:var(--text3,#5d6b7e);font-size:11px;font-weight:700">Solution</text>
+
+      <rect x="150" y="34" width="118" height="30" rx="5" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.3"/>
+      <text x="163" y="54" style="fill:var(--text1,#0f172a);font-size:11.5px">KES-R011</text>
+      <line x1="209" y1="66" x2="209" y2="122" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#sdr3a)"/>
+      <rect x="150" y="126" width="118" height="30" rx="5" style="fill:var(--card,#ffffff);stroke:var(--dia-a,#ba2142);stroke-width:1.6"/>
+      <text x="163" y="146" style="fill:var(--dia-a,#ba2142);font-size:11.5px">KES-S014</text>
+      <text x="150" y="180" style="fill:var(--text2,#475569);font-size:11px;font-weight:700">One to one</text>
+      <text x="150" y="198" style="fill:var(--text3,#5d6b7e);font-size:11px">most rows are this</text>
+
+      <rect x="288" y="34" width="118" height="30" rx="5" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.3"/>
+      <text x="301" y="54" style="fill:var(--text1,#0f172a);font-size:11.5px">KES-R003</text>
+      <path d="M330 66 L306 122" style="fill:none;stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#sdr3a)"/>
+      <path d="M364 66 L388 122" style="fill:none;stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#sdr3a)"/>
+      <rect x="270" y="126" width="62" height="30" rx="5" style="fill:var(--card,#ffffff);stroke:var(--dia-a,#ba2142);stroke-width:1.6"/>
+      <text x="277" y="146" style="fill:var(--dia-a,#ba2142);font-size:11px">S005</text>
+      <rect x="362" y="126" width="62" height="30" rx="5" style="fill:var(--card,#ffffff);stroke:var(--dia-a,#ba2142);stroke-width:1.6"/>
+      <text x="369" y="146" style="fill:var(--dia-a,#ba2142);font-size:11px">S006</text>
+      <text x="270" y="180" style="fill:var(--text2,#475569);font-size:11px;font-weight:700">One request, two builds</text>
+      <text x="270" y="198" style="fill:var(--text3,#5d6b7e);font-size:11px">page and overlay</text>
+
+      <rect x="440" y="34" width="62" height="30" rx="5" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.3"/>
+      <text x="447" y="54" style="fill:var(--text1,#0f172a);font-size:11px">R007</text>
+      <rect x="516" y="34" width="62" height="30" rx="5" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.3"/>
+      <text x="523" y="54" style="fill:var(--text1,#0f172a);font-size:11px">R012</text>
+      <path d="M471 66 L497 122" style="fill:none;stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#sdr3a)"/>
+      <path d="M547 66 L521 122" style="fill:none;stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#sdr3a)"/>
+      <rect x="450" y="126" width="118" height="30" rx="5" style="fill:var(--card,#ffffff);stroke:var(--dia-a,#ba2142);stroke-width:1.6"/>
+      <text x="463" y="146" style="fill:var(--dia-a,#ba2142);font-size:11.5px">KES-S010</text>
+      <text x="440" y="180" style="fill:var(--text2,#475569);font-size:11px;font-weight:700">Two requests, one call</text>
+      <text x="440" y="198" style="fill:var(--text3,#5d6b7e);font-size:11px">same instant on the site</text>
+
+      <rect x="596" y="34" width="88" height="30" rx="5" style="fill:none;stroke:var(--border,#e2e8f0);stroke-width:1.3;stroke-dasharray:4 3"/>
+      <text x="609" y="54" style="fill:var(--text3,#5d6b7e);font-size:11px">nothing</text>
+      <line x1="640" y1="66" x2="640" y2="122" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4;stroke-dasharray:4 3" marker-end="url(#sdr3a)"/>
+      <rect x="596" y="126" width="88" height="30" rx="5" style="fill:var(--card,#ffffff);stroke:var(--dia-a,#ba2142);stroke-width:1.6"/>
+      <text x="609" y="146" style="fill:var(--dia-a,#ba2142);font-size:11.5px">STD</text>
+      <text x="596" y="180" style="fill:var(--text2,#475569);font-size:11px;font-weight:700">Nobody asked</text>
+      <text x="596" y="198" style="fill:var(--text3,#5d6b7e);font-size:11px">every site needs it</text>
+    </svg>
+</div>
+
 <h3 class="subsec-title">Sheets are themes, not chapters</h3>
 <p>Split the solutions across sheets by what they are about, not by the order they were written. Global variables. Commerce. Engagement. Configuration. A person wanting to know how the checkout works opens one sheet and finds every checkout solution together.</p>
 
@@ -103,6 +156,8 @@ weight: 3
 
 <p>It is also the last cheap moment. Changing a design in a spreadsheet costs a row. Changing it after the rules are built and the data layer is written costs two teams a week.</p>
 
+<p>That curve is not an analytics fact. Every project has a point where a decision stops being an edit and starts being rework, and the job of a design document is to pull as many decisions as possible to the left of it. Naming that moment, out loud, in front of the people who can still change their minds, is most of what design review is for.</p>
+
 <h3 class="subsec-title">The change log is part of the document, not a courtesy</h3>
 <p>Add a sheet with four columns: date, version, the IDs affected, and what changed. Then write in it every single time something moves. It takes twenty seconds and it is the sheet people read most in month six.</p>
 
@@ -110,61 +165,53 @@ weight: 3
 
 <p>The log also has a use nobody expects: recording things that were considered and dropped. A slot reserved for a cart value event and then abandoned should be written down, with its reason. Otherwise somebody assigns that event next year and then finds old data sitting in it.</p>
 
-<h3 class="subsec-title">Laying out the SDR</h3>
-<p>Build the first block carefully and the rest are the same shape. Most of the work is in deciding, not in typing.</p>
+
+<h3 class="subsec-title">Filling in the SDR workbook</h3>
+<p>The eight sheets and the seven columns are already there. The work is deciding what goes in the blocks, and the order below exists because getting one part wrong makes the next part twice as long.</p>
 
 <div class="dothis">
     <div class="dothis-hdr"><b>Do this</b> <span>Turn a signed requirement list into a design</span></div>
     <ol class="dothis-steps">
-        <li class="ds-group">Part one, the frame</li>
+        <li class="ds-group">Part one, the global block</li>
         <li>
-            <span class="ds-do">Create the seven columns, and write the definition of each one into the header cell as a comment.</span>
-            <span class="ds-see">The document then explains itself. Anyone opening it in two years gets the column definitions without asking you.</span>
+            <span class="ds-do">Open the SDR at <b>Global Variables</b> and rewrite KES-S001 for your own site, keeping the shape.</span>
+            <span class="ds-see">Do this first. It is the largest block, everything else inherits from it, and settling it here stops the same twelve variables being redesigned inside every later block.</span>
         </li>
         <li>
-            <span class="ds-do">Create the sheets by theme, plus Configuration, Product String, Variable Map and Change Log.</span>
-            <span class="ds-see">Four themes is typical for a retail site. A publisher would have different ones. The four support sheets are the same everywhere.</span>
+            <span class="ds-do">Decide whether you need the second block, KES-S002, for views that change without a page load.</span>
+            <span class="ds-see">Delete it if the site has no such views. Leaving a solution in the document that nobody will build is worse than not having designed it.</span>
         </li>
-        <li class="ds-group">Part two, the design</li>
-        <li>
-            <span class="ds-do">Write the global page load solution first, as KES-S001 or its equivalent, marked STD.</span>
-            <span class="ds-see">It is the largest block and everything else inherits from it. Getting it right first stops the same twelve variables being redesigned in every later block.</span>
-        </li>
+        <li class="ds-group">Part two, the moments</li>
         <li>
             <span class="ds-do">Work through the requirements in order, writing one block per moment on the site.</span>
-            <span class="ds-see">When one requirement needs two moments, write two blocks with two IDs. When two requirements happen in one instant, write one block carrying both requirement IDs.</span>
+            <span class="ds-see">When one requirement needs two moments, write two blocks with two IDs, as KES-S005 and KES-S006 do. When two requirements happen in the same instant, write one block carrying both requirement IDs, as KES-S010 does.</span>
         </li>
         <li>
-            <span class="ds-do">Fill in the details column with real example values, not descriptions of values.</span>
-            <span class="ds-see">Charcoal, Oatmeal, Sage beats "the colour of the product" every time. Examples are what make two people agree.</span>
+            <span class="ds-do">Rename the theme sheets to match your own site, and move blocks between them until each sheet reads as one subject.</span>
+            <span class="ds-see">A retail site splits into commerce and engagement. A publisher would not. The test is whether somebody asking how the checkout works can open one sheet.</span>
+        </li>
+        <li>
+            <span class="ds-do">Fill the details column with real example values rather than descriptions of values.</span>
+            <span class="ds-see">Charcoal, Oatmeal, Sage beats "the colour of the product" every time. Examples are what make two people agree they mean the same thing.</span>
         </li>
         <li class="ds-group">Part three, the back of the document</li>
         <li>
-            <span class="ds-do">Define the product string on its own sheet, position by position, with a worked example for one product and for two.</span>
-            <span class="ds-see">Include what an empty position looks like. A missing element still holds its place, and that is the single most common product string fault.</span>
+            <span class="ds-do">Rewrite the <b>Product String</b> sheet for your own catalogue, position by position, and keep the two-product and empty-position examples.</span>
+            <span class="ds-see">Those two examples are the most-used part of that sheet. Comma separation between products and a missing element still holding its place are the two faults that recur on every build.</span>
         </li>
         <li>
-            <span class="ds-do">Add the configuration solutions with their own IDs: report suites, time zone, currency, URL filters, channels, classifications.</span>
-            <span class="ds-see">They get tested and signed off like anything else. A configuration item with no ID is one nobody checks.</span>
+            <span class="ds-do">Work through the <b>Configuration</b> sheet and change every value to yours: report suites, time zone, currency, URL filters, channels, classifications.</span>
+            <span class="ds-see">Each one keeps its own ID, so each one gets tested and signed off like any rule. A configuration item with no ID is one nobody checks.</span>
         </li>
         <li>
-            <span class="ds-do">Fill the variable map from the blocks, then read it back the other way to catch a slot used twice for two different things.</span>
-            <span class="ds-see">This pass finds real mistakes. It is much easier to see a collision in the map than in forty separate blocks.</span>
+            <span class="ds-do">Fill the <b>Variable Map</b> from the blocks, then read it back the other way looking for one slot doing two jobs.</span>
+            <span class="ds-see">This pass finds real mistakes. A collision is obvious in the map and nearly invisible across forty blocks sitting on four sheets.</span>
         </li>
     </ol>
-    <p class="dothis-end">There is nothing else to lay out. Seven columns, sheets by theme, four support sheets, and one block per moment. None of that is a ceiling. A site with an app alongside it will want a platform column. A multi-brand programme will want a sheet per brand. Add either when the project has one.</p>
+    <p class="dothis-end">That is a complete design. One block per moment, four support sheets, and every row traceable to a requirement. None of that is a ceiling: a site with an app alongside it will want a platform column, and a multi-brand programme will want a sheet per brand, so add either when the project has one.</p>
 </div>
 
 <h3 class="subsec-title">The document a developer has not read yet</h3>
 <p>What exists at this point is a complete design that a business reader can approve. Every moment on the site has a block. Every block has an ID, a requirement behind it, and a list of what goes out. The configuration is written down. The product string is defined once. Nothing in it assumes knowledge of the tag manager, and that is deliberate, because the person signing it does not have any.</p>
 
 <p>Which means it also cannot be built from. Nothing here says which rule fires, what the direct call is named, which object on the page holds the colour, or what has to happen before what. That layer is the technical document, and the useful discovery is that it is not a new document at all. <a href="/adobe-analytics-learning/deliver/solution-design-reference/developer-instructions/">Developer Instructions</a> covers the eight columns that get added to the right of these seven. It also covers why two audiences sharing one file is the point rather than a compromise.</p>
-
-<div class="ref-box">
-    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
-    <ul>
-        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/implementation/prepare/solution-design" target="_blank">Adobe Docs: Create a solution design document</a></li>
-        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/admin/admin-tools/manage-report-suites/edit-report-suite/conversion-variables/conversion-var-admin" target="_blank">Adobe Docs: Conversion variables (eVar)</a></li>
-        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/implementation/vars/page-vars/products" target="_blank">Adobe Docs: The products variable</a></li>
-    </ul>
-</div>

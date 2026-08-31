@@ -16,6 +16,8 @@ weight: 6
 
 <p>That is a completely normal first cycle, and it is not a sign that anything has gone badly. What decides whether the project survives it is whether every one of those findings lands somewhere it can be tracked, or whether it lands in a chat thread.</p>
 
+<p>Where they landed is the fourth workbook beside this page. Open it before reading on. Twenty-eight rows, three dated cycles inside each one, and four different statuses, and the rest of this section is an explanation of why it is shaped that way rather than as a simple pass and fail list.</p>
+
 <h3 class="subsec-title">Test against the ID, not against the site</h3>
 <p>The instinct is to write a test plan from scratch: a list of pages, a list of things to click, a column for what happened. It produces findings nobody can act on, because a finding attached to a page is not attached to a requirement, and nobody can tell whether it matters.</p>
 
@@ -65,6 +67,49 @@ weight: 6
 
 <p>It also protects you. When somebody says a thing was reported as fixed two weeks ago, the row shows what was actually observed on that date. That is usually more precise than anybody's memory.</p>
 
+<div class="diagram-box">
+    <div class="diagram-title">Where a finding goes, and where it ends</div>
+    <svg viewBox="0 0 700 240" style="width:100%;height:auto;display:block" role="img"
+         aria-label="A cycle. One solution row is tested, which produces a dated finding written into the row. If it is not a pass it gets an owner and a date and returns to the next cycle. The loop repeats until the row reaches one of three endings: passed and signed, accepted as an exception, or dropped from the phase with a reason. Every ending is written down, and none of them is silence.">
+      <defs>
+        <marker id="vr1a" markerWidth="8" markerHeight="8" refX="6.5" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" style="fill:var(--dia-a,#ba2142)"/></marker>
+      </defs>
+
+      <rect x="16" y="70" width="128" height="46" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="30" y="90" style="fill:var(--text1,#0f172a);font-size:11.5px;font-weight:700">Test one row</text>
+      <text x="30" y="107" style="fill:var(--text2,#475569);font-size:11px">by solution ID</text>
+
+      <line x1="144" y1="93" x2="176" y2="93" style="stroke:var(--dia-a,#ba2142);stroke-width:1.6" marker-end="url(#vr1a)"/>
+
+      <rect x="182" y="70" width="150" height="46" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="196" y="90" style="fill:var(--text1,#0f172a);font-size:11.5px;font-weight:700">Dated finding</text>
+      <text x="196" y="107" style="fill:var(--text2,#475569);font-size:11px">added, never overwritten</text>
+
+      <line x1="332" y1="93" x2="364" y2="93" style="stroke:var(--dia-a,#ba2142);stroke-width:1.6" marker-end="url(#vr1a)"/>
+
+      <rect x="370" y="70" width="134" height="46" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="384" y="90" style="fill:var(--text1,#0f172a);font-size:11.5px;font-weight:700">Owner and date</text>
+      <text x="384" y="107" style="fill:var(--text2,#475569);font-size:11px">on anything not passed</text>
+
+      <path d="M437 118 C437 162 200 162 200 130" style="fill:none;stroke:var(--dia-a,#ba2142);stroke-width:1.6;stroke-dasharray:5 4" marker-end="url(#vr1a)"/>
+      <text x="248" y="176" style="fill:var(--dia-a,#ba2142);font-size:11px;font-weight:700">next cycle</text>
+
+      <line x1="504" y1="93" x2="536" y2="93" style="stroke:var(--dia-a,#ba2142);stroke-width:1.6" marker-end="url(#vr1a)"/>
+
+      <rect x="542" y="26" width="142" height="38" rx="6" style="fill:var(--card,#ffffff);stroke:var(--dia-c,#10b981);stroke-width:1.8"/>
+      <text x="556" y="50" style="fill:var(--text1,#0f172a);font-size:11.5px;font-weight:700">Passed, signed</text>
+
+      <rect x="542" y="74" width="142" height="38" rx="6" style="fill:var(--card,#ffffff);stroke:var(--dia-d,#f59e0b);stroke-width:1.8"/>
+      <text x="556" y="98" style="fill:var(--text1,#0f172a);font-size:11.5px;font-weight:700">Exception agreed</text>
+
+      <rect x="542" y="122" width="142" height="38" rx="6" style="fill:var(--card,#ffffff);stroke:var(--text3,#5d6b7e);stroke-width:1.8"/>
+      <text x="556" y="146" style="fill:var(--text1,#0f172a);font-size:11.5px;font-weight:700">Dropped, with reason</text>
+
+      <text x="16" y="196" style="fill:var(--text2,#475569);font-size:11px;font-weight:700">Three endings, and all three are written down.</text>
+      <text x="16" y="216" style="fill:var(--text3,#5d6b7e);font-size:11px">The fourth ending, silence, is the one that makes an implementation look unreliable in October.</text>
+    </svg>
+</div>
+
 <h3 class="subsec-title">Evidence is a screenshot, not an assertion</h3>
 <p>Capture what the call actually carried. A screenshot of the network request or the debugger output, saved against the solution ID, taken at the moment it passed.</p>
 
@@ -89,33 +134,38 @@ weight: 6
 
 <p>Those sentences cost nothing in week one. In week nine, when the gateway turns out not to fail on demand, they are the difference between a renegotiation and an argument.</p>
 
-<h3 class="subsec-title">Running a validation cycle</h3>
-<p>A cycle on a mid-sized implementation is a day of testing and two or three days of fixes. Three cycles is a realistic plan, and the third one is short.</p>
+
+<h3 class="subsec-title">Running a cycle in the validation workbook</h3>
+<p>The validation report beside this page holds a finished Phase 1: twenty-eight rows, three cycles, four statuses and a summary. A cycle on an implementation this size is a day of testing and two or three days of fixes, and three cycles is a realistic plan.</p>
 
 <div class="dothis">
     <div class="dothis-hdr"><b>Do this</b> <span>Turn a build into a signed result</span></div>
     <ol class="dothis-steps">
         <li class="ds-group">Part one, set up</li>
         <li>
-            <span class="ds-do">Build the tracker from the solution list: one row per solution ID, with the requirement sentence copied across.</span>
-            <span class="ds-see">Include the configuration solutions. Marketing channel rules and classifications fail as often as anything else and are easier to forget.</span>
+            <span class="ds-do">Clear the Kestrel rows from the <b>Tracker</b> sheet and paste in your own solution IDs and requirement sentences, straight from the SDR.</span>
+            <span class="ds-see">Copied, not retyped and not renumbered. The moment these IDs stop matching the design, every other document in the set stops connecting to this one.</span>
         </li>
         <li>
-            <span class="ds-do">Get the hard-to-produce test data arranged before the cycle, not during it.</span>
-            <span class="ds-see">A failed payment, a valid discount code, a search that returns nothing, an order with ten products. Each one is half a day of waiting if it is not ready.</span>
+            <span class="ds-do">Include the configuration solutions alongside the rules.</span>
+            <span class="ds-see">Marketing channel rules and classifications fail as often as anything else and are easier to forget, because nothing on the site looks different when they are wrong.</span>
+        </li>
+        <li>
+            <span class="ds-do">Arrange the hard-to-produce test data before the cycle rather than during it.</span>
+            <span class="ds-see">A failed payment, a valid discount code, a search that returns nothing, an order with ten products. Each one is half a day of waiting if it is not ready when you reach its row.</span>
         </li>
         <li class="ds-group">Part two, the cycle</li>
         <li>
             <span class="ds-do">Work down the rows in order, exercising each solution and reading what the call actually carried.</span>
-            <span class="ds-see">In order, so that coverage is countable. Testing the interesting ones first is how the boring ones go untested.</span>
+            <span class="ds-see">In order, so coverage is countable. Testing the interesting ones first is how the boring ones go untested.</span>
         </li>
         <li>
             <span class="ds-do">Write each finding into the row with today's date in front of it, leaving the previous findings where they are.</span>
-            <span class="ds-see">Be specific about what was wrong. Quantity was 2 when one product was added beats quantity incorrect.</span>
+            <span class="ds-see">Look at KES-S011 for the shape. Be specific: quantity was 2 when one product was added beats quantity incorrect.</span>
         </li>
         <li>
-            <span class="ds-do">Capture evidence against each solution that passes.</span>
-            <span class="ds-see">The call, or the debugger view, saved with the solution ID in the filename. Seconds now, arguments avoided later.</span>
+            <span class="ds-do">Capture evidence against every solution that passes, named with its solution ID.</span>
+            <span class="ds-see">The call, or the debugger view. Seconds now, arguments avoided later.</span>
         </li>
         <li>
             <span class="ds-do">Set an owner and a date on every row that is not Passed, before the cycle is circulated.</span>
@@ -123,19 +173,19 @@ weight: 6
         </li>
         <li class="ds-group">Part three, close it</li>
         <li>
-            <span class="ds-do">Decide the exceptions explicitly: what is accepted as it is, and what is dropped from this phase.</span>
-            <span class="ds-see">Each with a reason and a date. This is the conversation that makes go-live possible, and it needs to happen in a meeting rather than by inference.</span>
+            <span class="ds-do">Decide the exceptions explicitly and write them in the <b>Exception agreed</b> column: what is accepted as it is, and what is dropped from this phase.</span>
+            <span class="ds-see">Each with a reason and a date. This is the conversation that makes go-live possible, and it has to happen in a meeting rather than by inference.</span>
         </li>
         <li>
-            <span class="ds-do">Count the statuses onto a summary sheet and write a one-line recommendation.</span>
-            <span class="ds-see">Twenty-four passed, two partly, one failed, one dropped. Proceed. That is a sentence a decision-maker can act on without reading twenty-eight rows.</span>
+            <span class="ds-do">Count the statuses onto the <b>Summary</b> sheet and write one line of recommendation.</span>
+            <span class="ds-see">Twenty-four passed, two partly, one failed, one dropped, proceed. That is a sentence a decision-maker can act on without reading twenty-eight rows.</span>
         </li>
         <li>
             <span class="ds-do">Get the sign-off column filled in by the client, row by row.</span>
             <span class="ds-see">Row by row is the point. A single signature on a covering email is not the same thing and will not survive a disagreement.</span>
         </li>
     </ol>
-    <p class="dothis-end">There is nothing else to a validation cycle. One row per solution, dated findings, evidence, owners, exceptions and a signature. Go further where the stakes are higher. A regulated business will want the tester named on each row. A large programme will want the cycle repeated on production rather than a single check.</p>
+    <p class="dothis-end">That is a validation cycle complete. One row per solution, dated findings, evidence, owners, exceptions and a signature. Go further where the stakes are higher: a regulated business will want the tester named on each row, and a large programme will want the whole cycle repeated on production rather than a single check.</p>
 </div>
 
 <h3 class="subsec-title">How you know the project succeeded</h3>
@@ -145,12 +195,6 @@ weight: 6
 
 <p>Nothing in this module argues that the documents are the work. The work is the implementation. The documents make the implementation legible to the six or seven people who each need to understand it differently. They also let somebody who was never in the room pick it up two years later and be right about it.</p>
 
-<p>What all of this assumes is that you can see what a call actually carried, which is a skill of its own and the subject of a whole module. <a href="/adobe-analytics-learning/deliver/testing-debugging/debugging-tools-overview/">Testing and Debugging</a> covers the tools that show you the hit and how to read one. It also covers how to tell a data layer fault from a rule fault, when both look identical from the outside.</p>
+<p>And almost none of what makes that work belongs to Adobe Analytics. An identifier that survives from a meeting to a signature. Scope written down before anybody builds. One instruction per row, so a change costs one edit. Four statuses instead of two, because most of what happens in testing is neither a pass nor a failure. A dropped item recorded with a reason and a name against it. Take those five to a data platform migration, a replatform, or a system nobody has built yet, and they behave the same way. The analytics was the pathway. The method is the part you keep.</p>
 
-<div class="ref-box">
-    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
-    <ul>
-        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/implementation/launch/validate-publish-prod" target="_blank">Adobe Docs: Validate your implementation and publish to production</a></li>
-        <li><a href="https://experienceleague.adobe.com/en/docs/experience-platform/debugger/home" target="_blank">Adobe Docs: Experience Platform Debugger</a></li>
-    </ul>
-</div>
+<p>What all of this assumes is that you can see what a call actually carried, which is a skill of its own and the subject of a whole module. <a href="/adobe-analytics-learning/deliver/testing-debugging/debugging-tools-overview/">Testing and Debugging</a> covers the tools that show you the hit and how to read one. It also covers how to tell a data layer fault from a rule fault, when both look identical from the outside.</p>

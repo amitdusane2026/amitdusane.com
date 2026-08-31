@@ -4,6 +4,7 @@
 <p class="lcrumb"><a href="{{ "/adobe-analytics-learning/" | relURL }}">Adobe Analytics Learning</a> &rsaquo; <a href="{{ $mod.Parent.RelPermalink }}">{{ $mod.Parent.Title }}</a> &rsaquo; <a href="{{ $mod.RelPermalink }}">{{ $mod.Title }}</a></p>
 <h1 class="lsec-title">{{ .Title }}</h1>
 {{ partial "byline.html" (dict "page" . "full" true) }}
+{{ partial "moduledocs.html" . }}
 {{- /* Auto-insert the "Need implementation steps?" signpost just before the Adobe docs ref-box, but ONLY when that ref-box actually links to Adobe documentation. A ref-box of purely internal links does not get the note. */ -}}
 {{ $content := .Content }}
 {{- /* WAY-02: heading anchors, emitted at BUILD time and not by JavaScript.

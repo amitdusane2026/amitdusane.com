@@ -16,6 +16,8 @@ weight: 4
 
 <p>A variable map prevents that, and it is the one job the inventory does better than anything else. It just has to be built to answer the question somebody actually has, which is not what is eVar17.</p>
 
+<p>The sheet being described here is <b>Variable Map</b>, at the back of the SDR workbook beside this page. Open it and scroll past eVar36. The empty rows that follow are the subject of this section, and they are much easier to argue about with the sheet in front of you.</p>
+
 <h3 class="subsec-title">The map answers a different question from the design</h3>
 <p>The blocks at the front of the document are organised by moments on the site, which is right for designing and right for review. They are useless for two other questions that come up constantly. What is free? And where else is this variable used?</p>
 
@@ -40,6 +42,46 @@ weight: 4
 </div>
 
 <p>The last column is what lifts this above a list. Somebody proposing to change how Payment Method is set can see immediately that three solutions write to it, and that one of them is the order. That is a change with consequences, and the map says so before anybody touches a rule.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">The same facts, indexed both ways</div>
+    <svg viewBox="0 0 700 260" style="width:100%;height:auto;display:block" role="img"
+         aria-label="On the left, the design blocks are grouped by moment on the site: the cart add block and the quick view block each list their own variables, and eVar17 appears inside both of them. On the right, the variable map is grouped by slot instead: eVar17 appears once, with both solution identifiers listed beside it. The same facts, indexed from opposite ends. The design answers what happens at this moment. The map answers where else this variable is used.">
+      <text x="16" y="20" style="fill:var(--text3,#5d6b7e);font-size:11px;font-weight:700">Design, by moment</text>
+      <text x="384" y="20" style="fill:var(--text3,#5d6b7e);font-size:11px;font-weight:700">Map, by slot</text>
+
+      <rect x="16" y="34" width="300" height="96" rx="6" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="30" y="54" style="fill:var(--text1,#0f172a);font-size:11.5px;font-weight:700">KES-S005 &#183; cart add, product page</text>
+      <text x="30" y="76" style="fill:var(--text2,#475569);font-size:11px">products</text>
+      <text x="30" y="96" style="fill:var(--dia-a,#ba2142);font-size:11px;font-weight:700">eVar17</text>
+      <text x="30" y="116" style="fill:var(--text2,#475569);font-size:11px">scAdd</text>
+
+      <rect x="16" y="142" width="300" height="96" rx="6" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="30" y="162" style="fill:var(--text1,#0f172a);font-size:11.5px;font-weight:700">KES-S006 &#183; cart add, quick view</text>
+      <text x="30" y="184" style="fill:var(--text2,#475569);font-size:11px">products</text>
+      <text x="30" y="204" style="fill:var(--dia-a,#ba2142);font-size:11px;font-weight:700">eVar17</text>
+      <text x="30" y="224" style="fill:var(--text2,#475569);font-size:11px">scAdd</text>
+
+      <path d="M320 96 C352 96 352 128 380 128" style="fill:none;stroke:var(--dia-a,#ba2142);stroke-width:1.6"/>
+      <path d="M320 204 C352 204 352 140 380 140" style="fill:none;stroke:var(--dia-a,#ba2142);stroke-width:1.6"/>
+
+      <rect x="384" y="34" width="300" height="204" rx="6" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="398" y="56" style="fill:var(--text2,#475569);font-size:11px">eVar16</text>
+      <text x="470" y="56" style="fill:var(--text2,#475569);font-size:11px">Listing Type</text>
+      <rect x="390" y="112" width="286" height="44" rx="4" style="fill:var(--dia-a-soft,rgba(186,33,66,.10))"/>
+      <text x="398" y="86" style="fill:var(--text2,#475569);font-size:11px">&#8942;</text>
+      <text x="398" y="132" style="fill:var(--dia-a,#ba2142);font-size:11.5px;font-weight:700">eVar17  Cart Addition Source</text>
+      <text x="398" y="146" style="fill:var(--text2,#475569);font-size:11px">used by KES-S005, KES-S006</text>
+      <text x="398" y="176" style="fill:var(--text2,#475569);font-size:11px">eVar18</text>
+      <text x="470" y="176" style="fill:var(--text2,#475569);font-size:11px">Delivery Option</text>
+      <text x="398" y="198" style="fill:var(--text3,#5d6b7e);font-size:11px">eVar37</text>
+      <text x="398" y="220" style="fill:var(--text3,#5d6b7e);font-size:11px">eVar38</text>
+      <text x="470" y="198" style="fill:var(--text3,#5d6b7e);font-size:11px">free</text>
+      <text x="470" y="220" style="fill:var(--text3,#5d6b7e);font-size:11px">free</text>
+
+      <text x="16" y="256" style="fill:var(--text3,#5d6b7e);font-size:11px">The design answers what happens here. The map answers where else this is used, and what is still free.</text>
+    </svg>
+</div>
 
 <h3 class="subsec-title">Show every slot, not only the used ones</h3>
 <p>The instinct is to list the thirty-six variables in use and stop. Do the opposite. List all of them, up to whatever the contract provides, and leave the unused rows empty.</p>
@@ -77,43 +119,46 @@ weight: 4
 
 <p>That is worth being honest about rather than pretending otherwise. Two things keep it usable. Name one person who owns the map, in the document, by role if not by name. And be clear about which copy is authoritative for what. Admin is the truth for what a setting currently is. The document is the truth for why it was chosen and who relies on it. Those are different facts and only one of them is in the product.</p>
 
+<p>That pair of habits outlives this document and this tool. Any register that mirrors a live system will drift, whether it holds variables, servers, access permissions or suppliers. Naming an owner, and declaring which copy is authoritative for which kind of fact, is what keeps a drifting register useful instead of quietly abandoned.</p>
+
 <div class="pro-tip">
     <div class="pro-tip-hdr"><span class="tip-ico"></span>Reconcile on a fixed date, not when somebody notices</div>
     <p>Put a quarterly reconciliation in the calendar and give it thirty minutes. Export the conversion variables from Admin, put them beside the map, and look only for differences. The ones you find are usually small and occasionally alarming, and either way the fix costs minutes at that size. A map nobody has reconciled for two years is one nobody trusts, and an untrusted map sends the next analyst straight back to guessing.</p>
 </div>
 
-<h3 class="subsec-title">Filling the variable map</h3>
-<p>Do this after the design blocks are written, never before. A map built first becomes a shopping list, and the design ends up shaped by what was already allocated.</p>
+
+<h3 class="subsec-title">Filling in the variable map</h3>
+<p>The <b>Variable Map</b> sheet in the SDR workbook already runs to every slot Adobe offers. Do this after the design blocks are written, never before: a map built first becomes a shopping list, and the design ends up shaped by whatever was already allocated.</p>
 
 <div class="dothis">
     <div class="dothis-hdr"><b>Do this</b> <span>Build the map from the design, then read it back</span></div>
     <ol class="dothis-steps">
         <li>
-            <span class="ds-do">List every slot the report suite has, in three blocks side by side: traffic, conversion, events.</span>
-            <span class="ds-see">Delete the rows beyond your contract before anything else, so a free row means free.</span>
+            <span class="ds-do">Delete the rows your contract does not cover. The sheet ships with 75 props, 250 eVars and 1000 events, which is the maximum rather than your allocation.</span>
+            <span class="ds-see">Do this before anything else. Until it is done, a free row means possibly free and possibly beyond your allowance, which makes the whole sheet unusable for the one question it exists to answer.</span>
         </li>
         <li>
-            <span class="ds-do">Put the reserved variables at the top of each block: pageName and channel, campaign and products, purchase and the cart events.</span>
-            <span class="ds-see">They behave differently from numbered slots and Adobe already decides what they mean. Listing them stops somebody designing a custom event for a cart add.</span>
+            <span class="ds-do">Keep the reserved variables at the top of each block and clear the names beside them.</span>
+            <span class="ds-see">pageName, channel, campaign, products, purchase and the cart events. Adobe already decides what those mean. Listing them stops somebody designing a custom event for a cart addition.</span>
         </li>
         <li>
-            <span class="ds-do">Fill in the report name and settings for every slot the design uses, and leave the rest empty.</span>
+            <span class="ds-do">Fill in the report name and the settings for every slot your design uses, and leave the rest empty.</span>
             <span class="ds-see">Settings, not descriptions. Most Recent, Visit. Product Syntax Merchandising, expires on Purchase. Counter. Currency.</span>
         </li>
         <li>
-            <span class="ds-do">Add a Used By column and fill it with the solution IDs that populate each slot.</span>
-            <span class="ds-see">This falls out of the design blocks. It is also the check: a slot with no solution against it is either a mistake or a reservation, and both need an explanation.</span>
+            <span class="ds-do">Fill the <b>Used by</b> column with the solution IDs that populate each slot.</span>
+            <span class="ds-see">It falls straight out of the design blocks, and it doubles as a check. A slot with a name and no solution against it is either a mistake or a reservation, and both need explaining.</span>
         </li>
         <li>
-            <span class="ds-do">Read the map top to bottom looking for two different things sharing one slot, and for the same thing occupying two.</span>
-            <span class="ds-see">Both are common in a first draft and both are nearly invisible in the design blocks, because the blocks are forty screens apart.</span>
+            <span class="ds-do">Read the sheet top to bottom looking for two different things sharing one slot, and for one thing occupying two.</span>
+            <span class="ds-see">Both are common in a first draft and both are nearly invisible in the design blocks, because those blocks sit forty screens apart on four sheets.</span>
         </li>
         <li>
-            <span class="ds-do">Record reservations and retirements in the empty rows, with a date and a reason.</span>
-            <span class="ds-see">This is the sheet that stops the gift registry problem. An empty row that says held for loyalty tier is not empty.</span>
+            <span class="ds-do">Write reservations and retirements into the empty rows, each with a date and a reason.</span>
+            <span class="ds-see">This is the step that prevents the gift registry problem in the opening. An empty row that says held for loyalty tier is not empty.</span>
         </li>
     </ol>
-    <p class="dothis-end">There is nothing else to the map. Every slot, the settings, and who uses it. Extend it where the estate needs more. A suite with list variables, a second currency, or deep classifications each want a block of their own. A large estate wants a column naming which report suites share a definition.</p>
+    <p class="dothis-end">That is the whole map. Every slot, its settings, and who uses it. Extend it where the estate needs more: list variables, a second currency or deep classifications each want a block of their own, and a large estate wants a column naming which report suites share a definition.</p>
 </div>
 
 <h3 class="subsec-title">Why the map goes at the back</h3>
@@ -122,13 +167,3 @@ weight: 4
 <p>That ordering also matches how the document gets used. In review, nobody opens the map. In build, everybody does. During a change six months later, the map is the first sheet somebody checks and the design blocks are what they read next. Front to back, the document runs from why to what, and the map is the last stop before the work becomes instructions.</p>
 
 <p>Those instructions are the next layer. The design says a colour is bound to the product. The map says eVar12 is merchandising. Neither tells a developer which object on the page holds the value, or when to populate it. <a href="/adobe-analytics-learning/deliver/solution-design-reference/developer-instructions/">Developer Instructions</a> covers the columns that answer that, and the ordering rule that prevents the most common failure in any implementation.</p>
-
-<div class="ref-box">
-    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
-    <ul>
-        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/admin/admin-tools/manage-report-suites/edit-report-suite/conversion-variables/conversion-var-admin" target="_blank">Adobe Docs: Conversion variables (eVar)</a></li>
-        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/admin/admin-tools/manage-report-suites/edit-report-suite/conversion-variables/merchandising-evars" target="_blank">Adobe Docs: Merchandising eVars and product finding methods</a></li>
-        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/admin/admin-tools/manage-report-suites/edit-report-suite/traffic-variables/traffic-var" target="_blank">Adobe Docs: Traffic variables (prop)</a></li>
-        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/implementation/vars/page-vars/products" target="_blank">Adobe Docs: The products variable</a></li>
-    </ul>
-</div>

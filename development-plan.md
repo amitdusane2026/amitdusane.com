@@ -1778,3 +1778,91 @@ reported success and the count went 219 to 218. **Date front matter from
 6. **M19 needs Amit's QA**, including a read of the five workbooks.
 
 Nothing pushed. `origin/develop` is still on `fa87694`; production untouched.
+
+---
+
+## M19 revision, 30 August 2026
+
+Amit read the module and returned ten inputs. Eight were acted on directly; two
+needed a decision first, and both were his.
+
+### The download UI became site furniture
+
+His point was that on a module whose payload is a set of files, a download
+control buried mid-article is only found by a reader who was already scrolling
+for something else. **The files now appear in two generated places on every
+section of the module**: a strip under the byline, and a card pinned to the top
+of the in-page spine, above "On this page".
+
+The spine was chosen over a fourth floating control because **it already solves
+exactly this problem** for the path-box jump and Ask Amit. Its own code comment
+makes the argument: it is the only furniture on a section page reachable from
+any scroll position without scrolling first. The order of loudness — pocket map,
+page nav, identity — was deliberate and does not gain a fourth voice.
+
+Both surfaces come from `[params.worlds.<world>.moduledocs.m<NN>]` and are never
+authored. Twenty of twenty-one modules emit nothing. It sits inside the world
+rather than at params level for the same reason phases do: module numbers repeat
+across worlds, and a global table would hand CJA's module 19 the learning
+world's workbooks with no error anywhere.
+
+### What else changed across all six sections
+
+**The fictional company is now introduced before it is used.** A new section in
+§1 says plainly what Kestrel and Co. is, that the project is a week from
+go-live, and that the documents should be read as a record rather than a
+template. The full `dl-box` moved up to sit with it, ahead of the ID discussion.
+
+**Every section now assumes the files are open**, and says so in one line naming
+the specific sheet under discussion. That doubles as orientation.
+
+**The project-management theme is stated once and landed six times.** A new §1
+section says the module is taught through an analytics implementation and is
+almost entirely not about analytics. Each later section closes on the
+transferable principle rather than repeating the claim.
+
+**All six walkthroughs were rewritten to start from the downloaded file.** They
+no longer teach spreadsheet mechanics. They say strip these rows, change this
+prefix, fill this column.
+
+**Four new figures**, on the BRD, SDR, variable map and validation sections.
+None of them replicates a document; each explains the concept behind one.
+
+### Two standing exceptions, recorded in the rulebook
+
+**No ref-box anywhere in M19.** Amit's ruling after long consideration: Adobe is
+the last word on the technology and has no standing on how to run a project. This
+also turns off the "Need implementation steps?" note automatically, since the
+template only injects it where a ref-box with an Adobe domain exists. These
+sections therefore fail the checklist item *ref-box present, last on the page* on
+purpose, and most now end on their closing paragraph.
+
+**Screenshot density above the two-per-section cap**, because this module walks a
+reader through documents rather than a product.
+
+Both are in the rulebook. An undocumented exception is one a future session
+helpfully undoes.
+
+### The figure checker earned its keep
+
+`diagram-check.js` found five real faults across the four new figures that no
+amount of reading would have caught: a label overflowing its box by two pixels,
+two labels within 1.2px of an edge, three text-on-shape overlaps caused by a
+rounded-corner trick, and **white text on `--dia-c` at 2.54:1**. The site has a
+full `--dia-*-ink` set for exactly that, and the figure now uses the soft fills
+with ink text. All six figures pass in both themes at 1440, and nothing overflows
+at 375.
+
+One flag fires on every figure and is not ours: *renders at 743px, not 700*. It
+appears identically on the signed-off Segments figures, so it is a pre-existing
+condition of the column width at that viewport rather than anything in M19.
+
+### Still open
+
+**Pass two is the screenshots.** Amit has asked that I capture them, from the
+Kestrel workbooks on this machine, and the brief is many small tight crops rather
+than a few large ones — the 290px phone width is what forces that. Nothing to
+redact for the first time on the site, because the documents are our own.
+
+The rest of the queue is unchanged: M11 §1's expired warn-box, the M03 §2
+contradiction, M20 Testing, M21 CJA, 27 landing pages, and the home page card.

@@ -782,6 +782,19 @@
     if (askA) askA.setAttribute('data-ask', '');
   }
 
+  /* Module downloads, pinned above the heading list. Emitted hidden by
+     partials/moduledocs.html on every section of a module that declares a
+     file set, and lifted here rather than built in JS so the markup lives in
+     one place. It goes FIRST, before "On this page", because on a module
+     whose payload is a set of files the files outrank the heading list: a
+     reader who has not opened them is reading about documents they cannot
+     see. Nothing is emitted at all on the 20 modules with no file set. */
+  var mdocs = document.getElementById('mdocs-src');
+  if (mdocs && mdocs.firstElementChild) {
+    rail.appendChild(mdocs.firstElementChild);
+    mdocs.parentNode.removeChild(mdocs);
+  }
+
   if (ol.children.length) {
     var hd = document.createElement('p');
     hd.className = 'wf-rail-h';

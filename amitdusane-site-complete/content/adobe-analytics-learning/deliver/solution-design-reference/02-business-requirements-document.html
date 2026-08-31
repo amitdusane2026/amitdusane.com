@@ -16,6 +16,8 @@ weight: 2
 
 <p>Both go into the document, worded the way they were said, with nothing to mark one as small and the other as enormous. That restraint is the discipline the whole document runs on, and it is harder than it sounds.</p>
 
+<p>The document in question is the first of the five workbooks beside this page, and the sheet being described here is <b>Requirements</b>. Open it now if you have not already. Every column named below is a column you can look at, and reading about them in the abstract is the slow way to do this.</p>
+
 <h3 class="subsec-title">Record what they want, never how you will do it</h3>
 <p>The temptation, when a request arrives that you already know how to solve, is to write down the solution. The browser one is a single line. Adobe collects browser automatically, so why not note that and move on. Do it once and the habit spreads. By requirement twenty the document has become a design, badly, written before anybody had time to think.</p>
 
@@ -41,6 +43,44 @@ weight: 2
 <div class="pro-tip">
     <div class="pro-tip-hdr"><span class="tip-ico"></span>This column is the difference between taking an order and giving advice</div>
     <p>Anybody can write down what they were told in a room. Arriving with the five things this business will want in six months, and being right, is the part they are paying for. It is also the cheapest credibility available on a project, because it happens in week one before you have delivered anything else.</p>
+</div>
+
+<div class="diagram-box">
+    <div class="diagram-title">What a sentence gains when it becomes a row</div>
+    <svg viewBox="0 0 700 250" style="width:100%;height:auto;display:block" role="img"
+         aria-label="On the left, a request spoken in a workshop: I want to know which discount codes cost us the most. On the right, the same sentence sitting in a row with eight other columns around it: requirement identifier, business objective, technical objective, who raised it, the reporting dimensions, the metrics, the priority, the phase and the sign-off. The words of the request are unchanged. Everything around it is new.">
+      <defs>
+        <marker id="brd1a" markerWidth="8" markerHeight="8" refX="6.5" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" style="fill:var(--dia-a,#ba2142)"/></marker>
+      </defs>
+
+      <text x="16" y="20" style="fill:var(--text3,#5d6b7e);font-size:11px;font-weight:700">Said in a workshop</text>
+      <text x="316" y="20" style="fill:var(--text3,#5d6b7e);font-size:11px;font-weight:700">Written as a row</text>
+
+      <rect x="16" y="76" width="242" height="86" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="30" y="104" style="fill:var(--text1,#0f172a);font-size:12.5px">&#8220;I want to know which</text>
+      <text x="30" y="124" style="fill:var(--text1,#0f172a);font-size:12.5px">discount codes cost us</text>
+      <text x="30" y="144" style="fill:var(--text1,#0f172a);font-size:12.5px">the most.&#8221;</text>
+
+      <line x1="266" y1="119" x2="306" y2="119" style="stroke:var(--dia-a,#ba2142);stroke-width:1.8" marker-end="url(#brd1a)"/>
+
+      <rect x="316" y="76" width="368" height="86" rx="6" style="fill:var(--card,#ffffff);stroke:var(--dia-a,#ba2142);stroke-width:1.8"/>
+      <text x="330" y="104" style="fill:var(--text1,#0f172a);font-size:12.5px">&#8220;I want to know which discount</text>
+      <text x="330" y="124" style="fill:var(--text1,#0f172a);font-size:12.5px">codes cost us the most.&#8221;</text>
+      <text x="330" y="148" style="fill:var(--dia-a,#ba2142);font-size:11px;font-weight:700">the words do not change</text>
+
+      <rect x="316" y="36" width="368" height="26" rx="4" style="fill:var(--accent-light,#fdeef1);stroke:var(--border,#e2e8f0);stroke-width:1"/>
+      <text x="330" y="53" style="fill:var(--text2,#475569);font-size:11px">KES-R011  &#183;  Sales  &#183;  Promotions  &#183;  Business</text>
+
+      <rect x="316" y="176" width="368" height="26" rx="4" style="fill:var(--accent-light,#fdeef1);stroke:var(--border,#e2e8f0);stroke-width:1"/>
+      <text x="330" y="193" style="fill:var(--text2,#475569);font-size:11px">Discount Code, Product  &#183;  Applications, Value</text>
+
+      <rect x="316" y="208" width="368" height="26" rx="4" style="fill:var(--accent-light,#fdeef1);stroke:var(--border,#e2e8f0);stroke-width:1"/>
+      <text x="330" y="225" style="fill:var(--text2,#475569);font-size:11px">High  &#183;  Phase 1  &#183;  Signed</text>
+
+      <text x="16" y="196" style="fill:var(--text2,#475569);font-size:11px">Eight facts wrapped</text>
+      <text x="16" y="212" style="fill:var(--text2,#475569);font-size:11px">around one sentence.</text>
+      <text x="16" y="234" style="fill:var(--text3,#5d6b7e);font-size:11px">That is the whole document.</text>
+    </svg>
 </div>
 
 <h3 class="subsec-title">Give every requirement an ID before you give it anything else</h3>
@@ -86,49 +126,54 @@ weight: 2
 
 <p>Let the business set the priority and the phase, and record who set it. Your job is the estimate, not the choice. Once those two columns are filled in and signed, a whole category of argument disappears. Why is the sorting requirement not live? The answer is a row rather than a memory.</p>
 
-<h3 class="subsec-title">Building the BRD sheet</h3>
-<p>An afternoon of drafting after the workshop, then two rounds of review. Build it in this order, because the parts depend on each other.</p>
+
+<h3 class="subsec-title">Filling in the BRD workbook</h3>
+<p>The workbook already has the four sheets and every column described above. What follows is the order to fill them in, which matters more than it looks, because several of the steps are only cheap while the ones before them are still open.</p>
 
 <div class="dothis">
     <div class="dothis-hdr"><b>Do this</b> <span>Turn a workshop into a document somebody can sign</span></div>
     <ol class="dothis-steps">
         <li class="ds-group">Part one, capture</li>
         <li>
+            <span class="ds-do">Open the BRD workbook at the <b>Requirements</b> sheet and clear the Kestrel rows, leaving the ten columns in place.</span>
+            <span class="ds-see">Leave KES-R001 sitting there while you write your first few rows. Copying the shape of a finished row is faster than remembering what belongs in each column.</span>
+        </li>
+        <li>
             <span class="ds-do">Write every request into a row, in the words it was asked in, with no editing and no sizing.</span>
-            <span class="ds-see">Including the ones that are not analytics and the ones that cannot be done. They are dealt with in part two, not by leaving them out.</span>
+            <span class="ds-see">Including the ones that are not analytics and the ones that cannot be done. Those are dealt with in part two, not by leaving them out.</span>
         </li>
         <li>
-            <span class="ds-do">Number them with a property prefix and a running number, starting at 001.</span>
-            <span class="ds-see">Do this before grouping or sorting anything. An ID assigned after a sort is an ID that encodes an ordering nobody will remember.</span>
+            <span class="ds-do">Number them from 001 with your own prefix, before grouping or sorting anything.</span>
+            <span class="ds-see">An ID assigned after a sort encodes an ordering nobody will remember, and the ordering will change again next week.</span>
         </li>
         <li>
-            <span class="ds-do">Add your recommended requirements, and mark them as recommended in their own column.</span>
-            <span class="ds-see">Errors, performance, login state on every hit, footer and header navigation. Five or six is plenty and most will be accepted.</span>
+            <span class="ds-do">Add your recommended requirements and set the <b>Raised By</b> column to mark them.</span>
+            <span class="ds-see">Errors, performance, login state on every hit, header and footer navigation. Five or six is plenty and most will be accepted.</span>
         </li>
         <li class="ds-group">Part two, shape</li>
         <li>
-            <span class="ds-do">Move everything that cannot be delivered onto an Out of Scope sheet, each with a reason and what it would take.</span>
-            <span class="ds-see">A reason, never a refusal. The delivery calculator goes to the website team. The ledger reconciliation gets a sentence about what analytics counts.</span>
+            <span class="ds-do">Move everything that cannot be delivered onto the <b>Out of Scope</b> sheet, which already carries its three columns: what was asked for, why it is not in scope, and what it would take.</span>
+            <span class="ds-see">A reason, never a refusal. Look at KES-X004 for the shape of a difficult one, where the honest answer is that the tool is wrong for the question.</span>
         </li>
         <li>
-            <span class="ds-do">Group what remains, name the four or five objectives that fall out, and tag every row with one.</span>
-            <span class="ds-see">Look at the counts per objective before moving on. A lopsided distribution is a finding worth raising in the review.</span>
+            <span class="ds-do">Name your four or five objectives on the <b>Objectives and Scope</b> sheet, then tag every requirement with the one it serves.</span>
+            <span class="ds-see">Count the requirements per objective before moving on. Twenty-two against sales and one against data quality is a finding worth raising in the review.</span>
         </li>
         <li>
-            <span class="ds-do">Fill in the rough dimensions and metrics for each row.</span>
+            <span class="ds-do">Fill the dimensions and metrics columns roughly.</span>
             <span class="ds-see">Rough is the correct level. Product, Product Category, Cart Additions. Naming eVars here is starting the design in the wrong document.</span>
         </li>
         <li class="ds-group">Part three, agree</li>
         <li>
-            <span class="ds-do">Walk the document with the business, and let them set priority and phase on every row.</span>
+            <span class="ds-do">Walk the sheet with the business and let them set <b>Priority</b> and <b>Phase</b> on every row.</span>
             <span class="ds-see">Expect a third of it to move to a later phase. That is the meeting working, not the meeting going badly.</span>
         </li>
         <li>
-            <span class="ds-do">Add the change log sheet, record the version, and get the sign-off column filled in.</span>
-            <span class="ds-see">A row left blank in that column is a row nobody agreed to, and it will surface in testing.</span>
+            <span class="ds-do">Record the version on the <b>Change Log</b> sheet and get the <b>Sign-off</b> column filled in, row by row.</span>
+            <span class="ds-see">A row left blank in that column is a row nobody agreed to, and it will surface in testing when it is expensive.</span>
         </li>
     </ol>
-    <p class="dothis-end">There is nothing else in a BRD. Requirements, objectives, out of scope, priority, phase, sign-off and a log. None of that is a ceiling. A regulated business will want a data-protection column. A large programme will want the requesting team named. Add them when the project asks.</p>
+    <p class="dothis-end">That is a finished BRD. Requirements, objectives, out of scope, priority, phase, sign-off and a log, and nothing else belongs in it. None of that is a ceiling: a regulated business will want a data-protection column and a large programme will want the requesting team named, so add them when the project asks.</p>
 </div>
 
 <h3 class="subsec-title">What this buys you when the project changes</h3>
@@ -136,13 +181,6 @@ weight: 2
 
 <p>With a signed BRD it is a change request. It gets an ID, an estimate and a decision. The decision is made by the person paying, not by whoever happened to be on the call. Nothing about that is obstructive; it is simply the difference between a scope somebody agreed to and a scope that happened. The document is not there to say no. It is there so that yes means something.</p>
 
-<p>Once it is signed, the requirements stop being sentences and start being the input to a design. Every one of those IDs is about to be answered by one or more solutions, each with an identifier of its own. That mapping is rarely one to one. <a href="/adobe-analytics-learning/deliver/solution-design-reference/sdr-structure/">SDR Structure</a> covers how a requirement becomes a block of rows, and why some solutions have no requirement behind them at all.</p>
+<p>None of the last three paragraphs mentioned Adobe Analytics, and that is the point of this module rather than an accident of it. Numbered requirements, a written record of what is out of scope, and a phase somebody signed are how any large piece of work stays inside its own boundaries. The analytics is what makes the example concrete.</p>
 
-<div class="ref-box">
-    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
-    <ul>
-        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/implementation/prepare/solution-design" target="_blank">Adobe Docs: Create a solution design document</a></li>
-        <li><a href="https://experienceleague.adobe.com/en/docs/analytics-learn/tutorials/administration/admin-tips/download-the-adobe-analytics-implementation-playbook" target="_blank">Adobe Docs: Adobe Analytics implementation playbook</a></li>
-        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/implementation/prepare/data-layer" target="_blank">Adobe Docs: Create a data layer</a></li>
-    </ul>
-</div>
+<p>Once it is signed, the requirements stop being sentences and start being the input to a design. Every one of those IDs is about to be answered by one or more solutions, each with an identifier of its own. That mapping is rarely one to one. <a href="/adobe-analytics-learning/deliver/solution-design-reference/sdr-structure/">SDR Structure</a> covers how a requirement becomes a block of rows, and why some solutions have no requirement behind them at all.</p>

@@ -90,6 +90,47 @@ disableKinds = ["taxonomy", "term"]
     js   = "world-learning.js"
     root = "/adobe-analytics-learning"
 
+# ---------------------------------------------------------------------------
+# Module downloads, added 30 August 2026 for M19.
+#
+# Most modules teach a topic and the prose is the whole deliverable. A few
+# hand the reader a set of files, and for those the files are the payload
+# rather than an extra. Those modules declare their files here, keyed "m" plus
+# the module number, and every section of that module then carries them in two
+# places automatically: a strip below the byline, and a card pinned to the top
+# of the in-page spine, which is the one piece of furniture on a section page
+# reachable from any scroll position without scrolling first.
+#
+# It sits INSIDE the world, not at params level, for the same reason phases do.
+# Module numbers repeat across worlds, so a global table would hand CJA's
+# module 19 the learning world's workbooks with no error anywhere.
+# ---------------------------------------------------------------------------
+[params.worlds.adobe-analytics-learning.moduledocs]
+  [params.worlds.adobe-analytics-learning.moduledocs.m19]
+    label = "The Kestrel and Co. workbooks"
+    strip = "The five worked documents this module is built on"
+    blurb = "A complete set for a fictional online homeware retailer, used as the example throughout this module. They are filled in rather than blank, because an empty grid teaches nothing and a filled one can be emptied in a minute. Delete the rows, keep the shape."
+    [[params.worlds.adobe-analytics-learning.moduledocs.m19.files]]
+      name = "Business Requirements Document"
+      href = "/templates/adobe-analytics-business-requirements-document-template.xlsx"
+      meta = "XLSX &middot; 4 sheets &middot; 36 requirements"
+    [[params.worlds.adobe-analytics-learning.moduledocs.m19.files]]
+      name = "Solution Design Reference"
+      href = "/templates/adobe-analytics-solution-design-reference-template.xlsx"
+      meta = "XLSX &middot; 8 sheets &middot; 35 solutions"
+    [[params.worlds.adobe-analytics-learning.moduledocs.m19.files]]
+      name = "Technical Specification Document"
+      href = "/templates/adobe-analytics-technical-specification-document-template.xlsx"
+      meta = "XLSX &middot; 9 sheets &middot; the SDR plus 8 columns"
+    [[params.worlds.adobe-analytics-learning.moduledocs.m19.files]]
+      name = "Validation Report"
+      href = "/templates/adobe-analytics-validation-report-template.xlsx"
+      meta = "XLSX &middot; 2 sheets &middot; 3 test cycles"
+    [[params.worlds.adobe-analytics-learning.moduledocs.m19.files]]
+      name = "Implementation Project Plan"
+      href = "/templates/adobe-analytics-implementation-project-plan-template.xlsx"
+      meta = "XLSX &middot; 2 sheets &middot; 21 activities"
+
 [params.worlds.adobe-analytics-learning.phases]
   [params.worlds.adobe-analytics-learning.phases.foundations]
     order = 1

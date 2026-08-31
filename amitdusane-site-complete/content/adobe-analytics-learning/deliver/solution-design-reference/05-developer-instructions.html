@@ -16,6 +16,8 @@ weight: 5
 
 <p>And nobody reads it. Every walkthrough with the development team still starts from nothing, with somebody talking through what the document already said. The book was written for an audience that turned out not to exist.</p>
 
+<p>What replaced it is the third workbook beside this page. Open it alongside the SDR and put the two windows next to each other, because the whole of this section is about the relationship between them, and thirty seconds of looking is worth several paragraphs of description.</p>
+
 <h3 class="subsec-title">Why the technical document was the one that failed</h3>
 <p>The failure is not about writing quality. It is about the shape of the thing against the shape of the work.</p>
 
@@ -32,39 +34,34 @@ weight: 5
     <div class="diagram-title">One row, two audiences</div>
     <svg viewBox="0 0 700 320" style="width:100%;height:auto;display:block" role="img"
          aria-label="A single row of fifteen columns split into two groups. The left group of seven columns is the signed Solution Design Reference: solution ID, requirement ID, solution component, requirement, variable or event, name, and details and examples. The right group of eight columns is added to make the technical document: data layer or tool code, rule type, rule name, rule condition, data element, developer instructions, product data layer, and custom code. The business reads the left group, the build team reads the right.">
-      <rect x="16" y="46" width="330" height="238" rx="8" style="fill:var(--card,#ffffff);stroke:var(--dia-a,#ba2142);stroke-width:1.8"/>
-      <rect x="354" y="46" width="330" height="238" rx="8" style="fill:var(--card,#ffffff);stroke:var(--dia-c,#10b981);stroke-width:1.8"/>
+      <rect x="16" y="44" width="330" height="248" rx="8" style="fill:var(--dia-a-soft,rgba(186,33,66,.10));stroke:var(--dia-a,#ba2142);stroke-width:1.8"/>
+      <rect x="354" y="44" width="330" height="248" rx="8" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.8"/>
 
-      <rect x="16" y="46" width="330" height="30" rx="8" style="fill:var(--dia-a,#ba2142)"/>
-      <rect x="16" y="66" width="330" height="10" style="fill:var(--dia-a,#ba2142)"/>
-      <rect x="354" y="46" width="330" height="30" rx="8" style="fill:var(--dia-c,#10b981)"/>
-      <rect x="354" y="66" width="330" height="10" style="fill:var(--dia-c,#10b981)"/>
+      <text x="32" y="70" style="fill:var(--dia-a-ink,#951833);font-size:12.5px;font-weight:700">The SDR, seven columns, already signed</text>
+      <text x="370" y="70" style="fill:var(--dia-c-ink,#0a6e50);font-size:12.5px;font-weight:700">Eight columns added for the build</text>
 
-      <text x="32" y="66" style="fill:#ffffff;font-size:12.5px;font-weight:700">The SDR, seven columns, already signed</text>
-      <text x="370" y="66" style="fill:#ffffff;font-size:12.5px;font-weight:700">Eight columns added for the build</text>
+      <text x="32" y="92" style="fill:var(--text2,#475569);font-size:11px">Read by the business</text>
+      <text x="370" y="92" style="fill:var(--text2,#475569);font-size:11px">Read by the build team</text>
 
-      <text x="32" y="100" style="fill:var(--text3,#5d6b7e);font-size:11px">Read by the business</text>
-      <text x="370" y="100" style="fill:var(--text3,#5d6b7e);font-size:11px">Read by the build team</text>
+      <text x="32" y="122" style="fill:var(--text1,#0f172a);font-size:11.5px">Solution ID</text>
+      <text x="32" y="144" style="fill:var(--text1,#0f172a);font-size:11.5px">Requirement ID</text>
+      <text x="32" y="166" style="fill:var(--text1,#0f172a);font-size:11.5px">Solution component</text>
+      <text x="32" y="188" style="fill:var(--text1,#0f172a);font-size:11.5px">Requirement</text>
+      <text x="32" y="210" style="fill:var(--text1,#0f172a);font-size:11.5px">Variable or event</text>
+      <text x="32" y="232" style="fill:var(--text1,#0f172a);font-size:11.5px">Name</text>
+      <text x="32" y="254" style="fill:var(--text1,#0f172a);font-size:11.5px">Details and examples</text>
 
-      <text x="32" y="128" style="fill:var(--text1,#0f172a);font-size:11.5px">Solution ID</text>
-      <text x="32" y="150" style="fill:var(--text1,#0f172a);font-size:11.5px">Requirement ID</text>
-      <text x="32" y="172" style="fill:var(--text1,#0f172a);font-size:11.5px">Solution component</text>
-      <text x="32" y="194" style="fill:var(--text1,#0f172a);font-size:11.5px">Requirement</text>
-      <text x="32" y="216" style="fill:var(--text1,#0f172a);font-size:11.5px">Variable or event</text>
-      <text x="32" y="238" style="fill:var(--text1,#0f172a);font-size:11.5px">Name</text>
-      <text x="32" y="260" style="fill:var(--text1,#0f172a);font-size:11.5px">Details and examples</text>
-
-      <text x="370" y="128" style="fill:var(--text1,#0f172a);font-size:11.5px">Data layer or tool code</text>
-      <text x="370" y="150" style="fill:var(--text1,#0f172a);font-size:11.5px">Rule type</text>
-      <text x="370" y="172" style="fill:var(--text1,#0f172a);font-size:11.5px">Rule name</text>
-      <text x="370" y="194" style="fill:var(--text1,#0f172a);font-size:11.5px">Rule condition</text>
-      <text x="370" y="216" style="fill:var(--text1,#0f172a);font-size:11.5px">Data element</text>
-      <text x="370" y="238" style="fill:var(--text1,#0f172a);font-size:11.5px">Developer instructions</text>
-      <text x="370" y="260" style="fill:var(--text1,#0f172a);font-size:11.5px">Product data layer</text>
-      <text x="370" y="282" style="fill:var(--text1,#0f172a);font-size:11.5px">Custom code</text>
+      <text x="370" y="122" style="fill:var(--text1,#0f172a);font-size:11.5px">Data layer or tool code</text>
+      <text x="370" y="144" style="fill:var(--text1,#0f172a);font-size:11.5px">Rule type</text>
+      <text x="370" y="166" style="fill:var(--text1,#0f172a);font-size:11.5px">Rule name</text>
+      <text x="370" y="188" style="fill:var(--text1,#0f172a);font-size:11.5px">Rule condition</text>
+      <text x="370" y="210" style="fill:var(--text1,#0f172a);font-size:11.5px">Data element</text>
+      <text x="370" y="232" style="fill:var(--text1,#0f172a);font-size:11.5px">Developer instructions</text>
+      <text x="370" y="254" style="fill:var(--text1,#0f172a);font-size:11.5px">Product data layer</text>
+      <text x="370" y="276" style="fill:var(--text1,#0f172a);font-size:11.5px">Custom code</text>
 
       <text x="16" y="26" style="fill:var(--text2,#475569);font-size:12px;font-weight:700">KES-S005 is one row, and it is the same row in both documents.</text>
-      <text x="16" y="308" style="fill:var(--text3,#5d6b7e);font-size:11px">Nothing on the left is restated on the right, because nothing was moved.</text>
+      <text x="16" y="312" style="fill:var(--text3,#5d6b7e);font-size:11px">Nothing on the left is restated on the right, because nothing was moved.</text>
     </svg>
 </div>
 
@@ -133,47 +130,50 @@ Notes:
 
 <p>The economy of this shape shows up on the day something changes. A direct call gets renamed, and that is one cell. A product field is added, and that is one cell. The change log gets a line naming the solution ID. Nothing else in the document has to be touched, and nothing else can quietly fall out of step.</p>
 
+<p>That property is the reason this shape is worth stealing for work that has nothing to do with analytics. A document where one change costs one edit stays true. A document where one change costs four edits across three chapters becomes false quietly, a little at a time, and nobody can point at the day it stopped being reliable.</p>
+
 <h3 class="subsec-title">What else has to be written down before any of it works</h3>
 <p>Rules do not run in a vacuum, so two more sheets belong in the technical document. One for the platform: which extensions are installed, the report suite for each environment, the tracking server, the identity service, which plugins are loaded and where. One for custom code, holding the four or five places the implementation genuinely needs code rather than configuration.</p>
 
 <p>Write the reason next to each piece of code, not only the code. A guard that stops a refreshed order confirmation sending a second purchase looks like clutter to somebody tidying up next year. With one line saying what it prevents, it survives.</p>
 
-<h3 class="subsec-title">Extending the SDR into a TSD</h3>
-<p>An afternoon, if the design is finished. If it is not, this step will find out.</p>
+
+<h3 class="subsec-title">Filling in the technical document</h3>
+<p>The TSD workbook beside this page is already the SDR with its eight extra columns, filled in for Kestrel and Co. Open both files side by side once before you start, because the relationship between them is easier to see than to describe.</p>
 
 <div class="dothis">
     <div class="dothis-hdr"><b>Do this</b> <span>Add eight columns and a walkthrough, and stop writing a book</span></div>
     <ol class="dothis-steps">
         <li>
-            <span class="ds-do">Copy the signed SDR to a new file, name it as the technical document version 1.0, and change nothing on the left.</span>
-            <span class="ds-see">The first seven columns should stay identical to the signed version, cell for cell. If they drift, the business signed something that no longer exists.</span>
+            <span class="ds-do">Copy your signed SDR to a new file, name it as the technical document version 1.0, and change nothing in the first seven columns.</span>
+            <span class="ds-see">Compare them afterwards. Those columns should be identical cell for cell, and if they have drifted the business has signed something that no longer exists.</span>
         </li>
         <li>
-            <span class="ds-do">Add the eight columns and colour the two header groups differently.</span>
-            <span class="ds-see">Then say what the colours mean, once, in the walkthrough and in the file. A colour nobody explained is decoration.</span>
+            <span class="ds-do">Add the eight columns with the header colouring the Kestrel file uses, and say once what the two colours mean.</span>
+            <span class="ds-see">First colour is what the business signs, second is what the build team uses. A colour nobody explained is decoration.</span>
         </li>
         <li>
-            <span class="ds-do">For each block, decide the rule type first, then name the rule and its condition.</span>
-            <span class="ds-see">Direct call for anything the site has to trigger. Page load only when the values are genuinely present at page load. Event based when the tag manager can recognise the element itself.</span>
+            <span class="ds-do">Decide the rule type for each block first, then name the rule and its condition.</span>
+            <span class="ds-see">Direct call for anything the site has to trigger. Page load only when the values are genuinely present at page load. Event based when the tag manager can recognise the element on its own.</span>
         </li>
         <li>
-            <span class="ds-do">Give every data layer object exactly one data element, and reference the element in the rules rather than the raw path.</span>
-            <span class="ds-see">A renamed object is then one edit. Read the path directly in twelve rules and it is twelve edits, and the twelfth gets missed.</span>
+            <span class="ds-do">Give every data layer object exactly one data element, and reference the element in rules rather than the raw path.</span>
+            <span class="ds-see">A renamed object is then one edit. Read the path directly in twelve rules and it becomes twelve edits, and the twelfth is the one that gets missed.</span>
         </li>
         <li>
             <span class="ds-do">Write the developer instruction for each block, ending with the ordering note.</span>
-            <span class="ds-see">Plain English, a handful of lines, and the exact call to make. Repeat the ordering note on every block even though it is the same words. It is the one that gets forgotten.</span>
+            <span class="ds-see">Plain English, a handful of lines, and the exact call to make. Repeat the ordering note on every block even though the words are the same. It is the one that gets forgotten.</span>
         </li>
         <li>
-            <span class="ds-do">Add the platform sheet and the custom code sheet.</span>
-            <span class="ds-see">Extensions, report suites per environment, plugins, the consent gate. Then each piece of code with the reason it exists beside it.</span>
+            <span class="ds-do">Rewrite the <b>Platform Setup</b> and <b>Custom Code</b> sheets for your own build.</span>
+            <span class="ds-see">Extensions, report suites per environment, plugins, the consent gate. Then each piece of code with the reason it exists written beside it, or somebody deletes it during a tidy-up next year.</span>
         </li>
         <li>
             <span class="ds-do">Walk it through with both developers in one session, and tell each of them which columns are theirs.</span>
             <span class="ds-see">One session, not one per team. Most of the questions are about the seam between them, and the seam only gets discussed when both are in the room.</span>
         </li>
     </ol>
-    <p class="dothis-end">There is nothing else to write. Eight columns, two support sheets and one walkthrough. Add to it where the estate is bigger. A site with a mobile app alongside it needs a second set of technical columns, because an app has no data layer and the instructions are entirely different.</p>
+    <p class="dothis-end">That is the technical document finished. Eight columns, two support sheets and one walkthrough, and no prose anywhere except inside a cell. Add to it where the estate is bigger: a mobile app needs a second set of technical columns entirely, because an app has no data layer and the instructions are different from top to bottom.</p>
 </div>
 
 <h3 class="subsec-title">What a developer can now do without you</h3>
@@ -182,13 +182,3 @@ Notes:
 <p>The build can start, and it will not be right first time. Direct calls will fire twice. A quantity will arrive as the cart total. A payment method will come through as a gateway code rather than a name. That is normal, and none of it is a documentation failure, because the way faults get found is a test cycle that checks the build against the design, row by row, using the same identifiers.</p>
 
 <p><a href="/adobe-analytics-learning/deliver/solution-design-reference/validation-and-sign-off/">Validation and Sign-off</a> covers how that cycle is run and recorded, why four statuses are better than pass and fail, and how a project reaches the point where somebody can say honestly whether it worked.</p>
-
-<div class="ref-box">
-    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
-    <ul>
-        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/implementation/prepare/data-layer" target="_blank">Adobe Docs: Create a data layer</a></li>
-        <li><a href="https://experienceleague.adobe.com/en/docs/experience-platform/tags/extensions/client/analytics/overview" target="_blank">Adobe Docs: Adobe Analytics extension</a></li>
-        <li><a href="https://experienceleague.adobe.com/en/docs/experience-platform/tags/ui/rules" target="_blank">Adobe Docs: Rules in Adobe Experience Platform Tags</a></li>
-        <li><a href="https://experienceleague.adobe.com/en/docs/experience-platform/tags/ui/data-elements" target="_blank">Adobe Docs: Data elements in Adobe Experience Platform Tags</a></li>
-    </ul>
-</div>

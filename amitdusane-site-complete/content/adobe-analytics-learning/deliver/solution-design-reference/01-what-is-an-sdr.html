@@ -57,6 +57,34 @@ weight: 1
 
 <p>Notice what is not in that table. There is no document for the person running the project, because the plan is a separate thing, and no document for the person testing, because the test results are a separate thing. Both of those exist here too, and both of them are covered in <a href="/adobe-analytics-learning/deliver/solution-design-reference/validation-and-sign-off/">Validation and Sign-off</a>. What matters at this point is the shape of the middle three: a request, a design, an instruction.</p>
 
+<h3 class="subsec-title">The company these documents belong to</h3>
+<p>Everything from this point on refers to one implementation, and it is worth being clear about what it is before any of it is used as an example.</p>
+
+<p>Kestrel and Co. is a fictional online homeware retailer. Furniture, kitchen, bedding, twelve showrooms, and a trade account scheme for interior designers. The company does not exist and the project never happened. Nothing inside the documents is invented for effect, though. The requirements are the ones businesses ask for, the design decisions are the ones that have to be made, and the faults found in testing are the faults that occur.</p>
+
+<p>The project sits at a specific moment, and reading it that way is what makes it useful. Requirements were signed in March. The design was signed in April. The build ran through May, three test cycles followed, and go-live is about a week away. So when a later section says what was agreed, or what failed in cycle two and was fixed by cycle three, it describes a project that is nearly finished. Not a template somebody filled in.</p>
+
+<div class="dl-box">
+    <div class="dl-title"><span class="dl-ico" aria-hidden="true"></span>The five workbooks, filled in and ready to strip</div>
+    <p>The complete set for Kestrel and Co., used throughout this module. They are filled in rather than blank, because an empty grid teaches nothing and a filled one can be emptied in a minute. Delete the rows, keep the shape.</p>
+    <ul class="dl-list">
+        <li><a href="/templates/adobe-analytics-business-requirements-document-template.xlsx" download><span class="dl-name">Business Requirements Document</span><span class="dl-meta">XLSX &middot; 4 sheets &middot; 36 requirements</span></a></li>
+        <li><a href="/templates/adobe-analytics-solution-design-reference-template.xlsx" download><span class="dl-name">Solution Design Reference</span><span class="dl-meta">XLSX &middot; 8 sheets &middot; 35 solutions</span></a></li>
+        <li><a href="/templates/adobe-analytics-technical-specification-document-template.xlsx" download><span class="dl-name">Technical Specification Document</span><span class="dl-meta">XLSX &middot; 9 sheets &middot; the SDR plus 8 columns</span></a></li>
+        <li><a href="/templates/adobe-analytics-validation-report-template.xlsx" download><span class="dl-name">Validation Report</span><span class="dl-meta">XLSX &middot; 2 sheets &middot; 3 test cycles</span></a></li>
+        <li><a href="/templates/adobe-analytics-implementation-project-plan-template.xlsx" download><span class="dl-name">Implementation Project Plan</span><span class="dl-meta">XLSX &middot; 2 sheets &middot; 21 activities</span></a></li>
+    </ul>
+</div>
+
+<p>Open them now, before going further. Five minutes of scrolling through the SDR and the validation report is enough. Everything after this point describes rows you can look at, and the rest of the module is much harder work when the document being discussed is one you have never seen. The same five files sit in the panel beside this page and under the byline of every section, so they are never more than one click away.</p>
+
+<h3 class="subsec-title">What this module is really teaching</h3>
+<p>One more thing before the documents themselves, because it changes how the rest reads.</p>
+
+<p>This is taught through an Adobe Analytics implementation, because that is the work these documents were built for and that is where the examples come from. Very little of it is about Adobe Analytics. Requirement identifiers that survive from a meeting to a signature. Scope written down before build starts. A record of what was deliberately not done. One instruction per row, so a change costs one edit. Four test statuses instead of two. A dropped item recorded with a reason and a name against it. That is project management.</p>
+
+<p>It is shown here on an analytics project. It transfers without modification to a platform migration, a replatform, a customer data platform rollout, or anything else large enough that people start losing track of what was agreed. The analytics is the pathway. The method is the thing worth keeping.</p>
+
 <h3 class="subsec-title">The ID that runs from a request to a sign-off</h3>
 <p>Three documents sitting in three files are three documents. What turns them into one thing is that every requirement is given an identifier the moment it is written down, and that identifier is never reused, never renumbered, and never dropped. A request from the business becomes KES-R003. The design that answers it becomes KES-S005. The build instruction carries KES-S005. The test result is a row keyed on KES-S005. The sign-off is against KES-S005.</p>
 
@@ -73,14 +101,14 @@ weight: 1
       <text x="16" y="20" style="fill:var(--text3,#5d6b7e);font-size:11px;font-weight:700">BRD</text>
       <text x="196" y="20" style="fill:var(--text3,#5d6b7e);font-size:11px;font-weight:700">SDR</text>
       <text x="386" y="20" style="fill:var(--text3,#5d6b7e);font-size:11px;font-weight:700">TSD</text>
-      <text x="566" y="20" style="fill:var(--text3,#5d6b7e);font-size:11px;font-weight:700">VALIDATION</text>
+      <text x="566" y="20" style="fill:var(--text3,#5d6b7e);font-size:11px;font-weight:700">Validation</text>
 
       <line x1="16" y1="28" x2="684" y2="28" style="stroke:var(--border,#e2e8f0);stroke-width:1"/>
 
-      <rect x="16" y="88" width="150" height="72" rx="6" style="fill:var(--card,#ffffff);stroke:var(--dia-a,#ba2142);stroke-width:1.8"/>
+      <rect x="16" y="86" width="150" height="80" rx="6" style="fill:var(--card,#ffffff);stroke:var(--dia-a,#ba2142);stroke-width:1.8"/>
       <text x="28" y="110" style="fill:var(--dia-a,#ba2142);font-size:12px;font-weight:700">KES-R003</text>
       <text x="28" y="130" style="fill:var(--text2,#475569);font-size:11px">Know what is added</text>
-      <text x="28" y="146" style="fill:var(--text2,#475569);font-size:11px">to the cart, and from where</text>
+      <text x="28" y="146" style="fill:var(--text2,#475569);font-size:11px">to the cart, and where</text>
 
       <path d="M166 118 C182 118 182 74 194 74" style="fill:none;stroke:var(--dia-a,#ba2142);stroke-width:1.6" marker-end="url(#sdr1a)"/>
       <path d="M166 130 C182 130 182 174 194 174" style="fill:none;stroke:var(--dia-a,#ba2142);stroke-width:1.6" marker-end="url(#sdr1a)"/>
@@ -140,66 +168,45 @@ weight: 1
     <p>If you are ever unsure whether something belongs in an SDR, ask which column it would sit in. A fact about eVar24 belongs in the map at the back. A fact about how form tracking works belongs in a solution row near the front, and it will bring three or four variables with it. The document is organised by what the business wanted, which is why the business can read it.</p>
 </div>
 
-<h3 class="subsec-title">Starting one from nothing</h3>
-<p>The first version takes an afternoon, and most of the afternoon goes on the requirements rather than the design. Build it in this order, because each step depends on the one above it.</p>
+<h3 class="subsec-title">Starting your own set from these</h3>
+<p>There is no reason to build any of this from an empty sheet. The three workbooks above already carry the columns, the sheet layout, the header comments and a worked example of every row type. Strip them and they become yours, and the whole job is an afternoon.</p>
 
 <div class="dothis">
-    <div class="dothis-hdr"><b>Do this</b> <span>Set up the three documents so the identifiers hold</span></div>
+    <div class="dothis-hdr"><b>Do this</b> <span>Turn the Kestrel workbooks into your own</span></div>
     <ol class="dothis-steps">
         <li>
-            <span class="ds-do">Open a spreadsheet, not a word processor. One workbook per document, three workbooks in total.</span>
-            <span class="ds-see">Name them so the version is in the filename. Version 1.0 signed and version 1.0 with four unrecorded edits in it are the same file to everyone except the person who made the edits.</span>
+            <span class="ds-do">Open the BRD, the SDR and the TSD, and save each one under your own project name with the version in the filename.</span>
+            <span class="ds-see">Version 1.0 signed, and version 1.0 with four unrecorded edits in it, are the same file to everyone except the person who made the edits.</span>
         </li>
         <li>
-            <span class="ds-do">Pick a prefix for the property, two to four letters, and write every requirement into the BRD with a number that starts at 001 and never gets reused.</span>
-            <span class="ds-see">Do this before writing a single variable name. Renumbering later means finding every reference in three other documents, and that is how a chain gets quietly broken.</span>
+            <span class="ds-do">Delete the Kestrel rows, but keep one worked example of each row type until you have found your feet.</span>
+            <span class="ds-see">Keep the sheets, the columns and the header comments. An entirely empty sheet is harder to start from than one with a single example still sitting in it.</span>
         </li>
         <li>
-            <span class="ds-do">In the SDR, give each sheet a theme rather than a chapter. Global variables, commerce, engagement, configuration.</span>
-            <span class="ds-see">Themes match how people ask questions. Somebody wanting to know how the checkout works opens one sheet, not five.</span>
+            <span class="ds-do">Replace <code>KES</code> with your own two to four letter prefix everywhere, using find and replace across the whole workbook.</span>
+            <span class="ds-see">One minute of work. It is what stops your first status call being an argument about whose R001 anybody means.</span>
         </li>
         <li>
-            <span class="ds-do">Write one solution as a block: an ID row carrying the requirement, then one row beneath it for every variable and event the solution needs.</span>
-            <span class="ds-see">This is the whole grammar of the document, and it is covered in detail in <a href="/adobe-analytics-learning/deliver/solution-design-reference/sdr-structure/">SDR Structure</a>. Get one block right and the other forty are the same shape.</span>
+            <span class="ds-do">Start in the BRD and nowhere else. One row per thing the business asked for, numbered from 001, before you write a single variable name.</span>
+            <span class="ds-see">Even when you already know what the design will be. A design written before the requirements are numbered has nothing to trace back to, which is the whole problem this set exists to solve.</span>
         </li>
         <li>
-            <span class="ds-do">Put the variable map on its own sheet at the back, listing every slot the report suite has, not only the ones in use.</span>
-            <span class="ds-see">The empty rows are the point. They are what stops the next person burning eVar 40 on something trivial.</span>
+            <span class="ds-do">Leave the SDR and the TSD closed until the BRD is signed.</span>
+            <span class="ds-see">Designing against unsigned requirements is how a project ends up building something nobody agreed to, and being certain it did the right thing.</span>
         </li>
         <li>
-            <span class="ds-do">Add a change log sheet now, while it is empty, with columns for date, version, affected IDs and what changed.</span>
-            <span class="ds-see">A log started on the day of the first change has already lost the first change. Nobody ever adds one retrospectively and gets it right.</span>
+            <span class="ds-do">Put your first entry in the change log on day one, while it is still empty.</span>
+            <span class="ds-see">A log started on the day of the first change has already lost that change. Nobody ever adds one retrospectively and gets it right.</span>
         </li>
         <li>
-            <span class="ds-do">Write the definition of each column into the header cell as a comment.</span>
-            <span class="ds-see">The document then explains itself to whoever opens it in two years, which is usually not you, and is sometimes you having forgotten.</span>
+            <span class="ds-do">Keep the header comments and edit them where your project differs.</span>
+            <span class="ds-see">They are what makes the workbook explain itself to whoever opens it in two years, which is usually not you, and is sometimes you having forgotten.</span>
         </li>
     </ol>
-    <p class="dothis-end">There is nothing else to set up. Three workbooks, one identifier scheme, one sheet layout repeated. Treat that as the floor rather than the ceiling: every project adds a column or a sheet that its own situation demands, and the ones that hold up are the ones worth keeping for the next project.</p>
-</div>
-
-<div class="dl-box">
-    <div class="dl-title"><span class="dl-ico" aria-hidden="true"></span>The five workbooks, filled in and ready to strip</div>
-    <p>A worked set for a fictional online homeware retailer, Kestrel and Co., used as the example throughout this module. They are complete rather than blank, because an empty grid teaches nothing and a filled one can be emptied in a minute. Delete the rows, keep the shape.</p>
-    <ul class="dl-list">
-        <li><a href="/templates/adobe-analytics-business-requirements-document-template.xlsx" download><span class="dl-name">Business Requirements Document</span><span class="dl-meta">XLSX &middot; 4 sheets &middot; 36 requirements</span></a></li>
-        <li><a href="/templates/adobe-analytics-solution-design-reference-template.xlsx" download><span class="dl-name">Solution Design Reference</span><span class="dl-meta">XLSX &middot; 8 sheets &middot; 35 solutions</span></a></li>
-        <li><a href="/templates/adobe-analytics-technical-specification-document-template.xlsx" download><span class="dl-name">Technical Specification Document</span><span class="dl-meta">XLSX &middot; 9 sheets &middot; the SDR plus 8 columns</span></a></li>
-        <li><a href="/templates/adobe-analytics-validation-report-template.xlsx" download><span class="dl-name">Validation Report</span><span class="dl-meta">XLSX &middot; 2 sheets &middot; 3 test cycles</span></a></li>
-        <li><a href="/templates/adobe-analytics-implementation-project-plan-template.xlsx" download><span class="dl-name">Implementation Project Plan</span><span class="dl-meta">XLSX &middot; 2 sheets &middot; 21 activities</span></a></li>
-    </ul>
+    <p class="dothis-end">That is the whole setup. Three workbooks stripped, one prefix changed, and the requirements started. Nothing else needs building before the work begins. None of it is a ceiling either: every project adds a column or a sheet its own situation demands, and the ones that hold up are worth carrying into the next project.</p>
 </div>
 
 <h3 class="subsec-title">Where the design actually gets made</h3>
 <p>So the thing to carry out of this section is small. An SDR is a design document, and it is organised by what somebody asked for rather than by what the report suite contains. The variable list belongs in it and belongs at the back. Every row carries an identifier, and that identifier is what lets a sentence spoken in a meeting in March be traced to a signed test result in June.</p>
 
 <p>That leaves the question of where the identifiers come from in the first place. They are assigned before any design exists, in the document that records only what the business wants and deliberately says nothing about how it will be done. <a href="/adobe-analytics-learning/deliver/solution-design-reference/business-requirements-document/">Business Requirements Document</a> covers how that one is built, why a trivial-sounding request and an enormous one get written down the same way, and how to record the things you are not going to do.</p>
-
-<div class="ref-box">
-    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
-    <ul>
-        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/implementation/prepare/solution-design" target="_blank">Adobe Docs: Create a solution design document</a></li>
-        <li><a href="https://experienceleague.adobe.com/en/docs/analytics-learn/tutorials/implementation/implementation-basics/creating-and-maintaining-an-sdr" target="_blank">Adobe Docs: Create and maintain a Solution Design Reference</a></li>
-        <li><a href="https://experienceleague.adobe.com/en/docs/analytics-learn/tutorials/administration/admin-tips/download-the-adobe-analytics-implementation-playbook" target="_blank">Adobe Docs: Adobe Analytics implementation playbook</a></li>
-    </ul>
-</div>

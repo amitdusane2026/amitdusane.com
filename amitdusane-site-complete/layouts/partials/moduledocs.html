@@ -1,0 +1,41 @@
+{{/*
+  Module downloads, added 30 August 2026 for M19.
+
+  A module whose payload is a set of files declares them in
+  [params.worlds.<world>.moduledocs.m<NN>]. This partial renders them twice
+  and neither copy is ever authored into a content file:
+
+    .mdocs-strip   one line, below the byline, so a reader who lands mid-module
+                   knows the files exist before scrolling anywhere.
+    #mdocs-src     a hidden card that world-learning.js lifts into the top of
+                   the in-page spine. The spine is sticky on desktop and a
+                   drawer on a floating button below 1244px, so the files stay
+                   reachable from any scroll position. That is the same reason
+                   the path-box jump and Ask Amit live there.
+
+  Emitting nothing at all when the module has no file set is the normal case:
+  20 of 21 modules take this branch.
+*/}}
+{{ $w := index .Site.Params.worlds .Section }}
+{{ $num := .Params.modulenum }}
+{{ if and $w $num $w.moduledocs }}
+  {{ $set := index $w.moduledocs (printf "m%v" $num) }}
+  {{ with $set }}
+    <p class="mdocs-strip">
+      <span class="mdocs-ico" aria-hidden="true"></span>
+      <span class="mdocs-strip-t">{{ .strip }}</span>
+      {{ range $i, $f := .files }}{{ if $i }}<span class="mdocs-sep">&middot;</span>{{ end }}<a href="{{ $f.href | relURL }}" download>{{ $f.name }}</a>{{ end }}
+    </p>
+
+    <div id="mdocs-src" hidden>
+      <div class="mdocs-card">
+        <p class="mdocs-card-h"><span class="mdocs-ico" aria-hidden="true"></span>{{ .label }}</p>
+        <ul>
+          {{ range .files }}
+            <li><a href="{{ .href | relURL }}" download><span class="mdocs-n">{{ .name }}</span><span class="mdocs-m">{{ .meta | safeHTML }}</span></a></li>
+          {{ end }}
+        </ul>
+      </div>
+    </div>
+  {{ end }}
+{{ end }}
