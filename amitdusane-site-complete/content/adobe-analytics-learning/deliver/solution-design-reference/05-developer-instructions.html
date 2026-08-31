@@ -68,8 +68,8 @@ weight: 5
 <div class="shot-box">
     <div class="shot-title">The colour changes, and that is the whole instruction</div>
     <div class="shot-frame">
-        <img src="/img/adobe-analytics-tsd-column-colour-seam.webp" width="1400" height="593" loading="lazy"
-             alt="Three columns of the technical document, at the point where the header fill changes from orange to green. The orange header reads Name. The two green headers read Data layer object or tool code and Rule type. Beneath them, rows pair Page with digitalData.page.pageInfo.pageName and Direct Call, Listing Type with digitalData.page.listingType, Product with digitalData.product in square brackets, and Product Colour with digitalData.product.colour.">
+        <img src="/img/adobe-analytics-tsd-column-colour-seam.webp" width="700" height="296" loading="lazy"
+             alt="The point where the header fill changes from orange to green.">
         <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
     </div>
     <div class="shot-note">Everything left of the seam is the document the business signed, unchanged. Everything right of it was added for the build. One sentence at the walkthrough tells each audience which colour is theirs, and that sentence saves more time than the document does.</div>
@@ -139,8 +139,8 @@ Notes:
 <div class="shot-box">
     <div class="shot-title">One cell, and it is the only one they read</div>
     <div class="shot-frame">
-        <img src="/img/adobe-analytics-tsd-developer-instruction-cell.webp" width="1370" height="716" loading="lazy"
-             alt="A single column of the technical document, headed Developer instructions in green. The cell beneath it holds several lines of plain English: update the product objects for the clicked product, then call underscore satellite dot track with the identifier product underscore click; populate the product objects first; and a note that a direct call fired before the objects are set will send an empty product.">
+        <img src="/img/adobe-analytics-tsd-developer-instruction-cell.webp" width="685" height="358" loading="lazy"
+             alt="One Developer instructions cell, a few lines of plain English.">
         <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
     </div>
     <div class="shot-note">Notice what is absent. No explanation of what an eVar is, no rationale, no reference to the requirement. All of that exists five columns to the left, for a reader who wants it. This cell is written for somebody who does not.</div>
@@ -150,6 +150,35 @@ Notes:
 
 <p>The economy of this shape shows up on the day something changes. A direct call gets renamed, and that is one cell. A product field is added, and that is one cell. The change log gets a line naming the solution ID. Nothing else in the document has to be touched, and nothing else can quietly fall out of step.</p>
 
+<div class="diagram-box">
+    <div class="diagram-title">Why one shape stays true and the other rots</div>
+    <svg viewBox="0 0 700 250" style="width:100%;height:auto;display:block" role="img"
+         aria-label="Two ways of holding the same information. On the left, prose: one change touches a paragraph, a cross reference, a diagram caption and an appendix, four edits, and the fourth is the one that gets missed, so the document drifts out of true a little at a time. On the right, rows: the same change touches one cell, and the change log gets a line. The document either stays true or is visibly wrong.">
+      <rect x="16" y="34" width="322" height="158" rx="8" style="fill:var(--card,#ffffff);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+      <text x="30" y="56" style="fill:var(--text2,#475569);font-size:12px;font-weight:700">One change, held as prose</text>
+      <rect x="30" y="68" width="294" height="26" rx="3" style="fill:var(--dia-d-soft,rgba(245,158,11,.14))"/>
+      <text x="38" y="86" style="fill:var(--text1,#0f172a);font-size:11px">the paragraph that describes it</text>
+      <rect x="30" y="98" width="294" height="26" rx="3" style="fill:var(--dia-d-soft,rgba(245,158,11,.14))"/>
+      <text x="38" y="116" style="fill:var(--text1,#0f172a);font-size:11px">the cross reference in another chapter</text>
+      <rect x="30" y="128" width="294" height="26" rx="3" style="fill:var(--dia-d-soft,rgba(245,158,11,.14))"/>
+      <text x="38" y="146" style="fill:var(--text1,#0f172a);font-size:11px">the diagram caption</text>
+      <rect x="30" y="158" width="294" height="26" rx="3" style="fill:var(--dia-d-soft,rgba(245,158,11,.14))"/>
+      <text x="38" y="176" style="fill:var(--text1,#0f172a);font-size:11px">the appendix, and this is the one missed</text>
+
+      <rect x="362" y="34" width="322" height="158" rx="8" style="fill:var(--card,#ffffff);stroke:var(--dia-c,#10b981);stroke-width:1.8"/>
+      <text x="376" y="56" style="fill:var(--dia-c-ink,#0a6e50);font-size:12px;font-weight:700">One change, held as rows</text>
+      <rect x="376" y="68" width="294" height="26" rx="3" style="fill:var(--dia-c-soft,rgba(16,185,129,.12))"/>
+      <text x="384" y="86" style="fill:var(--text1,#0f172a);font-size:11px">one cell</text>
+      <rect x="376" y="98" width="294" height="26" rx="3" style="fill:var(--dia-c-soft,rgba(16,185,129,.12))"/>
+      <text x="384" y="116" style="fill:var(--text1,#0f172a);font-size:11px">one line in the change log</text>
+      <text x="384" y="150" style="fill:var(--text3,#5d6b7e);font-size:11px">Nothing else can fall out of step,</text>
+      <text x="384" y="168" style="fill:var(--text3,#5d6b7e);font-size:11px">because nothing else says it.</text>
+
+      <text x="16" y="222" style="fill:var(--text2,#475569);font-size:11.5px;font-weight:700">A document where one change costs one edit stays true.</text>
+      <text x="16" y="240" style="fill:var(--text3,#5d6b7e);font-size:11px">One where it costs four becomes false quietly, and nobody can name the day it stopped being reliable.</text>
+    </svg>
+</div>
+
 <p>That property is the reason this shape is worth stealing for work that has nothing to do with analytics. A document where one change costs one edit stays true. A document where one change costs four edits across three chapters becomes false quietly, a little at a time, and nobody can point at the day it stopped being reliable.</p>
 
 <h3 class="subsec-title">What else has to be written down before any of it works</h3>
@@ -158,8 +187,8 @@ Notes:
 <div class="shot-box">
     <div class="shot-title">Code with the reason it exists beside it</div>
     <div class="shot-frame">
-        <img src="/img/adobe-analytics-tsd-custom-code-sheet.webp" width="1400" height="594" loading="lazy"
-             alt="The Custom Code sheet of the technical document, subtitled the four places this implementation needs code rather than configuration. Three columns headed Solution ID, Where and When list KES-S012 in the purchase rule custom code action, running before the Analytics call, and KES-S008 in the cart view rule, running while the product string is built.">
+        <img src="/img/adobe-analytics-tsd-custom-code-sheet.webp" width="700" height="297" loading="lazy"
+             alt="The Custom Code sheet, each entry tied to a solution identifier.">
         <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
     </div>
     <div class="shot-note">Four rows is the whole sheet, and each one carries a solution identifier. Code that cannot be traced to a solution is code somebody deletes during a tidy-up, and the duplicate-order guard is exactly the kind of thing that looks like clutter until the day it stops working.</div>

@@ -26,8 +26,8 @@ weight: 6
 <div class="shot-box">
     <div class="shot-title">The test document is the solution list, copied across</div>
     <div class="shot-frame">
-        <img src="/img/adobe-analytics-validation-tracker-rows.webp" width="1400" height="783" loading="lazy"
-             alt="The Tracker sheet of a validation report, with three columns headed Solution ID, Requirement and Status. Rows run in sequence from KES-S001 every page load on the website, through KES-S002 every virtual page load in the cart and checkout, KES-S003 a product is clicked on a listing page, and onward. The Status column reads Passed on most rows and Partly passed on one.">
+        <img src="/img/adobe-analytics-validation-tracker-rows.webp" width="700" height="391" loading="lazy"
+             alt="The validation tracker, one row per solution identifier with a status.">
         <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
     </div>
     <div class="shot-note">Nothing here was invented for testing. The identifiers and the sentences are copied from the design, which is what makes coverage countable: every row of the SDR either appears here with a status or is missing, and missing is visible.</div>
@@ -55,8 +55,8 @@ weight: 6
 <div class="shot-box">
     <div class="shot-title">All four statuses, in one column, in one phase</div>
     <div class="shot-frame">
-        <img src="/img/adobe-analytics-validation-four-statuses.webp" width="968" height="1560" loading="lazy"
-             alt="Two columns of the Tracker sheet, headed Solution ID and Status. The visible rows show KES-S001 Passed, KES-S002 Partly passed, KES-S003 and KES-S004 Passed, then KES-S018 Passed, KES-S019 Failed, KES-S023 Ignored and KES-S032 Passed. The jumps in the identifiers show that rows in between have been collapsed.">
+        <img src="/img/adobe-analytics-validation-four-statuses.webp" width="484" height="780" loading="lazy"
+             alt="The Status column showing Passed, Partly passed, Failed and Ignored.">
         <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
     </div>
     <div class="shot-note">Read the Status column on its own. A real phase produces a mixture, and a report where every row says Passed is a report nobody in the room will believe, including the person who wrote it.</div>
@@ -86,8 +86,8 @@ weight: 6
 <div class="shot-box">
     <div class="shot-title">Three cycles inside one cell, and an owner beside it</div>
     <div class="shot-frame">
-        <img src="/img/adobe-analytics-validation-dated-findings.webp" width="1400" height="1937" loading="lazy"
-             alt="Three columns of the Tracker sheet, headed Solution ID, Findings by cycle and Action on. Each findings cell holds several dated lines, one per test cycle, dated 22 May, 29 May and 04 June, describing what was observed on each date. The Action on column is blank on most rows and names the client on one.">
+        <img src="/img/adobe-analytics-validation-dated-findings.webp" width="700" height="968" loading="lazy"
+             alt="Findings cells holding three dated cycles each, and an owner column.">
         <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
     </div>
     <div class="shot-note">Three dates stacked in a single cell, oldest at the top, and a name in the last column against the one still open. That shape is deliberate: a fix that moved a problem and a fix that solved it produce identical statuses, and only the history tells them apart.</div>
@@ -150,7 +150,7 @@ weight: 6
 
 <p>This is the part people avoid, because writing a client's name against a failure feels like blame. It is the opposite. An unowned finding stays open by default and gets rediscovered every cycle, and the third time it appears somebody starts asking why the implementation is taking so long. An owned finding with a date is a piece of work somebody is doing.</p>
 
-<p>Be even-handed about it. In the worked example, most of the fixes are ours and some are theirs, and a couple sit with a third party neither of us controls. The document records who, not who is at fault, and once that is established nobody minds their name being in the column.</p>
+<p>Be even-handed about it. In the worked example the column names the analytics team on some rows, Kestrel web dev on others, Kestrel QA on the test data, and a third party that neither side controls on one. The document records who acts next, not who is at fault, and once that is established nobody minds their team being in the column.</p>
 
 <h3 class="subsec-title">Sign-off is theirs to give, and it has to be recorded</h3>
 <p>A row is not finished when you think it works. It is finished when the client says so, in the sign-off column, next to the solution ID.</p>
@@ -160,8 +160,8 @@ weight: 6
 <div class="shot-box">
     <div class="shot-title">The whole phase as four numbers</div>
     <div class="shot-frame">
-        <img src="/img/adobe-analytics-validation-summary-counts.webp" width="1208" height="952" loading="lazy"
-             alt="The Summary sheet of a validation report, headed Summary, Phase 1 as at 04 June 2026. Two columns headed Status and Count list Passed 24, Partly passed 2, Failed 1 and Ignored 1, followed by rows giving total solutions tested 28, cycles run 3, faults found in cycle 1 26, and faults still open 4.">
+        <img src="/img/adobe-analytics-validation-summary-counts.webp" width="604" height="476" loading="lazy"
+             alt="The Summary sheet, four status counts and the cycle totals.">
         <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
     </div>
     <div class="shot-note">Twenty-six faults found in the first cycle, out of twenty-eight solutions tested. Putting that number on the summary rather than hiding it is what makes the recommendation underneath it credible.</div>

@@ -60,7 +60,7 @@ weight: 1
 <h3 class="subsec-title">The company these documents belong to</h3>
 <p>Everything from this point on refers to one implementation, and it is worth being clear about what it is before any of it is used as an example.</p>
 
-<p>Kestrel and Co. is a fictional online homeware retailer. Furniture, kitchen, bedding, twelve showrooms, and a trade account scheme for interior designers. The company does not exist and the project never happened. Nothing inside the documents is invented for effect, though. The requirements are the ones businesses ask for, the design decisions are the ones that have to be made, and the faults found in testing are the faults that occur.</p>
+<p>Kestrel and Co. is a fictional online homeware retailer. Furniture, kitchen, bedding, twelve showrooms, and a trade account scheme for interior designers. The implementation is run by an analytics team working alongside three Kestrel teams: the business team who ask for things and sign them off, Kestrel web dev who build the data layer, and Kestrel QA who test. The company does not exist and the project never happened. Nothing inside the documents is invented for effect, though. The requirements are the ones businesses ask for, the design decisions are the ones that have to be made, and the faults found in testing are the faults that occur.</p>
 
 <p>The project sits at a specific moment, and reading it that way is what makes it useful. Requirements were signed in March. The design was signed in April. The build ran through May, three test cycles followed, and go-live is about a week away. So when a later section says what was agreed, or what failed in cycle two and was fixed by cycle three, it describes a project that is nearly finished. Not a template somebody filled in.</p>
 
@@ -79,8 +79,8 @@ weight: 1
 <div class="shot-box">
     <div class="shot-title">The document opens by explaining itself</div>
     <div class="shot-frame">
-        <img src="/img/adobe-analytics-sdr-sheet-guide.webp" width="1400" height="1182" loading="lazy"
-             alt="The first sheet of the Solution Design Reference workbook, headed How to read this document, with two columns, Column and What it holds. Five rows define Solution ID as unique and permanent and quoted in the technical document, in every test result and in every status call until the project closes; Requirement ID as the requirements from the BRD that this solution answers, with STD marking a standard piece of any implementation that nobody asked for; Solution Component as the part of the site or the mechanism; Requirement as what is being solved in one line; and Variable slash Event as the variable or event that will carry the value.">
+        <img src="/img/adobe-analytics-sdr-sheet-guide.webp" width="700" height="591" loading="lazy"
+             alt="The How to read this document sheet, defining each column of the SDR.">
         <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
     </div>
     <div class="shot-note">The first sheet is not the design. It is the instructions for reading the design, and it is the sheet most often missing from an inherited document. Note what the Requirement ID row admits: <strong>STD</strong> exists because some solutions have no requirement behind them at all.</div>
@@ -94,6 +94,50 @@ weight: 1
 <p>This is taught through an Adobe Analytics implementation, because that is the work these documents were built for and that is where the examples come from. Very little of it is about Adobe Analytics. Requirement identifiers that survive from a meeting to a signature. Scope written down before build starts. A record of what was deliberately not done. One instruction per row, so a change costs one edit. Four test statuses instead of two. A dropped item recorded with a reason and a name against it. That is project management.</p>
 
 <p>It is shown here on an analytics project. It transfers without modification to a platform migration, a replatform, a customer data platform rollout, or anything else large enough that people start losing track of what was agreed. The analytics is the pathway. The method is the thing worth keeping.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">The pathway, and what you actually take away</div>
+    <svg viewBox="0 0 700 240" style="width:100%;height:auto;display:block" role="img"
+         aria-label="A wide band labelled the pathway, Adobe Analytics, runs across the figure and carries five things specific to the tool: eVars and events, the products variable, tag manager rules, report suite settings, and merchandising. Rising out of it are five takeaways that belong to no tool at all: an identifier that survives, scope written down before build, one instruction per row, four test statuses, and a decision recorded with a name. A note says the band is what you were taught with and the five above are what you keep.">
+      <defs>
+        <marker id="sdrp1" markerWidth="7" markerHeight="7" refX="5.6" refY="3.5" orient="auto"><path d="M0 0 L7 3.5 L0 7 Z" style="fill:var(--dia-a,#ba2142)"/></marker>
+      </defs>
+
+      <text x="16" y="22" style="fill:var(--dia-a,#ba2142);font-size:12px;font-weight:700">What you keep, and it belongs to no tool</text>
+
+      <rect x="16" y="34" width="126" height="52" rx="6" style="fill:var(--dia-a-soft,rgba(186,33,66,.10));stroke:var(--dia-a,#ba2142);stroke-width:1.5"/>
+      <text x="27" y="54" style="fill:var(--text1,#0f172a);font-size:11px">An identifier that</text>
+      <text x="27" y="70" style="fill:var(--text1,#0f172a);font-size:11px">survives to sign-off</text>
+
+      <rect x="152" y="34" width="126" height="52" rx="6" style="fill:var(--dia-a-soft,rgba(186,33,66,.10));stroke:var(--dia-a,#ba2142);stroke-width:1.5"/>
+      <text x="163" y="54" style="fill:var(--text1,#0f172a);font-size:11px">Scope written down</text>
+      <text x="163" y="70" style="fill:var(--text1,#0f172a);font-size:11px">before build starts</text>
+
+      <rect x="288" y="34" width="126" height="52" rx="6" style="fill:var(--dia-a-soft,rgba(186,33,66,.10));stroke:var(--dia-a,#ba2142);stroke-width:1.5"/>
+      <text x="299" y="54" style="fill:var(--text1,#0f172a);font-size:11px">One instruction per</text>
+      <text x="299" y="70" style="fill:var(--text1,#0f172a);font-size:11px">row, one edit</text>
+
+      <rect x="424" y="34" width="126" height="52" rx="6" style="fill:var(--dia-a-soft,rgba(186,33,66,.10));stroke:var(--dia-a,#ba2142);stroke-width:1.5"/>
+      <text x="435" y="54" style="fill:var(--text1,#0f172a);font-size:11px">Four statuses, not</text>
+      <text x="435" y="70" style="fill:var(--text1,#0f172a);font-size:11px">pass and fail</text>
+
+      <rect x="560" y="34" width="124" height="52" rx="6" style="fill:var(--dia-a-soft,rgba(186,33,66,.10));stroke:var(--dia-a,#ba2142);stroke-width:1.5"/>
+      <text x="571" y="54" style="fill:var(--text1,#0f172a);font-size:11px">A cut recorded</text>
+      <text x="571" y="70" style="fill:var(--text1,#0f172a);font-size:11px">with a name</text>
+
+      <line x1="79"  y1="140" x2="79"  y2="94" style="stroke:var(--dia-a,#ba2142);stroke-width:1.5" marker-end="url(#sdrp1)"/>
+      <line x1="215" y1="140" x2="215" y2="94" style="stroke:var(--dia-a,#ba2142);stroke-width:1.5" marker-end="url(#sdrp1)"/>
+      <line x1="351" y1="140" x2="351" y2="94" style="stroke:var(--dia-a,#ba2142);stroke-width:1.5" marker-end="url(#sdrp1)"/>
+      <line x1="487" y1="140" x2="487" y2="94" style="stroke:var(--dia-a,#ba2142);stroke-width:1.5" marker-end="url(#sdrp1)"/>
+      <line x1="622" y1="140" x2="622" y2="94" style="stroke:var(--dia-a,#ba2142);stroke-width:1.5" marker-end="url(#sdrp1)"/>
+
+      <rect x="16" y="144" width="668" height="60" rx="8" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.5"/>
+      <text x="30" y="168" style="fill:var(--text2,#475569);font-size:12px;font-weight:700">The pathway: an Adobe Analytics implementation</text>
+      <text x="30" y="190" style="fill:var(--text3,#5d6b7e);font-size:11px">eVars and events &#183; the products variable &#183; tag manager rules &#183; report suite settings &#183; merchandising</text>
+
+      <text x="16" y="228" style="fill:var(--text3,#5d6b7e);font-size:11px">The band below is what the examples are made of. The five above work on a migration, a replatform, or a tool nobody has built yet.</text>
+    </svg>
+</div>
 
 <h3 class="subsec-title">The ID that runs from a request to a sign-off</h3>
 <p>Three documents sitting in three files are three documents. What turns them into one thing is that every requirement is given an identifier the moment it is written down, and that identifier is never reused, never renumbered, and never dropped. A request from the business becomes KES-R003. The design that answers it becomes KES-S005. The build instruction carries KES-S005. The test result is a row keyed on KES-S005. The sign-off is against KES-S005.</p>
@@ -216,8 +260,8 @@ weight: 1
     <div class="shot-box">
         <div class="shot-title">Every column header carries its own definition</div>
         <div class="shot-frame">
-            <img src="/img/adobe-analytics-sdr-column-definition-comment.webp" width="1400" height="719" loading="lazy"
-                 alt="Three columns of a Solution Design Reference sheet, headed Solution ID, Requirement ID and Solution Component, with orange header fills. A yellow comment balloon is open, its leader line pointing at the Solution ID header, reading: Unique and permanent. Quoted in the technical document, in every test result and in every status call until the project closes. Never renumber one. Small red triangles sit in the top right corner of the other headers, showing they carry comments too. Below the balloon the row for KES-S004 begins a new block.">
+            <img src="/img/adobe-analytics-sdr-column-definition-comment.webp" width="700" height="359" loading="lazy"
+                 alt="A comment balloon open on the Solution ID header, defining the column.">
             <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
         </div>
         <div class="shot-note">Look at the red triangles rather than the balloon. Every header on the sheet carries a definition, so the document answers its own questions without you in the room. This costs about ten minutes once and it is the difference between a workbook somebody inherits and one somebody rebuilds.</div>

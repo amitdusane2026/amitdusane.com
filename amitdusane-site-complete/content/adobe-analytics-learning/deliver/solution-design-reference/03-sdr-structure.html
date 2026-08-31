@@ -39,8 +39,8 @@ weight: 3
 <div class="shot-box">
     <div class="shot-title">The identity is on the first row and nowhere else</div>
     <div class="shot-frame">
-        <img src="/img/adobe-analytics-sdr-solution-block-identity.webp" width="1400" height="719" loading="lazy"
-             alt="Three columns of a Solution Design Reference sheet, headed Solution ID, Requirement ID and Solution Component. The row for KES-S003 is filled across all three, carrying requirement KES-R001 and the component Product listing. The four rows beneath it are completely blank. Then KES-S004 begins, filled across all three again, with the component Product detail.">
+        <img src="/img/adobe-analytics-sdr-solution-block-identity.webp" width="700" height="359" loading="lazy"
+             alt="One solution block: KES-S003 filled across, four blank rows, then KES-S004.">
         <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
     </div>
     <div class="shot-note">The blank rows are doing the work. They are not missing data, they are what tells a reader that everything between KES-S003 and KES-S004 belongs to one moment on the site. Where the identifier reappears is where the next moment starts.</div>
@@ -49,8 +49,8 @@ weight: 3
 <div class="shot-box">
     <div class="shot-title">And the variables sit underneath it, in order</div>
     <div class="shot-frame">
-        <img src="/img/adobe-analytics-sdr-solution-block-variables.webp" width="1328" height="876" loading="lazy"
-             alt="Two columns of the same sheet, headed Variable slash Event and Name. The rows list pageName as Page, eVar16 as Listing Type, products as Product, eVar12 marked M as Product Colour, and event12 as Product Clicks, then the next block begins with pageName as Page again.">
+        <img src="/img/adobe-analytics-sdr-solution-block-variables.webp" width="664" height="438" loading="lazy"
+             alt="The variable rows of a solution block, from pageName to event12.">
         <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
     </div>
     <div class="shot-note">The third column is the one that gets dropped from most documents and the one that prevents most arguments. <strong>Charcoal, Oatmeal, Sage</strong> is not decoration: it is what stops a developer sending hex codes and an analyst expecting names.</div>
@@ -172,8 +172,8 @@ weight: 3
 <div class="shot-box">
     <div class="shot-title">Settings get identifiers, exactly like rules do</div>
     <div class="shot-frame">
-        <img src="/img/adobe-analytics-sdr-configuration-sheet.webp" width="1268" height="1256" loading="lazy"
-             alt="The Configuration sheet of a Solution Design Reference, subtitled the parts of the implementation that are settings rather than rules. Two columns headed Solution ID and Setting list KES-S025 production report suite, KES-S026 development report suite, KES-S027 time zone, KES-S028 currency, KES-S029 internal URL filters and KES-S030 bot filtering.">
+        <img src="/img/adobe-analytics-sdr-configuration-sheet.webp" width="634" height="628" loading="lazy"
+             alt="The Configuration sheet, six settings each carrying a solution identifier.">
         <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
     </div>
     <div class="shot-note">Six settings, six identifiers, and almost every requirement column says <strong>STD</strong>. Nobody asked for a time zone. Set it wrong and every historical hit lands on a different day, permanently, which is why it gets an identifier and a test result like anything else.</div>
@@ -185,6 +185,38 @@ weight: 3
 <p>This is the moment to be precise, because everything downstream inherits it. The technical document turns each row into an instruction. The test plan checks each row. The report suite gets configured from the variable map. A row left vague here becomes a question in the build, and a question in the build becomes a guess.</p>
 
 <p>It is also the last cheap moment. Changing a design in a spreadsheet costs a row. Changing it after the rules are built and the data layer is written costs two teams a week.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">What one decision costs, by when it is made</div>
+    <svg viewBox="0 0 700 250" style="width:100%;height:auto;display:block" role="img"
+         aria-label="A rising cost curve across four project stages. Changing a decision during requirements costs one row. During design it costs one row. Once the build has started it costs two teams several days. After go live it costs a rewrite plus an explanation of the historical data. A marked point between design and build is labelled the last cheap moment, and a note says the job of a design review is to pull decisions to the left of it.">
+      <line x1="52" y1="196" x2="672" y2="196" style="stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <line x1="52" y1="196" x2="52" y2="34" style="stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="16" y="44" style="fill:var(--text3,#5d6b7e);font-size:11px">Cost</text>
+
+      <path d="M92 184 C210 182 250 176 300 166 C380 150 430 110 520 74 C570 54 610 46 648 42" style="fill:none;stroke:var(--dia-a,#ba2142);stroke-width:2.4"/>
+
+      <circle cx="92"  cy="184" r="4.5" style="fill:var(--dia-a,#ba2142)"/>
+      <circle cx="300" cy="166" r="4.5" style="fill:var(--dia-a,#ba2142)"/>
+      <circle cx="520" cy="74"  r="4.5" style="fill:var(--dia-a,#ba2142)"/>
+      <circle cx="648" cy="42"  r="4.5" style="fill:var(--dia-a,#ba2142)"/>
+
+      <text x="66"  y="214" style="fill:var(--text2,#475569);font-size:11px;font-weight:700">Requirements</text>
+      <text x="66"  y="230" style="fill:var(--text3,#5d6b7e);font-size:11px">one row</text>
+      <text x="266" y="214" style="fill:var(--text2,#475569);font-size:11px;font-weight:700">Design</text>
+      <text x="266" y="230" style="fill:var(--text3,#5d6b7e);font-size:11px">one row</text>
+      <text x="470" y="214" style="fill:var(--text2,#475569);font-size:11px;font-weight:700">Build</text>
+      <text x="470" y="230" style="fill:var(--text3,#5d6b7e);font-size:11px">two teams, days</text>
+      <text x="596" y="214" style="fill:var(--text2,#475569);font-size:11px;font-weight:700">After go live</text>
+      <text x="596" y="230" style="fill:var(--text3,#5d6b7e);font-size:11px">rewrite, plus history</text>
+
+      <line x1="392" y1="150" x2="392" y2="196" style="stroke:var(--dia-d,#f59e0b);stroke-width:1.8;stroke-dasharray:5 4"/>
+      <text x="342" y="140" style="fill:var(--dia-d-ink,#8a5700);font-size:11.5px;font-weight:700">the last cheap moment</text>
+
+      <line x1="52" y1="120" x2="672" y2="120" style="stroke:var(--border,#e2e8f0);stroke-width:1;stroke-dasharray:3 5"/>
+      <text x="16" y="26" style="fill:var(--text3,#5d6b7e);font-size:11px">Sign-off is not a formality. It is the mechanism that drags decisions to the left of the dashed line.</text>
+    </svg>
+</div>
 
 <p>That curve is not an analytics fact. Every project has a point where a decision stops being an edit and starts being rework, and the job of a design document is to pull as many decisions as possible to the left of it. Naming that moment, out loud, in front of the people who can still change their minds, is most of what design review is for.</p>
 

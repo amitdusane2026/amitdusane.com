@@ -26,8 +26,8 @@ weight: 2
 <div class="shot-box">
     <div class="shot-title">Six requests, and nothing marking one as bigger</div>
     <div class="shot-frame">
-        <img src="/img/adobe-analytics-brd-requirement-rows.webp" width="1400" height="1056" loading="lazy"
-             alt="The Requirements sheet of a Business Requirements Document, showing three columns headed Requirement ID, Business Objective and Technical Objective, with orange header fills. Nine rows run in sequence from KES-R001 to KES-R009, each carrying an objective code such as KBO-01 and a technical objective such as Product listing, Product detail, Cart, Checkout and Order.">
+        <img src="/img/adobe-analytics-brd-requirement-rows.webp" width="700" height="528" loading="lazy"
+             alt="Nine consecutive requirement rows, KES-R001 to KES-R009, with their objectives.">
         <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
     </div>
     <div class="shot-note">Nine consecutive identifiers, and nothing in the sheet says which of them will take an afternoon and which will take a month. That absence is deliberate. Estimating happens later, in a different column, after everything has been collected.</div>
@@ -41,8 +41,8 @@ weight: 2
 <div class="shot-box">
     <div class="shot-title">The things you are not doing get identifiers too</div>
     <div class="shot-frame">
-        <img src="/img/adobe-analytics-brd-out-of-scope-sheet.webp" width="1400" height="1055" loading="lazy"
-             alt="The Out of Scope sheet of a Business Requirements Document, headed Out of Scope, agreed and recorded so that it is not asked for again in build. Two columns, Item ID and What was asked for, list KES-X001 recognise the same person across their phone, laptop and tablet, KES-X002 include orders taken by the call centre, KES-X003 export a list of customers who abandoned a cart, and KES-X004 reconcile website revenue with the finance ledger to the penny.">
+        <img src="/img/adobe-analytics-brd-out-of-scope-sheet.webp" width="700" height="527" loading="lazy"
+             alt="The Out of Scope sheet, four items each with an identifier.">
         <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
     </div>
     <div class="shot-note">The identifiers are the point. <strong>KES-X004</strong> can be quoted in a status call the same way a requirement can, which is what stops the ledger question being raised for a third time by somebody who missed the first two answers.</div>
@@ -63,8 +63,8 @@ weight: 2
 <div class="shot-box">
     <div class="shot-title">One column separates asked for from proposed</div>
     <div class="shot-frame">
-        <img src="/img/adobe-analytics-brd-raised-by-column.webp" width="1400" height="885" loading="lazy"
-             alt="Two columns of the Requirements sheet, headed Requirement and Raised By. Rows list requirements including knowing which home page banners are clicked, how the main navigation is used, and which footer links are used. The Raised By column reads Business against most rows and Recommended against the footer links row. The row numbers jump, showing that rows in between have been collapsed.">
+        <img src="/img/adobe-analytics-brd-raised-by-column.webp" width="700" height="442" loading="lazy"
+             alt="The Raised By column, reading Business on most rows and Recommended on one.">
         <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
     </div>
     <div class="shot-note">One word in one column, and it is the one people leave out. Eight months from now somebody will ask why footer tracking is in scope when nobody remembers requesting it, and <strong>Recommended</strong> is the whole answer.</div>
@@ -212,14 +212,55 @@ weight: 2
 <div class="shot-box">
     <div class="shot-title">Five entries, and every one names why</div>
     <div class="shot-frame">
-        <img src="/img/adobe-analytics-brd-change-log.webp" width="1400" height="851" loading="lazy"
-             alt="The Change Log sheet of a Business Requirements Document, with two columns headed Date and What changed and why. Five dated entries run from a first draft circulated after the discovery workshop, through five recommended requirements being added, several requirements moving to Phase 2 after the effort estimate, the Out of Scope sheet being added, and sign-off by the client with one requirement left queried.">
+        <img src="/img/adobe-analytics-brd-change-log.webp" width="700" height="425" loading="lazy"
+             alt="The BRD change log, five dated entries each saying what changed and why.">
         <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
     </div>
     <div class="shot-note">Read the third entry. Requirements moved to Phase 2 on a named date, after an effort estimate, and the entry says which ones. That is the row somebody opens in October wanting to know why sorting is not live, and it answers them without a meeting.</div>
 </div>
 
 <p>With a signed BRD it is a change request. It gets an ID, an estimate and a decision. The decision is made by the person paying, not by whoever happened to be on the call. Nothing about that is obstructive; it is simply the difference between a scope somebody agreed to and a scope that happened. The document is not there to say no. It is there so that yes means something.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">Where a late request goes, with and without a signed scope</div>
+    <svg viewBox="0 0 700 220" style="width:100%;height:auto;display:block" role="img"
+         aria-label="One late request, wishlist tracking, arriving six weeks into the build. Without a signed scope it becomes a conversation, then quiet extra work, and the project grows by a third while everyone agrees nobody added anything. With a signed scope it becomes a change request with an identifier, an estimate and a decision made by the person paying. Both paths can end in yes. Only one of them can be counted.">
+      <defs>
+        <marker id="brd2a" markerWidth="7" markerHeight="7" refX="5.6" refY="3.5" orient="auto"><path d="M0 0 L7 3.5 L0 7 Z" style="fill:var(--text3,#5d6b7e)"/></marker>
+      </defs>
+
+      <rect x="16" y="86" width="132" height="48" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="28" y="106" style="fill:var(--text1,#0f172a);font-size:11.5px;font-weight:700">"Can we add</text>
+      <text x="28" y="123" style="fill:var(--text1,#0f172a);font-size:11.5px;font-weight:700">wishlist tracking?"</text>
+
+      <path d="M148 100 C176 100 176 58 200 58" style="fill:none;stroke:var(--text3,#5d6b7e);stroke-width:1.5" marker-end="url(#brd2a)"/>
+      <path d="M148 120 C176 120 176 162 200 162" style="fill:none;stroke:var(--text3,#5d6b7e);stroke-width:1.5" marker-end="url(#brd2a)"/>
+
+      <text x="206" y="30" style="fill:var(--dia-d-ink,#8a5700);font-size:11.5px;font-weight:700">No signed scope</text>
+      <rect x="206" y="38" width="150" height="40" rx="5" style="fill:var(--dia-d-soft,rgba(245,158,11,.14));stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
+      <text x="216" y="63" style="fill:var(--text1,#0f172a);font-size:11px">it becomes a conversation</text>
+      <rect x="372" y="38" width="150" height="40" rx="5" style="fill:var(--dia-d-soft,rgba(245,158,11,.14));stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
+      <text x="382" y="63" style="fill:var(--text1,#0f172a);font-size:11px">then quiet extra work</text>
+      <rect x="538" y="32" width="146" height="52" rx="5" style="fill:var(--dia-d-soft,rgba(245,158,11,.14));stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
+      <text x="548" y="54" style="fill:var(--text1,#0f172a);font-size:11px">a third bigger, and</text>
+      <text x="548" y="72" style="fill:var(--text1,#0f172a);font-size:11px">nobody added anything</text>
+      <line x1="356" y1="58" x2="368" y2="58" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#brd2a)"/>
+      <line x1="522" y1="58" x2="534" y2="58" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#brd2a)"/>
+
+      <text x="206" y="196" style="fill:var(--dia-c-ink,#0a6e50);font-size:11.5px;font-weight:700">Signed scope</text>
+      <rect x="206" y="142" width="150" height="40" rx="5" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
+      <text x="216" y="167" style="fill:var(--text1,#0f172a);font-size:11px">it gets an identifier</text>
+      <rect x="372" y="142" width="150" height="40" rx="5" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
+      <text x="382" y="167" style="fill:var(--text1,#0f172a);font-size:11px">and an estimate</text>
+      <rect x="538" y="136" width="146" height="52" rx="5" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
+      <text x="548" y="158" style="fill:var(--text1,#0f172a);font-size:11px">the person paying</text>
+      <text x="548" y="176" style="fill:var(--text1,#0f172a);font-size:11px">decides</text>
+      <line x1="356" y1="162" x2="368" y2="162" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#brd2a)"/>
+      <line x1="522" y1="162" x2="534" y2="162" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#brd2a)"/>
+
+      <text x="16" y="214" style="fill:var(--text3,#5d6b7e);font-size:11px">Both paths can end in yes. Only one of them can be counted afterwards.</text>
+    </svg>
+</div>
 
 <p>None of the last three paragraphs mentioned Adobe Analytics, and that is the point of this module rather than an accident of it. Numbered requirements, a written record of what is out of scope, and a phase somebody signed are how any large piece of work stays inside its own boundaries. The analytics is what makes the example concrete.</p>
 
