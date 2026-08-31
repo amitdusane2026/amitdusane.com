@@ -27,12 +27,16 @@
       {{ range $i, $f := .files }}{{ if $i }}<span class="mdocs-sep">&middot;</span>{{ end }}<a href="{{ $f.href | relURL }}" download>{{ $f.name }}</a>{{ end }}
     </p>
 
+    {{/* The rail card carries names only. The numbering and the per-file meta
+         were there in the first version and both had to go: they tripled the
+         card's height and pushed "On this page" below the fold, which made the
+         spine's own job harder in order to advertise a file size. */}}
     <div id="mdocs-src" hidden>
       <div class="mdocs-card">
         <p class="mdocs-card-h"><span class="mdocs-ico" aria-hidden="true"></span>{{ .label }}</p>
         <ul>
           {{ range .files }}
-            <li><a href="{{ .href | relURL }}" download><span class="mdocs-n">{{ .name }}</span><span class="mdocs-m">{{ .meta | safeHTML }}</span></a></li>
+            <li><a href="{{ .href | relURL }}" download>{{ .name }}</a></li>
           {{ end }}
         </ul>
       </div>

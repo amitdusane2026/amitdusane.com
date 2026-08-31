@@ -107,8 +107,8 @@ disableKinds = ["taxonomy", "term"]
 # ---------------------------------------------------------------------------
 [params.worlds.adobe-analytics-learning.moduledocs]
   [params.worlds.adobe-analytics-learning.moduledocs.m19]
-    label = "The Kestrel and Co. workbooks"
-    strip = "The five worked documents this module is built on"
+    label = "Analytics project delivery documents"
+    strip = "The five delivery documents this module is built on"
     blurb = "A complete set for a fictional online homeware retailer, used as the example throughout this module. They are filled in rather than blank, because an empty grid teaches nothing and a filled one can be emptied in a minute. Delete the rows, keep the shape."
     [[params.worlds.adobe-analytics-learning.moduledocs.m19.files]]
       name = "Business Requirements Document"

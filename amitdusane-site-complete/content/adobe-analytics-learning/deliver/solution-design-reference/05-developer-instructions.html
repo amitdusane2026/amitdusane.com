@@ -34,10 +34,10 @@ weight: 5
     <div class="diagram-title">One row, two audiences</div>
     <svg viewBox="0 0 700 320" style="width:100%;height:auto;display:block" role="img"
          aria-label="A single row of fifteen columns split into two groups. The left group of seven columns is the signed Solution Design Reference: solution ID, requirement ID, solution component, requirement, variable or event, name, and details and examples. The right group of eight columns is added to make the technical document: data layer or tool code, rule type, rule name, rule condition, data element, developer instructions, product data layer, and custom code. The business reads the left group, the build team reads the right.">
-      <rect x="16" y="44" width="330" height="248" rx="8" style="fill:var(--dia-a-soft,rgba(186,33,66,.10));stroke:var(--dia-a,#ba2142);stroke-width:1.8"/>
+      <rect x="16" y="44" width="330" height="248" rx="8" style="fill:var(--dia-d-soft,rgba(245,158,11,.14));stroke:var(--dia-d,#f59e0b);stroke-width:1.8"/>
       <rect x="354" y="44" width="330" height="248" rx="8" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.8"/>
 
-      <text x="32" y="70" style="fill:var(--dia-a-ink,#951833);font-size:12.5px;font-weight:700">The SDR, seven columns, already signed</text>
+      <text x="32" y="70" style="fill:var(--dia-d-ink,#8a5700);font-size:12.5px;font-weight:700">The SDR, seven columns, already signed</text>
       <text x="370" y="70" style="fill:var(--dia-c-ink,#0a6e50);font-size:12.5px;font-weight:700">Eight columns added for the build</text>
 
       <text x="32" y="92" style="fill:var(--text2,#475569);font-size:11px">Read by the business</text>
@@ -68,11 +68,21 @@ weight: 5
 <div class="shot-box">
     <div class="shot-title">The colour changes, and that is the whole instruction</div>
     <div class="shot-frame">
-        <img src="/img/adobe-analytics-tsd-column-colour-seam.webp" width="700" height="296" loading="lazy"
+        <img src="/img/adobe-analytics-tsd-column-colour-seam.webp" width="561" height="238" loading="lazy"
              alt="The point where the header fill changes from orange to green.">
         <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
     </div>
     <div class="shot-note">Everything left of the seam is the document the business signed, unchanged. Everything right of it was added for the build. One sentence at the walkthrough tells each audience which colour is theirs, and that sentence saves more time than the document does.</div>
+</div>
+
+<div class="shot-box">
+    <div class="shot-title">The identifiers are the same ones, untouched</div>
+    <div class="shot-frame">
+        <img src="/img/adobe-analytics-tsd-same-identifiers.webp" width="272" height="217" loading="lazy"
+             alt="The Solution ID and Requirement ID columns of the technical document.">
+        <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
+    </div>
+    <div class="shot-note">Open this beside the SDR. These two columns are identical, cell for cell, which is the whole reason the two documents cannot disagree.</div>
 </div>
 
 <p>The gain is not the saved typing, although a week is a week. It is that the two documents can no longer disagree. There is no second description of what KES-S005 does, so there is no way for one of them to go stale while the other is updated.</p>
@@ -99,6 +109,16 @@ weight: 5
 </div>
 
 <p>Only the first row of a block carries the rule columns, in the same way the design does. The variable rows beneath it carry their own data layer path and their own data element, and leave the rest empty. A rule is a property of the moment, not of each variable in it.</p>
+
+<div class="shot-box">
+    <div class="shot-title">What fires, what it is called, and what holds the value</div>
+    <div class="shot-frame">
+        <img src="/img/adobe-analytics-tsd-rule-columns.webp" width="426" height="198" loading="lazy"
+             alt="The Rule type, Rule name and Data element columns for two solutions.">
+        <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
+    </div>
+    <div class="shot-note">Direct Call, the exact rule name, and the data element. Case matters in all three, and a capital in the wrong place fails silently.</div>
+</div>
 
 <h3 class="subsec-title">Two developers, and only one of them should read your column</h3>
 <p>An implementation is built by two different people who often do not work for the same organisation. A site developer writes the data layer, populating objects on the page. An analytics developer works in the <a href="/adobe-analytics-learning/collect/adobe-launch-tags/rules/">tag manager</a>, building the rules and <a href="/adobe-analytics-learning/collect/adobe-launch-tags/data-elements/">data elements</a> that read those objects.</p>
@@ -139,7 +159,7 @@ Notes:
 <div class="shot-box">
     <div class="shot-title">One cell, and it is the only one they read</div>
     <div class="shot-frame">
-        <img src="/img/adobe-analytics-tsd-developer-instruction-cell.webp" width="685" height="358" loading="lazy"
+        <img src="/img/adobe-analytics-tsd-developer-instruction-cell.webp" width="342" height="179" loading="lazy"
              alt="One Developer instructions cell, a few lines of plain English.">
         <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
     </div>
@@ -187,7 +207,7 @@ Notes:
 <div class="shot-box">
     <div class="shot-title">Code with the reason it exists beside it</div>
     <div class="shot-frame">
-        <img src="/img/adobe-analytics-tsd-custom-code-sheet.webp" width="700" height="297" loading="lazy"
+        <img src="/img/adobe-analytics-tsd-custom-code-sheet.webp" width="516" height="219" loading="lazy"
              alt="The Custom Code sheet, each entry tied to a solution identifier.">
         <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
     </div>
@@ -196,6 +216,16 @@ Notes:
 
 <p>Write the reason next to each piece of code, not only the code. A guard that stops a refreshed order confirmation sending a second purchase looks like clutter to somebody tidying up next year. With one line saying what it prevents, it survives.</p>
 
+
+<div class="shot-box">
+    <div class="shot-title">And what has to exist before any rule runs</div>
+    <div class="shot-frame">
+        <img src="/img/adobe-analytics-tsd-platform-setup.webp" width="377" height="219" loading="lazy"
+             alt="The Platform Setup sheet, listing extensions and their settings against solution identifiers.">
+        <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
+    </div>
+    <div class="shot-note">Extensions, report suites per environment, plugins and the consent gate. None of it is a rule, and all of it gets tested.</div>
+</div>
 
 <h3 class="subsec-title">Filling in the technical document</h3>
 <p>The TSD workbook beside this page is already the SDR with its eight extra columns, filled in for Kestrel and Co. Open both files side by side once before you start, because the relationship between them is easier to see than to describe.</p>

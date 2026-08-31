@@ -1122,13 +1122,10 @@ body.world-learning .lcontent p.mdocs-strip{font-size:var(--fs-meta); line-heigh
 .mdocs-card ul{list-style:none; margin:0; padding:0}
 .mdocs-card li{margin:0}
 .mdocs-card a{
-  display:block; padding:5px 0; text-decoration:none;
-  border-top:1px solid var(--border);
+  display:block; padding:4px 0; text-decoration:none;
+  font-size:var(--fs-meta); font-weight:600; color:var(--accent); line-height:1.3;
 }
-.mdocs-card li:first-child a{border-top:none}
-.mdocs-card a:hover .mdocs-n{text-decoration:underline}
-.mdocs-n{display:block; font-size:var(--fs-meta); font-weight:600; color:var(--accent); line-height:1.3}
-.mdocs-m{display:block; font-size:var(--fs-micro); color:var(--text3); line-height:1.4}
+.mdocs-card a:hover{text-decoration:underline}
 
 /* ==========================================================================
    .dl-box, 31 August 2026. The site's first downloadable asset.

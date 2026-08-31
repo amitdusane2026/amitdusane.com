@@ -44,7 +44,7 @@ weight: 4
 <div class="shot-box">
     <div class="shot-title">The used slots, and who is relying on each one</div>
     <div class="shot-frame">
-        <img src="/img/adobe-analytics-variable-map-used-slots.webp" width="700" height="462" loading="lazy"
+        <img src="/img/adobe-analytics-variable-map-used-slots.webp" width="561" height="371" loading="lazy"
              alt="The variable map, showing report names and the solutions using each slot.">
         <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
     </div>
@@ -103,7 +103,7 @@ weight: 4
 <div class="shot-box">
     <div class="shot-title">And the empty rows, which are the useful part</div>
     <div class="shot-frame">
-        <img src="/img/adobe-analytics-variable-map-free-slots.webp" width="700" height="365" loading="lazy"
+        <img src="/img/adobe-analytics-variable-map-free-slots.webp" width="561" height="293" loading="lazy"
              alt="The variable map further down, where every column after the slot name is blank.">
         <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
     </div>
@@ -122,6 +122,16 @@ weight: 4
 
 <p>Two of those settings deserve a moment, because they are decisions rather than defaults. Allocation decides which value gets the credit when a visitor touches several. Most Recent is the usual answer. Original Value is right when the question is what started something. Banner Name in the worked example uses Original Value on purpose, because the interesting question is which banner brought somebody in, not which one they clicked last. Expiration decides how long a value keeps earning credit, and Visit is the safe default. Merchandising variables expire on purchase, so a product attribute stops applying the moment the product is bought.</p>
 
+<div class="shot-box">
+    <div class="shot-title">Allocation and expiration live here, not in the design</div>
+    <div class="shot-frame">
+        <img src="/img/adobe-analytics-variable-map-settings.webp" width="362" height="333" loading="lazy"
+             alt="The Conversion variable and Setting columns, showing Most Recent, Visit and merchandising settings.">
+        <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
+    </div>
+    <div class="shot-note">Every setting in one column, one screen. The design blocks carry only the bracketed hint, because a business reader cannot use any of this.</div>
+</div>
+
 <div class="path-box">
     <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where these settings live in Adobe Analytics</div>
     <p>Analytics &gt; <span class="path">Admin &gt; Report Suites</span>, select the suite, then <span class="path">Edit Settings</span>. Conversion variables and their allocation, expiration and merchandising sit under <span class="path">Conversion &gt; Conversion Variables</span>. Events and their type sit under <span class="path">Conversion &gt; Success Events</span>. Props and their pathing sit under <span class="path">Traffic &gt; Traffic Variables</span>. The map in your document is a copy of these three screens plus the intent behind them.</p>
@@ -135,7 +145,7 @@ weight: 4
 <div class="shot-box">
     <div class="shot-title">Six positions, and what breaks at each one</div>
     <div class="shot-frame">
-        <img src="/img/adobe-analytics-product-string-positions.webp" width="700" height="685" loading="lazy"
+        <img src="/img/adobe-analytics-product-string-positions.webp" width="456" height="447" loading="lazy"
              alt="The Product String sheet, six numbered positions and what carries each one.">
         <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
     </div>
@@ -143,6 +153,16 @@ weight: 4
 </div>
 
 <p>Eleven of the twenty-four solutions in the worked example depend on that definition. Writing it once and pointing at it is the difference between one clear rule and eleven slightly different descriptions of the same thing.</p>
+
+<div class="shot-box">
+    <div class="shot-title">Including what two products look like</div>
+    <div class="shot-frame">
+        <img src="/img/adobe-analytics-product-string-example.webp" width="482" height="160" loading="lazy"
+             alt="The worked product string examples, for one product and for two.">
+        <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
+    </div>
+    <div class="shot-note">The comma between products is the fault that recurs on every build, so the sheet shows it rather than describing it.</div>
+</div>
 
 <h3 class="subsec-title">Your copy will drift from the live one</h3>
 <p>The map in the document is a copy. The live version is in Admin, it is maintained by the product, and it is always right about settings. Yours will fall behind, because somebody will change an expiration in the interface at four in the afternoon and not open the spreadsheet.</p>

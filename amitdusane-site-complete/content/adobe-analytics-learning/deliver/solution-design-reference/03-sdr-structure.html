@@ -39,7 +39,7 @@ weight: 3
 <div class="shot-box">
     <div class="shot-title">The identity is on the first row and nowhere else</div>
     <div class="shot-frame">
-        <img src="/img/adobe-analytics-sdr-solution-block-identity.webp" width="700" height="359" loading="lazy"
+        <img src="/img/adobe-analytics-sdr-solution-block-identity.webp" width="426" height="219" loading="lazy"
              alt="One solution block: KES-S003 filled across, four blank rows, then KES-S004.">
         <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
     </div>
@@ -49,7 +49,7 @@ weight: 3
 <div class="shot-box">
     <div class="shot-title">And the variables sit underneath it, in order</div>
     <div class="shot-frame">
-        <img src="/img/adobe-analytics-sdr-solution-block-variables.webp" width="664" height="438" loading="lazy"
+        <img src="/img/adobe-analytics-sdr-solution-block-variables.webp" width="332" height="219" loading="lazy"
              alt="The variable rows of a solution block, from pageName to event12.">
         <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
     </div>
@@ -59,6 +59,16 @@ weight: 3
 <p>Five rows, and a business reader can follow every one of them. They asked to know what goes in the cart and where it was added from. The answer is sitting there: the product, the source, the colour, and a count. Nobody had to explain what an eVar is for that sentence to land.</p>
 
 <p>Compare that with the same information in an inventory. eVar17 would sit in a list between eVar16 and eVar18, and its neighbours would be Listing Type and Delivery Option, two things it has nothing to do with. The block puts the variables that fire together next to each other, which is the only arrangement that matches how the site actually behaves.</p>
+
+<div class="shot-box">
+    <div class="shot-title">And the column that stops the arguments</div>
+    <div class="shot-frame">
+        <img src="/img/adobe-analytics-sdr-details-column.webp" width="392" height="160" loading="lazy"
+             alt="The Variable and Details columns, with example values such as Charcoal, Oatmeal, Sage.">
+        <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
+    </div>
+    <div class="shot-note">Real values, not descriptions of values. This is what stops a developer sending hex codes while an analyst waits for names.</div>
+</div>
 
 <h3 class="subsec-title">The seven columns, and what each one is for</h3>
 <p>Seven columns carry the design. Adding an eighth is common and usually fine. Removing one of these is where documents start failing.</p>
@@ -101,6 +111,16 @@ weight: 3
 
 <p>That last row is worth sitting with. The single biggest block in any SDR is the one that fires on every page, carrying page name, section, category, login state, customer ID and the timing events. No business person will ever request it, because it is not a question about the business. Leave it out and every other solution in the document collapses, because they all inherit from it.</p>
 
+<div class="shot-box">
+    <div class="shot-title">Two requirement identifiers against one solution</div>
+    <div class="shot-frame">
+        <img src="/img/adobe-analytics-sdr-many-to-one-mapping.webp" width="272" height="122" loading="lazy"
+             alt="The Solution ID and Requirement ID columns, one row carrying two requirement identifiers.">
+        <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
+    </div>
+    <div class="shot-note">KES-S010 answers two requests at once, because the delivery step and the delivery option happen in the same instant on the site.</div>
+</div>
+
 <div class="info-box">
     <div class="info-hdr"><span class="info-ico"></span>The variable that turns up in every block is the sign it is working</div>
     <p>Once a document is finished, one or two variables will appear in almost every solution. Page name is in all twenty-four blocks of the worked example. Login status is in most. That repetition looks like waste in a spreadsheet and it is the opposite: it is the record that every moment on the site carries its context. The variable map at the back is where you see that pattern in one view, and that is one of the things <a href="/adobe-analytics-learning/deliver/solution-design-reference/variable-mapping/">Variable Mapping</a> is for.</p>
@@ -111,7 +131,7 @@ weight: 3
     <svg viewBox="0 0 700 220" style="width:100%;height:auto;display:block" role="img"
          aria-label="Four panels showing how requirements map to solutions. One to one: a single requirement joins a single solution. One requirement to two solutions: the same request needs two separate builds. Two requirements to one solution: two requests happen in the same instant and one call carries both. And a solution with no requirement above it at all, marked STD, which is the global page load that every site needs and nobody asks for.">
       <defs>
-        <marker id="sdr3a" markerWidth="7" markerHeight="7" refX="5.6" refY="3.5" orient="auto"><path d="M0 0 L7 3.5 L0 7 Z" style="fill:var(--text3,#5d6b7e)"/></marker>
+        <marker id="sdr3a" markerWidth="6" markerHeight="6" refX="5.4" refY="3" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0.4 L6 3 L0 5.6 Z" style="fill:var(--text3,#5d6b7e)"/></marker>
       </defs>
 
       <text x="16" y="18" style="fill:var(--text3,#5d6b7e);font-size:11px;font-weight:700">Requirement</text>
@@ -157,6 +177,16 @@ weight: 3
     </svg>
 </div>
 
+<div class="shot-box">
+    <div class="shot-title">And the marker for the ones nobody asked for</div>
+    <div class="shot-frame">
+        <img src="/img/adobe-analytics-sdr-std-marker.webp" width="272" height="143" loading="lazy"
+             alt="The Solution ID and Requirement ID columns, the requirement column reading STD.">
+        <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
+    </div>
+    <div class="shot-note">STD in place of a requirement identifier. Nobody requests a global page load, and it is the largest block in the document.</div>
+</div>
+
 <h3 class="subsec-title">Sheets are themes, not chapters</h3>
 <p>Split the solutions across sheets by what they are about, not by the order they were written. Global variables. Commerce. Engagement. Configuration. A person wanting to know how the checkout works opens one sheet and finds every checkout solution together.</p>
 
@@ -172,7 +202,7 @@ weight: 3
 <div class="shot-box">
     <div class="shot-title">Settings get identifiers, exactly like rules do</div>
     <div class="shot-frame">
-        <img src="/img/adobe-analytics-sdr-configuration-sheet.webp" width="634" height="628" loading="lazy"
+        <img src="/img/adobe-analytics-sdr-configuration-sheet.webp" width="317" height="314" loading="lazy"
              alt="The Configuration sheet, six settings each carrying a solution identifier.">
         <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
     </div>

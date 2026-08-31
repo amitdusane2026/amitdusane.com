@@ -26,7 +26,7 @@ weight: 2
 <div class="shot-box">
     <div class="shot-title">Six requests, and nothing marking one as bigger</div>
     <div class="shot-frame">
-        <img src="/img/adobe-analytics-brd-requirement-rows.webp" width="700" height="528" loading="lazy"
+        <img src="/img/adobe-analytics-brd-requirement-rows.webp" width="441" height="333" loading="lazy"
              alt="Nine consecutive requirement rows, KES-R001 to KES-R009, with their objectives.">
         <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
     </div>
@@ -41,7 +41,7 @@ weight: 2
 <div class="shot-box">
     <div class="shot-title">The things you are not doing get identifiers too</div>
     <div class="shot-frame">
-        <img src="/img/adobe-analytics-brd-out-of-scope-sheet.webp" width="700" height="527" loading="lazy"
+        <img src="/img/adobe-analytics-brd-out-of-scope-sheet.webp" width="467" height="352" loading="lazy"
              alt="The Out of Scope sheet, four items each with an identifier.">
         <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
     </div>
@@ -63,7 +63,7 @@ weight: 2
 <div class="shot-box">
     <div class="shot-title">One column separates asked for from proposed</div>
     <div class="shot-frame">
-        <img src="/img/adobe-analytics-brd-raised-by-column.webp" width="700" height="442" loading="lazy"
+        <img src="/img/adobe-analytics-brd-raised-by-column.webp" width="497" height="314" loading="lazy"
              alt="The Raised By column, reading Business on most rows and Recommended on one.">
         <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
     </div>
@@ -80,7 +80,7 @@ weight: 2
     <svg viewBox="0 0 700 250" style="width:100%;height:auto;display:block" role="img"
          aria-label="On the left, a request spoken in a workshop: I want to know which discount codes cost us the most. On the right, the same sentence sitting in a row with eight other columns around it: requirement identifier, business objective, technical objective, who raised it, the reporting dimensions, the metrics, the priority, the phase and the sign-off. The words of the request are unchanged. Everything around it is new.">
       <defs>
-        <marker id="brd1a" markerWidth="8" markerHeight="8" refX="6.5" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" style="fill:var(--dia-a,#ba2142)"/></marker>
+        <marker id="brd1a" markerWidth="6" markerHeight="6" refX="5.4" refY="3" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0.4 L6 3 L0 5.6 Z" style="fill:var(--dia-a,#ba2142)"/></marker>
       </defs>
 
       <text x="16" y="20" style="fill:var(--text3,#5d6b7e);font-size:11px;font-weight:700">Said in a workshop</text>
@@ -118,6 +118,16 @@ weight: 2
 
 <p>Two rules make the numbering worth having. Never reuse a number, and never renumber. A requirement that gets dropped keeps its ID and gets a status. That ID is quoted in the design, in the technical document and in the test results, and pulling it out leaves four holes. Numbers are cheap. Reaching KES-R100 on a project with sixty requirements is completely normal and is a record of what happened.</p>
 
+<div class="shot-box">
+    <div class="shot-title">Every row carries the objective it serves</div>
+    <div class="shot-frame">
+        <img src="/img/adobe-analytics-brd-objective-tag.webp" width="272" height="162" loading="lazy"
+             alt="The Requirement ID and Business Objective columns, each row tagged KBO-01.">
+        <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
+    </div>
+    <div class="shot-note">Two columns, and the second one is what lets a senior reader approve a scope without reading thirty rows.</div>
+</div>
+
 <h3 class="subsec-title">Objectives are derived, not collected</h3>
 <p>Nobody in a workshop announces a business objective. They ask for thirty specific things, and the objectives are visible in the pile once it is complete. Group them and four or five appear: track business performance, understand customer behaviour, measure whether the site itself works, measure marketing, protect the quality of the data.</p>
 
@@ -127,6 +137,16 @@ weight: 2
 <p>Every requirement is eventually answered by a report, and a report is a set of dimensions and a set of metrics. So put two columns in the document and fill them in roughly. Somebody wants to know about browser usage: the dimensions column says Browser, the metrics column says Visits. Somebody wants to know which discount codes cost the most: dimensions Discount Code and Product, metrics Discount Applications and Discount Value.</p>
 
 <p>These are sketches and not commitments, and the exact variables are settled later in the design. What they do is let a business reader look at a row and picture the thing they will eventually be handed. Sign-off on a plain list of sentences is a formality that people give without thinking. Sign-off on a row that shows roughly the table they will get is a real decision. It is where somebody says that is not what they meant.</p>
+
+<div class="shot-box">
+    <div class="shot-title">The report, sketched before it is promised</div>
+    <div class="shot-frame">
+        <img src="/img/adobe-analytics-brd-dimensions-and-metrics.webp" width="422" height="160" loading="lazy"
+             alt="The Reporting Dimensions and Reporting Metrics columns for four requirements.">
+        <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
+    </div>
+    <div class="shot-note">Rough is the right level here. Product, Product Category, Cart Additions. Naming eVars in these two columns is starting the design in the wrong document.</div>
+</div>
 
 <div class="tbl-wrap">
 <table>
@@ -156,6 +176,16 @@ weight: 2
 
 <p>Let the business set the priority and the phase, and record who set it. Your job is the estimate, not the choice. Once those two columns are filled in and signed, a whole category of argument disappears. Why is the sorting requirement not live? The answer is a row rather than a memory.</p>
 
+
+<div class="shot-box">
+    <div class="shot-title">The three columns the business fills in, not you</div>
+    <div class="shot-frame">
+        <img src="/img/adobe-analytics-brd-priority-phase-signoff.webp" width="348" height="162" loading="lazy"
+             alt="The Priority, Phase and Sign-off columns, showing High, Phase 1 and Signed.">
+        <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
+    </div>
+    <div class="shot-note">Your job is the estimate. Priority, phase and signature are theirs, and a blank in the third column is a row nobody agreed to.</div>
+</div>
 
 <h3 class="subsec-title">Filling in the BRD workbook</h3>
 <p>The workbook already has the four sheets and every column described above. What follows is the order to fill them in, which matters more than it looks, because several of the steps are only cheap while the ones before them are still open.</p>
@@ -212,7 +242,7 @@ weight: 2
 <div class="shot-box">
     <div class="shot-title">Five entries, and every one names why</div>
     <div class="shot-frame">
-        <img src="/img/adobe-analytics-brd-change-log.webp" width="700" height="425" loading="lazy"
+        <img src="/img/adobe-analytics-brd-change-log.webp" width="482" height="293" loading="lazy"
              alt="The BRD change log, five dated entries each saying what changed and why.">
         <button type="button" class="shot-zoom-btn" aria-label="Enlarge this screenshot">&#10530;</button>
     </div>
@@ -226,7 +256,7 @@ weight: 2
     <svg viewBox="0 0 700 220" style="width:100%;height:auto;display:block" role="img"
          aria-label="One late request, wishlist tracking, arriving six weeks into the build. Without a signed scope it becomes a conversation, then quiet extra work, and the project grows by a third while everyone agrees nobody added anything. With a signed scope it becomes a change request with an identifier, an estimate and a decision made by the person paying. Both paths can end in yes. Only one of them can be counted.">
       <defs>
-        <marker id="brd2a" markerWidth="7" markerHeight="7" refX="5.6" refY="3.5" orient="auto"><path d="M0 0 L7 3.5 L0 7 Z" style="fill:var(--text3,#5d6b7e)"/></marker>
+        <marker id="brd2a" markerWidth="6" markerHeight="6" refX="5.4" refY="3" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0.4 L6 3 L0 5.6 Z" style="fill:var(--text3,#5d6b7e)"/></marker>
       </defs>
 
       <rect x="16" y="86" width="132" height="48" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
