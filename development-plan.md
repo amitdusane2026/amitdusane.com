@@ -2106,3 +2106,72 @@ contradiction with M15 §1, the home page card into the learning section, and th
 component rulebook entry for M21's no-walkthrough exception.
 
 Committed to `develop`. Nothing pushed, production untouched.
+
+---
+
+## Session close, 1 September 2026 (second): the landing pages
+
+**All 26 landing pages are written.** Content creation across the site now
+stands at **143 of 144 pages (99.3%)**. The only page left is the glossary.
+
+### What shipped
+
+21 module landings and 5 phase landings, 83 to 109 words each, two paragraphs,
+no components, links, headings or figures anywhere. Amit's brief was explicit:
+plain language, no teaching, create interest by naming the reader's real
+problem rather than the feature.
+
+The two page types do different jobs, and the brief separated them clearly.
+A **module landing** states the problem and names three or four concepts that
+are the stars of that module. A **phase landing** explains why that stage of
+the work exists at all: foundation, collection, shaping, analysis,
+maintenance. The shaping page carries the clearest version of it, arguing that
+something has to sit between collection and reporting to give raw values
+meaning.
+
+### Two findings that explain why this was never done before
+
+**`module/list.html` never rendered `.Content`.** The category layout had it and
+the module layout did not, so a module landing had nowhere to put a body. Any
+text written into those files before today would have vanished silently. One
+line added, matching the category layout.
+
+**Five phase landings already had content**, despite the tracker recording all
+26 as uncreated. They were revised rather than created: the second paragraphs
+read as a table of contents in prose, and each page now leads with the purpose
+of the phase instead.
+
+### Two corrections Amit made on sight
+
+**The word count came off the scale line.** Landings showed "6 sections ·
+16,726 words · about 1 hr 16 min". His ruling: the reading time answers the
+same question better, because nobody plans an afternoon around a word count.
+The count still drives the time, it is simply not displayed.
+
+**The foundations description repeated the body.** He flagged the sentence
+"Everything later in this curriculum rests on these three", which turned out to
+be the `description` front matter rather than page copy. Both layouts print the
+description directly above the content, and on that page the two listed the
+same three things one after the other. Description rewritten, body rewritten to
+stop repeating it.
+
+### Also fixed this session
+
+The M11 classification deprecation messaging. The legacy importer was
+deprecated on 31 August 2026 and three places on the site still described that
+date as upcoming. Verified against Experience League, moved to past tense, and
+qualified: Adobe announced a deprecation rather than a shutdown, so the box now
+tells the reader to check what their own account still offers.
+
+### Next session
+
+**The glossary** is the last content page, and it is the only thing standing
+between the site and 100%.
+
+Beyond that, and unchanged: M11 §1 and M03 §2 both still carry small open
+items, the home page needs its second topic card for the learning section, and
+the component rulebook still needs the entry recording M21's deliberate absence
+of walkthroughs.
+
+The learning section remains unpublished. `amitdusane.com/adobe-analytics-learning/`
+still returns 404 by design, and nothing has been merged to `main`.

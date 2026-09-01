@@ -31,8 +31,11 @@
       {{- end -}}
       <span>{{ $mods }} module{{ if ne $mods 1 }}s{{ end }}</span><span class="ls-sep" aria-hidden="true">&middot;</span>
     {{- end -}}
+    {{- /* The word count was dropped on 1 Sep 2026. It answered the same
+       question the reading time answers, less usefully: nobody plans an
+       afternoon around 16,726 words, they plan it around an hour and a
+       quarter. The count is still what produces the time, just not shown. */ -}}
     <span>{{ $n }} section{{ if ne $n 1 }}s{{ end }}</span><span class="ls-sep" aria-hidden="true">&middot;</span>
-    <span>{{ lang.FormatNumber 0 $words }} words</span><span class="ls-sep" aria-hidden="true">&middot;</span>
     <span>{{ $time }}</span>
   </p>
 {{- end -}}

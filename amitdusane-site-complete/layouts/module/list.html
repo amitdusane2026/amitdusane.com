@@ -5,6 +5,7 @@
 {{ partial "byline.html" (dict "page" . "full" false) }}
 {{ partial "scale.html" (dict "page" .) }}
 <p>{{ .Description }}</p>
+{{ .Content }}
 <ol class="lsec-list">
   {{ range .Pages.ByWeight }}
     <li><a href="{{ .RelPermalink }}"><span class="lsn">{{ .Params.sectionnum }}</span><span>{{ .Title }}</span></a></li>

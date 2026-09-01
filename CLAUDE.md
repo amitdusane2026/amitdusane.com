@@ -352,6 +352,18 @@ So material that belongs to a whole module gets distributed across its sections,
 
 This is QA Rulebook check 4 and rule 5 of the component rulebook. It is the easiest rule on the site to break while writing a good sentence.
 
+**All 26 were written on 1 Sep 2026, and Amit's brief sharpened the rule into two different jobs.** They came out at 83 to 109 words, two paragraphs each, with no components, links, headings or figures of any kind. Plain language, no teaching.
+
+**A module landing states the reader's real problem, then names three or four concepts that are the stars of that module.** Classifications opens on campaign codes nobody wants to read, not on what a classification is. The test is whether somebody deciding *should I spend an hour here* gets an honest answer.
+
+**A phase landing is not a bucket label.** The five phases mean something: foundation, collection, shaping, analysis, maintenance. Each landing explains *why that stage exists at all* and leaves the content to the modules. The shaping page earns its place by saying that something has to sit between collection and reporting and give raw values meaning, which is the entire argument for the phase.
+
+**Watch for the description repeating the body.** Both `module/list.html` and `category/list.html` print `{{ .Description }}` as a paragraph immediately above `{{ .Content }}`. On the foundations page the description and the opening line listed the same three things one after the other, which Amit caught on sight. When writing a landing, read the description first and write away from it.
+
+**`module/list.html` did not render `.Content` at all until 1 Sep 2026.** The category layout always had it; the module one did not, so a module landing had nowhere for a body to go. That is the likeliest reason none was ever written. One line was added to match the category layout.
+
+**Every landing is now `_index.html`.** The 21 module landings were `.md` and were converted with their front matter carried across unchanged. The old permission for a `.md` module index no longer applies to anything, and reintroducing one would restore the Goldmark trap for no gain.
+
 A `path-box` is included only if the subject has an Adobe screen. A data layer does not; a report suite setting does.
 
 ---
