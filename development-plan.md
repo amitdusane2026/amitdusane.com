@@ -2001,3 +2001,108 @@ of work than the ten remaining sections and are what holds all-content
 completion at 74.3%; and the home page card into the learning section.
 
 Nothing pushed. `origin/develop` remains on `fa87694`; production untouched.
+
+---
+
+## Session close, 1 September 2026: the section corpus is complete
+
+**All 116 sections are written, QA'd and signed off.** Modules 20 and 21 were
+drafted, rejected, rewritten and accepted in this session. Every one of the 21
+modules now has its full complement of sections.
+
+Corpus: **116 of 116 sections (100%)**, 21 of 21 modules, and **117 of 144
+content pages (81.2%)**. The remaining 27 are the landing pages.
+
+### What shipped
+
+**M20 Testing and Debugging** and **M21 Adobe Analytics and CJA**, ten sections,
+about 14,500 words of prose, ten figures, no screenshots.
+
+### Both modules were written twice, and the second version is the one that counts
+
+The first drafts passed every automated check and Amit rejected both. Two
+faults, and neither was findable by any measurement in place at the time.
+
+**M20 ignored M19.** Across five sections it carried three prose links to the
+SDR module, one borrowed order ID, and nothing else. No workbook, no download,
+none of the four statuses, and none of the Kestrel findings, despite those being
+named as ready-made worked examples before drafting started. His reading:
+*"As if we have never discussed testing and debugging in any content on the
+website and we are doing it first time."* He found it at the `dothis` blocks,
+where M19 hands the reader a document and M20 taught a different vocabulary for
+the same activity.
+
+The rewrite makes the validation report the spine. Twenty one distinct Kestrel
+solution IDs now carry the teaching, every walkthrough ends with a dated line in
+a tracker row and one of M19's four statuses, and the invented scenarios are
+gone. **M19 is authoritative and M20 conforms to it**, not the other way round.
+
+**Both modules read as literary rather than instructional.** Sentence and
+paragraph medians were both inside benchmark and the prose still failed. The
+fault was decode cost: figures of speech the reader has to resolve before
+reaching the fact. Shipped examples included the heading *"Every tool is a
+window, and the frame matters more than the glass"* and the closing paragraph
+*"Everything else is a lookup."* His instruction: *"we are not writing newspaper
+article but user coming to website is learner, who needs help, handholding."*
+
+Rewritten plainly. Every metaphor heading replaced with one that names its
+content, no aphoristic closers, no personification. Sentence medians 13 to 16,
+and four of M21's five sections hit 13 on the first draft with no repair pass.
+
+### M21 is a comparison, not a tutorial
+
+Second ruling, later the same day. **M21 exists because CJA is where analytics
+is going, not to teach CJA.** The module answers three questions: what Adobe
+Analytics has that CJA does not, what CJA has that Adobe Analytics does not, and
+which restrictions CJA removes. The third carries it, because it is the only one
+that connects to the reader's own frustrations.
+
+**Every `dothis` block came out of M21.** Amit: *"'Do this' literally starts
+teaching CJA, and we don't need that."* This makes M21 a standing exception to
+the section anatomy and needs recording in the component rulebook.
+
+**And M21 routes readers to the Web SDK Migration world.** Ten links across four
+sections, including two `cards` blocks. The framing came from that world's own
+"The forward path" article, which already calls the Web SDK *the on-ramp, not
+the destination*, so the two sections now agree rather than competing.
+
+### Screenshots
+
+Removed entirely from both modules. There were no captures to take, so four
+`shot-pending` placeholders came out rather than waiting for a capture day.
+**Both modules now clear the `shot-pending` merge guard.**
+
+### Two platform findings, both recorded in CLAUDE.md
+
+**A workbook open in Excel freezes the dev server, silently.** Hugo copies
+`static/templates/*.xlsx` on every build and Windows blocks the read. The server
+keeps serving the last good build while every rebuild fails in the background,
+so the source moves and the page does not. It looks exactly like a dead file
+watcher, and it cost half an hour chasing the wrong cause. This will keep
+happening, because M20 tells the reader to open the validation report.
+
+**The dev server can now stay up while work happens.** `--poll 700ms` is in
+`.claude/launch.json`; verification builds go to a separate destination and
+cacheDir so they never share state with a running server. Only the final build
+before a commit needs the server stopped.
+
+### The Ask Amit bar
+
+Retuned on Amit's judgment after a week of live use. Appears at three quarters
+rather than two thirds, and hides once the prev/next navigation is on screen so
+it stops covering those links. Keyed to the element rather than a scroll
+percentage, because `.lpn` is a fixed height inside articles that vary by a
+thousand words.
+
+### Next session
+
+**The 27 landing pages.** 21 module landings, 5 category landings and the
+glossary. All 21 module landings are `_index.md` and must become `_index.html`
+before any body is written, or Goldmark strips every component. This is now the
+only block standing between the site and complete content.
+
+Still open beyond that: M11 §1's expired deprecation warn-box, the M03 §2
+contradiction with M15 §1, the home page card into the learning section, and the
+component rulebook entry for M21's no-walkthrough exception.
+
+Committed to `develop`. Nothing pushed, production untouched.

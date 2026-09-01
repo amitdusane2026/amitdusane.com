@@ -1,11 +1,167 @@
 ---
 slug: "what-is-customer-journey-analytics"
 title: "What Is Customer Journey Analytics"
-published: 2026-07-18
-lastmod: 2026-07-18
+seotitle: "What Is Customer Journey Analytics (CJA)"
+description: "Adobe Analytics decides at collection and stores the answer. CJA stores the event and decides at report time. What that fixes, and what it gives up."
+published: 2026-09-01
+lastmod: 2026-09-01
 type: lesson
 modulenum: 21
 sectionnum: 1
 weight: 1
 ---
-<p>This section is not yet written.</p>
+<p>A processing rule has been putting the wrong value into a variable since March. Somebody finds it in September. The fix takes four minutes.</p>
+
+<p>The next question is what happens to the six months already collected. In Adobe Analytics, nothing happens to it. The rule ran at collection, it wrote what it wrote, and the original value was never stored. There is nothing to go back to.</p>
+
+<p>Anybody who has worked in Adobe Analytics for a while has lived that conversation. It is the clearest example of the restriction this module is about, and of what Customer Journey Analytics changes.</p>
+
+<h3 class="subsec-title">Why this module exists</h3>
+<p>This module does not teach you to use Customer Journey Analytics. That is a body of work in its own right, and it would need its own curriculum.</p>
+
+<p>What it does is answer three questions for somebody who already knows Adobe Analytics. What does Adobe Analytics have that CJA does not. What does CJA have that Adobe Analytics does not. And which of the restrictions you have been working around for years does CJA actually remove.</p>
+
+<p>That last question is the useful one, because CJA is where Adobe is taking analytics. Knowing what it fixes tells you whether the move is worth making, and when.</p>
+
+<h3 class="subsec-title">When the decision gets made</h3>
+<p>CJA is usually described as a way to bring online and offline data together in one place. That is true, and it makes CJA sound like Adobe Analytics with more storage. The real change is the timing of decisions.</p>
+
+<p>Adobe Analytics makes almost every decision when data arrives, then stores the result. Which channel gets credit. How long an eVar persists. Where a visit ends. What a processing rule rewrote. All of it is settled at collection, and what lands in storage is the answer rather than the question.</p>
+
+<p>CJA stores the event and settles those questions when you run a report. Attribution, persistence, session definition and much of the shaping happen at report time. That means they can be changed, and a change applies to everything already collected.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">Same data, and the difference is where the decisions sit</div>
+    <svg viewBox="0 0 700 300" style="width:100%;height:auto;display:block" role="img"
+         aria-label="Two panels. On the left, headed Adobe Analytics, an event flows into a box of collection time decisions covering processing rules, channel credit, persistence and session definition, and from there into storage which holds the answer. A note says changing a decision affects new data only. On the right, headed Customer Journey Analytics, the same event flows straight into storage which holds the raw event, and the decisions box sits after storage at report time, feeding the report. A note says changing a decision changes history too.">
+      <defs>
+        <marker id="cj1a" markerWidth="7" markerHeight="7" refX="6.2" refY="3.5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0.6 L7 3.5 L0 6.4 Z" style="fill:var(--text3,#5d6b7e)"/></marker>
+      </defs>
+
+      <text x="20" y="22" style="fill:var(--text2,#475569);font-size:14px;font-weight:700">Adobe Analytics</text>
+      <text x="374" y="22" style="fill:var(--text2,#475569);font-size:14px;font-weight:700">Customer Journey Analytics</text>
+
+      <rect x="20" y="34" width="306" height="216" rx="6" style="fill:none;stroke:var(--border,#e2e8f0);stroke-width:1.6"/>
+
+      <rect x="40" y="50" width="266" height="34" rx="5" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="173" y="72" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">The event arrives</text>
+      <line x1="173" y1="84" x2="173" y2="98" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#cj1a)"/>
+
+      <rect x="40" y="104" width="266" height="56" rx="5" style="fill:var(--dia-d-soft,rgba(245,158,11,.14));stroke:var(--dia-d,#f59e0b);stroke-width:1.6"/>
+      <text x="173" y="126" text-anchor="middle" style="fill:var(--dia-d-ink,#8a5700);font-size:12.5px;font-weight:700">Decisions, at collection</text>
+      <text x="173" y="146" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">rules, credit, persistence, sessions</text>
+      <line x1="173" y1="160" x2="173" y2="174" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#cj1a)"/>
+
+      <rect x="40" y="180" width="266" height="34" rx="5" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="173" y="202" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">Storage holds the answer</text>
+
+      <text x="40" y="236" style="fill:var(--dia-d-ink,#8a5700);font-size:11px">Change a decision and only new data hears about it.</text>
+
+      <rect x="374" y="34" width="306" height="216" rx="6" style="fill:none;stroke:var(--accent,#ba2142);stroke-width:1.6"/>
+
+      <rect x="394" y="50" width="266" height="34" rx="5" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="527" y="72" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">The event arrives</text>
+      <line x1="527" y1="84" x2="527" y2="98" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#cj1a)"/>
+
+      <rect x="394" y="104" width="266" height="34" rx="5" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="527" y="126" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">Storage holds the event</text>
+      <line x1="527" y1="138" x2="527" y2="152" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#cj1a)"/>
+
+      <rect x="394" y="158" width="266" height="56" rx="5" style="fill:var(--accent-light,rgba(186,33,66,.10));stroke:var(--accent,#ba2142);stroke-width:1.6"/>
+      <text x="527" y="180" text-anchor="middle" style="fill:var(--accent2,#951833);font-size:12.5px;font-weight:700">Decisions, at report time</text>
+      <text x="527" y="200" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">in a data view, and changeable</text>
+
+      <text x="394" y="236" style="fill:var(--accent2,#951833);font-size:11px">Change a decision and history changes too.</text>
+
+      <text x="20" y="284" style="fill:var(--text3,#5d6b7e);font-size:11px">Neither is more accurate. One commits early and is cheap to read. The other commits late and is cheap to correct.</text>
+    </svg>
+</div>
+
+<p>Neither arrangement is better on its own. Deciding early is cheap to read and expensive to change. Deciding late is cheap to change and asks more of you at report time, because the report now depends on settings somebody chose.</p>
+
+<h3 class="subsec-title" data-nav="What CJA removes">The Adobe Analytics restrictions that CJA removes</h3>
+<p>This is the part worth reading closely, because each row is something you have probably worked around.</p>
+
+<div class="tbl-wrap">
+<table>
+<thead>
+<tr><th>The restriction in Adobe Analytics</th><th>What CJA does instead</th></tr>
+</thead>
+<tbody>
+<tr><td>A processing rule that was wrong is wrong forever. The original value was never stored</td><td>The raw event is stored. Change the setting and every month already collected is re-read</td></tr>
+<tr><td>75 props and 250 eVars, allocated in meetings, and a spare slot is a scarce resource</td><td>Any schema field can be a dimension or a metric. A data view supports 5,000 of each</td></tr>
+<tr><td>One report suite per report. Combining two means multi-suite tagging, decided at collection</td><td>A connection combines datasets after the fact, with no change to collection</td></tr>
+<tr><td>Digital behavior only. Call center contacts and store transactions live somewhere else</td><td>Any dataset in Platform, whatever it describes, as long as it shares an identifier</td></tr>
+<tr><td>The visit timeout is fixed for the whole report suite</td><td>Session length is a data view setting, and two data views can disagree deliberately</td></tr>
+<tr><td>Attribution is chosen when the variable is configured, and changing it does not reach backward</td><td>Attribution is set per component at report time, and changing it applies to history</td></tr>
+<tr><td>Low Traffic bucketing hides values you never got to see</td><td>Every unique value is kept at full cardinality</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>Read down the left column and you have a fair summary of what makes Adobe Analytics work frustrating. Read down the right and you have the argument for CJA, which is stronger than the marketing version because every line answers something specific.</p>
+
+<h3 class="subsec-title">eVars, props and events do not exist in CJA</h3>
+<p>This is the sentence that unsettles people who know Adobe Analytics well. In Customer Journey Analytics, eVars, props and events in the Adobe Analytics sense no longer exist.</p>
+
+<p>A schema replaces them. Data arrives as fields defined in Experience Data Model, and any field can become a dimension or a metric.</p>
+
+<p>Somebody who has just spent months learning eVars could reasonably feel the ground moved. It did, and less than it looks. The slot was an implementation detail of one product. What you were learning underneath it was that a value has a scope, that the scope has to be chosen deliberately, and that persistence decides who gets credit. All of that still applies. In CJA those choices are more visible, because somebody sets them in a data view where you can see them.</p>
+
+<div class="info-box">
+    <div class="info-hdr"><span class="info-ico"></span>The concepts transfer, the vocabulary does not</div>
+    <p>Allocation, expiration, merchandising and the products string are Adobe Analytics words for a smaller set of ideas. What a value applies to, how long it applies for, and what it is bound to. Those ideas are why <a href="/adobe-analytics-learning/foundations/variables/evars-conversion-variables/">eVars (Conversion Variables)</a> is worth reading even if you are heading straight to CJA. What does not transfer is the numbering, the ceilings, and the housekeeping that came with them.</p>
+</div>
+
+<h3 class="subsec-title">The data view holds the settings</h3>
+<p>A data view decides how raw events are interpreted. It sits between a connection, which names the datasets in play, and Analysis Workspace, which is the same reporting interface Adobe Analytics uses.</p>
+
+<p>Inside it are the settings that used to be report suite configuration and processing rules. Which fields are dimensions and which are metrics. How a value persists and for how long. Which attribution model applies by default. Where a session ends. There are also derived fields, which do at report time what processing rules did at collection.</p>
+
+<p>One consequence catches teams out. A single dataset can now produce several versions of the truth. Build two data views over the same events with different session timeouts and you get two different Sessions figures. Both are correct, both are defensible, and both can be quoted in a meeting by people who do not know the other exists. Governance stops being about who can edit a report suite and becomes about who can create a data view.</p>
+
+<div class="warn-box">
+    <div class="warn-hdr"><span class="warn-ico"></span>Sessions and Visits will not agree</div>
+    <p>Visits is calculated in Adobe Analytics at processing time. Sessions is calculated in Customer Journey Analytics at report time. Adobe states that the two metrics may differ, and in practice they do. Anybody running both systems over the same period should expect the totals to disagree, and should say so before the comparison reaches somebody's desk. The alternative is a meeting about whether one of the two systems is broken. Neither is. They are answering slightly different questions.</p>
+</div>
+
+<h3 class="subsec-title">What Adobe Analytics has that CJA does not</h3>
+<p>The trade runs both ways, and some of these surprise people late in a project.</p>
+
+<div class="tbl-wrap">
+<table>
+<thead>
+<tr><th>Absent from CJA</th><th>Status</th><th>Why it matters</th></tr>
+</thead>
+<tbody>
+<tr><td>Activity Map</td><td>Not currently planned</td><td>A whole way of looking at a page goes, and teams who use it daily will notice</td></tr>
+<tr><td>Contribution analysis</td><td>Not currently planned</td><td>Explaining an anomaly becomes a manual investigation</td></tr>
+<tr><td>Triggers</td><td>Never supported</td><td>Abandonment triggers have to be rebuilt elsewhere in the stack</td></tr>
+<tr><td>Unlimited dimension persistence</td><td>Capped at 90 days</td><td>Long lookbacks that Adobe Analytics allowed have a ceiling here</td></tr>
+<tr><td>People metric via Cross-Device Co-op</td><td>Never supported</td><td>Person level counting comes from stitching instead</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>Set against the earlier table, that is the honest shape of the decision. CJA removes a long list of restrictions and takes away a short list of features, and which list matters more depends on how your organization actually works.</p>
+
+<h3 class="subsec-title">What CJA runs on</h3>
+<p>Customer Journey Analytics reads data held in Adobe Experience Platform. It collects nothing itself.</p>
+
+<p>That is a real dependency. Data has to be in Platform first, described by a schema, sitting in a dataset. Which means the practical question is not whether CJA is better. It is how your data gets into Platform, and that is a collection project rather than a reporting one.</p>
+
+<p>There are two routes, and one of them is a significant piece of work with a guide of its own on this site. <a href="/adobe-analytics-learning/deliver/adobe-analytics-cja/adobe-experience-platform-integration/">Adobe Experience Platform Integration</a> covers both, what a schema now does that a design document used to do, and the one mistake that cannot be undone.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Analytics</div>
+    <p>In a different product, reached from the same place. Customer Journey Analytics has its own entry in the Experience Cloud application switcher. Inside it, the left navigation carries <span class="path">Connections</span>, <span class="path">Data views</span> and <span class="path">Workspace</span>. That Workspace is the same interface Adobe Analytics uses, which is deliberate, and it is why an experienced analyst is productive on day one and confused on day two.</p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics-platform/using/cja-overview/cja-b2c-overview/cja-overview" target="_blank">Adobe Docs: Customer Journey Analytics Overview</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics-platform/using/compare-aa-cja/cja-aa-comparison/data-processing-comparisons" target="_blank">Adobe Docs: Compare Data Processing Across Adobe Analytics and CJA</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics-platform/using/compare-aa-cja/cja-aa-comparison/cja-aa" target="_blank">Adobe Docs: Customer Journey Analytics Feature Support</a></li>
+    </ul>
+</div>

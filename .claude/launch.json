@@ -10,7 +10,9 @@
         "amitdusane-site-complete",
         "--port",
         "1313",
-        "--noHTTPCache"
+        "--noHTTPCache",
+        "--poll",
+        "700ms"
       ],
       "port": 1313
     }

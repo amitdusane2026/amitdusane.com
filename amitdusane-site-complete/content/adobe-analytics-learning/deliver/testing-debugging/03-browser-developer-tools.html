@@ -1,76 +1,261 @@
 ---
 slug: "browser-developer-tools"
 title: "Browser Developer Tools"
-published: 2026-07-15
-lastmod: 2026-07-15
+seotitle: "Debugging Adobe Analytics with Browser Developer Tools"
+description: "The request is the only fact on the chain. How to find a hit, read it without help, and run the test that separates a data layer fault from a rule fault."
+published: 2026-09-01
+lastmod: 2026-09-01
 type: lesson
 modulenum: 20
 sectionnum: 3
 weight: 3
 ---
-<p>Browser DevTools provide raw access to network requests, allowing deep inspection of Analytics beacons.</p>
-                <h3 class="subsec-title">Network Tab Inspection</h3>
-                <div class="code-block">
-                    <div class="code-hdr"><span class="code-lang">Finding Analytics Requests</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-                    <div class="code-body"><pre>1. Open DevTools (F12 or Cmd+Option+I)
-2. Go to Network tab
-3. Filter by: "b/ss" or "collect"
+<p>On 22 May the Kestrel cart page was tested with three products in the cart. The products variable was present and it had a value, so at a glance the solution looked fine.</p>
 
-AppMeasurement requests:
-https://metrics.example.com/b/ss/rsid/0/...
+<p>Reading the raw string showed something else. All three product IDs were inside one entry, joined by commas, instead of three entries separated by commas. Adobe would have read that as a single product with a very odd name.</p>
 
-Web SDK requests:
-https://edge.adobedc.net/ee/v1/collect...
+<p>That fault is only visible in the request itself. It was recorded against KES-S008 and the string was rebuilt as an array before the next cycle.</p>
 
-Key Query Parameters to Check:
-├── g = Page URL
-├── r = Referrer
-├── c1-c75 = Props
-├── v1-v250 = eVars
-├── events = Events list
-├── products = Products string
-├── pageName / gn = Page name
-├── ch = Channel
-├── mid = Marketing Cloud ID
-└── aid = Analytics ID</pre></div>
-                </div>
+<div class="dl-box">
+    <div class="dl-title"><span class="dl-ico" aria-hidden="true"></span>The validation report, for following along</div>
+    <p>Rows KES-S005 and KES-S008 in the <b>Tracker</b> sheet are both products string faults, and both were found by reading a raw request. If you have not downloaded the file, you can get it now or come back to it later.</p>
+    <ul class="dl-list">
+        <li><a href="/templates/adobe-analytics-validation-report-template.xlsx" download><span class="dl-name">Validation Report</span><span class="dl-meta">XLSX &middot; 2 sheets &middot; 28 solutions &middot; 3 test cycles</span></a></li>
+    </ul>
+</div>
 
-                <h3 class="subsec-title">Console Debugging</h3>
-                <div class="code-block">
-                    <div class="code-hdr"><span class="code-lang">JavaScript Console Commands</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-                    <div class="code-body"><pre>// Check if s object exists (AppMeasurement)
-console.log(s);
+<h3 class="subsec-title">Why you still need the raw request</h3>
+<p>The debugger is quicker to read and it is not always available. Three situations come up regularly.</p>
 
-// View current variable values
-console.log(s.pageName);
-console.log(s.eVar1);
-console.log(s.events);
+<p>The fault happens on somebody else's machine, in another office, on a locked down browser with no extensions. The fault only happens in a browser the extension does not support. Or the debugger shows something that makes no sense and you need to confirm it somewhere neutral.</p>
 
-// Check tracking server
-console.log(s.trackingServer);
+<p>There is also the case above. Where the exact characters matter, a formatted view can hide the problem, and the raw string is the only place the structure is visible.</p>
 
-// View entire configuration
-console.table(s);
+<h3 class="subsec-title">Finding the hit</h3>
+<p>Open developer tools, go to the Network tab, and filter. What you filter for depends on which library the site uses.</p>
 
-// For Web SDK - check alloy object
-console.log(alloy);
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">Network tab filters, by library</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>AppMeasurement            filter:  /b/ss/
+  https://metrics.kestrelandco.com/b/ss/kestrelprod/1/...
+  Everything is in the URL. One request per hit.
 
-// Check data layer
-console.log(window.dataLayer);
-console.log(window.digitalData);
+Web SDK (Edge Network)    filter:  /ee
+  https://edge.adobedc.net/ee/v1/collect?configId=...
+  Everything is in a JSON payload. Read the Payload tab.
 
-// Force a tracking call (testing only!)
-s.t(); // Page view
-s.tl(true, 'o', 'Test Link'); // Link tracking</pre></div>
-                </div>
-                <div class="warn-box">
-                    <div class="warn-hdr"><span class="warn-ico"></span>Testing in Production</div>
-                    <p>Never use s.t() or s.tl() in production console as it will send real data. Use a development report suite or Adobe's debug mode which doesn't send data.</p>
-                </div>
-                <div class="ref-box">
-                    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
-                    <ul>
-                        <li><a href="https://experienceleague.adobe.com/docs/analytics/implementation/validate/debugger.html" target="_blank">Adobe Docs: Debugging Implementation</a></li>
-                    </ul>
-                </div>
-            
+Both can also be found by filtering on the collection domain,
+which helps when a site uses its own first party domain and the
+path has been customized.</pre></div>
+</div>
+
+<p>Two settings make this usable, and both have to be on before you do the action. <strong>Preserve log</strong> keeps requests across page navigations, without which a checkout clears the evidence at every step. <strong>Disable cache</strong> stops the library being served from an old copy, which matters on the day you are testing whether a fix deployed.</p>
+
+<h3 class="subsec-title">Reading a hit without help</h3>
+<p>An AppMeasurement request is a query string. The parameter names are short because they were designed when URL length mattered. There are dozens. These are the ones that answer real questions.</p>
+
+<div class="tbl-wrap">
+<table>
+<thead>
+<tr><th>Parameter</th><th>Holds</th><th>Worth checking because</th></tr>
+</thead>
+<tbody>
+<tr><td>The path after <code>/b/ss/</code></td><td>The report suite ID</td><td>Correct data in the wrong suite looks exactly like no data</td></tr>
+<tr><td><code>pageName</code></td><td>The Page dimension</td><td>An empty one falls back to the URL, which fills a report with query strings</td></tr>
+<tr><td><code>g</code> and <code>-g</code></td><td>The page URL, first 255 bytes and then the rest</td><td>A long URL is split across two parameters rather than truncated</td></tr>
+<tr><td><code>r</code></td><td>The referring URL</td><td>Empty referrers turn paid traffic into direct traffic</td></tr>
+<tr><td><code>c1</code> to <code>c75</code></td><td>Props</td><td><code>c4</code> is prop4. The number is the only mapping there is</td></tr>
+<tr><td><code>v1</code> to <code>v250</code></td><td>eVars</td><td><code>v19</code> is eVar19. An eVar missing here can still report a persisted value</td></tr>
+<tr><td><code>events</code></td><td>The comma separated event list</td><td>An event missing here cannot appear in any report, whatever the rule claims</td></tr>
+<tr><td><code>products</code></td><td>The products string</td><td>Position decides meaning. Position three is quantity, and it is the usual fault</td></tr>
+<tr><td><code>pe</code> and <code>pev2</code></td><td>The link type, and the link name</td><td>Their presence means this is a link hit rather than a page view</td></tr>
+<tr><td><code>mid</code> and <code>aid</code></td><td>Experience Cloud ID, and the legacy Analytics ID</td><td>A missing <code>mid</code> points at the identity service, not at Analytics</td></tr>
+<tr><td><code>cc</code></td><td>The currency code of the hit</td><td>A wrong one converts every revenue figure on it</td></tr>
+<tr><td><code>ts</code></td><td>A custom timestamp, when one is set</td><td>It changes when the hit lands, and so changes what you should expect to see</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>Read them in a fixed order rather than looking for the one you care about. Report suite, then hit type, then the variables the design names. The Kestrel cycle found two faults that no single variable would have shown: a whole journey landing in the wrong suite, and a page view firing where a link was intended.</p>
+
+<p>The products string deserves its own look, because position decides meaning and two of the Kestrel faults were there. KES-S005 sent the cart total in position three instead of the quantity being added, so adding one product reported two. KES-S008 was the malformed string in the opener. Both look like a populated value until you read the characters.</p>
+
+<div class="warn-box">
+    <div class="warn-hdr"><span class="warn-ico"></span>An empty query string does not mean an empty hit</div>
+    <p>AppMeasurement libraries from 1.4.1 onward send an image request over HTTP POST when it grows too long, and data sent that way is not truncated at any length. So a large hit, usually one carrying a full products string, can show almost nothing in the URL while every variable sits in the request body. Reading only the query string and concluding the variables were dropped is one of the most common false findings in this work. Open the Payload or Request tab and read the body. Web SDK requests always need that, because they carry a JSON payload rather than a query string.</p>
+</div>
+
+<h3 class="subsec-title">The console, and two things worth doing in it</h3>
+<p>The Network tab shows what left the browser. The console shows what the page knew, which is the other half of every useful comparison.</p>
+
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">Console, reading what the page actually held</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>// Whatever object the site publishes. Read it at the moment of the fault.
+window.digitalData
+window.adobeDataLayer
+window.dataLayer
+
+// Adobe Client Data Layer keeps a history, which is the useful part.
+// It shows what was pushed and in what order, not just the end state.
+window.adobeDataLayer.getState()
+
+// Make the tag library report which rules fire, for this session
+// and this site only. Set it before you do the action.
+_satellite.setDebug(true)
+
+// The Web SDK equivalent. The URL parameter needs no console at all,
+// which matters on a browser you cannot type into.
+alloy("setDebug", { "enabled": true })
+?alloy_debug=true</pre></div>
+</div>
+
+<p>Read the data layer object first, then do the action, then read the request. Those three readings in that order answer most questions in about a minute.</p>
+
+<div class="warn-box">
+    <div class="warn-hdr"><span class="warn-ico"></span>Never fire a tracking call from a production console</div>
+    <p>Typing <code>s.t()</code> or <code>s.tl()</code> into the console of a live site sends a real hit into the real report suite, and it cannot be recalled. The data is in the report, it will be in the month end figures, and there is no undo. Adobe will not remove it, because nothing went wrong. Test firing belongs in a development report suite. Doing the real action on the page is almost always better than simulating one. A simulated call proves the library works. It proves nothing about the rule that should have called it.</p>
+</div>
+
+<h3 class="subsec-title">Telling a data layer fault from a rule fault</h3>
+<p>This is the test the section exists for. It settles the question that otherwise runs for a week between an analytics team and a web development team.</p>
+
+<p>A missing value in a report has three possible causes, and from the report all three look the same. The site never provided the value. The site provided it and the rule failed to carry it. Or both worked and something inside Adobe changed it. Two comparisons separate all three, and they take about a minute.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">Two comparisons, four results, and each one names a different team</div>
+    <svg viewBox="0 0 700 300" style="width:100%;height:auto;display:block" role="img"
+         aria-label="A decision flow reading left to right. It starts at read the request. If the value is present and correct, the path goes up to read the report, which ends either at nothing to fix, or at the fault sits inside Adobe, owned by whoever manages processing rules. If the value is absent or wrong, the path goes down to read the data layer, which ends either at the fault is the rule or the mapping, owned by the analytics team, or at the fault is the site, owned by the web development team.">
+      <defs>
+        <marker id="dt3a" markerWidth="7" markerHeight="7" refX="6.2" refY="3.5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0.6 L7 3.5 L0 6.4 Z" style="fill:var(--text3,#5d6b7e)"/></marker>
+      </defs>
+
+      <rect x="14" y="118" width="126" height="52" rx="6" style="fill:var(--accent-light,rgba(186,33,66,.10));stroke:var(--accent,#ba2142);stroke-width:1.6"/>
+      <text x="77" y="140" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:700">Read the request</text>
+      <text x="77" y="158" text-anchor="middle" style="fill:var(--accent2,#951833);font-size:11px">always first</text>
+
+      <path d="M140 144 L168 144 L168 76 L194 76" style="fill:none;stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#dt3a)"/>
+      <text x="176" y="118" style="fill:var(--text2,#475569);font-size:11px">value correct</text>
+
+      <path d="M140 144 L168 144 L168 212 L194 212" style="fill:none;stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#dt3a)"/>
+      <text x="176" y="176" style="fill:var(--text2,#475569);font-size:11px">value absent or wrong</text>
+
+      <rect x="200" y="50" width="132" height="52" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="266" y="72" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">Read the report</text>
+      <text x="266" y="90" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">once it has processed</text>
+
+      <rect x="200" y="186" width="132" height="52" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="266" y="208" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">Read the data layer</text>
+      <text x="266" y="226" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">in the console</text>
+
+      <path d="M332 76 L356 76 L356 34 L380 34" style="fill:none;stroke:var(--text3,#5d6b7e);stroke-width:1.2" marker-end="url(#dt3a)"/>
+      <path d="M332 76 L356 76 L356 116 L380 116" style="fill:none;stroke:var(--text3,#5d6b7e);stroke-width:1.2" marker-end="url(#dt3a)"/>
+      <path d="M332 212 L356 212 L356 170 L380 170" style="fill:none;stroke:var(--text3,#5d6b7e);stroke-width:1.2" marker-end="url(#dt3a)"/>
+      <path d="M332 212 L356 212 L356 252 L380 252" style="fill:none;stroke:var(--text3,#5d6b7e);stroke-width:1.2" marker-end="url(#dt3a)"/>
+
+      <rect x="386" y="12" width="298" height="44" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="402" y="31" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">Report agrees: nothing to fix</text>
+      <text x="402" y="47" style="fill:var(--text2,#475569);font-size:11px">mark it Passed, with evidence</text>
+
+      <rect x="386" y="94" width="298" height="44" rx="6" style="fill:var(--dia-e-soft,rgba(124,58,237,.10));stroke:var(--dia-e,#7c3aed);stroke-width:1.4"/>
+      <text x="402" y="113" style="fill:var(--dia-e-ink,#5b21b6);font-size:12.5px;font-weight:600">Report disagrees: inside Adobe</text>
+      <text x="402" y="129" style="fill:var(--text2,#475569);font-size:11px">processing rules, VISTA, bot filtering</text>
+
+      <rect x="386" y="148" width="298" height="44" rx="6" style="fill:var(--dia-a-soft,rgba(186,33,66,.10));stroke:var(--dia-a,#ba2142);stroke-width:1.4"/>
+      <text x="402" y="167" style="fill:var(--dia-a-ink,#951833);font-size:12.5px;font-weight:600">Data layer correct: the rule</text>
+      <text x="402" y="183" style="fill:var(--text2,#475569);font-size:11px">the analytics team owns the repair</text>
+
+      <rect x="386" y="230" width="298" height="44" rx="6" style="fill:var(--dia-b-soft,rgba(37,99,235,.10));stroke:var(--dia-b,#2563eb);stroke-width:1.4"/>
+      <text x="402" y="249" style="fill:var(--dia-b-ink,#1d4ed8);font-size:12.5px;font-weight:600">Data layer wrong: the site</text>
+      <text x="402" y="265" style="fill:var(--text2,#475569);font-size:11px">the web development team owns it</text>
+    </svg>
+</div>
+
+<p>Solution KES-S004 went through this on 22 May. Every product detail page view arrived empty. The request was missing the product values, so the path goes down. In the console the product objects were present and correct by the time anybody looked.</p>
+
+<p>That combination looks contradictory and it is the useful clue. The data layer was right when a person checked it, and empty when the rule read it, because the page load rule ran before the site had populated the objects. The repair was to change it to a direct call the site fires once its own values are set. That is recorded in the technical document change log, which is what stops somebody changing it back.</p>
+
+<p>What the two comparisons really buy is not speed. The test names the owner from evidence both teams looked at together, so the conversation moves straight to the repair instead of to whose fault it is.</p>
+
+<div class="info-box">
+    <div class="info-hdr"><span class="info-ico"></span>An eVar missing from a hit can still be correct</div>
+    <p>Conversion variables persist, so a value set on the product page keeps being credited to later hits in the visit without appearing in any of them. So somebody reads a purchase hit, finds no <code>v19</code>, and reports Payment Method as broken. They have found nothing, if the design sets it at the payment step and expires it at the end of the visit. Read the request against the design for that specific moment, not against a general expectation. Allocation and expiration are covered in <a href="/adobe-analytics-learning/foundations/variables/evars-conversion-variables/">eVars (Conversion Variables)</a>.</p>
+</div>
+
+<h3 class="subsec-title">Single page applications lose hits in two ways</h3>
+<p>A site that changes screens without reloading the page causes two different problems, and it is worth knowing both before testing one.</p>
+
+<p>The first is about evidence. The browser does not clear the request list, so hits pile up from every screen in the journey. That is helpful once Preserve log is on and confusing before, because the hit on screen may belong to a screen you left three steps ago. Read the timestamp column.</p>
+
+<p>The second is the real fault. A page load rule fires once, at the actual page load, and never again. Every later screen is a change in the application's own state that the browser knows nothing about. Unless the site announces each one, four screens produce one page view.</p>
+
+<p>Kestrel had the opposite version of this on KES-S002. The direct call fired on the first load as well as on each step change, so the checkout counted one page view too many. Both faults are found the same way: do the action, count the requests, and compare that count against the design.</p>
+
+<h3 class="subsec-title">Capturing evidence for the row</h3>
+<p>A finding that will be disagreed with needs evidence attached. The validation report expects it on every solution that passes, and it takes a few seconds.</p>
+
+<p>Use <strong>Copy as cURL</strong> or save the request, and take a screenshot named for the solution ID. That settles arguments permanently, and it is the only defense against the most awkward situation in implementation work: a solution that passed testing and is wrong in production. With evidence you can say exactly what was seen on staging, and the conversation becomes about what changed between the two environments. Without it, the conversation is about whether the testing was any good.</p>
+
+<h3 class="subsec-title">Capturing a hit properly</h3>
+<p>Run this when the finding is going into a test cycle, which in practice means most of them.</p>
+
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>Capture and read a hit that will stand up in a review</span></div>
+    <ol class="dothis-steps">
+        <li class="ds-group">Part one, before you touch the page</li>
+        <li>
+            <span class="ds-do">Open developer tools, go to Network, and switch on <b>Preserve log</b> and <b>Disable cache</b>.</span>
+            <span class="ds-see">Both before you act. Neither can be applied to a request that has already gone.</span>
+        </li>
+        <li>
+            <span class="ds-do">Filter for <code>/b/ss/</code> or <code>/ee</code>, then clear the list so it starts empty.</span>
+            <span class="ds-see">An empty list at the moment you act makes it obvious whether the action produced a hit or produced nothing.</span>
+        </li>
+        <li>
+            <span class="ds-do">Run <code>_satellite.setDebug(true)</code> and read the data layer object once, before acting.</span>
+            <span class="ds-see">The before state is half the comparison and it cannot be recovered later.</span>
+        </li>
+        <li class="ds-group">Part two, the capture</li>
+        <li>
+            <span class="ds-do">Do the one action, then stop. Do not click anything else.</span>
+            <span class="ds-see">One action, one set of hits. A second click makes it impossible to say which request came from what.</span>
+        </li>
+        <li>
+            <span class="ds-do">Count the requests before reading any of them.</span>
+            <span class="ds-see">Two where the design says one is a finding on its own, and it disappears if you open the first hit and start reading variables.</span>
+        </li>
+        <li>
+            <span class="ds-do">Read the report suite, then the hit type, then the variables the design names for this moment.</span>
+            <span class="ds-see">In that order, every time. The first two checks catch faults that no amount of variable reading will reveal.</span>
+        </li>
+        <li>
+            <span class="ds-do">If the query string looks short or empty, open the Payload or Request tab and read the body.</span>
+            <span class="ds-see">Long hits travel by POST and Web SDK hits always do. This step alone prevents a whole category of false finding.</span>
+        </li>
+        <li class="ds-group">Part three, record it</li>
+        <li>
+            <span class="ds-do">Save the request or copy it as cURL, and name the screenshot after the solution ID.</span>
+            <span class="ds-see">A finding with the raw hit attached ends a disagreement. A finding described from memory starts one.</span>
+        </li>
+        <li>
+            <span class="ds-do">Write the finding into the row as what you observed, with today's date, and set the status.</span>
+            <span class="ds-see">All three product IDs are in one entry rather than three beats products string malformed, and it stays true even if your diagnosis is wrong.</span>
+        </li>
+    </ol>
+    <p class="dothis-end">That is a hit captured, read and recorded. Where a fault only affects some visitors, repeat the same capture on a throttled connection and in a second browser. The difference between the two captures is usually the answer.</p>
+</div>
+
+<h3 class="subsec-title">What you have now</h3>
+<p>The ability to read an implementation on any machine, including one you do not control. And a two comparison test that names which team owns a repair, before anybody argues about it.</p>
+
+<p>Every check in this section stops at the moment the request leaves the browser. A hit that is perfect on the way out can still be discarded by a bot rule. Or changed by a processing rule, deduplicated against another visitor's purchase ID, or credited to a channel nobody expected. All of that happens where you cannot watch, and none of it reports an error.</p>
+
+<p>So a correct request is necessary and not sufficient, and the last check is always the round trip. <a href="/adobe-analytics-learning/deliver/testing-debugging/real-time-validation/">Real-Time Validation</a> covers what happens in that gap, how quickly you can see the far side of it, and the one variable type real time reporting will not show you.</p>
+
+<div class="ref-box">
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/implementation/validate/query-parameters" target="_blank">Adobe Docs: Data Collection Query Parameters</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/experience-platform/web-sdk/commands/setdebug" target="_blank">Adobe Docs: Web SDK setDebug Command</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/experience-platform/collection/tags/setdebug" target="_blank">Adobe Docs: setDebug for Tags</a></li>
+    </ul>
+</div>

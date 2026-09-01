@@ -136,7 +136,19 @@ Depth counting has to count *every* `<div` and `</div>` on a line, not line-anch
 
 **An eleventh, found 20 Aug 2026, and it is expensive because it wastes whole verification passes.** `hugo server`'s file watcher **silently misses in-place rewrites in this tree** — a `perl -pi` or any editor that replaces rather than appends. The source is correct, a clean build is correct, and the served page is the old one. It looks exactly like an edit that did nothing, which is the same symptom as trap four, so the instinct is to go hunting in the CSS or the cascade.
 
-It cost three false verification passes in one session, each one a full re-measure of nine figures in two themes. **Never verify against a running `hugo server` in this tree.** The reliable sequence is: stop the server, `rm -rf public`, `hugo --gc`, assert the page count, restart, then check. Confirm the served markup carries something unique to your edit before trusting a single measurement taken from it.
+It cost three false verification passes in one session, each one a full re-measure of nine figures in two themes.
+
+**Fixed 1 Sep 2026, and the cause is the filesystem rather than Hugo.** This tree sits inside OneDrive, whose sync layer does not reliably emit the filesystem events `hugo server` listens for, so an in-place rewrite often produces no event at all. Measured before the fix: twelve edits and reverts, six picked up and six missed, with no pattern. Intermittent is worse than broken, because a served page cannot be trusted and cannot be shown to be wrong.
+
+`--poll` replaces event watching with polling and removes the problem entirely: the same twelve-edit test passed twelve out of twelve. `.claude/launch.json` now carries `--poll 700ms`, and **the server can therefore stay running all day**, which is what Amit needs it for. Do not remove that flag; without it the preview silently serves stale pages about half the time.
+
+**The other half of the old rule still stands, and `--poll` does not touch it.** A CLI `hugo --gc` must never run against the same tree as a live server, because `--gc` collects the shared resource cache underneath it. That is what silently wrote stale content into two pages on 26 Aug while reporting success. The fix is to give the verification build its own output and its own cache, so the two processes share nothing:
+
+```bash
+hugo --gc --source amitdusane-site-complete --destination "$SCRATCH/verify-public" --cacheDir "$SCRATCH/hugo-cache"
+```
+
+Verified 1 Sep 2026: 219 pages, the server still answering on 1313 throughout, and the project's own `public/` untouched. Use that form for every verification build while a server is up, and keep `rm -rf public && hugo --gc` for the final build before a commit, with the server stopped.
 
 **A twelfth, found 25 Aug 2026, and it only shows on paper.** `.print-doc` is not a wrapper, it is a **layout `<table>`**: its `thead` cell carries the running header, its `tfoot` cell the footer, and its single `tbody` cell holds *the entire article*, copied in by `lFillPrintDoc` on `beforeprint`. So **`.print-doc td` does not mean "a table cell in the content", it means "the page"**. A rule meant to give content tables a grid was written that way and instead drew a border around the whole sheet, boxed the header, and set every paragraph on the page to 8.5pt. It builds clean, it is invisible on screen, and it only appears in a print preview. **Scope every print rule for a content element through the class that identifies it** — `.print-doc .tbl-wrap td`, never `.print-doc td`.
 
@@ -158,6 +170,12 @@ hugo --gc
 rm -rf amitdusane-site-complete/public && hugo --gc --source amitdusane-site-complete
 ```
 
+**A workbook open in Excel freezes the dev server, silently.** Hugo copies `static/templates/*.xlsx` on every build, and Windows will not let it read a file Excel has open. The build fails at the static copy step with `The process cannot access the file because it is being used by another process`, *after* the pages have rendered, so the error names the file rather than the cause.
+
+On a CLI build that error is at least visible. **On `hugo server` it is not.** The server keeps serving the last successful build and every later rebuild fails in the background, so the source moves and the served page does not. It looks exactly like a dead file watcher, and on 1 Sep 2026 it sent me chasing `--poll` for half an hour before a failed server restart printed the real error. The `--poll` finding above still stands; it was tested before the workbook was opened, and it is not what broke.
+
+**So when the served page is stale, check for a locked workbook before suspecting the watcher.** `Get-CimInstance Win32_Process -Filter "Name='EXCEL.EXE'"` names it, and closing the workbook is the whole fix. This will keep happening, because M20 tells the reader to open the validation report and follow along, which is exactly what Amit was doing.
+
 **Assert the page count after every build.** Current baseline: 219 pages. If the count drops, stop and find out why before doing anything else. This single check would have caught the 103-page outage in one second.
 
 Then crawl the built HTML, not the source. Source passing every check proves nothing; the bug lives in the interaction between source and build.
@@ -166,7 +184,9 @@ Then crawl the built HTML, not the source. Source passing every check proves not
 
 **So compare source against build, not just the count.** Extract the `h3.subsec-title` text from every section source and from its built page and compare. It takes seconds and it is the only check that catches a build that lies about having succeeded. Any mismatch means the build output cannot be trusted anywhere, not just on the page that flagged.
 
-**Only one `hugo server` may run against this tree, and never while a build runs.** Two servers plus a CLI build is what corrupted it. `.claude/launch.json` now defines exactly one server, on port 1313. If a preview looks stale, stop every hugo process, `rm -rf public`, rebuild, then start one server; do not debug the CSS.
+**Only one `hugo server` may run against this tree, and no CLI build may share its output or its cache.** Two servers plus a CLI build is what corrupted it. `.claude/launch.json` defines exactly one server, on port 1313, with `--poll 700ms`.
+
+That server is meant to stay up while work happens, so do not stop it out of habit. While it runs, verification builds go to a separate destination and cacheDir (see trap eleven); only the final build before a commit uses `rm -rf public && hugo --gc`, with the server stopped first. If a preview still looks stale, confirm the served markup carries something unique to your edit before debugging any CSS.
 
 ---
 
@@ -392,7 +412,9 @@ Never nest a `code-block` inside a `warn-box`, `pro-tip`, or `info-box`. State t
 
 Every SVG needs `role="img"` and a full-sentence `aria-label`.
 
-**Use a 700-unit `viewBox`, and treat authored px as rendered px.** 61 of the 65 inline SVGs already use 700, and since 18 Aug the figure holds `--diagram-min` (700px) at every width, with the box scrolling when the column is narrower. So a `font-size="11"` now renders at 11px rather than at whatever the column happened to allow. Before that it was a lottery: the same diagram rendered at 4.3px on a phone and 8.2px in the three-column desktop shell, because an inline SVG is one scalable image and its text shrinks with the frame.
+**Use a 700-unit `viewBox`, and treat authored px as rendered px above 880px.** 61 of the 65 inline SVGs already use 700. Above the 880px breakpoint the figure holds `--diagram-min` (700px) and the box scrolls when the column is narrower, so a `font-size="11"` renders at 11px rather than at whatever the column happened to allow. Before that it was a lottery: the same diagram rendered at 4.3px on a phone and 8.2px in the three-column desktop shell, because an inline SVG is one scalable image and its text shrinks with the frame.
+
+**At 880px and below that is deliberately reversed, and the zoom button is what pays for it.** Verified against the code 31 Aug 2026, after a measurement on a 375px phone read authored 11px text rendering at 5.1px and looked like a defect. It is not one. The mobile query sets `.diagram-box{overflow-x:hidden}` and `.diagram-frame > svg{min-width:0;width:100%}`, so the figure shrinks to fit the column, and `world-learning.js` inserts a `.diagram-frame`, a `.diagram-zoom-btn` and a `.fig-hint` reading "Tap &#10530; to see this full size". The CSS comment records the trade: horizontal scrolling inside a page is easy to miss and left roughly 390px of every figure off-screen, so once there is a way to open a figure at authored size, shrinking to the column is better than a scroller nobody finds. **So never diagnose small phone text in a figure as a fault, and never add a scroller back without reading that comment.** What the floor still buys is the enlarged view: authored below 11px is illegible even zoomed.
 
 **Nothing in a diagram should be authored below 11px.** The corpus still has 141 places at 8 to 10.5px, 16 of which land under the ~9px legibility floor; those are known and listed under CMP-12. An HTML/CSS diagram layout does not have this problem at all — it is real DOM text, so it reflows and keeps its size, which is the strongest argument for reaching for an HTML layout over an SVG when a diagram can be built either way.
 

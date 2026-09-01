@@ -2,61 +2,242 @@
 slug: "common-issues-solutions"
 title: "Common Issues and Solutions"
 seotitle: "Common Adobe Analytics Issues and Fixes"
-published: 2026-07-15
-lastmod: 2026-07-15
+description: "The faults that recur in Adobe Analytics implementations. What each symptom means, where to look for the cause, and the two that remove data silently."
+published: 2026-09-01
+lastmod: 2026-09-01
 type: lesson
 modulenum: 20
 sectionnum: 5
 weight: 5
 ---
-<p>Learn to quickly diagnose and resolve the most frequent implementation problems.</p>
-                <h3 class="subsec-title">Troubleshooting Guide</h3>
-                <div class="tbl-wrap">
-                    <table>
-                        <thead><tr><th>Symptom</th><th>Possible Causes</th><th>Solution</th></tr></thead>
-                        <tbody>
-                            <tr><td><strong>No data at all</strong></td><td>Library not loading, wrong RSID, blocked requests</td><td>Check Network tab for beacon, verify RSID</td></tr>
-                            <tr><td><strong>Missing page views</strong></td><td>s.t() not called, SPA issues</td><td>Verify tracking call fires on each view</td></tr>
-                            <tr><td><strong>Wrong report suite</strong></td><td>Hardcoded RSID, environment mismatch</td><td>Check s.account or Launch rules</td></tr>
-                            <tr><td><strong>Duplicate data</strong></td><td>Multiple libraries, double firing rules</td><td>Audit tags, check for multiple s.t() calls</td></tr>
-                            <tr><td><strong>Variables not set</strong></td><td>Timing issues, scope problems</td><td>Verify data layer populates before tag fires</td></tr>
-                            <tr><td><strong>Events not firing</strong></td><td>Missing from events string, serialization issues</td><td>Check s.events value in debugger</td></tr>
-                            <tr><td><strong>Revenue discrepancy</strong></td><td>Currency issues, products string format</td><td>Validate products string format exactly</td></tr>
-                            <tr><td><strong>High bounce rate</strong></td><td>Beacon on non-content pages, bot traffic</td><td>Review what pages fire tracking</td></tr>
-                        </tbody>
-                    </table>
-                </div>
+<p>The first Kestrel test cycle, on 22 May, tested twenty eight solutions. Twenty six had something wrong with them. Two were correct first time.</p>
 
-                <h3 class="subsec-title">Products String Validation</h3>
-                <div class="code-block">
-                    <div class="code-hdr"><span class="code-lang">Common Products String Errors</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-                    <div class="code-body"><pre>Correct Format:
-Category;Product;Quantity;Price;Events;Merchandising
+<p>That is a normal first cycle and not a sign that anything has gone badly. What is more useful than the number is that the twenty six were not twenty six different problems. They were a small set of faults, repeating.</p>
 
-Example:
-"Shoes;SKU123;1;99.99;event1=1;eVar10=red"
+<p>Somebody who has done this for a few years names the likely cause before opening anything, and is right most of the time. That is recognition rather than intuition, and this section is the list they are recognizing from.</p>
 
-Common Errors:
-✗ Missing semicolons: "ShoesSKU12319999"
-✗ Wrong order: "SKU123;Shoes;99.99;1"
-✗ Spaces in values: "Shoes; SKU123; 1; 99.99"
-✗ Currency symbols: "Shoes;SKU123;1;$99.99"
-✗ Comma decimals: "Shoes;SKU123;1;99,99"
+<div class="dl-box">
+    <div class="dl-title"><span class="dl-ico" aria-hidden="true"></span>The validation report, for following along</div>
+    <p>Every fault in this section is a real row in the <b>Tracker</b> sheet, with its dates and its status. The <b>Summary</b> sheet holds the counts quoted above. Reading the two beside this section is the fastest way to see how a finding is written down.</p>
+    <ul class="dl-list">
+        <li><a href="/templates/adobe-analytics-validation-report-template.xlsx" download><span class="dl-name">Validation Report</span><span class="dl-meta">XLSX &middot; 2 sheets &middot; 28 solutions &middot; 3 test cycles</span></a></li>
+    </ul>
+</div>
 
-Validation Tips:
-- Always 6 fields (use empty semicolons if needed)
-- Numeric fields: no currency symbols or commas
-- Multiple products: separate with comma
-- Test with simple values first</pre></div>
-                </div>
-                <div class="pro-tip">
-                    <div class="pro-tip-hdr"><span class="tip-ico"></span>Pro Tip</div>
-                    <p>Create a QA spreadsheet that lists every variable, its expected value, and where it should appear. Work through this systematically when validating implementations to ensure nothing is missed.</p>
-                </div>
-                <div class="ref-box">
-                    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
-                    <ul>
-                        <li><a href="https://experienceleague.adobe.com/docs/analytics/implementation/validate/debugger.html" target="_blank">Adobe Docs: Validate Implementation</a></li>
-                    </ul>
-                </div>
-            
+<h3 class="subsec-title">The faults that keep recurring</h3>
+<p>Nobody reports a fault in useful terms. What arrives is a number somebody does not believe, which is the end of the chain. The work is translating that backward into a place to look.</p>
+
+<div class="tbl-wrap">
+<table>
+<thead>
+<tr><th>What you are told</th><th>Usually caused by</th><th>The one check that settles it</th></tr>
+</thead>
+<tbody>
+<tr><td>There is no data at all</td><td>Collection, or the report suite</td><td>Does a request appear, and which suite is in its path</td></tr>
+<tr><td>The numbers are roughly double</td><td>Two rules firing, or a rule firing twice</td><td>Count the requests produced by one action</td></tr>
+<tr><td>A variable is empty in reports</td><td>Anywhere, which is why it is the hard one</td><td>Is the value in the request, and is it in the data layer</td></tr>
+<tr><td>Right in the hit, wrong in reports</td><td>Processing rules, VISTA, or a channel rule</td><td>Compare the sent hit with the post processed hit</td></tr>
+<tr><td>Orders missing, revenue short</td><td>Purchase ID deduplication</td><td>Are two orders sharing an identifier, or is none being set</td></tr>
+<tr><td>Page views far too low</td><td>Single page application navigation</td><td>Does a hit fire on the second screen of a journey</td></tr>
+<tr><td>It works for me and not for them</td><td>Consent, blockers, timing, or browser</td><td>Reproduce on a slow connection and a second browser</td></tr>
+<tr><td>Traffic dropped overnight</td><td>Bot filtering, consent changes, or a certificate</td><td>Compare against the day it started, not against today</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3 class="subsec-title">The same call firing more than once</h3>
+<p>This was the single most common fault in the Kestrel cycle, and it appeared in three different forms.</p>
+
+<p>KES-S003, a product click on a listing page, fired the direct call twice on every click. Product clicks were exactly double. Two rules were responding to the same click.</p>
+
+<p>KES-S002, the checkout screens, fired on the first load as well as on each step change, so the checkout counted one page view too many. One rule, firing in a situation nobody intended.</p>
+
+<p>KES-S009, starting the checkout, fired again every time the customer went back a step. The rule was correct and the trigger was wrong.</p>
+
+<p>All three are found the same way. Do the action once, then count the requests before reading any of them. If you open the first hit and start reading variables, a second identical hit is invisible.</p>
+
+<p>One case that looks the same is not a fault. <a href="/adobe-analytics-learning/foundations/report-suites/multi-suite-tagging/">Multi-Suite Tagging</a> is supposed to produce more than one request, going to different report suites. Check the suite in each path before reporting a duplicate.</p>
+
+<h3 class="subsec-title">A repeated purchase ID removes the whole hit</h3>
+<p>Adobe removes duplicate purchases using an identifier sent on the same hit as the purchase event. Send two hits with the same identifier and the second is treated as a repeat of the first. That is correct behavior, and it is what stops a customer refreshing a confirmation page from being counted twice.</p>
+
+<p>Kestrel hit exactly that on KES-S012. On 22 May, refreshing the confirmation page sent a second purchase and revenue on the test account was double. A guard was added, and by 29 May twenty refreshes produced no duplicate.</p>
+
+<p>What surprises people is how much gets removed. When a hit is treated as a duplicate purchase, all of its conversion data is dropped, not only the purchase event. The eVars on that hit, the other events on it, the products string. The request succeeded and none of it appears anywhere.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">A repeated purchase ID does not drop the order. It drops the hit.</div>
+    <svg viewBox="0 0 700 274" style="width:100%;height:auto;display:block" role="img"
+         aria-label="Two panels. The left panel, headed first hit with this purchase ID, contains four green chips: purchase event, revenue and products, eVar19 payment method, and eVar21 discount code, with a line beneath saying all of it stored. The right panel, headed second hit, same purchase ID, contains the same four items drawn as faint dashed chips, with a crimson line beneath saying none of it reports. Deduplication discards every piece of conversion data on the hit, not only the purchase event.">
+      <text x="20" y="22" style="fill:var(--text2,#475569);font-size:14px;font-weight:700">First hit with this purchase ID</text>
+      <text x="370" y="22" style="fill:var(--text2,#475569);font-size:14px;font-weight:700">Second hit, same purchase ID</text>
+
+      <rect x="20" y="34" width="306" height="182" rx="6" style="fill:none;stroke:var(--dia-c,#10b981);stroke-width:1.6"/>
+      <rect x="40" y="52" width="266" height="30" rx="4" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.4"/>
+      <text x="54" y="72" style="fill:var(--dia-c-ink,#0a6e50);font-size:12px;font-weight:600">purchase event</text>
+      <rect x="40" y="90" width="266" height="30" rx="4" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.4"/>
+      <text x="54" y="110" style="fill:var(--dia-c-ink,#0a6e50);font-size:12px;font-weight:600">revenue and products</text>
+      <rect x="40" y="128" width="266" height="30" rx="4" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.4"/>
+      <text x="54" y="148" style="fill:var(--dia-c-ink,#0a6e50);font-size:12px;font-weight:600">eVar19 Payment Method</text>
+      <rect x="40" y="166" width="266" height="30" rx="4" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.4"/>
+      <text x="54" y="186" style="fill:var(--dia-c-ink,#0a6e50);font-size:12px;font-weight:600">eVar21 Discount Code</text>
+
+      <rect x="370" y="34" width="306" height="182" rx="6" style="fill:none;stroke:var(--dia-a,#ba2142);stroke-width:1.6"/>
+      <rect x="390" y="52" width="266" height="30" rx="4" style="fill:none;stroke:var(--text3,#5d6b7e);stroke-width:1.2;stroke-dasharray:5 4"/>
+      <text x="404" y="72" style="fill:var(--text3,#5d6b7e);font-size:12px">purchase event</text>
+      <rect x="390" y="90" width="266" height="30" rx="4" style="fill:none;stroke:var(--text3,#5d6b7e);stroke-width:1.2;stroke-dasharray:5 4"/>
+      <text x="404" y="110" style="fill:var(--text3,#5d6b7e);font-size:12px">revenue and products</text>
+      <rect x="390" y="128" width="266" height="30" rx="4" style="fill:none;stroke:var(--text3,#5d6b7e);stroke-width:1.2;stroke-dasharray:5 4"/>
+      <text x="404" y="148" style="fill:var(--text3,#5d6b7e);font-size:12px">eVar19 Payment Method</text>
+      <rect x="390" y="166" width="266" height="30" rx="4" style="fill:none;stroke:var(--text3,#5d6b7e);stroke-width:1.2;stroke-dasharray:5 4"/>
+      <text x="404" y="186" style="fill:var(--text3,#5d6b7e);font-size:12px">eVar21 Discount Code</text>
+
+      <text x="40" y="238" style="fill:var(--dia-c-ink,#0a6e50);font-size:12.5px;font-weight:700">All of it stored.</text>
+      <text x="390" y="238" style="fill:var(--dia-a-ink,#951833);font-size:12.5px;font-weight:700">None of it reports.</text>
+      <text x="40" y="262" style="fill:var(--text3,#5d6b7e);font-size:11px">The request succeeded in both cases, and nothing recorded that the second one was discarded.</text>
+    </svg>
+</div>
+
+<div class="warn-box">
+    <div class="warn-hdr"><span class="warn-ico"></span>Purchase identifiers are global, and they last three years</div>
+    <p>Deduplication applies across all visitors rather than within one, and identifiers are held for 37 months. So an order number series that restarts, or one that overlaps with another brand sharing the report suite, creates duplicates between two people who have never met. The opposite failure is just as quiet. When no identifier is supplied, Adobe generates one from the events and product string, keyed to that visitor, held for 24 hours, with only the last five kept. A customer who buys the same item twice in one day can lose the second order. Sending a genuinely unique order identifier on every purchase hit prevents both. It is a one line change, and it is almost never made until after the first quarter end that does not reconcile.</p>
+</div>
+
+<h3 class="subsec-title">Values that are present and wrong</h3>
+<p>These are harder to notice than a missing value, because the report looks populated. Four Kestrel rows show the range.</p>
+
+<p>KES-S005 sent the cart total as the quantity, so adding one product reported two. The value was in the right position and it was the wrong number.</p>
+
+<p>KES-S010 dropped the delivery charge whenever the charge was zero, because the site treated zero as nothing to send. Free delivery orders looked like orders with no delivery data.</p>
+
+<p>KES-S015 sent the search result count as a string rather than a number, so no null search was ever recorded. The value was there, in the wrong type.</p>
+
+<p>KES-S016 counted search result positions from zero rather than one, so every position in every report was one place out.</p>
+
+<p>The common thread is that none of these would fail any check that only asks whether a value arrived. They are caught by reading the value against the design and asking whether it is the value the design asked for.</p>
+
+<div class="warn-box">
+    <div class="warn-hdr"><span class="warn-ico"></span>Stop the cycle if personal data appears in a hit</div>
+    <p>On 22 May the Kestrel customer ID arrived as a raw email address. Testing stopped and it was raised immediately, rather than being written down and carried to the end of the cycle. That is the correct response. A hit carrying a plain email address is a privacy problem the moment it reaches Adobe, and every minute of further testing adds more of them to a report suite. Raise it, get collection stopped or the value hashed, and resume afterward. The obligations behind this are covered in <a href="/adobe-analytics-learning/foundations/report-suites/privacy-data-retention/">Privacy and Data Retention</a>.</p>
+</div>
+
+<h3 class="subsec-title">Values that go missing on a slow connection</h3>
+<p>A rule reads the page at the moment it fires. If the call goes out before the site has filled its data layer objects, the call leaves with empty values and nothing records a problem. The rule fired, the request was sent, Adobe accepted it, and the report is thinner than it should be.</p>
+
+<p>This is the fault from the opening of <a href="/adobe-analytics-learning/deliver/testing-debugging/debugging-tools-overview/">Debugging Tools Overview</a>, and Kestrel had it twice: on the global page name, and on KES-S004 where every product view arrived empty.</p>
+
+<p>It depends on timing rather than logic, so it is intermittent. On a fast connection the objects are ready first and it works. On the tester's machine it usually works. On some proportion of real visits it does not, and that proportion is invisible, because a hit with an empty variable looks like a page that genuinely had no value.</p>
+
+<p>The instinct is to add a delay before the rule fires. Resist it. A delay is a guess about somebody else's network. It makes the fault rarer without removing it, and a fault that appears once a fortnight is harder to fix than one that appears every time. The repair Kestrel used was to change the rule to a direct call the site fires once its own values are set. The site knows when its data is ready and the tag manager never will.</p>
+
+<div class="pro-tip">
+    <div class="pro-tip-hdr"><span class="tip-ico"></span>Throttle the connection before you sign anything off</div>
+    <p>Set the network tab to a slow profile and walk the journey again. It costs a few minutes per cycle and it is the only cheap way to find ordering faults before customers do. Everything about a developer machine is built to hide them: a fast connection, a warm cache, and a page that has been loaded fifty times already. A solution that passes at full speed and fails when throttled has not failed intermittently. It has told you what it does, and roughly what share of real visitors it does it to.</p>
+</div>
+
+<h3 class="subsec-title">When no call fires at all</h3>
+<p>Check four things, in this order, because it is roughly the order of likelihood. The library did not load. The report suite in the request is not the one being reported on. Consent was declined or never given. A browser extension blocked the request.</p>
+
+<p>Kestrel had three variants worth knowing. KES-S018 sent no call on registration at first, then sent one on failed registrations too, which is the opposite fault appearing after the fix. KES-S021 fired on header and menu links but not footer links, so the fault was in which elements the rule matched rather than in the rule itself. And KES-S013 sent nothing at all on a failed payment, because the failure page was served by the payment gateway and the site never regained control.</p>
+
+<p>That last one is worth pausing on. No amount of debugging the site will find a call that cannot fire, because the page belongs to somebody else. The repair was for the gateway to return to a site page first.</p>
+
+<h3 class="subsec-title">Consent, blockers, and traffic you will never see</h3>
+<p>Some missing data is correct. Visitors who decline consent are not tracked, ad blockers stop requests before they leave, and bot filtering removes traffic deliberately. None of that is a defect and none of it is recoverable by debugging.</p>
+
+<p>What is a defect is tracking somebody who declined. Kestrel found that on KES-S038: two rules fired before consent had been answered. That is the direction that matters, and it is worth checking explicitly rather than assuming the consent extension handles everything.</p>
+
+<p>For the rest, the useful response is to know the rough size of each. Then nobody spends a week chasing a discrepancy that is working as designed, and nobody quotes a figure as though it covered everybody. An implementation reporting fewer visits than the server logs is normal. Being able to say roughly why, in a meeting, is worth more than closing the gap.</p>
+
+<h3 class="subsec-title">When a solution does not pass</h3>
+<p>Most of what happens in testing is neither a pass nor a failure, which is why the validation report has four statuses rather than two. The Kestrel cycle ended with one of each of the difficult three.</p>
+
+<div class="tbl-wrap">
+<table>
+<thead>
+<tr><th>Status</th><th>Kestrel example</th><th>What it needs alongside it</th></tr>
+</thead>
+<tbody>
+<tr><td>Partly passed</td><td>KES-S013, payment failure. Two reasons map correctly, three gateway timeout codes still arrive as numbers</td><td>The exact part that does not work, an owner, and a date</td></tr>
+<tr><td>Failed</td><td>KES-S019, sign out. No call across all three cycles. The session clears and the page reloads before the tag manager sees anything</td><td>An owner and a date, never left without both</td></tr>
+<tr><td>Ignored</td><td>KES-S023, form tracking. The form component belongs to a third party whose next release lands after go live</td><td>A reason, who agreed it, and when</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>Ignored is the status that keeps the document honest. The alternative is silence: the solution stays on the list, nobody mentions it, and in October somebody builds a report on form completions and finds nothing. At that point the implementation looks unreliable, and there is no evidence on either side about whether it was ever delivered.</p>
+
+<p>Kestrel finished with twenty four passed, two partly passed, one failed and one dropped, and a recommendation to proceed. That is a result somebody can act on, and it is only possible because the difficult three were written down as they happened.</p>
+
+<h3 class="subsec-title">Working a fault to a cause</h3>
+<p>Use this for a fault that did not yield to recognition, which is about a third of them. It is deliberately slow, because guessing has already failed by this point.</p>
+
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>Take a fault from a complaint to a named cause, and close the row</span></div>
+    <ol class="dothis-steps">
+        <li class="ds-group">Part one, make it testable</li>
+        <li>
+            <span class="ds-do">Turn the complaint into a claim with a variable, a page, an action and an expected value.</span>
+            <span class="ds-see">Until it is testable it cannot be closed either, which is how faults stay open for months.</span>
+        </li>
+        <li>
+            <span class="ds-do">Find out when it started from the data, before believing anybody's account of when it started.</span>
+            <span class="ds-see">A start date points at a release, a configuration change or a certificate. It is often the whole answer and it costs one report.</span>
+        </li>
+        <li>
+            <span class="ds-do">Reproduce it. If you cannot, find out what is different about the people who can.</span>
+            <span class="ds-see">Browser, connection speed, consent state, geography, whether they are signed in. The difference is usually the cause.</span>
+        </li>
+        <li class="ds-group">Part two, find the stage</li>
+        <li>
+            <span class="ds-do">Read the request and decide which half of the chain you are in.</span>
+            <span class="ds-see">Value absent means the browser side. Value present means inside Adobe. One look retires half the possibilities.</span>
+        </li>
+        <li>
+            <span class="ds-do">On the browser side, compare the data layer against the request.</span>
+            <span class="ds-see">Two comparisons, one minute, and it names which team owns the repair without anybody arguing for it.</span>
+        </li>
+        <li>
+            <span class="ds-do">On the Adobe side, compare the sent hit with the post processed hit, then check the variable is enabled in the report suite.</span>
+            <span class="ds-see">A variable that was never enabled reports nothing however perfect the hit is, and it is the last thing anybody checks.</span>
+        </li>
+        <li class="ds-group">Part three, close it properly</li>
+        <li>
+            <span class="ds-do">Before fixing anything, work out how far back the fault goes and what has been reported from the affected data.</span>
+            <span class="ds-see">The repair is usually the small half of the job. Somebody has been reporting on this for weeks and needs telling.</span>
+        </li>
+        <li>
+            <span class="ds-do">Fix it, then confirm the fix through the full round trip rather than in the hit alone.</span>
+            <span class="ds-see">A fix confirmed only in the browser repeats the assumption that produced the fault. Wait for the report.</span>
+        </li>
+        <li>
+            <span class="ds-do">Add a dated line to the row with the cause and the fix, leave the earlier findings in place, and set the status.</span>
+            <span class="ds-see">The next person to meet this fault is probably you, in eight months, having forgotten every detail of it.</span>
+        </li>
+    </ol>
+    <p class="dothis-end">That is a fault taken to a cause rather than to a workaround. Where the fault reached a report somebody presents from, add a written note of the affected period. The number people remember is the one they saw, not the one corrected later.</p>
+</div>
+
+<h3 class="subsec-title">Where this module leaves you</h3>
+<p>With a way of working that does not depend on the tools. A value travels five stages. No tool sees all five. The request is the only fact, so start there, and two comparisons tell you which stage a fault lives in and which team owns the repair. Departure is not the same as arrival, so the round trip is the only proof that counts. And most faults are a small set that repeats, which you now have a list of.</p>
+
+<p>Each of those answers goes in the same place: a row in the validation report, with a date, a status and an owner. That is what turns a week of testing into something a client can sign, and it is the subject of <a href="/adobe-analytics-learning/deliver/solution-design-reference/validation-and-sign-off/">Validation and Sign-off</a>.</p>
+
+<p>Very little of this belongs to Adobe Analytics. The tools change often. The bookmarklet everybody used ten years ago is unmaintained, the interface that carried reporting for fifteen years stopped working in 2024, and the debugger gained a new capability in 2026. What holds is the chain, the boundary in the middle of it, and the discipline of writing down what you saw on the day you saw it.</p>
+
+<p>Customer Journey Analytics moves that boundary. Its processing decisions happen when you run a report, rather than when the data arrives. That changes what can be fixed later and what has to be right first. <a href="/adobe-analytics-learning/deliver/adobe-analytics-cja/what-is-customer-journey-analytics/">What Is Customer Journey Analytics</a> covers that model and what it changes.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Analytics</div>
+    <p>Most of the fixes here are made on three screens rather than in the browser. Processing rules and bot rules sit under <span class="path">Admin &gt; Report Suites &gt; Edit Settings &gt; General</span>. Whether a variable is enabled, and how it persists, sits under <span class="path">Edit Settings &gt; Conversion &gt; Conversion Variables</span>. Whether an event deduplicates on an identifier sits under <span class="path">Edit Settings &gt; Conversion &gt; Success Events</span>. VISTA rules appear on none of these, because Adobe configures them, which is worth knowing before spending an afternoon looking.</p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/implementation/vars/page-vars/purchaseid" target="_blank">Adobe Docs: purchaseID</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/implementation/vars/page-vars/events/event-serialization" target="_blank">Adobe Docs: Event ID Serialization</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/technotes/processing-order" target="_blank">Adobe Docs: Processing Order for Data in Adobe Analytics</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/technotes/latency" target="_blank">Adobe Docs: Data Availability and Latency</a></li>
+    </ul>
+</div>

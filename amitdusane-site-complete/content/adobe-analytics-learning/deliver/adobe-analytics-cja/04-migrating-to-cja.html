@@ -2,11 +2,211 @@
 slug: "migrating-to-cja"
 title: "Migrating to CJA"
 seotitle: "Migrating from Adobe Analytics to CJA"
-published: 2026-07-18
-lastmod: 2026-07-18
+description: "There is no deadline, which should change how you decide. What has to be rebuilt, the five discrepancies that always appear, and what a parallel run is for."
+published: 2026-09-01
+lastmod: 2026-09-01
 type: lesson
 modulenum: 21
 sectionnum: 4
 weight: 4
 ---
-<p>This section is not yet written.</p>
+<p>Two months into a migration, somebody puts the same report side by side in both systems. The revenue figures are eleven per cent apart, and a week goes into finding out why.</p>
+
+<p>The answer turns out to be four things at once. An attribution default nobody set. A processing rule from 2021 that was never written down. A purchase deduplication setting that did not come across. And rows the source connector had left behind.</p>
+
+<p>None of those is a fault in either product. Each one is a decision somebody made years ago and nobody recorded, surfacing at the one moment when two systems have to agree.</p>
+
+<h3 class="subsec-title">There is no deadline</h3>
+<p>Much of the writing about this topic carries an implied urgency, and it distorts the decision.</p>
+
+<p>Adobe has announced no end of life for Adobe Analytics. The product is actively developed and its release notes are current. What was retired is narrower, and it keeps getting generalized. Reports &amp; Analytics stopped working on 17 January 2024. Data Workbench went before it. The legacy Report Builder reached end of life in June 2026. Those are components and tools, and their retirement says nothing about the platform underneath.</p>
+
+<p>Adobe describes Customer Journey Analytics as the next generation product, and its own guidance on moving is a case by case conversation rather than a mandate. That is a different message from the one the market has settled on.</p>
+
+<p>The consequence is practical. A migration run because of a deadline is planned backward from a date. That is how a business ends up in CJA with rebuilt segments, unexplained discrepancies and no new capability. A migration run for a capability starts from a question somebody cannot currently answer, and that question decides the scope and the sequence.</p>
+
+<div class="info-box">
+    <div class="info-hdr"><span class="info-ico"></span>Three questions that make the case honestly</div>
+    <p>Do you need to analyze data that is not digital behavior, such as call center contacts, store transactions or subscription records, alongside web and app data? Do you need to correct or reinterpret history rather than only what arrives from now on? And do you need to report on people rather than devices, with an identifier good enough to support it? A clear yes to any of the three is a real reason to move, and the migration can be scoped around it. Three vague maybes is a reason to wait, and waiting costs nothing while Adobe Analytics remains supported.</p>
+</div>
+
+<h3 class="subsec-title">What does not come across</h3>
+<p>The data moves. Almost everything built on top of it is rebuilt by hand, and the size of that list is the usual reason a plan slips.</p>
+
+<div class="tbl-wrap">
+<table>
+<thead>
+<tr><th>In Adobe Analytics</th><th>What happens to it</th></tr>
+</thead>
+<tbody>
+<tr><td>Segments</td><td>Rebuilt. They do not port, and the logic often needs rethinking against report-time sessions</td></tr>
+<tr><td>Calculated metrics</td><td>Rebuilt. Same arithmetic, different components underneath</td></tr>
+<tr><td>Processing rules and VISTA rules</td><td>Recreated as Data Prep mappings or derived fields, and the derived field version is usually more capable</td></tr>
+<tr><td>Marketing channel rules</td><td>Partly. Some rule types are unsupported, and a Web SDK implementation needs derived fields to reproduce them</td></tr>
+<tr><td>Custom session logic</td><td>Becomes a data view setting, which is easier to change and easier to get quietly wrong</td></tr>
+<tr><td>Long dimension persistence</td><td>Capped at 90 days. An eVar set never to expire has no equivalent</td></tr>
+<tr><td>Activity Map</td><td>Not available and not currently planned</td></tr>
+<tr><td>Classifications</td><td>Become lookup datasets or derived field logic rather than uploads against a key</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>Read that as an inventory exercise rather than a warning. Every row is a countable list in your own estate, and counting them takes an afternoon.</p>
+
+<h3 class="subsec-title">What that inventory looks like in practice</h3>
+<p>The Kestrel and Co. implementation is a useful size for seeing this, because its documents are complete and public. Its design covers 35 solutions, of which 28 were built and tested in the first phase.</p>
+
+<p>Four of those 28 are configuration rather than tracking calls, and those four are the migration work.</p>
+
+<div class="tbl-wrap">
+<table>
+<thead>
+<tr><th>Kestrel solution</th><th>What it is in Adobe Analytics</th><th>What it becomes in CJA</th></tr>
+</thead>
+<tbody>
+<tr><td>KES-S031</td><td>Marketing channel processing rules, nine channels</td><td>Partly rebuilt. Some rule types are unsupported, and a Web SDK feed needs derived fields</td></tr>
+<tr><td>KES-S032</td><td>Campaign code classifications, uploaded against a key</td><td>A lookup dataset, or derived field logic</td></tr>
+<tr><td>KES-S033</td><td>A processing rule bucketing search result counts</td><td>A derived field, applied at report time and changeable afterward</td></tr>
+<tr><td>KES-S038</td><td>Consent gating on every rule, in the tag manager</td><td>Unchanged. It happens before collection, so it migrates with the implementation</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>The last row is the useful one. Consent gating is the only one of the four that does not move, because it happens in the browser before any data is collected. Everything Adobe does after collection has to be rebuilt somewhere else.</p>
+
+<div class="dl-box">
+    <div class="dl-title"><span class="dl-ico" aria-hidden="true"></span>The documents a migration actually reads</div>
+    <p>These three are the ones a migration works from. The design document lists what should exist, the technical document holds the rules that have to be recreated, and the validation report records what was actually proven and what was dropped. They are filled in with the Kestrel example. If you cannot download them now, you can come back to this page later.</p>
+    <ul class="dl-list">
+        <li><a href="/templates/adobe-analytics-solution-design-reference-template.xlsx" download><span class="dl-name">Solution Design Reference</span><span class="dl-meta">XLSX &middot; 8 sheets &middot; 35 solutions &middot; the inventory</span></a></li>
+        <li><a href="/templates/adobe-analytics-technical-specification-document-template.xlsx" download><span class="dl-name">Technical Specification Document</span><span class="dl-meta">XLSX &middot; 9 sheets &middot; the rules to rebuild</span></a></li>
+        <li><a href="/templates/adobe-analytics-validation-report-template.xlsx" download><span class="dl-name">Validation Report</span><span class="dl-meta">XLSX &middot; 2 sheets &middot; what was proven, and what was dropped</span></a></li>
+    </ul>
+</div>
+
+<h3 class="subsec-title">The five discrepancies, and what causes each</h3>
+<p>When two systems report the same period and disagree, the causes are almost always from a short list. Working through it in order settles most investigations quickly.</p>
+
+<div class="tbl-wrap">
+<table>
+<thead>
+<tr><th>Symptom</th><th>Cause</th><th>What to do</th></tr>
+</thead>
+<tbody>
+<tr><td>Conversions credited to different channels</td><td>The data view has its own default attribution model, commonly Same Touch, where the Adobe Analytics variable was set to Last Touch</td><td>Set attribution deliberately per component rather than accepting the default</td></tr>
+<tr><td>Orders and revenue too high</td><td>Deduplication was configured in Adobe Analytics and not reproduced in the data view</td><td>Set the deduplication identifier on the metric in the data view</td></tr>
+<tr><td>Far more dimension values than expected</td><td>CJA keeps every unique value at full cardinality, with no Low Traffic bucket</td><td>Expect it, and check whether anything downstream relied on that bucketing</td></tr>
+<tr><td>Visits and Sessions disagree</td><td>Visits is fixed at collection. Sessions is calculated at report time from the data view setting</td><td>Match the session timeout, then accept a residual gap as correct</td></tr>
+<tr><td>Row counts short by a small margin</td><td>The source connector segments out certain data, and more rows can be segmented between the Data Lake and CJA</td><td>Measure the gap once, write it down, and stop reinvestigating it</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>The last row deserves a habit rather than an answer. Establish the size of the structural gap early, in writing, on a period nobody is arguing about. After that, any difference larger than that number is a real finding and anything within it is noise. That is the difference between a week of investigation and an afternoon.</p>
+
+<h3 class="subsec-title">Run both systems, on purpose</h3>
+<p>The two systems overlap for a period. Treating that overlap as a planned phase rather than an awkward interval is most of what separates a calm migration from a fraught one.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">Adobe Analytics does not stop, and the overlap is where the arguing gets done</div>
+    <svg viewBox="0 0 700 286" style="width:100%;height:auto;display:block" role="img"
+         aria-label="A timeline in three phases. Adobe Analytics runs as a bar across the entire width and does not stop. The Analytics source connector starts at the beginning of phase one and continues. Web SDK collection to the Edge Network starts at phase two. Customer Journey Analytics becomes the reporting system of record at phase three. A bracket spanning phases one and two carries three checkpoint markers and is labelled reconcile at every checkpoint, marking the parallel period during which both systems report the same data.">
+      <text x="150" y="20" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">Phase 1, backfill</text>
+      <text x="356" y="20" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">Phase 2, dual collection</text>
+      <text x="570" y="20" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">Phase 3, CJA leads</text>
+
+      <line x1="256" y1="28" x2="256" y2="212" style="stroke:var(--text3,#5d6b7e);stroke-width:1.2;stroke-dasharray:4 4"/>
+      <line x1="458" y1="28" x2="458" y2="212" style="stroke:var(--text3,#5d6b7e);stroke-width:1.2;stroke-dasharray:4 4"/>
+
+      <text x="14" y="52" style="fill:var(--text2,#475569);font-size:11px">Adobe Analytics</text>
+      <rect x="14" y="58" width="672" height="28" rx="5" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="350" y="77" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">still collecting, still supported, no announced end date</text>
+
+      <text x="14" y="108" style="fill:var(--text2,#475569);font-size:11px">Source connector</text>
+      <rect x="14" y="114" width="672" height="28" rx="5" style="fill:var(--dia-b-soft,rgba(37,99,235,.10));stroke:var(--dia-b,#2563eb);stroke-width:1.4"/>
+      <text x="350" y="133" text-anchor="middle" style="fill:var(--dia-b-ink,#1d4ed8);font-size:11px">13 months of history, then ongoing</text>
+
+      <text x="262" y="164" style="fill:var(--text2,#475569);font-size:11px">Web SDK to the Edge</text>
+      <rect x="256" y="170" width="430" height="28" rx="5" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.4"/>
+      <text x="471" y="189" text-anchor="middle" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px">everything built from here on</text>
+
+      <rect x="458" y="212" width="228" height="28" rx="5" style="fill:var(--accent-light,rgba(186,33,66,.10));stroke:var(--accent,#ba2142);stroke-width:1.6"/>
+      <text x="572" y="231" text-anchor="middle" style="fill:var(--accent2,#951833);font-size:11px;font-weight:700">CJA is the system of record</text>
+
+      <path d="M14 254 L14 246 L458 246 L458 254" style="fill:none;stroke:var(--text3,#5d6b7e);stroke-width:1.4"/>
+      <circle cx="104" cy="246" r="4.5" style="fill:var(--accent,#ba2142)"/>
+      <circle cx="236" cy="246" r="4.5" style="fill:var(--accent,#ba2142)"/>
+      <circle cx="368" cy="246" r="4.5" style="fill:var(--accent,#ba2142)"/>
+      <text x="236" y="272" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:700">Reconcile at every checkpoint, while both systems still answer</text>
+      <text x="572" y="272" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">only now is it safe to stop maintaining the old one</text>
+    </svg>
+</div>
+
+<p>The overlap lets you ask a question of both systems and investigate the difference while the evidence still exists. Once Adobe Analytics stops being maintained internally, every unexplained discrepancy becomes permanent, and the new system inherits a reputation it cannot shake off.</p>
+
+<p>Use the period for something specific. Pick the ten reports the business actually acts on, reproduce those ten in CJA, and reconcile each to a stated tolerance. Ten reconciled reports is a finished migration in every sense a stakeholder cares about. Rebuilding everything anybody ever made is a project with no end.</p>
+
+<h3 class="subsec-title">Why documentation decides how this goes</h3>
+<p>Adobe's own guidance on migrating puts it plainly: without rule documentation, metric discrepancies are inevitable.</p>
+
+<p>Every processing rule, VISTA rule and channel rule in a live implementation is a decision that changed the data. During a migration each one has to be reproduced or deliberately dropped, and both need somebody to know what it did and why. Where that is written down, the rebuild is mechanical. Where it is not, somebody reverse engineers behavior from reports, which is slow, incomplete, and produces a system nobody quite trusts.</p>
+
+<p>The Kestrel table above is what a documented estate looks like. Four configuration solutions, each with an identifier, a requirement sentence and a record of what was tested. Working out what to rebuild took reading one sheet. An undocumented estate of the same size starts with an archaeology project.</p>
+
+<div class="warn-box">
+    <div class="warn-hdr"><span class="warn-ico"></span>The one mistake that cannot be corrected later</div>
+    <p>Schema field data types are fixed once data has been ingested against them. A numeric value defined as a string, or a date left as free text, is repaired by deleting the dataset and recreating it. That discards the history already landed in it. Everything else in a CJA migration is reversible in an afternoon. This is not. Have somebody who knows the data read the field types before the first load, and treat that review as a gate rather than a formality.</p>
+</div>
+
+<h3 class="subsec-title" data-nav="Where to actually start">Where to actually start, and it is not in CJA</h3>
+<p>The instinct on deciding to move is to open Customer Journey Analytics and start building. That is the wrong first move, and the reason is in the two routes covered in <a href="/adobe-analytics-learning/deliver/adobe-analytics-cja/adobe-experience-platform-integration/">Adobe Experience Platform Integration</a>.</p>
+
+<p>The source connector will get your report suite into CJA in an afternoon. What it delivers is CJA reading data Adobe Analytics already shaped, with the collection-time decisions baked in. You get the new reporting model on top of the old data model, which is the smaller half of the benefit.</p>
+
+<p>The full benefit needs clean events arriving through the Edge Network, and that means moving collection to the Web SDK. Do that first and CJA adoption becomes connecting a dataset. Skip it and you have bought a platform you cannot use properly.</p>
+
+<p>So the practical first project is not a CJA project at all. It is a Web SDK migration, and this site has a complete guide to it.</p>
+
+<div class="cards">
+    <a class="card" href="/web-sdk-migration/">
+        <div class="card-icon">🧭</div>
+        <h3 class="card-title">Web SDK Migration</h3>
+        <p class="card-desc">Thirteen ordered steps from taking inventory to decommissioning AppMeasurement, with a knowledge base of twenty two reference articles behind it. The on-ramp that makes everything in this module affordable.</p>
+    </a>
+    <a class="card" href="/web-sdk-migration/take-inventory/">
+        <div class="card-icon">📋</div>
+        <h3 class="card-title">Take inventory</h3>
+        <p class="card-desc">The first step, and the one that overlaps most with the counting exercise above. Everything you own, written down, before any decision about what carries forward.</p>
+    </a>
+    <a class="card" href="/web-sdk-migration/kb/forward/">
+        <div class="card-icon">🛣️</div>
+        <h3 class="card-title">The forward path</h3>
+        <p class="card-desc">What the Web SDK unlocks once data flows through the Edge: CJA, server-side Event Forwarding, and Target. The case for sequencing them rather than attempting them together.</p>
+    </a>
+</div>
+
+<p>Sequence the two projects rather than combining them. Stabilize Adobe Analytics on the Web SDK, prove parity against the old collection, and only then bring CJA in. Running them together is how a team ends up unable to say whether a discrepancy came from the new collection or the new reporting.</p>
+
+<p>When the CJA half does begin, the shape of it is the one this section has described. Count what has to be rebuilt. Reconcile a bounded set of reports rather than everything. Have somebody who knows the data review the field types before the first load, because that is the only step you cannot undo. And keep Adobe Analytics answering until the people who use those reports have signed them off.</p>
+
+<h3 class="subsec-title">Where this leaves you</h3>
+<p>With a decision that is yours to time. There is no deadline. The case for moving is a capability rather than a date. And the work is dominated by rebuilding what sat on top of the data rather than by moving the data itself.</p>
+
+<p>One theme has run through this whole module. What makes a migration hard is not the difference between two products. It is the undocumented decisions inside the old one, and those were expensive long before anybody proposed moving. A team that has kept a design document current migrates in weeks. A team that has not spends those weeks working out what they built.</p>
+
+<p>That leaves a question about direction: where to go after Adobe Analytics, and which parts of it keep their value once the product changes. <a href="/adobe-analytics-learning/deliver/adobe-analytics-cja/what-to-learn-next/">What to Learn Next</a> answers both.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Analytics</div>
+    <p>The inventory you need is spread across three screens, and gathering it is the first real task of any migration. Segments and calculated metrics are listed under <span class="path">Components</span>. Processing rules, bot rules and channel rules sit under <span class="path">Admin &gt; Report Suites &gt; Edit Settings</span>. Variable configuration is under <span class="path">Edit Settings &gt; Conversion</span> and <span class="path">Traffic</span>. VISTA rules appear on none of them, because Adobe configures those, so your own documentation is the only record you will have.</p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics-platform/using/compare-aa-cja/aa-to-cja" target="_blank">Adobe Docs: Evolution from Adobe Analytics</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics-platform/using/compare-aa-cja/cja-aa-comparison/cja-aa" target="_blank">Adobe Docs: Customer Journey Analytics Feature Support</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics-platform/using/compare-aa-cja/aa-to-cja-user" target="_blank">Adobe Docs: CJA User Guide for Adobe Analytics Users</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics-platform/using/technotes/guardrails" target="_blank">Adobe Docs: Customer Journey Analytics Guardrails</a></li>
+    </ul>
+</div>

@@ -1,46 +1,228 @@
 ---
 slug: "debugging-tools-overview"
 title: "Debugging Tools Overview"
-published: 2026-07-15
-lastmod: 2026-07-15
+seotitle: "How to Debug an Adobe Analytics Implementation"
+description: "Testing works down the solution list, one row at a time. The five stages a value travels, which tool can see each stage, and where the finding gets written."
+published: 2026-09-01
+lastmod: 2026-09-01
 type: lesson
 modulenum: 20
 sectionnum: 1
 weight: 1
 ---
-<p>Effective debugging is crucial for ensuring accurate data collection. Adobe Analytics offers several tools to inspect, validate, and troubleshoot your implementation.</p>
-                <h3 class="subsec-title">Essential Debugging Tools</h3>
-                <div class="tbl-wrap">
-                    <table>
-                        <thead><tr><th>Tool</th><th>Purpose</th><th>Best For</th></tr></thead>
-                        <tbody>
-                            <tr><td><strong>Adobe Experience Platform Debugger</strong></td><td>Browser extension for inspecting Adobe tags</td><td>Real-time implementation validation</td></tr>
-                            <tr><td><strong>Browser Developer Tools</strong></td><td>Network tab, console inspection</td><td>Raw request analysis</td></tr>
-                            <tr><td><strong>Charles Proxy / Fiddler</strong></td><td>HTTP proxy for traffic inspection</td><td>Mobile app debugging</td></tr>
-                            <tr><td><strong>Adobe Analytics Debugger</strong></td><td>Legacy browser bookmarklet</td><td>Quick variable inspection</td></tr>
-                            <tr><td><strong>Real-Time Reports</strong></td><td>Live data validation</td><td>Confirming data receipt</td></tr>
-                            <tr><td><strong>Data Warehouse</strong></td><td>Unsampled data verification</td><td>Historical data validation</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="diagram-box">
-                    <div class="diagram-title">Debugging Workflow</div>
-                    <div class="diagram-content">
-                        <div class="flow-horizontal">
-                            <div class="flow-step">Implement</div>
-                            <span class="flow-arrow">→</span>
-                            <div class="flow-step">Debug Locally</div>
-                            <span class="flow-arrow">→</span>
-                            <div class="flow-step">Validate in Real-Time</div>
-                            <span class="flow-arrow">→</span>
-                            <div class="flow-step highlight">Verify in Reports</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="ref-box">
-                    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
-                    <ul>
-                        <li><a href="https://experienceleague.adobe.com/docs/debugger/using/experience-cloud-debugger.html" target="_blank">Adobe Docs: Experience Platform Debugger</a></li>
-                    </ul>
-                </div>
-            
+<p>On 22 May the first test cycle on the Kestrel and Co. website reached the product pages. The page name was empty on every one of them.</p>
+
+<p>Nothing had failed. The pages loaded normally, the tracking call fired, and Adobe accepted it. The page name was missing because the site set it in a script that ran after the call had already gone.</p>
+
+<p>That cycle tested twenty eight solutions and found something wrong with twenty six of them. Two were correct first time. This is what a first test cycle normally looks like, and this module is about how you find those twenty six and prove you have fixed them.</p>
+
+<h3 class="subsec-title">The company and the documents used here</h3>
+<p>Kestrel and Co. is a fictional online homeware retailer. Furniture, kitchen, bedding, twelve showrooms, and a trade account scheme for interior designers. The company does not exist and the project never happened, but the requirements are ones businesses ask for and the faults are ones that occur.</p>
+
+<p>Its implementation was designed in a set of five documents, covered in <a href="/adobe-analytics-learning/deliver/solution-design-reference/what-is-an-sdr/">Solution Design Reference</a>. One of the five is the validation report, and that document is what this module fills in. Every fault above was recorded in it, against the solution it belonged to, on the date it was found.</p>
+
+<div class="dl-box">
+    <div class="dl-title"><span class="dl-ico" aria-hidden="true"></span>Download the validation report before you start</div>
+    <p>The validation report is the document this module works in, so it is worth having open beside you. It is filled in with a finished Kestrel test cycle: twenty eight rows, three dated cycles and four statuses. If you cannot download it now, the sections still read on their own, and you can come back to this page later and follow along then. The other four documents are here because the validation report refers to them.</p>
+    <ul class="dl-list">
+        <li><a href="/templates/adobe-analytics-validation-report-template.xlsx" download><span class="dl-name">Validation Report</span><span class="dl-meta">XLSX &middot; 2 sheets &middot; 3 test cycles &middot; used throughout this module</span></a></li>
+        <li><a href="/templates/adobe-analytics-solution-design-reference-template.xlsx" download><span class="dl-name">Solution Design Reference</span><span class="dl-meta">XLSX &middot; 8 sheets &middot; 35 solutions</span></a></li>
+        <li><a href="/templates/adobe-analytics-technical-specification-document-template.xlsx" download><span class="dl-name">Technical Specification Document</span><span class="dl-meta">XLSX &middot; 9 sheets &middot; the SDR plus 8 columns</span></a></li>
+        <li><a href="/templates/adobe-analytics-business-requirements-document-template.xlsx" download><span class="dl-name">Business Requirements Document</span><span class="dl-meta">XLSX &middot; 4 sheets &middot; 36 requirements</span></a></li>
+        <li><a href="/templates/adobe-analytics-implementation-project-plan-template.xlsx" download><span class="dl-name">Implementation Project Plan</span><span class="dl-meta">XLSX &middot; 2 sheets &middot; 21 activities</span></a></li>
+    </ul>
+</div>
+
+<h3 class="subsec-title">What testing an implementation means</h3>
+<p>Testing is not browsing the site and looking for problems. It is working down a list of solutions and checking each one.</p>
+
+<p>The list comes from the design document. Each row is one solution with an identifier, such as KES-S004 for a product detail page view, and a sentence saying what it is supposed to do. You exercise that solution on the site, read what the tracking call actually carried, and write down what you found.</p>
+
+<p>Testing against a list matters for one reason. It makes coverage countable. Every solution in the design either appears in the validation report with a status, or it is missing, and missing is visible. Browsing the site and looking for problems gives you no way to know what you did not check.</p>
+
+<h3 class="subsec-title">The five stages a value travels</h3>
+<p>A value that reaches a report has been through five stages. Any of them can drop it.</p>
+
+<p>The value starts as something the website knows, such as the delivery option a customer picked, held in a data layer object. A rule in the tag manager reads that object and puts it into a variable. The library builds a request and sends it to Adobe. Adobe processes what arrives, running bot rules, processing rules, VISTA rules and marketing channel rules in a fixed order. What survives all of that appears in a report, usually an hour or two later.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">Five stages, one boundary, and three tools that each see a different part</div>
+    <svg viewBox="0 0 700 306" style="width:100%;height:auto;display:block" role="img"
+         aria-label="A left to right chain of five stages: data layer, tag rule, request, Adobe processing, and report. A vertical dashed boundary sits between request and Adobe processing, marked in the browser on the left and inside Adobe on the right. The request stage is highlighted because it is the recommended starting point. Below the chain, three horizontal brackets show tool coverage: browser developer tools reach from the data layer through to the request, the Experience Platform Debugger reaches the same span and extends by a dashed line into processing for post processed hits, and Analysis Workspace covers only processing and the report.">
+      <defs>
+        <marker id="ch1a" markerWidth="7" markerHeight="7" refX="6.2" refY="3.5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0.6 L7 3.5 L0 6.4 Z" style="fill:var(--text3,#5d6b7e)"/></marker>
+      </defs>
+
+      <text x="14" y="18" style="fill:var(--text3,#5d6b7e);font-size:11px">in the browser</text>
+      <text x="424" y="18" style="fill:var(--text3,#5d6b7e);font-size:11px">inside Adobe</text>
+      <line x1="408" y1="26" x2="408" y2="196" style="stroke:var(--text3,#5d6b7e);stroke-width:1.2;stroke-dasharray:4 4"/>
+
+      <rect x="14" y="30" width="112" height="52" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="70" y="52" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">Data layer</text>
+      <text x="70" y="70" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">the site's own value</text>
+
+      <line x1="126" y1="56" x2="148" y2="56" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#ch1a)"/>
+
+      <rect x="154" y="30" width="104" height="52" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="206" y="52" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">Tag rule</text>
+      <text x="206" y="70" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">reads it, maps it</text>
+
+      <line x1="258" y1="56" x2="280" y2="56" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#ch1a)"/>
+
+      <rect x="286" y="30" width="116" height="52" rx="6" style="fill:var(--accent-light,rgba(186,33,66,.10));stroke:var(--accent,#ba2142);stroke-width:1.6"/>
+      <text x="344" y="52" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:700">Request</text>
+      <text x="344" y="70" text-anchor="middle" style="fill:var(--accent2,#951833);font-size:11px">start here</text>
+
+      <line x1="402" y1="56" x2="428" y2="56" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#ch1a)"/>
+
+      <rect x="434" y="30" width="122" height="52" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="495" y="52" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">Processing</text>
+      <text x="495" y="70" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">rules, in a fixed order</text>
+
+      <line x1="556" y1="56" x2="578" y2="56" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#ch1a)"/>
+
+      <rect x="584" y="30" width="102" height="52" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="635" y="52" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">Report</text>
+      <text x="635" y="70" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">an hour or two later</text>
+
+      <path d="M14 118 L14 108 L402 108 L402 118" style="fill:none;stroke:var(--dia-b,#2563eb);stroke-width:1.4"/>
+      <text x="208" y="134" text-anchor="middle" style="fill:var(--dia-b-ink,#1d4ed8);font-size:12.5px;font-weight:600">Browser developer tools</text>
+
+      <path d="M14 164 L14 154 L402 154 L402 164" style="fill:none;stroke:var(--dia-e,#7c3aed);stroke-width:1.4"/>
+      <line x1="402" y1="154" x2="556" y2="154" style="stroke:var(--dia-e,#7c3aed);stroke-width:1.4;stroke-dasharray:5 4"/>
+      <path d="M556 154 L556 164" style="fill:none;stroke:var(--dia-e,#7c3aed);stroke-width:1.4"/>
+      <text x="208" y="180" text-anchor="middle" style="fill:var(--dia-e-ink,#5b21b6);font-size:12.5px;font-weight:600">Experience Platform Debugger</text>
+      <text x="480" y="180" text-anchor="middle" style="fill:var(--dia-e-ink,#5b21b6);font-size:11px">post processed only</text>
+
+      <path d="M434 210 L434 200 L686 200 L686 210" style="fill:none;stroke:var(--dia-c,#10b981);stroke-width:1.4"/>
+      <text x="560" y="226" text-anchor="middle" style="fill:var(--dia-c-ink,#0a6e50);font-size:12.5px;font-weight:600">Analysis Workspace</text>
+
+      <text x="14" y="266" style="fill:var(--text2,#475569);font-size:12.5px;font-weight:700">No single tool sees all five stages.</text>
+      <text x="14" y="288" style="fill:var(--text3,#5d6b7e);font-size:11px">Choosing a tool means choosing which stages you are taking on trust.</text>
+    </svg>
+</div>
+
+<p>The product page fault above sat at stage one. The site had not put the page name into the data layer by the time the rule read it. A rule that reads an empty object and a rule that never ran produce the same result in the report, so the stages are what tell them apart.</p>
+
+<h3 class="subsec-title">Which tool sees which stage</h3>
+<p>Four tools cover the five stages. What matters about each is what it can prove.</p>
+
+<div class="tbl-wrap">
+<table>
+<thead>
+<tr><th>Tool</th><th>Proves</th><th>Cannot tell you</th></tr>
+</thead>
+<tbody>
+<tr><td>Browser developer tools</td><td>Exactly what left the browser, and whether it left at all</td><td>What any of it means, or what Adobe did with it</td></tr>
+<tr><td>Experience Platform Debugger</td><td>Which rules fired, which data elements resolved, and what each variable is called</td><td>Anything on a browser it is not installed in, which includes every customer's</td></tr>
+<tr><td>Analysis Workspace, including real time reporting</td><td>What Adobe kept, after all its own rules have run</td><td>Why something is missing, or which stage lost it</td></tr>
+<tr><td>Experience Platform Assurance</td><td>The same for a mobile app, over a session paired by PIN</td><td>Anything happening in a web browser</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>The first two tools show the same event from different sides. Developer tools give you the facts without the names. The debugger gives you the names, but only works on a machine you control. Most debugging moves between those two views, and the third tool settles whether anything survived.</p>
+
+<h3 class="subsec-title">Start at the request</h3>
+<p>Look at what left the browser first, before forming any theory about what is wrong. Not the data layer, not the rule, and not the report.</p>
+
+<p>The request is the only stage that is a fact. Everything before it is intention: a data layer that should have been populated, a rule that should have fired, a mapping somebody wrote in a document. Everything after it happens inside Adobe, where you cannot watch.</p>
+
+<p>Starting there also halves the search in one step. If the value is in the request but wrong in the report, the fault is inside Adobe and reading the site will not find it. If the value is missing from the request, nothing Adobe does can put it back, and the report is a distraction.</p>
+
+<p>Follow that order for your first cases. After a dozen of them you will start recognizing faults by their symptoms and jumping straight to the likely stage, which is quicker and occasionally wrong. The order is what you go back to when the shortcut fails.</p>
+
+<div class="pro-tip">
+    <div class="pro-tip-hdr"><span class="tip-ico"></span>Reproduce the fault before you explain it</div>
+    <p>The first instinct on being handed a problem is to reason about it, and reasoning produces four possible causes and no answer. Go to the page, do the thing, and look at the request. A fault you can reproduce on demand is usually solved within the hour, because each theory can now be tested in thirty seconds. A fault you cannot reproduce is a much harder job, and it is worth finding out which of the two you have before you start.</p>
+</div>
+
+<h3 class="subsec-title">Three questions, in this order</h3>
+<p>Once the request is on screen, three questions cover almost everything.</p>
+
+<p><strong>Did the call fire at all?</strong> If there is no request, nothing after it matters. The rule did not trigger, the library did not load, consent blocked it, or a browser extension stopped it. Settle this before anything else.</p>
+
+<p><strong>Did it carry the right values?</strong> The call fired, and a variable is empty, or holds a code where a name was expected. Now you need to know where the value should have come from, and whether the site failed to provide it or the rule failed to read it.</p>
+
+<p><strong>Did Adobe keep it?</strong> The call fired, the values were right, and the report is still wrong. Something between collection and reporting removed it or changed it. The list of things that can do that is short.</p>
+
+<p>The first two are answered in the browser, in <a href="/adobe-analytics-learning/deliver/testing-debugging/browser-developer-tools/">Browser Developer Tools</a> and the <a href="/adobe-analytics-learning/deliver/testing-debugging/adobe-experience-platform-debugger/">Adobe Experience Platform Debugger</a>. The third cannot be answered there at all, and is covered in <a href="/adobe-analytics-learning/deliver/testing-debugging/real-time-validation/">Real-Time Validation</a>.</p>
+
+<h3 class="subsec-title">Where the finding gets written</h3>
+<p>Every answer goes into the validation report, in the row for that solution. Four things go with it.</p>
+
+<div class="tbl-wrap">
+<table>
+<thead>
+<tr><th>Column</th><th>What you write</th><th>Example from the Kestrel cycle</th></tr>
+</thead>
+<tbody>
+<tr><td>Status</td><td>Passed, Partly passed, Failed or Ignored, as at the latest cycle</td><td>KES-S013 payment failure is Partly passed</td></tr>
+<tr><td>Findings by cycle</td><td>The date, then what you observed. Add to the cell, never overwrite it</td><td>22 May: Payment method arrives as the gateway code rather than the name.</td></tr>
+<tr><td>Action on</td><td>Who does the next thing, on every row that is not Passed</td><td>Kestrel web dev</td></tr>
+<tr><td>ETA</td><td>A date, on every row that is not Passed</td><td>19 Jun</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>Write what you observed rather than what you concluded. "Quantity was 2 when one product was added" stays true even if your diagnosis turns out to be wrong. "Quantity is broken" does not help anybody and cannot be retested.</p>
+
+<div class="info-box">
+    <div class="info-hdr"><span class="info-ico"></span>Testing and debugging are two different activities</div>
+    <p>Testing works down a list and records what happened, whether or not anything turns out to be wrong. Debugging starts from one symptom and works backward to a cause. A project needs both, at different times. Testing is planned into cycles against a signed design, which is covered in <a href="/adobe-analytics-learning/deliver/solution-design-reference/validation-and-sign-off/">Validation and Sign-off</a>. Debugging happens whenever somebody reports a number they do not believe. The tools are the same and the approach is not, and running a debugging session as though it were a test cycle is how one fault takes a week.</p>
+</div>
+
+<h3 class="subsec-title">Testing one solution, end to end</h3>
+<p>This is one row of a test cycle. Run it on KES-S004, the product detail page view, using the validation report as your record.</p>
+
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>Test one solution and record the result</span></div>
+    <ol class="dothis-steps">
+        <li>
+            <span class="ds-do">Open the validation report at the <b>Tracker</b> sheet and find the row you are testing. Read the requirement sentence beside it.</span>
+            <span class="ds-see">The requirement tells you what to check. Testing without reading it is how somebody confirms the call fired and misses that it carried the wrong value.</span>
+        </li>
+        <li>
+            <span class="ds-do">Open the network tab, switch on <b>Preserve log</b>, then do the action on the site.</span>
+            <span class="ds-see">Preserve log first. A checkout that navigates will clear the request you needed, and you will walk the journey again to get it back.</span>
+        </li>
+        <li>
+            <span class="ds-do">Read the request. Check the report suite, then the hit type, then the variables the design names for that moment.</span>
+            <span class="ds-see">In that order. A perfect set of variables landing in the wrong report suite looks exactly like no data at all.</span>
+        </li>
+        <li>
+            <span class="ds-do">If a value is missing, open the console and read the data layer object it should have come from.</span>
+            <span class="ds-see">This one check decides everything. A populated data layer with an empty request means the rule. An empty data layer means the site.</span>
+        </li>
+        <li>
+            <span class="ds-do">Write the finding into the row, starting with today's date, below anything already there.</span>
+            <span class="ds-see">Below, not over. Three dated lines show whether a fix worked or moved the problem, and one line cannot.</span>
+        </li>
+        <li>
+            <span class="ds-do">Set the status. If it is not Passed, fill in <b>Action on</b> and <b>ETA</b> before you move to the next row.</span>
+            <span class="ds-see">Before, not at the end of the day. An owner assigned in a review meeting is an owner chosen by whoever stayed quiet.</span>
+        </li>
+    </ol>
+    <p class="dothis-end">That is one solution tested and recorded. Repeat it down the sheet and you have a cycle. Go further where the case needs it. A solution that fails for only some visitors wants a second run, on a different browser or a slower connection, before you write it down as passed.</p>
+</div>
+
+<h3 class="subsec-title">What you have now</h3>
+<p>A way of working that does not depend on any particular tool. A value travels five stages, no tool sees all five, the request is the only fact, and three questions tell you which stage to investigate. Each answer goes into a row with a date, a status and an owner.</p>
+
+<p>The tools change. The bookmarklet everybody used ten years ago is no longer maintained, and the extension that replaced it gained a new capability in 2026. The five stages have not moved, and somebody who understands them can pick up whatever tool exists in five years.</p>
+
+<p>The next tool turns a request full of numbered parameters into names you recognize, and shows which rules fired. <a href="/adobe-analytics-learning/deliver/testing-debugging/adobe-experience-platform-debugger/">Adobe Experience Platform Debugger</a> covers what it reads, what it cannot see, and one setting that changes what it can prove.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Analytics</div>
+    <p>Mostly outside the product. The debugger is a Chrome extension, the network tab belongs to the browser, and Assurance is reached at <span class="path">assurance.adobe.com</span> with a session paired to a running app. Only the reporting end is inside Adobe Analytics, under <span class="path">Workspace</span>, with real time reporting switched on per suite from <span class="path">Admin &gt; Report Suites &gt; Edit Settings &gt; Real-Time</span>.</p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/technotes/processing-order" target="_blank">Adobe Docs: Processing Order for Data in Adobe Analytics</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/experience-platform/collection/use-cases/debugging" target="_blank">Adobe Docs: Debugging Methods</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/experience-platform/assurance/home" target="_blank">Adobe Docs: Experience Platform Assurance Overview</a></li>
+    </ul>
+</div>

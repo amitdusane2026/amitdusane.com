@@ -849,9 +849,19 @@
      outrank all of them by spanning the full width, and it costs about 7% of a
      390x844 screen permanently to serve an action most readers never take.
 
-     So it arrives instead. It slides up once the reader is two thirds through
-     the article -- roughly the point where a question has actually formed --
-     and it can be dismissed.
+     So it arrives instead. It slides up once the reader is three quarters
+     through the article -- roughly the point where a question has actually
+     formed -- and it can be dismissed.
+
+     THREE QUARTERS, not two thirds. Amit's call on 1 Sep 2026, after a week
+     of living with it: at two thirds the bar was intruding on readers who
+     were still reading. Somebody who genuinely works down a section still
+     meets it; somebody skimming the middle no longer does.
+
+     IT ALSO LEAVES AT THE FOOT OF THE PAGE. Same call, same reason: the bar
+     sat on top of the previous and next links and made moving between
+     sections awkward. It now hides as soon as that navigation is on screen,
+     and comes back if the reader scrolls up away from it.
 
      DISMISSAL IS FOR THIS READING PASS ONLY. It used to persist across the
      whole session, which was wrong twice over: the offer is tied to THIS
@@ -867,6 +877,7 @@
 
      CSS confines the shape by width; this only toggles a class. */
   var askDismissed = false;
+  var askNav = document.querySelector('.lpn');   /* the prev/next block */
   var askBar = document.createElement('div');
   askBar.className = 'ask-bar';
   askBar.innerHTML =
@@ -893,18 +904,30 @@
       li.classList.toggle('seen', i < active);
     });
 
-    /* Measured against the ARTICLE, not the document: the footer, the
-       prev/next and the print block are not reading, and counting them would
-       push the trigger past the end of the prose on a short section. */
+    /* Measured against .lmain rather than the document: the site footer and
+       the print block are not reading, and counting them would push the
+       trigger past the end of the prose on a short section. .lmain does
+       include the prev/next block, which an earlier version of this comment
+       denied. It is a fixed 165px or so and makes no practical difference to
+       the fraction, and the bottom behaviour below keys off that element
+       directly rather than off the fraction. */
     if (askBar) {
       var r = main.getBoundingClientRect(),
           read = (-r.top + window.innerHeight) / (r.height || 1);
       /* Coming back up past the re-arm point clears the dismissal, so the bar
-         is available again on the next pass down. 0.58 rather than 0.66 gives
+         is available again on the next pass down. 0.66 rather than 0.75 gives
          it hysteresis: with one threshold it would flicker for a reader
          resting on the boundary. */
-      if (read < 0.58) askDismissed = false;
-      var shown = read > 0.66 && !askDismissed;
+      if (read < 0.66) askDismissed = false;
+      /* Off once the prev/next links are on screen, so the bar never covers
+         them. Keyed to the element rather than to a scroll percentage on
+         purpose: .lpn is a fixed height inside articles that run from 700 to
+         2000 words, so a percentage tuned to clear it on a long section would
+         fire far too early on a short one. Scrolling back up above the
+         navigation brings the bar back, provided the reader is still past the
+         three quarter mark. */
+      var navUp = askNav && askNav.getBoundingClientRect().top < window.innerHeight;
+      var shown = read > 0.75 && !navUp && !askDismissed;
       askBar.classList.toggle('is-in', shown);
       /* The body class lifts the About mark and the page-nav button clear of
          the bar. They occupy the same corner, and measured at 390 they collide

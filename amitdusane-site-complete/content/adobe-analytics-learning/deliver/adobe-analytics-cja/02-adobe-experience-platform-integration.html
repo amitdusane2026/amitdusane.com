@@ -2,63 +2,175 @@
 slug: "adobe-experience-platform-integration"
 title: "Adobe Experience Platform Integration"
 seotitle: "Adobe Analytics and Experience Platform Integration"
-published: 2026-07-15
-lastmod: 2026-07-15
+description: "CJA reads data it never collected. The two routes into Platform, why one of them is a project in itself, and where the full guide to that project lives."
+published: 2026-09-01
+lastmod: 2026-09-01
 type: lesson
 modulenum: 21
 sectionnum: 2
 weight: 2
 ---
-<p>Adobe Analytics integrates deeply with Adobe Experience Platform (AEP) for enhanced data collection, unified profiles, and advanced activation.</p>
-                <h3 class="subsec-title">Integration Methods</h3>
-                <div class="tbl-wrap">
-                    <table>
-                        <thead><tr><th>Method</th><th>Direction</th><th>Purpose</th></tr></thead>
-                        <tbody>
-                            <tr><td><strong>Analytics Source Connector</strong></td><td>Analytics → AEP</td><td>Backfill & stream Analytics data to Platform</td></tr>
-                            <tr><td><strong>Web SDK</strong></td><td>Website → Both</td><td>Single tag sends to Analytics & AEP</td></tr>
-                            <tr><td><strong>Server-Side Forwarding</strong></td><td>Analytics → AEP</td><td>Forward hit data to Experience Platform</td></tr>
-                            <tr><td><strong>Customer Journey Analytics</strong></td><td>AEP → CJA</td><td>Cross-channel analysis in CJA</td></tr>
-                        </tbody>
-                    </table>
-                </div>
+<p>Customer Journey Analytics collects nothing. It reads data that is already in Adobe Experience Platform, described by a schema and held in a dataset.</p>
 
-                <h3 class="subsec-title">Web SDK Architecture</h3>
-                <div class="diagram-box">
-                    <div class="diagram-title">Web SDK Data Flow</div>
-                    <div class="diagram-content">
-                        <div class="flow-vertical">
-                            <div class="flow-step">Website (Web SDK / alloy.js)</div>
-                            <span class="flow-arrow-down">↓</span>
-                            <div class="flow-step">Edge Network (Datastream)</div>
-                            <span class="flow-arrow-down">↓</span>
-                            <div class="flow-step" style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
-                                <span class="flow-dest">Analytics</span>
-                                <span class="flow-dest">AEP</span>
-                                <span class="flow-dest">Target</span>
-                                <span class="flow-dest">Audience Manager</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<p>So the question that decides a CJA project is not whether CJA is better. It is how your data gets into Platform. That is a collection project, and it is where the time goes.</p>
 
-                <h3 class="subsec-title">Benefits of AEP Integration</h3>
-                <ul>
-                    <li><strong>Unified data collection:</strong> Single SDK for all Adobe solutions</li>
-                    <li><strong>Real-time profiles:</strong> Analytics data enriches customer profiles</li>
-                    <li><strong>Cross-channel analysis:</strong> Combine web, app, offline data in CJA</li>
-                    <li><strong>Activation:</strong> Use Analytics segments in RTCDP for personalization</li>
-                    <li><strong>Future-proof:</strong> Web SDK is Adobe's strategic collection method</li>
-                </ul>
-                <div class="pro-tip">
-                    <div class="pro-tip-hdr"><span class="tip-ico"></span>Pro Tip</div>
-                    <p>If starting a new implementation, strongly consider Web SDK over AppMeasurement. It provides a unified data collection approach and prepares you for Customer Journey Analytics and other AEP capabilities.</p>
-                </div>
-                <div class="ref-box">
-                    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
-                    <ul>
-                        <li><a href="https://experienceleague.adobe.com/docs/experience-platform/sources/connectors/adobe-applications/analytics.html" target="_blank">Adobe Docs: Analytics Source Connector</a></li>
-                        <li><a href="https://experienceleague.adobe.com/docs/experience-platform/web-sdk/home.html" target="_blank">Adobe Docs: Web SDK</a></li>
-                    </ul>
-                </div>
-            
+<h3 class="subsec-title">Two routes into Platform</h3>
+<p>There are two ways Adobe Analytics data reaches Platform, and they answer different questions.</p>
+
+<p>The <strong>Analytics source connector</strong> copies an existing report suite across. Each report suite you configure becomes its own dataset in the Data Lake, thirteen months of history come with it, and new hits keep flowing. Nothing on the website changes and nothing needs redeploying.</p>
+
+<p>The <strong>Web SDK</strong> sends data from the page to the Edge Network, which forwards it to Platform and can forward the same event to Adobe Analytics as well. This is the route for anything built from now on, and it is a re-implementation of how the site collects data.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">Two ways in, one place they arrive</div>
+    <svg viewBox="0 0 700 288" style="width:100%;height:auto;display:block" role="img"
+         aria-label="Two entry paths converge. The upper path starts at an Adobe Analytics report suite, passes through the Analytics source connector carrying thirteen months of history, and reaches a dataset in the Experience Platform data lake. The lower path starts at the website using the Web SDK, passes through the Edge Network, and reaches a dataset as well, while also forwarding a copy to Adobe Analytics. Both datasets feed a connection, which feeds a data view.">
+      <defs>
+        <marker id="cj2a" markerWidth="7" markerHeight="7" refX="6.2" refY="3.5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0.6 L7 3.5 L0 6.4 Z" style="fill:var(--text3,#5d6b7e)"/></marker>
+      </defs>
+
+      <rect x="14" y="26" width="132" height="46" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="80" y="46" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">Report suite</text>
+      <text x="80" y="63" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">what you already have</text>
+
+      <line x1="146" y1="49" x2="168" y2="49" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#cj2a)"/>
+
+      <rect x="174" y="26" width="150" height="46" rx="6" style="fill:var(--dia-b-soft,rgba(37,99,235,.10));stroke:var(--dia-b,#2563eb);stroke-width:1.6"/>
+      <text x="249" y="46" text-anchor="middle" style="fill:var(--dia-b-ink,#1d4ed8);font-size:12.5px;font-weight:700">Source connector</text>
+      <text x="249" y="63" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">13 months of history</text>
+
+      <rect x="14" y="140" width="132" height="46" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="80" y="160" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">The website</text>
+      <text x="80" y="177" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">using the Web SDK</text>
+
+      <line x1="146" y1="163" x2="168" y2="163" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#cj2a)"/>
+
+      <rect x="174" y="140" width="150" height="46" rx="6" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.6"/>
+      <text x="249" y="160" text-anchor="middle" style="fill:var(--dia-c-ink,#0a6e50);font-size:12.5px;font-weight:700">Edge Network</text>
+      <text x="249" y="177" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">for anything new</text>
+
+      <path d="M324 49 L352 49 L352 96 L378 96" style="fill:none;stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#cj2a)"/>
+      <path d="M324 163 L352 163 L352 118 L378 118" style="fill:none;stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#cj2a)"/>
+      <path d="M249 186 L249 216 L80 216 L80 200" style="fill:none;stroke:var(--text3,#5d6b7e);stroke-width:1.2;stroke-dasharray:5 4"/>
+      <text x="128" y="234" style="fill:var(--text3,#5d6b7e);font-size:11px">a copy can still go to Adobe Analytics</text>
+
+      <rect x="384" y="84" width="146" height="46" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="457" y="104" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">Datasets</text>
+      <text x="457" y="121" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">described by a schema</text>
+
+      <line x1="530" y1="107" x2="552" y2="107" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#cj2a)"/>
+
+      <rect x="558" y="60" width="128" height="42" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="622" y="86" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">Connection</text>
+
+      <line x1="622" y1="102" x2="622" y2="114" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#cj2a)"/>
+
+      <rect x="558" y="120" width="128" height="42" rx="6" style="fill:var(--accent-light,rgba(186,33,66,.10));stroke:var(--accent,#ba2142);stroke-width:1.6"/>
+      <text x="622" y="146" text-anchor="middle" style="fill:var(--accent2,#951833);font-size:12.5px;font-weight:700">Data view</text>
+
+      <text x="14" y="264" style="fill:var(--text3,#5d6b7e);font-size:11px">The connection says which data. The data view says what it means. Only the second one is easy to change.</text>
+    </svg>
+</div>
+
+<p>Most organizations end up running both for a period. The source connector supplies history a new system has no other way of getting, and the Web SDK supplies the future.</p>
+
+<h3 class="subsec-title" data-nav="The Web SDK route has its own guide">The Web SDK route is a project, and this site has a full guide to it</h3>
+<p>The difference in size between the two routes is easy to miss. The source connector is a configuration screen. The Web SDK is a re-implementation of how the site collects data, and it is the larger piece of work by a wide margin.</p>
+
+<p>It is also the one that matters most, because Adobe treats the Web SDK as the long-term collection path for everything, not only for CJA. Once data flows through the Edge Network, adopting CJA becomes a matter of connecting the dataset rather than re-instrumenting the site.</p>
+
+<p>That migration has its own section on this site. A complete thirteen step walkthrough, with a knowledge base of twenty two reference articles behind it, covering the parts this module can only summarize.</p>
+
+<div class="cards">
+    <a class="card" href="/web-sdk-migration/">
+        <div class="card-icon">🧭</div>
+        <h3 class="card-title">Web SDK Migration, start to finish</h3>
+        <p class="card-desc">The whole migration as thirteen ordered steps, from taking inventory to decommissioning AppMeasurement. Written as a procedure to follow rather than a topic to read, with the architect's decision called out at every fork.</p>
+    </a>
+    <a class="card" href="/web-sdk-migration/create-the-schema/">
+        <div class="card-icon">🗂️</div>
+        <h3 class="card-title">Create the schema</h3>
+        <p class="card-desc">The XDM work this section summarizes in three paragraphs, done properly. Classes, field groups, the Analytics Full Extension, and why clean XDM is what makes CJA adoption cheap later.</p>
+    </a>
+    <a class="card" href="/web-sdk-migration/map-your-variables/">
+        <div class="card-icon">🔀</div>
+        <h3 class="card-title">Map your variables</h3>
+        <p class="card-desc">Where every eVar, prop and event you own is translated into schema fields. This is the exercise that turns a variable map into a migration plan, and it is the step most projects underestimate.</p>
+    </a>
+    <a class="card" href="/web-sdk-migration/prove-parity/">
+        <div class="card-icon">⚖️</div>
+        <h3 class="card-title">Prove parity</h3>
+        <p class="card-desc">How to show the new collection matches the old before anybody switches anything off. It is the same reconciliation problem a CJA migration meets, and the same way out of it.</p>
+    </a>
+</div>
+
+<p>One piece of advice from that guide is worth repeating here, because it decides the order of your projects. Stabilize Adobe Analytics on the Web SDK first, then treat CJA as a separate project after that. Teams that attempt both at once end up debugging a new collection method and a new reporting model in the same week, and cannot tell which one is producing the discrepancy.</p>
+
+<h3 class="subsec-title">What a schema does that a design document used to do</h3>
+<p>Platform holds data as Experience Data Model. Three ideas cover most of what a practitioner needs.</p>
+
+<p>A <strong>class</strong> says what kind of thing a record is. Almost everything in analytics is an XDM ExperienceEvent, a time stamped record of something that happened. A <strong>field group</strong> is a reusable block of fields added to a schema, so commerce fields, environment details and web fields arrive as ready made components. An <strong>identity map</strong> is a field holding the identifiers for the person an event belongs to, each keyed by a namespace.</p>
+
+<p>Here is what changes for somebody arriving from Adobe Analytics. The report suite carried numbered slots, and the <a href="/adobe-analytics-learning/deliver/solution-design-reference/what-is-an-sdr/">solution design reference</a> recorded what each one meant, because the product could not. In Platform the schema carries the meaning itself, in the system.</p>
+
+<p>The design document does not stop being useful. It still records why a field exists, which requirement it serves, and who asked for it. What it no longer has to do is compensate for a product that cannot describe itself. Building a schema properly is <a href="/web-sdk-migration/create-the-schema/">its own step in the migration guide</a>, alongside a reference article on <a href="/web-sdk-migration/kb/xdm-vs-data/">the xdm object versus the data object</a>, which is the decision that shapes everything downstream.</p>
+
+<h3 class="subsec-title">What the source connector gives you, and what it does not</h3>
+<p>The connector is the easiest part of a CJA project. You choose a report suite and a standardized Adobe Analytics schema is created for you. There is no schema design decision and nothing to map by hand.</p>
+
+<p>Two details decide how much history you get. Thirteen months of backfill comes with each dataflow. Since 26 April 2023 the backfill in non-production sandboxes is limited to three months, which regularly surprises a team who tested in development and planned around what they saw.</p>
+
+<div class="warn-box">
+    <div class="warn-hdr"><span class="warn-ico"></span>The row counts will not match, and that is expected</div>
+    <p>Adobe states that certain types of data are segmented out by the source connector and never reach the Data Lake. Other rows can be segmented out again between the Data Lake and Customer Journey Analytics. So a report suite and its CJA counterpart will not agree on totals, before any data view setting is considered. Measure the size of that gap during a parallel period and write it down. The alternative is discovering it in a meeting where somebody has already decided the new system is broken.</p>
+</div>
+
+<p>The deeper limit is what the connector cannot give you. It brings across data that Adobe Analytics already shaped, with its collection-time decisions baked in. It is a good way to get history into CJA and a poor way to get the clean XDM that makes CJA worth having. That is the argument for the Web SDK route.</p>
+
+<h3 class="subsec-title">Where two sources stop agreeing</h3>
+<p>One report suite on its own is straightforward. The interesting problem starts when you combine sources, and it is a problem about documentation rather than technology.</p>
+
+<p>Take the Kestrel and Co. implementation used throughout <a href="/adobe-analytics-learning/deliver/solution-design-reference/what-is-an-sdr/">the SDR module</a>. On the website, eVar19 holds Payment Method, and the design says it carries the name: Visa, PayPal, Klarna. The showroom till system also records how somebody paid, as a three letter code in a field called <code>tender_type</code>. The trade account system records it a third way, because designers are invoiced rather than paying at the point of sale.</p>
+
+<p>In Adobe Analytics this never came up. Each system reported separately and nobody had to reconcile them. Bring all three into one CJA connection and those three meanings have to become one field, or the resulting dimension is nonsense.</p>
+
+<p>Data Prep is where that reconciliation happens. The tooling is not the hard part. The hard part is that somebody has to know what each source means by payment method, and the only place that is ever recorded is a design document.</p>
+
+<div class="pro-tip">
+    <div class="pro-tip-hdr"><span class="tip-ico"></span>Audit the variable maps before anybody touches Platform</div>
+    <p>Put the variable map from every source side by side in one sheet, slot by slot, and mark every place two sources disagree about the same thing. That exercise predicts most of the effort in a multi source migration. It can be done in a morning by somebody with no Platform access at all, and it turns a vague statement about complexity into a countable list of decisions. Where a field is undocumented, treat that as a finding rather than a gap to fill in later. An undocumented variable that four teams quietly rely on is the most expensive thing in any migration.</p>
+</div>
+
+<h3 class="subsec-title">Connections and data views</h3>
+<p>A <strong>connection</strong> names the datasets in play, and can hold up to a hundred of them. It is the plumbing: which data, from which sandbox, with backfill switched on or off per dataset.</p>
+
+<p>A <strong>data view</strong> sits on top and decides interpretation. An organization can hold up to two thousand data views, and one connection can carry hundreds. That tells you how Adobe expects them to be used: freely, and as a way of serving different audiences from one set of events.</p>
+
+<p>The difference between the two is worth learning early. A data view is cheap and reversible. A dataset is neither.</p>
+
+<div class="warn-box">
+    <div class="warn-hdr"><span class="warn-ico"></span>A wrong data type means deleting the dataset and starting again</div>
+    <p>Field data types in a schema cannot be changed after data has been ingested against them. Define a numeric field as a string, or a date as free text, and the correction is to delete the dataset and recreate it. That takes the ingested history with it. This is the one irreversible mistake in the whole pipeline, and it is the strongest reason to have somebody who knows the data review every field type before the first load.</p>
+</div>
+
+<h3 class="subsec-title">What the pipeline looks like</h3>
+<p>Data reaches Platform by the source connector or the Edge Network, a schema describes it, a connection selects it, and a data view decides what it means. Two of those four are effectively permanent and two are cheap to change.</p>
+
+<p>The route you take decides how much of CJA you actually get. The source connector gives you CJA reading Adobe Analytics data, with Adobe Analytics decisions already applied. The Web SDK gives you CJA reading events, which is the thing worth having.</p>
+
+<p>None of this has solved identity. Data from a website, an app and a call center can sit in one connection and still describe the same person three times over, because each source knows them by a different identifier. <a href="/adobe-analytics-learning/deliver/adobe-analytics-cja/cross-device-analytics/">Cross-Device Analytics</a> covers how Adobe resolves that in both products, and why the honest answer is still not one person.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Analytics</div>
+    <p>Spread across three products, which is itself the lesson. Source connectors and schemas live in Experience Platform under <span class="path">Sources</span> and <span class="path">Schemas</span>, with field mapping under <span class="path">Data Prep</span>. Connections and data views live in Customer Journey Analytics under <span class="path">Connections</span> and <span class="path">Data views</span>. Adobe Analytics is only the source, and nothing about this integration is configured from <span class="path">Admin &gt; Report Suites</span>.</p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/experience-platform/sources/connectors/adobe-applications/analytics" target="_blank">Adobe Docs: Analytics Source Connector for Report Suite Data</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics-platform/using/compare-aa-cja/cja-aa-comparison/aa-data-in-cja" target="_blank">Adobe Docs: Use Adobe Analytics Report Suite Data in CJA</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/experience-platform/xdm/schema/composition" target="_blank">Adobe Docs: Basics of Schema Composition</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics-platform/using/cja-connections/create-connection" target="_blank">Adobe Docs: Create or Edit a Connection</a></li>
+    </ul>
+</div>

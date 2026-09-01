@@ -1,71 +1,225 @@
 ---
 slug: "real-time-validation"
 title: "Real-Time Validation"
-published: 2026-07-15
-lastmod: 2026-07-15
+seotitle: "Validating an Adobe Analytics Implementation in Real Time"
+description: "Real-time reporting shows data within two minutes of collection. What it can confirm during a test session, what it refuses to show, and how to plan the wait."
+published: 2026-09-01
+lastmod: 2026-09-01
 type: lesson
 modulenum: 20
 sectionnum: 4
 weight: 4
 ---
-<p>Real-Time reports in Adobe Analytics show data within seconds of collection, making them ideal for implementation validation.</p>
-                <h3 class="subsec-title">Using Real-Time Reports</h3>
-                <div class="flow">
-                    <div class="flow-step">1. Configure Real-Time</div>
-                    <span class="flow-arrow">→</span>
-                    <div class="flow-step">2. Trigger Test Actions</div>
-                    <span class="flow-arrow">→</span>
-                    <div class="flow-step">3. Watch Data Appear</div>
-                    <span class="flow-arrow">→</span>
-                    <div class="flow-step highlight">4. Validate Values</div>
-                </div>
+<p>Every check you can make in a browser stops at the same moment: when the request leaves. What Adobe does with it after that is invisible from the page.</p>
 
-                <h3 class="subsec-title">Real-Time Configuration</h3>
-                <div class="code-block">
-                    <div class="code-hdr"><span class="code-lang">Recommended Setup for Testing</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-                    <div class="code-body"><pre>Report 1: Page Views
-├── Primary Dimension: Page
-├── Secondary: None
-└── Use: Verify pageName values
+<p>Real-time reporting is the quickest way to see the other side. It shows data within about two minutes of collection, which is fast enough to deploy a fix and confirm it in the same sitting.</p>
 
-Report 2: Custom Variables
-├── Primary Dimension: eVar (your test eVar)
-├── Secondary: Page
-└── Use: Validate eVar values
+<p>It is also small, specific, and it will not show you the variable type most implementations care about most. This section covers what it does, what it refuses, and how to plan a test cycle around the wait.</p>
 
-Report 3: Events
-├── Primary Dimension: Page
-├── Metric: Your test event
-└── Use: Confirm events fire
+<h3 class="subsec-title">What happens after the request leaves</h3>
+<p>Once a hit crosses into Adobe, several things run over it in a fixed order.</p>
 
-Pro Tips:
-- Use "Referencing Page" to see entry points
-- Add secondary dimensions for context
-- Filter to your IP for isolated testing</pre></div>
-                </div>
+<p>Bot rules can discard it. Processing rules and VISTA rules can change any variable on it. Marketing channel rules decide which source gets credited. Event deduplication can drop a purchase whose identifier another hit already used. eVar persistence decides how long a value keeps being credited to later hits.</p>
 
-                <h3 class="subsec-title">Testing Checklist</h3>
-                <div class="tbl-wrap">
-                    <table>
-                        <thead><tr><th>Test</th><th>What to Verify</th><th>Where to Check</th></tr></thead>
-                        <tbody>
-                            <tr><td><strong>Page Load</strong></td><td>pageName, channel, props, eVars</td><td>Debugger + Real-Time</td></tr>
-                            <tr><td><strong>Link Clicks</strong></td><td>Link tracking fires, events populate</td><td>Network tab + Real-Time</td></tr>
-                            <tr><td><strong>Form Submits</strong></td><td>Events, eVars capture form data</td><td>Debugger + Real-Time</td></tr>
-                            <tr><td><strong>Purchase</strong></td><td>Products string, revenue, purchaseID</td><td>Full beacon inspection</td></tr>
-                            <tr><td><strong>Video</strong></td><td>Video events, milestones</td><td>Multiple beacons</td></tr>
-                            <tr><td><strong>SPA Navigation</strong></td><td>Virtual page views fire correctly</td><td>Network tab timing</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="path-box">
-                    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to Find</div>
-                    <p>Analytics → <span class="path">Reports → Real-Time</span></p>
-                </div>
-                <div class="ref-box">
-                    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
-                    <ul>
-                        <li><a href="https://experienceleague.adobe.com/docs/analytics/admin/admin-tools/real-time-reports/realtime.html" target="_blank">Adobe Docs: Real-Time Reports</a></li>
-                    </ul>
-                </div>
-            
+<p>All of that is configuration somebody chose, and none of it reports back to the browser. So a clean network capture proves the implementation on the page did its job, and nothing more.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">Two exits from the pipeline, at different depths and different speeds</div>
+    <svg viewBox="0 0 700 320" style="width:100%;height:auto;display:block" role="img"
+         aria-label="A pipeline inside Adobe drawn as two rows. The upper row is collection time processing: bot rules, then processing and VISTA rules, then hit level marketing channel rules. An arrow leads right from the end of that row into a green box labelled real time report, under two minutes. The flow then wraps to a lower row of visit and visitor level processing: visit and visitor defined, event deduplication, and eVar persistence, which is highlighted. An arrow leads right from the end of that row into a box labelled Analysis Workspace, thirty to ninety minutes. Everything in the lower row happens after the real time report has already seen the hit.">
+      <defs>
+        <marker id="rt4a" markerWidth="7" markerHeight="7" refX="6.2" refY="3.5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0.6 L7 3.5 L0 6.4 Z" style="fill:var(--text3,#5d6b7e)"/></marker>
+        <marker id="rt4b" markerWidth="7" markerHeight="7" refX="6.2" refY="3.5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0.6 L7 3.5 L0 6.4 Z" style="fill:var(--dia-c,#10b981)"/></marker>
+      </defs>
+
+      <text x="14" y="28" style="fill:var(--text3,#5d6b7e);font-size:11px">Collection time</text>
+
+      <rect x="14" y="38" width="146" height="50" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="87" y="59" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">Bot rules</text>
+      <text x="87" y="77" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">discard, silently</text>
+
+      <line x1="160" y1="63" x2="174" y2="63" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#rt4a)"/>
+
+      <rect x="180" y="38" width="146" height="50" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="253" y="59" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">Processing, VISTA</text>
+      <text x="253" y="77" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">change any variable</text>
+
+      <line x1="326" y1="63" x2="340" y2="63" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#rt4a)"/>
+
+      <rect x="346" y="38" width="146" height="50" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="419" y="59" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">Channel rules</text>
+      <text x="419" y="77" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">at hit level</text>
+
+      <line x1="492" y1="63" x2="514" y2="63" style="stroke:var(--dia-c,#10b981);stroke-width:1.6" marker-end="url(#rt4b)"/>
+
+      <rect x="520" y="38" width="166" height="50" rx="6" style="fill:var(--dia-c-soft,rgba(16,185,129,.12));stroke:var(--dia-c,#10b981);stroke-width:1.6"/>
+      <text x="603" y="59" text-anchor="middle" style="fill:var(--dia-c-ink,#0a6e50);font-size:12.5px;font-weight:700">Real-Time report</text>
+      <text x="603" y="77" text-anchor="middle" style="fill:var(--dia-c-ink,#0a6e50);font-size:11px">under two minutes</text>
+
+      <path d="M419 88 L419 118 L87 118 L87 152" style="fill:none;stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#rt4a)"/>
+      <text x="240" y="112" text-anchor="middle" style="fill:var(--text3,#5d6b7e);font-size:11px">the hit carries on</text>
+
+      <text x="14" y="150" style="fill:var(--text3,#5d6b7e);font-size:11px">Visit and visitor level</text>
+
+      <rect x="14" y="160" width="146" height="50" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="87" y="181" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">Visit defined</text>
+      <text x="87" y="199" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">and the visitor</text>
+
+      <line x1="160" y1="185" x2="174" y2="185" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#rt4a)"/>
+
+      <rect x="180" y="160" width="146" height="50" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="253" y="181" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:600">Deduplication</text>
+      <text x="253" y="199" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">purchase IDs checked</text>
+
+      <line x1="326" y1="185" x2="340" y2="185" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#rt4a)"/>
+
+      <rect x="346" y="160" width="146" height="50" rx="6" style="fill:var(--accent-light,rgba(186,33,66,.10));stroke:var(--accent,#ba2142);stroke-width:1.6"/>
+      <text x="419" y="181" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:700">eVar persistence</text>
+      <text x="419" y="199" text-anchor="middle" style="fill:var(--accent2,#951833);font-size:11px">values start to carry</text>
+
+      <line x1="492" y1="185" x2="514" y2="185" style="stroke:var(--text3,#5d6b7e);stroke-width:1.4" marker-end="url(#rt4a)"/>
+
+      <rect x="520" y="160" width="166" height="50" rx="6" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.4"/>
+      <text x="603" y="181" text-anchor="middle" style="fill:var(--text1,#0f172a);font-size:12.5px;font-weight:700">Analysis Workspace</text>
+      <text x="603" y="199" text-anchor="middle" style="fill:var(--text2,#475569);font-size:11px">30 to 90 minutes</text>
+
+      <text x="14" y="252" style="fill:var(--text2,#475569);font-size:12.5px;font-weight:700">The fast exit is taken before the second row has happened.</text>
+      <text x="14" y="274" style="fill:var(--text3,#5d6b7e);font-size:11px">That is why real time reporting can show a prop and an event, and cannot show an eVar.</text>
+      <text x="14" y="296" style="fill:var(--text3,#5d6b7e);font-size:11px">Visit level channel credit is decided in the second row too, and is absent for the same reason.</text>
+    </svg>
+</div>
+
+<h3 class="subsec-title">Real-Time reporting survived, and it moved</h3>
+<p>Reports &amp; Analytics, the green interface most of this product's history was spent in, stopped working on 17 January 2024. Many people assume the Real-Time report went with it.</p>
+
+<p>It did not. It still runs at the same speed, and it now sits inside Analysis Workspace as a template.</p>
+
+<p>It has to be switched on per report suite in Admin first, and that is the step people miss. A template that has never been configured shows nothing at all, which looks the same as a template that is broken.</p>
+
+<div class="warn-box">
+    <div class="warn-hdr"><span class="warn-ico"></span>Current status, verified August 2026</div>
+    <p>Real time reporting is configured at <span class="path">Admin &gt; Report Suites &gt; Edit Settings &gt; Real-Time</span> and read at <span class="path">Workspace &gt; Templates &gt; Adobe templates &gt; Engagement &gt; Real-Time</span>. Configuring or viewing it needs an administrator, or membership of the All Report Access and Advanced Reporting groups. After you enable it, allow up to twenty minutes before data starts arriving. Menu paths in Workspace move more often than product capabilities do, so check the location before deciding the feature has gone.</p>
+</div>
+
+<h3 class="subsec-title">What it can and cannot do</h3>
+<p>It is deliberately small. Knowing its shape before you plan a cycle stops it being a disappointment.</p>
+
+<div class="tbl-wrap">
+<table>
+<thead>
+<tr><th>Constraint</th><th>The number</th><th>What it means for testing</th></tr>
+</thead>
+<tbody>
+<tr><td>Reports per suite</td><td>Three</td><td>You choose in advance what to watch, and changing it is an admin action</td></tr>
+<tr><td>Shape of each report</td><td>One site wide metric, three dimensions</td><td>One primary and two secondary, with no dimension repeated in a report</td></tr>
+<tr><td>Latency</td><td>Under two minutes</td><td>Fast enough to deploy a fix and retest in one sitting</td></tr>
+<tr><td>Refresh</td><td>Every minute, automatically</td><td>You watch it rather than reloading it</td></tr>
+<tr><td>History held</td><td>Two hours</td><td>Finest detail for the first thirty minutes, coarser after that</td></tr>
+<tr><td>Time to start</td><td>Up to twenty minutes after enabling</td><td>Enable it the day before the cycle, not on the morning of it</td></tr>
+<tr><td>eVars</td><td>Not supported</td><td>The variable type most implementations care about most is absent</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3 class="subsec-title">Why eVars are not available</h3>
+<p>The reason is in the drawing above, and it follows from where the feed is taken.</p>
+
+<p>A hit is processed in stages. The early stages need only the hit itself: whether it came from a bot, what the processing rules say, which channel the referrer implies. The later stages need context the hit does not carry, because they depend on the other hits that visitor has made. Whether this is visit four. Whether a purchase identifier has been seen before. And what an eVar should be credited with, which depends on values set on earlier hits.</p>
+
+<p>Real time reporting takes its feed from the early stages, which is exactly why it is fast. An eVar has no value at that point, because persistence has not happened yet. The speed and the absence are the same fact.</p>
+
+<div class="pro-tip">
+    <div class="pro-tip-hdr"><span class="tip-ico"></span>Use a prop to watch what an eVar will carry later</div>
+    <p>Sometimes a value has to be confirmed inside the session rather than an hour later. Put a prop carrying the same value alongside the eVar for the duration of the build. Props are available to real time reporting because they are decided at the hit and never persist, which is the same property that makes them useless for attribution. Many implementations already carry this pairing for other reasons. Where one exists it turns an hour of waiting into ninety seconds, and where one does not, adding a temporary prop is cheaper than it sounds.</p>
+</div>
+
+<h3 class="subsec-title">What to watch, and what to wait for</h3>
+<p>Decide this before the cycle rather than during it.</p>
+
+<p>Watch in real time the things decided at the hit. Whether traffic is arriving at all, page names, site sections, props, and events firing. That covers most of what goes wrong in the first hour, and a fix can be deployed and confirmed while everybody is still in the room.</p>
+
+<p>Wait for the report for everything decided later. eVars and their persistence, attribution, visit level channel credit, and anything involving deduplication.</p>
+
+<p>Configuration items belong in that second group too, and they catch people out. A marketing channel rule, a processing rule that buckets a value, a classification upload: none of these can be checked until data has been through the full run. They are usually tested a cycle later than the tracking calls, and a plan that assumes otherwise will show them as failures on the first pass.</p>
+
+<p>Classifications sit outside both. They are applied on top of stored data rather than being a step in this pipeline, so an unclassified value in either view is correct until the file is uploaded.</p>
+
+<h3 class="subsec-title">Planning the wait into the cycle</h3>
+<p>The commonest way a test cycle overruns is treating processing time as an annoyance instead of a fixed cost to be scheduled.</p>
+
+<p>Complete data appears in reports around two hours after collection. The usual range is thirty to ninety minutes, depending on where the traffic falls relative to the hourly batch. An Analytics for Target integration adds five to ten minutes across the board, and hits carrying custom timestamps follow their own schedule.</p>
+
+<p>Run that against a working day and the shape is clear. Testing done in the morning can be confirmed before lunch. Testing done at half past four is confirmed tomorrow. Cycles roughly a week apart give room to test, fix, and confirm the fix in reporting before the next one starts.</p>
+
+<div class="pro-tip">
+    <div class="pro-tip-hdr"><span class="tip-ico"></span>Test in a report suite you are allowed to be wrong in</div>
+    <p>A development report suite costs nothing to create and removes any worry about polluting production figures during a build. It also lets you do the things that are useful and destructive at once. Firing calls from the console, repeating the same purchase twenty times, and leaving obviously fake values in variables so they are easy to find. Give it a name nobody could mistake for the real one. Then check the report suite in the first line of every hit you read. A development suite that quietly stops being used is how test data reaches a month end figure.</p>
+</div>
+
+<h3 class="subsec-title">Confirming that a value survived</h3>
+<p>This closes the loop the browser cannot close. It is the step most often skipped, because the hit already looked right.</p>
+
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>Prove a value arrived, not just that it left</span></div>
+    <ol class="dothis-steps">
+        <li class="ds-group">Part one, the day before</li>
+        <li>
+            <span class="ds-do">Enable real time reporting on the test suite at <b>Admin &gt; Report Suites &gt; Edit Settings &gt; Real-Time</b>.</span>
+            <span class="ds-see">The day before, because data can take twenty minutes to start and a blank report on the morning of a cycle looks like a fault.</span>
+        </li>
+        <li>
+            <span class="ds-do">Configure the three reports around what you are testing, not around what is interesting.</span>
+            <span class="ds-see">One metric and three dimensions each. Page and site section for a navigation build, an event and a prop for a checkout build.</span>
+        </li>
+        <li class="ds-group">Part two, in the session</li>
+        <li>
+            <span class="ds-do">Do the action, confirm the hit in the network tab, then open <b>Workspace &gt; Templates &gt; Adobe templates &gt; Engagement &gt; Real-Time</b>.</span>
+            <span class="ds-see">Both, in that order. The hit tells you what was sent, the report tells you what was kept.</span>
+        </li>
+        <li>
+            <span class="ds-do">Watch for your value for a few minutes before deciding anything.</span>
+            <span class="ds-see">Under two minutes is normal. Concluding at forty seconds that a value did not arrive creates a false finding and a wasted investigation.</span>
+        </li>
+        <li>
+            <span class="ds-do">If traffic is arriving but your value is absent, check whether it is an eVar before anything else.</span>
+            <span class="ds-see">An eVar will never appear here. That is the design, and hunting for a fault will cost an hour and find nothing.</span>
+        </li>
+        <li class="ds-group">Part three, the slow half</li>
+        <li>
+            <span class="ds-do">List the solutions that cannot be confirmed in real time and schedule them for the next morning.</span>
+            <span class="ds-see">Written down, not held in anybody's head. These are the ones that get forgotten and signed off untested.</span>
+        </li>
+        <li>
+            <span class="ds-do">The next day, open the same values in Workspace and compare them against the hits you captured.</span>
+            <span class="ds-see">A value correct in the hit and wrong here was changed inside Adobe, which points at processing rules, VISTA or deduplication rather than the site.</span>
+        </li>
+        <li>
+            <span class="ds-do">Write both halves into the solution row, with their dates, then set the status.</span>
+            <span class="ds-see">Sent correctly on one date, confirmed in reporting on the next, is a complete finding. Either half on its own is an assumption.</span>
+        </li>
+    </ol>
+    <p class="dothis-end">That is a round trip proven rather than assumed. For anything that affects revenue, run the same comparison once more a week after go live on production traffic, because that is where bot filtering and consent start to show.</p>
+</div>
+
+<h3 class="subsec-title">What the round trip proves</h3>
+<p>A hit that left correctly and a value that arrived correctly are two different claims. Only the second is what a report is built from.</p>
+
+<p>Real time reporting closes part of that gap in under two minutes, for values decided at the hit. Everything decided later needs the wait, and the wait is thirty to ninety minutes whatever anybody would prefer.</p>
+
+<p>Both halves belong in the record. A finding that says only the hit was correct is worth having and it is not a pass. The most awkward conversation in this work is about a solution that passed testing and is wrong in production, and the only defense is having checked the far side.</p>
+
+<p>The tools are now covered and the method is in place. What remains is what experience supplies: knowing what a symptom usually means before you start investigating. <a href="/adobe-analytics-learning/deliver/testing-debugging/common-issues-solutions/">Common Issues and Solutions</a> covers the faults that recur, what each looks like from a report, and the two that remove data so quietly nobody notices for a quarter.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Analytics</div>
+    <p>Two screens, and both are needed. Configure at <span class="path">Admin &gt; Report Suites</span>, select the suite, then <span class="path">Edit Settings &gt; Real-Time</span>, where you set one metric and three dimensions for each of up to three reports. Read at <span class="path">Workspace &gt; Templates &gt; Adobe templates &gt; Engagement &gt; Real-Time</span>. Both need an administrator, or the All Report Access and Advanced Reporting permission groups.</p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/real-time-reporting/realtime" target="_blank">Adobe Docs: Real-Time Reporting Overview</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/technotes/latency" target="_blank">Adobe Docs: Data Availability and Latency</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/analytics/technotes/processing-order" target="_blank">Adobe Docs: Processing Order for Data in Adobe Analytics</a></li>
+    </ul>
+</div>

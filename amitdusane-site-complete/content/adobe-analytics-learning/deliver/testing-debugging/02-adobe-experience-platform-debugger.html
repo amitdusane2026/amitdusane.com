@@ -1,61 +1,195 @@
 ---
 slug: "adobe-experience-platform-debugger"
 title: "Adobe Experience Platform Debugger"
-published: 2026-07-15
-lastmod: 2026-07-15
+seotitle: "Adobe Experience Platform Debugger for Adobe Analytics"
+description: "The extension that puts names on a tracking call and shows which rules fired. What it reads, what it cannot see, and one change made in 2026."
+published: 2026-09-01
+lastmod: 2026-09-01
 type: lesson
 modulenum: 20
 sectionnum: 2
 weight: 2
 ---
-<p>The AEP Debugger is the primary tool for inspecting Adobe Experience Cloud implementations, including Analytics, Target, and Launch.</p>
-                <h3 class="subsec-title">Key Features</h3>
-                <ul>
-                    <li><strong>Summary view:</strong> Quick overview of all Adobe solutions on page</li>
-                    <li><strong>Analytics inspection:</strong> View all variables sent in each request</li>
-                    <li><strong>Launch validation:</strong> Check rules fired, data elements, extensions</li>
-                    <li><strong>Network requests:</strong> See actual beacon calls to Adobe</li>
-                    <li><strong>Experience Cloud ID:</strong> Verify visitor identification</li>
-                    <li><strong>Logs:</strong> Console-style logging of tag activity</li>
-                </ul>
+<p>On 22 May the payment step on the Kestrel and Co. website was tested. The call fired and the variable holding the payment method contained <code>AUTH_CC_3DS</code>.</p>
 
-                <h3 class="subsec-title">Analytics Tab Details</h3>
-                <div class="code-block">
-                    <div class="code-hdr"><span class="code-lang">What to Inspect</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-                    <div class="code-body"><pre>Report Suite ID (rsid)
-├── Verify correct report suite
-└── Check for multi-suite tagging
+<p>That is a gateway code. The design asked for the payment method name, so that a report would show Visa, PayPal and Klarna rather than codes nobody outside the payments team can read. The fault was recorded that day against solution KES-S011.</p>
 
-Page Variables
-├── pageName - Is it populated correctly?
-├── channel - Site section accurate?
-├── hier1-5 - Hierarchy values
-└── server - Server/domain
+<p>Finding it took one thing that a raw request does not give you: knowing that this particular variable is Payment Method.</p>
 
-Custom Variables
-├── eVar1-250 - Conversion variables
-├── prop1-75 - Traffic variables
-├── list1-3 - List variables
-└── products - Product string format
+<div class="dl-box">
+    <div class="dl-title"><span class="dl-ico" aria-hidden="true"></span>The validation report, for following along</div>
+    <p>Row KES-S011 in the <b>Tracker</b> sheet carries this fault across all three cycles, and it is worth reading beside this section. If you have not downloaded the file, you can get it now or come back to it later.</p>
+    <ul class="dl-list">
+        <li><a href="/templates/adobe-analytics-validation-report-template.xlsx" download><span class="dl-name">Validation Report</span><span class="dl-meta">XLSX &middot; 2 sheets &middot; 28 solutions &middot; 3 test cycles</span></a></li>
+    </ul>
+</div>
 
-Events
-├── events - Which events fired?
-├── purchaseID - Deduplication ID
-└── currencyCode - Currency setting
+<h3 class="subsec-title">Why the variable names matter</h3>
+<p>Here is part of that payment step call, exactly as it left the browser.</p>
 
-Visitor Info
-├── Experience Cloud ID (mid)
-├── Analytics Visitor ID (aid)
-└── Customer ID (if set)</pre></div>
-                </div>
-                <div class="pro-tip">
-                    <div class="pro-tip-hdr"><span class="tip-ico"></span>Pro Tip</div>
-                    <p>Use the "Lock" feature in the debugger to keep inspecting a specific page even as you navigate. This is invaluable for debugging multi-page flows like checkout processes.</p>
-                </div>
-                <div class="ref-box">
-                    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
-                    <ul>
-                        <li><a href="https://experienceleague.adobe.com/docs/debugger/using/solutions.html" target="_blank">Adobe Docs: Debugging Analytics</a></li>
-                    </ul>
-                </div>
-            
+<div class="code-block">
+    <div class="code-hdr"><span class="code-lang">Part of one request, as it leaves the browser</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><pre>&amp;v18=Next%20day&amp;v19=AUTH_CC_3DS&amp;v20=KES-88213&amp;c4=checkout%3Apayment
+&amp;events=scCheckout&amp;pe=lnk_o&amp;pev2=payment%20continue</pre></div>
+</div>
+
+<p>The request carries slot numbers, not names. To know that <code>v19</code> is wrong you have to know three things that are not in it. That v19 is eVar19. That eVar19 is Payment Method. And that the design asks for the name here rather than the code.</p>
+
+<p>The Adobe Experience Platform Debugger supplies that missing half. It reads the same request and shows it with the names attached.</p>
+
+<div class="diagram-box">
+    <div class="diagram-title">The same request, with and without the names</div>
+    <svg viewBox="0 0 700 268" style="width:100%;height:auto;display:block" role="img"
+         aria-label="Two panels joined by a single dashed connector labelled one request. The left panel, headed as it leaves the browser, shows four raw query parameters: v18 equals Next day, v19 equals AUTH underscore CC underscore 3DS, c4 equals checkout colon payment, and events equals scCheckout. The right panel, headed as the debugger reads it, shows the same four values with their names attached: eVar18 Delivery Option, eVar19 Payment Method, prop4 Page Section, and Checkout as an event.">
+      <text x="20" y="24" style="fill:var(--text2,#475569);font-size:14px;font-weight:700">As it leaves the browser</text>
+      <text x="392" y="24" style="fill:var(--text2,#475569);font-size:14px;font-weight:700">As the debugger reads it</text>
+
+      <rect x="20" y="34" width="286" height="182" rx="6" style="fill:none;stroke:var(--border,#e2e8f0);stroke-width:1.6"/>
+      <rect x="38" y="52" width="250" height="30" rx="4" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
+      <text x="52" y="72" style="fill:var(--text2,#475569);font-size:11.5px;font-family:monospace">v18=Next%20day</text>
+      <rect x="38" y="90" width="250" height="30" rx="4" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
+      <text x="52" y="110" style="fill:var(--text2,#475569);font-size:11.5px;font-family:monospace">v19=AUTH_CC_3DS</text>
+      <rect x="38" y="128" width="250" height="30" rx="4" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
+      <text x="52" y="148" style="fill:var(--text2,#475569);font-size:11.5px;font-family:monospace">c4=checkout:payment</text>
+      <rect x="38" y="166" width="250" height="30" rx="4" style="fill:var(--bg3,#f1f5f9);stroke:var(--border,#e2e8f0);stroke-width:1.2"/>
+      <text x="52" y="186" style="fill:var(--text2,#475569);font-size:11.5px;font-family:monospace">events=scCheckout</text>
+
+      <line x1="306" y1="125" x2="386" y2="125" style="stroke:var(--accent,#ba2142);stroke-width:1.4;stroke-dasharray:5 4"/>
+      <text x="346" y="116" text-anchor="middle" style="fill:var(--accent2,#951833);font-size:11px;font-weight:700">one request</text>
+
+      <rect x="392" y="34" width="288" height="182" rx="6" style="fill:none;stroke:var(--accent,#ba2142);stroke-width:1.6"/>
+      <rect x="410" y="52" width="252" height="30" rx="4" style="fill:var(--accent-light,rgba(186,33,66,.10));stroke:var(--accent,#ba2142);stroke-width:1.4"/>
+      <text x="424" y="72" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:600">eVar18 Delivery Option</text>
+      <rect x="410" y="90" width="252" height="30" rx="4" style="fill:var(--accent-light,rgba(186,33,66,.10));stroke:var(--accent,#ba2142);stroke-width:1.4"/>
+      <text x="424" y="110" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:600">eVar19 Payment Method</text>
+      <rect x="410" y="128" width="252" height="30" rx="4" style="fill:var(--accent-light,rgba(186,33,66,.10));stroke:var(--accent,#ba2142);stroke-width:1.4"/>
+      <text x="424" y="148" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:600">prop4 Page Section</text>
+      <rect x="410" y="166" width="252" height="30" rx="4" style="fill:var(--accent-light,rgba(186,33,66,.10));stroke:var(--accent,#ba2142);stroke-width:1.4"/>
+      <text x="424" y="186" style="fill:var(--text1,#0f172a);font-size:12px;font-weight:600">Checkout, an event</text>
+
+      <text x="20" y="246" style="fill:var(--text3,#5d6b7e);font-size:11px">The same data. Only the right side can be checked by somebody who did not build the implementation.</text>
+    </svg>
+</div>
+
+<p>That matters during a test cycle. A raw request can only be read by somebody holding the variable map in their head or on a second screen. A named one can also be read by the analyst who asked for the variable, and by the client sitting beside you. The people most likely to notice that a payment method is wrong are the people who work with payment methods.</p>
+
+<p>The <a href="/adobe-analytics-learning/deliver/solution-design-reference/variable-mapping/">Variable Map</a> in the design document is the paper version of the same translation. Reading the two side by side is the quickest way to find a value that was implemented into the wrong slot.</p>
+
+<h3 class="subsec-title">What the extension is</h3>
+<p>It is a Chrome extension, installed from the Chrome Web Store. It examines a web page and reports on how the Adobe Experience Cloud products on it are implemented. It opens in its own window rather than inside the browser developer tools, and you attach it to a tab.</p>
+
+<p>Once attached, it splits what it finds into one tab per product. Analytics is one. Beside it sit Experience Platform Web SDK, Target, Audience Manager, Experience Platform Tags, Experience Cloud ID, and Dynamic Tag Management for older sites. A Summary view says which of those are present on the page. A Logs view collects the messages the libraries produce.</p>
+
+<h3 class="subsec-title">Which rules fired, and which did not</h3>
+<p>The naming is useful. The Experience Platform Tags tab is the part nothing else can replace, because it shows the middle of the chain.</p>
+
+<p>A value moves from a data layer object into a request in two steps. A data element reads the object, and a rule fires and maps it. Both steps happen inside the tag manager, in memory, in a few milliseconds. The request shows the result and says nothing about how it was produced.</p>
+
+<p>The Tags tab shows which library is loaded, which environment it came from, and which rules ran on this page. Two faults from the Kestrel cycle show why that matters.</p>
+
+<p>Solution KES-S003 was a product click on a listing page. On 22 May the direct call fired twice on every click, so product clicks were exactly double. The request looked correct both times. Only the list of rules that fired showed two rules responding to the same click.</p>
+
+<p>Solution KES-S006 was a cart addition from the quick view overlay. The cart source arrived as Product Page rather than Quick View, so the two could not be told apart in reporting. Again the request was well formed. The rule that fired was the product page rule, not the quick view one, and that is visible in the Tags tab and nowhere else.</p>
+
+<div class="pro-tip">
+    <div class="pro-tip-hdr"><span class="tip-ico"></span>Turn on the library logging before you reproduce the fault</div>
+    <p>Run <code>_satellite.setDebug(true)</code> once in the console and the tag library starts reporting what it does: which rules fire, in what order, and what each one sets. The setting stays on for the rest of the browser session and applies to that one site, so it survives a checkout journey without following you elsewhere. Set it before you do the action. The messages describe events as they happen, and there is no way to ask for them afterward.</p>
+</div>
+
+<h3 class="subsec-title">Post-processed hits, and what changed in 2026</h3>
+<p>For most of this tool's history there was a hard wall at the moment the request left the browser. Anything Adobe did after that was invisible from a page. That covers bot rules, processing rules and VISTA rules.</p>
+
+<p>There is now a window in that wall. The Analytics section of the debugger has a toggle that switches the view between the hit as sent and the hit after Adobe's own rules have run.</p>
+
+<div class="warn-box">
+    <div class="warn-hdr"><span class="warn-ico"></span>Current status, verified August 2026</div>
+    <p>The post processed hits toggle arrived in the Analytics section of the debugger in June 2026, and the current version is 1.7.1, released 24 June 2026. Tooling here changes faster than the product it inspects, so check the release notes before assuming a colleague's older install behaves like yours. An extension that has not updated is one of the more confusing differences between two people looking at the same page.</p>
+</div>
+
+<p>That toggle turns a whole class of investigation into one comparison. If a variable is correct in the sent hit and different in the post processed one, a rule inside Adobe changed it, and the search moves off the website. If it is wrong in both, it was wrong when it left.</p>
+
+<p>Two limits go with it. The comparison covers rules that run at collection, not the visitor level work that happens later, so eVar persistence and attribution are still not shown. And it tells you that a rule changed something without telling you which rule, so you get a direction rather than a name.</p>
+
+<h3 class="subsec-title">What the debugger cannot show you</h3>
+<p>Three limits are worth planning around.</p>
+
+<p><strong>It only sees browsers it is installed in.</strong> That means your machine and your colleagues' machines. Faults that happen to real visitors and not to you are invisible to this tool. It is a Chrome extension, so a problem that only occurs in Safari is also out of reach.</p>
+
+<p><strong>Some views need you to be signed in.</strong> Reading non-public data through the extension requires an authenticated Experience Cloud session in an open browser tab. A debugger showing less than a colleague's is usually a logged out session rather than a difference in the page.</p>
+
+<p><strong>It runs inside the page it is watching.</strong> Version 1.7.1 exists partly to fix a defect where Analytics debugging could corrupt context data in Analytics requests. So when a hit looks wrong in a way that makes no sense, close the debugger, reload, and read the raw request in the network tab before believing it.</p>
+
+<h3 class="subsec-title">Reading a hit in the debugger</h3>
+<p>This is the routine for one row of a test cycle when you have the debugger available. The order is deliberate: it catches the expensive faults before you start reading individual variables.</p>
+
+<div class="dothis">
+    <div class="dothis-hdr"><b>Do this</b> <span>Read a hit, then record it against the solution</span></div>
+    <ol class="dothis-steps">
+        <li class="ds-group">Part one, set up</li>
+        <li>
+            <span class="ds-do">Install the extension from the Chrome Web Store, then sign in to Experience Cloud in another tab of the same browser.</span>
+            <span class="ds-see">The sign in is not optional for the useful views. Non-public data needs an authenticated session in an open tab.</span>
+        </li>
+        <li>
+            <span class="ds-do">Open the page you are testing, open the debugger, and lock it to that tab.</span>
+            <span class="ds-see">Locking lets you walk a checkout without the debugger following you somewhere else halfway through.</span>
+        </li>
+        <li>
+            <span class="ds-do">Run <code>_satellite.setDebug(true)</code> in the console before doing anything on the page.</span>
+            <span class="ds-see">Before. The library reports as it goes and cannot be asked afterward what it did.</span>
+        </li>
+        <li class="ds-group">Part two, read the hit</li>
+        <li>
+            <span class="ds-do">Do the action, then open the Analytics tab and read the report suite first.</span>
+            <span class="ds-see">Always first. Every variable can be correct and land in a suite nobody reports on, and that looks exactly like no data at all.</span>
+        </li>
+        <li>
+            <span class="ds-do">Check the hit type next: a page view, or a link with its own link name.</span>
+            <span class="ds-see">A page view where a link was intended inflates page views everywhere, and no single variable will show it.</span>
+        </li>
+        <li>
+            <span class="ds-do">Read the variables the design names for this moment, and check that the ones it does not name are absent.</span>
+            <span class="ds-see">A variable arriving where the design does not ask for it is a real finding, and it is the one nobody looks for.</span>
+        </li>
+        <li>
+            <span class="ds-do">Open the Experience Platform Tags tab and confirm which rules fired and which environment the library came from.</span>
+            <span class="ds-see">Testing a staging fix against a production library wastes an afternoon and looks exactly like a fix that did not work.</span>
+        </li>
+        <li class="ds-group">Part three, record it</li>
+        <li>
+            <span class="ds-do">Switch the Analytics section to post processed hits and compare the two views of the same hit.</span>
+            <span class="ds-see">Any variable that differs was changed by a rule inside Adobe. That comparison moves the search off the website.</span>
+        </li>
+        <li>
+            <span class="ds-do">Write the finding into the solution row with today's date, naming the variable and the value you saw.</span>
+            <span class="ds-see">Payment method arrives as the gateway code rather than the name is a finding. Payment method wrong is not, and cannot be retested.</span>
+        </li>
+        <li>
+            <span class="ds-do">Set the status, and add an owner and a date if it is anything other than Passed.</span>
+            <span class="ds-see">KES-S011 was Failed on 22 May, Partly passed on 29 May with one provider still wrong, and Passed on 4 June. Three lines, one row.</span>
+        </li>
+    </ol>
+    <p class="dothis-end">That is a hit read and recorded. Where a page carries Target or an identity service as well, give those tabs the same pass, because a fault in one product often looks like a fault in another.</p>
+</div>
+
+<h3 class="subsec-title">What the debugger can prove</h3>
+<p>The fastest way to read an implementation, and the clearest view of the middle of the chain. Names on the variables, a list of the rules that fired, and a comparison across the boundary into Adobe.</p>
+
+<p>Each of those advantages has the same limit. The debugger shows you a page as your own browser experienced it. Your browser is signed in, unblocked, running current Chrome with an extension installed, on a fast connection. It is not representative of the traffic a report is built from. The tool answers whether the implementation can work. It does not answer whether it does work for everybody.</p>
+
+<p>The next tool needs no installation and is present in every browser, including ones you do not control. <a href="/adobe-analytics-learning/deliver/testing-debugging/browser-developer-tools/">Browser Developer Tools</a> covers how to find a hit, how to read one without help, and the test that separates a data layer fault from a rule fault.</p>
+
+<div class="path-box">
+    <div class="path-title"><span class="path-ico" aria-hidden="true"></span>Where to find it in Adobe Analytics</div>
+    <p>Not inside Adobe Analytics. The debugger installs into Chrome from the Chrome Web Store and opens in its own window. The variables it names are configured back in the product, under <span class="path">Admin &gt; Report Suites &gt; Edit Settings &gt; Conversion &gt; Conversion Variables</span>. Its useful views also need an Experience Cloud session open in another tab of the same browser.</p>
+</div>
+
+<div class="ref-box">
+    <div class="ref-title"><span class="ref-ico"></span>Learn More</div>
+    <ul>
+        <li><a href="https://experienceleague.adobe.com/en/docs/experience-platform/debugger/home" target="_blank">Adobe Docs: Experience Platform Debugger Extension</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/experience-platform/debugger/install-debugger" target="_blank">Adobe Docs: Install Experience Platform Debugger</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/experience-platform/debugger/release-notes" target="_blank">Adobe Docs: Experience Platform Debugger Release Notes</a></li>
+        <li><a href="https://experienceleague.adobe.com/en/docs/experience-platform/collection/tags/setdebug" target="_blank">Adobe Docs: setDebug for Tags</a></li>
+    </ul>
+</div>
