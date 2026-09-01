@@ -1,8 +1,29 @@
+{{- /* ===========================================================================
+     CROSS-WORLD HINT INDEX
+     Titles and descriptions only, every world, no body text. This exists so a
+     reader searching inside one world can be told that a term is also covered
+     in another, without either world's search having to load the other's prose.
+
+     It carries no body text on purpose. That is what keeps it flat as the site
+     grows: a new world adds its page titles and nothing else, so this file
+     stays small at 1000 pages the way it is small at 200. The per-world
+     indexes in _default/list.json carry the searchable prose.
+
+     Until 1 September 2026 this file was the site's only index, and it held the
+     full text of the migration world alone. Search therefore covered 38 pages
+     and none of the 144 in the learning world.
+
+       t  title        u  url
+       w  world label  d  description
+     =========================================================================== */ -}}
 {{- $idx := slice -}}
-{{- range (where .Site.RegularPages "Section" "web-sdk-migration") -}}
-  {{- $badge := cond (eq .Type "step") "Step" (cond (eq .Type "kb") "KB" "Reference") -}}
-  {{- $grp := "" -}}
-  {{- if eq .Type "kb" }}{{ $grp = .Params.grouplabel }}{{ end -}}
-  {{- $idx = $idx | append (dict "title" .Title "url" .RelPermalink "type" $badge "group" $grp "text" (.Plain | replaceRE "\\s+" " ")) -}}
+{{- range .Site.Pages -}}
+  {{- $sec := .Section -}}
+  {{- if and (ne $sec "") (ne .Kind "home") -}}
+    {{- $world := "" -}}
+    {{- with $.Site.GetPage (printf "/%s" $sec) -}}{{- $world = .Title -}}{{- end -}}
+    {{- $d := .Description | default "" -}}
+    {{- $idx = $idx | append (dict "t" .Title "u" .RelPermalink "w" $world "d" $d) -}}
+  {{- end -}}
 {{- end -}}
 {{- $idx | jsonify -}}

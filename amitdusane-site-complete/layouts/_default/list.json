@@ -1,0 +1,86 @@
+{{- /* ===========================================================================
+     PER-WORLD SEARCH INDEX
+     Emitted only for the two world roots, which declare outputs: ["HTML","JSON"]
+     in their own front matter. Everything else keeps rendering HTML alone, so a
+     module landing does not quietly produce a second copy of the index.
+
+     One index per world rather than one for the site. At 144 pages a single
+     global index is merely large; at the 1000 pages this site is heading for,
+     across Adobe Analytics, CJA, RTCDP, AJO and the rest, it stops being
+     shippable at all. Sharding by world means a reader in Adobe Analytics never
+     downloads CJA's prose, and adding a world stays what INF-05 made it: a
+     config block plus a layout, not a redesign.
+
+     An entry is a SECTION HEADING, not a page. The heading is the landing
+     target, not the thing being searched: the query matches the full prose
+     under that heading, and the hit then drops the reader on the permanent
+     #anchor that lesson/single.html already generates at build time. Splitting
+     the text this way costs nothing, because the same prose is partitioned
+     rather than duplicated, and it is the difference between landing on the
+     right paragraph and landing at the top of a 2,000 word article.
+
+     The prose is indexed in full, deliberately uncapped. An earlier draft
+     capped each entry, which would have left the index dominated by heading
+     text, and the headings on this site are editorial full clauses rather than
+     keywords. "A prop is written in pencil" is a fine heading and a useless
+     search key.
+
+     Keys are one character because they repeat once per entry:
+       t  heading text          u  url, with the #anchor where there is one
+       p  page title            g  group label, the module or parent
+       x  the searchable prose
+     =========================================================================== */ -}}
+{{- $world := .Section -}}
+{{- $idx := slice -}}
+{{- $pages := where (where .Site.Pages "Section" $world) "Kind" "!=" "home" -}}
+{{- range $pages -}}
+  {{- $u := .RelPermalink -}}
+  {{- $ptitle := .Title -}}
+  {{- /* Short badge for the result row. Each world names its own page kinds. */ -}}
+  {{- $badge := "Page" -}}
+  {{- if eq $world "web-sdk-migration" -}}
+    {{- $badge = cond (eq .Type "step") "Step" (cond (eq .Type "kb") "KB" "Reference") -}}
+  {{- else -}}
+    {{- $badge = cond (eq .Type "lesson") "Section" (cond (eq .Type "module") "Module" (cond (eq .Type "category") "Phase" (cond (eq .Type "glossary") "Glossary" "Page"))) -}}
+  {{- end -}}
+  {{- /* The world root carries no type of its own, so it falls through the
+         chain above. It is a real page and worth indexing, just not a "Page". */ -}}
+  {{- if eq .Type $world -}}{{- $badge = "Overview" -}}{{- end -}}
+  {{- $group := "" -}}
+  {{- with .Parent -}}
+    {{- if ne .Kind "home" -}}{{- $group = .Title -}}{{- end -}}
+  {{- end -}}
+  {{- /* Anchored through the shared partial, because .Content itself carries no
+         ids: they are injected at render time. Indexing .Content directly
+         produced entries whose #anchor did not exist on the page. */ -}}
+  {{- $c := partial "anchored-content.html" . -}}
+  {{- $parts := split $c `<h3 class="subsec-title"` -}}
+
+  {{- /* Part 0 is whatever precedes the first h3: the untitled opener on a
+         section, or the whole body on a landing page and the glossary. */ -}}
+  {{- $opener := index $parts 0 -}}
+  {{- $otext := trim (replaceRE `\s+` " " (plainify $opener)) " " -}}
+  {{- if gt (len $otext) 40 -}}
+    {{- $idx = $idx | append (dict "t" $ptitle "u" $u "p" $ptitle "g" $group "b" $badge "x" $otext) -}}
+  {{- end -}}
+
+  {{- range $i, $part := $parts -}}
+    {{- if gt $i 0 -}}
+      {{- /* Read the id from the heading's OWN opening tag only. Searching the
+             whole chunk picked up the first id in the body instead, which on a
+             section carrying a figure meant the anchor of an SVG element. */ -}}
+      {{- $id := "" -}}
+      {{- $open := index (split $part ">") 0 -}}
+      {{- with (findRE `id="[^"]+"` $open 1) -}}
+        {{- $id = replaceRE `^id="|"$` "" (index . 0) -}}
+      {{- end -}}
+      {{- $head := trim (plainify (replaceRE `(?s)^[^>]*>(.*?)</h3>.*$` "$1" $part)) " " -}}
+      {{- $body := replaceRE `(?s)^.*?</h3>` "" $part -}}
+      {{- $btext := trim (replaceRE `\s+` " " (plainify $body)) " " -}}
+      {{- if and (ne $head "") (ne $id "") -}}
+        {{- $idx = $idx | append (dict "t" $head "u" (printf "%s#%s" $u $id) "p" $ptitle "g" $group "b" $badge "x" $btext) -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- $idx | jsonify -}}

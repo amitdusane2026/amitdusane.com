@@ -6,365 +6,869 @@ type: glossary
 weight: 999
 ---
 
-                <p>A comprehensive reference of key terms and concepts used throughout Adobe Analytics. Use this glossary as a quick lookup while learning or working with the platform.</p>
-                
-                <h3 class="subsec-title">A</h3>
-                <div class="glossary-list">
-                    <div class="glossary-item">
-                        <div class="glossary-term">Activity Map</div>
-                        <div class="glossary-def">A browser-based tool that displays visual overlays on web pages showing link click activity with color-coded rankings.</div>
-                    </div>
-                    <div class="glossary-item">
-                        <div class="glossary-term">Allocation</div>
-                        <div class="glossary-def">The setting that determines how an eVar assigns credit when multiple values are set. Options include Most Recent, Original, or Linear.</div>
-                    </div>
-                    <div class="glossary-item">
-                        <div class="glossary-term">Analysis Workspace</div>
-                        <div class="glossary-def">Adobe Analytics' primary reporting interface featuring drag-and-drop panels, visualizations, and freeform tables for flexible data analysis.</div>
-                    </div>
-                    <div class="glossary-item">
-                        <div class="glossary-term">Anomaly Detection</div>
-                        <div class="glossary-def">Machine learning feature that automatically identifies statistically significant deviations from expected metric values.</div>
-                    </div>
-                    <div class="glossary-item">
-                        <div class="glossary-term">AppMeasurement</div>
-                        <div class="glossary-def">Adobe's traditional JavaScript library (AppMeasurement.js) for collecting analytics data and sending it to Adobe servers.</div>
-                    </div>
-                    <div class="glossary-item">
-                        <div class="glossary-term">Attribution</div>
-                        <div class="glossary-def">The process of assigning credit for conversions to marketing touchpoints. Attribution IQ provides multiple models for analysis.</div>
-                    </div>
-                </div>
+<p class="gl-intro">Every term links to the section that explains it in full.</p>
 
-                <h3 class="subsec-title">B</h3>
-                <div class="glossary-list">
-                    <div class="glossary-item">
-                        <div class="glossary-term">Beacon</div>
-                        <div class="glossary-def">The HTTP request sent to Adobe servers containing analytics data. Also called an image request or server call.</div>
-                    </div>
-                    <div class="glossary-item">
-                        <div class="glossary-term">Bounce</div>
-                        <div class="glossary-def">A visit consisting of only a single page view, where the visitor left without any additional interaction.</div>
-                    </div>
-                    <div class="glossary-item">
-                        <div class="glossary-term">Bounce Rate</div>
-                        <div class="glossary-def">The percentage of visits that are bounces. Calculated as: Bounces ÷ Entries × 100.</div>
-                    </div>
-                    <div class="glossary-item">
-                        <div class="glossary-term">Bot Filtering</div>
-                        <div class="glossary-def">The process of identifying and excluding non-human traffic (crawlers, spiders, bots) from analytics data.</div>
-                    </div>
-                </div>
+<nav class="gl-az" aria-label="Jump to a letter">
+  <a href="#gl-a">A</a>
+  <a href="#gl-b">B</a>
+  <a href="#gl-c">C</a>
+  <a href="#gl-d">D</a>
+  <a href="#gl-e">E</a>
+  <a href="#gl-f">F</a>
+  <a href="#gl-g">G</a>
+  <a href="#gl-h">H</a>
+  <a href="#gl-i">I</a>
+  <span class="gl-az-off" aria-hidden="true">J</span>
+  <span class="gl-az-off" aria-hidden="true">K</span>
+  <a href="#gl-l">L</a>
+  <a href="#gl-m">M</a>
+  <a href="#gl-n">N</a>
+  <a href="#gl-o">O</a>
+  <a href="#gl-p">P</a>
+  <span class="gl-az-off" aria-hidden="true">Q</span>
+  <a href="#gl-r">R</a>
+  <a href="#gl-s">S</a>
+  <a href="#gl-t">T</a>
+  <a href="#gl-u">U</a>
+  <a href="#gl-v">V</a>
+  <a href="#gl-w">W</a>
+  <a href="#gl-x">X</a>
+  <span class="gl-az-off" aria-hidden="true">Y</span>
+  <span class="gl-az-off" aria-hidden="true">Z</span>
+</nav>
 
-                <h3 class="subsec-title">C</h3>
-                <div class="glossary-list">
-                    <div class="glossary-item">
-                        <div class="glossary-term">Calculated Metric</div>
-                        <div class="glossary-def">A custom metric created by combining existing metrics using mathematical formulas, functions, and segments.</div>
-                    </div>
-                    <div class="glossary-item">
-                        <div class="glossary-term">Campaign Variable</div>
-                        <div class="glossary-def">A reserved variable (s.campaign) used to track marketing campaign tracking codes, typically populated via URL parameter.</div>
-                    </div>
-                    <div class="glossary-item">
-                        <div class="glossary-term">Classification</div>
-                        <div class="glossary-def">Metadata added to dimension values post-collection, allowing grouping of granular values into categories without changing implementation.</div>
-                    </div>
-                    <div class="glossary-item">
-                        <div class="glossary-term">Context Data</div>
-                        <div class="glossary-def">Flexible key-value pairs (s.contextData) sent with hits that can be mapped to variables via Processing Rules.</div>
-                    </div>
-                    <div class="glossary-item">
-                        <div class="glossary-term">Conversion Variable</div>
-                        <div class="glossary-def">See eVar. Variables designed to persist beyond the initial hit and associate with subsequent conversion events.</div>
-                    </div>
-                    <div class="glossary-item">
-                        <div class="glossary-term">Cross-Device Analytics (CDA)</div>
-                        <div class="glossary-def">Feature that stitches visitor data across devices to provide a unified view of the customer journey.</div>
-                    </div>
-                    <div class="glossary-item">
-                        <div class="glossary-term">Customer Journey Analytics (CJA)</div>
-                        <div class="glossary-def">Adobe's next-generation analytics product built on Experience Platform, enabling cross-channel analysis.</div>
-                    </div>
-                </div>
+<h3 class="subsec-title gl-letter" id="gl-a">A</h3>
+<div class="glossary-list">
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/collect/adobe-launch-tags/rules/#actions-what-the-rule-does">Action (Launch)</a>
+    <div class="glossary-def">The part of a Launch rule that does something once the event has fired and the conditions have passed.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/analyze/activity-map/activity-map-overview/#the-report-knows-the-page-not-the-button">Activity Map</a>
+    <div class="glossary-def">A feature that records which link on a page was clicked, and where on the page it sat.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/foundations/adobe-analytics-fundamentals/what-is-adobe-analytics/#what-it-actually-does-for-you">Adobe Analytics</a>
+    <div class="glossary-def">Adobe's behavioural analytics product, which collects what people do on a site or an app and turns it into reports.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/collect/data-layers/adobe-client-data-layer/#step-1-the-developer-declares-it">Adobe Client Data Layer (ACDL)</a>
+    <div class="glossary-def">Adobe's event-driven data layer library, where the site pushes events onto an array that keeps a history rather than overwriting a single object.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/deliver/adobe-analytics-cja/adobe-experience-platform-integration/#two-routes-into-platform">Adobe Experience Platform</a>
+    <div class="glossary-def">The data platform underneath Adobe's newer applications, which stores events as datasets against a defined schema.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/deliver/testing-debugging/adobe-experience-platform-debugger/#what-the-extension-is">Adobe Experience Platform Debugger</a>
+    <div class="glossary-def">A browser extension that shows the hits a page sent and which Launch rules fired to produce them.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/collect/adobe-launch-tags/launch-architecture/#what-launch-actually-is">Adobe Experience Platform Tags</a>
+    <div class="glossary-def">Adobe's tag management system, still widely called Launch, which delivers tracking code to a site without a developer release.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/analyze/attribution-models/attribution-models-compared/#algorithmic-and-when-not-to-use-it">Algorithmic attribution</a>
+    <div class="glossary-def">An attribution model that works out the credit split statistically from your own data rather than applying a fixed rule.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/foundations/variables/evars-conversion-variables/#allocation-who-gets-the-credit">Allocation</a>
+    <div class="glossary-def">The eVar setting that decides which value gets the credit when several values were set before the conversion.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/collect/tracking-calls/first-party-cookies/#the-durable-answer-today-first-party-device-ids">AMCV cookie</a>
+    <div class="glossary-def">The first-party cookie that stores the Experience Cloud ID in the visitor's browser.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/analyze/analysis-workspace/analysis-workspace-overview/#a-space-where-the-work-is-analysis-and-the-name-is-the">Analysis Workspace</a>
+    <div class="glossary-def">The reporting interface where dimensions, metrics and segments are dragged onto a canvas to build an analysis.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/analyze/analysis-workspace/anomaly-detection-contribution-analysis/#what-the-product-is-actually-doing-when-it-draws-that-band">Anomaly detection</a>
+    <div class="glossary-def">A statistical band drawn around a metric's expected range, flagging the points that fall outside it.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/collect/data-collection/appmeasurement-library/#where-appmeasurement-slips-in">AppMeasurement</a>
+    <div class="glossary-def">The long-standing JavaScript library that packs values into a tracking call and sends it to Adobe.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/analyze/calculated-metrics/calculated-metrics-best-practices/#approved-is-a-promise-somebody-has-to-keep">Approved metric</a>
+    <div class="glossary-def">A calculated metric marked as the sanctioned version of a number, which commits somebody to maintaining it.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/collect/data-collection/appmeasurement-library/#apl-append-to-any-list-not-just-events">apl</a>
+    <div class="glossary-def">An AppMeasurement helper that appends a value to a delimited list without overwriting what is already there.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/analyze/attribution-models/what-is-attribution/#credit-is-shared-not-measured">Attribution</a>
+    <div class="glossary-def">The rule that decides which touch point earns the credit for a conversion, since the data records no reason for anything.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/analyze/attribution-models/what-is-attribution/#credit-is-shared-not-measured">Attribution IQ</a>
+    <div class="glossary-def">Adobe's name for the set of attribution models that can be applied to any metric column at report time.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/analyze/attribution-models/attribution-models-compared/#every-model-and-the-exact-split-it-uses">Attribution model</a>
+    <div class="glossary-def">A named rule for splitting conversion credit across touch points, such as last touch, linear or time decay.</div>
+  </div>
+</div>
 
-                <h3 class="subsec-title">D</h3>
-                <div class="glossary-list">
-                    <div class="glossary-item">
-                        <div class="glossary-term">Data Element</div>
-                        <div class="glossary-def">In Adobe Launch, a reusable reference to data (from data layer, DOM, cookies, etc.) used across rules and extensions.</div>
-                    </div>
-                    <div class="glossary-item">
-                        <div class="glossary-term">Data Feed</div>
-                        <div class="glossary-def">Raw, hit-level data export delivered automatically to FTP or cloud storage, containing every collected variable.</div>
-                    </div>
-                    <div class="glossary-item">
-                        <div class="glossary-term">Data Layer</div>
-                        <div class="glossary-def">A JavaScript object on a web page containing structured data for analytics and marketing tools to consume.</div>
-                    </div>
-                    <div class="glossary-item">
-                        <div class="glossary-term">Data Warehouse</div>
-                        <div class="glossary-def">Tool for extracting large volumes of unsampled, aggregated data with flexible dimensions and delivery options.</div>
-                    </div>
-                    <div class="glossary-item">
-                        <div class="glossary-term">Datastream</div>
-                        <div class="glossary-def">Configuration in Adobe Experience Platform that routes data from Web SDK to various Adobe solutions.</div>
-                    </div>
-                    <div class="glossary-item">
-                        <div class="glossary-term">Dimension</div>
-                        <div class="glossary-def">An attribute or characteristic used to categorize data. Examples: Page Name, Browser, Campaign.</div>
-                    </div>
-                </div>
+<h3 class="subsec-title gl-letter" id="gl-b">B</h3>
+<div class="glossary-list">
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/foundations/variables/products-string/#merchandising-evars-bound-to-a-product-not-the-visitor">Binding order</a>
+    <div class="glossary-def">The moment a merchandising eVar attaches its value to a product rather than to the visitor.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/foundations/report-suites/bot-filtering/#why-it-is-a-checkbox-at-all">Bot filtering</a>
+    <div class="glossary-def">The report suite setting that removes known automated traffic before it is ever stored.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/foundations/report-suites/report-suite-settings/#bot-rules">Bot rules</a>
+    <div class="glossary-def">Your own rules for excluding automated traffic that the standard list does not catch.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/analyze/calculated-metrics/building-calculated-metrics/#the-denominator-is-the-entire-argument">Bounce rate</a>
+    <div class="glossary-def">The share of visits that ended on the same hit they started, expressed as a ratio rather than a count.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/analyze/analysis-workspace/freeform-tables/#what-a-breakdown-really-does">Breakdown</a>
+    <div class="glossary-def">Splitting one row of a table by a second dimension, which asks a narrower question of the same rows.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/deliver/testing-debugging/browser-developer-tools/#reading-a-hit-without-help">Browser developer tools</a>
+    <div class="glossary-def">The browser's own network and console panels, which show the raw tracking request without any Adobe tooling in the way.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/collect/adobe-launch-tags/publishing-workflow/#build-and-name-your-first-library">Build (Launch)</a>
+    <div class="glossary-def">Compiling a Launch library into the JavaScript file that an environment actually serves.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/deliver/solution-design-reference/business-requirements-document/#record-what-they-want-never-how-you-will-do-it">Business Requirements Document (BRD)</a>
+    <div class="glossary-def">The document that records what the business asked to measure, before anybody decides how to measure it.</div>
+  </div>
+</div>
 
-                <h3 class="subsec-title">E</h3>
-                <div class="glossary-list">
-                    <div class="glossary-item">
-                        <div class="glossary-term">ECID (Experience Cloud ID)</div>
-                        <div class="glossary-def">A universal visitor identifier used across Adobe Experience Cloud solutions for cross-solution visitor recognition.</div>
-                    </div>
-                    <div class="glossary-item">
-                        <div class="glossary-term">Entry</div>
-                        <div class="glossary-def">The first page or value in a visit. Entry Pages show where visitors begin their sessions.</div>
-                    </div>
-                    <div class="glossary-item">
-                        <div class="glossary-term">eVar (Conversion Variable)</div>
-                        <div class="glossary-def">Custom variables (eVar1-eVar250) with configurable persistence, used to track values that should be associated with later conversions.</div>
-                    </div>
-                    <div class="glossary-item">
-                        <div class="glossary-term">Event</div>
-                        <div class="glossary-def">A metric that counts or captures values when specific actions occur. Types include Counter, Numeric, and Currency events.</div>
-                    </div>
-                    <div class="glossary-item">
-                        <div class="glossary-term">Event Serialization</div>
-                        <div class="glossary-def">A deduplication method using unique IDs to prevent the same event from being counted multiple times.</div>
-                    </div>
-                    <div class="glossary-item">
-                        <div class="glossary-term">Exit</div>
-                        <div class="glossary-def">The last page or value in a visit. Exit Pages show where visitors end their sessions.</div>
-                    </div>
-                    <div class="glossary-item">
-                        <div class="glossary-term">Expiration</div>
-                        <div class="glossary-def">The setting that determines how long an eVar value persists. Options include Hit, Visit, or custom timeframes.</div>
-                    </div>
-                </div>
+<h3 class="subsec-title gl-letter" id="gl-c">C</h3>
+<div class="glossary-list">
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/analyze/calculated-metrics/what-are-calculated-metrics/#a-saved-formula-not-saved-data">Calculated metric</a>
+    <div class="glossary-def">A saved formula rather than saved data, evaluated at report time from metrics that were already collected.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/foundations/variables/default-reserved-variables/#campaign-a-reserved-slot-for-marketing">campaign</a>
+    <div class="glossary-def">The reserved variable that carries the tracking code identifying which marketing activity brought a visitor in.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/collect/data-layers/what-is-a-data-layer/#naming-it-the-w3c-standard-everyone-half-follows">CEDDL</a>
+    <div class="glossary-def">The W3C data layer specification that gave the industry the digitalData object, which most implementations follow only in part.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/shape/marketing-channels/marketing-channel-processing-rules/#the-anatomy-of-a-rule">Channel rule</a>
+    <div class="glossary-def">A rule that inspects an incoming hit and decides which marketing channel it belongs to.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/shape/classifications/classifications-overview/#what-a-classification-actually-is">Classification</a>
+    <div class="glossary-def">A lookup that gives a collected value extra attributes it never carried, and does so retroactively.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/shape/classifications/designing-the-key/#the-key-is-not-a-setting">Classification key</a>
+    <div class="glossary-def">The raw collected value that a classification file matches on, which is a design decision rather than a setting.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/shape/classifications/classification-rule-builder/#a-rule-is-not-a-different-mechanism">Classification Rule Builder</a>
+    <div class="glossary-def">A tool that fills classification columns automatically by matching patterns in the key, instead of uploading a file.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/shape/classifications/classification-sets/#what-a-set-actually-contains">Classification set</a>
+    <div class="glossary-def">The container holding a classification schema and its data, which can be attached to more than one variable.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/collect/tracking-calls/first-party-cookies/#the-older-fix-and-why-it-is-no-longer-enough-on-its-own">CNAME</a>
+    <div class="glossary-def">A DNS alias that makes Adobe's collection domain look like your own, so the cookie it sets counts as first party.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/analyze/analysis-workspace/cohort-analysis/#a-cohort-is-a-group-defined-by-when-not-by-who">Cohort analysis</a>
+    <div class="glossary-def">A table that groups people by when they first did something, then follows each group forward in time.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/collect/adobe-launch-tags/rules/#conditions-whether-the-rule-runs">Condition (Launch)</a>
+    <div class="glossary-def">The test that decides whether a Launch rule actually runs after its event has fired.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/shape/processing-rules/conditions-actions/#conditions-deciding-when-a-rule-acts">Condition (processing rule)</a>
+    <div class="glossary-def">The test that decides whether a processing rule acts on an incoming hit.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/deliver/adobe-analytics-cja/adobe-experience-platform-integration/#connections-and-data-views">Connection (CJA)</a>
+    <div class="glossary-def">The object that brings one or more Platform datasets into Customer Journey Analytics.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/collect/adobe-launch-tags/consent-and-tag-management/#what-your-consent-platform-actually-hands-you">Consent</a>
+    <div class="glossary-def">The visitor's recorded permission for tracking, which your tag manager has to read before it fires anything.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/analyze/segments/segment-containers/#three-containers-three-widths">Container (segment)</a>
+    <div class="glossary-def">The scope of a segment, deciding whether it asks about a single hit, one visit, or a person's whole history.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/foundations/variables/context-data-variables/#what-it-buys-you">Context data variable</a>
+    <div class="glossary-def">A named value sent on a hit without occupying a variable slot, mapped to a real variable later by a processing rule.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/analyze/analysis-workspace/anomaly-detection-contribution-analysis/#contribution-analysis-and-what-it-is-really-for">Contribution analysis</a>
+    <div class="glossary-def">An automated search for the dimension items that account for an anomaly the product has already flagged.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/foundations/variables/events-success-events/#an-event-is-a-switch-that-counts">Counter event</a>
+    <div class="glossary-def">An event that simply adds one each time it fires, which is the default kind.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/deliver/adobe-analytics-cja/cross-device-analytics/#what-stitching-gives-you">Cross-device analytics</a>
+    <div class="glossary-def">Resolving several devices to one person so a journey does not appear as several unrelated visitors.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/collect/tracking-calls/cross-domain-tracking/#the-mechanism-carry-the-id-in-the-url">Cross-domain tracking</a>
+    <div class="glossary-def">Carrying the visitor ID in the URL between two domains so one person does not become two visitors.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/analyze/analysis-workspace/curation-and-templates/#what-curation-actually-removes">Curation</a>
+    <div class="glossary-def">Cutting a project's available dimensions, metrics and segments down to the few its readers should see.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/foundations/report-suites/report-suite-settings/#general-account-settings-the-data-quality-foundation">Currency code</a>
+    <div class="glossary-def">The report suite setting that fixes which currency stored revenue is expressed in.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/foundations/variables/events-success-events/#an-event-is-a-switch-that-counts">Currency event</a>
+    <div class="glossary-def">An event that carries a monetary amount and is converted into the report suite's currency on the way in.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/collect/tracking-calls/link-tracking/#the-three-link-types-and-why-they-exist">Custom link</a>
+    <div class="glossary-def">A link call for an interaction that is neither a download nor a departure from the site.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/deliver/adobe-analytics-cja/what-is-customer-journey-analytics/#what-cja-runs-on">Customer Journey Analytics (CJA)</a>
+    <div class="glossary-def">Adobe's analytics application built on Experience Platform, which stores the event and decides how to read it at report time.</div>
+  </div>
+</div>
 
-                <h3 class="subsec-title">F</h3>
-                <div class="glossary-list">
-                    <div class="glossary-item">
-                        <div class="glossary-term">Fallout</div>
-                        <div class="glossary-def">A visualization showing conversion rates between defined touchpoints in a sequence, revealing where users drop off.</div>
-                    </div>
-                    <div class="glossary-item">
-                        <div class="glossary-term">First Touch</div>
-                        <div class="glossary-def">Attribution model that gives 100% credit to the first touchpoint in a visitor's journey.</div>
-                    </div>
-                    <div class="glossary-item">
-                        <div class="glossary-term">Flow</div>
-                        <div class="glossary-def">A visualization showing paths visitors take through your site, displaying previous and next values for any dimension.</div>
-                    </div>
-                    <div class="glossary-item">
-                        <div class="glossary-term">Freeform Table</div>
-                        <div class="glossary-def">The primary data table in Analysis Workspace allowing flexible combinations of dimensions, metrics, and segments.</div>
-                    </div>
-                </div>
+<h3 class="subsec-title gl-letter" id="gl-d">D</h3>
+<div class="glossary-list">
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/collect/adobe-launch-tags/data-elements/#what-a-data-element-is-and-how-it-differs-from-the-data">Data element</a>
+    <div class="glossary-def">A named reference in Launch that points at a value on the page, so rules do not read the page directly.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/analyze/data-feeds/data-feeds-overview/#one-row-for-every-server-call-your-site-sends">Data feed</a>
+    <div class="glossary-def">A scheduled export giving one row for every server call the site sent, at the lowest level of detail available.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/collect/data-layers/what-is-a-data-layer/#the-one-rule-you-never-break">Data layer</a>
+    <div class="glossary-def">An agreed object on the page holding the values analytics needs, so measurement never has to read the page itself.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/foundations/report-suites/privacy-data-retention/#what-the-window-does-while-nobody-is-watching">Data retention</a>
+    <div class="glossary-def">The period after which Adobe deletes your data, set per report suite and enforced quietly.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/deliver/adobe-analytics-cja/what-is-customer-journey-analytics/#the-data-view-holds-the-settings">Data view (CJA)</a>
+    <div class="glossary-def">The CJA object holding the settings that Adobe Analytics fixes at collection, such as attribution and persistence.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/analyze/data-warehouse/data-warehouse-overview/#why-it-is-called-a-warehouse-literally">Data Warehouse</a>
+    <div class="glossary-def">A request-based export of aggregated data that ignores the row limits and Low Traffic bucketing of the interface.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/deliver/adobe-analytics-cja/adobe-experience-platform-integration/#two-routes-into-platform">Dataset (CJA)</a>
+    <div class="glossary-def">A stored collection of events in Experience Platform, shaped by a schema and fed into a CJA connection.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/collect/data-collection/adobe-web-sdk/#where-the-web-sdk-sits">Datastream</a>
+    <div class="glossary-def">The server-side configuration that tells the Edge Network which Adobe products a piece of collected data should be forwarded to.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/foundations/variables/default-reserved-variables/#family-two-dimensions-adobe-collects-automatically">Default variables</a>
+    <div class="glossary-def">Dimensions Adobe populates for you, such as browser, referrer and geography, without any implementation work.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/deliver/solution-design-reference/developer-instructions/#the-columns-that-turn-a-design-into-instructions">Developer instructions</a>
+    <div class="glossary-def">The columns in an SDR that turn a design decision into something a developer can implement without asking you.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/collect/data-layers/data-layer-design/#why-the-root-is-called-digitaldata-and-why-renaming-costs">digitalData</a>
+    <div class="glossary-def">The conventional root name for a data layer object, inherited from the W3C specification and expensive to rename later.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/foundations/adobe-analytics-fundamentals/key-terminology/#dimensions-and-metrics-the-two-axes-of-every-report">Dimension</a>
+    <div class="glossary-def">A descriptive attribute you group a report by, which supplies the rows of a table.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/shape/marketing-channels/marketing-channel-processing-rules/#9.-direct">Direct</a>
+    <div class="glossary-def">The marketing channel that catches traffic with no identifiable source, which is usually larger than it should be.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/collect/data-collection/appmeasurement-library/#doplugins-the-callback-adobe-named-for-you">doPlugins</a>
+    <div class="glossary-def">An AppMeasurement callback that runs just before a hit is sent, used to set or clean values at the last moment.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/collect/tracking-calls/link-tracking/#the-three-link-types-and-why-they-exist">Download link</a>
+    <div class="glossary-def">A link call fired when a visitor takes a file rather than moving to another page.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/analyze/analysis-workspace/freeform-tables/#dynamic-rows-keep-re-asking-static-rows-freeze-the-answer">Dynamic rows</a>
+    <div class="glossary-def">Table rows that re-run their question whenever the date or segment changes, unlike static rows which hold a fixed set.</div>
+  </div>
+</div>
 
-                <h3 class="subsec-title">G-H</h3>
-                <div class="glossary-list">
-                    <div class="glossary-item">
-                        <div class="glossary-term">Global Report Suite</div>
-                        <div class="glossary-def">A report suite that collects data from all properties/sites, enabling organization-wide analysis.</div>
-                    </div>
-                    <div class="glossary-item">
-                        <div class="glossary-term">Hierarchy Variable (hier)</div>
-                        <div class="glossary-def">Variables (hier1-hier5) used to capture hierarchical site structure, with levels separated by delimiters.</div>
-                    </div>
-                    <div class="glossary-item">
-                        <div class="glossary-term">Hit</div>
-                        <div class="glossary-def">A single request sent to Adobe servers. Types include page views (s.t()) and link tracking calls (s.tl()).</div>
-                    </div>
-                </div>
+<h3 class="subsec-title gl-letter" id="gl-e">E</h3>
+<div class="glossary-list">
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/collect/data-collection/adobe-web-sdk/#where-the-web-sdk-sits">Edge Network</a>
+    <div class="glossary-def">Adobe's collection layer that receives data once and distributes it to the products a datastream names.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/collect/adobe-launch-tags/environments/#the-embed-code-and-where-the-library-lives">Embed code</a>
+    <div class="glossary-def">The script tag that loads a Launch library, with one code per environment.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/shape/marketing-channels/engagement-periods/#the-setting-itself">Engagement period</a>
+    <div class="glossary-def">How long a marketing channel keeps earning credit for later visits after the click that brought somebody in.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/collect/adobe-launch-tags/environments/#why-environments-exist">Environment</a>
+    <div class="glossary-def">A Launch target, development, staging or production, each serving its own built library.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/collect/adobe-launch-tags/rules/#events-when-the-rule-fires">Event (Launch)</a>
+    <div class="glossary-def">The trigger that starts a Launch rule, such as a page load or a click.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/foundations/variables/evars-conversion-variables/#why-persistence-is-the-whole-point">eVar</a>
+    <div class="glossary-def">A conversion variable whose value persists beyond the hit that set it, so it can still earn credit later.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/collect/tracking-calls/link-tracking/#the-three-link-types-and-why-they-exist">Exit link</a>
+    <div class="glossary-def">A link call fired when a visitor leaves for another site.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/foundations/variables/evars-conversion-variables/#expiration-how-long-the-value-sticks">Expiration</a>
+    <div class="glossary-def">The eVar setting that decides how long a value keeps persisting before it stops counting.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/collect/tracking-calls/experience-cloud-id-ecid/#the-identifier-that-kept-changing-its-name">Experience Cloud ID (ECID)</a>
+    <div class="glossary-def">The identifier shared across Adobe products that marks a browser, not a person.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/collect/adobe-launch-tags/extensions/#what-an-extension-actually-is">Extension</a>
+    <div class="glossary-def">A packaged block of functionality installed into a Launch property, supplying its own events, conditions and actions.</div>
+  </div>
+</div>
 
-                <h3 class="subsec-title">I-L</h3>
-                <div class="glossary-list">
-                    <div class="glossary-item">
-                        <div class="glossary-term">Instance</div>
-                        <div class="glossary-def">A metric counting times a variable was explicitly set on a hit. Different from Occurrences for persisted eVars.</div>
-                    </div>
-                    <div class="glossary-item">
-                        <div class="glossary-term">Last Touch</div>
-                        <div class="glossary-def">Attribution model that gives 100% credit to the most recent touchpoint before conversion.</div>
-                    </div>
-                    <div class="glossary-item">
-                        <div class="glossary-term">Launch (Adobe Experience Platform Tags)</div>
-                        <div class="glossary-def">Adobe's tag management system for deploying and managing marketing and analytics tags on websites.</div>
-                    </div>
-                    <div class="glossary-item">
-                        <div class="glossary-term">Linear Attribution</div>
-                        <div class="glossary-def">Attribution model that distributes credit equally across all touchpoints in the conversion path.</div>
-                    </div>
-                    <div class="glossary-item">
-                        <div class="glossary-term">Link Tracking</div>
-                        <div class="glossary-def">Tracking method (s.tl()) for capturing interactions without a full page load, like clicks, downloads, or video plays.</div>
-                    </div>
-                    <div class="glossary-item">
-                        <div class="glossary-term">List Variable (list)</div>
-                        <div class="glossary-def">Variables (list1-list3) that accept multiple delimited values in a single hit, each receiving full credit.</div>
-                    </div>
-                    <div class="glossary-item">
-                        <div class="glossary-term">Lookback Window</div>
-                        <div class="glossary-def">The time period considered when applying attribution models. Can be set to Visit, Visitor, or custom timeframes.</div>
-                    </div>
-                </div>
+<h3 class="subsec-title gl-letter" id="gl-f">F</h3>
+<div class="glossary-list">
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/analyze/analysis-workspace/fallout-and-flow-analysis/#fallout-and-the-steps-that-need-not-be-pages">Fallout analysis</a>
+    <div class="glossary-def">A visualization that tests a funnel you define in advance and shows where people dropped out of it.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/deliver/adobe-analytics-cja/cross-device-analytics/#whether-you-can-stitch-at-all">Field-based stitching</a>
+    <div class="glossary-def">Replaying a known identifier across a device's earlier anonymous events so they resolve to one person.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/collect/tracking-calls/first-party-cookies/#first-party-is-not-the-same-as-durable">First-party cookie</a>
+    <div class="glossary-def">A cookie set on your own domain, which browsers treat more kindly than a third-party one but still do not keep forever.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/analyze/attribution-models/attribution-models-compared/#eleven-models-but-only-three-shapes">First touch</a>
+    <div class="glossary-def">An attribution model giving all the credit to the earliest touch point inside the lookback window.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/analyze/analysis-workspace/fallout-and-flow-analysis/#flow-and-the-routes-nobody-would-have-thought-to-test">Flow analysis</a>
+    <div class="glossary-def">A visualization that shows the paths people actually took, rather than testing a route you already suspected.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/analyze/analysis-workspace/freeform-tables/#rows-ask-what-columns-ask-how-much">Freeform table</a>
+    <div class="glossary-def">The core Workspace table, where rows ask what and columns ask how much.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/shape/classifications/importing-classification-data/#ftp-briefly">FTP import</a>
+    <div class="glossary-def">Delivering classification files to a scheduled location so nobody has to upload one by hand each night.</div>
+  </div>
+</div>
 
-                <h3 class="subsec-title">M</h3>
-                <div class="glossary-list">
-                    <div class="glossary-item">
-                        <div class="glossary-term">Marketing Channel</div>
-                        <div class="glossary-def">A categorization of traffic sources (Paid Search, Email, Direct, etc.) configured via Marketing Channel Processing Rules.</div>
-                    </div>
-                    <div class="glossary-item">
-                        <div class="glossary-term">Merchandising eVar</div>
-                        <div class="glossary-def">eVar configuration that binds values to specific products, enabling product-level analysis of attributes like color or size.</div>
-                    </div>
-                    <div class="glossary-item">
-                        <div class="glossary-term">Metric</div>
-                        <div class="glossary-def">A quantitative measurement. Examples: Page Views, Visits, Revenue, Conversion Rate.</div>
-                    </div>
-                    <div class="glossary-item">
-                        <div class="glossary-term">Multi-Suite Tagging</div>
-                        <div class="glossary-def">Sending the same hit to multiple report suites simultaneously using comma-separated RSIDs.</div>
-                    </div>
-                </div>
+<h3 class="subsec-title gl-letter" id="gl-g">G</h3>
+<div class="glossary-list">
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/foundations/report-suites/privacy-data-retention/#choosing-the-period-which-is-not-an-analytics-decision">GDPR</a>
+    <div class="glossary-def">The European privacy regulation that gives people rights of access and erasure over their personal data.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/foundations/report-suites/global-vs-individual-report-suites/#the-global-strategy-one-archive-for-everything">Global report suite</a>
+    <div class="glossary-def">A single report suite collecting everything, so cross-property journeys stay in one place.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/analyze/data-warehouse/creating-data-warehouse-requests/#granularity-is-a-dimension-wearing-a-different-name">Granularity</a>
+    <div class="glossary-def">The time interval a request breaks its rows by, which behaves like another dimension.</div>
+  </div>
+</div>
 
-                <h3 class="subsec-title">O-P</h3>
-                <div class="glossary-list">
-                    <div class="glossary-item">
-                        <div class="glossary-term">Occurrence</div>
-                        <div class="glossary-def">A metric counting all hits where a variable has a value, including persisted values from previous hits.</div>
-                    </div>
-                    <div class="glossary-item">
-                        <div class="glossary-term">Page View</div>
-                        <div class="glossary-def">A hit generated by calling s.t() or equivalent, typically representing a full page load.</div>
-                    </div>
-                    <div class="glossary-item">
-                        <div class="glossary-term">Participation</div>
-                        <div class="glossary-def">Attribution model giving 100% credit to every touchpoint that participated in the conversion path.</div>
-                    </div>
-                    <div class="glossary-item">
-                        <div class="glossary-term">Pathing</div>
-                        <div class="glossary-def">Analysis of the sequence in which visitors navigate through pages or values. Enabled on props.</div>
-                    </div>
-                    <div class="glossary-item">
-                        <div class="glossary-term">Processing Rules</div>
-                        <div class="glossary-def">Self-service rules in the Admin Console that transform incoming data before storage (e.g., mapping context data to variables).</div>
-                    </div>
-                    <div class="glossary-item">
-                        <div class="glossary-term">Products String</div>
-                        <div class="glossary-def">A specially formatted variable (s.products) containing product data: Category;Product;Quantity;Price;Events;Merchandising.</div>
-                    </div>
-                    <div class="glossary-item">
-                        <div class="glossary-term">Prop (Traffic Variable)</div>
-                        <div class="glossary-def">Custom variables (prop1-prop75) that do not persist beyond the hit. Used for pathing and hit-level analysis.</div>
-                    </div>
-                </div>
+<h3 class="subsec-title gl-letter" id="gl-h">H</h3>
+<div class="glossary-list">
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/foundations/adobe-analytics-fundamentals/key-terminology/#a-visit-ends-four-ways-and-only-one-of-them-is-famous">Hit</a>
+    <div class="glossary-def">One tracking call reaching Adobe, which is the smallest unit anything else is built from.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/analyze/data-feeds/data-feeds-overview/#one-row-for-every-server-call-your-site-sends">Hit-level data</a>
+    <div class="glossary-def">Data at one row per hit, with no aggregation applied by Adobe.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/analyze/data-feeds/data-feed-contents/#what-actually-lands-in-the-bucket">hit_data.tsv</a>
+    <div class="glossary-def">The main file in a data feed delivery, carrying the hits themselves and no header row.</div>
+  </div>
+</div>
 
-                <h3 class="subsec-title">R</h3>
-                <div class="glossary-list">
-                    <div class="glossary-item">
-                        <div class="glossary-term">Real-Time Reports</div>
-                        <div class="glossary-def">Reports showing data within seconds of collection, used for validating implementations and monitoring live activity.</div>
-                    </div>
-                    <div class="glossary-item">
-                        <div class="glossary-term">Report Suite</div>
-                        <div class="glossary-def">A data repository in Adobe Analytics that stores all collected data for a defined scope (site, app, region, etc.).</div>
-                    </div>
-                    <div class="glossary-item">
-                        <div class="glossary-term">RSID (Report Suite ID)</div>
-                        <div class="glossary-def">The unique identifier for a report suite, used to direct data collection to the correct destination.</div>
-                    </div>
-                </div>
+<h3 class="subsec-title gl-letter" id="gl-i">I</h3>
+<div class="glossary-list">
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/foundations/report-suites/bot-filtering/#what-the-list-catches-and-what-walks-straight-past-it">IAB bot list</a>
+    <div class="glossary-def">The industry list of known automated agents that Adobe's standard bot filtering matches against.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/foundations/report-suites/report-suite-settings/#internal-url-filters">Internal URL filter</a>
+    <div class="glossary-def">The setting that tells Adobe which domains are yours, so your own pages are not counted as referrers.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/foundations/report-suites/privacy-data-retention/#one-field-never-reaches-gate-one-at-all">IP obfuscation</a>
+    <div class="glossary-def">Discarding or masking the visitor's IP address, which happens after geo-lookup and bot filtering have already used it.</div>
+  </div>
+</div>
 
-                <h3 class="subsec-title">S</h3>
-                <div class="glossary-list">
-                    <div class="glossary-item">
-                        <div class="glossary-term">s Object</div>
-                        <div class="glossary-def">The main AppMeasurement JavaScript object containing configuration, variables, and tracking methods.</div>
-                    </div>
-                    <div class="glossary-item">
-                        <div class="glossary-term">s.t()</div>
-                        <div class="glossary-def">The AppMeasurement method that sends a page view tracking call to Adobe servers.</div>
-                    </div>
-                    <div class="glossary-item">
-                        <div class="glossary-term">s.tl()</div>
-                        <div class="glossary-def">The AppMeasurement method that sends a link tracking call for interactions without page loads.</div>
-                    </div>
-                    <div class="glossary-item">
-                        <div class="glossary-term">Segment</div>
-                        <div class="glossary-def">A filter that isolates subsets of data based on defined criteria, using containers (Hit, Visit, Visitor) and logic operators.</div>
-                    </div>
-                    <div class="glossary-item">
-                        <div class="glossary-term">Sequential Segment</div>
-                        <div class="glossary-def">A segment with conditions that must occur in a specific order, using THEN operators for path-based analysis.</div>
-                    </div>
-                    <div class="glossary-item">
-                        <div class="glossary-term">Server Call</div>
-                        <div class="glossary-def">Any hit sent to Adobe servers. Organizations are allocated a certain number based on their contract.</div>
-                    </div>
-                    <div class="glossary-item">
-                        <div class="glossary-term">Solution Design Reference (SDR)</div>
-                        <div class="glossary-def">Documentation mapping every variable to its business purpose, expected values, and implementation details.</div>
-                    </div>
-                    <div class="glossary-item">
-                        <div class="glossary-term">Success Event</div>
-                        <div class="glossary-def">See Event. Custom metrics that track business-significant actions like purchases, sign-ups, or video completions.</div>
-                    </div>
-                </div>
+<h3 class="subsec-title gl-letter" id="gl-l">L</h3>
+<div class="glossary-list">
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/analyze/attribution-models/attribution-models-compared/#eleven-models-but-only-three-shapes">Last touch</a>
+    <div class="glossary-def">An attribution model giving all the credit to the most recent touch point inside the lookback window.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/collect/adobe-launch-tags/publishing-workflow/#the-four-states-a-library-moves-through">Library (Launch)</a>
+    <div class="glossary-def">A bundle of Launch changes that moves through approval states on its way to production.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/analyze/attribution-models/attribution-models-compared/#every-model-and-the-exact-split-it-uses">Linear attribution</a>
+    <div class="glossary-def">An attribution model splitting the credit evenly across every touch point in the window.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/collect/tracking-calls/link-tracking/#how-a-link-call-gets-made-on-the-web">Link tracking</a>
+    <div class="glossary-def">Sending a call for an interaction that is not a page load, which does not increment page views.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/collect/data-collection/appmeasurement-library/#the-linktrackvars-trap-the-one-that-haunts-everyone">linkTrackVars</a>
+    <div class="glossary-def">The AppMeasurement list naming which variables a link call is allowed to carry, and the usual reason a value goes missing.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/foundations/variables/list-variables-list-props/#two-kinds-and-which-side-they-sit-on">List prop</a>
+    <div class="glossary-def">A prop that accepts several delimited values on one hit and reports each separately.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/foundations/variables/list-variables-list-props/#list-variable-settings-worth-knowing">List variable</a>
+    <div class="glossary-def">A conversion variable that holds several values at once, of which only three exist per report suite.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/analyze/segments/sequential-segments/#logic-group-an-unordered-step-inside-an-ordered-sequence">Logic group</a>
+    <div class="glossary-def">A step inside a sequential segment whose own conditions may happen in any order.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/analyze/attribution-models/lookback-windows/#the-window-is-not-your-reports-date-range">Lookback window</a>
+    <div class="glossary-def">How far back attribution will look for touch points, which is not the same thing as the report's date range.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/analyze/data-feeds/data-feed-contents/#the-raw-row-is-the-source-of-truth">Lookup table</a>
+    <div class="glossary-def">A companion file in a data feed that translates the numeric codes in the hit rows into readable values.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/analyze/data-warehouse/data-warehouse-overview/#follow-along-find-your-own-low-traffic-wall">Low Traffic</a>
+    <div class="glossary-def">The bucket Adobe moves rare dimension values into once a variable exceeds its unique value limit.</div>
+  </div>
+</div>
 
-                <h3 class="subsec-title">T-U</h3>
-                <div class="glossary-list">
-                    <div class="glossary-item">
-                        <div class="glossary-term">Time Decay</div>
-                        <div class="glossary-def">Attribution model giving more credit to touchpoints closer in time to the conversion.</div>
-                    </div>
-                    <div class="glossary-item">
-                        <div class="glossary-term">Tracking Server</div>
-                        <div class="glossary-def">The domain where analytics data is sent. Can be Adobe's domain or a CNAME configured for first-party collection.</div>
-                    </div>
-                    <div class="glossary-item">
-                        <div class="glossary-term">Traffic Variable</div>
-                        <div class="glossary-def">See Prop. Hit-scoped variables used for pathing analysis and traffic reporting.</div>
-                    </div>
-                    <div class="glossary-item">
-                        <div class="glossary-term">Unique Visitors</div>
-                        <div class="glossary-def">The count of distinct individuals visiting your site, identified by cookies or other visitor ID methods.</div>
-                    </div>
-                </div>
+<h3 class="subsec-title gl-letter" id="gl-m">M</h3>
+<div class="glossary-list">
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/shape/marketing-channels/marketing-channels-overview/#two-words-that-become-one-idea">Marketing channel</a>
+    <div class="glossary-def">A named grouping of traffic sources that answers where a visit actually came from.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/shape/marketing-channels/marketing-channel-processing-rules/#where-these-rules-run">Marketing channel processing rules</a>
+    <div class="glossary-def">The ordered rules that sort each incoming hit into a channel, which are separate from ordinary processing rules.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/foundations/variables/evars-conversion-variables/#merchandising-evars-crediting-products-not-visitors">Merchandising eVar</a>
+    <div class="glossary-def">An eVar bound to a product rather than to the visitor, so credit follows the item through the basket.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/foundations/adobe-analytics-fundamentals/key-terminology/#dimensions-and-metrics-the-two-axes-of-every-report">Metric</a>
+    <div class="glossary-def">A number you measure, which supplies the columns of a table.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/collect/data-collection/mobile-sdk/#it-is-a-compiled-sdk-and-that-has-a-cost">Mobile SDK</a>
+    <div class="glossary-def">Adobe's compiled library for apps, which cannot be changed without shipping a new release to the stores.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/foundations/report-suites/multi-suite-tagging/#the-decision-that-saves-you-the-most-multi-suite-or-a-vrs">Multi-suite tagging</a>
+    <div class="glossary-def">Sending the same hit to more than one report suite, which multiplies the server call bill.</div>
+  </div>
+</div>
 
-                <h3 class="subsec-title">V-W</h3>
-                <div class="glossary-list">
-                    <div class="glossary-item">
-                        <div class="glossary-term">Virtual Report Suite (VRS)</div>
-                        <div class="glossary-def">A filtered view of a parent report suite that applies segments at report time without duplicating data.</div>
-                    </div>
-                    <div class="glossary-item">
-                        <div class="glossary-term">Visit</div>
-                        <div class="glossary-def">A session consisting of consecutive hits from a visitor. Ends after 30 minutes of inactivity or at midnight.</div>
-                    </div>
-                    <div class="glossary-item">
-                        <div class="glossary-term">Visitor</div>
-                        <div class="glossary-def">A unique individual identified across visits, typically via browser cookies containing the visitor ID.</div>
-                    </div>
-                    <div class="glossary-item">
-                        <div class="glossary-term">VISTA Rules</div>
-                        <div class="glossary-def">Server-side processing rules implemented by Adobe Engineering for complex data transformations beyond Processing Rules capabilities.</div>
-                    </div>
-                    <div class="glossary-item">
-                        <div class="glossary-term">Web SDK</div>
-                        <div class="glossary-def">Adobe's modern JavaScript library (alloy.js) for sending data to Experience Platform Edge Network and multiple solutions.</div>
-                    </div>
-                </div>
+<h3 class="subsec-title gl-letter" id="gl-n">N</h3>
+<div class="glossary-list">
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/foundations/variables/events-success-events/#an-event-is-a-switch-that-counts">Numeric event</a>
+    <div class="glossary-def">An event that carries a quantity rather than simply counting one each time it fires.</div>
+  </div>
+</div>
 
-                <div class="info-box" style="margin-top: 32px;">
-                    <div class="info-hdr"><span class="info-ico"></span>Using This Glossary</div>
-                    <p>This glossary covers the most essential Adobe Analytics terminology. For deeper understanding of any term, refer to the corresponding module in this Learning Hub or consult Adobe's official documentation.</p>
-                </div>
+<h3 class="subsec-title gl-letter" id="gl-o">O</h3>
+<div class="glossary-list">
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/foundations/variables/events-success-events/#an-event-is-a-switch-that-counts">Occurrence</a>
+    <div class="glossary-def">A count of the hits on which a value was present, whether it was newly set or persisting.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/collect/adobe-launch-tags/consent-and-tag-management/#three-systems-three-jobs-and-none-of-them-overlap">Opt-in</a>
+    <div class="glossary-def">A consent model where nothing fires until the visitor has actively agreed.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/analyze/activity-map/using-activity-map/#the-overlay-and-what-live-mode-cannot-do">Overlay (Activity Map)</a>
+    <div class="glossary-def">The view that paints click data directly onto the live page, which is the shop window rather than the product.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/shape/classifications/importing-classification-data/#overwrite-on-conflict-and-what-it-actually-means">Overwrite on conflict</a>
+    <div class="glossary-def">The import setting deciding whether an uploaded classification value replaces one that is already there.</div>
+  </div>
+</div>
+
+<h3 class="subsec-title gl-letter" id="gl-p">P</h3>
+<div class="glossary-list">
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/collect/tracking-calls/page-view-tracking/#what-a-page-view-actually-tells-you">Page view</a>
+    <div class="glossary-def">The metric incremented by a page load call, which says a screen was seen and nothing more.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/foundations/variables/default-reserved-variables/#pagename-small-variable-big-consequences">pageName</a>
+    <div class="glossary-def">The reserved variable naming the page, whose value decides how readable every page report will be.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/analyze/analysis-workspace/projects-and-panels/#the-panel-is-where-a-question-gets-its-context">Panel</a>
+    <div class="glossary-def">The block inside a project that carries a date range, a report suite and any segments applied to everything in it.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/analyze/attribution-models/attribution-models-compared/#participation-asks-a-different-question">Participation</a>
+    <div class="glossary-def">A model giving full credit to every touch point involved, so the column deliberately does not add up to the total.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/foundations/variables/props-traffic-variables/#two-things-props-are-quietly-good-at">Pathing</a>
+    <div class="glossary-def">Sequence reporting available on props, showing what came before and after a value.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/foundations/variables/evars-conversion-variables/#why-persistence-is-the-whole-point">Persistence</a>
+    <div class="glossary-def">An eVar's ability to keep counting on later hits, which is the property that separates it from a prop.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/collect/tracking-calls/experience-cloud-id-ecid/#then-the-identifier-became-a-foundation">Person ID</a>
+    <div class="glossary-def">The identifier CJA counts people by, chosen in the data view rather than fixed at collection.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/analyze/data-feeds/data-feed-contents/#post_-is-where-the-processing-became-visible">post_ columns</a>
+    <div class="glossary-def">The data feed columns holding values after Adobe's processing, as opposed to what the browser originally sent.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/shape/processing-rules/conditions-actions/#order-is-logic-not-layout">Processing order</a>
+    <div class="glossary-def">The sequence rules run in, which is logic rather than layout because each rule sees the result of the last.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/shape/processing-rules/what-are-processing-rules/#what-a-processing-rule-is">Processing rule</a>
+    <div class="glossary-def">A rule that reshapes a hit after it arrives and before it is stored, permanently and without affecting past data.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/foundations/adobe-analytics-fundamentals/account-structure-access/#the-piece-that-does-the-work-the-product-profile">Product profile</a>
+    <div class="glossary-def">The Admin Console object that grants a group of users a defined level of access to specific report suites.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/foundations/variables/products-string/#anatomy-and-the-three-delimiters-that-decide-everything">Products string</a>
+    <div class="glossary-def">A single delimited variable carrying an entire order, item by item, with its own events and merchandising values.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/analyze/analysis-workspace/projects-and-panels/#a-project-is-the-whole-conversation-not-one-answer">Project (Workspace)</a>
+    <div class="glossary-def">The saved object holding a whole analysis, which is a conversation rather than a single answer.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/foundations/variables/props-traffic-variables/#a-prop-is-written-in-pencil">Prop</a>
+    <div class="glossary-def">A traffic variable whose value counts only on the hit that set it and never persists.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/collect/adobe-launch-tags/properties/#what-a-property-holds">Property (Launch)</a>
+    <div class="glossary-def">The Launch container holding the extensions, data elements and rules that become one script.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/collect/adobe-launch-tags/publishing-workflow/#the-approval-gates-and-why-they-exist">Publishing workflow</a>
+    <div class="glossary-def">The approval path a Launch library follows from development to production.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/deliver/testing-debugging/common-issues-solutions/#a-repeated-purchase-id-removes-the-whole-hit">Purchase ID</a>
+    <div class="glossary-def">The order identifier used to deduplicate purchases, where a repeated value removes the entire hit rather than one event.</div>
+  </div>
+</div>
+
+<h3 class="subsec-title gl-letter" id="gl-r">R</h3>
+<div class="glossary-list">
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/deliver/testing-debugging/real-time-validation/#what-it-can-and-cannot-do">Real-time validation</a>
+    <div class="glossary-def">Checking within minutes that a hit survived processing, using the reports that update fastest.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/analyze/activity-map/implementation-setup/#regions-come-from-the-id-attribute">Region (Activity Map)</a>
+    <div class="glossary-def">The area of a page a clicked link sat in, taken from the id attribute of a surrounding element.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/foundations/report-suites/what-are-report-suites/#what-defines-a-report-suite">Report suite</a>
+    <div class="glossary-def">The container your data lands in, which defines the boundary of everything that can be reported together.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/foundations/report-suites/what-are-report-suites/#what-defines-a-report-suite">Report suite ID (RSID)</a>
+    <div class="glossary-def">The short identifier naming a report suite in tracking code and in the interface.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/shape/marketing-channels/channel-attribution/#report-time-attribution-and-the-release-from-permanence">Report-time attribution</a>
+    <div class="glossary-def">Applying an attribution model when the report runs rather than fixing it at collection, so the choice is no longer permanent.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/foundations/variables/default-reserved-variables/#family-one-reserved-variables-you-populate">Reserved variables</a>
+    <div class="glossary-def">Named variables Adobe defines for you, such as pageName and campaign, which you populate rather than allocate.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/foundations/report-suites/what-are-report-suites/#how-many-boxes-do-you-need">Rollup report suite</a>
+    <div class="glossary-def">A suite that adds up the totals of several others, without keeping the detail underneath them.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/collect/adobe-launch-tags/rules/#a-rule-has-three-parts">Rule (Launch)</a>
+    <div class="glossary-def">The unit of work in Launch, made of an event, optional conditions, and actions.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/collect/adobe-launch-tags/rules/#sequence-and-order-making-rules-work-together">Rule order</a>
+    <div class="glossary-def">The number deciding which of two Launch rules runs first when both are triggered by the same event.</div>
+  </div>
+</div>
+
+<h3 class="subsec-title gl-letter" id="gl-s">S</h3>
+<div class="glossary-list">
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/collect/adobe-launch-tags/properties/#the-_satellite-object">_satellite</a>
+    <div class="glossary-def">The global object Launch exposes on the page, useful for inspecting and debugging a property from the console.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/collect/data-collection/appmeasurement-library/#the-s-object-what-packs-the-pixel">s object</a>
+    <div class="glossary-def">The AppMeasurement object holding every value a hit will carry until the call is sent.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/collect/tracking-calls/page-view-tracking/#the-call-itself-and-the-moment-it-fires">s.t()</a>
+    <div class="glossary-def">The AppMeasurement method that sends a page view call.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/collect/tracking-calls/link-tracking/#how-a-link-call-gets-made-on-the-web">s.tl()</a>
+    <div class="glossary-def">The AppMeasurement method that sends a link call without incrementing page views.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/deliver/adobe-analytics-cja/adobe-experience-platform-integration/#what-a-schema-does-that-a-design-document-used-to-do">Schema (XDM)</a>
+    <div class="glossary-def">The declared structure of a Platform dataset, which enforces in the system what a design document used to describe on paper.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/analyze/data-warehouse/delivery-options/#scheduling-and-the-setting-you-cannot-change-later">Scheduling (Data Warehouse)</a>
+    <div class="glossary-def">Setting a request to run repeatedly, with a frequency that cannot be changed once it is saved.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/collect/tracking-calls/server-calls-billing/#primary-and-secondary-server-calls">Secondary server call</a>
+    <div class="glossary-def">An additional billable call created when the same hit is copied to another report suite.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/analyze/segments/understanding-segments/#a-segment-is-a-filter-that-became-a-thing">Segment</a>
+    <div class="glossary-def">A saved definition of which people, visits or hits a report should consider, reusable everywhere.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/analyze/segments/segment-types-sharing/#the-segment-manager-where-saved-segments-live">Segment manager</a>
+    <div class="glossary-def">The screen where saved segments are found, tagged, shared and approved.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/analyze/segments/segment-types-sharing/#publishing-when-a-segment-leaves-analytics">Segment publishing</a>
+    <div class="glossary-def">Sending a segment out of Analytics to the Experience Cloud so other products can act on the same audience.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/analyze/segments/segment-types-sharing/#reuse-by-stacking-not-by-rebuilding">Segment stacking</a>
+    <div class="glossary-def">Applying several existing segments together instead of building a new combined one.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/analyze/segments/sequential-segments/#then-putting-events-in-order">Sequential segment</a>
+    <div class="glossary-def">A segment where the conditions have to happen in a stated order, built with THEN.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/foundations/variables/events-success-events/#serialization-stopping-the-double-count">Serialization</a>
+    <div class="glossary-def">Attaching an identifier to an event so the same occurrence is counted only once however often it is sent.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/collect/tracking-calls/server-calls-billing/#what-a-server-call-actually-is">Server call</a>
+    <div class="glossary-def">One billable request reaching Adobe's collection servers, which is the unit your contract is measured in.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/collect/data-collection/server-side-collection/#what-changes-when-the-browser-is-gone">Server-side collection</a>
+    <div class="glossary-def">Sending data to Adobe from your own systems rather than from a browser, which removes the cookie and gains a timestamp problem.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/shape/marketing-channels/engagement-periods/#where-session-refresh-really-comes-from">Session Refresh</a>
+    <div class="glossary-def">The channel that catches a returning visit inside the engagement period, which is why Direct often looks smaller than expected.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/collect/tracking-calls/spa-tracking/#what-a-single-page-application-really-is">Single page application (SPA)</a>
+    <div class="glossary-def">A site that swaps content without loading a new page, which breaks page tracking and variable clearing at the same time.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/deliver/solution-design-reference/what-is-an-sdr/#an-architect-does-not-hand-you-a-count-of-bricks">Solution Design Reference (SDR)</a>
+    <div class="glossary-def">The document connecting each business requirement to the variables and code that satisfy it.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/deliver/solution-design-reference/what-is-an-sdr/#the-id-that-runs-from-a-request-to-a-sign-off">Solution ID</a>
+    <div class="glossary-def">The identifier that follows one requirement from the BRD through the design to validation and sign-off.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/deliver/adobe-analytics-cja/cross-device-analytics/#what-stitching-gives-you">Stitching</a>
+    <div class="glossary-def">Joining anonymous and known events for the same person, which lowers your visitor count on purpose.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/shape/classifications/classification-sets/#subscriptions-and-the-constraint-nobody-expects">Subscription (classification set)</a>
+    <div class="glossary-def">Attaching a set to a variable so the variable inherits that set's classification columns.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/foundations/variables/events-success-events/#an-event-is-a-switch-that-counts">Success event</a>
+    <div class="glossary-def">A variable that counts something happening, rather than describing it.</div>
+  </div>
+</div>
+
+<h3 class="subsec-title gl-letter" id="gl-t">T</h3>
+<div class="glossary-list">
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/collect/data-collection/tag-management-systems/#what-a-tag-management-system-actually-buys-you">Tag management system</a>
+    <div class="glossary-def">A tool that delivers and changes tracking code on a site without waiting for a developer release.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/analyze/analysis-workspace/curation-and-templates/#templates-and-the-difference-between-reuse-and-copying">Template (Workspace)</a>
+    <div class="glossary-def">A reusable project shape, which is genuine reuse rather than a copy that immediately starts to drift.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/collect/tracking-calls/first-party-cookies/#why-identity-keeps-disappearing">Third-party cookie</a>
+    <div class="glossary-def">A cookie set on a domain other than the one being visited, now blocked by default in most browsers.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/analyze/attribution-models/attribution-models-compared/#time-decay-and-custom-need-a-number-from-you">Time decay</a>
+    <div class="glossary-def">An attribution model giving more credit to touch points nearer the conversion, governed by a half-life you choose.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/foundations/report-suites/report-suite-settings/#general-account-settings-the-data-quality-foundation">Time zone</a>
+    <div class="glossary-def">The report suite setting that decides when a day starts and ends for every report built from it.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/analyze/analysis-workspace/freeform-tables/#the-total-row-and-the-row-nobody-looks-at">Total row</a>
+    <div class="glossary-def">The summary row of a table, which will not always equal the sum of the rows beneath it.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/foundations/variables/default-reserved-variables/#campaign-a-reserved-slot-for-marketing">Tracking code</a>
+    <div class="glossary-def">The value placed in the campaign variable to identify which marketing activity a visit came from.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/collect/data-collection/mobile-sdk/#trackstate-and-trackaction">trackState and trackAction</a>
+    <div class="glossary-def">The mobile SDK methods equivalent to a page view call and a link call.</div>
+  </div>
+</div>
+
+<h3 class="subsec-title gl-letter" id="gl-u">U</h3>
+<div class="glossary-list">
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/analyze/attribution-models/attribution-models-compared/#every-model-and-the-exact-split-it-uses">U-shaped attribution</a>
+    <div class="glossary-def">An attribution model weighting the first and last touch points heavily and sharing the rest between the middle.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/collect/tracking-calls/experience-cloud-id-ecid/#how-the-number-becomes-unique-visitors">Unique visitor</a>
+    <div class="glossary-def">A count of distinct visitor identifiers, which counts browsers rather than people.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/shape/classifications/troubleshooting-maintenance/#which-is-where-unspecified-deserves-a-second-look">Unspecified</a>
+    <div class="glossary-def">The row a report shows when a dimension had no value, which is worth reading rather than hiding.</div>
+  </div>
+</div>
+
+<h3 class="subsec-title gl-letter" id="gl-v">V</h3>
+<div class="glossary-list">
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/deliver/solution-design-reference/validation-and-sign-off/#sign-off-is-theirs-to-give-and-it-has-to-be-recorded">Validation and sign-off</a>
+    <div class="glossary-def">Testing each solution against its ID and recording who accepted it, which is what closes an implementation.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/deliver/solution-design-reference/variable-mapping/#the-map-answers-a-different-question-from-the-design">Variable mapping</a>
+    <div class="glossary-def">The list of every variable slot and what occupies it, including the ones still free.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/foundations/variables/variable-planning/#start-from-the-end-report-not-the-variables">Variable planning</a>
+    <div class="glossary-def">Choosing variables by starting from the report you want and working backwards to what must be collected.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/foundations/report-suites/virtual-report-suites/#one-suite-one-differentiator-many-views">Virtual report suite (VRS)</a>
+    <div class="glossary-def">A filtered view of a real report suite, defined by a segment and costing no additional server calls.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/foundations/adobe-analytics-fundamentals/key-terminology/#a-visit-ends-four-ways-and-only-one-of-them-is-famous">Visit</a>
+    <div class="glossary-def">A sequence of hits from one visitor, which can end in four different ways and not only by going idle.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/analyze/data-feeds/data-feed-contents/#the-columns-worth-knowing-by-name">Visit number</a>
+    <div class="glossary-def">A counter recording which visit in a visitor's history the current one is.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/deliver/adobe-analytics-cja/cross-device-analytics/#a-visitor-is-a-browser-not-a-person">Visitor</a>
+    <div class="glossary-def">What Adobe Analytics counts as an individual, which is a browser rather than a person.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/shape/vista-rules/what-are-vista-rules/#what-a-vista-rule-is">VISTA rule</a>
+    <div class="glossary-def">A rule Adobe configures for you further back in the pipeline than anything you can reach yourself.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/analyze/analysis-workspace/visualizations/#there-are-two-dozen-shapes-and-you-will-use-about-five">Visualization</a>
+    <div class="glossary-def">Any chart in Workspace, each of which is a drawing of a table that exists underneath it.</div>
+  </div>
+</div>
+
+<h3 class="subsec-title gl-letter" id="gl-w">W</h3>
+<div class="glossary-list">
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/shape/marketing-channels/marketing-channel-processing-rules/#the-waterfall-and-why-order-decides-everything">Waterfall</a>
+    <div class="glossary-def">The top to bottom evaluation of channel rules, where the first rule to match wins and the rest never run.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/collect/data-collection/adobe-web-sdk/#where-the-web-sdk-sits">Web SDK</a>
+    <div class="glossary-def">Adobe's newer collection library, which sends one payload to the Edge Network instead of one call per product.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/analyze/segments/sequential-segments/#tightening-the-gap-after-and-within">Within and After</a>
+    <div class="glossary-def">The time constraints that stop a sequential segment matching two events that happened months apart.</div>
+  </div>
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/analyze/analysis-workspace/workspace-performance-and-limits/#the-guardrails-and-what-they-are-actually-telling-you">Workspace limits</a>
+    <div class="glossary-def">The guardrails on project size and complexity, which usually signal a design problem rather than a technical ceiling.</div>
+  </div>
+</div>
+
+<h3 class="subsec-title gl-letter" id="gl-x">X</h3>
+<div class="glossary-list">
+  <div class="glossary-item">
+    <a class="glossary-term" href="/adobe-analytics-learning/collect/data-collection/adobe-web-sdk/#what-adobe-built-instead-a-platform-and-a-shared-language">XDM</a>
+    <div class="glossary-def">Experience Data Model, the shared vocabulary every Adobe product on Platform reads data through.</div>
+  </div>
+</div>

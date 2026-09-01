@@ -1,4 +1,5 @@
 ---
+outputs: ["HTML","JSON"]
 title: "AppMeasurement → Web SDK Migration"
 seotitle: "AppMeasurement to Adobe Web SDK Migration Guide"
 description: "A complete, field-tested guide to migrating Adobe Analytics from AppMeasurement to the Experience Platform Web SDK — schema, datastream, identity, consent, parity."

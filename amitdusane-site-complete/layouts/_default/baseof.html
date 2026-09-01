@@ -219,15 +219,23 @@
     </div>
   </div>
 
-  {{ if $mig }}
+  {{/* Search belongs to every world, not just the migration one. The overlay
+       markup and search.js used to sit inside the `if $mig` block, which is why
+       the learning world shipped a search button that did nothing for months.
+       The only per-world part is which index it reads. */}}
+  {{ if or $mig $learn }}
   <div class="search-overlay" id="searchOverlay" hidden>
-    <div class="search-box" role="dialog" aria-modal="true" aria-label="Search the guide">
-      <div class="search-in"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg><input id="searchInput" type="text" placeholder="Search steps, topics, and references&hellip;" autocomplete="off" spellcheck="false" aria-label="Search"><kbd>Esc</kbd></div>
-      <div class="search-results" id="searchResults"><div class="search-hint">Type to search the guide.</div></div>
+    <div class="search-box" role="dialog" aria-modal="true" aria-label="Search this section">
+      <div class="search-in"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg><input id="searchInput" type="text" placeholder="{{ if $learn }}Search sections, concepts, and terms&hellip;{{ else }}Search steps, topics, and references&hellip;{{ end }}" autocomplete="off" spellcheck="false" aria-label="Search"><kbd>Esc</kbd></div>
+      <div class="search-results" id="searchResults"><div class="search-hint">Type to search.</div></div>
     </div>
   </div>
-  <script>window.SEARCH_INDEX="{{ "index.json" | relURL }}";</script>
+  {{/* Each world searches its own index. SEARCH_HINTS is the tiny cross-world
+       titles file, used only to say a term is also covered elsewhere. */}}
+  <script>window.SEARCH_INDEX="{{ (printf "%s/index.json" $world.root) | relURL }}";window.SEARCH_HINTS="{{ "index.json" | relURL }}";window.SEARCH_WORLD="{{ .Section }}";</script>
   <script src="{{ "search.js" | relURL }}?v={{ substr (sha256 (readFile "static/search.js")) 0 10 }}"></script>
+  {{ end }}
+  {{ if $mig }}
   <script src="{{ "world-migration.js" | relURL }}"></script>
   {{ end }}
   {{ if $learn }}
