@@ -147,7 +147,7 @@ Platform	navigation	1	Left sidebar module navigation	Feature	layouts/_default/ba
 Platform	navigation	2	Pocket map (where this fits)	Feature	layouts/partials/wherefits.html		NA		NA	0	0	Yes	No	No
 Platform	navigation	3	Home map	Feature	layouts/partials/homemap.html		NA		NA	0	0	Yes	No	No
 Platform	navigation	4	Previous and next section links	Feature	layouts/_default/baseof.html		NA		NA	0	0	Yes	No	No
-Platform	navigation	5	Learning-world search	Feature	static/world-learning.js		NA		NA	0	0	No	No	No
+Platform	navigation	5	Site-wide search: per-world index, cross-world hint, both worlds	Feature	static/search.js		NA		NA	0	0	Yes	No	No
 Platform	navigation	6	Migration-world search	Feature	static/search.js		NA		NA	0	0	Yes	No	No
 Platform	navigation	7	Search index generation	Feature	layouts/index.json		NA		NA	0	0	Yes	No	No
 Platform	presentation	8	Dual-world stylesheet switching	Feature	layouts/partials/head.html		NA		NA	0	0	Yes	No	No
@@ -226,3 +226,13 @@ Platform	presentation		Five worked Kestrel and Co. workbooks published as downlo
 Platform	presentation		Module downloads as furniture: a strip under the byline and a card pinned to the top of the in-page spine, on every section of a module that declares files	Feature	layouts/partials/moduledocs.html	NA	NA	NA	NA	NA	NA	Yes	No	No
 Platform	presentation		M19 screenshots: nineteen cell-range exports from the Kestrel workbooks, the first shots on the site taken from our own documents	Feature	amitdusane-site-complete/static/img/	NA	NA	NA	NA	NA	NA	Yes	No	No
 Platform	presentation		tbl-hint: a generated line above any table that still scrolls on a phone after the fitting ladder	Feature	static/world-learning.js	NA	NA	NA	NA	NA	NA	Yes	No	No
+Platform	chrome		Global site header: logo + amitdusane.com + section name, one partial for every world	Feature	layouts/partials/siteheader.html	NA	NA	NA	NA	NA	NA	Yes	No	No
+Platform	chrome		Header responsive: one row above 1180, two rows below, hamburger joins row two below 880	Feature	static/chrome.css	NA	NA	NA	NA	NA	NA	Yes	No	No
+Platform	presentation		Manrope wordmark, self-hosted and preloaded, used nowhere else on the site	Feature	static/fonts/manrope-latin-wght-normal.woff2	NA	NA	NA	NA	NA	NA	Yes	No	No
+Platform	presentation		IBM Plex promoted to the site typeface; migration moved off the system stack	Feature	static/chrome.css	NA	NA	NA	NA	NA	NA	Yes	No	No
+Platform	chrome		Global print document: one partial, one filler, section name swapped per world	Feature	layouts/partials/printdoc.html	NA	NA	NA	NA	NA	NA	Yes	No	No
+Platform	chrome		Byline made global; dates added to all 38 migration pages	Feature	static/chrome.css	NA	NA	NA	NA	NA	NA	Yes	No	No
+Platform	presentation		Figure zoom, overlay and hint lifted global; migration figures fit the phone	Feature	static/figures.js	NA	NA	NA	NA	NA	NA	Yes	No	No
+Platform	chrome		Ask Amit bar lifted global, shows at half the article, re-arms on leaving the zone	Feature	static/askbar.js	NA	NA	NA	NA	NA	NA	Yes	No	No
+Platform	chrome		Theme toggle deduplicated into siteheader.js; both worlds had identical copies	Feature	static/siteheader.js	NA	NA	NA	NA	NA	NA	Yes	No	No
+Platform	tech-debt		Heading anchors made one partial, shared by lesson/single.html and the search index	Feature	layouts/partials/anchored-content.html	NA	NA	NA	NA	NA	NA	Yes	No	No

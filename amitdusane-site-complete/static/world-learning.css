@@ -36,7 +36,11 @@
      borders and icons. Never set small type in the bare token. */
   --success-ink:#0a6e50; --warning-ink:#8a5700; --info-ink:#1d4ed8; --danger-ink:#a4161a;
   --label-ls:.085em;
-  --sidebar-w:280px; --header-h:60px; --logo-ink:#1E3A8A; --tagline-accent:#1E3A8A;
+  /* --header-h is owned by chrome.css, which the global header lives in. It must
+     NOT be redeclared here: this file loads after chrome.css, and a media query
+     adds no specificity, so a plain :root value here would beat chrome's
+     responsive one and pin the header at its desktop height on a phone. */
+  --sidebar-w:280px; --logo-ink:#1E3A8A; --tagline-accent:#1E3A8A;
 
   /* ---------------------------------------------------------------------
      ACCENT (COL-01 / COL-04 / COL-06, 18 Aug 2026)
@@ -209,16 +213,9 @@ a:hover{text-decoration:underline}
 .section a strong, .section a b{font-weight:inherit}
 
 /* ---------- Header ---------- */
-.lhead{position:fixed;top:0;left:0;right:0;height:var(--header-h);background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 16px;z-index:1000;gap:16px}
-.lmenu-btn{display:none;background:none;border:none;color:var(--text1);cursor:pointer;padding:8px}
-.llogo{display:flex;align-items:center;gap:10px;text-decoration:none}
-.llogo-icon{width:58px;height:58px;display:flex;align-items:center;justify-content:center;color:var(--logo-ink);flex:none}
-.llogo-text{font-size:16px;font-weight:700;color:var(--text1)}
-.llogo-author{font-size:13px;color:var(--text2);margin-top:2px}
-.llogo-author b{color:var(--accent);font-weight:700}
-.lsearch-btn{flex:1;max-width:320px;display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:6px;color:var(--text3);font-size:13px;cursor:pointer}
-.lsearch-btn:hover{border-color:var(--accent)}
-.lsearch-btn .lsk{margin-left:auto;font-size:11px;border:1px solid var(--border);border-radius:5px;padding:1px 6px}
+/* The header moved to chrome.css as the .site-* component on 2 Sep 2026. It is
+   one shared thing now, used by every world, so its rules cannot live inside
+   a single world stylesheet. */
 
 /* ---------------------------------------------------------------------------
    SEARCH OVERLAY
@@ -252,9 +249,6 @@ a:hover{text-decoration:underline}
 .shint-lead{display:block;font-size:var(--fs-micro);font-weight:700;color:var(--text2);margin-bottom:5px}
 .search-results .shint-a{display:block;font-size:var(--fs-meta);padding:3px 0;color:var(--accent);text-decoration:none}
 .search-results .shint-a:hover{text-decoration:underline}
-.lhead-right{display:flex;align-items:center;gap:10px;margin-left:auto}
-.licon-btn{background:var(--bg3);border:1px solid var(--border);color:var(--text1);padding:7px;border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center}
-.licon-btn:hover{border-color:var(--accent)}
 
 /* ---------- Sidebar ---------- */
 .lsidebar{position:fixed;top:var(--header-h);left:0;width:var(--sidebar-w);height:calc(100vh - var(--header-h));background:var(--bg2);border-right:1px solid var(--border);overflow-y:auto;z-index:900;transition:transform .3s}
@@ -330,24 +324,6 @@ a:hover{text-decoration:underline}
    in 44.6KB, against four or five static files. The single 800 in the
    stylesheet clamps to 700 and is not used on a section page.
 
-   These @font-face rules are global but cost the other 115 sections nothing:
-   a face is only fetched when something actually uses it, and the family is
-   applied under body.world-learning alone.
-   -------------------------------------------------------------------------- */
-@font-face{
-  font-family:'IBM Plex Sans';
-  font-style:normal;
-  font-weight:100 700;              /* variable axis */
-  font-display:swap;
-  src:url('fonts/ibm-plex-sans-latin-wght-normal.woff2') format('woff2');
-}
-@font-face{
-  font-family:'IBM Plex Mono';
-  font-style:normal;
-  font-weight:400;
-  font-display:swap;
-  src:url('fonts/ibm-plex-mono-latin-400-normal.woff2') format('woff2');
-}
 
 /* TYP-04 site-wide: IBM Plex is the learning world font. */
 /* Mono is applied per selector because the base rules hardcode Consolas and
@@ -679,9 +655,8 @@ body.world-learning .welcome-btn:hover{background:var(--accent2);text-decoration
 .lpn .lpn-next{text-align:right}
 
 /* ---------- Mobile drawer ---------- */
-.loverlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:850}
+
 @media(max-width:880px){
-  .lmenu-btn{display:flex}
   .lsidebar{transform:translateX(-100%)}
   body.lnav-open .lsidebar{transform:translateX(0)}
   body.lnav-open .loverlay{display:block}
@@ -692,26 +667,29 @@ body.world-learning .welcome-btn:hover{background:var(--accent2);text-decoration
      main way anybody finds anything, so it keeps its place in the header and
      the label is what gets dropped. Sized to the same 34px target as the print
      and theme buttons beside it. */
-  .lsearch-btn{flex:0 0 auto;width:34px;height:34px;max-width:none;margin-left:auto;padding:0;justify-content:center;border-radius:8px}
-  .lsearch-btn span{display:none}
-  .lsearch-btn svg{width:16px;height:16px}
   /* TYP-01: the mobile step of the type scale is a TOKEN override, not a
      per-component one. This block previously redefined eight components
      individually and dropped body prose to 13px, which is too small for
      long-form reading and is the rendering Google indexes. Add a component
      override here only for something the scale genuinely cannot express. */
   :root{
-    --header-h:52px;
+    /* --header-h is set by the 1180 block above, which is where the header
+       becomes two rows; it is deliberately not repeated here. */
     --fs-title:27px; --fs-h3:20px; --fs-body:16.5px; --fs-sm:14.5px;
     --fs-label:13.5px; --fs-meta:12px; --fs-micro:11px; --fs-code:13px;
     /* TYP-03: the spacing step scales with the type step, so the heading
        keeps its four-to-one ratio on a phone instead of collapsing. */
     --sp-xs:5px; --sp-sm:10px; --sp-md:15px; --sp-lg:24px; --sp-xl:36px;
   }
-  .lhead{padding:0 12px;gap:10px}
-  .llogo-text{font-size:14px}
-  .llogo-author{display:none}
-  .llogo-icon{width:48px;height:48px}
+  /* The whole chain does not fit a phone: hamburger, mark, amitdusane.com, rule,
+     section name and three icon buttons come to more than 375px before padding.
+     The WORDMARK is what drops, not the section name. The mark is still the link
+     to the site root, so tapping it goes home exactly as it does on desktop, and
+     the section name is the half that tells a reader where they actually are. */
+  /* Back to a flex row on a phone. The centred grid is a desktop idea: at 375px
+     a 34px search icon marooned in the middle would squeeze the section name
+     from both sides, so the icons group at the right edge as they did before
+     and the identity cluster takes the space that is left. */
   .path-box{padding:12px 14px}
   body.world-learning .lcontent .path{padding:2px 7px}
   .ref-box{padding:12px 13px}
@@ -773,19 +751,7 @@ body.world-learning .welcome-btn:hover{background:var(--accent2);text-decoration
   .print-doc .lupdated{font-size:8.5pt;color:#6b7280;margin:-4pt 0 10pt;padding-left:0}
   .print-doc .lupdated time{font-weight:600}
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  .lhead,.lsidebar,.loverlay,.lmain{display:none !important}
-  .print-doc{display:table !important;width:100%;border-collapse:collapse;table-layout:fixed}
-  .print-doc thead{display:table-header-group}
-  .print-doc tfoot{display:table-footer-group}
-  .print-doc td{padding:0}
-  .print-doc thead td{border-bottom:2px solid #ba2142;padding-bottom:5px}
-  .print-doc thead .ph-row{display:flex;justify-content:space-between;align-items:baseline;gap:14px}
-  .print-doc thead .ph-brand{display:inline-flex;align-items:center;gap:8px}
-  .print-doc thead .ph-title{font-size:10.5pt;font-weight:700;color:#1c2129}
-  .print-doc thead .ph-ctx{font-size:8.5pt;color:#6b7280;white-space:nowrap}
-  .print-doc thead .ph-by{font-size:9pt;font-weight:600;color:#4b5563;margin-top:2px}
-  .print-doc tfoot td{border-top:2px solid #ba2142;padding-top:5px;text-align:center}
-  .print-doc tfoot span{font-size:8.5pt;color:#4b5563}
+  .site-head,.lsidebar,.loverlay,.lmain{display:none !important}
   .print-doc tbody td{padding:16px 0}
   .print-doc .lcrumb,.print-doc .lpn{display:none !important}
   .print-doc h1,.print-doc h2,.print-doc h3{break-after:avoid;page-break-after:avoid}
@@ -909,7 +875,6 @@ body.world-learning .welcome-btn:hover{background:var(--accent2);text-decoration
      key and whose second is a paragraph. The reported problem was cells
      running together, and that is the borders' job, not the layout's. */
   .print-doc .dothis-hdr{background:#f1f5f9}
-  @page{margin:14mm}
 }
 
 /* ==========================================================================

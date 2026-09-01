@@ -3,6 +3,7 @@
   <p class="crumb"><a href="{{ "/web-sdk-migration/" | relURL }}">Migration</a> &rsaquo; {{ .Title }}</p>
   <div class="eyebrow">References</div>
   <h1>{{ .Title }}</h1>
+  {{ partial "byline.html" (dict "page" . "full" true) }}
   {{ .Content }}
 </section>
 {{ end }}

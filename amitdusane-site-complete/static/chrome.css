@@ -485,3 +485,343 @@ body.wf-lock{overflow:hidden}
 [data-theme="dark"] .ask-note{color:#a2acba}
 
 @media print{.ask-overlay,.ask-bar{display:none !important}}
+
+/* ============================================================================
+   THE SITE HEADER. Global: every world, every page.
+   Markup is layouts/partials/siteheader.html.
+
+   This block carries its OWN colour tokens rather than reading a world's. The
+   two worlds name their palettes differently -- the learning world uses
+   --bg2/--text1/--border, the migration world --bg/--ink/--line -- so a shared
+   component that reached for either would be broken in the other. chrome.css
+   already makes that mistake elsewhere: its overlay rules call var(--ink) and
+   var(--line), which the learning world defines nowhere. Not repeating it here.
+
+   --header-h lives here too, because the header is what sets it and both
+   worlds' layouts read it: the learning sidebar top, content offset, sticky
+   glossary strip and scroll-padding, and the migration rail's top and height.
+   ============================================================================ */
+:root{
+  --header-h:60px;
+  --hdr-bg:#ffffff; --hdr-ink:#0f172a; --hdr-muted:#5d6b7e; --hdr-line:#e2e8f0;
+  --hdr-field:#f1f5f9; --hdr-mark:#1E3A8A; --hdr-accent:#ba2142;
+}
+[data-theme="dark"]{
+  --hdr-bg:#1e293b; --hdr-ink:#f1f5f9; --hdr-muted:#94a3b8; --hdr-line:#334155;
+  --hdr-field:#283340; --hdr-mark:#ffffff; --hdr-accent:#f27893;
+}
+
+/* Three columns so the search box sits at the header's true centre, not at the
+   centre of whatever the identity cluster left over. minmax(0,1fr) on the outer
+   tracks matters: a bare 1fr sizes from content, which made the two sides
+   unequal and put the search 10px off centre at every width. */
+.site-head{position:fixed;top:0;left:0;right:0;box-sizing:border-box;height:var(--header-h);background:var(--hdr-bg);border-bottom:1px solid var(--hdr-line);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,300px) minmax(0,1fr);align-items:center;padding:0 16px;z-index:1000;gap:16px}
+.site-head-left{display:flex;align-items:center;gap:12px;min-width:0}
+.site-menu-btn{display:none;background:none;border:none;color:var(--hdr-ink);cursor:pointer;padding:8px}
+
+/* The mark and the wordmark are ONE link to the site root: adjacent, same
+   destination, so two links would only make a reader wonder if they differ. */
+.site-brand{display:flex;align-items:center;gap:10px;text-decoration:none;flex:none}
+.site-brand:hover{text-decoration:none}
+.site-brand-mark{width:58px;height:58px;display:flex;align-items:center;justify-content:center;color:var(--hdr-mark);flex:none}
+.site-brand-mark svg{width:100%;height:100%;display:block}
+/* Manrope, self-hosted, used nowhere else on the site. That is the point: every
+   other word is Plex Sans or the system stack, so the wordmark reads as a mark
+   rather than as a line of text. Colour tracks the monogram, which inverts to
+   white in dark mode, so a hard-coded indigo would sit at 1.5:1 there while the
+   mark beside it went white. */
+.site-brand-name{font-family:'Manrope',-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:16px;font-weight:700;letter-spacing:-.3px;color:var(--hdr-mark);white-space:nowrap}
+.site-brand:hover .site-brand-name{color:var(--hdr-accent)}
+/* A rule, not a slash or chevron: those read as a breadcrumb and compete with
+   the real breadcrumb directly below. */
+.site-rule{width:1px;height:22px;background:var(--hdr-line);flex:none}
+.site-section{font-family:'Manrope',-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:18px;font-weight:700;color:var(--hdr-ink);text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.site-section:hover{color:var(--hdr-accent);text-decoration:none}
+
+.site-search{width:100%;box-sizing:border-box;display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--hdr-field);border:1px solid var(--hdr-line);border-radius:6px;color:var(--hdr-muted);font-size:13px;font-family:inherit;cursor:pointer}
+.site-search:hover{border-color:var(--hdr-accent)}
+.site-search .site-key{margin-left:auto;font-size:11px;border:1px solid var(--hdr-line);border-radius:5px;padding:1px 6px}
+.site-head-right{display:flex;align-items:center;gap:10px;justify-self:end}
+.site-icon-btn{background:var(--hdr-field);border:1px solid var(--hdr-line);color:var(--hdr-ink);padding:7px;border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.site-icon-btn:hover{border-color:var(--hdr-accent)}
+
+/* ----------------------------------------------------------------------------
+   TWO ROWS FROM 1180 DOWN, not from 880.
+   One row cannot hold both identities plus the controls below roughly 1200px:
+   at 1024 the identity cluster needs 441px on each side of a centred search
+   box, leaving about 63px for the box. Arithmetic, not tuning. The symptom was
+   the section name truncating to a stub while the search kept its full width.
+     row 1   mark + amitdusane.com ............ search  print  theme
+     row 2   section name
+   This block must stay BEFORE the 880 one: equal specificity, so the narrower
+   rules win on source order.
+   ---------------------------------------------------------------------------- */
+@media(max-width:1180px){
+  :root{--header-h:88px}
+  .site-head{display:grid;grid-template-columns:auto 1fr minmax(0,320px) auto;grid-template-rows:auto auto;align-items:center;padding:6px 16px;gap:4px 10px}
+  .site-head-left{display:contents}
+  .site-brand{grid-area:1/1/2/3;gap:10px}
+  .site-rule{display:none}
+  /* 44 because two rows plus a 58px mark overflow the 88px header:
+     58 + 4 gap + 22 section + 12 padding is 96. */
+  .site-brand-mark{width:44px;height:44px}
+  .site-brand-name{font-size:15px}
+  .site-search{grid-area:1/3/2/4}
+  .site-head-right{grid-area:1/4/2/5}
+  .site-section{grid-area:2/1/3/5;overflow:visible;text-overflow:clip;line-height:1.25}
+}
+
+/* Below 880 the drawer appears, so the hamburger joins row two beside the
+   section name. Its box is given the mark's width and its icon centred, so the
+   two align on one vertical axis: both already started at the same x, but a
+   44px mark against a ~32px button put their centres 6px apart. */
+@media(max-width:880px){
+  .site-head{grid-template-columns:auto 1fr auto auto;padding:5px 12px;gap:4px 8px}
+  .site-menu-btn{display:flex;grid-area:2/1/3/2;width:44px;padding:8px 0;justify-content:center;justify-self:start}
+  .site-brand-name{font-size:15px}
+  .site-search{grid-area:1/3/2/4;flex:0 0 auto;width:34px;height:34px;padding:0;justify-content:center;border-radius:8px}
+  .site-search span{display:none}
+  .site-search svg{width:16px;height:16px}
+  .site-section{grid-area:2/2/3/5;font-size:15px}
+}
+
+/* Manrope carries the wordmark in the global header, so the face belongs here
+   rather than in one world's stylesheet. Self-hosted like the rest: the site
+   loads nothing from a CDN. It is fetched only because the header uses it. */
+@font-face{
+  font-family:'Manrope';
+  font-style:normal;
+  font-weight:200 800;              /* variable axis */
+  font-display:swap;
+  src:url('fonts/manrope-latin-wght-normal.woff2') format('woff2');
+}
+
+/* IBM Plex is now the site typeface, not the learning world's alone. The faces
+   live here because chrome.css is the one stylesheet every world loads. */
+   These @font-face rules are global but cost the other 115 sections nothing:
+   a face is only fetched when something actually uses it, and the family is
+   applied under body.world-learning alone.
+   -------------------------------------------------------------------------- */
+@font-face{
+  font-family:'IBM Plex Sans';
+  font-style:normal;
+  font-weight:100 700;              /* variable axis */
+  font-display:swap;
+  src:url('fonts/ibm-plex-sans-latin-wght-normal.woff2') format('woff2');
+}
+@font-face{
+  font-family:'IBM Plex Mono';
+  font-style:normal;
+  font-weight:400;
+  font-display:swap;
+  src:url('fonts/ibm-plex-mono-latin-400-normal.woff2') format('woff2');
+}
+
+/* ============================================================================
+   BYLINE. Global: who wrote this, the credential, the dates, the read time.
+   Built by layouts/partials/byline.html.
+
+   The learning world keeps its own copy of these rules scoped through
+   body.world-learning .lcontent, which is more specific and therefore still
+   wins there. That is deliberate: this block exists so the OTHER worlds get a
+   byline at all, without changing a pixel of the one Amit already signed off.
+
+   Sizes are literal rather than tokenised because chrome.css carries no type
+   scale, and inventing one here would be a second scale to keep in step.
+   ============================================================================ */
+.byline{
+  display:flex; flex-wrap:wrap; align-items:center; gap:5px 11px;
+  margin:0 0 30px; padding:11px 0;
+  border-top:1px solid var(--hdr-line); border-bottom:1px solid var(--hdr-line);
+  font-size:12.5px; color:var(--hdr-muted); line-height:1.5;
+}
+/* The name carries by SIZE, not by looking like a link: underlined crimson made
+   the byline read as a row of links, and plain dark text read as a label nobody
+   would click. The underline arrives on hover only. */
+.byline .by-who{font-size:15.5px; font-weight:700; color:var(--hdr-ink); text-decoration:none; letter-spacing:-.008em}
+.byline .by-who:hover{color:var(--hdr-accent); text-decoration:underline; text-decoration-thickness:1.5px; text-underline-offset:3px}
+.byline-lite{margin-bottom:12px}
+.byline .by-pre{font-size:12.5px; color:var(--hdr-muted)}
+.byline .by-cred,.byline .by-date,.byline .by-read{color:var(--hdr-muted)}
+.byline .by-date,.byline .by-read{white-space:nowrap}
+.byline .by-sep{color:var(--hdr-muted); opacity:.7}
+@media(max-width:600px){
+  /* Three deliberate lines on a phone: who, the credential, then the dates and
+     read time together. Letting it wrap freely broke mid-credential. */
+  .byline{gap:3px 9px}
+  .byline .by-who{flex:1 0 100%}
+  .byline .by-cred{flex:1 0 100%; order:2}
+  .byline .by-sep{display:none}
+  .byline .by-date{order:3}
+  .byline .by-read{order:4}
+  .byline .by-read::before{content:"\00B7\00A0"; opacity:.7}
+}
+
+/* ============================================================================
+   FIGURES: the zoom control, the overlay and the hint. Global.
+   Built by figures.js.
+
+   The learning world keeps its own copies of these rules and they are more
+   specific, so nothing there changes. This block exists so the migration world
+   gets the same behaviour: on a phone the drawing shrinks to fit the column and
+   a button opens it at full size, instead of a horizontal scroller that leaves
+   half the figure off-screen with nothing saying so.
+   ============================================================================ */
+.shot-ov{position:fixed;top:0;right:0;bottom:0;left:0;z-index:9999;background:rgba(15,23,42,.93);display:none}
+.shot-ov.open{display:block}
+.shot-ov-scroll{position:absolute;top:0;right:0;bottom:0;left:0;overflow:auto;-webkit-overflow-scrolling:touch;padding:58px 16px 24px}
+.shot-ov-scroll img{display:block;margin:0 auto;max-width:none;height:auto}
+/* [hidden] must be re-asserted: display:block above is (0,1,1) and the UA's
+   [hidden] rule is (0,1,0), so without this a srcless image sits above every
+   expanded diagram showing its alt text and a broken-image icon. */
+.shot-ov-scroll img[hidden]{display:none}
+/* The card follows the theme because the artwork does: figures paint from
+   theme tokens, so a fixed white ground gives washed-out shapes in dark mode. */
+.shot-ov-svg{margin:0 auto;width:max-content;border-radius:4px;padding:14px;background:var(--hdr-bg);border:1px solid var(--hdr-line)}
+.shot-ov-svg[hidden]{display:none}
+.shot-ov-close{position:fixed;top:12px;right:14px;z-index:2;width:38px;height:38px;padding:0;border:1px solid rgba(255,255,255,.28);border-radius:8px;background:rgba(15,23,42,.85);color:#fff;font-size:20px;line-height:1;cursor:pointer}
+.shot-ov-hint{position:fixed;top:20px;left:16px;z-index:2;color:rgba(255,255,255,.72);font-size:12px;font-weight:600}
+body.shot-ov-open{overflow:hidden}
+
+/* The frame figures.js wraps around the drawing, so a button can sit on it. */
+figure.fig-svg .diagram-frame{position:relative}
+figure.fig-svg .diagram-zoom-btn{display:none}
+figure.fig-svg .fig-hint{display:none}
+
+@media(max-width:880px){
+  /* Shrink to fit rather than scroll sideways. A scroller inside a page is
+     easy to miss, which is the whole reason the control exists. */
+  figure.fig-svg{overflow-x:hidden}
+  figure.fig-svg .diagram-frame{overflow-x:hidden}
+  figure.fig-svg .diagram-frame > svg{min-width:0;width:100%}
+  figure.fig-svg .diagram-zoom-btn{
+    position:absolute;top:8px;right:8px;
+    display:flex;align-items:center;justify-content:center;
+    width:30px;height:30px;padding:0;font-size:15px;line-height:1;
+    border:1px solid var(--hdr-line);border-radius:6px;
+    background:var(--hdr-bg);color:var(--hdr-muted);cursor:pointer;
+  }
+  figure.fig-svg .diagram-zoom-btn[hidden]{display:none}
+  figure.fig-svg .fig-hint{display:block;margin:0 0 6px;font-size:11px;color:var(--hdr-muted);line-height:1.45}
+  figure.fig-svg .fig-hint[hidden]{display:none}
+}
+
+/* ============================================================================
+   ASK AMIT BAR. Global. Built by askbar.js.
+
+   Arrives past three quarters of a read and gets out of the way once the
+   prev/next block is on screen. The learning world keeps its own copies of
+   these rules, which use its tokens and load later, so it is unchanged; this
+   block is what gives the migration world the same bar.
+   ============================================================================ */
+.ask-bar{
+  display:flex; align-items:center; gap:10px;
+  position:fixed; z-index:930;
+  bottom:calc(12px + env(safe-area-inset-bottom, 0px));
+  padding:11px 14px; border-radius:12px;
+  background:var(--hdr-bg); border:1px solid var(--hdr-line);
+  box-shadow:0 8px 26px rgba(15,23,42,.18);
+  opacity:0; pointer-events:none;
+  transition:transform .32s cubic-bezier(.2,.8,.3,1), opacity .22s ease;
+}
+.ask-bar > a{flex:1; display:flex; align-items:baseline; gap:7px; text-decoration:none; min-width:0}
+.ask-bar span{font-size:15px; color:var(--hdr-muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+/* "Ask Amit" in the migration world's own blue rather than the header's crimson,
+   so the call to action belongs to the section it appears in. This rule only
+   reaches the migration world: the learning world carries its own .ask-bar
+   rules, which load later and keep its crimson. The dark value is that world's
+   dark accent, not a lightened version of the light one. */
+.ask-bar b{flex:none; font-size:15px; font-weight:700; color:#1f5fae}
+[data-theme="dark"] .ask-bar b{color:#5fa1e6}
+.ask-bar-x{flex:none; width:30px; height:30px; border:none; border-radius:8px; background:transparent;
+           color:var(--hdr-muted); font-size:20px; line-height:1; cursor:pointer}
+.ask-bar-x:hover{background:var(--hdr-field); color:var(--hdr-ink)}
+[data-theme="dark"] .ask-bar{box-shadow:0 8px 26px rgba(0,0,0,.5)}
+
+@media(max-width:1243px){
+  .ask-bar{left:12px; right:12px; transform:translateY(calc(100% + 24px))}
+  .ask-bar.is-in{transform:none; opacity:1; pointer-events:auto}
+  /* The bar spans the width and the bottom-right corner is already occupied by
+     the About mark, which collides with it exactly at 390. Both lift by the
+     bar's height while it shows. `bottom` rather than `transform`, because
+     .author-fab:hover sets transform:none and would cancel a translate
+     mid-hover, making the mark jump. */
+  body.ask-bar-in .author-fab{bottom:calc(84px + env(safe-area-inset-bottom, 0px))}
+  body.ask-bar-in .wf-nav-fab{bottom:calc(178px + env(safe-area-inset-bottom, 0px))}
+  .author-fab,.wf-nav-fab{transition:bottom .32s cubic-bezier(.2,.8,.3,1)}
+}
+@media(min-width:1244px){
+  .ask-bar{left:50%; width:min(430px, calc(100vw - 48px)); transform:translateX(-50%) translateY(calc(100% + 24px))}
+  .ask-bar.is-in{transform:translateX(-50%); opacity:1; pointer-events:auto}
+}
+/* A bar that slides is a bar that moves under the reader's thumb. */
+@media(prefers-reduced-motion:reduce){.ask-bar{transition:none}}
+
+/* The Ask overlay takes its accent from the world it opens in. Scoped rather
+   than edited in place: the base rules above are crimson and are shared, so
+   changing them would repaint the learning world's overlay too. */
+body.world-migration .ask-kicker{color:#1f5fae}
+body.world-migration .ask-route:hover{border-color:#1f5fae}
+body.world-migration .ask-route:hover .ask-route-ico{color:#1f5fae}
+body.world-migration .ask-route:hover .ask-route-act{color:#1f5fae}
+body.world-migration .ask-route.is-copied{border-color:#1f5fae}
+body.world-migration .ask-route.is-copied .ask-route-act{color:#1f5fae}
+[data-theme="dark"] body.world-migration .ask-kicker{color:#5fa1e6}
+[data-theme="dark"] body.world-migration .ask-route:hover{border-color:#5fa1e6}
+[data-theme="dark"] body.world-migration .ask-route:hover .ask-route-ico{color:#5fa1e6}
+[data-theme="dark"] body.world-migration .ask-route:hover .ask-route-act{color:#5fa1e6}
+[data-theme="dark"] body.world-migration .ask-route.is-copied{border-color:#5fa1e6}
+[data-theme="dark"] body.world-migration .ask-route.is-copied .ask-route-act{color:#5fa1e6}
+
+/* ============================================================================
+   THE PRINT DOCUMENT. Global. Markup is partials/printdoc.html, filled by
+   printdoc.js.
+
+   .print-doc is NOT a wrapper, it is a layout <table>: the thead cell carries
+   the running header repeated on every sheet, the tfoot cell the footer, and
+   the single tbody cell holds the whole article. So `.print-doc td` means "the
+   page", not "a table cell in the content" -- a rule written that way once put
+   a border round the entire sheet and set every paragraph to 8.5pt. Scope every
+   print rule for a content element through the class that identifies it.
+
+   Only the document chrome is here. Each world keeps its own print rules for
+   its own components, because their content is genuinely different: the
+   learning world has dothis blocks and a spine to hide, the migration world has
+   step navigation and a why-row. Sharing those would mean rules that are dead
+   in one world and load-bearing in the other.
+   ============================================================================ */
+@media print{
+  .print-doc{display:table !important;width:100%;border-collapse:collapse;table-layout:fixed}
+  .print-doc thead{display:table-header-group}
+  .print-doc tfoot{display:table-footer-group}
+  .print-doc td{padding:0}
+  .print-doc thead td{border-bottom:2px solid #ba2142;padding-bottom:5px}
+  .print-doc thead .ph-row{display:flex;justify-content:space-between;align-items:baseline;gap:14px}
+  .print-doc thead .ph-brand{display:inline-flex;align-items:center;gap:8px}
+  .print-doc thead .ph-title{font-size:10.5pt;font-weight:700;color:#1c2129}
+  .print-doc thead .ph-ctx{font-size:8.5pt;color:#6b7280;white-space:nowrap}
+  .print-doc thead .ph-by{font-size:9pt;font-weight:600;color:#4b5563;margin-top:2px}
+  .print-doc tfoot td{border-top:2px solid #ba2142;padding-top:5px;text-align:center}
+  .print-doc tfoot span{font-size:8.5pt;color:#4b5563}
+  .print-doc tbody td{padding:16px 0;color:#1c2129}
+  /* The live chrome never prints, in any world. */
+  .site-head,.author-fab,.about-overlay,.ask-overlay,.ask-bar{display:none !important}
+  @page{margin:14mm}
+}
+
+@media print{
+  /* The running header's rules take the world's own accent. Crimson is the
+     learning world's; the migration world is blue, and printing its guide with
+     a crimson rule made the sheet look like it belonged to the other section. */
+  body.world-migration .print-doc thead td{border-bottom-color:#1f5fae}
+  body.world-migration .print-doc tfoot td{border-top-color:#1f5fae}
+  /* The fixed header needs no room on paper. body.world-migration carries a
+     padding-top of --header-h so the live page clears the fixed header, and it
+     survived into print as a band of white above the running header on every
+     sheet. Nothing is fixed on paper, so the offset has no job here. */
+  body.world-migration{padding-top:0 !important}
+  /* Breadcrumbs are screen navigation. The learning world already dropped its
+     .lcrumb; this is the migration equivalent, which was printing a "Migration
+     > Knowledge Base > ..." line directly above the title that repeats it. */
+  .print-doc .crumb{display:none !important}
+}

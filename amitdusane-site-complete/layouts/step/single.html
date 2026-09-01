@@ -9,6 +9,7 @@
   {{ $pct := int (math.Round (mul (div (float .Params.stepnum) $total) 100)) }}
   <div class="progress"><span class="eyebrow">Step {{ printf "%02d" .Params.stepnum }} of {{ $total }}</span><div class="track"><div class="fill" style="width:{{ $pct }}%"></div></div><span class="pc">{{ $pct }}% complete</span></div>
   <h1>{{ .Title }}</h1>
+  {{ partial "byline.html" (dict "page" . "full" true) }}
   {{ .Content }}
   <nav class="stepnav" aria-label="Step navigation">
     {{ if gt $idx 0 }}{{ $p := index $steps (sub $idx 1) }}<a class="prev" href="{{ $p.RelPermalink }}"><span class="lbl">Previous</span>&larr; {{ $p.Title }}</a>{{ else }}<span class="prev placeholder">&middot;</span>{{ end }}

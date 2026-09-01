@@ -1,7 +1,7 @@
 {{ define "main" }}
 {{ $mod := .Parent }}
 {{ $cur := . }}
-<p class="lcrumb"><a href="{{ "/adobe-analytics-learning/" | relURL }}">Adobe Analytics Learning</a> &rsaquo; <a href="{{ $mod.Parent.RelPermalink }}">{{ $mod.Parent.Title }}</a> &rsaquo; <a href="{{ $mod.RelPermalink }}">{{ $mod.Title }}</a></p>
+<p class="lcrumb"><a href="{{ $mod.Parent.RelPermalink }}">{{ $mod.Parent.Title }}</a> &rsaquo; <a href="{{ $mod.RelPermalink }}">{{ $mod.Title }}</a></p>
 <h1 class="lsec-title">{{ .Title }}</h1>
 {{ partial "byline.html" (dict "page" . "full" true) }}
 {{ partial "moduledocs.html" . }}

@@ -42,10 +42,17 @@
        the only world that uses them. The migration world keeps the system stack
        and never fetches them. `crossorigin` is required on font preloads even
        same-origin, or the browser fetches the file a second time. */}}
-  {{ if eq .Section "adobe-analytics-learning" }}
+  {{/* Plex is the site typeface now, not the learning world's alone, so both
+       faces preload everywhere. Mono is included because code blocks and the
+       glossary use it in either world. */}}
   <link rel="preload" href="{{ "fonts/ibm-plex-sans-latin-wght-normal.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="{{ "fonts/ibm-plex-mono-latin-400-normal.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
-  {{ end }}
+  {{/* Manrope carries the wordmark in the global header, so it is preloaded on
+       EVERY page rather than only in the learning world. The header is fixed
+       and above the fold everywhere; without this the mark renders in the
+       fallback stack and visibly reflows when the face lands, on the one
+       element that is meant to be the site's identity. */}}
+  <link rel="preload" href="{{ "fonts/manrope-latin-wght-normal.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
   {{/* INF-06. One lookup instead of a branch per world. The cache-busting hash
        is still computed per file, from whichever stylesheet the world names. */}}
   {{ with index .Site.Params.worlds .Section }}<link rel="stylesheet" href="{{ .css | relURL }}?v={{ substr (sha256 (readFile (printf "static/%s" .css))) 0 10 }}">{{ else }}

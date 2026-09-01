@@ -12,7 +12,7 @@
     --ok:#1f7a4d; --ok-soft:#e9f4ee; --warn:#9a5b00; --warn-soft:#fbf2e3;
     --danger:#a13030; --danger-soft:#f8ecec; --story:#5a4a86; --story-soft:#efecf6;
     --code-bg:#1c2128; --code-ink:#e7ebf0;
-    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --sans:'IBM Plex Sans',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
     --serif:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
     --mono:"SFMono-Regular",ui-monospace,Menlo,Consolas,monospace;
     --rail:300px; --panel:480px; --measure:760px;
@@ -63,7 +63,7 @@
 
   /* ---------- Layout ---------- */
   .layout{display:flex;align-items:flex-start}
-  .rail{position:sticky;top:64px;width:var(--rail);height:calc(100vh - 64px);overflow-y:auto;
+  .rail{position:sticky;top:var(--header-h);width:var(--rail);height:calc(100vh - var(--header-h));overflow-y:auto;
     border-right:1px solid var(--line);background:var(--page);padding:14px 0 60px}
   .rail .grp{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--ink);font-weight:800;
     margin:6px 18px 8px;display:flex;align-items:center;gap:8px}
@@ -252,17 +252,18 @@
   .ref-host{font-size:11px;color:var(--faint);font-variant-numeric:tabular-nums}
 
   /* ---------- Responsive ---------- */
-  .railmore,.railmore-h{display:none}
+  /* The rail's "More" group is permanent now. It used to be the mobile half of
+     a pair, hidden here and swapped in below 1000px while .topnav carried the
+     same two links in the header. The header nav is gone, so this is the only
+     route to Knowledge Base and References and must not be display:none at any
+     width. */
   @media(max-width:1000px){
-    .rail{position:fixed;top:64px;left:0;z-index:65;transform:translateX(-100%);transition:transform .2s;box-shadow:0 10px 40px rgba(0,0,0,.18)}
+    .rail{position:fixed;top:var(--header-h);left:0;z-index:65;transform:translateX(-100%);transition:transform .2s;box-shadow:0 10px 40px rgba(0,0,0,.18)}
     body.nav-open .rail{transform:none}
     body.nav-open .scrim{opacity:1;pointer-events:auto}
     .menu-btn{display:inline-block}
     .main{padding:28px 20px 100px}
     .view.active{padding:24px 22px}
-    .topnav{display:none}
-    .railmore{display:block}
-    .railmore-h{display:block}
   }
   @media(max-width:560px){
     .topbar{height:54px;padding:0 12px;gap:10px}
@@ -289,9 +290,13 @@
     .view.rebalanced .astep .al{font-size:16px}
     .call{padding:9px 12px}
     /* figures: stay legible, scroll within the card rather than shrink to unreadable */
-    .fig-svg{padding:14px 12px 10px;overflow-x:auto;-webkit-overflow-scrolling:touch}
-    .fig-svg svg{min-width:560px}
-    .fig-svg figcaption{position:sticky;left:0;width:calc(100vw - 56px);box-sizing:border-box}
+    /* The horizontal scroller is gone, 2 Sep 2026. It forced svg{min-width:560px}
+       so a 375px phone saw about two thirds of every figure with nothing saying
+       there was more, and a scroller inside a page is easy to miss. Figures now
+       shrink to the column and carry a button that opens them at full size,
+       which is what the learning world settled on for the same problem. The
+       sticky caption went with it: there is nothing to scroll past any more. */
+    .fig-svg{padding:14px 12px 10px}
   }
 
   /* ---------- Spine content (Phase 2) ---------- */
@@ -401,8 +406,12 @@
   @media(max-width:560px){
     .search-btn .sk,.search-btn .sl{display:none}
     .search-btn{flex:0 0 auto;width:34px;max-width:none;height:34px;margin-left:auto;padding:0;justify-content:center;border-radius:8px}
-    .author-fab{width:48px;height:48px;bottom:18px;right:18px}
-    .author-fab svg{width:22px;height:22px}
+    /* The 48px fab and its 22px mark that sat here are gone, 2 Sep 2026. The
+       About mark is a universal component in chrome.css, sized from --fab-size
+       and positioned on --fab-axis so it shares a centre line with the other
+       floating control. This file loads after chrome.css, so these two lines
+       quietly won and left the migration world with a mark noticeably smaller
+       than the same mark on a learning page. Sizing belongs with the component. */
     .search-overlay{padding:12px 10px 10px}
     .search-box{max-height:calc(100vh - 24px)}
   }
@@ -421,20 +430,12 @@
     html,body{ background:#fff }
     *{ -webkit-print-color-adjust:exact; print-color-adjust:exact }
     /* hide the live app entirely; print the mirrored single-view document instead */
-    .topbar, .layout, .scrim, .panel, .search-overlay, .about-overlay, .author-fab{ display:none !important }
+    .site-head, .layout, .scrim, .panel, .search-overlay, .about-overlay, .author-fab{ display:none !important }
     /* the print document: a table so thead/tfoot REPEAT on every page and RESERVE their height (no overlap) */
-    .print-doc{ display:table !important; width:100%; border-collapse:collapse; table-layout:fixed }
-    .print-doc thead{ display:table-header-group }
-    .print-doc tfoot{ display:table-footer-group }
-    .print-doc td{ padding:0 }
-    .print-doc thead td{ border-bottom:2px solid #e11d48; padding-bottom:5px }
-    .print-doc thead .ph-row{ display:flex; justify-content:space-between; align-items:baseline; gap:14px }
-    .print-doc thead .ph-title{ font-size:9pt; font-weight:600; color:#5b6370 }
-    .print-doc thead .ph-ctx{ font-size:8pt; color:#9aa1ab; white-space:nowrap }
-    .print-doc thead .ph-by{ font-size:8pt; color:#9aa1ab; margin-top:2px }
-    .print-doc tfoot td{ border-top:2px solid #e11d48; padding-top:5px; text-align:center }
-    .print-doc tfoot span{ font-size:8pt; color:#9aa1ab }
-    .print-doc tbody td{ padding:16px 0 }      /* breathing room between the running header/footer and content */
+    /* The print document chrome moved to chrome.css on 2 Sep 2026. The copy
+       that sat here fought it and won on source order, which is why the
+       running header printed at 9pt in #5b6370 from page two onward: small
+       and faint next to the learning world it was supposed to match. */
     /* content inside the mirrored view */
     .print-doc .wrap{ max-width:none !important }
     .print-doc .progress, .print-doc .why-row, .print-doc .stepnav{ display:none !important }
@@ -496,3 +497,8 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* The shared header is position:fixed, so unlike the old sticky .topbar it
+   takes no space in the flow. Everything in this world has to start below it.
+   The learning world does the same thing with a margin on .lmain. */
+body.world-migration{padding-top:var(--header-h)}

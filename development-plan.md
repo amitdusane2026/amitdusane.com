@@ -2175,3 +2175,101 @@ of walkthroughs.
 
 The learning section remains unpublished. `amitdusane.com/adobe-analytics-learning/`
 still returns 404 by design, and nothing has been merged to `main`.
+
+---
+
+## Session close, 2 September 2026: the global layer
+
+**The site stopped being a set of sections and became containers.** Amit stated
+the objective in this session: two reusable containers exist, a heavy-content
+one (Adobe Analytics, then CJA, RTCDP, AJO) and a step-by-step task one (Web SDK
+migration, then mobile SDK, then Analytics to CJA), with a certification-prep
+container still to design. Everything shared sits in a global layer so a new
+section costs content and nothing else. That is the frame for all the work
+below, and it is recorded in memory.
+
+### Content reached 100%
+
+The glossary was rebuilt from scratch: **188 terms**, one sentence each, every
+one linked to the section that teaches it and 188 of 188 anchors resolving. It
+had been inherited from a single-page app and never designed. Seven terms came
+out because the audit showed the site does not teach them, which is the rule
+Amit set: the glossary carries the vocabulary of the website, not of the
+product. **144 of 144 content pages are now created, QA'd and final.**
+
+Landing-page SEO was audited and corrected: three descriptions outside the
+110-160 rule, five repeating their own body, and one duplicate seotitle between
+M11's landing and its first section.
+
+### Search, built properly
+
+**One index per world, not one for the site.** At 144 pages a global index is
+merely large; at the 1000 pages this site is heading for it stops being
+shippable. Sharding by world means a reader in Adobe Analytics never downloads
+CJA's prose, and adding a world stays a front-matter line.
+
+  /index.json                            12 KB gz    184 entries  titles only
+  /adobe-analytics-learning/index.json   523 KB gz    968 entries  full prose
+  /web-sdk-migration/index.json           28 KB gz     39 entries  full prose
+
+An entry is a section heading rather than a page, so a hit lands on the exact
+anchor. Prose is indexed in full and uncapped: a capped index would be dominated
+by heading text, and the headings here are editorial clauses rather than
+keywords. The index prefetches on idle so half a megabyte is paid while somebody
+reads, which was Amit's call: search must return real results rather than fast
+weak ones.
+
+The small cross-world file exists so a reader searching "datastream" inside
+Adobe Analytics is told the migration guide covers it, without either world
+loading the other's prose.
+
+### The global layer
+
+Both worlds now share: the header, the print document, the byline, the search
+shell, figure zoom, the Ask Amit bar, and the theme toggle. The migration world
+lost its own `.topbar`, its own print builder, its own theme handler and its own
+copies of the figure and byline rules.
+
+The header reads its section name from the world root's title, with an optional
+`shorttitle` for worlds whose real title is too long. So CJA inherits the header
+from its `[params.worlds]` block with no template edit.
+
+### Four bugs the porting exposed, all the same shape
+
+A world stylesheet holding a stale local copy of a shared component, loading
+last, silently winning. Worth naming because it will recur as containers three
+and four are built.
+
+- `world-learning.css` still declared `--header-h:60px` on `:root`. Media
+  queries add no specificity, so that plain value beat chrome.css's responsive
+  one and pinned the header at desktop height on a phone while two rows rendered
+  inside it.
+- `world-shell.css` kept a full copy of the print chrome, including `.ph-title`
+  at 9pt in #5b6370. It won on source order, which is why the migration running
+  header printed small and faint from page two.
+- `world-shell.css` also kept `.author-fab{width:48px}`, shrinking the About
+  mark on migration pages below the size the same mark had in the other world.
+- The shared header is `position:fixed` where the old `.topbar` was `sticky`, so
+  migration content slid underneath until a body offset was added; that offset
+  then had to be zeroed for print, where nothing is fixed.
+
+Two more worth recording. The Why panel in the migration world stopped opening
+with no console error, because `openKB` still read the index's old field names
+after the per-world rebuild renamed them. And the Ask Amit bar was suppressed
+permanently in migration because its "get out of the way" rule tested the whole
+viewport, which is fine at 2000 words and never true at 350.
+
+### Next session
+
+The **home and About pages** still use the third header, `.gtop`, and would need
+a layout offset to take the global one. **Migration's dead header CSS** is still
+in `world-shell.css`: inert, since none of those classes appear on any built
+page, but interleaved with live rules rather than in one block.
+
+Still open and unchanged: the **home page card** into the learning section, the
+**component rulebook entry** for M21's absent walkthroughs, and the M03 §2
+contradiction with M15 §1.
+
+**GA is live on `main` and switched off on `develop`.** A merge as things stand
+turns tracking off at the moment it is most wanted. The switch is the comment
+wrapper in `head.html`.

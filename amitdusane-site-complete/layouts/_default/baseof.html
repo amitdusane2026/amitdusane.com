@@ -16,25 +16,7 @@
 {{ if $mig }}
   {{ $steps := (where .Site.RegularPages "Type" "step").ByWeight }}
   {{ $curnum := 0 }}{{ if eq .Type "step" }}{{ $curnum = .Params.stepnum }}{{ end }}
-  <div class="topbar">
-    <button class="menu-btn" id="menuBtn" aria-label="Toggle navigation">&#9776;</button>
-    <a class="tohome" href="{{ "/" | relURL }}" title="Back to home">&larr; <span>Home</span></a>
-    <span class="tbsep" aria-hidden="true"></span>
-    <a class="brandblock" href="{{ "/web-sdk-migration/" | relURL }}">
-      <span class="brandmark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13M12 6l6 6-6 6"/></svg></span>
-      <span class="brandtext">
-        <span class="brandname">AppMeasurement <span class="arrow">&rarr;</span> Web SDK <span class="sub">&middot; Migration Guide</span></span>
-        <span class="brandby">Created by <b>Amit G Dusane</b></span>
-      </span>
-    </a>
-    <nav class="topnav" aria-label="Primary">
-      <a class="topnavlink" href="{{ "/web-sdk-migration/kb/" | relURL }}">Knowledge Base</a>
-      <a class="topnavlink" href="{{ "/web-sdk-migration/references/" | relURL }}">References</a>
-    </nav>
-    <button class="search-btn" id="searchBtn" aria-label="Search" title="Search"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><span class="sl">Search topics&hellip;</span><span class="sk">/</span></button>
-    <button class="print-btn" id="printBtn" aria-label="Print or save as PDF" title="Print / Save as PDF"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg></button>
-    <button class="theme-btn" id="themeBtn" aria-label="Toggle dark mode" title="Toggle dark mode"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/></svg></button>
-  </div>
+  {{ partial "siteheader.html" . }}
   <div class="layout">
     <nav class="rail" id="rail">
       <div class="grp kb railmore-h">More</div>
@@ -54,11 +36,7 @@
     <div class="panel-head"><span class="pk" id="panelKind">Knowledge Base</span><button class="px" id="panelClose" aria-label="Close">&#10005;</button></div>
     <div class="panel-body" id="panelBody"></div>
   </aside>
-  <table class="print-doc" id="printDoc" aria-hidden="true">
-    <thead><tr><td><div class="ph-row"><span class="ph-title">AppMeasurement &#8594; Web SDK &#183; Migration Guide</span><span class="ph-ctx" id="printCtx"></span></div><div class="ph-by">Created by Amit G Dusane &#183; amitdusane.com</div></td></tr></thead>
-    <tfoot><tr><td><span>amitdusane.com &#183; AppMeasurement &#8594; Web SDK Migration Guide</span></td></tr></tfoot>
-    <tbody><tr><td><div id="printBody"></div></td></tr></tbody>
-  </table>
+  {{ partial "printdoc.html" . }}
 {{ else if $learn }}
   {{ $modules := (where .Site.Pages "Type" "module").ByParam "modulenum" }}
   {{ $curModule := "" }}
@@ -68,28 +46,15 @@
   {{ $phases = sort $phases "order" }}
   {{ $curModNum := 0 }}
   {{ if $curModule }}{{ $curModNum = $curModule.Params.modulenum }}{{ end }}
-  <header class="lhead">
-    <button class="lmenu-btn" id="lMenuBtn" aria-label="Toggle navigation"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
-    <a class="llogo" href="{{ "/adobe-analytics-learning/" | relURL }}">
-      <span class="llogo-icon" aria-hidden="true">{{ partial "logo.html" (dict "size" 58 "hidden" true) }}</span>
-      <span>
-        <div class="llogo-text">Adobe Analytics Learning</div>
-      </span>
-    </a>
-    <button class="lsearch-btn" id="lSearchBtn" type="button" aria-label="Search">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-      <span>Search topics&hellip;</span><span class="lsk">/</span>
-    </button>
-    <div class="lhead-right">
-      <button class="licon-btn" id="lPrintBtn" aria-label="Print" title="Print"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg></button>
-      <button class="licon-btn" id="lThemeBtn" aria-label="Toggle dark mode" title="Toggle dark mode"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/></svg></button>
-    </div>
-  </header>
+  {{ partial "siteheader.html" . }}
   <div class="loverlay" id="lOverlay"></div>
   <nav class="lsidebar" id="lSidebar">
     <div class="lsidebar-content">
-      <a class="lnav-alltop" href="{{ "/adobe-analytics-learning/" | relURL }}">&larr; All modules</a>
-      <a class="lnav-alltop" href="{{ "/adobe-analytics-learning/glossary/" | relURL }}">&#9671; Glossary</a>
+      {{/* "All modules" and "Glossary" removed 2 Sep 2026 on Amit's call. The
+           header now carries the route to the section front page, so the first
+           was a duplicate of it. Note that this leaves the glossary reachable
+           only from the section front page and from search: nothing in the
+           section navigation points at it. */}}
       {{ $cats := sort (where .Site.Pages "Type" "category") "Params.catorder" }}
       {{ range $cats }}
         {{ $cat := . }}
@@ -127,11 +92,7 @@
   </nav>
   <main class="lmain"><div class="lcontent">{{ block "main" . }}{{ end }}</div></main>
   {{ if eq .Type "lesson" }}{{ partial "wherefits.html" . }}{{ end }}
-  <table class="print-doc" id="printDoc" aria-hidden="true">
-    <thead><tr><td><div class="ph-row"><span class="ph-brand">{{ partial "logo.html" (dict "size" 36 "hidden" true "ink" "#1E3A8A") }}<span class="ph-title">Adobe Analytics Learning</span></span><span class="ph-ctx" id="printCtx"></span></div><div class="ph-by">Created by Amit G Dusane &#183; amitdusane.com</div></td></tr></thead>
-    <tfoot><tr><td><span>amitdusane.com &#183; Adobe Analytics Learning</span></td></tr></tfoot>
-    <tbody><tr><td><div id="printBody"></div></td></tr></tbody>
-  </table>
+  {{ partial "printdoc.html" . }}
 {{ else }}
   <div class="gtop">{{ if .IsHome }}<span class="gbrand">Amit G Dusane</span>{{ else }}<a class="gbrand gback" href="{{ "/" | relURL }}">&larr; Home</a>{{ end }}</div>
   <main class="gmain">{{ block "main" . }}{{ end }}</main>
@@ -247,5 +208,15 @@
        It looked exactly like a scripting bug. Same trap as the stylesheet
        tags, and the same fix. */ -}}
   <script src="{{ "author.js" | relURL }}?v={{ substr (sha256 (readFile "static/author.js")) 0 10 }}"></script>
+  {{/* The global header's own behaviour, so it loads wherever the header does:
+       every world and the plain pages too. */}}
+  <script src="{{ "siteheader.js" | relURL }}?v={{ substr (sha256 (readFile "static/siteheader.js")) 0 10 }}"></script>
+  {{/* Figure zoom, overlay and hint. Global for the same reason: "a drawing too
+       big for a phone needs a way to be opened" is not specific to one world. */}}
+  <script src="{{ "figures.js" | relURL }}?v={{ substr (sha256 (readFile "static/figures.js")) 0 10 }}"></script>
+  {{/* The Ask Amit bar. After author.js, which owns the overlay it opens. */}}
+  <script src="{{ "askbar.js" | relURL }}?v={{ substr (sha256 (readFile "static/askbar.js")) 0 10 }}"></script>
+  {{/* Fills the print document. One builder for every world. */}}
+  <script src="{{ "printdoc.js" | relURL }}?v={{ substr (sha256 (readFile "static/printdoc.js")) 0 10 }}"></script>
 </body>
 </html>

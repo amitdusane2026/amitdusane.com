@@ -3,11 +3,11 @@
 (function () {
   var docEl = document.documentElement, body = document.body;
 
-  var tb = document.getElementById('themeBtn');
-  function applyTheme(t) { docEl.setAttribute('data-theme', t); docEl.style.colorScheme = t; try { localStorage.setItem('site-theme', t); } catch (e) {} }
-  if (tb) tb.addEventListener('click', function () { applyTheme(docEl.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'); });
+  /* The theme toggle moved to siteheader.js on 2 Sep 2026. Both worlds carried
+     their own identical copy of it; the header is shared now, so the behaviour
+     is too. */
 
-  var mb = document.getElementById('menuBtn'), scrim = document.getElementById('scrim');
+  var mb = document.getElementById('siteMenuBtn'), scrim = document.getElementById('scrim');
   function closeNav() { body.classList.remove('nav-open'); }
   if (mb) mb.addEventListener('click', function () { body.classList.toggle('nav-open'); });
 
@@ -27,12 +27,28 @@
   function firstSentences(t, n) { var p = (t || '').split(/(?<=[.!?])\s+/); return p.slice(0, n || 3).join(' '); }
   function openKB(id) {
     ensureIdx(function () {
-      var e = null, i;
-      if (idx) for (i = 0; i < idx.length; i++) { if (idx[i].url && idx[i].url.indexOf('/kb/' + id + '/') !== -1) { e = idx[i]; break; } }
+      /* The index keys are one character (u, t, x, g) since they repeat once
+         per entry. This panel used to read .url/.title/.text/.group, and when
+         the index was rebuilt per world on 1 Sep 2026 those became undefined:
+         nothing ever matched, openKB returned silently, and every "Why" link
+         stopped opening with no error in the console.
+
+         The index is also per SECTION HEADING now, not per page, so one KB
+         topic yields several entries. Prefer the page-level one, the entry with
+         no #anchor, so the panel opens on the topic's own opening rather than
+         halfway down it. */
+      var e = null, first = null, i, u;
+      if (idx) for (i = 0; i < idx.length; i++) {
+        u = idx[i].u || '';
+        if (u.indexOf('/kb/' + id + '/') === -1) continue;
+        if (!first) first = idx[i];
+        if (u.indexOf('#') === -1) { e = idx[i]; break; }
+      }
+      e = e || first;
       if (!e) return;
-      if (pKind) pKind.textContent = e.group || 'Knowledge Base';
-      pBody.innerHTML = '<h2>' + e.title + '</h2><p>' + firstSentences(e.text, 3) + '</p>' +
-        '<div class="panel-foot"><a href="' + e.url + '">Read the full topic &rarr;</a></div>';
+      if (pKind) pKind.textContent = e.g || 'Knowledge Base';
+      pBody.innerHTML = '<h2>' + e.t + '</h2><p>' + firstSentences(e.x, 3) + '</p>' +
+        '<div class="panel-foot"><a href="' + e.u + '">Read the full topic &rarr;</a></div>';
       openPanel();
     });
   }
@@ -66,17 +82,6 @@
   });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { closePanel(); closeNav(); } });
 
-  function mFillPrintDoc() {
-    var av = document.querySelector('.main .view.active'), pb = document.getElementById('printBody'), ctx = document.getElementById('printCtx'), h1 = document.querySelector('.main h1');
-    if (pb && av) pb.innerHTML = av.innerHTML;
-    if (ctx) ctx.textContent = h1 ? h1.textContent : '';
-  }
-  var prb = document.getElementById('printBtn');
-  if (prb) prb.addEventListener('click', function () {
-    mFillPrintDoc();
-    window.print();
-  });
-  // Native browser print must fill the same container the button uses,
-  // otherwise it prints an empty header-only page.
-  window.addEventListener('beforeprint', mFillPrintDoc);
+  /* The print document moved to printdoc.js on 2 Sep 2026, shared with every
+     other world. */
 })();

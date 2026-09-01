@@ -1,0 +1,26 @@
+{{- /* The print document. One for the whole site.
+
+     This is not a wrapper, it is a layout <table>: the thead cell carries the
+     running header that repeats on every sheet, the tfoot cell the footer, and
+     the single tbody cell holds the entire article, copied in by printdoc.js on
+     beforeprint. That is why a rule written as `.print-doc td` means "the page"
+     rather than "a table cell in the content", and why every print rule for a
+     content element has to be scoped through the class that identifies it.
+
+     The learning world's layout was the one Amit kept, so it is the one that
+     became global: monogram, section name, byline, and the footer. Only the
+     section name changes per world, and it is read from the world root's own
+     title, so a new world inherits this with no edit here.
+
+     Before this, each world carried its own copy in baseof with its own title
+     hard-coded, and the migration one had no monogram at all. */ -}}
+{{- $world := index .Site.Params.worlds .Section -}}
+{{- $sectionTitle := "" -}}
+{{- with $world -}}
+  {{- with $.Site.GetPage .root }}{{ $sectionTitle = .Title }}{{ with .Params.shorttitle }}{{ $sectionTitle = . }}{{ end }}{{ end -}}
+{{- end -}}
+<table class="print-doc" id="printDoc" aria-hidden="true">
+  <thead><tr><td><div class="ph-row"><span class="ph-brand">{{ partial "logo.html" (dict "size" 36 "hidden" true "ink" "#1E3A8A") }}<span class="ph-title">{{ $sectionTitle }}</span></span><span class="ph-ctx" id="printCtx"></span></div><div class="ph-by">Created by Amit G Dusane &#183; amitdusane.com</div></td></tr></thead>
+  <tfoot><tr><td><span>amitdusane.com &#183; {{ $sectionTitle }}</span></td></tr></tfoot>
+  <tbody><tr><td><div id="printBody"></div></td></tr></tbody>
+</table>

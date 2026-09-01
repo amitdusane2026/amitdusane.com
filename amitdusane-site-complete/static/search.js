@@ -22,7 +22,7 @@
   var overlay = document.getElementById('searchOverlay');
   var input = document.getElementById('searchInput');
   var results = document.getElementById('searchResults');
-  var btn = document.getElementById('searchBtn') || document.getElementById('lSearchBtn');
+  var btn = document.getElementById('siteSearchBtn');
   if (!overlay || !input || !results) return;
 
   var index = null, loading = false, failed = false, sel = -1, current = [];

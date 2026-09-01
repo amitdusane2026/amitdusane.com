@@ -1,0 +1,52 @@
+{{- /* ===========================================================================
+     THE SITE HEADER. One component, every world.
+
+       logo + amitdusane.com  |  section name  ...  search  print  theme
+
+     The mark and the wordmark are a single link to the site root; the section
+     name is its own link to that world's front page. The section name is read
+     from the world root's own title, so a new world gets this header from its
+     [params.worlds] block without anyone touching this file.
+
+     Before this existed the site had three unrelated headers: .lhead in the
+     learning world, .topbar in the migration world and .gtop on the home and
+     about pages. Each carried a different idea of what a header is, and only
+     one of them had a route back to the site root at all.
+
+     IDs are neutral and shared. Theme is handled once in siteheader.js, since
+     both worlds had byte-identical implementations of it. Menu and print stay
+     per-world because they genuinely differ: the two worlds have different
+     drawers and build different print documents. They bind to these same IDs.
+     =========================================================================== */ -}}
+{{- $world := index .Site.Params.worlds .Section -}}
+{{- $root := "/" -}}
+{{- $sectionTitle := "" -}}
+{{- with $world -}}
+  {{- $root = .root -}}
+  {{- /* A world root can set `shorttitle` when its real title is too long for a
+         header. The migration guide is "AppMeasurement → Web SDK Migration"
+         everywhere else and just "Web SDK Migration" here. Falls back to the
+         title, so a world that needs no short form declares nothing. */ -}}
+  {{- with $.Site.GetPage .root }}{{ $sectionTitle = .Title }}{{ with .Params.shorttitle }}{{ $sectionTitle = . }}{{ end }}{{ end -}}
+{{- end -}}
+<header class="site-head">
+  <div class="site-head-left">
+    <button class="site-menu-btn" id="siteMenuBtn" type="button" aria-label="Toggle navigation"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+    <a class="site-brand" href="{{ "/" | relURL }}" aria-label="amitdusane.com home">
+      <span class="site-brand-mark" aria-hidden="true">{{ partial "logo.html" (dict "size" 58 "hidden" true) }}</span>
+      <span class="site-brand-name">amitdusane.com</span>
+    </a>
+    {{- if $sectionTitle }}
+    <span class="site-rule" aria-hidden="true"></span>
+    <a class="site-section" href="{{ (printf "%s/" $root) | relURL }}">{{ $sectionTitle }}</a>
+    {{- end }}
+  </div>
+  <button class="site-search" id="siteSearchBtn" type="button" aria-label="Search">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <span>Search topics&hellip;</span><span class="site-key">/</span>
+  </button>
+  <div class="site-head-right">
+    <button class="site-icon-btn" id="sitePrintBtn" type="button" aria-label="Print or save as PDF" title="Print / Save as PDF"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg></button>
+    <button class="site-icon-btn" id="siteThemeBtn" type="button" aria-label="Toggle dark mode" title="Toggle dark mode"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/></svg></button>
+  </div>
+</header>
