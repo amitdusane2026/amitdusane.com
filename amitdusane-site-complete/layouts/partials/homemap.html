@@ -22,9 +22,17 @@
   <div class="hm-tier hm-tier-cat">
     <div class="hm-row hm-row-cat">
       {{ range $phases }}
+        {{/* NO BLURB. Twenty-six subtitles across the two upper tiers read as
+             noise rather than as help: they doubled the height of every button,
+             wrapped the five phases into three ragged rows, and on a 1280x640
+             laptop pushed the whole map past the fold. The phase and module
+             names are the navigation; the blurb belongs to the landing page the
+             button leads to, which now says the same thing with room to say it.
+             The mobile query had already hidden them, so this only ever showed
+             on a desktop. Amit's call, 2 Sep 2026, after the first round of
+             tester feedback. */}}
         <button class="hm-cat{{ if eq .order $firstOrder }} on{{ end }}" data-cat="{{ .order }}" type="button">
           <span class="hm-lab">{{ .name }}</span>
-          <span class="hm-tag">{{ .blurb }}</span>
         </button>
       {{ end }}
     </div>
@@ -39,9 +47,9 @@
     <div class="hm-row hm-row-mod{{ if eq .order $firstOrder }} show{{ end }}" data-catgroup="{{ .order }}">
       {{ range $allMods }}
         {{ if in $ph.modules .Params.modulenum }}
+          {{/* No tagline here either, for the reason given on the phase tier. */}}
           <button class="hm-mod{{ if and (eq $ph.order $firstOrder) (eq .Params.modulenum $firstModNum) }} on{{ end }}" data-mod="{{ .Params.modulenum }}" type="button">
             <span class="hm-lab">{{ .Title }}</span>
-            {{ with .Params.tagline }}<span class="hm-tag">{{ . }}</span>{{ end }}
           </button>
         {{ end }}
       {{ end }}

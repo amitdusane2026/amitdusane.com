@@ -17,10 +17,43 @@
    pattern silently skipped every one of them. Same trap as the ref-box
    doc-note injection. */ -}}
 {{ $content = partial "anchored-content.html" . }}
-{{ if findRE `<div class="ref-box">(?s).*?(experienceleague\.adobe\.com|adobe\.com/go|://adobe)` $content 1 }}
+{{ $hasDocNote := findRE `<div class="ref-box">(?s).*?(experienceleague\.adobe\.com|adobe\.com/go|://adobe)` $content 1 }}
+{{ if $hasDocNote }}
   {{ $content = replaceRE `(<div class="ref-box")` (printf "%s$1" (partial "doc-note.html" .)) $content 1 }}
 {{ end }}
-<div class="section">{{ $content | safeHTML }}</div>
+{{- /* THE NAVIGATION GOES ABOVE THE ADOBE LINKS, which means cutting the
+     article in two. Readers in testing were reaching the foot of a section and
+     clicking into Experience League believing it was the way on to the next
+     section -- then, because Adobe's pages read as a continuation of ours, not
+     realising they had left the site at all and hunting for a map that was no
+     longer there.
+
+     Three blocks at the end all answered "what now", and the Adobe one was the
+     loudest, came first, and was introduced by a line inviting the click. The
+     prev/next was the quietest thing on the page at the moment of highest
+     intent. So the reader now meets the way onward first, and the Adobe links
+     become what they always were: the exit, taken deliberately.
+
+     CUT AT THE DOC-NOTE, NOT THE REF-BOX. The doc-note is emitted by the
+     partial two lines above, so its opening tag is byte-exact and ours; a
+     ref-box is author-written markup in 109 files and matching it is the trap
+     already recorded against the injection above. The ref-box is the fallback
+     for the handful of sections whose links are internal and so get no note.
+
+     Falling through both leaves $tail empty and the page renders exactly as it
+     did before, navigation last. That is the safe direction: a section that
+     does not split loses nothing. */ -}}
+{{ $marker := "" }}
+{{ if $hasDocNote }}{{ $marker = `<div class="doc-note">` }}
+{{ else if in $content `<div class="ref-box">` }}{{ $marker = `<div class="ref-box">` }}{{ end }}
+{{ $head := $content }}
+{{ $tail := "" }}
+{{ if and (ne $marker "") (in $content $marker) }}
+  {{ $parts := split $content $marker }}
+  {{ $head = index $parts 0 }}
+  {{ $tail = printf "%s%s" $marker (delimit (after 1 $parts) $marker) }}
+{{ end }}
+<div class="section">{{ $head | safeHTML }}</div>
 {{- /* The permanent "Ask Amit" line that sat here is gone, on Amit's call.
      A tip pinned to the foot of every section is only ever seen by a reader
      who already finished, and it sat below the ref-box, which the section
@@ -52,4 +85,9 @@
     <a class="lpn-next" href="{{ $next.RelPermalink }}"><span class="lpn-lab">{{ if ne $nextMod $mod }}Next module &rarr;{{ else }}Next &rarr;{{ end }}</span>{{ $next.Title }}</a>
   {{ else }}<span></span>{{ end }}
 </div>
+{{- /* The doc-note and the Adobe links, now below the navigation. Wrapped in
+     .section like the half above it so the ref-box keeps the rules written for
+     it there, chiefly the one that stops its links taking the underline every
+     other link in an article carries. */ -}}
+{{ with $tail }}<div class="section section-exit">{{ . | safeHTML }}</div>{{ end }}
 {{ end }}

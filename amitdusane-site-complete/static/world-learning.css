@@ -709,9 +709,17 @@ body.world-learning .welcome-btn:hover{background:var(--accent2);text-decoration
 
 /* ---------- Lesson prev/next ---------- */
 .lpn{display:flex;justify-content:space-between;gap:14px;margin-top:34px;padding-top:18px;border-top:1px solid var(--border)}
-.lpn a{flex:1;border:1px solid var(--border);border-radius:9px;padding:12px 16px;color:var(--text1);font-size:var(--fs-sm)}
+/* WEIGHT AND COLOUR, because this block sits at the moment of highest intent
+   and used to be the quietest thing on the page: a hairline border, a grey
+   micro label and body-weight text, directly under a coloured box of links
+   pointing off the site. Readers took the loud thing. The label carries the
+   accent now and the title carries 600, which is the least that makes the way
+   onward read as the primary action without turning the foot of an article
+   into a pair of buttons. */
+.lpn a{flex:1;border:1px solid var(--border);border-radius:9px;padding:12px 16px;color:var(--text1);font-size:var(--fs-sm);font-weight:600}
 .lpn a:hover{border-color:var(--accent);text-decoration:none}
-.lpn .lpn-lab{display:block;font-size:var(--fs-micro);color:var(--text3);margin-bottom:3px}
+.lpn a:hover .lpn-lab{color:var(--accent2)}
+.lpn .lpn-lab{display:block;font-size:var(--fs-micro);font-weight:700;color:var(--accent);margin-bottom:3px}
 .lpn .lpn-next{text-align:right}
 
 /* THE LEFT DRAWER'S SCRIM, and it never existed as anything but an empty div.
@@ -865,7 +873,12 @@ body.world-learning .welcome-btn:hover{background:var(--accent2);text-decoration
      Printed without its URL it points nowhere. Expanded for ref-box links
      only, because doing it to every inline link would bury the prose in
      parentheses. */
-  .print-doc .ref-box a[href^="http"]::after{content:" (" attr(href) ")";font-size:8pt;font-weight:400;color:#4b5563;word-break:break-all}
+  /* On paper the ::after prints the URL itself, so the screen mark has to be
+     undone completely: an 11px inline-block with a mask would clip that text to
+     a square. Every property the screen rule sets is reset here, not just the
+     content. */
+  .print-doc .ref-box a[href^="http"]::after{content:" (" attr(href) ")";font-size:8pt;font-weight:400;color:#4b5563;word-break:break-all;
+    display:inline;width:auto;height:auto;margin-left:0;vertical-align:baseline;background:none;-webkit-mask:none;mask:none}
   .print-doc .path{background:#CECBF6;color:#3C3489;padding:3px 9px;border-radius:4px;font-family:Consolas,monospace;font-size:13px}
   /* The path-box heading, printed from dark mode, came out #CECBF6 on white:
      a pale lavender wash where a heading should be. It is the same trap the
@@ -1186,6 +1199,24 @@ a.card .card-desc{color:var(--text2)}
 body.world-learning .lcontent .ref-box li{margin-bottom:4px;font-size:var(--fs-sm)}
 .ref-box a{color:var(--success);text-decoration:none}
 .ref-box a:hover{text-decoration:underline}
+/* THE MARK THAT SAYS THIS LEAVES THE SITE. Every one of these links carries
+   target="_blank", which on a desktop at least opens a visible second tab. On a
+   phone there is no tab strip, so leaving amitdusane.com produced no signal of
+   any kind -- and Adobe's pages read as a continuation of ours, so testers went
+   on believing they were still here and started looking for the map. The link
+   text already begins "Adobe Docs:" and that was not enough, because naming the
+   publisher is not the same as saying you are about to travel.
+
+   Drawn rather than a typed glyph, for the reason recorded on the other arrows
+   on this site: an arrow character carries its font's own metrics and sits off
+   the optical centre. currentColor so it follows the link into dark. */
+.ref-box a[href^="http"]::after{
+  content:""; display:inline-block; width:11px; height:11px;
+  margin-left:5px; vertical-align:-1px; background:currentColor;
+  -webkit-mask:var(--extlink) center/11px 11px no-repeat;
+          mask:var(--extlink) center/11px 11px no-repeat;
+  --extlink:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14 5h5v5M19 5l-8 8M17 14v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h4"/></svg>');
+}
 
 /* ==========================================================================
    Module downloads, 30 August 2026. Two surfaces, one config block.
@@ -1631,15 +1662,21 @@ a.glossary-term{display:block; text-decoration:none}
 .hm{position:relative}
 .hm-brand{position:absolute;top:0;right:6px;color:var(--logo-ink);opacity:.55}
 .hm-brand svg{display:block}
-.hm-tier{display:flex;justify-content:center;padding:9px 0}
+/* Vertical rhythm, widened 2 Sep 2026. Nine pixels between tiers packed the
+   rows into a block that read as noise rather than as a pyramid, and the gaps
+   are what say it is one. The budget is not the empty space on a large monitor
+   but the 138px left over on a 1280x640 laptop once the blurbs came out; this
+   and the taller arrows spend about 87 of it, so the map still does not
+   scroll on the smallest desktop anyone reads it on. */
+.hm-tier{display:flex;justify-content:center;padding:20px 0}
 .hm-tier-cat{padding-top:2px}
-.hm-row{display:flex;flex-wrap:wrap;justify-content:center;gap:12px 24px}
+.hm-row{display:flex;flex-wrap:wrap;justify-content:center;gap:14px 24px}
 .hm-row-mod,.hm-row-sec{display:none}
 .hm-row-mod.show,.hm-row-sec.show{display:flex;animation:hmFade .22s ease}
 @keyframes hmFade{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
 
 /* dotted divider + arrow node, themed */
-.hm-arrow{display:flex;align-items:center;justify-content:center;height:20px;position:relative}
+.hm-arrow{display:flex;align-items:center;justify-content:center;height:34px;position:relative}
 .hm-arrow::before{content:"";position:absolute;left:10%;right:10%;top:50%;border-top:1.5px dotted var(--text3)}
 .hm-arrow span{position:relative;z-index:1;width:22px;height:22px;border-radius:50%;background:var(--bg2);border:1.6px solid #16a34a;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 3px rgba(34,197,94,.12)}
 .hm-arrow span::after{content:"";border-left:4px solid transparent;border-right:4px solid transparent;border-top:6px solid #16a34a}
@@ -1648,7 +1685,6 @@ a.glossary-term{display:block; text-decoration:none}
 .hm-cat,.hm-mod,.hm-sec{display:inline-flex;flex-direction:column;align-items:center;gap:1px;padding:8px 14px;border:1px solid var(--border);background:var(--bg2);color:var(--text2);cursor:pointer;font-family:inherit;text-decoration:none;text-align:center;position:relative;border-radius:10px;transition:border-color .16s,background .16s,color .16s}
 @media(hover:hover){.hm-cat:hover,.hm-mod:hover,.hm-sec:hover{border-color:#22c55e;color:var(--text1)}}
 .hm-lab{font-size:14px;font-weight:600;white-space:nowrap;line-height:1.3;position:relative;z-index:1}
-.hm-tag{font-size:11.5px;color:var(--text2);font-weight:400;white-space:nowrap;line-height:1.25;position:relative;z-index:1}
 .hm-cat .hm-lab{font-size:15px;font-weight:700}
 .hm-sec .hm-lab{font-size:12.5px;font-weight:500}
 
@@ -1666,9 +1702,29 @@ a.glossary-term{display:block; text-decoration:none}
 
 /* DARK theme: brighter greens, diffuse bloom, light text */
 
+/* MORE AIR WHERE THERE IS AIR TO SPEND, and this has to be keyed to the height
+   of the window rather than its width. The base above is sized for a 1280x640
+   laptop, where the map clears the fold by 51px and not a pixel more. On a
+   1440x900 screen the same numbers leave 300px of empty page below it, which
+   is what makes the map read as a small suppressed panel floating in space.
+
+   BOTH THRESHOLDS ARE MEASURED, not chosen for looking round. Height alone is
+   not enough, because the panel gets taller as it gets narrower: at 920px wide
+   the five phases wrap to three rows instead of two, and at 1024x790 the map
+   overflowed by a whisker even at two. Both of those were live regressions
+   from a first attempt at 881x780. Verified fitting at 1100x880 with 145px to
+   spare, 1280x880 with 173px, 1440x900 with 193px and 1600x1000 with 293px;
+   verified still tight and correct below the cut at 1280x640, where the base
+   rhythm above clears the fold by 51px. A phone is excluded by the width. */
+@media(min-width:1100px) and (min-height:860px){
+  .hm-tier{padding:34px 0}
+  .hm-tier-cat{padding-top:10px}
+  .hm-arrow{height:52px}
+  .hm-row{gap:16px 26px}
+}
+
 @media(max-width:560px){
   .hm-row{gap:8px 12px}
-  .hm-tag{display:none}
   .hm-cat .hm-lab{font-size:12px}
   .hm-mod .hm-lab{font-size:11.5px}
   .hm-sec .hm-lab{font-size:11px}
@@ -2132,16 +2188,22 @@ body.world-learning .lcontent p.lland-tag{
 .ls-t{font-size:var(--fs-sm); font-weight:600; color:var(--text1); line-height:1.35}
 .lland-secs a:hover .ls-t{color:var(--accent)}
 .ls-d{font-size:var(--fs-meta); color:var(--text2); line-height:1.5}
-/* Drawn, and hidden until hover: a permanent arrow on every one of seventeen
-   rows competes with the titles it is meant to serve. */
+/* Drawn, permanent, and grey rather than accent. It was hidden until hover on
+   the reasoning that an arrow on every one of seventeen rows competes with the
+   titles it is meant to serve -- right about accent arrows, wrong about what
+   removing it costs. Without one, a row is a number, a title and a description
+   with no underline and no colour, which is a table of contents in a printed
+   document rather than a list of links, and testers read it that way. A phone
+   has no hover to correct the impression. Grey competes with nothing; hover
+   still takes it to accent and slides it. */
 .ls-go{
-  flex:none; width:14px; height:14px; margin-top:4px; background:var(--accent); opacity:0;
-  transition:opacity .15s, transform .15s;
+  flex:none; width:14px; height:14px; margin-top:4px; background:var(--text3);
+  transition:background-color .15s, transform .15s;
   -webkit-mask:var(--landarrow) center/14px 14px no-repeat;
           mask:var(--landarrow) center/14px 14px no-repeat;
   --landarrow:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M12.5 6l6 6-6 6"/></svg>');
 }
-.lland-secs a:hover .ls-go{opacity:1; transform:translateX(2px)}
+.lland-secs a:hover .ls-go{background:var(--accent); transform:translateX(2px)}
 .lland-secs li.soon .ls-t,.lland-secs li.soon .ls-d{color:var(--text3)}
 
 /* ----------------------------------------------------------------------------

@@ -566,23 +566,46 @@ body.world-migration{padding-top:var(--header-h)}
 .smap-blurb{margin:3px 0 0;font-size:12.5px;line-height:1.45;color:var(--muted)}
 
 .smap-steps{list-style:none;margin:0;padding:0 0 0 35px}
-.smap-step{display:flex;align-items:center;gap:10px;padding:7px 10px 7px 8px;border-radius:8px;
-  text-decoration:none;border:1px solid transparent;transition:background-color .15s,border-color .15s}
-.smap-step:hover{background:var(--accent-soft);border-color:var(--accent-line);text-decoration:none}
-.smap-sn{flex:none;width:20px;font-size:11.5px;font-weight:700;color:var(--muted);text-align:right;font-variant-numeric:tabular-nums}
-.smap-step:hover .smap-sn{color:var(--accent)}
-.smap-st{flex:1;min-width:0;font-size:14px;line-height:1.35;color:var(--ink-soft)}
+/* A STEP IS A CONTROL AND HAS TO LOOK LIKE ONE. This row carried no resting
+   state at all: a transparent border, no fill, grey text, and an arrow that
+   only appeared on hover. On the page that is thirteen lines of plain text
+   inside a panel, and readers said so -- they could not tell the steps were
+   the way into the guide. Adding the arrow back was not enough on its own.
+
+   So the row now has a surface of its own against the panel's white, a border,
+   a numbered chip and an accent arrow. Four signals rather than one, and none
+   of them depends on a pointer that a phone does not have. Hover still lifts
+   the whole row into the accent wash, so the pointer is rewarded without being
+   required. --bg-soft rather than --surface, because the panel behind it is
+   --surface and a white row on white separates from nothing. */
+.smap-step{display:flex;align-items:center;gap:10px;padding:9px 11px 9px 9px;border-radius:9px;
+  text-decoration:none;border:1px solid var(--line);background:var(--bg-soft);margin-bottom:6px;
+  transition:background-color .15s,border-color .15s,box-shadow .15s}
+.smap-step:hover{background:var(--accent-soft);border-color:var(--accent-line);text-decoration:none;box-shadow:var(--card-shadow)}
+.smap-sn{flex:none;width:21px;height:21px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  background:var(--accent-soft);color:var(--accent);font-size:11px;font-weight:800;font-variant-numeric:tabular-nums}
+.smap-st{flex:1;min-width:0;font-size:14px;line-height:1.35;color:var(--ink);font-weight:500}
 .smap-step:hover .smap-st{color:var(--accent)}
 /* Drawn rather than a typed glyph: an arrow character carries the font's own
-   metrics and sits off the optical centre of the row. Hidden until hover,
-   because thirteen permanent arrows is thirteen things competing with the step
-   names they are meant to serve. */
-.smap-go{flex:none;width:14px;height:14px;background:var(--accent);opacity:0;transition:opacity .15s,transform .15s;
+   metrics and sits off the optical centre of the row.
+
+   PERMANENT, AND GREY RATHER THAN ACCENT. It used to be hidden until hover, on
+   the reasoning that thirteen permanent arrows is thirteen things competing
+   with the step names they are meant to serve. That reasoning was right about
+   accent arrows floating beside plain text, and wrong about the consequence:
+   with the arrow gone, the only thing on this page saying the rows were
+   clickable was hover, which does not exist on a phone.
+
+   It is accent now rather than grey, which the earlier reasoning would have
+   rejected. It no longer floats: the row around it is a bordered control, so
+   the arrow reads as that control's own affordance rather than as thirteen
+   marks competing with thirteen names. */
+.smap-go{flex:none;width:14px;height:14px;background:var(--accent);transition:background-color .15s,transform .15s;
   -webkit-mask:var(--sarrow) center/14px 14px no-repeat;
           mask:var(--sarrow) center/14px 14px no-repeat;
   --sarrow:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M12.5 6l6 6-6 6"/></svg>');
 }
-.smap-step:hover .smap-go{opacity:1;transform:translateX(2px)}
+.smap-step:hover .smap-go{transform:translateX(2px)}
 
 /* ---- the two rooms off the corridor ---- */
 .mhome-foot{display:flex;gap:20px;flex-wrap:wrap;margin:22px 0 6px}
