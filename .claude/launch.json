@@ -12,8 +12,7 @@
         "1313",
         "--noHTTPCache",
         "--poll",
-        "700ms",
-        "--buildFuture"
+        "700ms"
       ],
       "port": 1313
     }

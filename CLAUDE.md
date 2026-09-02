@@ -211,19 +211,25 @@ On a CLI build that error is at least visible. **On `hugo server` it is not.** T
 
 **So when the served page is stale, check for a locked workbook before suspecting the watcher.** `Get-CimInstance Win32_Process -Filter "Name='EXCEL.EXE'"` names it, and closing the workbook is the whole fix. This will keep happening, because M20 tells the reader to open the validation report and follow along, which is exactly what Amit was doing.
 
-> **TEMPORARY, AND DELETE THIS BLOCK ON 4 SEPTEMBER 2026.** Every learning
-> section is dated `published: 2026-09-04` for launch day, which is in the
-> future until then, so **a build without `--buildFuture` reports 103 pages and
-> not 219**. That is correct behaviour rather than a fault: Hugo is holding back
-> 116 pages that are not published yet. Until launch day, add `--buildFuture` to
-> every verification build and read the baseline below as 219 only with that
-> flag. `.claude/launch.json` already carries it so the preview server keeps
-> serving the whole site. On 4 September the dates stop being future, the flag
-> stops mattering everywhere, and both it and this block should come out.
+> **TEMPORARY, AND DELETE THIS BLOCK ON 4 SEPTEMBER 2026**, along with
+> `buildFuture = true` in `hugo.toml`. Every learning section is dated
+> `published: 2026-09-04` for launch day. Until that date arrives Hugo counts
+> all 116 as unpublished and drops them, and the build still reports success,
+> at 103 pages.
 >
-> The staging copy on Cloudflare Pages builds from its own command, which this
-> repository does not hold, so staging shows the learning section only if that
-> command gets the same flag.
+> **The visible symptom is not a 404, which is what made it expensive.** The
+> pocket map, the home map and both landing templates count published children,
+> so with the sections gone every module renders its empty state and the site
+> fills with **"Coming soon"** — on staging, in front of testers, looking like
+> a half-built site rather than an absent section. It reached them on 3 Sep
+> 2026 before anyone connected it to the dates. If pages ever vanish here, look
+> at that empty state before believing a feature was switched off: nothing on
+> this site has a "coming soon" mode, only templates with nothing left to list.
+>
+> `buildFuture = true` in `hugo.toml` is what holds the count at 219 today. It
+> lives in the config rather than in a build command because the Cloudflare
+> staging build is configured outside this repository, and a flag we cannot
+> reach cannot fix staging.
 
 **Assert the page count after every build.** Current baseline: **219 pages on a production build, 220 on a staging build**. The extra one is the generated `_headers` file, which `layouts/index.headers` emits only when the baseURL is not amitdusane.com; on production the template produces nothing and Hugo writes no file. A staging build reporting 219, or a production build reporting 220, means the guard has inverted and should be investigated before anything else. If the count drops, stop and find out why before doing anything else. This single check would have caught the 103-page outage in one second.
 
