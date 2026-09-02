@@ -96,7 +96,27 @@ These documents were produced during earlier plain chat sessions. They are close
 
 `--diagram-min` (700px) is the width an inline-SVG figure holds so its text stays legible; see the diagram note below.
 
-**The typeface is IBM Plex Sans and IBM Plex Mono, self-hosted** in `static/fonts/`, and **Manrope for the wordmark**, three woff2 files totalling 84KB. All three are preloaded on every page and their `@font-face` rules live in `chrome.css`, because Plex became the site typeface on 2 Sep 2026 and the migration world moved off the system stack. Manrope is used for `amitdusane.com` in the header and **nowhere else** — that is the point, since every other word being Plex is what makes the wordmark read as a mark. Never add a CDN font link; the site loads no external assets at all.
+## Typography: three faces, and the rule that keeps them apart
+
+**IBM Plex Sans, IBM Plex Mono and Manrope, all self-hosted** in `static/fonts/`, three woff2 files totalling 84KB, all three preloaded on every page, `@font-face` rules in `chrome.css`. **Never add a CDN font link**; the site loads no external assets at all.
+
+**The rule is one sentence: Manrope names things, Plex says things, Mono is for code.** Manrope is the display face and it is spent only on *identity* — a name, a mark, or the title of a destination. Every other word on the site is Plex. That contrast is the whole reason the wordmark reads as a mark rather than as large text, so the constraint is not stylistic tidiness: **each new Manrope selector makes every existing one worth slightly less.**
+
+Where Manrope is allowed, and this list is exhaustive as of 2 Sep 2026:
+
+| Selector | What it sets |
+|---|---|
+| `.site-brand-name`, `.site-section` | the header wordmark and the section name beside it |
+| `.hm-word`, `.hm-title`, `.tile-title`, `.hm-foot-brand b` | home: wordmark, H1, the two guide tiles, footer mark |
+| `.ab-name`, `.gfoot-brand b` | About: the name, the footer mark |
+| `.about-name` | the About overlay's name, global |
+| `body.page-plain .guide h1` | the 404 heading |
+
+Everything else is **IBM Plex Sans**, inherited from `body`: all prose, lesson and step titles, every h3, taglines, bylines, navigation, tile sub-lines, both worlds. **IBM Plex Mono** is code and identifiers only: code blocks in both worlds, inline `<code>`, and `.ab-cert-id`.
+
+**Before adding a Manrope rule, the test is whether the text is a NAME.** "Adobe Analytics Learning" on a tile is a destination's name, so it qualifies. A tagline, a heading inside an article, or a section label is not a name however important it looks, and it stays Plex.
+
+**Never verify a typeface from `getComputedStyle().fontFamily`.** It reports what the CSS asked for, not what the browser drew, and it will report `"IBM Plex Sans"` on a page rendering Segoe UI. The only honest check is to measure: put the string in an off-screen `white-space:nowrap` span at the element's own size and weight, once with the page's stack and once with each candidate named alone, and compare widths. Identical width to the candidate is the proof. `[...document.fonts].map(f => f.family + ':' + f.status)` is the second check and should list all three families as `loaded`.
 
 **A section page is three columns above 1244px**: sidebar, article, and the in-page spine. The spine is built by `world-learning.js` from the h3 stack and is switched on by the `has-rail` body class, which `baseof.html` adds for `type: lesson` only. Below 1244px it becomes a drawer on a floating button. It is generated, never authored.
 **Content types** map to templates by front matter `type`: `category`, `module`, `lesson`, `glossary` in the learning world; `step`, `kb`, `ref` in the migration world.
@@ -156,6 +176,13 @@ hugo --gc --source amitdusane-site-complete --destination "$SCRATCH/verify-publi
 
 Verified 1 Sep 2026: 219 pages, the server still answering on 1313 throughout, and the project's own `public/` untouched. Use that form for every verification build while a server is up, and keep `rm -rf public && hugo --gc` for the final build before a commit, with the server stopped.
 
+
+**A fourteenth, found 2 Sep 2026, and it had been shipping for however long the Plex migration had been live.** A CSS comment that closes early turns the prose after it into a selector, and **an invalid selector makes the parser discard the block that follows it as well**. In `chrome.css` the comment above the `@font-face` block terminated on its second line; the next three lines of explanation became a selector, and the rule it swallowed was `@font-face{font-family:'IBM Plex Sans'}`. Manrope above it and IBM Plex Mono below it both parsed, so two of three faces loaded and the site quietly rendered its body text in Segoe UI.
+
+Nothing reports this. The build succeeds, the console is clean, and the network tab shows the woff2 downloading with a 200 either way, because a `<link rel=preload>` fetches the file whether or not any `@font-face` claims it. `getComputedStyle().fontFamily` reports `"IBM Plex Sans"` throughout, because that is what the CSS asked for.
+
+**So verify a typeface by measuring, never by reading the cascade**, using the width test in the typography section above. And after any edit near an `@font-face`, check `[...document.fonts].map(f => f.family + ':' + f.status)` lists every family as `loaded` — a missing family is the whole symptom. Amit spotted this from a screenshot before any check did.
+
 **A thirteenth, and it fired four times in one session (2 Sep 2026), which is why it is worth naming.** When a component becomes global, **a world stylesheet holding a stale local copy of it loads last and silently wins.** Every instance looked like a different bug and all four were this: `world-learning.css` still declared `--header-h:60px` on `:root`, and because a media query adds no specificity it beat `chrome.css`'s responsive value and pinned the header at desktop height on a phone; `world-shell.css` kept the whole print chrome, so the migration running header printed at 9pt in #5b6370 from page two; the same file kept `.author-fab{width:48px}`, shrinking the About mark below the size it had in the other world; and its `.fig-svg svg{min-width:560px}` meant a figure could never shrink to the column. **When you globalise something, grep every world stylesheet for the classes and tokens it owns and delete what you find**, then verify in the world you did NOT build it for. `lFillPrintDoc` in the twelfth note below is now `printdoc.js`; the trap it describes is unchanged.
 
 **A twelfth, found 25 Aug 2026, and it only shows on paper.** `.print-doc` is not a wrapper, it is a **layout `<table>`**: its `thead` cell carries the running header, its `tfoot` cell the footer, and its single `tbody` cell holds *the entire article*, copied in by `lFillPrintDoc` on `beforeprint`. So **`.print-doc td` does not mean "a table cell in the content", it means "the page"**. A rule meant to give content tables a grid was written that way and instead drew a border around the whole sheet, boxed the header, and set every paragraph on the page to 8.5pt. It builds clean, it is invisible on screen, and it only appears in a print preview. **Scope every print rule for a content element through the class that identifies it** — `.print-doc .tbl-wrap td`, never `.print-doc td`.
@@ -184,7 +211,7 @@ On a CLI build that error is at least visible. **On `hugo server` it is not.** T
 
 **So when the served page is stale, check for a locked workbook before suspecting the watcher.** `Get-CimInstance Win32_Process -Filter "Name='EXCEL.EXE'"` names it, and closing the workbook is the whole fix. This will keep happening, because M20 tells the reader to open the validation report and follow along, which is exactly what Amit was doing.
 
-**Assert the page count after every build.** Current baseline: 219 pages. If the count drops, stop and find out why before doing anything else. This single check would have caught the 103-page outage in one second.
+**Assert the page count after every build.** Current baseline: **219 pages on a production build, 220 on a staging build**. The extra one is the generated `_headers` file, which `layouts/index.headers` emits only when the baseURL is not amitdusane.com; on production the template produces nothing and Hugo writes no file. A staging build reporting 219, or a production build reporting 220, means the guard has inverted and should be investigated before anything else. If the count drops, stop and find out why before doing anything else. This single check would have caught the 103-page outage in one second.
 
 Then crawl the built HTML, not the source. Source passing every check proves nothing; the bug lives in the interaction between source and build.
 

@@ -1,24 +1,73 @@
 {{ define "main" }}
-{{ $steps := (where .Site.RegularPages "Type" "step").ByWeight }}
-{{ $first := index $steps 0 }}
+{{- /* ===========================================================================
+     THE MIGRATION GUIDE'S FRONT PAGE. Rebuilt 2 Sep 2026 on the shape the
+     learning world's front page already proved: mark, title, one punch line,
+     the navigator, one onward link. Nothing else.
+
+     WHAT IT REPLACED, and why each piece went:
+
+     A 1613px sales page against the learning front page's 741 -- a hero, a
+     subtitle, three stat tiles, a call to action, a scope note, and a 150-word
+     "Why I built this guide" essay. Two hundred and fifteen words before a
+     visitor could see a single step.
+
+     THE ESSAY BROKE THE VOICE RULE, and that is the part worth recording. It
+     carried four first-person instances -- "Why I built this guide", "the
+     reference I wish I had on my first migration" -- and a check of the whole
+     migration world found this page was the ONLY place the author spoke in
+     first person. Zero first person outside content/about.html is the site's
+     hardest rule; this page was the single exception and nobody had noticed.
+     What the essay was doing is now done by the punch line in nine words.
+
+     IT ALSO CARRIED A WRONG NUMBER. The stats block claimed "42 Sources"; the
+     references page has 44 links. A stat nobody maintains is worse than no
+     stat, so the counts that survive are the two the navigator itself proves
+     by listing them.
+
+     AND IT WAS OFF-BRAND: the mark was a generic arrow glyph rather than the
+     monogram every other front surface on the site now carries.
+
+     THE PUNCH LINE IS NOT DECORATION. AppMeasurement fires image beacons and
+     the Web SDK sends XDM events to the Edge, so "Stop sending beacons. Start
+     sending events." is literally what changes. It is also the line on this
+     world's social card, so the card and the page say the same thing.
+     =========================================================================== */ -}}
 <section class="view active">
-  <div class="home">
-    <span class="home-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13M12 6l6 6-6 6"/></svg></span>
-    <h1 class="home-title"><span class="ht-line">AppMeasurement <span class="arrow">&rarr;</span> Web SDK</span><span class="home-title-mg">Migration Guide</span></h1>
-    <p class="home-sub">A decision-led, field-tested guide to migrating from AppMeasurement to the Adobe Experience Platform Web SDK: the architectural calls, the gotchas, and the order to make them in.</p>
-    <div class="home-stats">
-      <div class="hstat"><div class="hn">13</div><div class="hl">Steps</div></div>
-      <div class="hstat"><div class="hn">24</div><div class="hl">KB topics</div></div>
-      <div class="hstat"><div class="hn">42</div><div class="hl">Sources</div></div>
+
+  {{- /* ITS OWN CLASS NAMES, not the learning world's .welcome / .hm-tagline /
+       .hm-panel. Those live in world-learning.css and this world never loads
+       it, so borrowing the markup would have produced an unstyled page; and
+       copying those rules into world-shell.css is the stale-local-copy trap
+       that produced four separate bugs on 2 Sep 2026.
+
+       The honest fix is to lift the shared front-page header into chrome.css
+       and have both worlds use it, since the two are now the same component.
+       That is a job for when the About page is rebuilt and chrome.css is open
+       anyway -- doing it here would mean editing world-learning.css and
+       risking the one front page that is already signed off. */ -}}
+  <div class="mfront-head">
+    <span class="mfront-mark" aria-hidden="true">
+      {{ partial "logo.html" (dict "size" 88 "hidden" true) }}
+    </span>
+    <div>
+      <h1 class="mfront-title">{{ .Title }}</h1>
+      <div class="mfront-punch"><span class="mp-a">Stop sending beacons.</span> <span class="mp-b">Start sending events.</span></div>
     </div>
-    <a class="home-cta" href="{{ $first.RelPermalink }}">Start migration &rarr;</a>
-    <div class="home-scope">Built from real implementations. Targets the Web SDK (alloy.js) on Adobe Experience Platform; your report suite, classifications, marketing channels, and segments stay server-side.</div>
   </div>
-  <div class="guide-why">
-    <div class="author-section-title">Why I built this guide</div>
-    <p>The migration from AppMeasurement to the Web SDK is not a script swap; it is a shift in where the work happens, off the visitor's browser and onto Adobe's Edge. The official documentation covers each piece, but it is scattered across dozens of pages with no opinion about what to do first or which mistakes will cost you weeks.</p>
-    <div class="author-quote"><p>This guide is the reference I wish I had on my first migration. It is built from real implementations, not theory, and it assumes you already know Adobe Analytics and respects your time. The aim is not to explain the basics; it is to give you the architectural decisions, the order to make them in, and the gotchas that do not surface until production.</p></div>
-    <p>If it helps you migrate with confidence, sidestep the visitor cliff, and ship without surprises, then it has done its job.</p>
+
+  <div class="mfront-panel">
+    <div class="mfront-cue">Thirteen steps, in the order the work happens</div>
+    {{ partial "stepmap.html" . }}
   </div>
+
+  {{- /* The two rooms off the corridor. The knowledge base and the references
+       are not steps, so they do not belong in the sequence above, but a
+       visitor who wants the "what is a datastream" answer before starting
+       should not have to enter step 1 to find it. */ -}}
+  <div class="mhome-foot">
+    <a class="mside-link" href="{{ "/web-sdk-migration/kb/" | relURL }}">Knowledge base &rarr;</a>
+    <a class="mside-link" href="{{ "/web-sdk-migration/references/" | relURL }}">References &rarr;</a>
+  </div>
+
 </section>
 {{ end }}

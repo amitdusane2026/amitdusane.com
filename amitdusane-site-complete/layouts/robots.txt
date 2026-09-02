@@ -1,4 +1,19 @@
+{{- /* Same baseURL guard as layouts/index.headers. Production invites crawling
+     and points at the sitemap; any other host refuses everything.
+
+     robots.txt is the WEAKEST of the three protections, and it is here for
+     completeness rather than as the defence: a Disallow stops a crawl but does
+     not stop a URL being indexed if something links to it. The X-Robots-Tag in
+     _headers is what actually prevents indexing; the meta robots tag in
+     head.html is the fallback for hosts that ignore _headers. */ -}}
+{{- $isProd := strings.Contains .Site.BaseURL "amitdusane.com" -}}
+{{ if $isProd -}}
 User-agent: *
 Allow: /
 
 Sitemap: {{ "sitemap.xml" | absURL }}
+{{- else -}}
+# Staging. Not for indexing.
+User-agent: *
+Disallow: /
+{{- end }}

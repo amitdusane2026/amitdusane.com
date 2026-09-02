@@ -502,3 +502,103 @@
    takes no space in the flow. Everything in this world has to start below it.
    The learning world does the same thing with a margin on .lmain. */
 body.world-migration{padding-top:var(--header-h)}
+
+/* ============================================================================
+   THE MIGRATION GUIDE'S FRONT PAGE. Rebuilt 2 Sep 2026.
+   Markup is layouts/web-sdk-migration/list.html + partials/stepmap.html.
+
+   It replaced a 1613px sales page -- hero, subtitle, three stat tiles, a call
+   to action, a scope note and a 150-word first-person essay -- with the shape
+   the learning world's front page already proved at 741px: mark, title, one
+   punch line, the navigator, one onward link.
+
+   EVERY COLOUR HERE IS A world-shell.css TOKEN, so this page follows the
+   migration world's light and dark themes like every other page in it. The
+   home page is the only fixed-treatment page on the site; this is not it.
+   ============================================================================ */
+
+/* ---- the header. Mark, title, punch. ---- */
+.mfront-head{display:flex;align-items:center;gap:18px;margin:6px 0 26px}
+/* --hdr-mark, the same token the site header and the learning world front page
+   use: indigo #1E3A8A in light, white in dark. It was var(--accent), which is
+   this world's blue, so the monogram was rendering in a colour it is never
+   drawn in anywhere else on the site. The mark is the personal brand and does
+   not take the world's accent -- the same reasoning that keeps the About
+   mark's halo indigo on every world. */
+.mfront-mark{flex:none;display:inline-flex;align-items:center;justify-content:center;width:88px;height:88px;color:var(--hdr-mark)}
+.mfront-mark svg{width:88px;height:88px}
+.mfront-title{margin:0;font-size:27px;font-weight:800;letter-spacing:-.4px;line-height:1.2;color:var(--ink)}
+/* Two tone, the same construction the learning world uses for its own tagline,
+   so the two front pages read as one site. The muted half is the thing being
+   left behind and the accent half is the thing being adopted, which is why the
+   colours are not interchangeable. */
+.mfront-punch{margin-top:7px;font-size:17px;font-weight:600;line-height:1.4}
+.mfront-punch .mp-a{color:var(--muted)}
+.mfront-punch .mp-b{color:var(--accent)}
+
+/* ---- the panel around the navigator ---- */
+.mfront-panel{border:1px solid var(--line);border-radius:14px;background:var(--surface);padding:20px 20px 8px;box-shadow:var(--card-shadow)}
+/* --muted, not --faint. --faint is #5e6671 in the dark theme and this measured
+   2.97:1 against the surface, well under AA. Same fix on .smap-sn below: the
+   two smallest pieces of text on the page were the two using the dimmest
+   token, which is the wrong way round. */
+.mfront-cue{font-size:11.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+
+/* ----------------------------------------------------------------------------
+   THE NAVIGATOR. Four stages, thirteen steps, all visible at once.
+
+   Two columns above 780px rather than one long ladder: four stacked stages put
+   the last one about 900px down, which is the wall this was meant to remove.
+   The stages still read in order down the left column and then the right,
+   which is the normal reading order for a two-column list.
+   ---------------------------------------------------------------------------- */
+.smap{display:grid;grid-template-columns:1fr 1fr;gap:10px 28px}
+.smap-stage{break-inside:avoid;margin-bottom:14px}
+.smap-head{display:flex;align-items:flex-start;gap:11px;margin-bottom:9px}
+/* The stage number is a marker, not a control: no border, no fill, just the
+   accent at a weight that lets the eye count four of them down the page. */
+.smap-num{flex:none;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  background:var(--accent-soft);color:var(--accent);font-size:12.5px;font-weight:800;margin-top:1px}
+.smap-headtext{min-width:0}
+.smap-name{margin:0;font-size:15.5px;font-weight:700;letter-spacing:-.15px;color:var(--ink);line-height:1.25}
+.smap-blurb{margin:3px 0 0;font-size:12.5px;line-height:1.45;color:var(--muted)}
+
+.smap-steps{list-style:none;margin:0;padding:0 0 0 35px}
+.smap-step{display:flex;align-items:center;gap:10px;padding:7px 10px 7px 8px;border-radius:8px;
+  text-decoration:none;border:1px solid transparent;transition:background-color .15s,border-color .15s}
+.smap-step:hover{background:var(--accent-soft);border-color:var(--accent-line);text-decoration:none}
+.smap-sn{flex:none;width:20px;font-size:11.5px;font-weight:700;color:var(--muted);text-align:right;font-variant-numeric:tabular-nums}
+.smap-step:hover .smap-sn{color:var(--accent)}
+.smap-st{flex:1;min-width:0;font-size:14px;line-height:1.35;color:var(--ink-soft)}
+.smap-step:hover .smap-st{color:var(--accent)}
+/* Drawn rather than a typed glyph: an arrow character carries the font's own
+   metrics and sits off the optical centre of the row. Hidden until hover,
+   because thirteen permanent arrows is thirteen things competing with the step
+   names they are meant to serve. */
+.smap-go{flex:none;width:14px;height:14px;background:var(--accent);opacity:0;transition:opacity .15s,transform .15s;
+  -webkit-mask:var(--sarrow) center/14px 14px no-repeat;
+          mask:var(--sarrow) center/14px 14px no-repeat;
+  --sarrow:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M12.5 6l6 6-6 6"/></svg>');
+}
+.smap-step:hover .smap-go{opacity:1;transform:translateX(2px)}
+
+/* ---- the two rooms off the corridor ---- */
+.mhome-foot{display:flex;gap:20px;flex-wrap:wrap;margin:22px 0 6px}
+.mside-link{font-size:13.5px;font-weight:600;color:var(--accent);text-decoration:none}
+.mside-link:hover{text-decoration:underline}
+
+@media(max-width:780px){
+  .smap{grid-template-columns:1fr;gap:0}
+  .mfront-head{gap:14px}
+  .mfront-mark,.mfront-mark svg{width:62px;height:62px}
+  .mfront-title{font-size:22px}
+  .mfront-punch{font-size:15.5px}
+  .mfront-panel{padding:16px 14px 6px}
+  .smap-steps{padding-left:0}
+}
+
+@media print{
+  .smap{grid-template-columns:1fr 1fr}
+  .smap-go{display:none}
+  .mfront-panel{border:none;box-shadow:none;padding:0}
+}

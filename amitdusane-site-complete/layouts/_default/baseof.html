@@ -12,7 +12,30 @@
      tells world-learning.js to build the in-page spine. Landing pages and the
      glossary have no h3 stack worth indexing, so they stay two-column. Decided
      server-side so the grid never reflows after JS runs. */}}
-<body class="{{ if $mig }}world-migration{{ else if $learn }}world-learning{{ end }}{{ if eq .Type "lesson" }} has-rail{{ end }}">
+{{/* `asks` marks a page that may offer the Ask Amit bar, and it exists because
+     the migration world cannot answer that question from the DOM the way the
+     learning world can. There, a lesson is the only thing carrying `.section`,
+     so askbar.js just looks for it. Here every page — the front page, the KB
+     index, the references list, a step, a KB topic — renders the same `.main`
+     wrapper, so there is nothing in the markup to tell them apart.
+
+     Type does it, and only from the template: a STEP or a KB TOPIC is a real
+     article that can leave a reader with a question. The front page is a
+     router, the KB index is a list of cards, and the references page is a
+     bibliography; offering "Questions about this section?" over any of those
+     is offering it to somebody who has not read anything yet.
+
+     .IsPage is what excludes the KB index, which carries `type: kb` on its own
+     _index.md and would otherwise qualify. */}}
+{{ $asks := and $mig .IsPage (or (eq .Type "step") (eq .Type "kb")) }}
+{{/* `page-plain` is About and 404: no world, no sidebar, no section. It exists
+     so chrome.css can strip the header down to identity plus the theme toggle
+     without those rules leaking into a world.
+
+     `page-about` narrows that to About alone, because About is pinned to the
+     light palette and the 404 is not. Two classes rather than one so the
+     shared shell rules stay shared. */}}
+<body class="{{ if $mig }}world-migration{{ else if $learn }}world-learning{{ else if .IsHome }}page-home{{ else }}page-plain{{ if eq .Type "about" }} page-about{{ end }}{{ end }}{{ if eq .Type "lesson" }} has-rail{{ end }}{{ if $asks }} asks{{ end }}">
 {{ if $mig }}
   {{ $steps := (where .Site.RegularPages "Type" "step").ByWeight }}
   {{ $curnum := 0 }}{{ if eq .Type "step" }}{{ $curnum = .Params.stepnum }}{{ end }}
@@ -50,11 +73,34 @@
   <div class="loverlay" id="lOverlay"></div>
   <nav class="lsidebar" id="lSidebar">
     <div class="lsidebar-content">
-      {{/* "All modules" and "Glossary" removed 2 Sep 2026 on Amit's call. The
-           header now carries the route to the section front page, so the first
-           was a duplicate of it. Note that this leaves the glossary reachable
-           only from the section front page and from search: nothing in the
-           section navigation points at it. */}}
+      {{/* "All modules" and "Glossary" were both removed on 2 Sep 2026, and the
+           note left here at the time said the cost of the second one out loud:
+           it left the glossary reachable from the section front page and from
+           search, and from nothing else in the navigation.
+
+           GLOSSARY IS BACK, at the top of the rail, on Amit's call the same
+           day. "All modules" stays gone -- the header wordmark already routes
+           to the section front page, so that one really was a duplicate. The
+           glossary never was: it is 188 terms that a reader wants mid-sentence,
+           from whichever section they are in, and a route that only exists two
+           clicks back at the front page is a route nobody takes.
+
+           Above the phase list rather than below it, because it is a lookup
+           rather than a stop on the curriculum, and a reader reaching for it is
+           interrupting themselves -- it should not be at the end of 142 links. */}}
+      {{/* The count is COUNTED, never typed. The migration guide's front page
+           carried a hand-written "42 Sources" against a references list that
+           had grown to 44, and it was wrong for who knows how long because
+           nothing recomputes a number somebody typed. This one is derived from
+           the glossary's own markup, so it cannot drift from the page it
+           describes. */}}
+      {{ $gloss := .Site.GetPage "/adobe-analytics-learning/glossary" }}
+      {{ with $gloss }}
+      <a class="lnav-glossary{{ if eq $.RelPermalink .RelPermalink }} current{{ end }}" href="{{ .RelPermalink }}">
+        <span>Glossary</span>
+        <span class="lnav-gloss-n">{{ len (findRE "class=\"glossary-term\"" .RawContent) }}</span>
+      </a>
+      {{ end }}
       {{ $cats := sort (where .Site.Pages "Type" "category") "Params.catorder" }}
       {{ range $cats }}
         {{ $cat := . }}
@@ -93,10 +139,41 @@
   <main class="lmain"><div class="lcontent">{{ block "main" . }}{{ end }}</div></main>
   {{ if eq .Type "lesson" }}{{ partial "wherefits.html" . }}{{ end }}
   {{ partial "printdoc.html" . }}
+{{ else if .IsHome }}
+  {{/* NO SITE HEADER ON THE HOME PAGE, and that is a deliberate exception to
+       the global layer rather than an oversight.
+
+       The header exists to carry identity plus a route back, a section name, a
+       search box, a drawer toggle and a print button. On home the route back
+       is the page you are on, and there is no section, no index and nothing to
+       print, so it was already reduced to a mark, a wordmark and a theme
+       toggle. The toggle went when the page stopped having two themes, which
+       left a full-width bar carrying a logo -- directly above a hero carrying
+       the same logo at three times the size.
+
+       So the hero carries the identity lockup instead, the way the social card
+       does, and the bar goes. Every other page in every world still renders
+       the shared header exactly as before. */}}
+  {{ block "main" . }}{{ end }}
 {{ else }}
-  <div class="gtop">{{ if .IsHome }}<span class="gbrand">Amit G Dusane</span>{{ else }}<a class="gbrand gback" href="{{ "/" | relURL }}">&larr; Home</a>{{ end }}</div>
+  {{/* About and 404. THE THIRD HEADER IS GONE as of 2 Sep 2026: these two pages
+       now take the same site header every world uses, which was the last step
+       of the consolidation started when the home page was rebuilt. `.gtop`,
+       `.gbrand`, `.gmain` and `.gfoot` are retired with it, and so is the
+       hundred-line legacy stylesheet that head.html used to inline for exactly
+       these pages.
+
+       The header renders in its one-row form here for the same reason it does
+       on home: no world means no section name, and chrome.css hides the menu,
+       search and print controls, which have nothing to act on. The theme
+       toggle stays, because unlike the home page these two follow the reader's
+       light or dark choice like every other page they can read. */}}
+  {{ partial "siteheader.html" . }}
   <main class="gmain">{{ block "main" . }}{{ end }}</main>
-  <footer class="gfoot">&copy; {{ now.Year }} <b>Amit G Dusane</b><span class="sep">&middot;</span>Adobe Experience Platform architect<span class="sep">&middot;</span><a href="{{ .Site.Params.linkedin }}" target="_blank" rel="me noopener">LinkedIn</a></footer>
+  <footer class="gfoot">
+    <span class="gfoot-brand">{{ partial "logo.html" (dict "size" 22 "hidden" true) }} <b>amitdusane.com</b></span>
+    <span class="gfoot-line">&copy; {{ now.Year }} Amit G Dusane &middot; {{ .Site.Params.jobTitle }}</span>
+  </footer>
 {{ end }}
 
   <button class="author-fab" id="authorFab" aria-label="About the author" title="About the author">{{ partial "logo.html" (dict "size" 30 "hidden" true) }}</button>
@@ -105,11 +182,26 @@
       <button class="about-x" id="aboutClose" aria-label="Close">&times;</button>
       <div class="about-head">
         <span class="about-avatar" aria-hidden="true">{{ partial "logo.html" (dict "size" 58 "hidden" true) }}</span>
-        <div><div class="about-name">Amit G Dusane</div><div class="about-role">Customer Journey Analytics Practitioner &middot; 16+ years</div></div>
+        <div><div class="about-name">{{ .Site.Params.author }}</div><div class="about-role">Adobe Experience Platform architect &middot; {{ partial "years.html" . }} years</div></div>
       </div>
+      {{- /* THE SHORT FORM OF content/about.html, and it has to stay that. This
+           overlay and the About page are the same person introducing himself
+           twice, so the only difference between them should be length.
+
+           It used to be neither. It carried contractions -- "I'm", "I've" --
+           which the About page does not use anywhere, and it was written in CV
+           register: "leading organizations", "governance frameworks",
+           "scalable technical solutions". Three phrases that say nothing a
+           reader can check, on a site whose whole claim is that it does not do
+           that. It also spelled "organizations" on a site that writes
+           "visualisations".
+
+           Two paragraphs now, condensed from the first two on the About page
+           and in the same words, so a reader who opens this and then clicks
+           through does not meet a different voice on the other side. */ -}}
       <div class="about-body">
-        <p>I'm a digital analytics professional with nearly 16 years of experience dedicated to Adobe Analytics and the Adobe Experience Cloud ecosystem. My career spans the platform's full evolution, from Omniture SiteCatalyst to the modern Web SDK and Experience Platform architecture.</p>
-        <p>I've held senior consulting, architect, and leadership roles at Adobe Systems, Accenture, Publicis Sapient, and other leading organizations, designing complex implementations, building governance frameworks, and translating business needs into scalable technical solutions.</p>
+        <p>Almost all of my {{ partial "years.html" (dict "ctx" . "words" true) }} years in digital analytics have gone into Adobe Analytics, and in recent years into the Experience Platform stack around it: the Web SDK and the Edge, XDM and datastreams, and Customer Journey Analytics.</p>
+        <p>I have spent most of that time explaining it. These guides are that reasoning written down, free to read, and meant to sit beside the official documentation rather than in front of it.</p>
       </div>
       <a class="about-cta" href="{{ .Site.Params.linkedin }}" target="_blank" rel="noopener">Connect on LinkedIn &rarr;</a>
       <div class="about-foot"><a href="{{ "/about/" | relURL }}">Read the full profile &rarr;</a></div>
@@ -140,7 +232,7 @@
       <span class="ask-logo" aria-hidden="true">{{ partial "logo.html" (dict "size" 58 "hidden" true) }}</span>
       <p class="ask-kicker">Ask Amit</p>
       <h2 class="ask-h" id="askHeading">How to reach me</h2>
-      <p class="ask-lede">Questions about this section, the wider curriculum, or an Adobe Analytics implementation. Whichever route suits you.</p>
+      <p class="ask-lede">Questions about this section, the wider curriculum, or an Adobe Analytics or Experience Platform implementation. Whichever route suits you.</p>
 
       {{- /* Three peers, not a primary and two fallbacks. The old panel put a
            filled crimson button on the mail app, a small outlined control on

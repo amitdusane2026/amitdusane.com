@@ -1,24 +1,131 @@
 {{ define "main" }}
-<div class="home2">
-  <div class="h2-profile">
-    <div class="h2-name">Amit G Dusane</div>
-    <div class="h2-role">Adobe Experience Platform architect &middot; Customer Journey Analytics &middot; digital analytics</div>
-    <p class="h2-sum">Nearly 16 years in digital analytics, dedicated almost entirely to Adobe Analytics and the Experience Cloud. I publish field-tested references for the Adobe Experience Platform ecosystem and keep them open.</p>
-    <div class="h2-facts">
-      <span><b>16+</b> years in analytics</span>
-      <span><b>ex-Adobe</b> &middot; 2016&ndash;2022</span>
-      <span><b>CJA &middot; AEP &middot; Adobe Analytics</b></span>
+{{- /* ===========================================================================
+     THE HOME PAGE. Rebuilt 2 Sep 2026, then rebuilt again the same day.
+
+     WHAT THE FIRST REBUILD GOT WRONG, because it is worth not repeating:
+
+     The hero was too tall, so on a desktop screen the page opened on a logo and
+     a paragraph and nothing else. The navigation -- which is this page's actual
+     job -- sat below the fold, and a reader had to guess it was there. The hero
+     is now roughly half the height and the tiles are inside the first screen at
+     every width this was measured at.
+
+     The copy made a claim it should not make. "Adobe's documentation tells you
+     where to click, these guides tell you why" positions this site against
+     Experience League, which is both arrogant and wrong: the two do different
+     jobs and a reader needs both. The site is COMPLEMENTARY, and the home page
+     now says so in those words rather than implying the documentation falls
+     short. Adobe is named because that is the subject; it is not the foil.
+
+     And the cards were doing the section's job. Each one carried a tagline and
+     a forty-word summary, which is a reasonable design for exactly two cards
+     and collapses at ten. The tiles below carry a title and one line, because
+     the destination explains itself and a reader clicking through is one click
+     from the detail.
+
+     THE TILES ARE BUILT TO SCALE TO TEN OR TWELVE. They are an auto-fitting
+     grid of small rows, not a two-up feature layout, so a third and fourth
+     world drop in without a redesign and without a phone having to scroll past
+     four hundred pixels of card to reach the second one.
+     =========================================================================== */ -}}
+<div class="home">
+
+  <section class="hm-hero">
+    {{- /* THE IDENTITY LOCKUP, and it is the whole reason there is no header
+         bar on this page. Mark and wordmark side by side, at the size a mark
+         needs to read as a mark rather than as a button, which is the
+         composition the social cards use. The mark is the site's identity now,
+         so this is the one place on the site it gets to be large. */ -}}
+    <div class="hm-lockup">
+      <span class="hm-mark" aria-hidden="true">{{ partial "logo.html" (dict "size" 118 "hidden" true) }}</span>
+      <span class="hm-word">amitdusane.com</span>
     </div>
-    <a class="h2-about" href="{{ "/about/" | relURL }}">About the author &rarr;</a>
-  </div>
-  <div class="h2-topics">
-    <div class="h2-topics-h">Topics</div>
-    <p class="h2-topics-note">Choose a topic to explore.</p>
-    <a class="tcard" style="--tcolor:#1f5fae;--tbg:#eaf1fb" href="{{ "/web-sdk-migration/" | relURL }}">
-      <div class="tc-h"><span class="tc-t">Web SDK Migration</span><span class="tc-tag">Live</span></div>
-      <div class="tc-d">A complete, field-tested guide to migrating Adobe Analytics from AppMeasurement to the Experience Platform Web SDK &mdash; schema, datastream, identity, consent, and parity, with the reasoning behind every step.</div>
-      <span class="tc-go">Enter the guide &rarr;</span>
-    </a>
-  </div>
+    <h1 class="hm-title">Adobe Analytics and Experience Platform guides</h1>
+    <p class="hm-tag">Written from implementation work, to read alongside the official documentation.</p>
+    <p class="hm-by">{{ .Site.Params.author }} &middot; {{ partial "years.html" . }} years in digital analytics, {{ .Site.Params.adobeYears }} of them at Adobe &middot; <a href="{{ "/about/" | relURL }}">About</a></p>
+  </section>
+
+  {{- /* The tiles. Ordered deliberately: the learning guide first, because it
+       is the larger body of work and the broader entry point, and somebody who
+       came for the migration guide already knows they want it.
+
+       EACH CARRIES ITS WORLD'S MODIFIER CLASS, and that drives the arrow and
+       the edge light only. The panel itself is identical on every tile.
+       Colouring a whole tile per world is what this page did in its first
+       version and it is what stops working at ten tiles; confining the colour
+       keeps it as wayfinding -- the crimson tile opens the crimson world --
+       without turning the section into a paint chart. */ -}}
+  <section class="hm-topics" aria-labelledby="hm-topics-h">
+    <h2 class="hm-h2" id="hm-topics-h">Guides</h2>
+    <div class="hm-tiles">
+
+      <a class="tile tile-learning" href="{{ "/adobe-analytics-learning/" | relURL }}">
+        <span class="tile-body">
+          <span class="tile-title">Adobe Analytics Learning</span>
+          <span class="tile-sub">21 modules &middot; 116 sections</span>
+        </span>
+        <span class="tile-go" aria-hidden="true"></span>
+      </a>
+
+      <a class="tile tile-migration" href="{{ "/web-sdk-migration/" | relURL }}">
+        <span class="tile-body">
+          <span class="tile-title">Web SDK Migration</span>
+          <span class="tile-sub">13 steps &middot; 24 knowledge-base entries</span>
+        </span>
+        <span class="tile-go" aria-hidden="true"></span>
+      </a>
+
+    </div>
+  </section>
+
+  {{- /* Three short answers to "what is this". Kept to a sentence each: the
+       page is a router, and a reader who wants more has two doors above. */ -}}
+  <section class="hm-why" aria-labelledby="hm-why-h">
+    <h2 class="hm-h2" id="hm-why-h">About these guides</h2>
+    <div class="hm-why-grid">
+      <div class="hm-why-item">
+        <h3>Free and open</h3>
+        <p>Every page is free to read. No account, no gate, and nothing to buy.</p>
+      </div>
+      <div class="hm-why-item">
+        <h3>Alongside the documentation</h3>
+        <p>Adobe Experience League is the official reference for product capabilities and configuration. These guides focus on the reasoning, trade-offs, and connections between the pieces, and link to the official pages throughout.</p>
+      </div>
+      <div class="hm-why-item">
+        <h3>From real implementations</h3>
+        <p>Written from {{ partial "years.html" (dict "ctx" . "words" true) }} years of building and fixing these implementations, including {{ .Site.Params.adobeYears }} at Adobe.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="hm-contact" aria-labelledby="hm-contact-h">
+    <h2 class="hm-h2" id="hm-contact-h">Get in touch</h2>
+    <ul class="hm-links">
+      <li>
+        <a class="hm-link" href="mailto:{{ .Site.Params.askEmail }}">
+          <span class="hm-link-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span>
+          <span class="hm-link-t"><b>Email</b><em>{{ .Site.Params.askEmail }}</em></span>
+        </a>
+      </li>
+      <li>
+        <a class="hm-link" href="{{ .Site.Params.linkedin }}" target="_blank" rel="me noopener">
+          <span class="hm-link-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 10v7M8 7v.01M12 17v-4a2 2 0 0 1 4 0v4"/></svg></span>
+          <span class="hm-link-t"><b>LinkedIn</b><em>linkedin.com/in/amitdusane</em></span>
+        </a>
+      </li>
+      <li>
+        <a class="hm-link" href="{{ "/about/" | relURL }}">
+          <span class="hm-link-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8v.01"/></svg></span>
+          <span class="hm-link-t"><b>About the author</b><em>Background and roles</em></span>
+        </a>
+      </li>
+    </ul>
+  </section>
+
+  <footer class="hm-foot">
+    <span class="hm-foot-brand">{{ partial "logo.html" (dict "size" 24 "hidden" true) }} <b>amitdusane.com</b></span>
+    <span class="hm-foot-line">&copy; {{ now.Year }} Amit G Dusane &middot; {{ .Site.Params.jobTitle }}</span>
+  </footer>
+
 </div>
 {{ end }}

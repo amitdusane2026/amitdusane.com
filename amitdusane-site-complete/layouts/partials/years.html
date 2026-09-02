@@ -1,0 +1,52 @@
+{{- /* ===========================================================================
+     YEARS OF EXPERIENCE, COMPUTED. One source of truth: params.careerStart.
+
+     The figure used to be typed as "16 years" in five places and spelled out as
+     "sixteen years" in two more, which meant seven edits every February and a
+     near-certainty that one of them would be missed. It is now derived here and
+     nowhere else.
+
+     EXACT, NOT APPROXIMATE. Dividing elapsed seconds by 365.25 days is the
+     obvious way and it is wrong by up to a day either side of the anniversary,
+     so the site would tick over early or late. This subtracts calendar years
+     and then takes one back if the anniversary has not arrived yet, which is
+     how a person actually counts.
+
+     Call it plain for a digit, or with `words` for the spelled-out form:
+       {{ partial "years.html" . }}                          -> 16
+       {{ partial "years.html" (dict "ctx" . "words" true) }} -> sixteen
+
+     IT UPDATES AT BUILD TIME, not when somebody loads the page. Every push to
+     main rebuilds, so it corrects itself the next time anything ships. If the
+     site ever goes quiet across a February, a scheduled rebuild in the deploy
+     workflow is what would keep it honest.
+     =========================================================================== */ -}}
+{{- $ctx := . -}}
+{{- $words := false -}}
+{{- if reflect.IsMap . -}}
+  {{- $ctx = .ctx -}}
+  {{- $words = default false .words -}}
+{{- end -}}
+{{- $start := time.AsTime (default "2010-02-02" $ctx.Site.Params.careerStart) -}}
+{{- $now := now -}}
+{{- $y := sub $now.Year $start.Year -}}
+{{- if or (lt (int $now.Month) (int $start.Month)) (and (eq (int $now.Month) (int $start.Month)) (lt $now.Day $start.Day)) -}}
+  {{- $y = sub $y 1 -}}
+{{- end -}}
+{{- if $words -}}
+  {{- /* Covers 10 to 40, which is the whole plausible life of this site. Outside
+       that range it falls back to the digit rather than printing nothing. */ -}}
+  {{- $w := dict
+      "10" "ten" "11" "eleven" "12" "twelve" "13" "thirteen" "14" "fourteen"
+      "15" "fifteen" "16" "sixteen" "17" "seventeen" "18" "eighteen"
+      "19" "nineteen" "20" "twenty" "21" "twenty-one" "22" "twenty-two"
+      "23" "twenty-three" "24" "twenty-four" "25" "twenty-five"
+      "26" "twenty-six" "27" "twenty-seven" "28" "twenty-eight"
+      "29" "twenty-nine" "30" "thirty" "31" "thirty-one" "32" "thirty-two"
+      "33" "thirty-three" "34" "thirty-four" "35" "thirty-five"
+      "36" "thirty-six" "37" "thirty-seven" "38" "thirty-eight"
+      "39" "thirty-nine" "40" "forty" -}}
+  {{- with index $w (string $y) }}{{ . }}{{ else }}{{ $y }}{{ end -}}
+{{- else -}}
+  {{- $y -}}
+{{- end -}}

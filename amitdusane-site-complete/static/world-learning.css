@@ -271,6 +271,20 @@ a:hover{text-decoration:underline}
 .lnav-alltop{display:flex;align-items:center;gap:6px;padding:9px 10px;margin-bottom:8px;font-size:12.5px;font-weight:600;color:var(--text2);border-radius:6px;text-decoration:none}
 .lnav-alltop:hover{background:var(--bg3);color:var(--text1);text-decoration:none}
 /* sidebar category level (phase) */
+/* The glossary link, pinned above the phase list. It is a lookup rather than a
+   stop on the curriculum, so it is deliberately NOT styled like a phase: no
+   chevron, no expandable body, and a count on the right that says what it is
+   without a word of explanation. Quiet enough that it does not compete with
+   the five phases, present enough that a reader mid-sentence can find it. */
+.lnav-glossary{display:flex;align-items:center;gap:8px;padding:8px 12px;margin-bottom:10px;
+  border:1px solid var(--border);border-radius:8px;text-decoration:none;
+  font-size:var(--fs-sm);font-weight:600;color:var(--text1);
+  transition:border-color .15s,background-color .15s,color .15s}
+.lnav-glossary:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-light)}
+.lnav-glossary.current{border-color:var(--accent);color:var(--accent);background:var(--accent-light)}
+.lnav-gloss-n{margin-left:auto;font-size:var(--fs-micro);font-weight:700;color:var(--text3);
+  font-variant-numeric:tabular-nums}
+.lnav-glossary:hover .lnav-gloss-n,.lnav-glossary.current .lnav-gloss-n{color:var(--accent)}
 .lnav-cat{margin-bottom:1px}
 .lnav-cathead{display:flex;align-items:center;justify-content:space-between;gap:4px;border-radius:6px}
 .lnav-catlink{flex:1;min-width:0;display:block;padding:10px 4px 10px 10px;font-size:12.5px;font-weight:700;color:var(--text1);text-decoration:none;line-height:1.3}
@@ -287,7 +301,16 @@ a:hover{text-decoration:underline}
 .lnav-catbody .lnav-headlink{font-size:12.5px}
 
 /* ---------- Main ---------- */
-.lmain{margin-left:var(--sidebar-w);margin-top:var(--header-h);min-height:calc(100vh - var(--header-h));padding:24px 32px}
+/* box-sizing:border-box is load-bearing here, not tidiness. min-height is
+   calc(100vh - header) and the padding is 24px top and bottom; under the
+   default content-box those 48px sit OUTSIDE the min-height, so the document
+   is always 48px taller than the viewport no matter how short the content
+   is. Every learning page with content shorter than one screen -- the world
+   front page, the five phase landings, the 21 module landings -- carried a
+   scrollbar that had nothing to scroll to. Found 2 Sep 2026: the front page
+   measured 848 against an 800 viewport, and hiding content changed nothing
+   because the height was never coming from the content. */
+.lmain{box-sizing:border-box;margin-left:var(--sidebar-w);margin-top:var(--header-h);min-height:calc(100vh - var(--header-h));padding:24px 32px}
 .lcontent{max-width:var(--column);margin:0 auto}
 /* ==========================================================================
    PROTOTYPE v2, one section only (M14 s1), behind `proto: true` front matter.

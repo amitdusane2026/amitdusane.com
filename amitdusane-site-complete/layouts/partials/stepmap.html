@@ -1,0 +1,51 @@
+{{/* ===========================================================================
+     THE MIGRATION GUIDE'S NAVIGATOR. Four stages, thirteen steps.
+
+     NOT the learning world's homemap. That one is a three-tier pyramid --
+     phase, then module, then section -- with click-to-cascade behaviour and a
+     pile of JavaScript, because it stands in front of 116 sections and no
+     visitor could be shown them all at once. This guide is thirteen steps in a
+     fixed order. A pyramid would be borrowed furniture: it would hide the one
+     thing a visitor most needs to see, which is the whole sequence and how
+     far it runs.
+
+     So everything is on the page at once, grouped, with no interaction to
+     discover. It is a table of contents that happens to be laid out well, and
+     that is the honest shape for a linear guide.
+
+     Stage membership comes from [params.worlds.web-sdk-migration.phases] in
+     hugo.toml, keyed on stepnum. A step is never listed here by hand.
+     =========================================================================== */}}
+{{ $w := index .Site.Params.worlds .Section }}
+{{ $steps := (where .Site.RegularPages "Type" "step").ByWeight }}
+{{ $stages := slice }}
+{{ range $k, $v := $w.phases }}{{ $stages = $stages | append $v }}{{ end }}
+{{ $stages = sort $stages "order" }}
+
+<div class="smap">
+  {{ range $stages }}
+    {{ $stage := . }}
+    <section class="smap-stage">
+      <div class="smap-head">
+        <span class="smap-num" aria-hidden="true">{{ .order }}</span>
+        <div class="smap-headtext">
+          <h2 class="smap-name">{{ .name }}</h2>
+          <p class="smap-blurb">{{ .blurb }}</p>
+        </div>
+      </div>
+      <ol class="smap-steps">
+        {{ range $steps }}
+          {{ if in $stage.steps .Params.stepnum }}
+            <li>
+              <a class="smap-step" href="{{ .RelPermalink }}">
+                <span class="smap-sn">{{ .Params.stepnum }}</span>
+                <span class="smap-st">{{ .Title }}</span>
+                <span class="smap-go" aria-hidden="true"></span>
+              </a>
+            </li>
+          {{ end }}
+        {{ end }}
+      </ol>
+    </section>
+  {{ end }}
+</div>

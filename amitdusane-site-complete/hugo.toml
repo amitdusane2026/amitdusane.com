@@ -25,8 +25,38 @@ disableKinds = ["taxonomy", "term"]
   publishDate = ["publishDate", "date"]
   expiryDate = ["expiryDate"]
 
+# ---------------------------------------------------------------------------
+# THE STAGING GUARD, added 2 Sep 2026.
+#
+# A second copy of this site is built from `develop` for a small group of
+# testers. It must never be indexed by Google: the learning section is
+# unpublished on the live site, and a crawlable staging copy would put all 144
+# pages in the index before launch, as duplicate content against a domain that
+# does not serve them yet.
+#
+# The protection is a `_headers` file carrying X-Robots-Tag, which is the
+# strongest available and, unlike robots.txt, stops indexing even when someone
+# links to the page from elsewhere. Cloudflare Pages and Netlify both read it;
+# GitHub Pages ignores it, so it is harmless on production.
+#
+# IT IS GENERATED, NOT WRITTEN BY HAND, and that is the whole point. A static
+# _headers file would be copied to every build including production, so the day
+# the live site moved to Cloudflare it would silently noindex amitdusane.com.
+# The template checks the baseURL instead: production emits an empty file,
+# anything else emits the block. Nobody has to remember.
+# ---------------------------------------------------------------------------
+[mediaTypes."text/nohost"]
+  suffixes = [""]
+  delimiter = ""
+
+[outputFormats.HEADERS]
+  mediaType = "text/nohost"
+  baseName = "_headers"
+  isPlainText = true
+  notAlternative = true
+
 [outputs]
-  home = ["HTML", "JSON"]
+  home = ["HTML", "JSON", "HEADERS"]
 
 [params]
   author = "Amit G Dusane"
@@ -37,6 +67,11 @@ disableKinds = ["taxonomy", "term"]
   # instead of asking their question. Namecheap forwarding, so it costs nothing
   # and can be rotated on its own if it ever gets scraped.
   askEmail = "ask@amitdusane.com"
+  # The one date the years-of-experience figure is derived from. See
+  # layouts/partials/years.html; nothing else on the site types a year count.
+  careerStart = "2010-02-02"
+  # Adobe is a CLOSED period, so this is a constant rather than a computation.
+  adobeYears = "seven"
 
 [services]
   [services.googleAnalytics]
@@ -84,11 +119,16 @@ disableKinds = ["taxonomy", "term"]
     css  = "world-shell.css"
     js   = "world-migration.js"
     root = "/web-sdk-migration"
+    # The social card for every page in this world. One image per world rather
+    # than one for the site: og-default.jpg was the Web SDK card, and it was
+    # being served on all 144 learning pages too.
+    og   = "og-web-sdk-migration.jpg"
 
   [params.worlds.adobe-analytics-learning]
     css  = "world-learning.css"
     js   = "world-learning.js"
     root = "/adobe-analytics-learning"
+    og   = "og-adobe-analytics-learning.jpg"
 
 # ---------------------------------------------------------------------------
 # Module downloads, added 30 August 2026 for M19.
@@ -157,3 +197,41 @@ disableKinds = ["taxonomy", "term"]
     name = "Deliver and maintain"
     blurb = "Design it before it is built, prove it works, and know where it goes next."
     modules = [19, 20, 21]
+
+# ---------------------------------------------------------------------------
+# THE MIGRATION GUIDE'S FOUR STAGES, added 2 Sep 2026 when its front page was
+# rebuilt around a navigator.
+#
+# Thirteen numbered steps in one flat list is a wall, and it tells a visitor
+# nothing about the shape of the work. These four groups are how the migration
+# actually runs, and the boundaries are real rather than cosmetic: nothing is
+# built in stage one, stage two is entirely Adobe-side plumbing that never
+# touches your data, stage three is where your own implementation starts
+# flowing, and stage four is the only part that can break production.
+#
+# KEYED ON STEP NUMBER, mirroring [params.worlds.adobe-analytics-learning.phases]
+# exactly, which is keyed on module number. That is deliberate: the grouping
+# lives in config for both worlds, so neither one needs a field added to every
+# content file, and a step can move between stages without editing its page.
+# ---------------------------------------------------------------------------
+[params.worlds.web-sdk-migration.phases]
+  [params.worlds.web-sdk-migration.phases.understand]
+    order = 1
+    name = "Understand the change"
+    blurb = "What actually moves, and what you already have."
+    steps = [1, 2]
+  [params.worlds.web-sdk-migration.phases.build]
+    order = 2
+    name = "Build the pipeline"
+    blurb = "The Adobe-side plumbing, before any of your data touches it."
+    steps = [3, 4, 5, 6]
+  [params.worlds.web-sdk-migration.phases.move]
+    order = 3
+    name = "Move the data"
+    blurb = "Your variables, your identity and your consent, flowing through it."
+    steps = [7, 8, 9, 10]
+  [params.worlds.web-sdk-migration.phases.prove]
+    order = 4
+    name = "Prove it and cut over"
+    blurb = "Confirm it matches the old beacon, then retire the old beacon."
+    steps = [11, 12, 13]

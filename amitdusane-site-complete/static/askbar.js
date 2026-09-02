@@ -12,8 +12,9 @@
    author.js, which loads on every page, turns that into the overlay. So this
    file only decides WHEN to offer it.
 
-   Per-world wiring is two questions, answered by whichever selector matches:
-     what am I measuring     the article container
+   Per-world wiring is three questions, answered by whichever selector matches:
+     is this page eligible at all   see the learning-world guard below
+     what am I measuring            the article container
      when do I get out of the way   the prev/next block at the end of it */
 (function () {
   var main = document.querySelector('.lmain') ||
@@ -27,6 +28,57 @@
              document.querySelector('.stepnav');
   var addrEl = document.getElementById('askAddr');
   if (!main || !addrEl) return;
+
+  /* THE LEARNING WORLD OFFERS THE BAR ON SECTIONS ONLY, and .section is what
+     says so: it wraps a lesson article and it is absent from all 26 module and
+     category landings and from the world root.
+
+     This used to be free. The bar lived inside world-learning.js's spine, which
+     returns early without .section, so a landing never reached the code that
+     builds it. Lifting the bar out on 2 Sep 2026 left that condition behind and
+     the bar started arriving on landings, which is wrong for the reason the
+     landings themselves exist: a landing is two paragraphs of signposting, so
+     "Questions about this section?" is offered to somebody who has not been
+     told anything yet, over the very links they came to click.
+
+     Learning-world only. The migration world answers the same question from a
+     body class instead, immediately below. */
+  if (document.body.classList.contains('world-learning') &&
+      !document.querySelector('.section')) return;
+
+  /* THE MIGRATION WORLD OFFERS THE BAR ON STEPS AND KB TOPICS ONLY, and it
+     needs a server-side answer rather than a DOM probe: its front page, its KB
+     index and its references page all render the same `.main` wrapper a step
+     does, so there is nothing in the markup to separate them. baseof.html adds
+     `asks` to the body on exactly the two page types that are real articles.
+
+     Narrowed 2 Sep 2026 on Amit's call. The bar had been appearing on the
+     front page, the KB index and the references list, which are a router, a
+     card grid and a bibliography -- none of them something a reader finishes
+     with a question about the section they just read. */
+  if (document.body.classList.contains('world-migration') &&
+      !document.body.classList.contains('asks')) return;
+
+  /* WHERE IN THE READ THE BAR ARRIVES, and it is per-world because the two
+     worlds are different lengths. A learning section runs to 2000 words, so
+     half of it is still mid-explanation and the offer intrudes on somebody who
+     is working; three quarters is roughly where a question has actually formed.
+     Amit's call on 1 Sep 2026, after a week of living with it. A migration step
+     is 350 words and three quarters lands on top of the prev/next block, so
+     that world shows at half.
+
+     Dismissal lasts until the reader LEAVES the zone. Step out below the re-arm
+     point and step back in, and the bar is offered again; nothing is remembered
+     between pages, because the offer carries this section's title and so is a
+     different offer on every page.
+
+     The dead band between the two numbers exists only to stop the flag
+     flickering for a reader resting exactly on the boundary. Nine points is
+     right below a 0.75 trigger; four is right below 0.50, where nine would mean
+     scrolling almost back to the top to re-arm. */
+  var LEARNING = document.body.classList.contains('world-learning'),
+      SHOW   = LEARNING ? 0.75 : 0.50,
+      REARM  = LEARNING ? 0.66 : 0.46;
 
   var dismissed = false;
   var bar = document.createElement('div');
@@ -46,22 +98,7 @@
   function sync() {
     var r = main.getBoundingClientRect(),
         read = (-r.top + window.innerHeight) / (r.height || 1);
-    /* Shows at half the article, on Amit's call 2 Sep 2026; it was three
-       quarters, which on a long section put the offer so late that a reader who
-       had already decided to leave never saw it.
-
-       Dismissal lasts until the reader LEAVES the zone. Step out below the
-       re-arm point and step back in, and the bar is offered again; that is the
-       behaviour Amit asked for, and it is why nothing is remembered between
-       pages either.
-
-       The gap between the two numbers exists only to stop the flag flickering
-       for someone resting exactly on the boundary, so it wants to be small. It
-       was 0.41 against 0.50, carried over from when the bar appeared at 0.75,
-       and nine points below a halfway trigger meant scrolling almost back to
-       the top to re-arm. Four points is enough for the dead band and makes
-       leaving and re-entering the zone feel immediate. */
-    if (read < 0.46) dismissed = false;
+    if (read < REARM) dismissed = false;
     /* Hide only once the navigation actually reaches the band the bar occupies,
        not the moment it enters the viewport at all.
 
@@ -78,7 +115,7 @@
     var barH = bar.getBoundingClientRect().height || 56;
     var band = window.innerHeight - barH - 24;
     var navUp = stop && stop.getBoundingClientRect().top < band;
-    var shown = read > 0.50 && !navUp && !dismissed;
+    var shown = read > SHOW && !navUp && !dismissed;
     bar.classList.toggle('is-in', shown);
     /* The body class lifts the About mark and the page-nav button clear of the
        bar: they occupy the same corner and collide with it exactly at 390. */

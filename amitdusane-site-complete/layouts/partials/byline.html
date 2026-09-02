@@ -25,7 +25,7 @@
      name and the credential, and needs the grammar. */ -}}
   {{ if not $full }}<span class="by-pre">Created by</span>{{ end }}
   <a class="by-who" href="{{ "/about/" | relURL }}">{{ $p.Site.Params.author }}</a>
-  <span class="by-cred">16 years in digital analytics, seven of them at Adobe</span>
+  <span class="by-cred">{{ partial "years.html" $p }} years in digital analytics, {{ $p.Site.Params.adobeYears }} of them at Adobe</span>
   {{- if $full }}
   <span class="by-sep" aria-hidden="true">&middot;</span>
   {{- /* Both dates only when they differ. On launch day every page carries

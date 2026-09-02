@@ -21,7 +21,16 @@
 .about-head{display:flex;align-items:center;gap:16px;margin-bottom:20px}
 .about-avatar{flex:none;width:96px;height:96px;display:inline-flex;align-items:center;justify-content:center;color:#1E3A8A}
 [data-theme="dark"] .about-avatar{color:#ffffff}
-.about-name{font-size:21px;font-weight:800;color:#1c1f24}
+/* Manrope, matching the name on the About page and the wordmark in the header.
+   The overlay is global -- one copy of the markup in baseof.html, one set of
+   rules here, shown identically on every page of every world -- so this is the
+   only place the change has to be made.
+
+   Weight drops from 800 to 700 with the face. Manrope's 800 is heavier than
+   Plex's at the same number, and at 21px it was closing up the counters. 700
+   matches what the About page and the home H1 already use. */
+.about-name{font-family:"Manrope",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:21px;font-weight:700;letter-spacing:-.02em;color:#1c1f24}
 .about-role{font-size:13px;color:#ba2142;font-weight:600;margin-top:3px}
 .about-body p{font-size:15px;line-height:1.7;color:#3b4048;margin:0 0 14px}
 .about-cta{display:inline-flex;align-items:center;gap:6px;margin-top:6px;color:#fff;background:#ba2142;border-radius:10px;padding:11px 22px;font-size:14px;font-weight:700;text-decoration:none}
@@ -43,68 +52,6 @@
 @media(max-width:560px){.author-fab{bottom:18px}}
 @media print{.author-fab,.about-overlay{display:none !important}}
 
-/* ---- GLOBAL shell (home, About, 404): slim top, no toggle/search/print ---- */
-.gtop{display:flex;align-items:center;height:60px;padding:0 26px;border-bottom:1px solid var(--line);background:var(--bg)}
-.gbrand{font-size:15px;font-weight:700;letter-spacing:.2px;color:var(--ink);text-decoration:none}
-.gbrand:hover{color:#ba2142}
-.gmain{max-width:980px;margin:0 auto;padding:34px 26px 90px}
-.gfoot{max-width:980px;margin:30px auto 0;padding:20px 26px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted)}
-.gfoot b{color:#ba2142}
-.gfoot a{color:var(--accent);text-decoration:none}
-.gfoot .sep{color:var(--faint);margin:0 7px}
-
-/* ---- GLOBAL HOME: profile (left, fixed) + topic cards (right, scroll) ---- */
-.home2{display:grid;grid-template-columns:300px 1fr;gap:40px;align-items:start}
-.h2-profile{position:sticky;top:84px}
-.h2-name{font-size:27px;font-weight:800;letter-spacing:-.3px;color:var(--ink)}
-.h2-role{font-size:14px;color:var(--ink-soft);margin-top:6px;line-height:1.5}
-.h2-sum{font-size:14px;color:var(--muted);line-height:1.65;margin:16px 0}
-.h2-facts{display:flex;flex-direction:column;gap:7px;margin:16px 0 20px}
-.h2-facts span{font-size:13px;color:var(--ink-soft)}
-.h2-facts b{color:#ba2142;font-weight:700;margin-right:5px}
-.h2-about{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);border-radius:9px;padding:9px 16px;font-size:13.5px;color:var(--ink);text-decoration:none}
-.h2-about:hover{border-color:#ba2142;color:#ba2142}
-.h2-topics-h{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--faint);font-weight:800;margin-bottom:14px}
-.tcard{display:block;border:1px solid var(--line);border-radius:14px;padding:22px 24px;text-decoration:none;margin-bottom:16px;background:var(--bg);border-left:4px solid var(--tcolor,#1f5fae)}
-.tcard:hover{box-shadow:0 6px 22px rgba(16,24,40,.08)}
-.tcard .tc-h{display:flex;align-items:center;gap:10px}
-.tcard .tc-t{font-size:18px;font-weight:800;color:var(--ink)}
-.tcard .tc-tag{font-size:11px;font-weight:700;border-radius:999px;padding:3px 10px;color:var(--tcolor,#1f5fae);background:var(--tbg,#eaf1fb)}
-.tcard .tc-d{font-size:14px;color:var(--muted);margin-top:8px;line-height:1.6}
-.tcard .tc-go{font-size:13.5px;color:var(--tcolor,#1f5fae);font-weight:600;margin-top:14px;display:inline-block}
-@media(max-width:760px){.home2{grid-template-columns:1fr;gap:24px}.h2-profile{position:static}}
-
-/* ---- GLOBAL About page (universal) — ported from the app ---- */
-.author-page{max-width:720px;margin:0 auto}
-.author-header{text-align:center;padding:10px 0 30px;border-bottom:1px solid var(--line);margin-bottom:30px}
-.author-title{font-size:30px;font-weight:800;margin-bottom:8px;color:#ba2142}
-.author-subtitle{font-size:14px;color:var(--ink-soft);margin-bottom:5px;line-height:1.5}
-.author-exp{font-size:13px;color:var(--muted)}
-.author-links{display:flex;justify-content:center;gap:12px;margin-top:18px}
-.author-link{display:inline-flex;align-items:center;gap:6px;padding:9px 18px;background:var(--bg);border:1px solid var(--line);border-radius:8px;color:var(--ink);text-decoration:none;font-size:13px}
-.author-link:hover{border-color:#ba2142;color:#ba2142}
-.author-section{margin-bottom:28px}
-.author-section-title{font-size:18px;font-weight:700;margin-bottom:12px;color:var(--ink)}
-.author-section p{font-size:14.5px;color:var(--ink-soft);line-height:1.7;margin:0 0 12px}
-.author-list{list-style:none;padding:0;margin:12px 0}
-.author-list li{font-size:13.5px;color:var(--ink-soft);padding:6px 0 6px 22px;position:relative}
-.author-list li::before{content:"\2192";position:absolute;left:0;color:#ba2142;font-weight:700}
-.company-list{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
-.company-tag{background:var(--bg);border:1px solid var(--line);padding:6px 12px;border-radius:6px;font-size:12px;color:var(--ink-soft)}
-.company-tag.adobe{background:#fdeef2;color:#ba2142;font-weight:600;border-color:#f7cdd8}
-.cert-badge{display:flex;align-items:center;gap:16px;background:var(--bg);border:1px solid var(--line);padding:16px;border-radius:9px;margin:8px 0}
-.cert-icon{font-size:30px;line-height:1}
-.cert-name{font-size:14.5px;font-weight:700;color:var(--ink)}
-.cert-id{font-size:12px;color:var(--muted)}
-
-/* polish: clearer back link + standout topic cards */
-.gback{font-size:14px;font-weight:600}
-.h2-topics-note{font-size:13.5px;color:var(--muted);margin:-6px 0 16px}
-.tcard{border:1.5px solid var(--tcolor,#1f5fae);background:var(--tbg,#eaf1fb);transition:transform .15s,box-shadow .15s}
-.tcard:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(31,95,174,.20)}
-.tcard .tc-tag{background:#fff}
-.tcard .tc-go{font-weight:700}
-.tcard .tc-d{color:var(--ink-soft)}
 
 /* ============================================================
    "See where this fits" pocket map v3.
@@ -596,12 +543,23 @@ body.wf-lock{overflow:hidden}
   src:url('fonts/manrope-latin-wght-normal.woff2') format('woff2');
 }
 
-/* IBM Plex is now the site typeface, not the learning world's alone. The faces
-   live here because chrome.css is the one stylesheet every world loads. */
-   These @font-face rules are global but cost the other 115 sections nothing:
-   a face is only fetched when something actually uses it, and the family is
-   applied under body.world-learning alone.
-   -------------------------------------------------------------------------- */
+/* IBM Plex is the site typeface, not the learning world's alone. The faces live
+   here because chrome.css is the one stylesheet every world loads.
+
+   THE COMMENT THAT USED TO BE HERE WAS BROKEN AND IT COST THE SITE ITS
+   TYPEFACE. It closed itself on its second line and then carried on with
+   three more lines of prose, which the CSS parser read as a selector. An
+   invalid selector followed by a block makes the parser discard BOTH, and
+   the block that followed was this @font-face rule -- so IBM Plex Sans was
+   never registered. Manrope above it and IBM Plex Mono below it both
+   parsed fine, which is why nothing looked obviously broken: the page
+   silently fell through the stack to Segoe UI on Windows, and only the
+   wordmark, which asks for Manrope, kept its intended face.
+
+   Measured after the fix: a paragraph of body prose rendered 173.3px tall
+   in the fallback and 144.5px in Plex, so this was never subtle, only
+   invisible. Nothing on the page tells you a webfont was dropped.
+   -------------------------------------------------------------------- */
 @font-face{
   font-family:'IBM Plex Sans';
   font-style:normal;
@@ -727,12 +685,24 @@ figure.fig-svg .fig-hint{display:none}
 .ask-bar > a{flex:1; display:flex; align-items:baseline; gap:7px; text-decoration:none; min-width:0}
 .ask-bar span{font-size:15px; color:var(--hdr-muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
 /* "Ask Amit" in the migration world's own blue rather than the header's crimson,
-   so the call to action belongs to the section it appears in. This rule only
-   reaches the migration world: the learning world carries its own .ask-bar
-   rules, which load later and keep its crimson. The dark value is that world's
-   dark accent, not a lightened version of the light one. */
-.ask-bar b{flex:none; font-size:15px; font-weight:700; color:#1f5fae}
-[data-theme="dark"] .ask-bar b{color:#5fa1e6}
+   so the call to action belongs to the section it appears in. The dark value is
+   that world's dark accent, not a lightened version of the light one.
+
+   BOTH COLOUR RULES CARRY THE WORLD CLASS, and the dark one is the reason. An
+   earlier comment here claimed these reached migration only, because the
+   learning world declares its own `.ask-bar b{color:var(--accent)}` and loads
+   later. That holds in light, where both selectors are (0,1,1) and source order
+   decides. It cannot hold in dark: a bare `[data-theme="dark"] .ask-bar b` is
+   (0,2,1) and out-specifies the world rule outright, so the learning world's
+   crimson turned migration blue every night. Source order never rescues a rule
+   that has been out-specified, so a global default with a themed variant cannot
+   be left to a world stylesheet to override. Scope it, or own it in one place.
+
+   The layout half stays global: both worlds want it and neither has ever
+   disagreed about it. */
+.ask-bar b{flex:none; font-size:15px; font-weight:700}
+body.world-migration .ask-bar b{color:#1f5fae}
+[data-theme="dark"] body.world-migration .ask-bar b{color:#5fa1e6}
 .ask-bar-x{flex:none; width:30px; height:30px; border:none; border-radius:8px; background:transparent;
            color:var(--hdr-muted); font-size:20px; line-height:1; cursor:pointer}
 .ask-bar-x:hover{background:var(--hdr-field); color:var(--hdr-ink)}
@@ -801,6 +771,14 @@ body.world-migration .ask-route.is-copied .ask-route-act{color:#1f5fae}
   .print-doc thead .ph-title{font-size:10.5pt;font-weight:700;color:#1c2129}
   .print-doc thead .ph-ctx{font-size:8.5pt;color:#6b7280;white-space:nowrap}
   .print-doc thead .ph-by{font-size:9pt;font-weight:600;color:#4b5563;margin-top:2px}
+  /* The running header already says "Created by Amit G Dusane" on every sheet,
+     so the article byline must not say it a second line later. What the byline
+     is worth keeping for on paper is the credential and the dates. This lived
+     only in world-learning.css, so the migration world printed the name twice
+     -- once in the header, once in bold accent under the title. Global now,
+     because it is the same argument in both worlds. */
+  .byline .by-who{display:none !important}
+  .byline .by-sep:first-of-type{display:none !important}
   .print-doc tfoot td{border-top:2px solid #ba2142;padding-top:5px;text-align:center}
   .print-doc tfoot span{font-size:8.5pt;color:#4b5563}
   .print-doc tbody td{padding:16px 0;color:#1c2129}
@@ -824,4 +802,587 @@ body.world-migration .ask-route.is-copied .ask-route-act{color:#1f5fae}
      .lcrumb; this is the migration equivalent, which was printing a "Migration
      > Knowledge Base > ..." line directly above the title that repeats it. */
   .print-doc .crumb{display:none !important}
+}
+
+/* ============================================================================
+   THE HOME PAGE. Markup is layouts/index.html. Body carries `page-home`.
+
+   ONE FIXED TREATMENT, NOT TWO THEMES, and that reverses an earlier decision
+   here on purpose. The argument for theming it was that a reader who chose
+   dark and clicked back to home should not get a white flash. That argument
+   dies if the page is dark for everyone: nobody is flashed, and the reader's
+   stored choice still governs every other page on the site, which is where
+   they actually read.
+
+   What replaced the two themes is the social card in static/og-home.jpg: same
+   mark, same faces, same accent. Structure did not change, colour did.
+
+   THE TOKENS THEREFORE CARRY NO DARK VARIANT. Do not add one. If a rule here
+   ever needs to respond to [data-theme] something has gone wrong, because the
+   page does not have a light state to respond with.
+
+   ----------------------------------------------------------------------------
+   TWO LIGHTS, AND WHERE THEY COME FROM.
+
+   A dark page is not a light page with the colours swapped: flat near-black
+   with grey boxes on it reads as unfinished, which is the note this page got
+   back from a stranger -- "good, but very basic". What fixes that is lighting
+   rather than more colour, so the ground carries two sources and everything
+   drawn on it is lit by them.
+
+   BOTH COLOURS COME OFF THE MONOGRAM, and that is the whole discipline here.
+   The mark is navy #1E3A8A with a #C8102E bar, so the page gets a warm crimson
+   key light from the top left and a cool navy fill from the right. Two lights
+   from the brand's own two colours is a lit room. Three or four in colours the
+   site does not otherwise use is the generic glowing-blob background that this
+   site has already refused once, when the mono-uppercase component label was
+   rejected on 19 Aug for being a recognisable generated-page signature.
+
+   Every glow below is a radial-gradient that falls to TRUE ZERO at its outer
+   stop, never a box-shadow. A box-shadow spreads from a rectangle and blooms
+   as a rounded square; and a gradient that stops while still partly opaque
+   leaves a visible ring, which is the exact fault that had to be fixed on the
+   About mark's halo on 19 Aug.
+   ============================================================================ */
+body.page-home{
+  --h-bg:#0f1319;
+  --h-bg2:#141a22;
+  /* The tiles sit two clear steps above the ground. At #171d26 they were within
+     a few points of the page and read as outlines rather than as surfaces, so
+     the only thing separating a tile from the background was its border. A
+     control the whole page exists to offer should not need to be looked for. */
+  --h-surface:#1d2531;
+  --h-ink:#f2f5f9;       /* headings, tile titles, the wordmark */
+  --h-ink2:#c2ccd8;      /* body prose */
+  /* Lifted twice as the key light was strengthened. The byline sits highest on
+     the page, where the glow is brightest, and each time the light went up this
+     value went under AA against it: 4.40:1 at .26 alpha, 4.45:1 at .55. Raising
+     a light raises the floor for everything drawn on it. */
+  --h-ink3:#a4aebb;      /* meta, one-liners, section labels */
+  /* 3.2:1 against the page ground, the WCAG 1.4.11 floor for a control's
+     boundary. At #333e4c it measured 1.72 and the tile edge was invisible --
+     the fill alone was carrying it, and the fill cannot reach 3:1 without
+     turning a card into a light grey block on a black page. */
+  --h-line:#58667a;
+  --h-line2:#1d242e;
+
+  /* The two lights, as colours. --h-key is the crimson off the monogram's bar,
+     --h-fill the navy off its letterforms, lifted enough to register on
+     near-black. --h-accent is the lightened crimson, and it is the only one of
+     the three allowed to carry text or a glyph: #ba2142 on #0f1319 measures
+     3.4:1 and fails. Same pair, same reason, as --accent / --accent2 in the
+     learning world. */
+  --h-key:186,33,66;
+  --h-fill:37,72,170;
+  --h-accent:#f27893;
+
+  --h-shadow:0 1px 2px rgba(0,0,0,.4);
+
+  --h-fs-word:31px; --h-fs-title:34px; --h-fs-tag:17px; --h-fs-h2:12.5px;
+  --h-fs-tile:17px; --h-fs-body:15px; --h-fs-meta:13px;
+  --h-col:1000px;
+
+  margin:0;
+  color:var(--h-ink2);
+  font-family:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;
+  /* Tells the browser to draw scrollbars and any UA control dark, whatever the
+     site theme says. Without it a reader in light mode gets a white scrollbar
+     down the side of a near-black page. */
+  color-scheme:dark;
+
+  /* ANCHORED TO THE PAGE, NOT THE VIEWPORT. background-attachment:fixed was
+     tried and is wrong twice over: the lights then ride down the screen as the
+     reader scrolls, so they sit over the contact block as readily as over the
+     identity, and iOS Safari has never rendered a fixed background reliably.
+     Anchored to the page they stay where the mark is.
+
+     Both have a mid stop. Two-stop gradients on this scale end in a visible
+     ring because the falloff is linear in alpha rather than perceptual; the
+     middle stop is what makes the edge disappear. */
+  background-color:var(--h-bg);
+  background-image:
+    radial-gradient(1350px 980px at 0% -14%,
+      rgba(var(--h-key),.58), rgba(var(--h-key),.17) 36%, rgba(var(--h-key),0) 68%),
+    radial-gradient(1050px 820px at 106% -6%,
+      rgba(var(--h-fill),.34), rgba(var(--h-fill),.09) 40%, rgba(var(--h-fill),0) 70%);
+  background-repeat:no-repeat;
+}
+
+/* The pre-paint script in head.html writes color-scheme onto documentElement
+   as an INLINE style, from the reader's stored theme. On a page that is dark
+   for everyone that is wrong half the time, and the visible symptom is a white
+   scrollbar running down the side of a near-black page. A stylesheet rule with
+   !important outranks a non-important inline style, which is the only way to
+   correct it without teaching that script about this page. */
+html:has(body.page-home){color-scheme:dark !important}
+
+/* No header on this page, and no left rule since 2 Sep 2026, so the content
+   owes no offset to either: it starts at the viewport edge and the section
+   paddings do the insetting. */
+
+/* The floating About mark is hidden here, and only here. It is the site-wide
+   identity control, but this page IS the identity: the mark is already on it at
+   118px, and the contact block already carries an explicit "About the author"
+   row. A third route to the same overlay, pinned over the footer, was one mark
+   too many. Hidden rather than not rendered, so author.js still finds the
+   element it binds to and nothing has to learn about this page. */
+body.page-home .author-fab{display:none}
+
+/* ----------------------------------------------------------------------------
+   HERO. Left-aligned, matching the card's composition rather than centring
+   everything: the lockup, the line, the meta, each starting on the same left
+   edge. Centred text under a left-aligned lockup reads as two designs.
+   ---------------------------------------------------------------------------- */
+.hm-hero{max-width:var(--h-col);margin:0 auto;padding:52px 26px 34px}
+/* WRAP, and min-width:0 on the word. The lockup is a mark of fixed width beside
+   a single unbreakable 14-character token, so with nowrap it has exactly one
+   failure mode and it is the whole page: the flex line cannot shrink, so it
+   pushes the body wider than the viewport and every section on the page gains a
+   horizontal scroll. Measured at 360px there were 13px of headroom, which is
+   none -- any narrower phone, or the fallback face rendering before Manrope
+   lands, tipped it over. Wrapping makes the wordmark drop under the mark
+   instead of shoving. */
+.hm-lockup{display:flex;align-items:center;flex-wrap:wrap;gap:12px 16px;margin:0 0 22px;position:relative;z-index:0}
+.hm-mark{display:inline-flex;color:#ffffff;flex:none;position:relative}
+/* The mark carries width and height ATTRIBUTES from partials/logo.html, which a
+   stylesheet outranks. It has to come down on a phone: 118px of a 360px screen
+   is a third of the width spent before a word is read. */
+.hm-mark svg{width:118px;height:118px}
+/* The mark is the brightest thing on the page, so it is also a light: a halo
+   sitting behind it, in the key colour, which makes the white letterforms read
+   as lit rather than pasted on. Behind, via z-index -1 against the lockup's own
+   stacking context, so it never sits over the glyph. */
+.hm-mark::before{
+  content:""; position:absolute; inset:-46%; z-index:-1; pointer-events:none;
+  background:radial-gradient(circle closest-side,
+    rgba(var(--h-key),.42), rgba(var(--h-key),.10) 55%, rgba(var(--h-key),0) 100%);
+}
+.hm-word{min-width:0;font-family:"Manrope",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:var(--h-fs-word);font-weight:700;letter-spacing:-.4px;color:var(--h-ink);line-height:1}
+/* Manrope, not Plex, and this is the one heading on the site that is. Manrope
+   has carried the wordmark alone since 2 Sep 2026 precisely so that the mark
+   reads as a mark; putting it on the H1 directly beneath the lockup ties the
+   two into a single identity block. It is deliberately confined to this one
+   line -- the tagline, the byline and every heading below stay Plex, or the
+   distinction the wordmark depends on is gone. */
+.hm-title{margin:0 0 10px;max-width:24ch;font-family:"Manrope",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:var(--h-fs-title);line-height:1.18;font-weight:700;letter-spacing:-.028em;color:var(--h-ink)}
+/* SCOPED, and it must stay scoped. `hm-` is shared vocabulary: the learning
+   world uses .hm-tag on every category and module blurb in its home map, and
+   this rule -- global and loading first -- was putting a 12px bottom margin
+   and a 64ch cap on all 26 of them. Harmless by luck in that layout, but it
+   is the leak, and the next world to reuse a name would not be so lucky.
+   The other .hm-* rules in this block do not collide with anything today;
+   check before adding one that does. */
+body.page-home .hm-tag{margin:0 0 12px;max-width:64ch;font-size:var(--h-fs-tag);line-height:1.55;color:var(--h-ink2)}
+.hm-by{margin:0;font-size:var(--h-fs-meta);color:var(--h-ink3)}
+.hm-by a{color:var(--h-ink3);text-decoration:underline;text-underline-offset:2px}
+.hm-by a:hover{color:var(--h-accent)}
+
+/* ---- section heading, shared. The rule beside it is lit in the key colour and
+   fades out, so a plain uppercase label stops being a plain uppercase label. */
+.hm-h2{display:flex;align-items:center;gap:12px;margin:0 0 14px;
+  font-size:var(--h-fs-h2);font-weight:700;letter-spacing:1.3px;text-transform:uppercase;color:var(--h-ink3)}
+.hm-h2::after{content:"";flex:1;height:1px;
+  background:linear-gradient(90deg, rgba(var(--h-key),.55), rgba(var(--h-key),0) 70%)}
+
+/* ----------------------------------------------------------------------------
+   THE TILES. A row, not a card: title, one line, and an arrow hard right.
+
+   auto-fit rather than a fixed two-up, so this holds ten or twelve without
+   another decision. At one tile per row on a phone each is about 82px, which
+   means four are reachable in a thumb's scroll instead of one and a half.
+
+   The arrow is the affordance. A tile that is merely a bordered box does not
+   read as clickable, which is what went wrong when per-world colour was
+   carrying that job: colour says "category", an arrow says "go".
+   ---------------------------------------------------------------------------- */
+.hm-topics{max-width:var(--h-col);margin:0 auto;padding:0 26px 46px}
+/* min(320px,100%) rather than a bare 320px. A grid track does not shrink below
+   its stated minimum -- it overflows the container instead -- so a hard 320px
+   floor is a horizontal scrollbar waiting for a narrow enough screen. The
+   min() form caps the floor at the container itself, which makes overflow
+   impossible at any width and removes the need for a separate mobile override. */
+.hm-tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr));gap:12px}
+/* THE TILE IS ITS OWN COLOUR, not a lighter shade of the page. It used to be a
+   flat #1d2531, which is the ground with the lights taken off it, and that is
+   why it read as correct but plain: a panel whose only idea is "slightly
+   lighter" has no material.
+
+   It is now a deep indigo-slate with a 140-degree gradient across it, warm at
+   the top left corner and cool at the bottom right, which is the same two
+   lights the page ground carries. So the tile is not an arbitrary blue: it is
+   the panel those two lamps would actually produce, which is what makes it read
+   as lit rather than as a colour someone picked.
+
+   THE PANEL IS IDENTICAL ON EVERY TILE, and that is the constraint that lets
+   this scale. Per-world colour lives on the arrow and on one edge, below. */
+.tile{
+  display:flex; align-items:center; gap:16px;
+  position:relative; overflow:hidden;
+  padding:18px; border-radius:12px; text-decoration:none;
+  background:linear-gradient(140deg, #263353 0%, #1e2942 46%, #182034 100%);
+  border:1px solid #5d6a86;
+  /* The inset hairline is the top edge catching the key light. One line of CSS,
+     and it is most of the difference between a filled rectangle and a surface
+     with a form. */
+  box-shadow:0 1px 2px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.10);
+  transition:border-color .18s, box-shadow .18s, transform .18s, background-color .18s;
+}
+/* The world's colour, as light spilling in from the leading edge rather than as
+   a fill. A 3px bar would be the accent-stripe device this page already threw
+   out once; a gradient that fades to nothing inside 40% of the tile reads as
+   the panel being lit from that side, and ten of them in ten colours still look
+   like one component. */
+.tile::before{
+  content:""; position:absolute; inset:0; pointer-events:none;
+  background:linear-gradient(100deg,
+    rgba(var(--tc),.26) 0%, rgba(var(--tc),.09) 22%, rgba(var(--tc),0) 46%);
+  transition:opacity .18s; opacity:.85;
+}
+.tile > *{position:relative}
+.tile-learning{--tc:186,33,66;  --tc-ink:#f27893}
+.tile-migration{--tc:31,95,174; --tc-ink:#5fa1e6}
+.tile:hover{
+  border-color:var(--tc-ink);
+  transform:translateY(-2px);
+  box-shadow:0 12px 34px rgba(0,0,0,.5),
+             0 0 30px rgba(var(--tc),.30),
+             inset 0 1px 0 rgba(255,255,255,.14);
+}
+.tile:hover::before{opacity:1}
+.tile:focus-visible{outline:2px solid var(--tc-ink);outline-offset:3px}
+.tile-body{display:flex;flex-direction:column;gap:3px;min-width:0;flex:1}
+/* Manrope, matching the H1. The two tile titles and the H1 are the only Plex
+   exceptions on the page; the sub-line below stays Plex because it is meta
+   rather than a name, and because a two-line block set entirely in the display
+   face stops looking like a label with a value under it. */
+.tile-title{font-family:"Manrope",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:var(--h-fs-tile);font-weight:700;letter-spacing:-.016em;color:var(--h-ink);line-height:1.25}
+.tile-sub{font-size:var(--h-fs-meta);color:var(--h-ink3);line-height:1.45}
+/* A lit disc in the world's own colour. The arrow is a MASK on the pseudo
+   element rather than a background-image with the colour baked into a data URI,
+   which is what it was: a data URI cannot read a custom property, so two worlds
+   meant two hard-coded copies of the same SVG. Masked, the shape is declared
+   once and --tc-ink colours it, and a third world is one line. */
+.tile-go{
+  flex:none; width:32px; height:32px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  background:rgba(var(--tc),.18);
+  border:1px solid rgba(var(--tc),.55);
+  box-shadow:0 0 14px rgba(var(--tc),.18);
+  transition:transform .18s, background-color .18s, box-shadow .18s, border-color .18s;
+}
+.tile-go::before{
+  content:""; width:14px; height:14px; background:var(--tc-ink);
+  -webkit-mask:var(--arrow) center/14px 14px no-repeat;
+          mask:var(--arrow) center/14px 14px no-repeat;
+  --arrow:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M12.5 6l6 6-6 6"/></svg>');
+}
+.tile:hover .tile-go{
+  transform:translateX(3px);
+  background-color:rgba(var(--tc),.34);
+  border-color:var(--tc-ink);
+  box-shadow:0 0 22px rgba(var(--tc),.45);
+}
+
+/* ---- the band. Opaque, so the two lights stop at its edge and the section
+   actually reads as a section. Its top edge is then a lit hairline carrying
+   both lights, warm on the left and cool on the right, which is the seam doing
+   a job instead of being a grey line. ---- */
+.hm-why{background:var(--h-bg2);border-bottom:1px solid var(--h-line2);position:relative}
+.hm-why::before{
+  content:""; position:absolute; top:0; left:0; right:0; height:1px;
+  background:linear-gradient(90deg,
+    rgba(var(--h-key),0), rgba(var(--h-key),.55) 18%,
+    rgba(var(--h-fill),.55) 72%, rgba(var(--h-fill),0));
+}
+.hm-why > .hm-h2,.hm-why-grid{max-width:var(--h-col);margin-left:auto;margin-right:auto;padding-left:26px;padding-right:26px}
+.hm-why > .hm-h2{padding-top:40px}
+.hm-why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;padding-bottom:44px}
+.hm-why-item h3{margin:0 0 6px;font-size:15.5px;font-weight:700;letter-spacing:-.01em;color:var(--h-ink)}
+.hm-why-item p{margin:0;font-size:var(--h-fs-body);line-height:1.62;color:var(--h-ink2)}
+
+/* ---- contact ---- */
+.hm-contact{max-width:var(--h-col);margin:0 auto;padding:44px 26px 16px}
+.hm-links{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.hm-link{display:flex;align-items:center;gap:12px;padding:14px 16px;border:1px solid var(--h-line);border-radius:11px;background:var(--h-surface);text-decoration:none;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.05);
+  transition:border-color .18s, background-color .18s, box-shadow .18s}
+.hm-link:hover{border-color:var(--h-accent);background:#252f3d;box-shadow:0 0 22px rgba(var(--h-key),.16), inset 0 1px 0 rgba(255,255,255,.08)}
+.hm-link-ico{flex:none;width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;
+  background:rgba(var(--h-key),.13);border:1px solid rgba(242,120,147,.24);color:var(--h-accent)}
+.hm-link-ico svg{width:17px;height:17px}
+.hm-link-t{display:flex;flex-direction:column;min-width:0}
+.hm-link-t b{font-size:var(--h-fs-body);font-weight:700;color:var(--h-ink)}
+.hm-link-t em{font-style:normal;font-size:var(--h-fs-meta);color:var(--h-ink3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* ---- footer ---- */
+.hm-foot{max-width:var(--h-col);margin:0 auto;padding:22px 26px 30px;border-top:1px solid var(--h-line2);display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.hm-foot-brand{display:inline-flex;align-items:center;gap:8px;color:#ffffff;font-size:var(--h-fs-body)}
+.hm-foot-brand b{font-family:"Manrope",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-weight:700;letter-spacing:-.3px;color:var(--h-ink)}
+.hm-foot-line{font-size:var(--h-fs-meta);color:var(--h-ink3)}
+
+/* ---------------------------------------------------------------------------
+   Narrow. The three-up prose grids collapse first; the tiles collapse on their
+   own through auto-fit and need no rule until the padding tightens.
+   --------------------------------------------------------------------------- */
+@media(max-width:900px){
+  body.page-home{--h-fs-title:29px; --h-fs-word:27px}
+  .hm-why-grid{grid-template-columns:1fr;gap:22px}
+  .hm-links{grid-template-columns:1fr}
+}
+@media(max-width:560px){
+  body.page-home{--h-fs-title:25px; --h-fs-word:23px; --h-fs-tag:15.5px; --h-fs-tile:16px}
+  /* A phone is a third of the width the lights were sized for, so at the same
+     radius the key light washes the whole screen instead of coming from a
+     corner. Pulled in with it. */
+  body.page-home{background-image:
+    radial-gradient(760px 620px at -6% -8%,
+      rgba(var(--h-key),.55), rgba(var(--h-key),.15) 38%, rgba(var(--h-key),0) 70%),
+    radial-gradient(620px 560px at 108% 3%,
+      rgba(var(--h-fill),.42), rgba(var(--h-fill),.11) 42%, rgba(var(--h-fill),0) 74%)}
+  .hm-hero{padding:34px 18px 24px}
+  .hm-lockup{gap:12px;margin-bottom:18px}
+  .hm-title{max-width:none}
+  .hm-mark svg{width:78px;height:78px}
+  .hm-topics{padding:0 18px 36px}
+  .hm-why > .hm-h2,.hm-why-grid,.hm-contact,.hm-foot{padding-left:18px;padding-right:18px}
+  .hm-contact{padding-top:34px}
+  .hm-foot{flex-direction:column;align-items:flex-start;gap:8px;padding-bottom:30px}
+}
+
+/* A reader who asked for less motion should not get a tile that lifts. The
+   glow is colour rather than movement, so it stays. */
+@media(prefers-reduced-motion:reduce){
+  .tile,.tile-go,.hm-link{transition:none}
+  .tile:hover{transform:none}
+  .tile:hover .tile-go{transform:none}
+}
+
+/* Paper is white, and none of the above survives the trip. Print the identity
+   and the routes in ink, and drop the ground, the lights and the glows. */
+@media print{
+  body.page-home{background:#fff !important;color:#1c2129;color-scheme:light}
+  body.page-home .hm-mark::before,body.page-home .hm-why::before,
+  body.page-home .hm-h2::after{display:none}
+  body.page-home .hm-word,body.page-home .hm-title,body.page-home .tile-title,
+  body.page-home .hm-why-item h3,body.page-home .hm-link-t b,
+  body.page-home .hm-foot-brand b{color:#0f1319}
+  body.page-home .hm-mark,body.page-home .hm-foot-brand{color:#1E3A8A}
+  body.page-home .hm-tag,body.page-home .hm-why-item p{color:#1c2129}
+  body.page-home .hm-by,body.page-home .tile-sub,body.page-home .hm-h2,
+  body.page-home .hm-link-t em,body.page-home .hm-foot-line{color:#4b5563}
+  body.page-home .hm-why{background:none}
+  body.page-home .tile,body.page-home .hm-link{background:none;border-color:#d5dae1;box-shadow:none;break-inside:avoid}
+  body.page-home .tile-go,body.page-home .author-fab{display:none !important}
+}
+
+/* ============================================================================
+   THE WORLD-LESS PAGES: About and 404. Rebuilt 2 Sep 2026.
+   Markup is content/about.html, layouts/404.html, and the {{ else }} branch of
+   baseof.html.
+
+   THESE ARE THEMED, and that is the difference between them and the home page.
+   Home is one fixed dark treatment because it is the identity page and its job
+   is to look like the social card. About is a page you READ -- twelve
+   paragraphs of prose -- so it follows the reader's light or dark choice like
+   every section on the site. The home page is the only fixed-treatment page,
+   and it should stay the only one.
+
+   Tokens are --hdr-*, which chrome.css already defines for both themes because
+   the site header uses them. That is deliberate rather than lazy: these pages
+   have no world stylesheet to inherit from, and inventing a third palette for
+   two pages is how you end up with the half-themed page this replaced.
+   ============================================================================ */
+body.page-plain{
+  margin:0;
+  background:var(--hdr-bg);
+  color:var(--hdr-ink);
+  font-family:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;
+  --header-h:60px;
+}
+/* One-row header: no world means no section name, and the menu, search and
+   print buttons have nothing to act on. The theme toggle stays. Same collapse
+   to two columns as the home page, so the toggle sits in the corner rather
+   than two thirds of the way across an empty bar. */
+
+/* ----------------------------------------------------------------------------
+   ABOUT IS LIGHT ONLY, whatever the reader chose elsewhere.
+
+   It is the mirror of the home page, which is dark only for the same class of
+   reason: both are identity pages rather than reading-the-curriculum pages, and
+   both are better with one settled look than with two. The reader's stored
+   choice still governs every world, the 404, and the overlays, which is where
+   they actually read.
+
+   HOW IT HOLDS. --hdr-* are redefined here to their light values, and this rule
+   is (0,1,1) against the [data-theme="dark"] block's (0,1,0), so it wins
+   outright rather than by source order. They are set on BODY rather than on
+   :root deliberately: a custom property set on an ancestor is inherited by
+   everything below it, so every --hdr-* consumer inside the page picks these up
+   without needing a rule of its own.
+
+   Values are copied from the :root light block rather than referenced, because
+   referencing would mean reading the very tokens this is overriding.
+   ---------------------------------------------------------------------------- */
+body.page-about{
+  --hdr-bg:#ffffff; --hdr-ink:#0f172a; --hdr-muted:#5d6b7e; --hdr-line:#e2e8f0;
+  --hdr-field:#f1f5f9; --hdr-mark:#1E3A8A; --hdr-accent:#ba2142;
+  color-scheme:light;
+}
+/* The pre-paint script writes color-scheme onto documentElement as an inline
+   style from the stored theme, which is wrong here half the time; the visible
+   symptom is a dark scrollbar down the side of a white page. A stylesheet rule
+   with !important outranks a non-important inline style, which is the only way
+   to correct it without teaching that script about this page. Same fix as the
+   home page, opposite direction. */
+html:has(body.page-about){color-scheme:light !important}
+
+/* No toggle, because there is nothing here for it to toggle. Leaving a control
+   that visibly does nothing is worse than not offering it: the reader presses
+   it, the page does not change, and the site looks broken rather than
+   deliberate. The header keeps the mark and the route home. */
+body.page-about #siteThemeBtn{display:none}
+body.page-plain .site-menu-btn,
+body.page-plain .site-search,
+body.page-plain #sitePrintBtn{display:none}
+body.page-plain .site-head{grid-template-columns:1fr auto}
+body.page-plain .site-head-right{justify-self:end}
+
+/* THE FLOATING ABOUT MARK IS HIDDEN ON BOTH OF THESE PAGES. On About it is
+   circular: it opens a short "about the author" overlay summarising the page
+   the reader is already standing on, and the full version is right there. The
+   404 gets the same treatment because it already offers three real routes out
+   and a fourth floating one, overlapping centred text, helps nobody.
+
+   Same call as the home page, and for the same reason there: this page IS the
+   identity, so a floating shortcut to a summary of it is one mark too many. */
+body.page-plain .author-fab{display:none}
+
+.gmain{max-width:760px;margin:0 auto;padding:calc(var(--header-h) + 40px) 26px 40px}
+.gfoot{max-width:760px;margin:0 auto;padding:20px 26px 40px;border-top:1px solid var(--hdr-line);
+  display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.gfoot-brand{display:inline-flex;align-items:center;gap:8px;color:var(--hdr-mark);font-size:14px}
+.gfoot-brand b{font-family:"Manrope",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-weight:700;letter-spacing:-.3px;color:var(--hdr-ink)}
+.gfoot-line{font-size:12.5px;color:var(--hdr-muted)}
+
+/* 404 ONLY, and scoped through .guide for a reason worth keeping. These were
+   written as bare `body.page-plain h1 / p / a`, which is specificity (0,1,2)
+   and beat every About rule that named only a class: .ab-role asked for muted
+   and rendered in full ink, measuring 13.35:1 against a background it was never
+   meant to sit on. Same trap as `body.world-learning .lcontent p` beating a
+   bare component selector -- a broad element rule scoped to the body wins
+   against the specific rule that looks more specific. Scoped to the one page
+   that needs them, they cannot reach About at all. */
+body.page-plain .guide h1{font-family:"Manrope",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:30px;font-weight:700;letter-spacing:-.02em;line-height:1.2;margin:0 0 14px;color:var(--hdr-ink)}
+body.page-plain .guide p{font-size:16px;line-height:1.7;color:var(--hdr-ink);margin:0 0 16px}
+body.page-plain .guide a{color:var(--hdr-accent)}
+
+/* ---------------------------------------------------------------------------
+   ABOUT. One column, no cards, no panels, no accent bars. It is a person
+   talking, so the page is set as prose and the only structure is a heading
+   every few paragraphs. The two places that are NOT prose -- the platform arc
+   and the organisations -- earn their layout because they are genuinely lists
+   of pairs and names rather than sentences pretending to be.
+   --------------------------------------------------------------------------- */
+.ab{max-width:680px}
+.ab-head{margin-bottom:38px}
+/* Manrope, matching the home page H1 and the wordmark. This is a name, which
+   is the one thing on the site most entitled to the display face. */
+.ab-name{font-family:"Manrope",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:38px;font-weight:700;letter-spacing:-.028em;line-height:1.1;margin:0 0 10px;color:var(--hdr-ink)}
+/* .ab .ab-role, not .ab-role: the sibling rule `.ab p` is (0,1,1) and would
+   otherwise repaint this line in body ink. */
+.ab .ab-role{margin:0 0 18px;font-size:14.5px;line-height:1.5;color:var(--hdr-muted)}
+/* The one line on the page allowed to be a statement rather than a sentence in
+   a paragraph. It is set larger than the prose and quieter than the name. */
+.ab .ab-punch{margin:0;font-size:19px;line-height:1.5;font-weight:500;color:var(--hdr-ink);
+  padding-top:18px;border-top:1px solid var(--hdr-line)}
+
+.ab-sec{margin:0 0 38px}
+.ab-h{font-size:12.5px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;
+  color:var(--hdr-muted);margin:0 0 14px}
+.ab p{font-size:16px;line-height:1.72;color:var(--hdr-ink);margin:0 0 15px}
+.ab p:last-child{margin-bottom:0}
+.ab i{font-style:italic}
+
+/* The platform arc. A two-column grid of from -> to, with the arrow drawn by
+   the grid rather than typed into the markup: a glyph arrow in text inherits
+   the font's metrics and never lines up down a column of ten rows. */
+.ab-arc{list-style:none;margin:0 0 18px;padding:0;border-top:1px solid var(--hdr-line)}
+.ab-arc li{display:grid;grid-template-columns:1fr 18px 1fr;align-items:center;gap:0 12px;
+  padding:9px 0;border-bottom:1px solid var(--hdr-line);font-size:14.5px;line-height:1.4}
+/* grid-row:1 on all three, and it is not optional. A ::before with only a
+   grid-column set is auto-placed: it takes row 1 column 2, the placement
+   cursor moves past it, and .ab-from asking for column 1 can no longer fit on
+   that row, so it starts a NEW one. The result was a 10px row holding the
+   arrow and a second row holding the text, which read as an arrow floating
+   above every pair on desktop and as arrow-then-from-then-to on a phone.
+   Naming the row for every item is what keeps them on one line. */
+.ab-arc li::before{content:"";grid-column:2;grid-row:1;justify-self:center;align-self:center;
+  width:14px;height:10px;background:var(--hdr-accent);
+  -webkit-mask:var(--abarrow) center/14px 10px no-repeat;
+          mask:var(--abarrow) center/14px 10px no-repeat;
+  --abarrow:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 16" fill="none" stroke="black" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8h18M15 2l6 6-6 6"/></svg>');
+}
+.ab-from{grid-column:1;grid-row:1;color:var(--hdr-muted)}
+.ab-to{grid-column:3;grid-row:1;color:var(--hdr-ink);font-weight:600}
+
+/* Certifications and organisations: plain lists, one line each, the only
+   decoration a right-aligned identifier or year. */
+.ab-certs,.ab-orgs{list-style:none;margin:0;padding:0}
+.ab-certs li{display:flex;align-items:baseline;justify-content:space-between;gap:16px;
+  padding:10px 0;border-bottom:1px solid var(--hdr-line);font-size:15px}
+.ab-certs li:first-child{border-top:1px solid var(--hdr-line)}
+.ab-cert-n{color:var(--hdr-ink);font-weight:600}
+.ab-cert-id{flex:none;font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:12.5px;
+  color:var(--hdr-muted);font-variant-numeric:tabular-nums}
+
+.ab-orgs{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px}
+.ab-orgs li{font-size:14px;padding:6px 12px;border:1px solid var(--hdr-line);border-radius:999px;
+  color:var(--hdr-ink);background:var(--hdr-field)}
+/* Adobe is marked because seven years inside the vendor is the single most
+   load-bearing fact on the page, not because a tag needed a colour. */
+.ab-orgs li.is-adobe{border-color:var(--hdr-accent);color:var(--hdr-accent);font-weight:600;background:none}
+
+.ab .ab-contact-lede{margin-bottom:16px}
+.ab-links{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.ab-link{display:flex;align-items:center;gap:12px;padding:14px 16px;border:1px solid var(--hdr-line);
+  border-radius:11px;background:var(--hdr-field);text-decoration:none;transition:border-color .16s}
+.ab-link:hover{border-color:var(--hdr-accent)}
+.ab-link-ico{flex:none;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;
+  justify-content:center;background:var(--hdr-bg);color:var(--hdr-accent)}
+.ab-link-ico svg{width:17px;height:17px}
+.ab-link-t{display:flex;flex-direction:column;min-width:0}
+.ab-link-t b{font-size:15px;font-weight:700;color:var(--hdr-ink)}
+.ab-link-t em{font-style:normal;font-size:12.5px;color:var(--hdr-muted);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+@media(max-width:640px){
+  .gmain{padding:calc(var(--header-h) + 28px) 18px 28px}
+  .gfoot{padding:18px 18px 30px;flex-direction:column;align-items:flex-start;gap:8px}
+  .ab-name{font-size:30px}
+  .ab-punch{font-size:17px}
+  /* Stacked, not squeezed. Two 1fr columns either side of an arrow gives each
+     side about 130px on a phone, which breaks "Excel plug-in reporting" across
+     three lines and leaves the arrow floating in the gap.
+
+     THE ROWS ARE NAMED HERE TOO, and in reading order: the from-value, then a
+     turned arrow, then the to-value. Left to auto-placement the ::before comes
+     first because it is the first child, which put the arrow ABOVE the pair it
+     was meant to sit between and made the column read backwards. */
+  .ab-arc li{grid-template-columns:1fr;gap:1px;padding:11px 0}
+  .ab-from{grid-column:1;grid-row:1}
+  .ab-arc li::before{grid-column:1;grid-row:2;justify-self:start;align-self:start;transform:rotate(90deg);margin:3px 0 3px 4px}
+  .ab-to{grid-column:1;grid-row:3}
+  .ab-links{grid-template-columns:1fr}
+}
+
+@media print{
+  body.page-plain .site-head,body.page-plain .author-fab{display:none !important}
+  .gmain{padding-top:0;max-width:none}
+  .ab-link,.ab-orgs li{border-color:#d5dae1;background:none}
 }

@@ -3,7 +3,16 @@
   <p class="crumb"><a href="{{ "/web-sdk-migration/" | relURL }}">Migration</a> &rsaquo; {{ .Title }}</p>
   <div class="eyebrow">References</div>
   <h1>{{ .Title }}</h1>
-  {{ partial "byline.html" (dict "page" . "full" true) }}
+  {{- /* NO BYLINE HERE. It carries the author, the credential, the published
+       and updated dates and a read time, and every one of those is a claim
+       about a piece of WRITING. This page is a bibliography: a list of links
+       to somebody else's documentation. "16 years in digital analytics · 4 min
+       read" over a list of URLs attributes authorship to work that is not
+       authored, and the read time is meaningless for a page nobody reads top
+       to bottom.
+
+       Steps and KB topics keep theirs -- those are articles. Removed 2 Sep
+       2026 on Amit's call. */ -}}
   {{ .Content }}
 </section>
 {{ end }}

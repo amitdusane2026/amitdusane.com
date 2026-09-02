@@ -1,0 +1,18 @@
+{{- /* Emitted to the site root as `_headers`. Cloudflare Pages and Netlify read
+     it; GitHub Pages ignores it entirely, so shipping it costs production
+     nothing.
+
+     THE CONDITION IS THE POINT. A hand-written _headers file in static/ would
+     be copied into every build, and the day the live site moved to Cloudflare
+     it would silently tell Google to drop amitdusane.com. Keying off the
+     baseURL means production emits an empty file and every other host emits
+     the block, with nobody having to remember which is which.
+
+     The staging build passes -b $CF_PAGES_URL/, so its baseURL is the
+     .pages.dev address and the test below fails, which is what we want. */ -}}
+{{- $prod := "amitdusane.com" -}}
+{{- $isProd := strings.Contains .Site.BaseURL $prod -}}
+{{- if not $isProd -}}
+/*
+  X-Robots-Tag: noindex, nofollow, noarchive
+{{ end -}}
