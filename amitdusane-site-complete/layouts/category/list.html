@@ -1,18 +1,67 @@
 {{ define "main" }}
-{{ $cat := . }}
-{{ $mods := sort (where .Site.Pages "Type" "module") "Params.modulenum" }}
-<div class="lmod-mark" aria-hidden="true">{{ partial "logo.html" (dict "size" 58 "hidden" true) }}</div>
-<p class="lcrumb">{{ .Title }}</p>
-<h1 class="lmod-title">{{ .Title }}</h1>
-{{ partial "byline.html" (dict "page" . "full" false) }}
-{{ partial "scale.html" (dict "page" .) }}
-<p>{{ .Description }}</p>
-{{ .Content }}
-<ol class="lsec-list">
+{{- /* ===========================================================================
+     PHASE LANDING. Rebuilt alongside the module landing, and deliberately a
+     DIFFERENT SHAPE from it. See layouts/module/list.html for the testing that
+     produced both.
+
+     A module landing is a numbered contents list, because its children are an
+     ordered reading sequence. A phase landing is a set of cards, because its
+     children are four or five substantial destinations a reader chooses
+     between rather than works through. Two different jobs should not look
+     identical, which is exactly what testers complained about.
+
+     Each card carries the module's number, its tagline, and how much is in it,
+     so the choice can be made here rather than by opening four modules.
+     =========================================================================== */ -}}
+{{- $cat := . -}}
+{{- $phases := len (where .Site.Pages "Type" "category") -}}
+{{- $mods := sort (where .Site.Pages "Type" "module") "Params.modulenum" -}}
+<p class="lcrumb"><a href="{{ "/adobe-analytics-learning/" | relURL }}">Adobe Analytics Learning</a> &rsaquo; {{ .Title }}</p>
+
+<div class="lland-head">
+  <p class="lland-kicker">Phase {{ .Params.catorder }} of {{ $phases }}</p>
+  <h1 class="lmod-title">{{ .Title }}</h1>
+  {{ partial "scale.html" (dict "page" .) }}
+</div>
+
+{{- /* THE MAP, first, as cards rather than a list. */ -}}
+<div class="lland-mods">
   {{ range $mods }}
     {{ if eq .Parent $cat }}
-      <li><a href="{{ .RelPermalink }}"><span class="lsn">{{ .Params.modulenum }}</span><span>{{ .Title }}</span></a></li>
+      {{ $n := len (where .RegularPagesRecursive "Description" "!=" "") }}
+      {{ if gt $n 0 }}
+      <a class="lland-mod" href="{{ .RelPermalink }}">
+        <span class="lm-n">{{ .Params.modulenum }}</span>
+        <span class="lm-body">
+          <span class="lm-t">{{ .Title }}</span>
+          {{ with .Params.tagline }}<span class="lm-tag">{{ . }}</span>{{ end }}
+          <span class="lm-meta">{{ $n }} section{{ if ne $n 1 }}s{{ end }}</span>
+        </span>
+        <span class="lm-go" aria-hidden="true"></span>
+      </a>
+      {{ else }}
+      <span class="lland-mod soon">
+        <span class="lm-n">{{ .Params.modulenum }}</span>
+        <span class="lm-body"><span class="lm-t">{{ .Title }}</span><span class="lm-meta">Coming soon</span></span>
+      </span>
+      {{ end }}
     {{ end }}
   {{ end }}
-</ol>
+</div>
+
+{{ if or .Description .Content }}
+<div class="lland-about">
+  <h2 class="lland-h2">About this phase</h2>
+  {{ with .Description }}<p class="lland-desc">{{ . }}</p>{{ end }}
+  {{ .Content }}
+</div>
+{{ end }}
+
+{{- $next := "" -}}
+{{- range where .Site.Pages "Type" "category" -}}
+  {{- if eq .Params.catorder (add $cat.Params.catorder 1) }}{{ $next = . }}{{ end -}}
+{{- end -}}
+{{ if $next }}
+<p class="lland-next">Next phase <a href="{{ $next.RelPermalink }}">{{ $next.Title }}</a></p>
+{{ end }}
 {{ end }}

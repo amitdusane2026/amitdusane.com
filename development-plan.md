@@ -2273,3 +2273,108 @@ contradiction with M15 §1.
 **GA is live on `main` and switched off on `develop`.** A merge as things stand
 turns tracking off at the moment it is most wanted. The switch is the comment
 wrapper in `head.html`.
+
+---
+
+## Session close, 2 September 2026 (second): three front pages, staging, and the first tester feedback
+
+The session began with the three pages that had never been designed — the home
+page, the migration front page, and About — and ended with the site in front of
+real readers for the first time.
+
+### The three pages
+
+**Home** went through six rounds. The instructive one was the middle: asked to
+tone down claims about Adobe, I toned down the whole page, and Amit's verdict was
+"too low profile". The fix was to take the OG cards as the design rather than
+inventing a third look, which is also why the page now carries a fixed dark
+palette and no theme toggle. Two smaller rulings worth keeping: a single accent
+rule down the left edge reads as an AI signature and was removed rather than
+extended to four sides, and the H1 and the two tile titles take Manrope because
+they are names.
+
+**Migration's front page** became a four-stage navigator whose stages come from
+`hugo.toml` rather than markup, so the shape survives the guide changing length.
+
+**About** was rebuilt from scratch and pinned to the light palette even when dark
+is chosen elsewhere. The copy rule Amit gave is the durable part: do not invite
+criticism, because a sentence that opens the door to disagreement makes a reader
+start calculating negatives. Genuine feedback arrives without being asked for.
+
+### The typeface had been broken the whole time
+
+**IBM Plex Sans was never rendering.** A CSS comment above the `@font-face` block
+closed on its second line; the next three lines of prose became an invalid
+selector, and an invalid selector makes the parser discard the block after it —
+which was Plex Sans itself. Manrope above and Plex Mono below both parsed, so two
+faces of three loaded and the body text quietly fell to Segoe UI.
+
+Nothing catches this. The build succeeds, the console is clean, the woff2 returns
+200 because `<link rel=preload>` fetches it whether or not any `@font-face` claims
+it, and `getComputedStyle().fontFamily` reports what the CSS asked for rather than
+what was drawn — which is exactly why my own check confirmed it was fine. Amit
+found it in a screenshot. The lesson is written into CLAUDE.md as trap fourteen:
+**verify a typeface by measuring rendered width, never by reading the cascade.**
+
+### Staging
+
+The site is now on Cloudflare Pages, off amitdusane.com, without GA, guarded by a
+generated `_headers` file that emits `X-Robots-Tag: noindex` on any baseURL that
+is not the production one. A staging build is therefore 220 pages where
+production is 219, and that asymmetry is itself the check that the guard has not
+inverted.
+
+### What the testers said, and why it mattered more than the bugs
+
+Three mobile bugs came back and were straightforward: the drawer would not close
+on an outside tap, and both overlays were oversized with close buttons that were
+hard to find. That last one was not really a sizing problem — the overlays sat at
+z-index 90 and 95, under the header's 1000, so on a short viewport the header
+covered the close button and swallowed the tap.
+
+**The serious feedback was not an error.** Almost every tester said the phase and
+module landing pages confused them: they went looking for the map, expected the
+pages to teach, and could not tell one kind of landing from the other. Amit's
+first instinct was to scrap the pages outright. The recommendation was to fix
+them instead, and all three complaints turned out to be true and mechanical:
+
+- The pocket map was rendered for `type: lesson` only, so the two page types
+  whose entire job is orientation were the two without it.
+- Both landings opened with prose and put the links underneath. On a 390x700
+  phone the first link began at **y=1028**, a screen and a half down, so the page
+  read as an article that never reached its point. It is **y=275** now, and the
+  signed-off prose is unchanged — it simply moved below the map.
+- The two templates were near-identical: same crumb, title class, byline, scale
+  line and `<ol>`. Only the list contents differed.
+
+They are now deliberately different shapes. A **module landing is a numbered
+contents list**, because its children are an ordered reading sequence, and each
+row carries the section's own `description` — a line already written and shown
+nowhere a reader could use it. A **phase landing is a grid of module cards**,
+because its children are four or five destinations to choose between.
+
+### The left rail
+
+The same feedback named the rail: every phase and module row was a link to a
+landing, so it read as a list of 26 landings with the 116 sections buried beneath
+them, and clicking "Classifications" expecting its contents got a page that
+teaches nothing. **The row is a `<button>` now and toggles what is inside it**,
+which is what the name promises. Each landing survives as a quiet **Overview**
+row within, separated by a hairline.
+
+That hairline is the interesting part. The first attempt distinguished Overview
+by colour and a 600 weight, which made it *louder* than the sections beneath —
+the exact inversion the row exists to avoid — and the colour step did nothing at
+night, because **`--text2` and `--text3` are both `#94a3b8` in dark**. Worth
+remembering before reaching for `--text3` to dim anything.
+
+### Next session
+
+The landing rebuild is committed but **untested by readers**; Amit will run it
+past the same group. Everything else on the previous list is unchanged: the
+**component rulebook entry** for M21's absent walkthroughs, the **M03 §2 / M15 §1**
+attribution contradiction, **migration's dead header CSS** in `world-shell.css`,
+and the **RSS feed**, which is worth doing at launch rather than before it.
+
+**GA is still live on `main` and switched off on `develop`**, and that remains the
+one thing to check before any merge.

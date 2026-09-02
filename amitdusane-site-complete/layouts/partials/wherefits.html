@@ -3,9 +3,20 @@
   Three tiers (category / module / section), one group shown per tier.
   A downward green arrow-trail connects the lit category -> module -> section.
 */}}
+{{/* CONTEXT BY PAGE TYPE, because this partial now runs on three kinds of page.
+     It used to assume a lesson and read .Parent as the module, which is only
+     true there: on a module landing .Parent is the category and on a phase
+     landing it is the world root, so modulenum came back nil and the map lit
+     nothing.
+
+     A module landing lights its own module. A phase landing lights only the
+     phase, since no single module is "here". */}}
 {{ $cur := . }}
-{{ $curMod := .Parent }}
-{{ $curModNum := $curMod.Params.modulenum }}
+{{ $isLesson := eq .Type "lesson" }}
+{{ $isModule := eq .Type "module" }}
+{{ $isPhase  := eq .Type "category" }}
+{{ $curModNum := 0 }}
+{{ if $isLesson }}{{ $curModNum = .Parent.Params.modulenum }}{{ else if $isModule }}{{ $curModNum = .Params.modulenum }}{{ end }}
 {{/* INF-05. Phases and the world root come from [params.worlds] keyed on the
        page's section, not from a global [params.phases] that a second world
        would silently inherit. */}}
@@ -16,7 +27,21 @@
 {{ range $k, $v := $w.phases }}{{ $phases = $phases | append $v }}{{ end }}
 {{ $phases = sort $phases "order" }}
 {{ $curPhaseKey := "" }}
-{{ range $phases }}{{ if in .modules $curModNum }}{{ $curPhaseKey = .order }}{{ end }}{{ end }}
+{{ if $isPhase }}
+  {{ $curPhaseKey = .Params.catorder }}
+{{ else }}
+  {{ range $phases }}{{ if in .modules $curModNum }}{{ $curPhaseKey = .order }}{{ end }}{{ end }}
+{{ end }}
+{{/* The you-are-here line, also by type. It used to read "$curMod.Title >
+     $cur.Title", which assumes a module and a section; a phase landing has
+     neither and a module landing has no section. */}}
+{{ $hereA := "" }}{{ $hereB := "" }}
+{{ if or $isLesson $isModule }}{{ $hereA = .Parent.Title }}{{ $hereB = .Title }}{{ else }}{{ $hereA = .Title }}{{ end }}
+{{/* With no module in context the map still needs a group to show in tier two,
+     so a phase landing opens on the first module of its own phase. */}}
+{{ if and $isPhase (eq $curModNum 0) }}
+  {{ range $phases }}{{ if eq .order $curPhaseKey }}{{ $curModNum = index (sort .modules) 0 }}{{ end }}{{ end }}
+{{ end }}
 
 <button class="wf-tab" id="wfFab" aria-label="See where this fits">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polygon points="15.5 8.5 13 13 8.5 15.5 11 11 15.5 8.5"/></svg>
@@ -34,7 +59,7 @@
 
     <div class="wf-here">
       <span class="wf-here-lab">You are here</span>
-      <span class="wf-here-path">{{ $curMod.Title }} <i>&rsaquo;</i> {{ $cur.Title }}</span>
+      <span class="wf-here-path">{{ $hereA }}{{ with $hereB }} <i>&rsaquo;</i> {{ . }}{{ end }}</span>
       <span class="wf-guide"><span class="wf-guide-d">Click to explore. Click a topic to open it.</span><span class="wf-guide-m">Tap to explore. Tap a topic to open it.</span></span>
     </div>
 

@@ -26,11 +26,17 @@
 
   document.addEventListener('click', function (ev) {
     var h = ev.target.closest ? ev.target.closest('[data-toggle]') : null;
-    if (h && (h.classList.contains('lnav-chevron') || h.classList.contains('lnav-catchev'))) {
+    /* The toggle is the WHOLE ROW now, not a separate chevron button. It used
+       to be `.lnav-chevron` / `.lnav-catchev`; those are decorative spans
+       inside the row today, so the class check moved up to the row itself.
+       The Overview links inside a body are siblings of the row rather than
+       descendants, so closest('[data-toggle]') misses them and they navigate
+       normally -- which is the point of them. */
+    if (h && (h.classList.contains('lnav-header') || h.classList.contains('lnav-cathead'))) {
       ev.preventDefault();
       var tgt = document.getElementById(h.getAttribute('data-toggle'));
       if (!tgt) return;
-      var isCat = h.classList.contains('lnav-catchev'),
+      var isCat = h.classList.contains('lnav-cathead'),
           willOpen = !tgt.classList.contains('open');
 
       if (willOpen) {

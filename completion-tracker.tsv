@@ -236,3 +236,18 @@ Platform	presentation		Figure zoom, overlay and hint lifted global; migration fi
 Platform	chrome		Ask Amit bar lifted global, shows at half the article, re-arms on leaving the zone	Feature	static/askbar.js	NA	NA	NA	NA	NA	NA	Yes	No	No
 Platform	chrome		Theme toggle deduplicated into siteheader.js; both worlds had identical copies	Feature	static/siteheader.js	NA	NA	NA	NA	NA	NA	Yes	No	No
 Platform	tech-debt		Heading anchors made one partial, shared by lesson/single.html and the search index	Feature	layouts/partials/anchored-content.html	NA	NA	NA	NA	NA	NA	Yes	No	No
+Platform	chrome		Home page rebuilt: identity lockup, Manrope H1, two guide tiles, fixed dark palette with no theme toggle	Feature	layouts/index.html	NA	NA	NA	NA	NA	NA	Yes	No	No
+Platform	seo		Three Open Graph images generated, one per world, each carrying the AD mark and amitdusane.com	Feature	static/img/og	NA	NA	NA	NA	NA	NA	Yes	No	No
+Platform	navigation		Migration front page rebuilt as a four-stage navigator, stages driven from hugo.toml rather than hardcoded	Feature	layouts/partials/stepmap.html	NA	NA	NA	NA	NA	NA	Yes	No	No
+Platform	chrome		About page rebuilt and moved out of content into a layout; light-pinned so it ignores a dark choice made elsewhere	Feature	layouts/about/single.html	NA	NA	NA	NA	NA	NA	Yes	No	No
+Platform	presentation		Years of experience computed from careerStart, so the About and home sentences can never go stale	Feature	layouts/partials/years.html	NA	NA	NA	NA	NA	NA	Yes	No	No
+Platform	tech-debt		IBM Plex Sans restored site-wide: an early-closed CSS comment had been discarding its @font-face block	Feature	static/chrome.css	NA	NA	NA	NA	NA	NA	Yes	No	No
+Platform	infrastructure		Staging guard: a generated _headers file emits X-Robots-Tag noindex on any baseURL that is not amitdusane.com	Feature	layouts/index.headers	NA	NA	NA	NA	NA	NA	Yes	No	No
+Platform	navigation		Glossary link pinned above the phase list in the left rail, with a term count derived from the page itself	Feature	layouts/_default/baseof.html	NA	NA	NA	NA	NA	NA	Yes	No	No
+Platform	presentation		Learning front page trimmed vertically, and a phantom 48px overflow removed from every short page	Feature	static/world-learning.css	NA	NA	NA	NA	NA	NA	Yes	No	No
+Platform	chrome		Mobile drawer closes on an outside tap: a scrim at z-899 under the sidebar, reported from the first staging test	Feature	static/world-learning.css	NA	NA	NA	NA	NA	NA	Yes	No	No
+Platform	chrome		Both overlays sized for a phone and given 40px close buttons; they were sitting under the header at z-1000	Feature	static/chrome.css	NA	NA	NA	NA	NA	NA	Yes	No	No
+Platform	navigation		Pocket map extended to module and phase landings; it had been rendered for type lesson only	Feature	layouts/_default/baseof.html	NA	NA	NA	NA	NA	NA	Yes	No	No
+Platform	navigation		Module landing rebuilt as a numbered contents list carrying each section description, map above the prose	Feature	layouts/module/list.html	NA	NA	NA	NA	NA	NA	Yes	No	No
+Platform	navigation		Phase landing rebuilt as module cards, a deliberately different shape from the module landing	Feature	layouts/category/list.html	NA	NA	NA	NA	NA	NA	Yes	No	No
+Platform	navigation		Left rail rows toggle instead of navigating; each landing demoted to a quiet Overview row inside	Feature	layouts/_default/baseof.html	NA	NA	NA	NA	NA	NA	Yes	No	No

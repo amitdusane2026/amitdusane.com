@@ -108,24 +108,33 @@
         {{ $isCurPhase := $isCatPage }}
         {{ if $curModule }}{{ if eq $curModule.Parent $cat }}{{ $isCurPhase = true }}{{ end }}{{ end }}
         <div class="lnav-cat">
-          <div class="lnav-cathead{{ if $isCurPhase }} open{{ end }}{{ if $isCatPage }} current{{ end }}">
-            <a class="lnav-catlink" href="{{ $cat.RelPermalink }}"><span class="lnav-catname">{{ $cat.Title }}</span></a>
-            <button class="lnav-catchev" type="button" data-toggle="cat-{{ $cat.Params.catorder }}" aria-label="Toggle {{ $cat.Title }} modules" aria-expanded="{{ if $isCurPhase }}true{{ else }}false{{ end }}">&#9660;</button>
-          </div>
+          {{/* THE ROW TOGGLES, IT DOES NOT NAVIGATE. Rebuilt 2 Sep 2026 after
+               user testing. Every phase row and every module row used to be a
+               link to a landing page, so the rail read as a list of 26
+               landings with the 116 sections buried underneath them -- and a
+               reader clicking "Classifications" expecting its contents got a
+               page that teaches nothing instead. Clicking a name now opens
+               what is inside it, which is what the name promises. The landing
+               is still one click away, as a deliberate choice named Overview
+               rather than an accident. */}}
+          <button class="lnav-cathead{{ if $isCurPhase }} open{{ end }}{{ if $isCatPage }} current{{ end }}" type="button" data-toggle="cat-{{ $cat.Params.catorder }}" aria-label="Toggle {{ $cat.Title }} modules" aria-expanded="{{ if $isCurPhase }}true{{ else }}false{{ end }}">
+            <span class="lnav-catname">{{ $cat.Title }}</span>
+            <span class="lnav-catchev" aria-hidden="true">&#9660;</span>
+          </button>
           <div class="lnav-catbody{{ if $isCurPhase }} open{{ end }}" id="cat-{{ $cat.Params.catorder }}">
+            <a class="lnav-ovw{{ if $isCatPage }} active{{ end }}" href="{{ $cat.RelPermalink }}">Phase overview</a>
             {{ range $modules }}
               {{ if eq .Parent $cat }}
                 {{ $mod := . }}
                 {{ $isCur := eq $mod $curModule }}
                 <div class="lnav-item">
-                  <div class="lnav-header{{ if $isCur }} current open{{ end }}">
-                    <a class="lnav-headlink" href="{{ $mod.RelPermalink }}">
-                      <span class="lnav-num">{{ $mod.Params.modulenum }}</span>
-                      <span class="lnav-title">{{ $mod.Title }}</span>
-                    </a>
-                    <button class="lnav-chevron" type="button" data-toggle="subs-{{ $mod.Params.modulenum }}" aria-label="Toggle {{ $mod.Title }} sections" aria-expanded="{{ if $isCur }}true{{ else }}false{{ end }}">&#9660;</button>
-                  </div>
+                  <button class="lnav-header{{ if $isCur }} open{{ end }}{{ if eq $.RelPermalink $mod.RelPermalink }} current{{ end }}" type="button" data-toggle="subs-{{ $mod.Params.modulenum }}" aria-label="Toggle {{ $mod.Title }} sections" aria-expanded="{{ if $isCur }}true{{ else }}false{{ end }}">
+                    <span class="lnav-num">{{ $mod.Params.modulenum }}</span>
+                    <span class="lnav-title">{{ $mod.Title }}</span>
+                    <span class="lnav-chevron" aria-hidden="true">&#9660;</span>
+                  </button>
                   <div class="lnav-subs{{ if $isCur }} open{{ end }}" id="subs-{{ $mod.Params.modulenum }}">
+                    <a class="lnav-sub lnav-ovw{{ if eq $.RelPermalink $mod.RelPermalink }} active{{ end }}" href="{{ $mod.RelPermalink }}">Overview</a>
                     {{ range $mod.Pages.ByWeight }}<a class="lnav-sub{{ if eq $.RelPermalink .RelPermalink }} active{{ end }}" href="{{ .RelPermalink }}">{{ .Title }}</a>{{ end }}
                   </div>
                 </div>
@@ -137,7 +146,12 @@
     </div>
   </nav>
   <main class="lmain"><div class="lcontent">{{ block "main" . }}{{ end }}</div></main>
-  {{ if eq .Type "lesson" }}{{ partial "wherefits.html" . }}{{ end }}
+  {{/* THE POCKET MAP NOW RENDERS ON LANDINGS TOO. It was lesson-only, which is
+       why testers who had been told the site has a map went looking for it on
+       a phase or module landing and found nothing. Those are exactly the pages
+       whose job is orientation, so they are the last pages that should be
+       missing it. wherefits.html resolves its own context by page type. */}}
+  {{ if or (eq .Type "lesson") (eq .Type "module") (eq .Type "category") }}{{ partial "wherefits.html" . }}{{ end }}
   {{ partial "printdoc.html" . }}
 {{ else if .IsHome }}
   {{/* NO SITE HEADER ON THE HOME PAGE, and that is a deliberate exception to

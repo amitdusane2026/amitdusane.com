@@ -1,14 +1,86 @@
 {{ define "main" }}
-<div class="lmod-mark" aria-hidden="true">{{ partial "logo.html" (dict "size" 58 "hidden" true) }}</div>
-<p class="lcrumb"><a href="{{ .Parent.RelPermalink }}">{{ .Parent.Title }}</a> &rsaquo; {{ .Title }}</p>
-<h1 class="lmod-title">{{ .Title }}</h1>
-{{ partial "byline.html" (dict "page" . "full" false) }}
-{{ partial "scale.html" (dict "page" .) }}
-<p>{{ .Description }}</p>
-{{ .Content }}
-<ol class="lsec-list">
+{{- /* ===========================================================================
+     MODULE LANDING. Rebuilt 2 Sep 2026 after the first round of user testing,
+     where this page and the phase landing failed in the same three ways for
+     almost every tester.
+
+     THEY WENT LOOKING FOR THE MAP AND IT WAS NOT HERE. baseof.html rendered
+     the pocket map for `type: lesson` only, so the two page types whose entire
+     job is orientation were the two without it. Fixed there, not here.
+
+     THEY EXPECTED THE PAGE TO TEACH. It does not, deliberately, but it opened
+     with 164 words of prose and put the section list underneath: on a 390x700
+     phone the first link began at y=1028, a screen and a half down. So the
+     page read as an article that never got to the point. The list is now the
+     first thing under the title and the prose sits below it.
+
+     THEY COULD NOT TELL A MODULE LANDING FROM A PHASE LANDING. The two
+     templates were near-identical -- same mark, same crumb, same title class,
+     same byline, same scale line, same description, same <ol>. Only the list
+     contents differed. Now they are different shapes AND the page says what it
+     is: a module landing is a numbered contents list, a phase landing is a set
+     of module cards, and each carries an eyebrow naming its place.
+
+     The prose is unchanged and stays below the map. It is signed-off writing
+     and it does real work for a search lander; it just should never have been
+     standing between a reader and the links.
+     =========================================================================== */ -}}
+{{- $mod := . -}}
+{{- $total := len (where .Site.Pages "Type" "module") -}}
+{{- $phase := .Parent -}}
+{{- $written := where .Pages "Description" "!=" "" -}}
+<p class="lcrumb"><a href="{{ $phase.RelPermalink }}">{{ $phase.Title }}</a> &rsaquo; {{ .Title }}</p>
+
+<div class="lland-head">
+  {{- /* Says what this page IS, in the two terms a reader is lost between:
+       which module, and which phase it belongs to. */ -}}
+  <p class="lland-kicker">Module {{ .Params.modulenum }} of {{ $total }} <span class="lk-sep" aria-hidden="true">&middot;</span> {{ $phase.Title }}</p>
+  <h1 class="lmod-title">{{ .Title }}</h1>
+  {{ with .Params.tagline }}<p class="lland-tag">{{ . }}</p>{{ end }}
+  {{ partial "scale.html" (dict "page" .) }}
+</div>
+
+{{- /* THE MAP, first. Each row carries its section's own description, which is
+     the line that tells a reader whether this is the one they want. The list
+     was previously title-only, so choosing between eight sections meant
+     opening them. */ -}}
+<ol class="lland-secs">
   {{ range .Pages.ByWeight }}
-    <li><a href="{{ .RelPermalink }}"><span class="lsn">{{ .Params.sectionnum }}</span><span>{{ .Title }}</span></a></li>
+    <li class="{{ if not .Params.description }}soon{{ end }}">
+      {{ if .Params.description }}
+      <a href="{{ .RelPermalink }}">
+        <span class="ls-n">{{ printf "%02d" .Params.sectionnum }}</span>
+        <span class="ls-body">
+          <span class="ls-t">{{ .Title }}</span>
+          <span class="ls-d">{{ .Description }}</span>
+        </span>
+        <span class="ls-go" aria-hidden="true"></span>
+      </a>
+      {{ else }}
+      <span class="ls-stub">
+        <span class="ls-n">{{ printf "%02d" .Params.sectionnum }}</span>
+        <span class="ls-body"><span class="ls-t">{{ .Title }}</span><span class="ls-d">Coming soon</span></span>
+      </span>
+      {{ end }}
+    </li>
   {{ end }}
 </ol>
+
+{{- /* Everything below the map is context, not instruction. A reader who came
+     to navigate has already left by here. */ -}}
+{{ if or .Description .Content }}
+<div class="lland-about">
+  <h2 class="lland-h2">About this module</h2>
+  {{ with .Description }}<p class="lland-desc">{{ . }}</p>{{ end }}
+  {{ .Content }}
+</div>
+{{ end }}
+
+{{- $next := "" -}}
+{{- range where .Site.Pages "Type" "module" -}}
+  {{- if eq .Params.modulenum (add $mod.Params.modulenum 1) }}{{ $next = . }}{{ end -}}
+{{- end -}}
+{{ if $next }}
+<p class="lland-next">Next module <a href="{{ $next.RelPermalink }}">{{ $next.Params.modulenum }}. {{ $next.Title }}</a></p>
+{{ end }}
 {{ end }}
