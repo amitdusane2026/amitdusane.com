@@ -9,7 +9,12 @@
    monogram has interior detail, so at 25px inside a 54px disc it looked
    like the logo was shrinking away from its own button. */
 .author-fab svg{width:36px;height:36px}
-.about-overlay{position:fixed;inset:0;z-index:90;background:rgba(15,18,23,.5);display:none;justify-content:center;align-items:center;padding:24px}
+/* z-index 1100, ABOVE the site header 1000. It was 90, which put the fixed
+   header on top of the modal: on a 390x620 phone the card centres high enough
+   that the header covered its close button, and elementFromPoint at the X
+   returned .site-head. Tapping close hit the header instead. A modal that the
+   page chrome can sit on top of is not a modal. */
+.about-overlay{position:fixed;inset:0;z-index:1100;background:rgba(15,18,23,.5);display:none;justify-content:center;align-items:center;padding:24px}
 .about-overlay:not([hidden]){display:flex}
 [data-theme="dark"] .about-overlay{background:rgba(0,0,0,.62)}
 /* Self-contained colors so the overlay renders identically on every world.
@@ -381,7 +386,7 @@ body.wf-lock{overflow:hidden}
    chrome.css carries no theme tokens, so colours are written out and swapped
    explicitly for dark, exactly as the About card does.
    ========================================================================== */
-.ask-overlay{position:fixed;inset:0;z-index:95;background:rgba(15,18,23,.55);display:none;justify-content:center;align-items:center;padding:24px}
+.ask-overlay{position:fixed;inset:0;z-index:1105;background:rgba(15,18,23,.55);display:none;justify-content:center;align-items:center;padding:24px}
 .ask-overlay:not([hidden]){display:flex}
 .ask-card{position:relative;background:#ffffff;color:#1c1f24;max-width:470px;width:100%;max-height:88vh;overflow-y:auto;border-radius:16px;padding:30px 30px 26px;box-shadow:0 30px 80px rgba(0,0,0,.4)}
 .ask-x{position:absolute;top:12px;right:14px;background:none;border:none;font-size:26px;line-height:1;color:#9aa1ab;cursor:pointer;padding:4px 8px}
@@ -432,6 +437,60 @@ body.wf-lock{overflow:hidden}
 [data-theme="dark"] .ask-note{color:#a2acba}
 
 @media print{.ask-overlay,.ask-bar{display:none !important}}
+
+
+/* ----------------------------------------------------------------------------
+   THE TWO MODALS ON A PHONE. Reported from live testing: both were too big and
+   the close button was hard to find or hit.
+
+   Three things were wrong and only one of them was size.
+
+   THE HEADER SAT ON TOP OF THEM. Fixed above by moving the overlays to z-index
+   1100 and 1105, over the header's 1000. That was the real "I could not close
+   it": on a 390x620 viewport the card centres high enough that the header
+   covered its close button, so the tap landed on the header.
+
+   THE CLOSE BUTTON WAS A 26px GLYPH with 4px of padding, about 34px square.
+   Under the 44px minimum a finger can reliably hit, and drawn in #9aa1ab,
+   which is quiet enough on white to be missed. It is now a 40px bordered
+   circle with a real edge, so it reads as a button rather than as decoration.
+
+   AND THE CARDS WERE SIZED FOR A DESKTOP: 30px of padding all round and
+   max-height:88vh. On a phone vh is measured against the browser's expanded
+   chrome, so 88vh can exceed what is actually visible; dvh tracks the real
+   viewport and the vh line stays as the fallback for anything that lacks it.
+   ---------------------------------------------------------------------------- */
+@media(max-width:560px){
+  .about-overlay,.ask-overlay{padding:12px;align-items:flex-start}
+  .about-card,.ask-card{
+    padding:44px 18px 20px;
+    border-radius:14px;
+    max-height:88vh;
+    max-height:88dvh;
+    margin-top:8px;
+  }
+  /* A real target, and pinned to the card's own top-right rather than left to
+     drift with the padding. */
+  .about-x,.ask-x{
+    top:8px; right:8px;
+    width:40px; height:40px; padding:0;
+    display:flex; align-items:center; justify-content:center;
+    font-size:24px; border-radius:50%;
+    border:1px solid rgba(0,0,0,.14); background:rgba(0,0,0,.03); color:#5a6270;
+  }
+  [data-theme="dark"] .about-x,[data-theme="dark"] .ask-x{
+    border-color:rgba(255,255,255,.18); background:rgba(255,255,255,.06); color:#c9d1da;
+  }
+  /* The Ask panel's three routes are the content; everything above them is
+     preamble, so it gives up its spacing first. */
+  .ask-logo{margin-bottom:2px}
+  .ask-h{font-size:20px;margin:4px 0 6px}
+  .ask-lede{font-size:14px;margin-bottom:14px}
+  .ask-route{padding:12px 13px}
+  .about-head{margin-bottom:14px}
+  .about-avatar{width:64px;height:64px}
+  .about-body p{font-size:14.5px;line-height:1.62;margin-bottom:11px}
+}
 
 /* ============================================================================
    THE SITE HEADER. Global: every world, every page.

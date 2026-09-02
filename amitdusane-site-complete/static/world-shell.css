@@ -369,7 +369,9 @@
   .search-btn:hover{border-color:var(--accent-line);background:var(--bg)}
   .search-btn .sl{flex:1;font-weight:400;color:var(--faint)}
   .search-btn .sk{font-size:11px;color:var(--faint);border:1px solid var(--line);border-radius:5px;padding:2px 7px;letter-spacing:.3px}
-  .search-overlay{position:fixed;inset:0;z-index:80;background:rgba(15,18,23,.45);display:none;justify-content:center;align-items:flex-start;padding:72px 16px 16px}
+  /* 1200, matching the learning world. At 80 the site header (1000) rendered
+     over the search panel, the same fault the About and Ask overlays had. */
+  .search-overlay{position:fixed;inset:0;z-index:1200;background:rgba(15,18,23,.45);display:none;justify-content:center;align-items:flex-start;padding:72px 16px 16px}
   .search-overlay:not([hidden]){display:flex}
   [data-theme="dark"] .search-overlay{background:rgba(0,0,0,.6)}
 

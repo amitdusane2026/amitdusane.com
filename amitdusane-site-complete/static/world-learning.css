@@ -312,6 +312,12 @@ a:hover{text-decoration:underline}
    because the height was never coming from the content. */
 .lmain{box-sizing:border-box;margin-left:var(--sidebar-w);margin-top:var(--header-h);min-height:calc(100vh - var(--header-h));padding:24px 32px}
 .lcontent{max-width:var(--column);margin:0 auto}
+
+/* The world front page only, selected by the one element unique to it. Its job
+   is to show the whole map without scrolling, and the generous bottom padding
+   that suits a 2000-word lesson is the last thing standing between the map and
+   a 650px laptop viewport. Lessons keep their 24px. */
+body.world-learning:has(.lhome-foot) .lmain{padding-bottom:8px}
 /* ==========================================================================
    PROTOTYPE v2, one section only (M14 s1), behind `proto: true` front matter.
 
@@ -637,14 +643,18 @@ body.world-learning .lcontent .lupdated{font-size:var(--fs-meta);color:var(--tex
 .lcontent p{color:var(--text1);margin:0 0 1em}
 
 /* ---------- Module landing cards (world index) ---------- */
-.welcome{display:flex;align-items:center;justify-content:center;gap:18px;padding:16px 16px 6px;margin-top:-4px}
-.welcome-icon{width:88px;height:88px;display:flex;align-items:center;justify-content:center;flex:none;color:var(--logo-ink)}
+/* Tightened 2 Sep 2026. The front page is a navigator and its third tier -- the
+   actual sections -- was landing at 701px, below the fold on any laptop shorter
+   than about 780. None of the space was doing work: it was padding on three
+   tiers, two 32px connector arrows, and an 88px mark. */
+.welcome{display:flex;align-items:center;justify-content:center;gap:16px;padding:6px 16px 2px;margin-top:-4px}
+.welcome-icon{width:64px;height:64px;display:flex;align-items:center;justify-content:center;flex:none;color:var(--logo-ink)}
 .welcome-text{text-align:left}
 .lmod-mark{color:var(--logo-ink);margin-bottom:10px}
 .lmod-mark svg{display:block}
 .welcome-title{font-size:28px;font-weight:700;margin:0;color:var(--text1);line-height:1.15}
 .welcome-sub{font-size:15px;color:var(--text2);max-width:520px;margin:0 auto 10px;text-align:center}
-.hm-cue{display:flex;align-items:center;justify-content:center;gap:14px;font-size:14px;font-weight:600;color:var(--text2);letter-spacing:.03em;margin:8px auto 2px}
+.hm-cue{display:flex;align-items:center;justify-content:center;gap:14px;font-size:14px;font-weight:600;color:var(--text2);letter-spacing:.03em;margin:2px auto 2px}
 .hm-cue::before,.hm-cue::after{content:"";height:1px;width:36px;background:var(--border)}
 .lhome-support{margin-top:10px}
 .welcome-stats{display:flex;justify-content:center;gap:40px;margin-bottom:26px}
@@ -677,12 +687,31 @@ body.world-learning .welcome-btn:hover{background:var(--accent2);text-decoration
 .lpn .lpn-lab{display:block;font-size:var(--fs-micro);color:var(--text3);margin-bottom:3px}
 .lpn .lpn-next{text-align:right}
 
+/* THE LEFT DRAWER'S SCRIM, and it never existed as anything but an empty div.
+   `.loverlay` had exactly one rule on the whole site -- `display:block` when
+   the drawer opened -- and no position, no inset, no background and no
+   z-index. An empty block element in normal flow is zero pixels tall, so
+   `display:block` changed nothing visible and there was never a surface to
+   catch a tap. world-learning.js has always bound closeNav to it; the handler
+   simply could not fire.
+
+   Reported from live testing on a phone: the left drawer could only be closed
+   by pressing the hamburger a second time, while the page-nav drawer and the
+   pocket map both closed on an outside tap. Those two work because .wf-nav-veil
+   below is a real fixed layer; this now matches it, including the fade, and
+   sits just under .lsidebar's z-index:900 so the drawer stays above its own
+   scrim. */
+.loverlay{display:none}
+
 /* ---------- Mobile drawer ---------- */
 
 @media(max-width:880px){
   .lsidebar{transform:translateX(-100%)}
   body.lnav-open .lsidebar{transform:translateX(0)}
-  body.lnav-open .loverlay{display:block}
+  body.lnav-open .loverlay{
+    display:block; position:fixed; inset:0; z-index:899;
+    background:rgba(0,0,0,.42);
+  }
   .lmain{margin-left:0;padding:18px 16px}
   /* Search collapses to an icon on a phone rather than disappearing. It was
      display:none here, which left the mobile reader with no way into search at
@@ -1575,15 +1604,15 @@ a.glossary-term{display:block; text-decoration:none}
 .hm{position:relative}
 .hm-brand{position:absolute;top:0;right:6px;color:var(--logo-ink);opacity:.55}
 .hm-brand svg{display:block}
-.hm-tier{display:flex;justify-content:center;padding:18px 0}
-.hm-tier-cat{padding-top:8px}
+.hm-tier{display:flex;justify-content:center;padding:9px 0}
+.hm-tier-cat{padding-top:2px}
 .hm-row{display:flex;flex-wrap:wrap;justify-content:center;gap:12px 24px}
 .hm-row-mod,.hm-row-sec{display:none}
 .hm-row-mod.show,.hm-row-sec.show{display:flex;animation:hmFade .22s ease}
 @keyframes hmFade{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
 
 /* dotted divider + arrow node, themed */
-.hm-arrow{display:flex;align-items:center;justify-content:center;height:32px;position:relative}
+.hm-arrow{display:flex;align-items:center;justify-content:center;height:20px;position:relative}
 .hm-arrow::before{content:"";position:absolute;left:10%;right:10%;top:50%;border-top:1.5px dotted var(--text3)}
 .hm-arrow span{position:relative;z-index:1;width:22px;height:22px;border-radius:50%;background:var(--bg2);border:1.6px solid #16a34a;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 3px rgba(34,197,94,.12)}
 .hm-arrow span::after{content:"";border-left:4px solid transparent;border-right:4px solid transparent;border-top:6px solid #16a34a}
@@ -1628,16 +1657,25 @@ a.glossary-term{display:block; text-decoration:none}
 @media(max-width:880px){.hm-tagline{font-size:13.5px}.hm-tagline .tl-b{display:block}}
 
 /* home map panel + dark box contrast */
-.hm-panel{max-width:1000px;margin:6px auto 0;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px 20px 22px}
+.hm-panel{max-width:1000px;margin:4px auto 0;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:12px 20px 14px}
 [data-theme="dark"] .hm-cat,[data-theme="dark"] .hm-mod,[data-theme="dark"] .hm-sec{background:var(--bg3)}
 /* COL-06: .18 over the darkened --bg3 left the tag text at 4.12:1. */
 [data-theme="dark"] .hm-cat.on,[data-theme="dark"] .hm-mod.on{background:rgba(34,197,94,.10)}
-@media(max-width:880px){.hm-panel{padding:14px 12px 18px;border-radius:14px}.welcome-title{font-size:21px}.welcome-icon{width:44px;height:44px}.hm-cat,.hm-mod,.hm-sec{padding:6px 11px}}
+@media(max-width:880px){.hm-panel{padding:14px 12px 18px;border-radius:14px}.hm-cat,.hm-mod,.hm-sec{padding:6px 11px}}
 
-/* home hero + cue mobile tuning */
+/* Home hero and cue, mobile. THE MARK AND THE TITLE SIZE ARE SET ONLY HERE.
+   There used to be a second (max-width:880px) block above declaring 44px and
+   21px, and this one -- identical specificity, later in the file -- silently
+   beat it and rendered the mark at 70px. The visible symptom was on a phone:
+   a 70px mark beside the text left 227px for the title, so "Adobe Analytics
+   Learning" broke across two lines and the whole hero read as cramped.
+
+   48px is chosen, not guessed: it leaves 281px for the text column at 390,
+   which is enough for the title on ONE line at 20px. The duplicate rules are
+   gone from the block above rather than left to fight. */
 @media(max-width:880px){
   .welcome{gap:12px}
-  .welcome-icon{width:70px;height:70px}
+  .welcome-icon{width:48px;height:48px}
   .welcome-title{font-size:20px;line-height:1.12}
   .hm-cue{font-size:12px;gap:8px;letter-spacing:.02em}
   .hm-cue::before,.hm-cue::after{display:none}
