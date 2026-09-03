@@ -1,0 +1,411 @@
+<title>amitdusane.com Launch Runbook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600;700&family=Manrope:wght@700;800&display=swap">
+<style>
+  :root{
+    --ground:#fbfaf9;
+    --surface:#ffffff;
+    --ink:#1a1618;
+    --ink2:#4a4247;
+    --ink3:#7a7176;
+    --rule:#e8e2e4;
+    --rule-strong:#d5cbcf;
+    --accent:#ba2142;
+    --accent-deep:#7d1329;
+    --accent-wash:#fdeef1;
+    --go:#0a6e50;
+    --go-wash:#e8f5ef;
+    --warn:#8a5700;
+    --warn-wash:#fdf3e0;
+    --code-ink:#2a2226;
+    --code-bg:#f4f0f1;
+    --shadow:0 1px 2px rgba(26,22,24,.05);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ground:#141013;
+      --surface:#1c171a;
+      --ink:#f2eef0;
+      --ink2:#c3b9bd;
+      --ink3:#8d8287;
+      --rule:#332c30;
+      --rule-strong:#463c41;
+      --accent:#f27893;
+      --accent-deep:#f7a1b4;
+      --accent-wash:#2c1a20;
+      --go:#54c08a;
+      --go-wash:#13291f;
+      --warn:#d39a45;
+      --warn-wash:#2c2412;
+      --code-ink:#e6dee1;
+      --code-bg:#241d20;
+      --shadow:0 1px 2px rgba(0,0,0,.3);
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#141013;
+    --surface:#1c171a;
+    --ink:#f2eef0;
+    --ink2:#c3b9bd;
+    --ink3:#8d8287;
+    --rule:#332c30;
+    --rule-strong:#463c41;
+    --accent:#f27893;
+    --accent-deep:#f7a1b4;
+    --accent-wash:#2c1a20;
+    --go:#54c08a;
+    --go-wash:#13291f;
+    --warn:#d39a45;
+    --warn-wash:#2c2412;
+    --code-ink:#e6dee1;
+    --code-bg:#241d20;
+    --shadow:0 1px 2px rgba(0,0,0,.3);
+  }
+
+  *{box-sizing:border-box}
+  body{
+    background:var(--ground);
+    color:var(--ink);
+    font-family:'IBM Plex Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:760px;margin:0 auto;padding:56px 24px 96px}
+
+  /* ---- masthead ---- */
+  .mast{border-bottom:2px solid var(--ink);padding-bottom:22px;margin-bottom:34px}
+  .eyebrow{
+    font-size:11.5px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;
+    color:var(--accent);margin:0 0 12px
+  }
+  h1{
+    font-family:Manrope,'IBM Plex Sans',sans-serif;font-weight:800;
+    font-size:clamp(30px,5vw,42px);line-height:1.1;letter-spacing:-.02em;
+    margin:0 0 14px;text-wrap:balance;
+  }
+  .standfirst{font-size:17px;color:var(--ink2);margin:0;max-width:60ch}
+  .meta{
+    display:flex;flex-wrap:wrap;gap:10px 26px;margin-top:20px;
+    font-size:13px;color:var(--ink3);
+    font-variant-numeric:tabular-nums;
+  }
+  .meta b{color:var(--ink2);font-weight:600}
+
+  /* ---- panels ---- */
+  .panel{
+    border:1px solid var(--rule-strong);border-radius:10px;
+    padding:18px 20px;margin:0 0 34px;background:var(--surface);box-shadow:var(--shadow);
+  }
+  .panel.warn{border-color:var(--warn);background:var(--warn-wash)}
+  .panel.stop{border-color:var(--accent);background:var(--accent-wash)}
+  .panel h2{
+    font-family:'IBM Plex Sans',sans-serif;font-size:15px;font-weight:700;
+    margin:0 0 8px;letter-spacing:-.005em;
+  }
+  .panel.warn h2{color:var(--warn)}
+  .panel.stop h2{color:var(--accent)}
+  .panel p{margin:0 0 10px;font-size:15px;color:var(--ink2)}
+  .panel p:last-child{margin-bottom:0}
+
+  /* ---- stages ---- */
+  .stage{margin:44px 0 0}
+  .stage-head{
+    display:flex;align-items:baseline;gap:12px;
+    border-bottom:1px solid var(--rule);padding-bottom:9px;margin-bottom:4px;
+  }
+  .stage-n{
+    font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;
+    color:var(--accent);letter-spacing:.06em;
+  }
+  .stage-t{
+    font-family:'IBM Plex Sans',sans-serif;font-size:17px;font-weight:700;margin:0;
+  }
+  .stage-note{font-size:13.5px;color:var(--ink3);margin:6px 0 0}
+
+  /* ---- steps ---- */
+  .step{
+    display:grid;grid-template-columns:38px 1fr;gap:0 16px;
+    padding:22px 0;border-bottom:1px solid var(--rule);
+  }
+  .step:last-child{border-bottom:none}
+  .num{
+    font-family:'IBM Plex Mono',monospace;font-size:15px;font-weight:600;
+    color:var(--ink3);padding-top:1px;font-variant-numeric:tabular-nums;
+  }
+  .step.critical .num{color:var(--accent)}
+  .body{min-width:0}
+  h3{
+    font-family:'IBM Plex Sans',sans-serif;font-size:17px;font-weight:700;
+    margin:0 0 7px;letter-spacing:-.01em;text-wrap:balance;
+  }
+  .why{margin:0 0 12px;color:var(--ink2);font-size:15px}
+  .why:last-child{margin-bottom:0}
+  .tag{
+    display:inline-block;vertical-align:2px;margin-left:8px;
+    font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+    padding:2px 7px;border-radius:4px;
+  }
+  .tag.pt{background:var(--accent);color:var(--surface)}
+  .tag.gate{background:var(--go);color:var(--surface)}
+  .tag.me{background:var(--rule);color:var(--ink2)}
+
+  pre{
+    margin:0 0 12px;padding:12px 14px;border-radius:7px;
+    background:var(--code-bg);border:1px solid var(--rule);
+    overflow-x:auto;
+  }
+  code{
+    font-family:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+    font-size:13.5px;color:var(--code-ink);white-space:pre;
+  }
+  p code,li code{
+    background:var(--code-bg);padding:1.5px 5px;border-radius:4px;
+    font-size:13px;white-space:normal;
+  }
+  .expect{
+    display:flex;gap:9px;align-items:flex-start;
+    font-size:14px;color:var(--ink2);
+    padding:9px 12px;border-left:2px solid var(--go);
+    background:var(--go-wash);border-radius:0 6px 6px 0;margin:0 0 12px;
+  }
+  .expect:last-child{margin-bottom:0}
+  .expect b{color:var(--go);font-weight:600;flex:none}
+  .halt{
+    border-left-color:var(--accent);background:var(--accent-wash);
+  }
+  .halt b{color:var(--accent)}
+  ul{margin:0 0 12px;padding-left:20px;color:var(--ink2);font-size:15px}
+  ul:last-child{margin-bottom:0}
+  li{margin-bottom:5px}
+  li::marker{color:var(--ink3)}
+
+  .foot{
+    margin-top:48px;padding-top:20px;border-top:2px solid var(--ink);
+    font-size:14px;color:var(--ink3);
+  }
+  .foot b{color:var(--ink2)}
+  a{color:var(--accent);text-underline-offset:2px}
+  a:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  @media (max-width:560px){
+    .wrap{padding:36px 18px 72px}
+    .step{grid-template-columns:28px 1fr;gap:0 12px}
+  }
+</style>
+
+<div class="wrap">
+
+  <header class="mast">
+    <p class="eyebrow">4 September 2026 &middot; Version 2.0</p>
+    <h1>amitdusane.com Launch Runbook</h1>
+    <p class="standfirst">Twelve steps, in the order they happen. Nothing reaches the live site until step&nbsp;7, and one step before it cannot be done afterwards.</p>
+    <div class="meta">
+      <span><b>Live branch</b> main</span>
+      <span><b>Work branch</b> develop</span>
+      <span><b>Expected pages</b> 219</span>
+      <span><b>Deploy time</b> ~2 min</span>
+    </div>
+  </header>
+
+  <div class="panel warn">
+    <h2>Do not start before 05:30 IST</h2>
+    <p>The learning section is dated 4 September. The build server runs on UTC, which is five and a half hours behind you, so until 05:30 your time it is still the 3rd over there. Build before then and Hugo treats all 116 sections as not yet published, drops them, and the site fills with &ldquo;Coming soon&rdquo; while reporting success.</p>
+    <p>After 05:30 IST this cannot happen. There is no other timing constraint.</p>
+  </div>
+
+  <section class="stage">
+    <div class="stage-head">
+      <span class="stage-n">STAGE 1</span>
+      <h2 class="stage-t">Get develop ready</h2>
+    </div>
+    <p class="stage-note">Everything here is reversible and nothing is public. The live site is still the June version throughout.</p>
+
+    <div class="step">
+      <div class="num">1</div>
+      <div class="body">
+        <h3>Pull, and confirm nothing is half-finished</h3>
+        <p class="why">Makes sure we start from exactly what is on GitHub, with no stray edits left over.</p>
+        <pre><code>git fetch origin
+git status</code></pre>
+        <div class="expect"><b>Expect</b><span>&ldquo;up to date with origin/develop&rdquo; and &ldquo;nothing to commit, working tree clean&rdquo;.</span></div>
+        <div class="expect halt"><b>Stop if</b><span>anything is listed as modified. We look at it before going further.</span></div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="num">2</div>
+      <div class="body">
+        <h3>Turn Google Analytics on</h3>
+        <p class="why">The tracking line is currently sealed inside a comment block, so the site ignores it. Removing the block lets it run. Property <code>G-9817PZWN9H</code>, already in the config.</p>
+        <ul>
+          <li>File: <code>layouts/partials/head.html</code>, the block at lines 6&ndash;14</li>
+          <li>The wrapper goes; the tracking line inside it stays</li>
+        </ul>
+        <div class="expect"><b>Expect</b><span>one line changed in one file.</span></div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="num">3</div>
+      <div class="body">
+        <h3>Remove the temporary date override</h3>
+        <p class="why">This was added so testers could see pages dated 4 September before the 4th arrived. Today it arrives on its own, so the override comes out and the safety net it was suppressing comes back.</p>
+        <ul>
+          <li><code>hugo.toml</code> &mdash; the <code>buildFuture = true</code> line and its comment block</li>
+          <li><code>CLAUDE.md</code> &mdash; the matching temporary block</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="step critical">
+      <div class="num">4</div>
+      <div class="body">
+        <h3>Build, and check the number<span class="tag gate">The gate</span></h3>
+        <p class="why">This one check has caught every silent failure on this project. A build can report success and still be missing a third of the site.</p>
+        <pre><code>rm -rf amitdusane-site-complete/public
+hugo --gc --source amitdusane-site-complete</code></pre>
+        <div class="expect"><b>Expect</b><span><b>219 pages</b>, and the tracking snippet present in the built HTML.</span></div>
+        <div class="expect halt"><b>Stop if</b><span>it says <b>103</b>. That is the date problem, and it means it is still the 3rd in UTC. Wait, then rebuild. Do not continue past this step.</span></div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="num">5</div>
+      <div class="body">
+        <h3>Commit and push develop</h3>
+        <p class="why">Saves the two changes to GitHub. Still nothing live &mdash; pushing to develop publishes nothing.</p>
+        <div class="expect"><b>Expect</b><span>a clean working tree and develop up to date.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="stage">
+    <div class="stage-head">
+      <span class="stage-n">STAGE 2</span>
+      <h2 class="stage-t">Preserve version 1</h2>
+    </div>
+    <p class="stage-note">One step, and it is the only one on this page that cannot be done afterwards.</p>
+
+    <div class="step critical">
+      <div class="num">6</div>
+      <div class="body">
+        <h3>Tag the current live site as v1.0<span class="tag pt">Do first</span></h3>
+        <p class="why">Git keeps every version forever, but only while something points at it. Step 7 replaces main, which leaves the June site unpointed-at &mdash; and GitHub eventually deletes commits nothing points to. This tag is what pins it permanently, so you can browse or restore the June site any time.</p>
+        <pre><code>git tag -a v1.0 730c59a -m "The June 2026 site, live until launch"
+git push origin v1.0</code></pre>
+        <div class="expect"><b>Expect</b><span>the tag to appear under Tags on GitHub.</span></div>
+        <div class="expect halt"><b>Stop if</b><span>this fails. Everything after this depends on it.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="stage">
+    <div class="stage-head">
+      <span class="stage-n">STAGE 3</span>
+      <h2 class="stage-t">Go live</h2>
+    </div>
+    <p class="stage-note">From here the public site changes. Reversible in about two minutes, but visible in the meantime.</p>
+
+    <div class="step critical">
+      <div class="num">7</div>
+      <div class="body">
+        <h3>Replace main with develop<span class="tag pt">Point of no return</span></h3>
+        <p class="why">This is the launch. It is an overwrite rather than a merge, because the two branches never shared a starting point. It also joins them into one history, so every future launch is an ordinary, simple update.</p>
+        <pre><code>git push origin develop:main --force-with-lease</code></pre>
+        <div class="expect"><b>Expect</b><span>the push to succeed and a build to start automatically.</span></div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="num">8</div>
+      <div class="body">
+        <h3>Watch the deploy finish</h3>
+        <p class="why">GitHub builds the site and publishes it. Around two minutes.</p>
+        <ul>
+          <li>GitHub &rarr; <b>Actions</b> tab &rarr; the run at the top</li>
+        </ul>
+        <div class="expect"><b>Expect</b><span>a green tick.</span></div>
+        <div class="expect halt"><b>Stop if</b><span>it fails. Read the error before touching anything &mdash; the old site is still up until the build succeeds.</span></div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="num">9</div>
+      <div class="body">
+        <h3>Check the live site yourself</h3>
+        <p class="why">Five things, in this order. Each one has failed at some point during this project.</p>
+        <ul>
+          <li><b>amitdusane.com</b> loads, with both cards on the home page</li>
+          <li><b>/adobe-analytics-learning/</b> loads &mdash; this returned 404 by design until today</li>
+          <li>Open any section. No &ldquo;Coming soon&rdquo; anywhere</li>
+          <li>The byline reads <b>Published: 4 Sep 2026</b></li>
+          <li>Google Analytics &rarr; Realtime shows your own visit</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="num">10</div>
+      <div class="body">
+        <h3>Tag the launch as v2.0</h3>
+        <p class="why">Names this version so you can find it later without hunting through commit IDs. From now on every push to main is preserved automatically &mdash; this tag just makes the milestone easy to reach.</p>
+        <pre><code>git tag -a v2.0 -m "Adobe Analytics Learning launch"
+git push origin v2.0</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <section class="stage">
+    <div class="stage-head">
+      <span class="stage-n">STAGE 4</span>
+      <h2 class="stage-t">Straight after launch</h2>
+    </div>
+    <p class="stage-note">Same sitting. Leaving this to later is how the first week of data gets spoiled.</p>
+
+    <div class="step critical">
+      <div class="num">11</div>
+      <div class="body">
+        <h3>Turn Google Analytics back off on develop<span class="tag pt">Same day</span></h3>
+        <p class="why">Your staging copy is built from develop. With tracking left on there, every tester click lands in the same report as real visitors, and your launch-week numbers are wrong in a way you cannot separate out afterwards.</p>
+        <ul>
+          <li>Put the comment wrapper back in <code>head.html</code></li>
+          <li>Commit and push develop</li>
+        </ul>
+        <div class="expect"><b>Expect</b><span>the staging page to carry no tracking snippet; the live site keeps it.</span></div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="num">12</div>
+      <div class="body">
+        <h3>Confirm the split is right</h3>
+        <p class="why">One last look, so you know the two sites are behaving differently on purpose.</p>
+        <ul>
+          <li>Live site: tracking on, learning section published</li>
+          <li>Staging: tracking off, same content</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="panel stop" style="margin-top:44px">
+    <h2>If anything goes wrong after step 7</h2>
+    <p>The June site goes back up within about two minutes:</p>
+    <pre style="margin-bottom:10px"><code>git push origin 730c59a:main --force</code></pre>
+    <p>Nothing is lost either way &mdash; the new version stays safe on develop, and v1.0 is tagged.</p>
+  </div>
+
+  <div class="panel">
+    <h2>Deliberately not doing tomorrow</h2>
+    <p><b>The RSS feed.</b> It is genuinely missing, but it is new code that has never been built or tested. Adding a feature inside the launch window is how launches go wrong. It ships afterwards, or tonight if you want it tested first.</p>
+    <p><b>Making the tracking switch automatic.</b> Steps 2 and 11 are a manual on/off that will repeat at every future launch. The site already has a guard that behaves differently on the live domain than on staging, and tracking could use the same trick &mdash; on by itself on amitdusane.com, off everywhere else. Worth doing, but after launch, not during.</p>
+  </div>
+
+  <p class="foot">
+    <b>Rollback point</b> <code>730c59a</code> &middot; the current live site &nbsp;&nbsp;&bull;&nbsp;&nbsp;
+    <b>Tracking property</b> <code>G-9817PZWN9H</code> &nbsp;&nbsp;&bull;&nbsp;&nbsp;
+    <b>Page count</b> 219 on a correct build, 103 if the date problem returns
+  </p>
+
+</div>
