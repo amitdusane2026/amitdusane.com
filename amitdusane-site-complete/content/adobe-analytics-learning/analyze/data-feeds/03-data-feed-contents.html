@@ -104,7 +104,7 @@ weight: 3
 
 <p><strong>Classifications are not in the feed.</strong> If your campaign codes are classified into friendly names, the feed carries the code and not the name. The classification tables live elsewhere and are applied at reporting time. So a warehouse built from feeds shows tracking codes where the dashboard shows campaign names, which looks like a bug and is not. Data Warehouse does carry classified values, which is one of the clearest reasons to choose it instead. The behaviour is covered in <a href="/adobe-analytics-learning/shape/classifications/classifications-overview/">Classifications Overview</a>.</p>
 
-<p><strong>Nothing is summarised.</strong> There is no visit count column, no unique visitor column, no revenue total. Those are all things Adobe calculates when a report runs, and reproducing them is the subject of the next section.</p>
+<p><strong>Nothing is summarised.</strong> There is no visit count column, no unique visitor column, no revenue total. Those are all things Adobe calculates when a report runs, and reproducing them is the subject of <a href="/adobe-analytics-learning/analyze/data-feeds/processing-data-feeds/">Processing Data Feeds</a>.</p>
 
 <h3 class="subsec-title">Follow along: read one row end to end</h3>
 <p>Twenty minutes with a real delivery and a text editor teaches more about Adobe Analytics than any amount of reading about it.</p>
@@ -141,7 +141,7 @@ weight: 3
         </li>
         <li>
             <span class="ds-do">Check <code>exclude_hit</code> and <code>hit_source</code> on the same row.</span>
-            <span class="ds-see">These decide whether Adobe counted this row at all, which is where the next section starts.</span>
+            <span class="ds-see">These decide whether Adobe counted this row at all, which is where <a href="/adobe-analytics-learning/analyze/data-feeds/processing-data-feeds/">Processing Data Feeds</a> starts.</span>
         </li>
     </ol>
     <p class="dothis-end">There is nothing to configure. A header file, one row, and three lookups. Doing it once makes every column reference afterwards obvious rather than abstract.</p>

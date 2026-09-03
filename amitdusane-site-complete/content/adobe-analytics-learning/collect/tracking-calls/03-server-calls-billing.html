@@ -10,7 +10,7 @@ modulenum: 7
 sectionnum: 3
 weight: 3
 ---
-<p>By now you have sent two different kinds of calls, the <a href="/adobe-analytics-learning/collect/tracking-calls/page-view-tracking/">page view</a> with <code>s.t()</code> and the <a href="/adobe-analytics-learning/collect/tracking-calls/link-tracking/">link call</a> with <code>s.tl()</code>. Underneath, they are the same event: a hit sent to Adobe's servers. That hit has a name in the world of contracts and invoices, the server call, and it is the single thing you actually pay Adobe for.</p>
+<p>Two kinds of call carry data to Adobe: the <a href="/adobe-analytics-learning/collect/tracking-calls/page-view-tracking/">page view</a> with <code>s.t()</code> and the <a href="/adobe-analytics-learning/collect/tracking-calls/link-tracking/">link call</a> with <code>s.tl()</code>. Underneath, they are the same event: a hit sent to Adobe's servers. That hit has a name in the world of contracts and invoices, the server call, and it is the single thing you actually pay Adobe for.</p>
 
 <p>This matters more than it first looks. Adobe Analytics is not priced per user, per report, or per dashboard. It is priced per server call. Once you see why, billing stops being a mysterious line item handed down by procurement and becomes something your implementation decisions directly control. That shift, from treating cost as someone else's problem to treating it as an architecture output, is the point of this section.</p>
 
@@ -18,7 +18,7 @@ weight: 3
 <p>Think about where the real cost sits in a system like this. It is not in drawing a chart for you on a Tuesday afternoon. The expense is in receiving every single hit from every visitor, processing it, and storing it more or less forever so that you can query it whenever you want. The heavy, recurring work is collection and retention. So the sensible unit to bill on is the unit of collection: one hit in, one server call counted. Everything about how Adobe prices the product follows from that one design decision.</p>
 
 <h3 class="subsec-title">What a server call actually is</h3>
-<p>In Adobe's own terms, a server call is a hit, also called an image request: a single instance of data being sent to Adobe's servers to process. You have already met the common kinds. The page view from <code>s.t()</code> is a server call. The link call from <code>s.tl()</code> is a server call. Their mobile counterparts, trackState and trackAction, are server calls too. One more source catches people out: each row of data you bring in from an offline source, through Data Sources import, also counts as a server call.</p>
+<p>In Adobe's own terms, a server call is a hit, also called an image request: a single instance of data being sent to Adobe's servers to process. The page view from <code>s.t()</code> is a server call. The link call from <code>s.tl()</code> is a server call. Their mobile counterparts, trackState and trackAction, are server calls too. One more source catches people out: each row of data you bring in from an offline source, through Data Sources import, also counts as a server call.</p>
 
 <div class="tbl-wrap">
     <table>

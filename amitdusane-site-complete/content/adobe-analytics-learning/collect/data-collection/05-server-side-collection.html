@@ -22,7 +22,7 @@ weight: 5
 <ul>
     <li><strong>Data Insertion API:</strong> the classic, AppMeasurement-era method. One hit at a time, sent as XML or a query string. It is the original server-side path and it still works. Adobe has not put it on a retirement schedule, but it now recommends the Bulk Data Insertion API for new work, so it is not where a fresh implementation should start.</li>
     <li><strong>Bulk Data Insertion API:</strong> the one Adobe recommends for new server-side work in the Analytics world. You send batch files of events (CSV, one event per row) rather than one call at a time, which is what you want for volume and for loading offline or historical data. One caution: bulk-inserted data is permanent, so validate a batch before you ingest it, because there is no clean undo.</li>
-    <li><strong>Edge Network Server API:</strong> the modern path that belongs to the Web SDK and Experience Platform world from the last two sections. Your server sends to the same Edge Network that alloy.js feeds, and the datastream fans it out from there.</li>
+    <li><strong>Edge Network Server API:</strong> the modern path that belongs to the <a href="/adobe-analytics-learning/collect/data-collection/adobe-web-sdk/">Web SDK</a> and Experience Platform world. Your server sends to the same Edge Network that alloy.js feeds, and the datastream fans it out from there.</li>
 </ul>
 <p>You do not need the payload details to make the decision. Which one you reach for follows directly from which world you are already living in: classic Analytics, or the Edge.</p>
 
