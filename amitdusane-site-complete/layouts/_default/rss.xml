@@ -1,0 +1,54 @@
+{{- /* ============================================================================
+     THE FEED, and there are three of them: the site, and one per world.
+
+     WHAT WAS HERE BEFORE. Nothing, which meant Hugo's internal template ran and
+     emitted a feed for every SECTION -- 27 of them, one per module and phase,
+     none linked from anywhere and none of them a thing a person would subscribe
+     to. Meanwhile the three pages somebody actually would subscribe to had no
+     feed at all, because the home page and both world roots each declare their
+     own `outputs` in front matter, and an explicit list replaces the default
+     rather than adding to it. So the site had 27 feeds and none that mattered.
+     `section = ["HTML"]` in hugo.toml stops the 27; adding RSS to those three
+     front matters creates the ones that count.
+
+     WHY RECURSIVE. A section feed lists direct children only. The learning
+     world's direct children are its five phase landings, so the default feed
+     would have announced "Collect the data" and nothing else. RegularPagesRecursive
+     reaches the sections themselves, which is what a reader is subscribing for.
+
+     WHY DESCRIPTIONS RATHER THAN FULL TEXT. Every page here carries a written
+     description, 110 to 160 characters, composed as a promise about the content.
+     It is better feed copy than a machine summary, and it keeps the file small:
+     144 articles at 2000 words each would be several megabytes fetched on a
+     schedule, forever, by every subscriber.
+     ============================================================================ */ -}}
+{{- $pages := .RegularPagesRecursive -}}
+{{- if .IsHome -}}{{- $pages = .Site.RegularPages -}}{{- end -}}
+{{- $pages = $pages.ByPublishDate.Reverse -}}
+{{- $limit := 40 -}}
+{{- if gt (len $pages) $limit -}}{{- $pages = first $limit $pages -}}{{- end -}}
+{{- printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>" | safeHTML }}
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} &#183; {{ .Site.Title }}{{ end }}</title>
+    <link>{{ .Permalink }}</link>
+    <description>{{ with .Description }}{{ . | transform.XMLEscape | safeHTML }}{{ else }}Practitioner-level guides to Adobe Analytics and the Experience Platform Web SDK.{{ end }}</description>
+    <language>en-us</language>
+    <copyright>&#169; {{ now.Year }} Amit G Dusane</copyright>
+    <lastBuildDate>{{ now.Format "Mon, 02 Jan 2006 15:04:05 -0700" | safeHTML }}</lastBuildDate>
+    {{- with .OutputFormats.Get "RSS" }}
+    <atom:link href="{{ .Permalink }}" rel="self" type="application/rss+xml" />
+    {{- end }}
+    {{- range $pages }}
+    <item>
+      <title>{{ .Title | transform.XMLEscape | safeHTML }}</title>
+      <link>{{ .Permalink }}</link>
+      <guid isPermaLink="true">{{ .Permalink }}</guid>
+      <pubDate>{{ .PublishDate.Format "Mon, 02 Jan 2006 15:04:05 -0700" | safeHTML }}</pubDate>
+      {{- with .Description }}
+      <description>{{ . | transform.XMLEscape | safeHTML }}</description>
+      {{- end }}
+    </item>
+    {{- end }}
+  </channel>
+</rss>

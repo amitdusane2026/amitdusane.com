@@ -1,5 +1,5 @@
 ---
-outputs: ["HTML","JSON"]
+outputs: ["HTML","JSON","RSS"]
 title: "AppMeasurement → Web SDK Migration"
 shorttitle: "Web SDK Migration"
 seotitle: "AppMeasurement to Adobe Web SDK Migration Guide"

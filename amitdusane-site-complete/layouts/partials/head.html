@@ -50,6 +50,14 @@
   <meta name="twitter:title" content="{{ $ogtitle }}">
   <meta name="twitter:description" content="{{ $ogdesc }}">
   <meta name="twitter:image" content="{{ $og | absURL }}">
+  {{- /* FEED AUTODISCOVERY, and it points at the reader's own world rather than
+       at the site. Somebody reading Adobe Analytics wants to hear about Adobe
+       Analytics, not about a migration guide they have already finished, and
+       the same argument that sharded the search index applies here. A page with
+       no world, the home page and About, offers the site-wide feed instead. */ -}}
+  {{- $feed := "index.xml" -}}
+  {{- with index .Site.Params.worlds .Section }}{{ $feed = printf "%s/index.xml" .root }}{{ end -}}
+  <link rel="alternate" type="application/rss+xml" title="{{ .Site.Title }}" href="{{ $feed | relURL }}">
   {{ partial "schema.html" . }}
   {{/* Asset URLs carry a content hash. Without it the browser keeps a stale
        copy of a stylesheet that changed, because the URL never moves. That

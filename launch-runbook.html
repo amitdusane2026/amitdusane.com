@@ -203,7 +203,7 @@
     <div class="meta">
       <span><b>Live branch</b> main</span>
       <span><b>Work branch</b> develop</span>
-      <span><b>Expected pages</b> 219</span>
+      <span><b>Expected pages</b> 195</span>
       <span><b>Deploy time</b> ~2 min</span>
     </div>
   </header>
@@ -265,8 +265,8 @@ git status</code></pre>
         <p class="why">This one check has caught every silent failure on this project. A build can report success and still be missing a third of the site.</p>
         <pre><code>rm -rf amitdusane-site-complete/public
 hugo --gc --source amitdusane-site-complete</code></pre>
-        <div class="expect"><b>Expect</b><span><b>219 pages</b>, and the tracking snippet present in the built HTML.</span></div>
-        <div class="expect halt"><b>Stop if</b><span>it says <b>103</b>. That is the date problem, and it means it is still the 3rd in UTC. Wait, then rebuild. Do not continue past this step.</span></div>
+        <div class="expect"><b>Expect</b><span><b>195 pages</b>, and the tracking snippet present in the built HTML.</span></div>
+        <div class="expect halt"><b>Stop if</b><span>it says <b>79</b>. That is the date problem, and it means it is still the 3rd in UTC. Wait, then rebuild. Do not continue past this step.</span></div>
       </div>
     </div>
 
@@ -397,15 +397,15 @@ git push origin v2.0</code></pre>
   </div>
 
   <div class="panel">
-    <h2>Deliberately not doing tomorrow</h2>
-    <p><b>The RSS feed.</b> It is genuinely missing, but it is new code that has never been built or tested. Adding a feature inside the launch window is how launches go wrong. It ships afterwards, or tonight if you want it tested first.</p>
-    <p><b>Making the tracking switch automatic.</b> Steps 2 and 11 are a manual on/off that will repeat at every future launch. The site already has a guard that behaves differently on the live domain than on staging, and tracking could use the same trick &mdash; on by itself on amitdusane.com, off everywhere else. Worth doing, but after launch, not during.</p>
+    <h2>Already done, and one thing left</h2>
+    <p><b>RSS shipped on 3 September</b>, tested, so it is not launch-day work. It also changed the number you check at step 4. The site had been quietly publishing 27 feeds, one per module and phase, that nothing linked to, while the home page and both guides had none. There are three now &mdash; the site, Adobe Analytics, and the migration guide &mdash; and browsers find them automatically. No page of the site changed: 187 HTML pages before and after.</p>
+    <p><b>Making the tracking switch automatic</b> is the one thing still worth doing, and it is for after launch. Steps 2 and 11 are a manual on/off that repeats at every future launch, and one forgotten step 11 spoils a week of data. The site already has a guard that behaves differently on the live domain than on staging; tracking can use the same trick, on by itself on amitdusane.com and off everywhere else.</p>
   </div>
 
   <p class="foot">
     <b>Rollback point</b> <code>730c59a</code> &middot; the current live site &nbsp;&nbsp;&bull;&nbsp;&nbsp;
     <b>Tracking property</b> <code>G-9817PZWN9H</code> &nbsp;&nbsp;&bull;&nbsp;&nbsp;
-    <b>Page count</b> 219 on a correct build, 103 if the date problem returns
+    <b>Page count</b> 195 on a correct build, 79 if the date problem returns
   </p>
 
 </div>
