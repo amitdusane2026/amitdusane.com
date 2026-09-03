@@ -3,6 +3,25 @@
   <div class="eyebrow" style="color:var(--accent);font-size:11.5px;letter-spacing:1.4px;text-transform:uppercase;font-weight:700">404</div>
   <h1>Page not found</h1>
   <p>That page doesn't exist or has moved.</p>
-  <p><a href="{{ "/" | relURL }}">Home</a> &nbsp;·&nbsp; <a href="{{ "/web-sdk-migration/" | relURL }}">Migration guide</a> &nbsp;·&nbsp; <a href="{{ "/web-sdk-migration/kb/" | relURL }}">Knowledge Base</a></p>
+  {{- /* THE WAYS OUT COME FROM THE WORLDS, not from a hand-written list. This
+       page was written when the migration guide was the only thing here, so it
+       offered Home, that guide, and that guide's Knowledge Base: three links,
+       two of them the same world, and no way at all to reach Adobe Analytics
+       Learning once it existed. A reader who mistypes a learning URL is exactly
+       the reader who most needs that link, and it was the one thing missing.
+
+       Ranging over [params.worlds] means a world gets its own way out the day
+       it is configured, with no edit here, which is the same promise the header,
+       the search shell and the social cards already keep. Each name comes from
+       the world root's own title, or its shorttitle where the real one is too
+       long to sit in a row of links. */ -}}
+  <p><a href="{{ "/" | relURL }}">Home</a>
+    {{- range $key, $w := .Site.Params.worlds -}}
+      {{- with $.Site.GetPage $w.root -}}
+        {{- $name := .Title -}}{{- with .Params.shorttitle }}{{ $name = . }}{{ end -}}
+        &nbsp;·&nbsp; <a href="{{ $w.root | relURL }}/">{{ $name }}</a>
+      {{- end -}}
+    {{- end -}}
+  </p>
 </article>
 {{ end }}
