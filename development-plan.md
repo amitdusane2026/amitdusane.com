@@ -2434,10 +2434,8 @@ migration front page, correct today. The component rulebook still lacks the
 entry for M21's deliberate absence of walkthroughs. M17 s4 never gained the
 surface API mention the structure map prescribes.
 
-**The one worth doing next** is making GA decide from the baseURL the way the
-noindex guard already does. Every launch currently costs two edits in opposite
-directions, and forgetting the second silently pollutes the live property with
-tester traffic.
+**The GA switch is done** (4 September 2026), so the item that used to sit here
+is closed. See the section below.
 
 ### Post-launch, same day
 
@@ -2476,15 +2474,53 @@ an AI badge.
 the only launch task not finished, and the domain is currently broken rather
 than merely empty.
 
+### The tracking switch, made automatic (4 September 2026)
+
+**GA now decides from the baseURL instead of from the branch.** The call in
+`layouts/partials/head.html` had been sealed inside a comment wrapper that was
+deleted before a launch and put back afterwards, so every launch cost two edits
+in opposite directions and forgetting the second sent tester traffic into the
+live property. It now fires only when `.Site.BaseURL` contains
+`amitdusane.com`, which is the test `layouts/index.headers` was already using
+to keep staging out of Google.
+
+**Reusing the existing test rather than inventing a second one is the point.**
+Tracking and noindex now read the same value, so they cannot disagree about
+which build is the real site: anything that turns tracking on also turns
+noindex off. The one case that would break that symmetry is a staging copy
+hosted under amitdusane.com itself rather than on pages.dev, where both guards
+would invert together and both would need something narrower than
+`strings.Contains`. Nothing is hosted that way, and the comment in `head.html`
+says so.
+
+**Tested against three baseURLs before it was trusted**, which is what Amit
+asked for:
+
+| Build | Pages | GA snippet | `noindex` | `_headers` |
+|---|---|---|---|---|
+| Production, no `-b` | 195 | **187 pages** | none | absent |
+| Staging, `-b …pages.dev/` | 196 | none | 188 pages | present |
+| Local, `-b localhost:1313/` | 196 | none | 188 pages | present |
+
+The counts match the documented baseline exactly. Both guards were also diffed
+against a build from the previous commit: **the staging output is byte-identical
+apart from three RSS `lastBuildDate` stamps**, so the change is a no-op on
+anything that is not production, and the production diff is nothing but the
+gtag snippet on 187 pages. The two pages that carry no GA on production are
+structural and pre-existing: Hugo's own alias stub, which has always carried its
+own `noindex`, and `appmeasurement-to-web-sdk-guide-offline.html`, a static file
+copied verbatim that no template ever touches.
+
+`launch-runbook.html` steps 2 and 11 are now marked "No longer needed" rather
+than deleted, so the numbering and the cross-references to step 7 survive. Step
+11 mattered most: followed today it would have turned tracking off on the live
+site.
+
 ### What the next session should pick up
 
-**Make GA decide from the baseURL**, the way `layouts/index.headers` already
-does for the noindex guard. Every launch currently costs two edits in opposite
-directions and the second one is easy to forget; forgetting it puts tester
-traffic into the live property during the week the numbers matter most. It was
-deliberately not done on launch day, because changing how the tracking switch
-behaves in the same hour as a launch is how you discover a week later that
-nothing was recorded.
+**The `amitdusane.in` redirect is the only launch task left**, and it is Amit's
+to do in the Cloudflare dashboard rather than mine. The domain is currently
+broken rather than merely empty. See `site-architecture.md`.
 
 After that: the two tech-debt rows, the component rulebook entry for M21's
 absent walkthroughs, and the surface API mention M17 s4 never gained.

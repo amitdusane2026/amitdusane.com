@@ -236,13 +236,9 @@ git status</code></pre>
     <div class="step">
       <div class="num">2</div>
       <div class="body">
-        <h3>Turn Google Analytics on</h3>
-        <p class="why">The tracking line is currently sealed inside a comment block, so the site ignores it. Removing the block lets it run. Property <code>G-9817PZWN9H</code>, already in the config.</p>
-        <ul>
-          <li>File: <code>layouts/partials/head.html</code>, the block at lines 6&ndash;14</li>
-          <li>The wrapper goes; the tracking line inside it stays</li>
-        </ul>
-        <div class="expect"><b>Expect</b><span>one line changed in one file.</span></div>
+        <h3>Turn Google Analytics on<span class="tag me">No longer needed</span></h3>
+        <p class="why">Automatic since 4 September 2026. The tracking call in <code>layouts/partials/head.html</code> fires whenever the baseURL is <code>amitdusane.com</code>, which is the same test the staging noindex guard already used. A production build passes no <code>-b</code>, so it tracks on its own. Property <code>G-9817PZWN9H</code>, in <code>hugo.toml</code>.</p>
+        <div class="expect"><b>Expect</b><span>no edit. Step 4 still checks the snippet is in the built HTML, which is where you confirm it worked.</span></div>
       </div>
     </div>
 
@@ -363,16 +359,12 @@ git push origin v2.0</code></pre>
     </div>
     <p class="stage-note">Same sitting. Leaving this to later is how the first week of data gets spoiled.</p>
 
-    <div class="step critical">
+    <div class="step">
       <div class="num">11</div>
       <div class="body">
-        <h3>Turn Google Analytics back off on develop<span class="tag pt">Same day</span></h3>
-        <p class="why">Your staging copy is built from develop. With tracking left on there, every tester click lands in the same report as real visitors, and your launch-week numbers are wrong in a way you cannot separate out afterwards.</p>
-        <ul>
-          <li>Put the comment wrapper back in <code>head.html</code></li>
-          <li>Commit and push develop</li>
-        </ul>
-        <div class="expect"><b>Expect</b><span>the staging page to carry no tracking snippet; the live site keeps it.</span></div>
+        <h3>Turn Google Analytics back off on develop<span class="tag me">No longer needed</span></h3>
+        <p class="why">Done automatically since 4 September 2026. <code>head.html</code> fires the tracking call only when the baseURL is the live domain, so a staging build and a <code>hugo server</code> build switch themselves off. There is nothing to put back, and putting the old comment wrapper back would now turn tracking off on the live site as well.</p>
+        <div class="expect"><b>Expect</b><span>nothing to do. Step 2 says the same thing from the other end.</span></div>
       </div>
     </div>
 
@@ -380,11 +372,12 @@ git push origin v2.0</code></pre>
       <div class="num">12</div>
       <div class="body">
         <h3>Confirm the split is right</h3>
-        <p class="why">One last look, so you know the two sites are behaving differently on purpose.</p>
+        <p class="why">One last look, so you know the live site and any staging copy are behaving differently on their own.</p>
         <ul>
-          <li>Live site: tracking on, learning section published</li>
-          <li>Staging: tracking off, same content</li>
+          <li>Live site: tracking on, no <code>noindex</code>, learning section published</li>
+          <li>Staging: tracking off, <code>noindex</code> present, same content</li>
         </ul>
+        <div class="expect"><b>Expect</b><span>both to be true without either having been edited. The two guards read the same baseURL, so they cannot disagree.</span></div>
       </div>
     </div>
   </section>
@@ -397,9 +390,9 @@ git push origin v2.0</code></pre>
   </div>
 
   <div class="panel">
-    <h2>Already done, and one thing left</h2>
+    <h2>Already done</h2>
     <p><b>RSS shipped on 3 September</b>, tested, so it is not launch-day work. It also changed the number you check at step 4. The site had been quietly publishing 27 feeds, one per module and phase, that nothing linked to, while the home page and both guides had none. There are three now &mdash; the site, Adobe Analytics, and the migration guide &mdash; and browsers find them automatically. No page of the site changed: 187 HTML pages before and after.</p>
-    <p><b>Making the tracking switch automatic</b> is the one thing still worth doing, and it is for after launch. Steps 2 and 11 are a manual on/off that repeats at every future launch, and one forgotten step 11 spoils a week of data. The site already has a guard that behaves differently on the live domain than on staging; tracking can use the same trick, on by itself on amitdusane.com and off everywhere else.</p>
+    <p><b>The tracking switch is automatic since 4 September 2026</b>, which is what emptied steps 2 and 11. <code>head.html</code> now fires the tracking call only when the baseURL is the live domain, the same test <code>layouts/index.headers</code> was already using to keep staging out of Google. Verified against three baseURLs before it was trusted: production emits the snippet on all 187 pages and no <code>noindex</code>; a <code>pages.dev</code> build and a localhost build emit neither, and their output is otherwise identical to the build before the change. <b>Tracking and noindex now read the same baseURL, so they cannot disagree about which build is the real site.</b></p>
   </div>
 
   <p class="foot">

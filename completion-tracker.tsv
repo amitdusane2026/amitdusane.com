@@ -251,3 +251,4 @@ Platform	navigation		Pocket map extended to module and phase landings; it had be
 Platform	navigation		Module landing rebuilt as a numbered contents list carrying each section description, map above the prose	Feature	layouts/module/list.html	NA	NA	NA	NA	NA	NA	Yes	No	No
 Platform	navigation		Phase landing rebuilt as module cards, a deliberately different shape from the module landing	Feature	layouts/category/list.html	NA	NA	NA	NA	NA	NA	Yes	No	No
 Platform	navigation		Left rail rows toggle instead of navigating; each landing demoted to a quiet Overview row inside	Feature	layouts/_default/baseof.html	NA	NA	NA	NA	NA	NA	Yes	No	No
+Platform	infrastructure		GA tracking guard: the tracking call fires only when the baseURL is amitdusane.com, replacing the per-launch comment wrapper	Feature	layouts/partials/head.html	NA	NA	NA	NA	NA	NA	Yes	No	No

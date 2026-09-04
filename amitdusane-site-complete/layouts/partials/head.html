@@ -4,31 +4,31 @@
   {{- /* Pre-paint: set theme before first paint to avoid a flash. Must stay inline + first. */ -}}
   <script>(function(){try{var t=localStorage.getItem('site-theme');if(t!=='dark'&&t!=='light')t='light';var d=document.documentElement;d.setAttribute('data-theme',t);d.style.colorScheme=t;}catch(e){document.documentElement.setAttribute('data-theme','light');document.documentElement.style.colorScheme='light';}})();</script>
   {{- /* ===================================================================
-         GOOGLE ANALYTICS: OFF ON `develop`, ON ON `main`.
-         Re-disabled here 4 September 2026, within the hour of launch.
+         GOOGLE ANALYTICS: DECIDED BY THE BASEURL, NOT BY THE BRANCH.
 
-         This is deliberate divergence, not drift. The staging copy is built
-         from `develop`, so a tracking tag left on here sends every tester's
-         click into the same property as real visitors. Launch week is exactly
-         the data that cannot be cleaned up afterwards, which is why this went
-         back the same day rather than "soon".
+         Until 4 September 2026 this call sat inside a comment wrapper that was
+         deleted before a launch and put back afterwards, so every launch cost
+         two edits in opposite directions. Forgetting the second one sends
+         tester traffic into the live property during the week the numbers
+         matter most, and that is data nobody can clean up later.
 
-         Property G-9817PZWN9H is preserved in hugo.toml, so nothing is lost.
+         The test below is the same one the staging noindex guard uses a few
+         lines down and in layouts/index.headers: is this build pointed at the
+         live domain. A staging build passes -b $CF_PAGES_URL/ and a
+         `hugo server` build serves from localhost, so both fail the test and
+         neither one tracks. Production passes no -b, so the baseURL in
+         hugo.toml stands and it does.
 
-         TO LAUNCH A NEW VERSION: delete this comment wrapper so the line below
-         runs, ship to `main`, then put the wrapper back on `develop`. That is
-         steps 2 and 11 of the launch runbook, and forgetting step 11 is the
-         expensive half.
+         THE TWO GUARDS ARE ONE DECISION AND MUST STAY THAT WAY. Anything that
+         turns tracking on also turns noindex off, so they can never disagree
+         about which build is the real site. The case that would break that
+         symmetry is a staging copy hosted under amitdusane.com itself rather
+         than on pages.dev: both guards would invert together, and both would
+         then need the narrower test. Nothing is hosted that way today.
 
-         WORTH REPLACING THIS WHOLE DANCE. Make the line fire only when the
-         baseURL is the live domain, the way the staging noindex guard further
-         down already decides for itself. Then nobody has to remember either
-         step. It was left alone on launch day on purpose: changing how the
-         tracking switch behaves is not a thing to do in the same hour as a
-         launch, and it needs testing against both baseURLs before it is
-         trusted.
-         {{ template "_internal/google_analytics.html" . }}
+         Property G-9817PZWN9H lives in hugo.toml.
      =================================================================== */ -}}
+  {{ if strings.Contains .Site.BaseURL "amitdusane.com" }}{{ template "_internal/google_analytics.html" . }}{{ end }}
   {{- /* Per-page title + description. Real query-intent versions land in Phase 4. */ -}}
   <title>{{ if .Params.seotitle }}{{ .Params.seotitle }}{{ else if .IsHome }}{{ .Site.Title }} · Adobe Experience Platform{{ else }}{{ .Title }} · {{ .Site.Title }}{{ end }}</title>
   <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Summary | plainify | truncate 150 }}{{ end }}">
