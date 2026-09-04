@@ -94,3 +94,44 @@ Also planned, shape assigned but not sequenced: Mobile Analytics legacy implemen
 Hugo handles 2000 pages comfortably; the current 219 build in about 320 ms. GitHub Pages limits are 1 GB published size and 100 GB/month bandwidth, and 2000 pages of text HTML is roughly 100 MB. Space is not the constraint. Keeping figures as inline SVG rather than images is what holds the size down.
 
 **GitHub Pages cannot host the RAG chatbot.** It serves static files only, and a chatbot needs an endpoint, a vector store, and an LLM call whose key must never reach the browser. When that time comes, either move hosting to Cloudflare Pages, which offers Workers in the same place, or keep Pages and put only the chatbot API elsewhere. The Hugo site does not change either way. Decide it then, not now.
+
+### The staging copy, and how to stand it back up
+
+**Cloudflare Pages hosted a staging build from 2 September 2026 until launch on
+4 September, then it was deleted.** Not paused: testers had the URL, and a copy
+of the site that anyone can forward, which quietly drifts out of date the moment
+work resumes, is worse than no copy. `X-Robots-Tag: noindex` kept it out of
+Google, but noindex has never stopped a human being sharing a link.
+
+Everything needed to recreate it, recorded before the project was deleted:
+
+| Setting | Value |
+|---|---|
+| Project name | `amitdusane-stage` |
+| Repository | `amitdusane2026/amitdusane.com` |
+| Production branch | `develop` |
+| Build command | `hugo --gc --source amitdusane-site-complete -b $CF_PAGES_URL/` |
+| Build output directory | `amitdusane-site-complete/public` |
+| Root directory | *(empty)* |
+| Build system version | 3 |
+| Build cache | Disabled |
+| Build watch paths | `*` |
+| Deploy hooks | none |
+| Bindings | none |
+| Environment variable | `HUGO_VERSION` = `0.123.7` (type: Text) |
+
+**Two of those are load-bearing and neither is obvious.**
+
+`HUGO_VERSION` exists because Cloudflare's default Hugo is far older than this
+site's, and without it the build either fails or, worse, succeeds against a
+version whose behaviour differs. Pin it to whatever the local toolchain runs.
+
+`-b $CF_PAGES_URL/` is what makes the noindex guard work. The guard in
+`layouts/index.headers` emits `X-Robots-Tag: noindex` for any baseURL that is
+not amitdusane.com, so staging protects itself by virtue of never being built
+with the production baseURL. Drop that flag and the staging copy becomes
+indexable duplicate content against the live site. It is not an optimisation.
+
+**Whoever recreates this should also decide whether it needs to be public at
+all.** Cloudflare Pages supports access control on preview deployments, which
+would remove the reason it had to be deleted this time.
