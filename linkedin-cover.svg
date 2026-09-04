@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1584" height="396" viewBox="0 0 1584 396">
+  <defs>
+    <radialGradient id="glow" cx="0.12" cy="0.30" r="0.72">
+      <stop offset="0"    stop-color="#3f1b29"/>
+      <stop offset="0.50" stop-color="#20141e"/>
+      <stop offset="1"    stop-color="#0f1219"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1584" height="396" fill="#0f1219"/>
+  <rect width="1584" height="396" fill="url(#glow)"/>
+  <rect x="0" y="0" width="7" height="396" fill="#bb2241"/>
+
+  <!-- The mark at 122px, locked up with the address. Two tiers only: the thing
+       to remember, then the promise. Held right of x=440 so the profile photo,
+       which overlaps the lower left of the cover, never touches it. -->
+  <g transform="translate(480,114) scale(1.90625)">
+    <path fill="#ffffff" d="M18 50 L32 18 L46 50 H40 L35 39 H29 L24 50 Z"/>
+    <path fill="#ffffff" d="M34 18 H44 C54 18 58 24 58 32 C58 40 54 46 44 46 H38 L41 40 H44 C49 40 52 37 52 32 C52 27 49 24 44 24 H37 Z"/>
+    <rect x="24" y="44" width="20" height="3.5" rx="1.7" fill="#C8102E"/>
+  </g>
+  <text x="628" y="198" font-family="Segoe UI" font-weight="bold" font-size="66" fill="#ffffff" letter-spacing="-1.2">amitdusane.com</text>
+
+  <text x="484" y="268" font-family="Segoe UI" font-weight="normal" font-size="29" fill="#9aa3b1">Stop operating Adobe Analytics. Start architecting it.</text>
+</svg>

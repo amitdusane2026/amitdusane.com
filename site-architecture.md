@@ -135,3 +135,26 @@ indexable duplicate content against the live site. It is not an optimisation.
 **Whoever recreates this should also decide whether it needs to be public at
 all.** Cloudflare Pages supports access control on preview deployments, which
 would remove the reason it had to be deleted this time.
+
+### Domains
+
+**amitdusane.com is the site. amitdusane.in is owned and does nothing**, and as of
+4 September 2026 it is worse than nothing: `http://` returns a 404 from
+Namecheap's parking servers and `https://` does not respond at all, so anyone
+typing it in a modern browser gets a connection error.
+
+**The decision is a 301 to `https://amitdusane.com/`, unmasked, and no content
+on it ever.** The second domain is worth holding defensively, and to catch the
+many people who type `.in` by habit. It is worth nothing as a destination, and a
+copy of the site there would compete with a domain that only began accumulating
+search signal on launch day.
+
+**Namecheap's own URL Redirect Record is the trap here.** It does not issue a
+certificate for a forwarding-only domain, so `https://amitdusane.in` keeps
+failing, which is the case that matters now that browsers try HTTPS first. Use
+Cloudflare: add the domain, repoint the Namecheap nameservers, add a Redirect
+Rule to the .com with status 301, and the certificate is issued automatically.
+Never use masked or frame forwarding: it keeps `.in` in the address bar with the
+real site in an iframe, which is duplicate content wearing a disguise.
+
+**Still outstanding.** It is the only task left over from launch.

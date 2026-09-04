@@ -2438,3 +2438,53 @@ surface API mention the structure map prescribes.
 noindex guard already does. Every launch currently costs two edits in opposite
 directions, and forgetting the second silently pollutes the live property with
 tester traffic.
+
+### Post-launch, same day
+
+Four things closed after the site went live, in this order.
+
+**Staging deleted, not paused.** Amit's call, and the right one: testers had the
+URL, `noindex` stops Google and not a person forwarding a link, and a public
+second copy drifts out of date the moment work resumes. Every setting was
+recorded in `site-architecture.md` first, including the two that are
+load-bearing and silent — `HUGO_VERSION`, without which Cloudflare builds on a
+much older Hugo, and `-b $CF_PAGES_URL/`, which is the only reason the noindex
+guard fires there at all.
+
+**The January 2026 single-page hub now redirects.** 846 bytes in place of 398KB.
+Redirected rather than switched off because it had been crawlable for eight
+months under Amit's name, titled "Adobe Analytics Learning Hub", competing with
+a section launched the same day on a URL Google already trusted. Pages stays on
+until roughly March 2027 so the signal transfers, then Source to None and
+archive.
+
+**Google Search Console.** Sitemap submitted and read the same day: Success, 186
+discovered, matching the file exactly. Manual indexing requested for eight entry
+points — home, the learning root, all five phase landings, the migration guide.
+The remaining 136 are the sitemap's job; the quota is 10 to 15 a day and working
+through them by hand would take a fortnight and achieve nothing the sitemap does
+not already do.
+
+**A LinkedIn cover** built from the OG card's own palette, sampled from the file
+rather than guessed, with the monogram taken from `layouts/partials/logo.html`
+so the mark is exact. Source kept as `linkedin-cover.svg`. Metadata stripped to
+three PNG chunks, deliberately: LinkedIn labels images carrying C2PA
+credentials, and a profile whose whole claim is real experience should not wear
+an AI badge.
+
+**Outstanding: the amitdusane.in redirect.** See `site-architecture.md`. It is
+the only launch task not finished, and the domain is currently broken rather
+than merely empty.
+
+### What the next session should pick up
+
+**Make GA decide from the baseURL**, the way `layouts/index.headers` already
+does for the noindex guard. Every launch currently costs two edits in opposite
+directions and the second one is easy to forget; forgetting it puts tester
+traffic into the live property during the week the numbers matter most. It was
+deliberately not done on launch day, because changing how the tracking switch
+behaves in the same hour as a launch is how you discover a week later that
+nothing was recorded.
+
+After that: the two tech-debt rows, the component rulebook entry for M21's
+absent walkthroughs, and the surface API mention M17 s4 never gained.
