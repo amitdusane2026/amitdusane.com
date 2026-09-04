@@ -2470,9 +2470,17 @@ three PNG chunks, deliberately: LinkedIn labels images carrying C2PA
 credentials, and a profile whose whole claim is real experience should not wear
 an AI badge.
 
-**Outstanding: the amitdusane.in redirect.** See `site-architecture.md`. It is
-the only launch task not finished, and the domain is currently broken rather
-than merely empty.
+**The amitdusane.in redirect is done**, 4 September 2026, and with it the last
+task left over from launch. Full configuration in `site-architecture.md`.
+Namecheap's own redirect row had in fact been set all along, which is why the
+domain was broken rather than merely empty: Namecheap issues no certificate for
+a forwarding-only domain, so `https://` refused to connect while `http://`
+returned a parking 404. Nameservers now point at Cloudflare, which issues the
+certificate itself. The non-obvious half was DNS rather than the rule: a
+Redirect Rule only fires if the request reaches Cloudflare, so the zone needs
+two **proxied** A records on a reserved dummy address. Verified over the wire:
+apex, `www`, both schemes and a deep path all return one 301 and land on a 200,
+with the query string intact.
 
 ### The tracking switch, made automatic (4 September 2026)
 
@@ -2518,9 +2526,11 @@ site.
 
 ### What the next session should pick up
 
-**The `amitdusane.in` redirect is the only launch task left**, and it is Amit's
-to do in the Cloudflare dashboard rather than mine. The domain is currently
-broken rather than merely empty. See `site-architecture.md`.
+**Launch is fully closed.** Both remaining items went on 4 September 2026: the
+tracking switch decides from the baseURL, and amitdusane.in redirects to the
+.com. Nothing from the launch list is outstanding.
 
-After that: the two tech-debt rows, the component rulebook entry for M21's
-absent walkthroughs, and the surface API mention M17 s4 never gained.
+Next is ordinary work, in no forced order: the two tech-debt rows, the component
+rulebook entry for M21's absent walkthroughs, and the surface API mention M17 s4
+never gained. After those, CJA is the third world, and `site-architecture.md`
+holds what a new world costs.

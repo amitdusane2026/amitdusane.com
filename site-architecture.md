@@ -138,23 +138,58 @@ would remove the reason it had to be deleted this time.
 
 ### Domains
 
-**amitdusane.com is the site. amitdusane.in is owned and does nothing**, and as of
-4 September 2026 it is worse than nothing: `http://` returns a 404 from
-Namecheap's parking servers and `https://` does not respond at all, so anyone
-typing it in a modern browser gets a connection error.
+**amitdusane.com is the site. amitdusane.in redirects to it**, 301, unmasked,
+path and query string preserved. Done 4 September 2026 through Cloudflare, and
+it is the last task left over from launch.
 
-**The decision is a 301 to `https://amitdusane.com/`, unmasked, and no content
-on it ever.** The second domain is worth holding defensively, and to catch the
-many people who type `.in` by habit. It is worth nothing as a destination, and a
-copy of the site there would compete with a domain that only began accumulating
-search signal on launch day.
+**Never put content on the .in.** It is worth holding defensively and to catch
+the many people who type `.in` by habit; it is worth nothing as a destination,
+and a copy of the site there would compete with a domain that only began
+accumulating search signal on launch day.
 
-**Namecheap's own URL Redirect Record is the trap here.** It does not issue a
-certificate for a forwarding-only domain, so `https://amitdusane.in` keeps
-failing, which is the case that matters now that browsers try HTTPS first. Use
-Cloudflare: add the domain, repoint the Namecheap nameservers, add a Redirect
-Rule to the .com with status 301, and the certificate is issued automatically.
-Never use masked or frame forwarding: it keeps `.in` in the address bar with the
-real site in an iframe, which is duplicate content wearing a disguise.
+**Namecheap's own URL Redirect Record was the trap, and it had in fact been
+set.** The row was sitting there pointing at the .com, which is why `http://`
+returned a 404 from the parking servers and `https://` refused to connect at
+all: Namecheap issues no certificate for a forwarding-only domain, and browsers
+try HTTPS first. A redirect nobody can reach is not a redirect. Namecheap's
+nameservers now point at Cloudflare, so that row is inert and can be deleted.
 
-**Still outstanding.** It is the only task left over from launch.
+**How it is built, and the one part that is not obvious.** Nameservers moved to
+Cloudflare (`lovisa` / `mitch.ns.cloudflare.com`), then a single Redirect Rule.
+The non-obvious half is DNS: a Redirect Rule only fires if the request reaches
+Cloudflare at all, so the zone needs **two proxied A records** — apex and `www`
+— pointing at `192.0.2.1`. That is a reserved documentation address with
+nothing on it, and nothing ever connects to it: the rule answers at the edge
+before any origin is contacted. **The orange cloud is the load-bearing part.**
+Grey-clouded, the request bypasses Cloudflare and the domain stays broken.
+
+The rule itself:
+
+| | |
+|---|---|
+| Match | `(http.host eq "amitdusane.in") or (http.host eq "www.amitdusane.in")` |
+| Type | Dynamic |
+| Expression | `concat("https://amitdusane.com", http.request.uri.path)` |
+| Status | 301 |
+| Preserve query string | on |
+
+**Dynamic rather than Static is what keeps the path.** Static sends every
+visitor to the homepage whatever they typed.
+
+**The five MX records and the SPF TXT were kept, and should stay.** Cloudflare's
+scan found live Namecheap email forwarding (`eforward1-5.registrar-servers.com`)
+on the .in, switched on by default rather than deliberately. MX records only
+carry mail and cannot be proxied, so they cost nothing and deleting them would
+silently break any address on that domain.
+
+**Verified over the wire the same day.** Apex, `www`, `http://` and `https://`
+all return a single 301 to the right place and land on a 200; a deep path
+survives, and so does a query string. The certificate is Cloudflare's Universal
+SSL, issued by Google Trust Services at 13:30 UTC, expiring 3 December 2026 and
+renewing itself. That certificate is the whole reason this went through
+Cloudflare rather than Namecheap.
+
+**`Always Use HTTPS` is deliberately left off.** The rule already sends every
+request straight to `https://amitdusane.com` in one hop whatever scheme it
+arrived on; the toggle would only insert a pointless second hop through
+`https://amitdusane.in`.
