@@ -3,21 +3,32 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   {{- /* Pre-paint: set theme before first paint to avoid a flash. Must stay inline + first. */ -}}
   <script>(function(){try{var t=localStorage.getItem('site-theme');if(t!=='dark'&&t!=='light')t='light';var d=document.documentElement;d.setAttribute('data-theme',t);d.style.colorScheme=t;}catch(e){document.documentElement.setAttribute('data-theme','light');document.documentElement.style.colorScheme='light';}})();</script>
-  {{- /* GOOGLE ANALYTICS, on since launch day, 4 September 2026. It was sealed
-       inside a comment from 20 July because a disabled site was still reporting
-       into the live property and inflating it. Property G-9817PZWN9H, in
-       hugo.toml.
+  {{- /* ===================================================================
+         GOOGLE ANALYTICS: OFF ON `develop`, ON ON `main`.
+         Re-disabled here 4 September 2026, within the hour of launch.
 
-       THIS LINE GOES BACK IN ITS WRAPPER ON `develop` IMMEDIATELY AFTER LAUNCH.
-       The staging copy builds from `develop`, so leaving it on there sends every
-       tester's click into the same property as real visitors, and the first
-       week of data is the week you cannot clean up afterwards. That is step 11
-       of the launch runbook and it happens the same day.
+         This is deliberate divergence, not drift. The staging copy is built
+         from `develop`, so a tracking tag left on here sends every tester's
+         click into the same property as real visitors. Launch week is exactly
+         the data that cannot be cleaned up afterwards, which is why this went
+         back the same day rather than "soon".
 
-       The durable fix, worth doing later, is to make this fire only when the
-       baseURL is the live domain, the way the staging noindex guard below
-       already does. Then this switch stops being something to remember. */ -}}
-  {{ template "_internal/google_analytics.html" . }}
+         Property G-9817PZWN9H is preserved in hugo.toml, so nothing is lost.
+
+         TO LAUNCH A NEW VERSION: delete this comment wrapper so the line below
+         runs, ship to `main`, then put the wrapper back on `develop`. That is
+         steps 2 and 11 of the launch runbook, and forgetting step 11 is the
+         expensive half.
+
+         WORTH REPLACING THIS WHOLE DANCE. Make the line fire only when the
+         baseURL is the live domain, the way the staging noindex guard further
+         down already decides for itself. Then nobody has to remember either
+         step. It was left alone on launch day on purpose: changing how the
+         tracking switch behaves is not a thing to do in the same hour as a
+         launch, and it needs testing against both baseURLs before it is
+         trusted.
+         {{ template "_internal/google_analytics.html" . }}
+     =================================================================== */ -}}
   {{- /* Per-page title + description. Real query-intent versions land in Phase 4. */ -}}
   <title>{{ if .Params.seotitle }}{{ .Params.seotitle }}{{ else if .IsHome }}{{ .Site.Title }} · Adobe Experience Platform{{ else }}{{ .Title }} · {{ .Site.Title }}{{ end }}</title>
   <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Summary | plainify | truncate 150 }}{{ end }}">
