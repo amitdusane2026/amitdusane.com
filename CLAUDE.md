@@ -42,7 +42,11 @@ GitHub: `amitdusane2026/amitdusane.com`. Two branches, and the difference is loa
 
 **The learning section is published**: 21 modules, 116 sections, live since 4 September. The home page carries both guides as `.tile tile-learning` and `.tile tile-migration`.
 
-The other repo on that account, `amitdusane2026/adobe-analytics-learning`, is an old single-page guide from January 2026. It is unrelated to this project despite the name.
+The other repo on that account, `amitdusane2026/adobe-analytics-learning`, held a single-page guide from January 2026, unrelated to this project despite the name. **On 4 September 2026 its `index.html` was replaced with a redirect to `/adobe-analytics-learning/`** and it now serves 846 bytes instead of 398KB.
+
+**It was redirected rather than switched off, and the reason is worth keeping.** That page had been live and crawlable for eight months, under Amit's name, titled "Adobe Analytics Learning Hub" — a title competing directly with the section launched the same day, on a URL Google already trusted while the real one was hours old. Deleting it would have discarded that standing and left every bookmark dead. A meta refresh with a canonical is what Google reads as a permanent move, which is the closest GitHub Pages can get to a 301.
+
+**Leave GitHub Pages enabled on it until roughly March 2027**, long enough for the signal to transfer, then set Source to None and archive the repo. Its README still describes the old hub as current and could say it moved.
 
 ---
 
