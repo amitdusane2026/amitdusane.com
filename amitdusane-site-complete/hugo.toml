@@ -5,29 +5,6 @@ enableRobotsTXT = true
 disableKinds = ["taxonomy", "term"]
 
 # ---------------------------------------------------------------------------
-# TEMPORARY. REMOVE THIS ON 4 SEPTEMBER 2026, THE DAY THE SITE LAUNCHES.
-#
-# Every learning section is dated `published: 2026-09-04` so the section reads
-# as published on launch day rather than backdated to when it was drafted.
-# Until that date arrives, Hugo treats all 116 of them as unpublished and drops
-# them: the build reports success at 103 pages, and because the maps and the
-# landings count published children, every module renders its empty state and
-# the site fills with "Coming soon". Nothing is broken and nothing is disabled;
-# there is simply nothing left for those templates to list.
-#
-# This line makes every build include them, so the staging copy matches local
-# exactly. It lives here rather than in a build command because the Cloudflare
-# staging build is configured outside this repository, and a flag we cannot
-# reach is a flag that does not fix staging.
-#
-# ON 4 SEPTEMBER: delete this line. The dates stop being in the future by
-# themselves, so nothing else changes, and deleting it restores the guard that
-# catches a genuinely mis-dated page. That guard is not decoration: a future
-# date once removed 103 pages here while the build reported success.
-# ---------------------------------------------------------------------------
-buildFuture = true
-
-# ---------------------------------------------------------------------------
 # CRITICAL. Do not remove.
 # By default Hugo derives `date` from `lastmod`, then derives `publishDate`
 # from `date`. A `lastmod` that is even one day ahead of the BUILD SERVER's

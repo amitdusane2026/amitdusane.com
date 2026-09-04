@@ -211,27 +211,9 @@ On a CLI build that error is at least visible. **On `hugo server` it is not.** T
 
 **So when the served page is stale, check for a locked workbook before suspecting the watcher.** `Get-CimInstance Win32_Process -Filter "Name='EXCEL.EXE'"` names it, and closing the workbook is the whole fix. This will keep happening, because M20 tells the reader to open the validation report and follow along, which is exactly what Amit was doing.
 
-> **TEMPORARY, AND DELETE THIS BLOCK ON 4 SEPTEMBER 2026**, along with
-> `buildFuture = true` in `hugo.toml`. Every learning section is dated
-> `published: 2026-09-04` for launch day. Until that date arrives Hugo counts
-> all 116 as unpublished and drops them, and the build still reports success,
-> at 79 pages rather than 195.
->
-> **The visible symptom is not a 404, which is what made it expensive.** The
-> pocket map, the home map and both landing templates count published children,
-> so with the sections gone every module renders its empty state and the site
-> fills with **"Coming soon"** — on staging, in front of testers, looking like
-> a half-built site rather than an absent section. It reached them on 3 Sep
-> 2026 before anyone connected it to the dates. If pages ever vanish here, look
-> at that empty state before believing a feature was switched off: nothing on
-> this site has a "coming soon" mode, only templates with nothing left to list.
->
-> `buildFuture = true` in `hugo.toml` is what holds the count at 219 today. It
-> lives in the config rather than in a build command because the Cloudflare
-> staging build is configured outside this repository, and a flag we cannot
-> reach cannot fix staging.
-
 **Assert the page count after every build.** Current baseline: **195 pages on a production build, 196 on a staging build**. It was 219 and 220 until 3 Sep 2026, when RSS was built properly: Hugo had been emitting a feed for every section, 27 of them, none linked from anywhere, while the three pages a person would subscribe to had none. Killing the 27 and adding 3 is the whole of the difference. **HTML page count did not move: 187 before and after, with identical file lists.** Hugo counts each output format as a page, so a feed change moves this number without touching a word of the site. The extra one is the generated `_headers` file, which `layouts/index.headers` emits only when the baseURL is not amitdusane.com; on production the template produces nothing and Hugo writes no file. A staging build reporting 219, or a production build reporting 220, means the guard has inverted and should be investigated before anything else. If the count drops, stop and find out why before doing anything else. This single check would have caught the 103-page outage in one second.
+
+**A dropped page does not surface as a 404, it surfaces as "Coming soon".** The pocket map, the home map and both landing templates count published children, so when pages vanish for any reason every module falls through to its empty state and the site fills with that phrase. It reached testers on 3 Sep 2026, from content dated a day into the future, and read as a half-built site rather than an absent section. Nothing here has a "coming soon" mode; there are only templates with nothing left to list. When the count drops, look at that empty state before believing a feature was switched off.
 
 Then crawl the built HTML, not the source. Source passing every check proves nothing; the bug lives in the interaction between source and build.
 
