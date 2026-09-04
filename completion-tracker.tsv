@@ -168,8 +168,8 @@ Platform	seo	22	JSON-LD BreadcrumbList	Feature	layouts/partials/schema.html		NA	
 Platform	seo	23	JSON-LD Article for learning world	Feature	layouts/partials/schema.html		NA		NA	0	0	Yes	No	No
 Platform	seo	24	datePublished and dateModified in schema	Feature	layouts/partials/schema.html		NA		NA	0	0	Yes	No	No
 Platform	seo	25	Originally published date on page	Feature	layouts/lesson/single.html		NA		NA	0	0	Yes	No	No
-Platform	seo	26	RSS feed	Feature	hugo.toml		NA		NA	0	0	No	No	No
-Platform	chrome	27	Home page topic cards	Feature	layouts/index.html		NA		NA	0	0	No	No	No
+Platform	seo	26	RSS feed	Feature	hugo.toml		NA		NA	0	0	Yes	No	No
+Platform	chrome	27	Home page topic cards	Feature	layouts/index.html		NA		NA	0	0	Yes	No	No
 Platform	chrome	28	404 page	Feature	layouts/404.html		NA		NA	0	0	Yes	No	No
 Platform	chrome	29	Favicon set	Feature	static/favicon.svg		NA		NA	0	0	Yes	No	No
 Platform	chrome	30	Open Graph default image	Feature	static/og-default.jpg		NA		NA	0	0	Yes	No	No
@@ -177,8 +177,8 @@ Platform	chrome	31	Site footer	Feature	layouts/_default/baseof.html		NA		NA	0	0	
 Platform	chrome	32	Glossary	Feature	layouts/glossary/single.html		NA		NA	0	0	Yes	No	No
 Platform	infrastructure	33	GitHub Actions deploy workflow	Feature	.github/workflows/deploy.yml		NA		NA	0	0	Yes	No	No
 Platform	infrastructure	34	Custom domain CNAME	Feature	static/CNAME		NA		NA	0	0	Yes	No	No
-Platform	infrastructure	35	Google Analytics	Feature	hugo.toml		NA		NA	0	0	No	No	No
-Platform	tech-debt	36	Per-world params.phases scoping	Feature	layouts/partials/wherefits.html		NA		NA	0	0	No	No	No
+Platform	infrastructure	35	Google Analytics	Feature	hugo.toml		NA		NA	0	0	Yes	No	No
+Platform	tech-debt	36	Per-world params.phases scoping	Feature	layouts/partials/wherefits.html		NA		NA	0	0	Yes	No	No
 Platform	tech-debt	37	Dead code removal	Feature	static/guide.css		NA		NA	0	0	No	No	No
 Platform	tech-debt	38	Hardcoded migration stats	Feature	layouts/web-sdk-migration/list.html		NA		NA	0	0	No	No	No
 Platform	tech-debt	39	Logo partial extraction	Feature	layouts/partials/		NA		NA	0	0	Yes	No	No

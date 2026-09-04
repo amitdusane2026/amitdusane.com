@@ -32,13 +32,13 @@ GitHub: `amitdusane2026/amitdusane.com`. Two branches, and the difference is loa
 
 **Never push or merge to `main` without Amit saying so explicitly, in that session.** There is no staging environment: `main` is the live site.
 
-The reason this matters right now is no longer unwritten content: **all 144 content pages are written, QA'd and final as of 2 Sep 2026.** It is that `develop` and `main` have diverged structurally. `main` is still the June site; `develop` carries the restructure, the whole learning world, the global header and print document, and the search indexes. A merge is a large change to a live site, not an increment.
+**The site launched on 4 September 2026 and both branches now share one history.** Until that day they had none: `main` grew from the original GitHub upload with the site at the repo root, `develop` from a `git init` here with the site inside `amitdusane-site-complete/`. `git merge-base` returned nothing, so a merge was impossible without `--allow-unrelated-histories`, and it would have left 72 stale June files at the root and conflicted on `deploy.yml`, the one file both carried. `main` was therefore replaced outright with `git push origin develop:main --force-with-lease`. **That was a one-off. Every launch from here is an ordinary push**, and `main` should never again be force-pushed without a reason as good as that one.
 
-**GA is the specific thing to check before any merge.** It is live on `main` (`layouts/partials/head.html` calls the internal template) and switched off on `develop`, where the call sits inside a comment wrapper. Merging as things stand turns tracking off at the moment it is most wanted. Deleting that wrapper is the whole switch.
+**Versions are tagged, and the tag is what preserves them.** `v1.0` is the June site at `730c59a`, tagged immediately before the overwrite, because once `main` moved nothing pointed at those commits and git eventually discards what nothing points to. `v2.0` is the launch at `52603dd`. Tag each future launch; from now on the history is linear so nothing else is at risk.
 
-The Adobe Analytics Learning section has never been published. `amitdusane.com/adobe-analytics-learning/` currently returns 404, by design, until the section is finished.
+**GA is the one thing that differs between the branches, deliberately and permanently.** It is ON on `main` and OFF on `develop`, where the call sits inside a comment wrapper. The staging copy builds from `develop`, so a tag left on there sends every tester's click into the live property. **Each launch is therefore two edits: delete the wrapper before shipping to `main`, put it back on `develop` the same hour.** Forgetting the second is the expensive half, and launch week is the data that cannot be cleaned up afterwards. The durable fix, still undone, is to let the line decide from the baseURL the way the staging noindex guard already does.
 
-Also unpublished: the home page (`layouts/index.html`) has only one topic card, Web SDK Migration. A second card for the learning section is needed at launch, using the existing `.tcard` component with the crimson accent.
+**The learning section is published**: 21 modules, 116 sections, live since 4 September. The home page carries both guides as `.tile tile-learning` and `.tile tile-migration`.
 
 The other repo on that account, `amitdusane2026/adobe-analytics-learning`, is an old single-page guide from January 2026. It is unrelated to this project despite the name.
 

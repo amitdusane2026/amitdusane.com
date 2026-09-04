@@ -2378,3 +2378,63 @@ and the **RSS feed**, which is worth doing at launch rather than before it.
 
 **GA is still live on `main` and switched off on `develop`**, and that remains the
 one thing to check before any merge.
+
+---
+
+## LAUNCHED, 4 September 2026
+
+**amitdusane.com serves the Adobe Analytics Learning section from `main` at
+`52603dd`, tagged `v2.0`.** 195 pages, 21 modules, 116 sections. The Web SDK
+migration guide keeps its June publish date and carries an updated one.
+
+### The launch itself
+
+Twelve steps, run in order from `launch-runbook.html`, which was written the
+night before precisely so launch morning involved no decisions. Every step
+passed first time. What the runbook added to the list Amit drew up was worth
+more than the list: tagging `v1.0` **before** the overwrite, turning GA back
+off on `develop` as a step rather than a footnote, a page-count gate between
+the edits and the push, and a rollback line written down before it was needed.
+
+**The branches had no common ancestor**, found the evening before rather than
+at 9am. `main` grew from the original GitHub upload with the site at the repo
+root; `develop` from a `git init` here with the site in a subfolder. A merge
+would have needed `--allow-unrelated-histories`, conflicted on `deploy.yml` (the
+only file both carried) and left 72 stale June files at the root. `main` was
+replaced outright instead. They now share one history, so the next launch is an
+ordinary push.
+
+**The riskiest thing was not the force push.** It was the staging noindex guard.
+Had it inverted, the site would have launched invisible to Google and looked
+perfectly fine for weeks. Checked over the wire immediately after deploy:
+absent on production, present on a staging build.
+
+### Shipped in the two days before launch
+
+- **RSS, built properly.** The site had been emitting 27 feeds, one per module
+  and phase, none linked from anywhere, while the home page and both world roots
+  had none. Now three, with autodiscovery per world. This is why the page-count
+  baseline moved from 219 to 195 with no HTML page gained or lost: Hugo counts
+  each output format as a page.
+- **29 journey-assuming phrases removed across 24 files.** The completed-site
+  rule had been recorded, banked at 16 instances on 12 Aug, and never actioned.
+  A wider scan found 29, ten of them opening paragraphs, four of those in Report
+  Suites alone, which had been written as one continuous narrative.
+- **The 404 now offers both guides**, and ranges over `[params.worlds]` so the
+  third one appears without an edit.
+- **M03 s2 stopped contradicting M15 s1** on what attribution ignores, then was
+  cut from 260 words to 83 when the first fix taught attribution at the wrong
+  altitude.
+
+### Still open
+
+Two tech-debt rows, neither reader-facing: dead `.topbar` CSS in
+`world-shell.css`, used by zero pages, and "Thirteen steps" hardcoded on the
+migration front page, correct today. The component rulebook still lacks the
+entry for M21's deliberate absence of walkthroughs. M17 s4 never gained the
+surface API mention the structure map prescribes.
+
+**The one worth doing next** is making GA decide from the baseURL the way the
+noindex guard already does. Every launch currently costs two edits in opposite
+directions, and forgetting the second silently pollutes the live property with
+tester traffic.
