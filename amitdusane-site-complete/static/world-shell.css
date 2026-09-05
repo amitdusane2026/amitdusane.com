@@ -27,6 +27,22 @@
     --code-bg:#0d1014; --code-ink:#e6eaf0;
     --page:#0e1115; --surface:#171b21; --card-shadow:0 1px 2px rgba(0,0,0,.25);
   }
+
+  /* THE MOBILE GUIDE'S ACCENT. Added 6 September 2026.
+     Both procedure worlds share this stylesheet, so the accent cannot sit on
+     :root alone or the second world wears the first one's blue. Exactly three
+     tokens move; everything else is deliberately identical, which is the whole
+     reason one stylesheet can serve two worlds.
+     Scoped on body, which is (0,1,1) against :root's (0,1,0), so it wins with
+     no !important. Repeated under [data-theme="dark"] because that attribute
+     sits on the html element, above body in the tree, so the first block would
+     otherwise keep the light teal at night. */
+  body.world-mobile{
+    --accent:#0f6b62; --accent-soft:#e6f2f0; --accent-line:#c2e0db;
+  }
+  [data-theme="dark"] body.world-mobile{
+    --accent:#4fc4b4; --accent-soft:#122b28; --accent-line:#2f5f58;
+  }
   /* Phase 6: dark-mode inline code / path chips, lift text + border contrast
      (light-mode navy code text and faint borders read poorly on the dark chip bg) */
   [data-theme="dark"] code{color:#9ec9f5;border-color:var(--faint)}

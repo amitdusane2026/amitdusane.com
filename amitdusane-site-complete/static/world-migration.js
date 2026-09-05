@@ -82,6 +82,42 @@
   });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { closePanel(); closeNav(); } });
 
+  /* COPY BUTTONS on .code blocks. Added 6 September 2026, because they had
+     never worked. world-shell.css has styled .code .copy since June, including
+     a .copy.done state, and nothing in any script ever set it: the button was
+     decoration on the one code block this world had. The Mobile SDK guide is
+     code-heavy and a reader copying Swift or Kotlin into somebody else.s app
+     is the whole point, so the handler is delegated here rather than written
+     per page.
+
+     Delegated on document, not bound per button, so it survives the KB panel
+     injecting markup after load. */
+  document.addEventListener('click', function (ev) {
+    var btn = ev.target.closest ? ev.target.closest('.code .copy') : null;
+    if (!btn) return;
+    var pre = btn.parentNode ? btn.parentNode.querySelector('pre') : null;
+    var text = pre ? pre.innerText : '';
+    if (!text) return;
+    var flash = function () {
+      btn.classList.add('done');
+      var orig = btn.getAttribute('data-label') || btn.textContent;
+      btn.setAttribute('data-label', orig);
+      btn.textContent = 'Copied';
+      setTimeout(function () { btn.textContent = orig; btn.classList.remove('done'); }, 1500);
+    };
+    var fallback = function () {
+      var ta = document.createElement('textarea');
+      ta.value = text; ta.setAttribute('readonly', '');
+      ta.style.position = 'absolute'; ta.style.left = '-9999px';
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); } catch (e) {}
+      document.body.removeChild(ta);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(flash, function () { fallback(); flash(); });
+    } else { fallback(); flash(); }
+  });
+
   /* The print document moved to printdoc.js on 2 Sep 2026, shared with every
      other world. */
 })();

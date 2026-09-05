@@ -760,8 +760,7 @@ figure.fig-svg .fig-hint{display:none}
    The layout half stays global: both worlds want it and neither has ever
    disagreed about it. */
 .ask-bar b{flex:none; font-size:15px; font-weight:700}
-body.world-migration .ask-bar b{color:#1f5fae}
-[data-theme="dark"] body.world-migration .ask-bar b{color:#5fa1e6}
+body.world-migration .ask-bar b,body.world-mobile .ask-bar b{color:var(--accent)}
 .ask-bar-x{flex:none; width:30px; height:30px; border:none; border-radius:8px; background:transparent;
            color:var(--hdr-muted); font-size:20px; line-height:1; cursor:pointer}
 .ask-bar-x:hover{background:var(--hdr-field); color:var(--hdr-ink)}
@@ -789,18 +788,19 @@ body.world-migration .ask-bar b{color:#1f5fae}
 /* The Ask overlay takes its accent from the world it opens in. Scoped rather
    than edited in place: the base rules above are crimson and are shared, so
    changing them would repaint the learning world's overlay too. */
-body.world-migration .ask-kicker{color:#1f5fae}
-body.world-migration .ask-route:hover{border-color:#1f5fae}
-body.world-migration .ask-route:hover .ask-route-ico{color:#1f5fae}
-body.world-migration .ask-route:hover .ask-route-act{color:#1f5fae}
-body.world-migration .ask-route.is-copied{border-color:#1f5fae}
-body.world-migration .ask-route.is-copied .ask-route-act{color:#1f5fae}
-[data-theme="dark"] body.world-migration .ask-kicker{color:#5fa1e6}
-[data-theme="dark"] body.world-migration .ask-route:hover{border-color:#5fa1e6}
-[data-theme="dark"] body.world-migration .ask-route:hover .ask-route-ico{color:#5fa1e6}
-[data-theme="dark"] body.world-migration .ask-route:hover .ask-route-act{color:#5fa1e6}
-[data-theme="dark"] body.world-migration .ask-route.is-copied{border-color:#5fa1e6}
-[data-theme="dark"] body.world-migration .ask-route.is-copied .ask-route-act{color:#5fa1e6}
+/* ACCENT ON THE ASK BAR, one rule per thing rather than one per theme.
+   Until 6 September 2026 these were fourteen rules: seven in #1f5fae and seven
+   more under [data-theme="dark"] repeating them in #5fa1e6. Both values are
+   exactly what --accent already holds in world-shell.css, light and dark, so
+   the token does the theme switch and the duplicates went. That also made the
+   second procedure world free: world-mobile sets its own --accent and these
+   rules follow it with no third copy. */
+body.world-migration .ask-kicker,body.world-mobile .ask-kicker{color:var(--accent)}
+body.world-migration .ask-route:hover,body.world-mobile .ask-route:hover{border-color:var(--accent)}
+body.world-migration .ask-route:hover .ask-route-ico,body.world-mobile .ask-route:hover .ask-route-ico{color:var(--accent)}
+body.world-migration .ask-route:hover .ask-route-act,body.world-mobile .ask-route:hover .ask-route-act{color:var(--accent)}
+body.world-migration .ask-route.is-copied,body.world-mobile .ask-route.is-copied{border-color:var(--accent)}
+body.world-migration .ask-route.is-copied .ask-route-act,body.world-mobile .ask-route.is-copied .ask-route-act{color:var(--accent)}
 
 /* ============================================================================
    THE PRINT DOCUMENT. Global. Markup is partials/printdoc.html, filled by
@@ -850,8 +850,8 @@ body.world-migration .ask-route.is-copied .ask-route-act{color:#1f5fae}
   /* The running header's rules take the world's own accent. Crimson is the
      learning world's; the migration world is blue, and printing its guide with
      a crimson rule made the sheet look like it belonged to the other section. */
-  body.world-migration .print-doc thead td{border-bottom-color:#1f5fae}
-  body.world-migration .print-doc tfoot td{border-top-color:#1f5fae}
+  body.world-migration .print-doc thead td,body.world-mobile .print-doc thead td{border-bottom-color:var(--accent)}
+  body.world-migration .print-doc tfoot td,body.world-mobile .print-doc tfoot td{border-top-color:var(--accent)}
   /* The fixed header needs no room on paper. body.world-migration carries a
      padding-top of --header-h so the live page clears the fixed header, and it
      survived into print as a band of white above the running header on every

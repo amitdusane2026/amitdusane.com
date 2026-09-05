@@ -65,7 +65,7 @@
   </div>
 
   <div class="mfront-panel">
-    <div class="mfront-cue">{{ $count }} steps, {{ $w.cue }}</div>
+    <div class="mfront-cue">{{ $count }} step{{ if ne $n 1 }}s{{ end }}, {{ $w.cue }}</div>
     {{ partial "stepmap.html" . }}
   </div>
 
