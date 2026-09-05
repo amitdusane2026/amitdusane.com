@@ -1,0 +1,40 @@
+---
+published: 2026-09-05
+lastmod: 2026-09-05
+title: "Decide what to track"
+seotitle: "Planning What to Track in an Adobe Mobile SDK Implementation"
+description: "What the SDK reports without being asked, why a screen is not a page view, and how to choose the handful of events worth a developer's time."
+slug: "decide-what-to-track"
+weight: 3
+type: step
+params:
+  stepnum: 3
+  kbids: ["screens-vs-pageviews", "lifecycle-metrics"]
+---
+<div class="narrative">The usual first move is to open the web tracking specification and work down it, translating. It is the wrong move. The result is recognisable every time: an app measured as though it were a slow website. Full of screen views nobody analyses. Missing the two or three things a product team actually argues about. Mobile reports a great deal on its own. The events worth specifying are fewer than a web practitioner expects. <b>Knowing which is which is the whole of this step.</b> It has to happen before the schema, because the schema is downstream of it.</div><div class="why-row"><span class="wl">Why?</span><a class="why" href="/aep-mobile-sdk/kb/lifecycle-metrics/" data-kb="lifecycle-metrics">What arrives without asking? <span class="arr">&#8599;</span></a><a class="why" href="/aep-mobile-sdk/kb/screens-vs-pageviews/" data-kb="screens-vs-pageviews">Is a screen a page view? <span class="arr">&#8599;</span></a></div><p>Start with what is free. The Lifecycle extension reports two events on its own: <b>Application Launch</b> and <b>Application Close</b>. They carry a standard field group called AEP Mobile Lifecycle Details. Between them you get installs, upgrades, launch counts, session length and device detail. No tracking code, no ticket. Automatic lifecycle tracking is on by default when the SDK is initialised.</p><figure class="fig-svg"><svg viewBox="0 0 700 220" role="img" aria-label="Lifecycle reports installs, upgrades, launches, session length and device detail automatically, while screen views and business events must be specified and written by a developer." style="width:100%;height:auto;display:block">
+<rect x="16" y="40" width="316" height="150" rx="10" style="fill:var(--ok-soft, #e9f4ee);stroke:var(--ok, #1f7a4d);stroke-width:1.6"/>
+<text x="174" y="30" text-anchor="middle" style="font-size:12px;font-weight:700;fill:var(--ok, #1f7a4d)">FREE, ON BY DEFAULT</text>
+<text x="174" y="66" text-anchor="middle" style="font-size:12.5px;font-weight:700;fill:var(--ink-soft, #3b4048)">Lifecycle</text>
+<text x="40" y="92" style="font-size:12px;fill:var(--ink-soft, #3b4048)">installs and first launches</text>
+<text x="40" y="112" style="font-size:12px;fill:var(--ink-soft, #3b4048)">upgrades</text>
+<text x="40" y="132" style="font-size:12px;fill:var(--ink-soft, #3b4048)">launch counts and session length</text>
+<text x="40" y="152" style="font-size:12px;fill:var(--ink-soft, #3b4048)">device, OS and app version</text>
+<text x="174" y="176" text-anchor="middle" style="font-size:11px;fill:var(--muted, #6b7280)">two events, no code written</text>
+<rect x="368" y="40" width="316" height="150" rx="10" style="fill:var(--accent-soft, #e6f2f0);stroke:var(--accent, #0f6b62);stroke-width:1.6"/>
+<text x="526" y="30" text-anchor="middle" style="font-size:12px;font-weight:700;fill:var(--accent, #0f6b62)">YOURS TO SPECIFY</text>
+<text x="526" y="66" text-anchor="middle" style="font-size:12.5px;font-weight:700;fill:var(--ink-soft, #3b4048)">Everything a person did</text>
+<text x="392" y="92" style="font-size:12px;fill:var(--ink-soft, #3b4048)">the screens worth naming</text>
+<text x="392" y="112" style="font-size:12px;fill:var(--ink-soft, #3b4048)">the two or three business events</text>
+<text x="392" y="132" style="font-size:12px;fill:var(--ink-soft, #3b4048)">who the person is, once known</text>
+<text x="392" y="152" style="font-size:12px;fill:var(--ink-soft, #3b4048)">whatever the argument is about</text>
+<text x="526" y="176" text-anchor="middle" style="font-size:11px;fill:var(--muted, #6b7280)">every one costs a release</text>
+<text x="350" y="212" text-anchor="middle" style="font-size:11.5px;fill:var(--muted, #6b7280)">Take everything on the left before you ask for anything on the right.</text>
+</svg><figcaption>The left box arrives whether or not anybody plans it. <b>Time spent specifying what is already free is the most common waste in a mobile implementation</b>, and it is usually the first week of one.</figcaption></figure><p>Then the harder half. A screen is not a page view, however similar the two look in a report. A web page has a URL, a referrer, and a load that ends. A screen can be pushed, popped, returned to, or kept alive in the background while a person answers a call. Count screens the way you count pages and you get session numbers nobody trusts. The definitions never quite line up.</p><div class="actionblock"><div class="abh">How to choose</div><div class="do-intro">Three questions, applied to every candidate event.</div><div class="astep"><div class="an">1</div><div>
+  <div class="al"><span class="lbl">Ask</span> Is Lifecycle already reporting this? If yes, it is finished. Move on.</div>
+</div></div>
+<div class="astep"><div class="an">2</div><div>
+  <div class="al"><span class="lbl">Ask</span> Would a decision change if this number moved? If nobody would act on it, it is not worth a release cycle.</div>
+</div></div>
+<div class="astep"><div class="an">3</div><div>
+  <div class="al"><span class="lbl">Ask</span> Can it be described without naming a screen? Events that survive a redesign are worth more than events tied to today's interface.</div>
+</div></div></div><div class="call mistake"><span class="ct">Where this goes wrong</span><p>The full web specification is handed over on day one, sixty events long. The developer estimates it honestly, the number frightens everybody, and the project stalls before the first release. A short list that ships beats a complete one that does not. Adding an event later is ordinary work.</p></div><div class="call check"><span class="ct">&#10003; Ready when</span><p>You have a written list, short enough to read aloud, of the events the app will send beyond Lifecycle. Every one survives the three questions above. That list is what the <a href="/aep-mobile-sdk/create-the-xdm-schema/">XDM schema</a> is built from, so it is worth getting right while it is still only a list.</p></div>
