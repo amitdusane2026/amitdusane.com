@@ -63,6 +63,7 @@ So whenever something written here is made wrong, narrower, or redundant by a la
 | Document | Authority over | Read it before |
 |---|---|---|
 | `structure-map.html` | Titles, seotitles, slugs, module and section numbering, the curriculum arc | Creating any page, or naming anything |
+| `aep-mobile-sdk-map.html` | **Section 3 only.** Every step and KB title, seotitle, slug and `kbids` bridge for the Adobe Experience Platform Mobile SDK world | Creating or naming any page under `/aep-mobile-sdk/` |
 | `diagram-spec.html` | Every figure: the reader's test, when to draw at all, type, colour, the canvas, the per-figure pass | Drawing, redrawing or removing any diagram |
 | `diagram-check.js` | The measurable half of the per-figure pass, so it is not retyped fifteen times a session | Verifying any redrawn or inherited figure |
 | `design-plan.html` | Why a shipped design decision was made, and what was rejected. **Closed 21 Aug 2026 -- not a work queue** | Understanding an existing design choice. Never for finding work |

@@ -1,0 +1,251 @@
+<title>AEP Mobile SDK — Curriculum Map</title>
+<style>
+  :root{
+    --bg:#fbfbfa; --card:#fff; --ink:#1c1c1a; --ink2:#55534e; --ink3:#8a8781;
+    --rule:#e5e3de; --accent:#1f6f5c; --accent-l:#eaf4f1; --warn:#b45309;
+    --warn-l:#fef3e2; --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{--bg:#16171a; --card:#1d1f23; --ink:#e8e6e3; --ink2:#a8a5a0; --ink3:#78756f;
+          --rule:#2c2f34; --accent:#5cc0a3; --accent-l:#17302a; --warn:#f0b357; --warn-l:#2e2413;}
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+       font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;}
+  .wrap{max-width:1080px;margin:0 auto;padding:40px 24px 80px}
+  h1{font-size:30px;line-height:1.2;margin:0 0 6px;letter-spacing:-.02em}
+  .sub{color:var(--ink2);margin:0 0 28px;font-size:15px}
+  h2{font-size:13px;text-transform:uppercase;letter-spacing:.09em;color:var(--accent);
+     margin:44px 0 14px;font-weight:700}
+  h3{font-size:19px;margin:34px 0 4px;letter-spacing:-.01em}
+  .mv-note{color:var(--ink2);font-size:14px;margin:0 0 14px}
+  .panel{background:var(--card);border:1px solid var(--rule);border-radius:10px;
+         padding:18px 20px;margin:0 0 22px}
+  .panel p{margin:0 0 10px}.panel p:last-child{margin:0}
+  table{width:100%;border-collapse:collapse;background:var(--card);
+        border:1px solid var(--rule);border-radius:10px;overflow:hidden;margin:0 0 6px}
+  th{background:var(--accent-l);color:var(--ink);text-align:left;font-size:12px;
+     text-transform:uppercase;letter-spacing:.06em;padding:9px 12px;border-bottom:1px solid var(--rule)}
+  td{padding:11px 12px;border-bottom:1px solid var(--rule);vertical-align:top;font-size:14.5px}
+  tr:last-child td{border-bottom:none}
+  .n{font-variant-numeric:tabular-nums;color:var(--ink3);width:30px;font-weight:600}
+  .t{font-weight:600;width:23%}
+  .seo{color:var(--ink2);font-size:13.5px}
+  code,.slug{font-family:var(--mono);font-size:12.5px;background:var(--accent-l);
+             color:var(--ink);padding:1px 5px;border-radius:4px}
+  .kb{font-family:var(--mono);font-size:12px;color:var(--ink2)}
+  .tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.04em;
+       padding:2px 7px;border-radius:99px;text-transform:uppercase}
+  .neutral{background:var(--accent-l);color:var(--accent)}
+  .split{background:var(--warn-l);color:var(--warn)}
+  .open{border-left:3px solid var(--warn);background:var(--warn-l)}
+  .stat{display:flex;gap:26px;flex-wrap:wrap;margin:0 0 26px}
+  .stat div{background:var(--card);border:1px solid var(--rule);border-radius:10px;
+            padding:12px 18px;min-width:120px}
+  .stat b{display:block;font-size:26px;line-height:1.1;letter-spacing:-.02em}
+  .stat span{font-size:12.5px;color:var(--ink2)}
+  .foot{margin-top:50px;padding-top:18px;border-top:1px solid var(--rule);
+        color:var(--ink3);font-size:13px}
+</style>
+
+<div class="wrap">
+
+<h1>Adobe Experience Platform Mobile SDK</h1>
+<p class="sub">Curriculum map, drafted 6 September 2026 · Section 3, procedure shape · <code>/aep-mobile-sdk/</code><br>
+<b>This document is the naming authority for the section.</b> Titles, seotitles and slugs come from here, not from memory. Renaming after publication breaks URLs.</p>
+
+<div class="stat">
+  <div><b>15</b><span>steps</span></div>
+  <div><b>25</b><span>KB articles</span></div>
+  <div><b>11</b><span>steps platform-neutral</span></div>
+  <div><b>15</b><span>diagrams, one per step</span></div>
+</div>
+
+<h2>What this section is</h2>
+<div class="panel">
+<p><b>Not "how to implement the Mobile SDK".</b> Every SDK reference is that already. This is <b>how to own an implementation you cannot build yourself</b>: how to hold your own with a developer you do not manage, read what they wrote, and find the fault when data does not arrive.</p>
+<p><b>The reader</b> is an analytics person who owns the implementation but not the app. They have shipped web tracking and never shipped an app. They will be handing work to a mobile developer in another team, and when it breaks they will be expected to say why.</p>
+<p><b>The central teaching problem</b> is that this reader arrives with the wrong mental model. They know context data variables passed to Analytics, which is the Mobile Services and AppMeasurement world. The Edge Network path is XDM. Moving them off contextdata thinking is what steps 1, 4 and 9 exist to do, and it is the same shift the Web SDK Migration world already teaches for web.</p>
+</div>
+
+<h2>Phase 0 decisions this map works within</h2>
+<table>
+<tr><th>Decision</th><th>Choice</th></tr>
+<tr><td class="t">Product name</td><td>Adobe Experience Platform Mobile SDK, used in full. No "AEP SDK" in prose.</td></tr>
+<tr><td class="t">URL prefix</td><td><code>/aep-mobile-sdk/</code></td></tr>
+<tr><td class="t">iOS and Android</td><td>One spine. Split at step level only where they genuinely differ.</td></tr>
+<tr><td class="t">Scope end</td><td>Both destinations: Adobe Analytics forwarding <i>and</i> the AEP XDM dataset.</td></tr>
+<tr><td class="t">Screenshots</td><td>None. Matches the migration world, which has zero.</td></tr>
+</table>
+
+<h2>The one-spine decision, measured</h2>
+<div class="panel">
+<p><b>Eleven of the fifteen steps are entirely platform-neutral.</b> The schema, the datastream, the tag property, consent configuration, Assurance validation and most of the debugging happen in Adobe's interface and read identically for iOS and Android.</p>
+<p>Only <b>step 7</b> carries a real split — dependency installation and SDK registration. Steps 8, 9 and 12 need the same instruction shown in two languages, which is a code block each, not a second page. Step 2 describes both toolchains because that is its subject.</p>
+<p>This is the evidence for one spine rather than two tracks. Two parallel sequences would have duplicated eleven steps to serve four.</p>
+</div>
+
+<h2>Movement 1 · Ground</h2>
+<p class="mv-note">The reader is not a mobile person yet. Nothing is configured and nothing is installed. These three steps decide whether the rest lands.</p>
+<table>
+<tr><th class="n">#</th><th class="t">Title</th><th>seotitle</th><th>Slug · KB bridge</th><th>Platform</th></tr>
+<tr><td class="n">1</td><td class="t">Understand what mobile changes</td>
+<td class="seo">Adobe Experience Platform Mobile SDK vs Web: What Changes</td>
+<td><span class="slug">understand-what-mobile-changes</span><br><span class="kb">sdk-vs-mobile-services · xdm-vs-contextdata</span></td>
+<td><span class="tag neutral">neutral</span></td></tr>
+
+<tr><td class="n">2</td><td class="t">Learn the app environment</td>
+<td class="seo">The Mobile App Environment for Analytics Practitioners</td>
+<td><span class="slug">learn-the-app-environment</span><br><span class="kb">app-build · who-does-what · dependency-managers</span></td>
+<td><span class="tag split">both toolchains</span></td></tr>
+
+<tr><td class="n">3</td><td class="t">Decide what to track</td>
+<td class="seo">Planning What to Track in an Adobe Mobile SDK Implementation</td>
+<td><span class="slug">decide-what-to-track</span><br><span class="kb">screens-vs-pageviews · lifecycle-metrics</span></td>
+<td><span class="tag neutral">neutral</span></td></tr>
+</table>
+<p class="mv-note"><b>Step 2 is the heaviest in the section and the reason it exists.</b> Builds, Xcode and Android Studio, dependency managers, debug versus release, simulator versus device, and where the analytics person's job ends. Written for somebody who has never opened an IDE.</p>
+
+<h2>Movement 2 · Configure</h2>
+<p class="mv-note">All Adobe-side and entirely platform-neutral. The reader can complete every one of these alone, before speaking to a developer at all. That independence is worth stating plainly in the prose.</p>
+<table>
+<tr><th class="n">#</th><th class="t">Title</th><th>seotitle</th><th>Slug · KB bridge</th><th>Platform</th></tr>
+<tr><td class="n">4</td><td class="t">Create the XDM schema</td>
+<td class="seo">Creating an XDM Schema for the Adobe Mobile SDK</td>
+<td><span class="slug">create-the-xdm-schema</span><br><span class="kb">mobile-schema · xdm-vs-contextdata</span></td>
+<td><span class="tag neutral">neutral</span></td></tr>
+
+<tr><td class="n">5</td><td class="t">Create the datastream</td>
+<td class="seo">Configuring a Datastream for Adobe Analytics and AEP</td>
+<td><span class="slug">create-the-datastream</span><br><span class="kb">datastream-services · edge-vs-direct · wrong-dataset</span></td>
+<td><span class="tag neutral">neutral</span></td></tr>
+
+<tr><td class="n">6</td><td class="t">Create the mobile tag property</td>
+<td class="seo">Creating a Mobile Tag Property and Adding SDK Extensions</td>
+<td><span class="slug">create-the-mobile-tag-property</span><br><span class="kb">extensions</span></td>
+<td><span class="tag neutral">neutral</span></td></tr>
+</table>
+<p class="mv-note"><b>Step 5 is where both destinations are configured</b>, and it is the step that makes this section a CJA prerequisite rather than an Analytics one. One datastream, two services.</p>
+
+<h2>Movement 3 · Implement</h2>
+<p class="mv-note">Where the developer comes in, and where the reader stops being able to do it alone. Every step here is written twice over: what to ask for, and how to check you got it.</p>
+<table>
+<tr><th class="n">#</th><th class="t">Title</th><th>seotitle</th><th>Slug · KB bridge</th><th>Platform</th></tr>
+<tr><td class="n">7</td><td class="t">Get the SDK into the app</td>
+<td class="seo">Installing the Adobe Experience Platform Mobile SDK on iOS and Android</td>
+<td><span class="slug">get-the-sdk-into-the-app</span><br><span class="kb">dependency-managers · release-not-deploy</span></td>
+<td><span class="tag split">major split</span></td></tr>
+
+<tr><td class="n">8</td><td class="t">Turn on lifecycle</td>
+<td class="seo">Adobe Mobile SDK Lifecycle Metrics: Setup and What You Get</td>
+<td><span class="slug">turn-on-lifecycle</span><br><span class="kb">lifecycle-metrics · install-attribution</span></td>
+<td><span class="tag split">code both</span></td></tr>
+
+<tr><td class="n">9</td><td class="t">Track screens and actions</td>
+<td class="seo">Tracking Screens and Actions with the Adobe Mobile SDK</td>
+<td><span class="slug">track-screens-and-actions</span><br><span class="kb">screens-vs-pageviews · xdm-vs-contextdata</span></td>
+<td><span class="tag split">code both</span></td></tr>
+
+<tr><td class="n">10</td><td class="t">Set up identity</td>
+<td class="seo">ECID and Customer IDs in the Adobe Mobile SDK</td>
+<td><span class="slug">set-up-identity</span><br><span class="kb">identity-on-mobile · customer-id</span></td>
+<td><span class="tag neutral">neutral</span></td></tr>
+
+<tr><td class="n">11</td><td class="t">Handle consent</td>
+<td class="seo">Implementing Consent in the Adobe Experience Platform Mobile SDK</td>
+<td><span class="slug">handle-consent</span><br><span class="kb">consent-mobile</span></td>
+<td><span class="tag neutral">neutral</span></td></tr>
+
+<tr><td class="n">12</td><td class="t">Read values from the SDK</td>
+<td class="seo">Reading ECID, Consent and Identity from the Adobe Mobile SDK</td>
+<td><span class="slug">read-values-from-the-sdk</span><br><span class="kb">identity-on-mobile · timing</span></td>
+<td><span class="tag split">code both</span></td></tr>
+</table>
+<p class="mv-note"><b>Step 12 is Amit's own item</b> — how to get values back out of the SDK, which is what an analytics person needs when they are debugging somebody else's app and cannot read the whole codebase.</p>
+
+<h2>Movement 4 · Prove and ship</h2>
+<p class="mv-note">The reason the section exists. Step 14 is the scar: analytics people end up debugging apps they did not write, and no guide teaches that.</p>
+<table>
+<tr><th class="n">#</th><th class="t">Title</th><th>seotitle</th><th>Slug · KB bridge</th><th>Platform</th></tr>
+<tr><td class="n">13</td><td class="t">Validate in Assurance</td>
+<td class="seo">Validating a Mobile SDK Implementation with Adobe Assurance</td>
+<td><span class="slug">validate-in-assurance</span><br><span class="kb">assurance · debug-vs-release · simulator-vs-device</span></td>
+<td><span class="tag neutral">neutral</span></td></tr>
+
+<tr><td class="n">14</td><td class="t">Debug when nothing arrives</td>
+<td class="seo">Debugging an Adobe Mobile SDK Implementation When No Data Arrives</td>
+<td><span class="slug">debug-when-nothing-arrives</span><br><span class="kb">nothing-arrives · schema-rejection · timing</span></td>
+<td><span class="tag neutral">neutral</span></td></tr>
+
+<tr><td class="n">15</td><td class="t">Release and manage versions</td>
+<td class="seo">Releasing a Mobile SDK Implementation and Managing App Versions</td>
+<td><span class="slug">release-and-manage-versions</span><br><span class="kb">release-not-deploy · app-versions · offline-queue</span></td>
+<td><span class="tag neutral">neutral</span></td></tr>
+</table>
+
+<h2>Knowledge base · 25 articles</h2>
+<p class="mv-note">Each is reached from a step's <code>Why?</code> row, wired through <code>kbids</code> in that step's front matter. Every article below is referenced by at least one step; none is an orphan.</p>
+
+<h3>A · The app environment, for someone who has never shipped an app</h3>
+<table>
+<tr><th>id</th><th class="t">Title</th><th>The question it answers</th><th>Steps</th></tr>
+<tr><td><code>app-build</code></td><td class="t">What an app build actually is</td><td>Why you cannot just change something and refresh</td><td>2</td></tr>
+<tr><td><code>dependency-managers</code></td><td class="t">Swift Package Manager, CocoaPods and Gradle</td><td>What "add the SDK" means when somebody says it</td><td>2, 7</td></tr>
+<tr><td><code>release-not-deploy</code></td><td class="t">Why a release is not a deployment</td><td>Why the fix you asked for lands in three weeks</td><td>7, 15</td></tr>
+<tr><td><code>debug-vs-release</code></td><td class="t">Debug builds and release builds</td><td>Why it worked on their machine and not in the store</td><td>13</td></tr>
+<tr><td><code>simulator-vs-device</code></td><td class="t">Simulator, emulator and a real device</td><td>What each one can and cannot prove</td><td>13</td></tr>
+<tr><td><code>who-does-what</code></td><td class="t">Where your job ends</td><td>What to own, what to ask for, what not to touch</td><td>2</td></tr>
+</table>
+
+<h3>B · The mental shift</h3>
+<table>
+<tr><th>id</th><th class="t">Title</th><th>The question it answers</th><th>Steps</th></tr>
+<tr><td><code>sdk-vs-mobile-services</code></td><td class="t">Mobile SDK, Mobile Services, AppMeasurement</td><td>Which one you are actually looking at</td><td>1</td></tr>
+<tr><td><code>xdm-vs-contextdata</code></td><td class="t">XDM instead of context data</td><td>Where your context data variables went</td><td>1, 4, 9</td></tr>
+<tr><td><code>screens-vs-pageviews</code></td><td class="t">A screen is not a page view</td><td>Why your web reporting instincts mislead you</td><td>3, 9</td></tr>
+<tr><td><code>lifecycle-metrics</code></td><td class="t">What lifecycle gives you free</td><td>What arrives without anyone writing tracking code</td><td>3, 8</td></tr>
+<tr><td><code>edge-vs-direct</code></td><td class="t">Edge Network or the direct extension</td><td>Which path you are on, and why it decides everything</td><td>5</td></tr>
+</table>
+
+<h3>C · The plumbing</h3>
+<table>
+<tr><th>id</th><th class="t">Title</th><th>The question it answers</th><th>Steps</th></tr>
+<tr><td><code>mobile-schema</code></td><td class="t">Mobile field groups</td><td>What the standard groups already carry for you</td><td>4</td></tr>
+<tr><td><code>datastream-services</code></td><td class="t">One datastream, two destinations</td><td>How the same event reaches Analytics and AEP</td><td>5</td></tr>
+<tr><td><code>wrong-dataset</code></td><td class="t">Data arriving where you did not expect</td><td>Why your events are in somebody else's dataset</td><td>5</td></tr>
+<tr><td><code>extensions</code></td><td class="t">Mobile extensions and what each is for</td><td>Which ones you need and which you can skip</td><td>6</td></tr>
+<tr><td><code>identity-on-mobile</code></td><td class="t">How the ECID persists on a device</td><td>What survives a reinstall, and what does not</td><td>10, 12</td></tr>
+<tr><td><code>customer-id</code></td><td class="t">Setting your own identifier</td><td>Why the ECID alone will not answer the CRM question</td><td>10</td></tr>
+<tr><td><code>consent-mobile</code></td><td class="t">Consent on a device</td><td>How it differs from a browser consent banner</td><td>11</td></tr>
+<tr><td><code>install-attribution</code></td><td class="t">Where installs come from</td><td>What the SDK can and cannot tell you about acquisition</td><td>8</td></tr>
+<tr><td><code>offline-queue</code></td><td class="t">Hits that arrive late</td><td>What a phone in a tunnel does to your reports</td><td>15</td></tr>
+<tr><td><code>app-versions</code></td><td class="t">The long tail of old versions</td><td>Why last year's build is still sending you data</td><td>15</td></tr>
+</table>
+
+<h3>D · Failure modes, feeding step 14</h3>
+<table>
+<tr><th>id</th><th class="t">Title</th><th>The question it answers</th><th>Steps</th></tr>
+<tr><td><code>assurance</code></td><td class="t">What Assurance is</td><td>Why it beats asking a developer to add a log line</td><td>13</td></tr>
+<tr><td><code>nothing-arrives</code></td><td class="t">The event that never left the device</td><td>How to tell "not sent" from "sent and rejected"</td><td>14</td></tr>
+<tr><td><code>schema-rejection</code></td><td class="t">Why the Edge rejected your payload</td><td>Reading a rejection and knowing whose problem it is</td><td>14</td></tr>
+<tr><td><code>timing</code></td><td class="t">Events fired before the SDK was ready</td><td>The race nobody sees until launch tracking is wrong</td><td>12, 14</td></tr>
+</table>
+
+<h2>Open questions, before Phase 2</h2>
+<div class="panel open">
+<p><b>1 · React Native and Flutter.</b> Adobe ships plugins for both, and a large share of real apps are built that way. The one-spine decision covered iOS and Android; it did not cover cross-platform frameworks. Three options: ignore them entirely, add one KB article explaining that the plugins wrap the same native SDK, or add a sixteenth step. <b>Recommendation: one KB article.</b> It costs almost nothing and stops a whole class of reader bouncing on step 7.</p>
+<p><b>2 · Which step gets written first.</b> Phase 3 builds one step end to end as the pattern. <b>Recommendation: step 7</b>, because it carries the only major platform split. If the one-spine treatment works there it works everywhere; if it does not, better to know before fourteen other steps are written to a shape that fails.</p>
+<p><b>3 · Sample app.</b> No screenshots is settled, but code blocks still need to be real. Whether they come from a working sample app or are written against the documentation changes how much can be verified.</p>
+</div>
+
+<h2>Deliberately absent</h2>
+<div class="panel">
+<p><b>No screenshots</b>, matching the procedure container. <b>No critique of Experience League</b> — Amit ruled that angle out; the objective is simply how to implement, not where Adobe's documentation falls short. <b>No certification content.</b> <b>No CJA analysis</b>: this section ends when data lands correctly in both destinations, and CJA Learning picks up from there.</p>
+</div>
+
+<p class="foot">
+Every product, extension and API name here is provisional until verified against Experience League during drafting. Adobe's mobile naming has moved more than once.<br>
+Descriptions (110&ndash;160 characters) are written per step at build time, not in this map, matching how <code>structure-map.html</code> works.
+</p>
+
+</div>
