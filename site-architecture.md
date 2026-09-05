@@ -44,12 +44,34 @@ Page anatomy, component vocabulary, navigation model, and the curriculum arc all
 
 ## What a world is, mechanically
 
-A self-contained sub-site selected by URL prefix, with its own stylesheet, JS, shell, and print document. The switch is an if/else chain in `layouts/partials/head.html:37` and `layouts/_default/baseof.html:4-6`.
+A self-contained sub-site selected by URL prefix, with its own stylesheet, JS, shell, and print document.
 
-**Before a third world exists, two things must change:**
+**The world is a registry lookup, not an if/else chain** (INF-06, 20 August
+2026). `baseof.html:8` does `index .Site.Params.worlds .Section`, and the entry
+carries four keys: `css`, `js`, `root` and `og`. The `og` is a per-world social
+card, added because `og-default.jpg` was the Web SDK card and was being served
+on all 144 learning pages. **A new world needs an OG image made for it**, which
+is easy to forget because nothing fails without one.
 
-1. **`params.phases` must become per-world.** `wherefits.html:12` and `homemap.html:10` read `.Site.Params.phases` globally and unscoped, so a second curriculum world would inherit Adobe Analytics' phase structure. Needs to become `params.worlds.<world>.phases` with the partials taking a world argument.
-2. **The world switch should key off `.Section`** rather than growing an if/else branch per world in two files. Eight sections would make it eight branches deep.
+**Both recorded blockers to a third world are cleared.** `params.phases` is
+per-world at `params.worlds.<world>.phases` (INF-05), and the switch keys off
+`.Section` as above. Verified against `hugo.toml` and the templates on
+6 September 2026.
+
+**But "a third world is a config block" overstates it, and this is the part to
+know before costing one.** `baseof.html` still carries `$mig` and `$learn`
+booleans with **twelve** references between them, because forty-odd lines of
+shell markup genuinely differ: the body class, two full content shells, the Ask
+Amit bar (migration only), the search placeholder wording, and two world-specific
+script blocks. A third world naively added becomes a third branch through all of
+it.
+
+**So the right move for a second procedure world is to generalise the flag
+rather than add a branch** — `$mig` becomes "is this a procedure-shaped world",
+read from the registry, and the existing shell serves both. That is the
+container claim finally being tested rather than asserted. If the migration
+shell cannot serve a second procedure world without forking, the container is
+not reusable and it is better to learn that on the cheap section than on CJA.
 
 For a new **curriculum** world the CSS is cheap: copy `world-learning.css`, change `--accent`, `--accent2`, `--accent-light` only. Every component is already token-driven.
 
@@ -73,17 +95,27 @@ A design supplied as pictures alone means guessing at the rules behind it, and p
 Order as planned. Only the first two exist.
 
 1. **Web SDK Migration** — live since June 2026. Procedure shape.
-2. **Adobe Analytics Learning** — in progress. Curriculum shape.
-3. CJA Learning — curriculum
-4. RTCDP — curriculum
-5. AJO — curriculum
-6. AEP Fundamentals — curriculum
-7. Web SDK mobile app implementation — procedure
+2. **Adobe Analytics Learning** — live since 4 September 2026. Curriculum shape.
+3. **Adobe Experience Platform Mobile SDK** — next. Procedure shape. `/aep-mobile-sdk/`.
+4. CJA Learning — curriculum
+5. RTCDP — curriculum
+6. AJO — curriculum
+7. AEP Fundamentals — curriculum
 8. Certification preparation, per product — new shape
 9. Delivery documents, and managing a long-term project — new shape
 10. A RAG chatbot over the whole site
 
 Also planned, shape assigned but not sequenced: Mobile Analytics legacy implementation (procedure), Setting up CJA reports (procedure).
+
+**Mobile SDK moved from seventh to third on 6 September 2026**, ahead of CJA
+and the three other curriculum worlds. Amit's reason is that CJA is the real
+destination and it cannot teach what it is for on web data alone: one person
+seen across app and web is the argument for CJA, and a course built on a single
+channel teaches the mechanics while skipping the point. The second reason is
+cost. This is the cheapest section available — the procedure container already
+exists and its second instance is what finally tests whether the container is
+reusable. Better to discover that on a section Amit knows cold than while also
+working out how to teach CJA.
 
 **Starting a new section is a kickoff conversation, not a build task.** What only Amit has: who the reader is and how they differ from the last section's reader, the arc, the module or step list with titles and seotitles, and what the official documentation gets wrong. Build the vessel before writing pages.
 
@@ -193,3 +225,49 @@ Cloudflare rather than Namecheap.
 request straight to `https://amitdusane.com` in one hop whatever scheme it
 arrived on; the toggle would only insert a pointless second hop through
 `https://amitdusane.in`.
+
+---
+
+## Adobe Experience Platform Mobile SDK — Phase 0 decisions
+
+Settled 6 September 2026, before any curriculum work. **These four are fixed;
+Phase 1 designs within them.**
+
+| Decision | Choice |
+|---|---|
+| Official name | **Adobe Experience Platform Mobile SDK.** Use Adobe's product name throughout; it is what readers search and it ends the AEP-vs-Adobe-Mobile confusion |
+| URL prefix and world key | **`/aep-mobile-sdk/`** |
+| iOS and Android | **One spine.** Split at step level only where the platforms genuinely differ |
+| Where it stops | **Both destinations**: Adobe Analytics forwarding *and* the AEP XDM dataset |
+| Screenshots | **None** |
+
+**The URL breaks the pattern set by `/web-sdk-migration/`, deliberately.** That
+one is task-shaped; this one is product-shaped and carries the acronym people
+type into a search box. Amit's call, made against a recommendation to stay
+consistent. Consistency of URL shape is worth less than matching the query.
+
+**One spine rather than two tracks, because the split is narrower than it
+looks.** The schema, the datastream, the tag property, the mobile extension
+configuration and Assurance validation are all platform-neutral, and they are
+where an analytics person actually gets stuck. What genuinely differs is
+dependency installation, SDK registration, and lifecycle hooks. Two parallel
+tracks would double the writing and halve the readership of every page.
+
+**Both destinations, because one implementation feeds both and the reader needs
+both.** The same SDK and the same schema reach Adobe Analytics and an AEP
+dataset through two services on one datastream. Stopping at the XDM dataset
+would leave an Adobe Analytics practitioner without their existing reporting;
+stopping at Analytics would leave the CJA seam unbuilt, which is the reason this
+section is being written third rather than seventh.
+
+**No screenshots is not a compromise here, it is the container's existing
+pattern.** `shot-box` belongs to the curriculum world. The Web SDK Migration
+world contains **zero** screenshots and exactly **one** inline SVG diagram per
+step, across all thirteen. So the diagram budget is the thing to plan, and code
+blocks carry the app-side work — which suits mobile better than screenshots
+would, since a reader copies Swift or Kotlin and cannot copy a picture of Xcode.
+
+**Still outstanding from Phase 0**, and it feeds the Phase 1 curriculum map: who
+this reader is and how they differ from the migration reader, what Experience
+League gets wrong about mobile, and the failure modes worth building sections
+around.
