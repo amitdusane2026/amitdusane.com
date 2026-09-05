@@ -3,11 +3,18 @@
 {{ partial "head.html" . }}
 {{/* INF-06. The world is keyed off the page's top-level .Section and looked up
        in [params.worlds], so a new world is a config block rather than another
-       branch here. $mig and $learn stay as booleans because forty-odd lines
-       below still read them; what changed is how they are derived. */}}
+       branch here. */}}
 {{ $world := index .Site.Params.worlds .Section }}
-{{ $mig := eq .Section "web-sdk-migration" }}
-{{ $learn := eq .Section "adobe-analytics-learning" }}
+{{/* Derived from the registry's `shape`, not from the section name, since
+     6 September 2026. A third world that is procedure-shaped renders the same
+     shell as the first one; only its bodyclass, its links and its labels
+     differ, and all three come from [params.worlds]. $world is nil on Home,
+     About and 404, so `with` guards the lookup rather than a direct field
+     access, which would error on nil. */}}
+{{ $shape := "" }}{{ $bodyclass := "" }}
+{{ with $world }}{{ $shape = .shape }}{{ $bodyclass = .bodyclass }}{{ end }}
+{{ $proc := eq $shape "procedure" }}
+{{ $learn := eq $shape "curriculum" }}
 {{/* A section page gets `has-rail`, which turns on the three-column shell and
      tells world-learning.js to build the in-page spine. Landing pages and the
      glossary have no h3 stack worth indexing, so they stay two-column. Decided
@@ -27,7 +34,7 @@
 
      .IsPage is what excludes the KB index, which carries `type: kb` on its own
      _index.md and would otherwise qualify. */}}
-{{ $asks := and $mig .IsPage (or (eq .Type "step") (eq .Type "kb")) }}
+{{ $asks := and $proc .IsPage (or (eq .Type "step") (eq .Type "kb")) }}
 {{/* `page-plain` is About and 404: no world, no sidebar, no section. It exists
      so chrome.css can strip the header down to identity plus the theme toggle
      without those rules leaking into a world.
@@ -35,19 +42,19 @@
      `page-about` narrows that to About alone, because About is pinned to the
      light palette and the 404 is not. Two classes rather than one so the
      shared shell rules stay shared. */}}
-<body class="{{ if $mig }}world-migration{{ else if $learn }}world-learning{{ else if .IsHome }}page-home{{ else }}page-plain{{ if eq .Type "about" }} page-about{{ end }}{{ end }}{{ if eq .Type "lesson" }} has-rail{{ end }}{{ if $asks }} asks{{ end }}">
-{{ if $mig }}
-  {{ $steps := (where .Site.RegularPages "Type" "step").ByWeight }}
+<body class="{{ if $bodyclass }}{{ $bodyclass }}{{ else if .IsHome }}page-home{{ else }}page-plain{{ if eq .Type "about" }} page-about{{ end }}{{ end }}{{ if eq .Type "lesson" }} has-rail{{ end }}{{ if $asks }} asks{{ end }}">
+{{ if $proc }}
+  {{ $steps := (where (where .Site.RegularPages "Type" "step") "Section" .Section).ByWeight }}
   {{ $curnum := 0 }}{{ if eq .Type "step" }}{{ $curnum = .Params.stepnum }}{{ end }}
   {{ partial "siteheader.html" . }}
   <div class="layout">
     <nav class="rail" id="rail">
       <div class="grp kb railmore-h">More</div>
       <div class="railmore">
-        <a class="navlink" href="{{ "/web-sdk-migration/kb/" | relURL }}"><span class="ic">&#9671;</span><span>Knowledge Base</span></a>
-        <a class="navlink" href="{{ "/web-sdk-migration/references/" | relURL }}"><span class="ic">&#167;</span><span>References</span></a>
+        <a class="navlink" href="{{ (printf "%s/kb/" $world.root) | relURL }}"><span class="ic">&#9671;</span><span>Knowledge Base</span></a>
+        <a class="navlink" href="{{ (printf "%s/references/" $world.root) | relURL }}"><span class="ic">&#167;</span><span>References</span></a>
       </div>
-      <div class="grp do">&#9656; The Migration</div>
+      <div class="grp do">&#9656; {{ $world.railtitle }}</div>
       <div id="stepNav">
         {{ range $steps }}<a class="steplink{{ if eq .Params.stepnum $curnum }} active{{ else if lt .Params.stepnum $curnum }} done{{ end }}" href="{{ .RelPermalink }}"><span class="sn">{{ .Params.stepnum }}</span><span>{{ .Title }}</span></a>{{ end }}
       </div>
@@ -287,10 +294,10 @@
   </div>
 
   {{/* Search belongs to every world, not just the migration one. The overlay
-       markup and search.js used to sit inside the `if $mig` block, which is why
+       markup and search.js used to sit inside the procedure-world block, which is why
        the learning world shipped a search button that did nothing for months.
        The only per-world part is which index it reads. */}}
-  {{ if or $mig $learn }}
+  {{ if or $proc $learn }}
   <div class="search-overlay" id="searchOverlay" hidden>
     <div class="search-box" role="dialog" aria-modal="true" aria-label="Search this section">
       <div class="search-in"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg><input id="searchInput" type="text" placeholder="{{ if $learn }}Search sections, concepts, and terms&hellip;{{ else }}Search steps, topics, and references&hellip;{{ end }}" autocomplete="off" spellcheck="false" aria-label="Search"><kbd>Esc</kbd></div>
@@ -302,8 +309,8 @@
   <script>window.SEARCH_INDEX="{{ (printf "%s/index.json" $world.root) | relURL }}";window.SEARCH_HINTS="{{ "index.json" | relURL }}";window.SEARCH_WORLD="{{ .Section }}";</script>
   <script src="{{ "search.js" | relURL }}?v={{ substr (sha256 (readFile "static/search.js")) 0 10 }}"></script>
   {{ end }}
-  {{ if $mig }}
-  <script src="{{ "world-migration.js" | relURL }}"></script>
+  {{ if $proc }}
+  <script src="{{ $world.js | relURL }}?v={{ substr (sha256 (readFile (printf "static/%s" $world.js))) 0 10 }}"></script>
   {{ end }}
   {{ if $learn }}
   <script src="{{ "world-learning.js" | relURL }}?v={{ substr (sha256 (readFile "static/world-learning.js")) 0 10 }}"></script>

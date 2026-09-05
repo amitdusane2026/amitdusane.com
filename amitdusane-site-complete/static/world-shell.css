@@ -503,7 +503,7 @@
 /* The shared header is position:fixed, so unlike the old sticky .topbar it
    takes no space in the flow. Everything in this world has to start below it.
    The learning world does the same thing with a margin on .lmain. */
-body.world-migration{padding-top:var(--header-h)}
+body.world-migration,body.world-mobile{padding-top:var(--header-h)}
 
 /* ============================================================================
    THE MIGRATION GUIDE'S FRONT PAGE. Rebuilt 2 Sep 2026.

@@ -1,6 +1,7 @@
 {{ define "main" }}
 <section class="view active">
-  <p class="crumb"><a href="{{ "/web-sdk-migration/" | relURL }}">Migration</a> &rsaquo; Knowledge Base</p>
+  {{ $w := index .Site.Params.worlds .Section }}
+  <p class="crumb"><a href="{{ (printf "%s/" $w.root) | relURL }}">{{ $w.name }}</a> &rsaquo; Knowledge Base</p>
   <div class="eyebrow">Knowledge Base</div>
   <h1>The &ldquo;why&rdquo; behind every step</h1>
   <p class="kb-intro">Everything the migration steps lean on &mdash; concepts, decisions, and reference &mdash; organized so you can browse it directly, or reach any topic in context via a step's <b>&ldquo;Why?&rdquo;</b> link.</p>

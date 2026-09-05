@@ -180,7 +180,7 @@ Platform	infrastructure	34	Custom domain CNAME	Feature	static/CNAME		NA		NA	0	0	
 Platform	infrastructure	35	Google Analytics	Feature	hugo.toml		NA		NA	0	0	Yes	No	No
 Platform	tech-debt	36	Per-world params.phases scoping	Feature	layouts/partials/wherefits.html		NA		NA	0	0	Yes	No	No
 Platform	tech-debt	37	Dead code removal	Feature	static/guide.css		NA		NA	0	0	No	No	No
-Platform	tech-debt	38	Hardcoded migration stats	Feature	layouts/web-sdk-migration/list.html		NA		NA	0	0	No	No	No
+Platform	tech-debt	38	Hardcoded migration stats: the step count is now counted, not typed	Feature	layouts/partials/procedurehome.html		NA		NA	0	0	Yes	No	No
 Platform	tech-debt	39	Logo partial extraction	Feature	layouts/partials/		NA		NA	0	0	Yes	No	No
 Platform	presentation		Author byline on sections and landings	Feature	layouts/partials/byline.html	NA	NA	NA	NA	NA	NA	Yes	No	No
 Platform	presentation		In-page spine (On this page)	Feature	static/world-learning.js	NA	NA	NA	NA	NA	NA	Yes	No	No
@@ -252,3 +252,5 @@ Platform	navigation		Module landing rebuilt as a numbered contents list carrying
 Platform	navigation		Phase landing rebuilt as module cards, a deliberately different shape from the module landing	Feature	layouts/category/list.html	NA	NA	NA	NA	NA	NA	Yes	No	No
 Platform	navigation		Left rail rows toggle instead of navigating; each landing demoted to a quiet Overview row inside	Feature	layouts/_default/baseof.html	NA	NA	NA	NA	NA	NA	Yes	No	No
 Platform	infrastructure		GA tracking guard: the tracking call fires only when the baseURL is amitdusane.com, replacing the per-launch comment wrapper	Feature	layouts/partials/head.html	NA	NA	NA	NA	NA	NA	Yes	No	No
+Platform	infrastructure		Third world registered: /aep-mobile-sdk/, procedure shape, sharing world-shell.css and the migration shell rather than forking either	Feature	hugo.toml	NA	NA	NA	NA	NA	NA	Yes	No	No
+Platform	infrastructure		Procedure shell generalised: shape/bodyclass/name/railtitle/punch keys replace the $mig boolean, and all four global step queries are scoped per world	Feature	layouts/_default/baseof.html	NA	NA	NA	NA	NA	NA	Yes	No	No

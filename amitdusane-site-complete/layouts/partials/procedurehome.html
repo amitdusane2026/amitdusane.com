@@ -1,0 +1,81 @@
+{{- /* ===========================================================================
+     THE FRONT PAGE OF ANY PROCEDURE WORLD. Lifted out of
+     layouts/web-sdk-migration/list.html on 6 September 2026, when a second
+     procedure world arrived and copying the file would have forked it.
+
+     Both worlds' list.html are now one line each, calling this. Everything
+     that differs between them -- the title, the punch line, the cue, the
+     step list, the two onward links -- comes from [params.worlds] or from
+     the page itself. Nothing here names a world.
+
+     WHAT THE ORIGINAL REPLACED, kept because the reasoning still governs
+     this file. A 1613px sales page against the learning front page's 741:
+     a hero, a subtitle, three stat tiles, a call to action, a scope note,
+     and a 150-word "Why I built this guide" essay. Two hundred and fifteen
+     words before a visitor could see a single step.
+
+     THE ESSAY BROKE THE VOICE RULE, and that is the part worth recording.
+     It carried four first-person instances, and a check of the whole
+     migration world found this page was the ONLY place the author spoke in
+     first person. Zero first person outside content/about.html is the
+     site's hardest rule; this page was the single exception and nobody had
+     noticed. What the essay was doing is now done by the punch line in
+     nine words.
+
+     IT ALSO CARRIED A WRONG NUMBER. The stats block claimed "42 Sources";
+     the references page has 44 links. A stat nobody maintains is worse than
+     no stat, so the counts that survive are the ones the navigator proves
+     by listing them -- which is why the step count below is counted rather
+     than typed.
+
+     THE PUNCH LINE IS NOT DECORATION. AppMeasurement fires image beacons
+     and the Web SDK sends XDM events to the Edge, so "Stop sending beacons.
+     Start sending events." is literally what changes. It is also the line
+     on that world's social card, so the card and the page say the same
+     thing. Any world using this partial owes its own punch line the same
+     honesty.
+     =========================================================================== */ -}}
+{{- $w := index .Site.Params.worlds .Section -}}
+{{- $steps := (where (where .Site.RegularPages "Type" "step") "Section" .Section).ByWeight -}}
+{{- /* Spelled out, because "13 steps" in a cue line reads like a spec and the
+       sentence around it is prose. Counted rather than typed: the migration
+       front page carried the word "Thirteen" by hand, which was correct only
+       for as long as nobody added a step. Above twenty it falls back to the
+       numeral, which is the right place for a sentence to stop spelling. */ -}}
+{{- $words := slice "Zero" "One" "Two" "Three" "Four" "Five" "Six" "Seven" "Eight" "Nine" "Ten"
+                    "Eleven" "Twelve" "Thirteen" "Fourteen" "Fifteen" "Sixteen" "Seventeen"
+                    "Eighteen" "Nineteen" "Twenty" -}}
+{{- $n := len $steps -}}
+{{- $count := cond (le $n 20) (index $words $n) (string $n) -}}
+<section class="view active">
+
+  {{- /* ITS OWN CLASS NAMES, not the learning world's .welcome / .hm-tagline /
+       .hm-panel. Those live in world-learning.css and this world never loads
+       it, so borrowing the markup would have produced an unstyled page; and
+       copying those rules into world-shell.css is the stale-local-copy trap
+       that produced four separate bugs on 2 Sep 2026. */ -}}
+  <div class="mfront-head">
+    <span class="mfront-mark" aria-hidden="true">
+      {{ partial "logo.html" (dict "size" 88 "hidden" true) }}
+    </span>
+    <div>
+      <h1 class="mfront-title">{{ .Title }}</h1>
+      <div class="mfront-punch"><span class="mp-a">{{ $w.punch_a }}</span> <span class="mp-b">{{ $w.punch_b }}</span></div>
+    </div>
+  </div>
+
+  <div class="mfront-panel">
+    <div class="mfront-cue">{{ $count }} steps, {{ $w.cue }}</div>
+    {{ partial "stepmap.html" . }}
+  </div>
+
+  {{- /* The two rooms off the corridor. The knowledge base and the references
+       are not steps, so they do not belong in the sequence above, but a
+       visitor who wants the "what is a datastream" answer before starting
+       should not have to enter step 1 to find it. */ -}}
+  <div class="mhome-foot">
+    <a class="mside-link" href="{{ (printf "%s/kb/" $w.root) | relURL }}">Knowledge base &rarr;</a>
+    <a class="mside-link" href="{{ (printf "%s/references/" $w.root) | relURL }}">References &rarr;</a>
+  </div>
+
+</section>

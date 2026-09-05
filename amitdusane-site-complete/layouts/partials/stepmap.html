@@ -17,7 +17,7 @@
      hugo.toml, keyed on stepnum. A step is never listed here by hand.
      =========================================================================== */}}
 {{ $w := index .Site.Params.worlds .Section }}
-{{ $steps := (where .Site.RegularPages "Type" "step").ByWeight }}
+{{ $steps := (where (where .Site.RegularPages "Type" "step") "Section" .Section).ByWeight }}
 {{ $stages := slice }}
 {{ range $k, $v := $w.phases }}{{ $stages = $stages | append $v }}{{ end }}
 {{ $stages = sort $stages "order" }}

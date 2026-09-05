@@ -38,7 +38,7 @@
   {{- $ptitle := .Title -}}
   {{- /* Short badge for the result row. Each world names its own page kinds. */ -}}
   {{- $badge := "Page" -}}
-  {{- if eq $world "web-sdk-migration" -}}
+  {{- if eq (index .Site.Params.worlds $world).shape "procedure" -}}
     {{- $badge = cond (eq .Type "step") "Step" (cond (eq .Type "kb") "KB" "Reference") -}}
   {{- else -}}
     {{- $badge = cond (eq .Type "lesson") "Section" (cond (eq .Type "module") "Module" (cond (eq .Type "category") "Phase" (cond (eq .Type "glossary") "Glossary" "Page"))) -}}

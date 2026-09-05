@@ -120,21 +120,68 @@ disableKinds = ["taxonomy", "term"]
 #           add a module, add its modulenum to the right phase. Order here is
 #           the order shown.
 # ---------------------------------------------------------------------------
+# THE REGISTRY GREW FOUR KEYS ON 6 SEPTEMBER 2026, when a second procedure
+# world arrived and proved that "a new world is a config block" was not yet
+# true. Four templates queried `Type "step"` globally, so two procedure worlds
+# would have mixed their steps in the rail, the step nav, the navigator and the
+# schema; and four breadcrumbs said "Migration" in hardcoded text. Both are now
+# read from here.
+#
+#   shape      procedure | curriculum. Drives which shell baseof.html renders,
+#              so a third procedure world needs no new branch.
+#   bodyclass  the world's own body class. NOT derived from the section name,
+#              because world-migration carries this guide's blue accent through
+#              twenty rules in chrome.css; a second procedure world shares the
+#              stylesheet and needs its own accent, not this one's.
+#   name       the breadcrumb label. Short, it sits before every page title.
+#   railtitle  the heading over the step list in the left rail.
 [params.worlds]
   [params.worlds.web-sdk-migration]
-    css  = "world-shell.css"
-    js   = "world-migration.js"
-    root = "/web-sdk-migration"
+    css       = "world-shell.css"
+    js        = "world-migration.js"
+    root      = "/web-sdk-migration"
+    shape     = "procedure"
+    bodyclass = "world-migration"
+    name      = "Migration"
+    fullname  = "Web SDK Migration"
+    seriesname = "AppMeasurement to Adobe Web SDK Migration Guide"
+    howto      = "Migrate from AppMeasurement to the Adobe Web SDK"
+    railtitle = "The Migration"
+    punch_a   = "Stop sending beacons."
+    punch_b   = "Start sending events."
+    cue       = "in the order the work happens"
     # The social card for every page in this world. One image per world rather
     # than one for the site: og-default.jpg was the Web SDK card, and it was
     # being served on all 144 learning pages too.
-    og   = "og-web-sdk-migration.jpg"
+    og        = "og-web-sdk-migration.jpg"
 
   [params.worlds.adobe-analytics-learning]
-    css  = "world-learning.css"
-    js   = "world-learning.js"
-    root = "/adobe-analytics-learning"
-    og   = "og-adobe-analytics-learning.jpg"
+    css       = "world-learning.css"
+    js        = "world-learning.js"
+    root      = "/adobe-analytics-learning"
+    shape     = "curriculum"
+    bodyclass = "world-learning"
+    name      = "Adobe Analytics"
+    fullname  = "Adobe Analytics Learning"
+    og        = "og-adobe-analytics-learning.jpg"
+
+  # Section 3, started 6 September 2026. Procedure shape, so it shares
+  # world-shell.css and the migration shell rather than forking either.
+  [params.worlds.aep-mobile-sdk]
+    css       = "world-shell.css"
+    js        = "world-migration.js"
+    root      = "/aep-mobile-sdk"
+    shape     = "procedure"
+    bodyclass = "world-mobile"
+    name      = "Mobile SDK"
+    fullname  = "Adobe Experience Platform Mobile SDK"
+    seriesname = "Adobe Experience Platform Mobile SDK Implementation Guide"
+    howto      = "Implement the Adobe Experience Platform Mobile SDK"
+    railtitle = "The Implementation"
+    punch_a   = "You will not write the app."
+    punch_b   = "You will still have to debug it."
+    cue       = "in the order the work happens"
+    og        = "og-aep-mobile-sdk.jpg"
 
 # ---------------------------------------------------------------------------
 # Module downloads, added 30 August 2026 for M19.
@@ -241,3 +288,27 @@ disableKinds = ["taxonomy", "term"]
     name = "Prove it and cut over"
     blurb = "Confirm it matches the old beacon, then retire the old beacon."
     steps = [11, 12, 13]
+
+# The four movements of the Mobile SDK guide, keyed on stepnum exactly as the
+# migration world's stages are. Grouping lives here and never in a page.
+[params.worlds.aep-mobile-sdk.phases]
+  [params.worlds.aep-mobile-sdk.phases.ground]
+    order = 1
+    name = "Ground"
+    blurb = "What mobile changes, and enough of the app to be useful in the room."
+    steps = [1, 2, 3]
+  [params.worlds.aep-mobile-sdk.phases.configure]
+    order = 2
+    name = "Configure"
+    blurb = "Every bit of this is Adobe-side. You can finish it before you speak to a developer."
+    steps = [4, 5, 6]
+  [params.worlds.aep-mobile-sdk.phases.implement]
+    order = 3
+    name = "Implement"
+    blurb = "The app itself, where you stop being able to do it alone."
+    steps = [7, 8, 9, 10, 11, 12]
+  [params.worlds.aep-mobile-sdk.phases.prove]
+    order = 4
+    name = "Prove and ship"
+    blurb = "Confirm the data arrives, find out why when it does not, then release."
+    steps = [13, 14, 15]

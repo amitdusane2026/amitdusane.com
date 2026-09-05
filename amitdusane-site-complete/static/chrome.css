@@ -856,7 +856,7 @@ body.world-migration .ask-route.is-copied .ask-route-act{color:#1f5fae}
      padding-top of --header-h so the live page clears the fixed header, and it
      survived into print as a band of white above the running header on every
      sheet. Nothing is fixed on paper, so the offset has no job here. */
-  body.world-migration{padding-top:0 !important}
+  body.world-migration,body.world-mobile{padding-top:0 !important}
   /* Breadcrumbs are screen navigation. The learning world already dropped its
      .lcrumb; this is the migration equivalent, which was printing a "Migration
      > Knowledge Base > ..." line directly above the title that repeats it. */

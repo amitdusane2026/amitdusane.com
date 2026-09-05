@@ -1,6 +1,12 @@
 {{- $home := .Site.Home.Permalink -}}
 {{- $person := dict "@type" "Person" "name" .Site.Params.author "url" $home "jobTitle" .Site.Params.jobTitle "sameAs" (slice .Site.Params.linkedin) -}}
-{{- $migURL := (printf "%sweb-sdk-migration/" $home) -}}
+{{- /* World-aware since 6 September 2026. A second procedure world needs the
+       same HowTo and the same breadcrumbs; both now read the registry rather
+       than naming the migration guide. $w is nil off-world, so $wshape guards
+       every test below. */ -}}
+{{- $w := index .Site.Params.worlds .Section -}}
+{{- $wshape := "" -}}{{- $wURL := "" -}}
+{{- with $w -}}{{- $wshape = .shape -}}{{- $wURL = printf "%s%s/" $home (strings.TrimPrefix "/" .root) -}}{{- end -}}
 
 {{- if .IsHome -}}
   {{- $website := dict "@context" "https://schema.org" "@type" "WebSite" "name" .Site.Title "url" $home "author" $person -}}
@@ -9,8 +15,8 @@
 {{- end -}}
 
 {{- /* Guide landing: HowTo listing the 13 steps */ -}}
-{{- if and .IsSection (eq .RelPermalink "/web-sdk-migration/") -}}
-  {{- $steps := (where .Site.RegularPages "Type" "step").ByWeight -}}
+{{- if and .IsSection (eq $wshape "procedure") -}}
+  {{- $steps := (where (where .Site.RegularPages "Type" "step") "Section" .Section).ByWeight -}}
   {{- $els := slice -}}
   {{- range $i, $s := $steps -}}
     {{- $els = $els | append (dict "@type" "HowToStep" "position" (add $i 1) "name" $s.Title "url" $s.Permalink) -}}
@@ -30,7 +36,7 @@
       "inLanguage" "en"
       "author" $person
       "publisher" $person
-      "isPartOf" (dict "@type" "CreativeWorkSeries" "name" "AppMeasurement to Adobe Web SDK Migration Guide" "url" $migURL) -}}
+      "isPartOf" (dict "@type" "CreativeWorkSeries" "name" $w.seriesname "url" $wURL) -}}
   <script type="application/ld+json">{{ $article | jsonify (dict "indent" "  ") | safeJS }}</script>
 {{- end -}}
 
@@ -67,10 +73,10 @@
   <script type="application/ld+json">{{ $art | jsonify (dict "indent" "  ") | safeJS }}</script>
 {{- end -}}
 {{- /* Breadcrumbs on guide pages */ -}}
-{{- if eq .Section "web-sdk-migration" -}}
-  {{- $crumbs := slice (dict "name" "Home" "url" $home) (dict "name" "Web SDK Migration" "url" $migURL) -}}
-  {{- if eq .Type "kb" -}}{{- $crumbs = $crumbs | append (dict "name" "Knowledge Base" "url" (printf "%skb/" $migURL)) -}}{{- end -}}
-  {{- if not (eq .RelPermalink "/web-sdk-migration/") -}}{{- $crumbs = $crumbs | append (dict "name" .Title "url" .Permalink) -}}{{- end -}}
+{{- if eq $wshape "procedure" -}}
+  {{- $crumbs := slice (dict "name" "Home" "url" $home) (dict "name" $w.fullname "url" $wURL) -}}
+  {{- if eq .Type "kb" -}}{{- $crumbs = $crumbs | append (dict "name" "Knowledge Base" "url" (printf "%skb/" $wURL)) -}}{{- end -}}
+  {{- if not (eq .RelPermalink (printf "%s/" $w.root)) -}}{{- $crumbs = $crumbs | append (dict "name" .Title "url" .Permalink) -}}{{- end -}}
   {{- $els := slice -}}
   {{- range $i, $c := $crumbs -}}
     {{- $els = $els | append (dict "@type" "ListItem" "position" (add $i 1) "name" $c.name "item" $c.url) -}}
