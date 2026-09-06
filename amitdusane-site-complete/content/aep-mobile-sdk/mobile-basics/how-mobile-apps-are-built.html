@@ -26,6 +26,39 @@ params:
 <p>The second approach is to write the app once, in a single language. A framework then produces both versions from that one codebase. <b>React Native</b> and <b>Flutter</b> are the two you will meet. Between them they account for a large and growing share of apps. This is the publisher writing one manuscript and running it through a very good translation engine. One author, one manuscript, two editions that read almost natively. It is enormously cheaper. For most kinds of book it is good enough that readers never notice.</p>
 <p>The word doing the work there is <i>almost</i>. A cross-platform framework covers the common ground extremely well. It reaches the edges more slowly. When a platform ships something new, the framework has to catch up before an app can use it, and that lag is measured in months rather than days. Occasionally a joke does not survive translation. The developer then writes a small piece of genuinely native code and bolts it on.</p>
 <p>For your purposes the important fact is a reassuring one. Adobe ships plugins for both frameworks, those plugins wrap the same native SDK, and everything on the Adobe side behaves identically. One codebase also means <b>a tracking request lands once rather than twice</b>, which removes an entire class of iOS-and-Android disagreement before it can happen.</p>
+<figure class="fig-svg"><svg viewBox="0 0 700 262" role="img" aria-label="One tracking request follows two routes. On a native project it is implemented separately by an iOS developer in Swift and an Android developer in Kotlin, producing two implementations that can disagree. On a cross-platform project one developer implements it once, so the two platforms cannot drift apart." style="width:100%;height:auto;display:block">
+<text x="24" y="22" style="font-size:12.5px;font-weight:700;fill:var(--ink-soft, #3b4048)">One tracking request, and how many times it gets built</text>
+<rect x="24" y="112" width="132" height="52" rx="8" style="fill:var(--accent-soft, #e6f2f0);stroke:var(--accent-line, #c2e0db);stroke-width:1.5"/>
+<text x="90" y="134" text-anchor="middle" style="font-size:11.5px;font-weight:700;fill:var(--accent, #0f6b62)">One request</text>
+<text x="90" y="150" text-anchor="middle" style="font-size:11px;fill:var(--ink-soft, #3b4048)">rename a screen</text>
+<line x1="156" y1="130" x2="182" y2="92" style="stroke:var(--faint, #9aa1ab);stroke-width:1.5"/>
+<polygon points="182,92 173,94 177,100" style="fill:var(--faint, #9aa1ab)"/>
+<line x1="156" y1="146" x2="182" y2="204" style="stroke:var(--faint, #9aa1ab);stroke-width:1.5"/>
+<polygon points="182,204 176,197 171,202" style="fill:var(--faint, #9aa1ab)"/>
+<text x="186" y="48" style="font-size:11px;font-weight:700;fill:var(--muted, #6b7280)">NATIVE</text>
+<rect x="186" y="56" width="176" height="34" rx="6" style="fill:var(--bg-soft, #f7f8fa);stroke:var(--line, #e4e6ea);stroke-width:1.5"/>
+<text x="274" y="77" text-anchor="middle" style="font-size:11.5px;fill:var(--ink, #1c1f24)">iOS developer, in Swift</text>
+<rect x="186" y="96" width="176" height="34" rx="6" style="fill:var(--bg-soft, #f7f8fa);stroke:var(--line, #e4e6ea);stroke-width:1.5"/>
+<text x="274" y="117" text-anchor="middle" style="font-size:11.5px;fill:var(--ink, #1c1f24)">Android developer, in Kotlin</text>
+<line x1="362" y1="73" x2="404" y2="86" style="stroke:var(--faint, #9aa1ab);stroke-width:1.5"/>
+<line x1="362" y1="113" x2="404" y2="100" style="stroke:var(--faint, #9aa1ab);stroke-width:1.5"/>
+<rect x="406" y="64" width="164" height="58" rx="6" style="fill:var(--warn-soft, #fbf2e3);stroke:var(--warn, #9a5b00);stroke-width:1.5"/>
+<text x="488" y="87" text-anchor="middle" style="font-size:11.5px;font-weight:700;fill:var(--warn, #9a5b00)">Two implementations</text>
+<text x="488" y="105" text-anchor="middle" style="font-size:11px;fill:var(--ink-soft, #3b4048)">two schedules, one ticket</text>
+<text x="582" y="88" style="font-size:11px;font-weight:700;fill:var(--warn, #9a5b00)">they can</text>
+<text x="582" y="104" style="font-size:11px;font-weight:700;fill:var(--warn, #9a5b00)">disagree</text>
+<line x1="24" y1="176" x2="676" y2="176" style="stroke:var(--line, #e4e6ea);stroke-width:1;stroke-dasharray:4 4"/>
+<text x="186" y="198" style="font-size:11px;font-weight:700;fill:var(--muted, #6b7280)">CROSS-PLATFORM</text>
+<rect x="186" y="206" width="176" height="34" rx="6" style="fill:var(--bg-soft, #f7f8fa);stroke:var(--line, #e4e6ea);stroke-width:1.5"/>
+<text x="274" y="227" text-anchor="middle" style="font-size:11.5px;fill:var(--ink, #1c1f24)">One developer, in JS or Dart</text>
+<line x1="362" y1="223" x2="404" y2="223" style="stroke:var(--faint, #9aa1ab);stroke-width:1.5"/>
+<polygon points="404,223 395,219 395,227" style="fill:var(--faint, #9aa1ab)"/>
+<rect x="406" y="198" width="164" height="50" rx="6" style="fill:var(--ok-soft, #e9f4ee);stroke:var(--ok, #1f7a4d);stroke-width:1.5"/>
+<text x="488" y="219" text-anchor="middle" style="font-size:11.5px;font-weight:700;fill:var(--ok, #1f7a4d)">One implementation</text>
+<text x="488" y="236" text-anchor="middle" style="font-size:11px;fill:var(--ink-soft, #3b4048)">fires from one place</text>
+<text x="582" y="219" style="font-size:11px;font-weight:700;fill:var(--ok, #1f7a4d)">cannot</text>
+<text x="582" y="235" style="font-size:11px;font-weight:700;fill:var(--ok, #1f7a4d)">drift</text>
+</svg><figcaption>The same request, on the two kinds of project. <b>Nothing on the Adobe side changes between these two routes</b>, and the only thing that does is how many people have to interpret your ticket.</figcaption></figure>
 <h2>Hybrid: put a web page inside an app</h2>
 <p>The third approach is to build the screens as web pages and wrap them in a thin app that displays them. The container is a real app you download from a store. Much of what you see inside it is a website, rendering in a component called a <b>WebView</b>. Apache Cordova and Ionic are the names you will hear. A great many apps use this for part of themselves rather than all of themselves.</p>
 <p>The publisher here has printed the same pages for both countries and bound them in a locally produced cover. It is the cheapest of the four by a wide margin. It ships fastest. Readers can usually tell.</p>

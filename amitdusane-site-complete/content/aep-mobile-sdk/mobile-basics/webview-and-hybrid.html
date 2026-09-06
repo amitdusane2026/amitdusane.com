@@ -32,6 +32,33 @@ params:
 </tbody></table></div>
 <h2>The trap in the middle option</h2>
 <p>The second arrangement is the common one, and it is the one that goes wrong. Two implementations are measuring one person. Unless they are joined deliberately, that person is <b>two people</b>. The app knows them by an ECID stored in app storage. The page inside the WebView is a browser and gets its own ECID, stored in browser storage. Same human, same phone, same session, two identities. The checkout appears to have been done by a stranger who arrived from nowhere.</p>
+<figure class="fig-svg"><svg viewBox="0 0 700 250" role="img" aria-label="One person on one phone opens an app that carries the Mobile SDK and an ECID stored in app storage, then a WebView screen inside it that carries the Web SDK and its own separate ECID stored in browser storage. Without a shared identity the two are reported as two different people." style="width:100%;height:auto;display:block">
+<text x="24" y="22" style="font-size:12.5px;font-weight:700;fill:var(--ink-soft, #3b4048)">One person, one phone, one session &#8212; and two identities</text>
+<rect x="24" y="40" width="300" height="180" rx="10" style="fill:var(--bg-soft, #f7f8fa);stroke:var(--line, #e4e6ea);stroke-width:1.5"/>
+<text x="40" y="62" style="font-size:11px;font-weight:700;fill:var(--muted, #6b7280)">ONE PHONE, ONE PERSON</text>
+<rect x="40" y="74" width="268" height="60" rx="7" style="fill:var(--accent-soft, #e6f2f0);stroke:var(--accent-line, #c2e0db);stroke-width:1.5"/>
+<text x="54" y="96" style="font-size:11.5px;font-weight:700;fill:var(--accent, #0f6b62)">The app &#8212; Mobile SDK</text>
+<text x="54" y="114" style="font-size:11px;fill:var(--ink-soft, #3b4048)">ECID in app storage</text>
+<text x="270" y="106" text-anchor="middle" style="font-size:15px;font-weight:700;fill:var(--accent, #0f6b62)">A</text>
+<rect x="40" y="144" width="268" height="60" rx="7" style="fill:var(--story-soft, #efecf6);stroke:var(--story, #5a4a86);stroke-width:1.5"/>
+<text x="54" y="166" style="font-size:11.5px;font-weight:700;fill:var(--story, #5a4a86)">A WebView screen &#8212; Web SDK</text>
+<text x="54" y="184" style="font-size:11px;fill:var(--ink-soft, #3b4048)">its own ECID, in browser storage</text>
+<text x="270" y="176" text-anchor="middle" style="font-size:15px;font-weight:700;fill:var(--story, #5a4a86)">B</text>
+<line x1="324" y1="104" x2="392" y2="104" style="stroke:var(--faint, #9aa1ab);stroke-width:1.5"/>
+<polygon points="392,104 383,100 383,108" style="fill:var(--faint, #9aa1ab)"/>
+<line x1="324" y1="174" x2="392" y2="174" style="stroke:var(--faint, #9aa1ab);stroke-width:1.5"/>
+<polygon points="392,174 383,170 383,178" style="fill:var(--faint, #9aa1ab)"/>
+<rect x="394" y="40" width="282" height="180" rx="10" style="fill:var(--danger-soft, #f8ecec);stroke:var(--danger, #a13030);stroke-width:1.5"/>
+<text x="410" y="62" style="font-size:11px;font-weight:700;fill:var(--danger, #a13030)">WHAT REPORTING SEES</text>
+<rect x="410" y="80" width="250" height="44" rx="6" style="fill:var(--bg, #ffffff);stroke:var(--line, #e4e6ea);stroke-width:1.5"/>
+<text x="424" y="98" style="font-size:11.5px;font-weight:700;fill:var(--ink, #1c1f24)">Visitor A &#8212; browsed, never bought</text>
+<text x="424" y="115" style="font-size:11px;fill:var(--muted, #6b7280)">the app journey, ending nowhere</text>
+<rect x="410" y="134" width="250" height="44" rx="6" style="fill:var(--bg, #ffffff);stroke:var(--line, #e4e6ea);stroke-width:1.5"/>
+<text x="424" y="152" style="font-size:11.5px;font-weight:700;fill:var(--ink, #1c1f24)">Visitor B &#8212; bought, from nowhere</text>
+<text x="424" y="169" style="font-size:11px;fill:var(--muted, #6b7280)">a checkout with no journey before it</text>
+<text x="535" y="200" text-anchor="middle" style="font-size:11.5px;font-weight:700;fill:var(--danger, #a13030)">Two people. Same human.</text>
+<text x="24" y="240" style="font-size:11px;fill:var(--muted, #6b7280)">The fix is one arrow: the app passes its ECID into the WebView, on every WebView, before the page sends anything.</text>
+</svg><figcaption>Neither side is broken, and each is doing its job correctly. <b>The damage is done by the join that was never specified</b>, which is why this has to be settled before the schema rather than after the numbers look wrong.</figcaption></figure>
 <p>Worse, the two can measure the same thing twice. The app fires an event when the WebView opens. The page fires its own event on load. One action has now produced two records, and reports quietly run high. Nobody sees an error, because nothing has gone wrong in any way a system can detect.</p>
 <p>None of this is unsolvable. Identity is passed from the app into the WebView, so that both sides agree who they are talking to. The two implementations are specified together, so neither measures what the other measures. It is real design work, done once, at the start. It is very unpleasant to retrofit, and retrofitting is when most teams meet it.</p>
 <h2>How the two sides are joined</h2>
