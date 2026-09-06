@@ -2578,8 +2578,13 @@ callback-based.
 how mobile apps are built, React Native and Flutter, WebView and hybrid. That
 completes the "What kind of app is this" group. Remaining are six under "The
 developer's world", three under "How an app behaves" and two under "Working
-with the team"; of those eleven, five are new and six are promotions from the
-knowledge base that need expanding to Part One depth.
+with the team"; of those eleven, four are new and seven are promotions from
+the knowledge base that need expanding to Part One depth. **Corrected 6
+September 2026** against `aep-mobile-sdk-map.html`, which lists the split per
+topic: the plan had said five and six. The map's own arithmetic confirms it,
+because KB 26 to 18 is eight removals, the seven promotions plus
+`kb/cross-platform`, which the written topic `react-native-and-flutter`
+already supersedes and which nothing had listed for removal.
 
 **Still to do after the topics are written:**
 
@@ -2594,10 +2599,41 @@ knowledge base that need expanding to Part One depth.
    never a separate page, or the site becomes three sites in one.
 4. Full QA pass, then launch on Amit's word only.
 
+### Two registers in one world, and the reason
+
+**The Mobile SDK section deliberately writes at two depths, decided by Amit on
+6 September 2026.** Getting this wrong in either direction damages the section,
+so it is recorded rather than left to whoever measures next.
+
+**Part Two, the implementation steps, keeps the migration guide's register.**
+Terse, roughly 300 words of prose, sentence median in the low teens, one diagram,
+a `dothis`-style action block. Quick turnaround is the point: a reader following
+steps wants the next instruction, not an essay.
+
+**Part One, the mobile app basics, is the opposite and must not be measured
+against it.** The reader is assumed illiterate in app development, and the
+objective is that after reading they can sit in a room with mobile developers
+and not be an alien there. That needs real length, worked examples, stories and
+analogies carried through a whole page. Measure these against the **learning
+world**, not the procedure world: paragraph medians in the sixties, sentence
+median around twelve, an extended analogy per topic rather than a definition.
+
+**A short Part One page is a failed Part One page.** The failure mode is
+applying the step targets here and producing a glossary, which is exactly what
+Experience League already provides and exactly what this section exists to be
+better than.
+
+**This section was deleted once already.** The session close of 6 September 2026
+removed it while leaving the pointer to it in "What the next session should pick
+up", so the governing spec for eleven unwritten pages survived only as a git
+object in `bcb97bb`. Restored 6 September 2026. If this heading is ever reworded,
+reword the pointer below with it.
+
 ### What the next session should pick up
 
 **Write the remaining eleven Part One topics**, in the groups the map lists, and
-read `### Two registers in one world` above before starting. Part One is
+read `### Two registers in one world, and the reason` above before
+starting. Part One is
 measured against the learning world, not against the steps next door. A short
 Part One page is a failed one.
 
