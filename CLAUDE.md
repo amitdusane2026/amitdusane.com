@@ -528,6 +528,10 @@ weight: 2
 
 `lastmod` is set manually, never derived from git. A date that lies is worse than no date.
 
+**Front matter carries text, never HTML.** `{{ .Title }}` and `{{ .Description }}` are escaped on output, so an entity written into front matter reaches the reader as the entity itself. A KB title written as `What &ldquo;add the SDK&rdquo; means` shipped on 6 September 2026 and rendered with the raw `&ldquo;` visible in the heading, the breadcrumb and the index card. Amit caught it on the page.
+
+**The fix is the data, not the template.** Type the real character, `"` and `"`, rather than reaching for `safeHTML` on the title, which would make every title in the site an HTML injection point to keep an entity nobody needed. Registry strings like `kbtitle` are the deliberate exception: those are rendered through `safeHTML` on purpose and may carry entities.
+
 Changing a slug on a live page requires an `aliases` entry. Never let an old URL 404.
 
 ---
