@@ -1,16 +1,32 @@
 {{ define "main" }}
+{{- /* THE KNOWLEDGE BASE INDEX, for any procedure world.
+
+     Until 6 September 2026 this template hardcoded four group keys, their
+     labels, the heading and the standfirst, every one of them written for the
+     migration guide. A second procedure world groups its background by what a
+     reader is stuck on rather than by kind of knowledge, so all of it moved to
+     [params.worlds.<world>.kbgroups] and .kb in hugo.toml.
+
+     Groups render in `order`, and a group with no articles renders nothing
+     rather than an empty heading, which is what lets a world's knowledge base
+     be written a cluster at a time. */ -}}
+{{ $w := index .Site.Params.worlds .Section }}
+{{ $groups := slice }}
+{{ range $k, $v := $w.kbgroups }}{{ $groups = $groups | append (merge $v (dict "key" $k)) }}{{ end }}
+{{ $groups = sort $groups "order" }}
 <section class="view active">
-  {{ $w := index .Site.Params.worlds .Section }}
   <p class="crumb"><a href="{{ (printf "%s/" $w.root) | relURL }}">{{ $w.name }}</a> &rsaquo; Knowledge Base</p>
   <div class="eyebrow">Knowledge Base</div>
-  <h1>The &ldquo;why&rdquo; behind every step</h1>
-  <p class="kb-intro">Everything the migration steps lean on &mdash; concepts, decisions, and reference &mdash; organized so you can browse it directly, or reach any topic in context via a step's <b>&ldquo;Why?&rdquo;</b> link.</p>
-  {{ $labels := dict "concepts" "Concepts" "decisions" "Decisions" "reference" "Reference" "program" "Program & strategy" }}
-  {{ range $g := slice "concepts" "decisions" "reference" "program" }}
-    <div class="kb-grp-h">{{ index $labels $g }}</div>
-    <div class="kb-cards">
-      {{ range (where $.Pages "Params.group" $g).ByWeight }}<a class="kb-card" href="{{ .RelPermalink }}"><div class="t">{{ .Title }}</div><div class="d">{{ .Description }}</div></a>{{ end }}
-    </div>
+  <h1>{{ $w.kb.kbtitle | safeHTML }}</h1>
+  <p class="kb-intro">{{ $w.kb.kbintro | safeHTML }}</p>
+  {{ range $g := $groups }}
+    {{ $items := (where $.Pages "Params.group" $g.key).ByWeight }}
+    {{ with $items }}
+      <div class="kb-grp-h">{{ $g.label | safeHTML }}</div>
+      <div class="kb-cards">
+        {{ range . }}<a class="kb-card" href="{{ .RelPermalink }}"><div class="t">{{ .Title }}</div><div class="d">{{ .Description }}</div></a>{{ end }}
+      </div>
+    {{ end }}
   {{ end }}
 </section>
 {{ end }}

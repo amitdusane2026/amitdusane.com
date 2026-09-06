@@ -1,0 +1,19 @@
+---
+published: 2026-09-06
+lastmod: 2026-09-06
+title: "Where your job ends"
+seotitle: "Analytics and Mobile Development: Who Owns What"
+description: "A dividing line worth agreeing on day one, because most mobile implementations fail at the seam rather than on either side of it."
+slug: "who-does-what"
+type: kb
+weight: 106
+params:
+  group: environment
+  grouplabel: "The app environment"
+---
+<p class="khook">Nobody writes this down, and then everybody discovers it under pressure, which is the worst moment to negotiate a boundary.</p>
+<p>The dividing line is cleaner than it looks. <b>Everything on Adobe's side is yours</b>: the schema, the dataset, the datastream, the tag property, the extensions, the consent default and every environment mapping. You can create, change and correct all of it in a browser, without asking anybody, and without a release.</p>
+<p><b>Everything inside the app is theirs</b>: adding the dependency, initialising the SDK, and placing the tracking calls where the app knows something happened. You cannot do any of it, and you should not try.</p>
+<p>The seam between the two is where implementations fail, and it has exactly three items: the Environment File ID you hand over, the specification of what to track, and the firing points where each event belongs. All three are yours to define and theirs to execute, so all three need writing down rather than describing in a meeting.</p>
+<p><b>For your implementation:</b> when data is missing, work out which side of the line the fault is on before raising anything. Four of the five places an event can stop are on your side, which is the opposite of most people's first instinct.</p>
+<div class="arch"><span class="at">&#9873; Architect&rsquo;s Decision</span><p>Own the specification completely and the code not at all. A tracking request that names the event, the field, the value and the firing point is a request a developer can build without a conversation, and that is the standard to hold yourself to.</p></div>

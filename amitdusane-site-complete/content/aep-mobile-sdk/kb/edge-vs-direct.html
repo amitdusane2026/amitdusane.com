@@ -1,0 +1,19 @@
+---
+published: 2026-09-06
+lastmod: 2026-09-06
+title: "Which path are you on"
+seotitle: "Edge Network Versus the Direct Analytics Extension on Mobile"
+description: "Two ways to reach Adobe Analytics from an app. One of them also reaches Customer Journey Analytics, and choosing wrongly is expensive to undo."
+slug: "edge-vs-direct"
+type: kb
+weight: 205
+params:
+  group: shift
+  grouplabel: "The mental shift"
+---
+<p class="khook">Both paths put data in Adobe Analytics and produce reports that look identical. Only one of them leaves you anywhere to go afterwards.</p>
+<p>The <b>direct</b> path uses the Adobe Analytics mobile extension and sends context data straight to a report suite. It is the older arrangement, it works, and a great many apps run on it. It also ends there. The data is Analytics data, shaped by processing rules, and nothing downstream can read it as anything else.</p>
+<p>The <b>Edge Network</b> path sends XDM to Adobe's Edge, where a datastream decides what happens next. Add the Adobe Analytics service and the same event reaches a report suite. Add the Experience Platform service and it also lands in a dataset, which is what Customer Journey Analytics reads. One implementation, two destinations, and the second is added without touching the app.</p>
+<p>There is a bridge between them. The Edge Bridge extension forwards existing <span class="mn">trackAction</span> and <span class="mn">trackState</span> calls to the Edge with no schema work, which rescues a large app that cannot be rewritten. What it produces is data shaped for Analytics travelling over the Edge, and that is not the same thing as XDM designed for analysis.</p>
+<p><b>For your implementation:</b> new work goes on the Edge Network path with real XDM. Edge Bridge is a migration tool, and treating it as a shortcut for a fresh build trades a week now against a rebuild later.</p>
+<div class="arch"><span class="at">&#9873; Architect&rsquo;s Decision</span><p>Edge Network, XDM, and both services on the datastream, from the first line of code. The direct extension is only correct when you are maintaining something that already exists.</p></div>

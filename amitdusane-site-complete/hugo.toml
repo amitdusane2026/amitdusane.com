@@ -312,3 +312,49 @@ disableKinds = ["taxonomy", "term"]
     name = "Prove and ship"
     blurb = "Confirm the data arrives, find out why when it does not, then release."
     steps = [13, 14, 15]
+
+# ---------------------------------------------------------------------------
+# KNOWLEDGE BASE GROUPS, moved out of layouts/kb/list.html on 6 September 2026.
+#
+# That template hardcoded four group keys and their labels, plus the index
+# heading and its intro paragraph, all of them naming the migration guide. A
+# second procedure world needs different groupings entirely: this one sorts by
+# what a reader is stuck on rather than by kind of knowledge.
+#
+# `kbtitle` and `kbintro` are the index page's own heading and standfirst.
+# ---------------------------------------------------------------------------
+[params.worlds.web-sdk-migration.kb]
+  kbtitle = "The &ldquo;why&rdquo; behind every step"
+  kbintro = "Everything the migration steps lean on: concepts, decisions and reference, organised so you can browse it directly, or reach any topic in context through a step's &ldquo;Why?&rdquo; link."
+
+[params.worlds.web-sdk-migration.kbgroups]
+  [params.worlds.web-sdk-migration.kbgroups.concepts]
+    order = 1
+    label = "Concepts"
+  [params.worlds.web-sdk-migration.kbgroups.decisions]
+    order = 2
+    label = "Decisions"
+  [params.worlds.web-sdk-migration.kbgroups.reference]
+    order = 3
+    label = "Reference"
+  [params.worlds.web-sdk-migration.kbgroups.program]
+    order = 4
+    label = "Program &amp; strategy"
+
+[params.worlds.aep-mobile-sdk.kb]
+  kbtitle = "The &ldquo;why&rdquo; behind every step"
+  kbintro = "The background the steps lean on, grouped by what a reader is usually stuck on rather than by kind of knowledge. Browse it directly, or reach any topic in context through a step's &ldquo;Why?&rdquo; link."
+
+[params.worlds.aep-mobile-sdk.kbgroups]
+  [params.worlds.aep-mobile-sdk.kbgroups.environment]
+    order = 1
+    label = "The app environment"
+  [params.worlds.aep-mobile-sdk.kbgroups.shift]
+    order = 2
+    label = "The mental shift"
+  [params.worlds.aep-mobile-sdk.kbgroups.plumbing]
+    order = 3
+    label = "The plumbing"
+  [params.worlds.aep-mobile-sdk.kbgroups.failures]
+    order = 4
+    label = "Failure modes"

@@ -1,0 +1,19 @@
+---
+published: 2026-09-06
+lastmod: 2026-09-06
+title: "What a build actually is"
+seotitle: "What a Mobile App Build Is, for Analytics Practitioners"
+description: "Source code becomes a binary before anybody runs it, and that single fact is behind almost everything that makes mobile analytics harder than web."
+slug: "app-build"
+type: kb
+weight: 101
+params:
+  group: environment
+  grouplabel: "The app environment"
+---
+<p class="khook">A web page is delivered as the text somebody wrote. An app is delivered as a sealed object made from that text, and the text is nowhere inside it.</p>
+<p>Building is translation. A developer writes Swift or Kotlin, and a compiler turns it into machine instructions packaged with images, fonts and configuration into one file. That file is what reaches a phone. It cannot be opened and read, it cannot be edited in place, and there is no equivalent of view-source pointed at it.</p>
+<p>Everything awkward about mobile measurement descends from that. There is no console to paste a check into, no network tab listing requests, and no way to confirm from the outside that a tracking call exists. The only way to see inside a running app is a tool the app itself invites in, which is what Assurance is.</p>
+<p>It also explains the waiting. Changing one string means a new build, and a new build means the whole file is made again, tested again, and submitted again. The cost is the same whether the change is one character or one thousand lines, which is why developers batch changes and why your small request joins a queue rather than jumping it.</p>
+<p><b>For your implementation:</b> stop asking whether something is in the code and start asking which build it is in. Those are different questions with different answers, and only the second one can be tested.</p>
+<div class="arch"><span class="at">&#9873; Architect&rsquo;s Decision</span><p>Treat every request as costing a release, and batch accordingly. Ask for the tracking you need in one specification rather than in six tickets across a quarter.</p></div>

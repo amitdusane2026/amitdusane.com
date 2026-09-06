@@ -1,0 +1,19 @@
+---
+published: 2026-09-06
+lastmod: 2026-09-06
+title: "What arrives without asking"
+seotitle: "Adobe Mobile SDK Lifecycle Metrics Explained"
+description: "Installs, upgrades, launches, session length and device detail, all reported from two automatic events that nobody has to write code for."
+slug: "lifecycle-metrics"
+type: kb
+weight: 204
+params:
+  group: shift
+  grouplabel: "The mental shift"
+---
+<p class="khook">The first tracking plan written for an app usually specifies several things the app is already reporting. That costs a sprint and produces nothing new.</p>
+<p>The Lifecycle extension emits two events on its own. <b>Application Launch</b> when the app comes to the foreground, and <b>Application Close</b> when it leaves. They carry a standard field group called AEP Mobile Lifecycle Details, and between them they answer most of what a product team asks in the first month.</p>
+<p>From those two events you get installs, identified as the first launch after installation. Upgrades, the first launch after a version change. Launch counts. Session length, measured as foreground time between the pair. And device, operating system and app version, on every event.</p>
+<p>Automatic lifecycle tracking is switched on by default when the SDK is initialised with the modern initialiser, so on a correctly built app all of this arrives with no tracking code at all. Older apps using explicit extension registration call the lifecycle start and pause methods by hand, and that is where the gaps appear.</p>
+<p><b>For your implementation:</b> read this list before writing a tracking plan, and delete from the plan anything already on it. That deletion is usually the largest single saving available in the first week.</p>
+<div class="arch"><span class="at">&#9873; Architect&rsquo;s Decision</span><p>Take everything lifecycle gives you before asking for anything custom. A specification that duplicates it is not more thorough, it is more expensive for the same result.</p></div>

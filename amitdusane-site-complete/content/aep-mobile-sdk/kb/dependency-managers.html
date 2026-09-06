@@ -1,0 +1,18 @@
+---
+published: 2026-09-06
+lastmod: 2026-09-06
+title: "What &ldquo;add the SDK&rdquo; means"
+seotitle: "Swift Package Manager, CocoaPods and Gradle for Analytics Practitioners"
+description: "Dependency managers explained for somebody who has never opened an IDE, and why the version numbers are worth caring about even though you never type one."
+slug: "dependency-managers"
+type: kb
+weight: 102
+params:
+  group: environment
+  grouplabel: "The app environment"
+---
+<p class="khook">Nobody copies the Adobe SDK into an app. They write down its name and a version, and a tool fetches it at build time.</p>
+<p>That tool is a dependency manager. On iOS it is Swift Package Manager, built into Xcode, or CocoaPods, which is older and still common. On Android it is Gradle. All three do the same job: read a list of libraries the project needs, download them, and make sure the versions fit together.</p>
+<p>Fitting together is the part that matters to you. The Adobe SDK is not one library but six or seven, and they are released as a set. Mix versions from different sets and the app either fails to build or, worse, builds and behaves strangely. Adobe publishes a bill of materials for Android, declared once as <span class="mn">sdk-bom</span>, which pins a known-good combination so every extension inherits it. On iOS the same discipline is a matter of using one version range across all the packages.</p>
+<p><b>For your implementation:</b> you will never type any of this, and you should still read the dependency block when a developer shares it. Seeing seven Adobe lines with no version pin, or with versions that disagree, is a question worth asking before anybody spends a week debugging behaviour.</p>
+<div class="arch"><span class="at">&#9873; Architect&rsquo;s Decision</span><p>Ask for the bill of materials on Android and one consistent version range on iOS. Pinning each extension by hand is the arrangement that eventually produces a build failure nobody can explain.</p></div>

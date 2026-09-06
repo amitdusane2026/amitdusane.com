@@ -1,0 +1,18 @@
+---
+published: 2026-09-06
+lastmod: 2026-09-06
+title: "Why a release is not a deployment"
+seotitle: "Why Shipping a Mobile App Is Not Like Publishing a Tag"
+description: "A tag publish reaches everyone in minutes. An app release passes a review, then waits on people choosing to update, and never reaches all of them."
+slug: "release-not-deploy"
+type: kb
+weight: 103
+params:
+  group: environment
+  grouplabel: "The app environment"
+---
+<p class="khook">Publishing a tag is an event. Releasing an app is a process with a long tail, and the tail never quite ends.</p>
+<p>A web change propagates on the next page load, so within an hour the old version has effectively stopped existing. An app change goes to a store, waits for review, and is then offered to people who decide for themselves whether to accept it. Many will, over weeks. Some have automatic updates switched off. A few are on a device too old to take the new version at all.</p>
+<p>Two consequences follow, and both surprise people who have only worked on the web. The first is speed: a fix you approve today is not measurable for weeks, so a mistake caught late is expensive in a way no web mistake is. The second is overlap: last year's build is still installed, still running, and still sending you data shaped the way it was shaped last year.</p>
+<p><b>For your implementation:</b> anything you can move out of the app and into configuration should live outside the app. The datastream, the tag property and the consent default are all changeable in a browser. Every decision you push into those is a decision you can correct in an afternoon rather than a quarter.</p>
+<div class="arch"><span class="at">&#9873; Architect&rsquo;s Decision</span><p>Put nothing in app code that could live in a tag property. The test is simple: if getting it wrong would need a release to fix, it is in the wrong place.</p></div>

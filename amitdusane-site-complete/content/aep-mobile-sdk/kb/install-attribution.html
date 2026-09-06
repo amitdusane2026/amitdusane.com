@@ -1,0 +1,19 @@
+---
+published: 2026-09-06
+lastmod: 2026-09-06
+title: "Where installs come from"
+seotitle: "Install Attribution Limits in Mobile Analytics"
+description: "The SDK can tell you an install happened. Telling you which campaign caused it is a different problem, owned mostly by the app stores."
+slug: "install-attribution"
+type: kb
+weight: 308
+params:
+  group: plumbing
+  grouplabel: "The plumbing"
+---
+<p class="khook">Install counts and install attribution sound like one topic. The first is straightforward and the second belongs to somebody else's system.</p>
+<p>Lifecycle reports that an install happened, identified as the first launch after installation, and that number is reliable. What it cannot tell you on its own is what a person saw before they installed, because that happened in a store, or a browser, or an advertisement, all of them outside your app and before your code existed on the device.</p>
+<p>The platforms have narrowed this deliberately over time. Attribution now runs through store-provided mechanisms with their own rules, their own delays and their own privacy limits, and those change more often than anything in Adobe's stack. Anybody promising precise install attribution from analytics tooling alone is describing a world that has been closing for years.</p>
+<p>What you can measure reliably is everything after the install: whether new installs reach a first meaningful action, how quickly they return, and how their first week compares with an earlier cohort. That is usually the question worth answering anyway.</p>
+<p><b>For your implementation:</b> agree early with marketing where attribution will come from, and make sure nobody assumes it arrives from the SDK. That assumption tends to surface in the week a campaign report is due.</p>
+<div class="arch"><span class="at">&#9873; Architect&rsquo;s Decision</span><p>Treat install attribution as a separate project with a separate owner. Measure post-install behaviour thoroughly, and never let a campaign plan depend on attribution nobody has confirmed is available.</p></div>

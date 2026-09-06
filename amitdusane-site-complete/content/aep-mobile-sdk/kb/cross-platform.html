@@ -1,0 +1,19 @@
+---
+published: 2026-09-06
+lastmod: 2026-09-06
+title: "React Native and Flutter"
+seotitle: "Adobe Mobile SDK on React Native and Flutter"
+description: "Cross-platform apps use plugins that wrap the same native SDK, so everything in this guide applies with one extra layer to be aware of."
+slug: "cross-platform"
+type: kb
+weight: 107
+params:
+  group: environment
+  grouplabel: "The app environment"
+---
+<p class="khook">A large share of apps are neither native iOS nor native Android, and the guide still applies to them almost unchanged.</p>
+<p>React Native and Flutter let one codebase produce both apps. Adobe ships plugins for each, and those plugins are wrappers: underneath, the same native SDK is doing the work, talking to the same Edge Network, configured by the same tag property and the same datastream.</p>
+<p>So everything on the Adobe side is identical. The schema, the datastream, the extensions, the Environment File ID, consent, identity and Assurance all behave exactly as described, because none of them knows or cares how the app was built.</p>
+<p>What differs is the installation, which uses the JavaScript or Dart package manager rather than Swift Package Manager or Gradle directly, and the API surface, which is the plugin's own wrapper around the native calls. Method names are recognisable but not always identical, and a few native capabilities arrive in the wrapper later than in the SDK itself.</p>
+<p><b>For your implementation:</b> specify what you need in terms of events, fields and firing points exactly as you would for a native app. Let the developer translate that into the plugin's API, which is their job and not a thing you need to learn.</p>
+<div class="arch"><span class="at">&#9873; Architect&rsquo;s Decision</span><p>Do not treat a cross-platform app as a different project. Ask one extra question at the start, which is whether the plugin supports everything on your list, and proceed identically once it is answered.</p></div>

@@ -1,0 +1,19 @@
+---
+published: 2026-09-06
+lastmod: 2026-09-06
+title: "Sent, or never sent"
+seotitle: "Telling a Mobile Event That Never Sent from One That Was Rejected"
+description: "Two completely different faults produce the same empty report, and separating them is the first thing worth doing when data goes missing."
+slug: "nothing-arrives"
+type: kb
+weight: 402
+params:
+  group: failures
+  grouplabel: "Failure modes"
+---
+<p class="khook">An empty report is not a diagnosis. It is the same symptom for at least five different problems, and guessing between them is what costs the weeks.</p>
+<p>The first split is the useful one. Did the event leave the device at all, or did it leave and get refused? Those two have nothing in common except how they look in a report, and they are owned by different people.</p>
+<p><b>Never sent</b> looks like this: nothing in Assurance beyond the client-side column, or nothing at all. Causes are the SDK not initialising, a consent value blocking collection, or a device with no connection holding events in the queue. The first is usually a wrong Environment File ID. The second is a setting you own. The third resolves itself.</p>
+<p><b>Sent and refused</b> looks different: the event appears, travels, and produces an error response instead of post-processed data. That means the payload reached Adobe and did not match what the schema expects, which is a schema or field-path problem rather than an app problem.</p>
+<p><b>For your implementation:</b> establish which of the two you have before telling anybody anything. Saying that events are not being sent, when they are being sent and rejected, points a whole team at the wrong system for as long as it takes them to prove you wrong.</p>
+<div class="arch"><span class="at">&#9873; Architect&rsquo;s Decision</span><p>Open Assurance before opening a ticket, every single time. Five minutes there decides whether this is a conversation with one person or a sprint for a team.</p></div>

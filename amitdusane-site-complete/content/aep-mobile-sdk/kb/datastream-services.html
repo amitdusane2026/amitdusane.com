@@ -1,0 +1,19 @@
+---
+published: 2026-09-06
+lastmod: 2026-09-06
+title: "One datastream, two destinations"
+seotitle: "How a Datastream Sends Mobile Data to Analytics and AEP"
+description: "The app sends an event once and knows nothing about where it goes. Everything about routing lives on Adobe's side, which is why it is cheap to correct."
+slug: "datastream-services"
+type: kb
+weight: 302
+params:
+  group: plumbing
+  grouplabel: "The plumbing"
+---
+<p class="khook">The most useful property of the datastream is that the app has never heard of it.</p>
+<p>An app sends one XDM event to the Edge Network. The datastream is the server-side configuration that receives it and decides what happens next, and it can hand the same event to more than one service. Add the <b>Adobe Analytics</b> service with a report suite ID and the event reaches Analytics. Add the <b>Adobe Experience Platform</b> service with a dataset and the same event also lands where Customer Journey Analytics can read it.</p>
+<p>Neither addition changes a line of app code. That is the whole architectural point, and it is worth dwelling on if you are used to the older mobile model where the destination was compiled in. Routing decisions have moved from the slowest place to change to one of the fastest.</p>
+<p>Three datastreams, one per environment, is the arrangement that keeps test traffic out of live reporting. Development and staging point at a validation report suite throughout, and only production carries the live one.</p>
+<p><b>For your implementation:</b> when a destination is wrong, fix the datastream before anybody looks at the app. Four of the five places an event can go missing are on this side of the line, and this is the cheapest of them to correct.</p>
+<div class="arch"><span class="at">&#9873; Architect&rsquo;s Decision</span><p>Add both services on day one even if Customer Journey Analytics is a year away. The dataset costs nothing while it waits, and history that was never collected cannot be recovered later.</p></div>

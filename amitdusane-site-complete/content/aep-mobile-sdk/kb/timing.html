@@ -1,0 +1,19 @@
+---
+published: 2026-09-06
+lastmod: 2026-09-06
+title: "Fired before the SDK was ready"
+seotitle: "Race Conditions in Adobe Mobile SDK Initialisation"
+description: "A call made while the SDK is still starting returns an empty value instead of failing, and it does so only sometimes, which is the hardest kind of fault."
+slug: "timing"
+type: kb
+weight: 404
+params:
+  group: failures
+  grouplabel: "Failure modes"
+---
+<p class="khook">The worst faults on mobile are not the ones that break. They are the ones that work four times out of five.</p>
+<p>The SDK starts asynchronously. Initialisation begins when the app launches and completes a moment later, and during that moment the SDK exists but is not ready. Code that asks it a question in that window gets an empty answer rather than an error, which is why this behaves so badly: nothing reports a failure, and the value is simply missing.</p>
+<p>Two situations produce it. Tracking calls fired very early, in the first screen's setup, may run before the SDK can send anything. And the read calls that fetch the ECID, the identities or the consent state all hand their answers to a callback for exactly this reason. Code written as though they return immediately reads whatever was there before the answer arrived, which is usually nothing.</p>
+<p>Because it depends on how fast a device starts up, it appears on slow phones and cold launches and vanishes on a developer's machine. That is the tell: a fault that only some people can reproduce, and never the person investigating it.</p>
+<p><b>For your implementation:</b> when a value is intermittently missing rather than always missing, suspect timing before suspecting configuration. Configuration fails consistently, which is a useful thing about it.</p>
+<div class="arch"><span class="at">&#9873; Architect&rsquo;s Decision</span><p>Treat any intermittent tracking fault as a timing question until proved otherwise, and make sure every read of SDK state goes through its callback. Code that assumes an immediate return will pass every test and fail in the field.</p></div>

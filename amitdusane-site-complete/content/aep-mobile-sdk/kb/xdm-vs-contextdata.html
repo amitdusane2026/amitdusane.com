@@ -1,0 +1,19 @@
+---
+published: 2026-09-06
+lastmod: 2026-09-06
+title: "Where context data went"
+seotitle: "XDM Instead of Context Data in Adobe Mobile Implementations"
+description: "The unit of collection changed from a flat bag of keys to a typed, agreed schema, and the reason is what happens after the data lands."
+slug: "xdm-vs-contextdata"
+type: kb
+weight: 202
+params:
+  group: shift
+  grouplabel: "The mental shift"
+---
+<p class="khook">Context data asked one question: what do you want to send? XDM asks a harder one first. What does this field mean, and will it still mean that next year?</p>
+<p>In the older model an app sent <span class="mn">c.productid</span>, or any other key it liked, and a processing rule on the Adobe side decided which eVar it became. Nothing validated the name. Nothing described the shape. Two teams could send the same idea under different keys without anybody noticing until a report disagreed with itself.</p>
+<p>XDM inverts that. The schema is agreed first, fields are typed, and the Edge rejects payloads that do not match. That rejection feels like an obstacle the first time it happens, and it is the entire point. A field that has taken data cannot later be removed or retyped, so what lands in the dataset has the same shape today, next quarter, and after the people who built it have moved on.</p>
+<p>The cost is real. You cannot invent a field on a Tuesday afternoon. The benefit is that Customer Journey Analytics, and anything else reading that dataset, never has to guess what a value means or reconcile four spellings of it.</p>
+<p><b>For your implementation:</b> spend the time on the schema before any code is written. Every hour there is repaid at the point somebody asks a question of the data that nobody anticipated.</p>
+<div class="arch"><span class="at">&#9873; Architect&rsquo;s Decision</span><p>Design the schema for the question you expect in a year, not for the report you were asked for this week. The first is expensive to add later. The second is trivial.</p></div>
