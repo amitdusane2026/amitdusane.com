@@ -2574,6 +2574,28 @@ recalled, and two would have been wrong from memory: `MobileCore.initialize`
 auto-registers extensions and enables lifecycle, and the read calls are all
 callback-based.
 
+**Part One, the mobile app basics, is five of fourteen topics as of 6
+September 2026.** Group 2's two new pages, `ios-swift-and-xcode` and
+`android-kotlin-and-studio`, are written; the four promotions in that group are
+not. Three facts in the Android page were verified against Adobe's own SDK
+source rather than recalled, because this environment's egress proxy blocks both
+`experienceleague.adobe.com` and `developer.adobe.com`: Core declares INTERNET
+and ACCESS_NETWORK_STATE in its own manifest fragment, each extension library
+registers itself by attaching metadata to a shared discovery service, and the
+SDK logs one "Discovered extension" line per extension at debug level. The iOS
+page corrects a simplification step 7 makes, since a SwiftUI app may have no
+AppDelegate.
+
+**Measured against the register spec, and the three Group 1 pages miss it.**
+The two new pages sit at paragraph medians 72 and 59 with sentence medians 13
+and 14.5, nothing over 30 words. The three written earlier sit at 47 to 51 and
+15 to 17. They were written in the same session that recorded the spec, so they
+read as a first attempt at it rather than a deliberate choice. A tightening pass
+on those three is open and unresolved; Amit has not ruled on whether it is worth
+doing.
+
+**The original three-of-fourteen note follows.**
+
 **Part One, the mobile app basics, is three of fourteen topics.** Written:
 how mobile apps are built, React Native and Flutter, WebView and hybrid. That
 completes the "What kind of app is this" group. Remaining are six under "The
