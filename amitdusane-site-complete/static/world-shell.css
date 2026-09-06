@@ -362,6 +362,20 @@
   .view.rebalanced .call.mistake{background:var(--bg);border-left-color:#c08a7f}
   .view.rebalanced .call.check{background:var(--bg);border-left-color:var(--ok)}
   .view.rebalanced .call.danger{background:var(--danger-soft);border-left-width:4px}
+  /* THE OPENING HOOK ON A STANDALONE KB PAGE. Added 6 September 2026.
+
+     .khook had styling only under .kbtopic and .panel-body, which are the
+     slide-over panel and the in-page topic view. A KB article opened at its own
+     URL has neither ancestor, so its opening line rendered as ordinary body
+     prose in both worlds, all 24 migration articles included. Nothing was
+     broken; the hook had simply lost its treatment when KB topics also became
+     pages of their own.
+
+     It borrows .narrative rather than inventing a value, because a hook and a
+     step's opening block do the same job in the same world, and one opening
+     voice is worth more than a second nearly-identical one. The two scoped
+     rules below are (0,2,0) against this (0,1,0), so the panel is untouched. */
+  .khook{font-size:16.5px;line-height:1.72;color:var(--ink-soft);margin:.35em 0 1.05em}
   /* KB topic opening (Phase 3) */
   .kbtopic .khook,.panel-body .khook{font-size:16px;color:var(--ink);line-height:1.7;margin:.1em 0 .8em}
   .kbtopic p,.panel-body p{margin:.6em 0}
@@ -423,6 +437,15 @@
   .shint-a:hover{text-decoration:underline}
   @media(max-width:560px){
     .search-btn .sk,.search-btn .sl{display:none}
+    /* The hook's mobile step lives in THIS query rather than the one at the top
+       of the file, and the reason is worth keeping. Both queries are
+       max-width:560px and both rules are (0,1,0), so the winner is decided by
+       source order alone. The base .khook rule sits above at line 379, which
+       is after the first query and before this one, so a step written up there
+       would be silently overridden and the hook would stay 16.5px on a phone.
+       .narrative has exactly that arrangement today and its own mobile step
+       does nothing; measured at 375px on 6 September 2026, it renders 16.5px. */
+    .khook{font-size:16px}
     .search-btn{flex:0 0 auto;width:34px;max-width:none;height:34px;margin-left:auto;padding:0;justify-content:center;border-radius:8px}
     /* The 48px fab and its 22px mark that sat here are gone, 2 Sep 2026. The
        About mark is a universal component in chrome.css, sized from --fab-size

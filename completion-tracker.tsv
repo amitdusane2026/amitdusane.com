@@ -299,3 +299,4 @@ Section	aep-mobile-sdk	REF	References	Section	/aep-mobile-sdk/references/	Adobe 
 Platform	infrastructure		Home tiles generated from the world registry, with step and section counts measured rather than typed	Feature	layouts/index.html	NA	NA	NA	NA	NA	NA	Yes	No	No
 Platform	infrastructure		KB index generalised: group keys, labels, heading and standfirst moved to params.worlds.<world>.kbgroups	Feature	layouts/kb/list.html	NA	NA	NA	NA	NA	NA	Yes	No	No
 Platform	infrastructure		References panel made world-aware: openRef fetched /web-sdk-migration/references/ by name, so every citation in a second procedure world opened the wrong document	Feature	static/world-migration.js	NA	NA	NA	NA	NA	NA	Yes	No	No
+Platform	presentation		Opening hook styled on standalone KB pages: .khook had rules only under .kbtopic and .panel-body, so it rendered as body prose in both worlds	Feature	static/world-shell.css	NA	NA	NA	NA	NA	NA	Yes	No	No
