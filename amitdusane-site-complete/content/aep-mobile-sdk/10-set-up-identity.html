@@ -1,0 +1,45 @@
+---
+published: 2026-09-06
+lastmod: 2026-09-06
+title: "Set up identity"
+seotitle: "ECID and Customer IDs in the Adobe Mobile SDK"
+description: "The ECID identifies a device, not a person. Adding your own customer ID is what lets one human being be recognised across an app and a website."
+slug: "set-up-identity"
+weight: 10
+type: step
+params:
+  stepnum: 10
+  kbids: ["identity-on-mobile", "customer-id"]
+---
+<div class="narrative">The SDK generates an ECID on first launch and attaches it to everything, with no work from anybody. That is genuinely useful and it is also the source of the most persistent misunderstanding in mobile analytics. <b>An ECID identifies an installation, not a human being.</b> The same person on a phone and a laptop is two ECIDs. The same person after a reinstall is two ECIDs. Every question that begins &ldquo;how many customers&rdquo; runs into that, and the answer is to send an identifier of your own alongside it.</div><div class="why-row"><span class="wl">Why?</span><a class="why" href="/aep-mobile-sdk/kb/identity-on-mobile/" data-kb="identity-on-mobile">What survives a reinstall? <span class="arr">&#8599;</span></a><a class="why" href="/aep-mobile-sdk/kb/customer-id/" data-kb="customer-id">Why is the ECID not enough? <span class="arr">&#8599;</span></a></div><figure class="fig-svg"><svg viewBox="0 0 700 200" role="img" aria-label="One person using a phone, a tablet and a website produces three separate ECIDs, and only a shared customer ID sent from all three lets them be recognised as one person." style="width:100%;height:auto;display:block">
+<rect x="20" y="34" width="150" height="42" rx="8" style="fill:var(--bg-soft, #f7f8fa);stroke:var(--line, #e4e6ea);stroke-width:1.4"/>
+<text x="95" y="52" text-anchor="middle" style="font-size:12px;fill:var(--ink-soft, #3b4048)">phone app</text>
+<text x="95" y="68" text-anchor="middle" style="font-size:11px;fill:var(--muted, #6b7280)">ECID 4f2a...</text>
+<rect x="20" y="86" width="150" height="42" rx="8" style="fill:var(--bg-soft, #f7f8fa);stroke:var(--line, #e4e6ea);stroke-width:1.4"/>
+<text x="95" y="104" text-anchor="middle" style="font-size:12px;fill:var(--ink-soft, #3b4048)">tablet app</text>
+<text x="95" y="120" text-anchor="middle" style="font-size:11px;fill:var(--muted, #6b7280)">ECID 91c7...</text>
+<rect x="20" y="138" width="150" height="42" rx="8" style="fill:var(--bg-soft, #f7f8fa);stroke:var(--line, #e4e6ea);stroke-width:1.4"/>
+<text x="95" y="156" text-anchor="middle" style="font-size:12px;fill:var(--ink-soft, #3b4048)">website</text>
+<text x="95" y="172" text-anchor="middle" style="font-size:11px;fill:var(--muted, #6b7280)">ECID d803...</text>
+<text x="240" y="60" style="font-size:11.5px;fill:var(--faint, #9aa1ab)">three devices</text>
+<text x="240" y="78" style="font-size:11.5px;fill:var(--faint, #9aa1ab)">three ECIDs</text>
+<text x="240" y="96" style="font-size:11.5px;fill:var(--faint, #9aa1ab)">three &ldquo;people&rdquo;</text>
+<text x="240" y="140" style="font-size:11.5px;font-weight:700;fill:var(--accent, #0f6b62)">add one shared ID</text>
+<text x="240" y="158" style="font-size:11.5px;fill:var(--muted, #6b7280)">sent from all three</text>
+<rect x="420" y="72" width="260" height="70" rx="10" style="fill:var(--accent-soft, #e6f2f0);stroke:var(--accent, #0f6b62);stroke-width:1.8"/>
+<text x="550" y="100" text-anchor="middle" style="font-size:13px;font-weight:700;fill:var(--accent, #0f6b62)">one person</text>
+<text x="550" y="120" text-anchor="middle" style="font-size:11.5px;fill:var(--ink-soft, #3b4048)">and the question becomes answerable</text>
+<line x1="392" y1="107" x2="414" y2="107" style="stroke:var(--accent, #0f6b62);stroke-width:1.8"/>
+</svg><figcaption>Nothing on the left is wrong. Each ECID is doing its job correctly. <b>The shared identifier is the only thing that turns three device histories into one customer</b>, which is the whole premise of cross-channel analysis.</figcaption></figure><div class="actionblock"><div class="abh">Send your own identifier</div><div class="gstep">iOS &middot; Swift</div><div class="code"><button class="copy">Copy</button><pre>let identityMap = IdentityMap()
+let item = IdentityItem(id: "cust-8842190",
+                        authenticatedState: .authenticated,
+                        primary: false)
+
+identityMap.addItem(item: item, withNamespace: "CustomerID")
+Identity.updateIdentities(with: identityMap)</pre></div><div class="gstep">Android &middot; Kotlin</div><div class="code"><button class="copy">Copy</button><pre>val item = IdentityItem("cust-8842190",
+                        AuthenticatedState.AUTHENTICATED,
+                        false)
+
+val identityMap = IdentityMap()
+identityMap.addItem(item, "CustomerID")
+Identity.updateIdentities(identityMap)</pre></div></div><p>Three parts of that need deciding by you rather than by a developer. The <b>namespace</b> must be the same string the website sends, or the two channels never join. The <b>identifier</b> must be the one your business already uses, not one invented for analytics. The <b>authenticated state</b> is a real claim about whether this person proved who they are, and it should be accurate rather than always set to authenticated.</p><div class="call mistake"><span class="ct">Where this goes wrong</span><p>The app sends a customer ID and the website sends the same value under a different namespace. Both implementations pass their own tests, both look correct in isolation, and the profiles never join. Agree the namespace once, in writing, before either side builds anything.</p></div><div class="call check"><span class="ct">&#10003; Ready when</span><p>The ECID is present on every event, and a customer ID is sent on the same namespace the web implementation uses, at the moment a person signs in. Removing it on sign-out matters just as much, and is the half people forget.</p></div>

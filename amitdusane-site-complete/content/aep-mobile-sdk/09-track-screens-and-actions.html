@@ -1,0 +1,45 @@
+---
+published: 2026-09-06
+lastmod: 2026-09-06
+title: "Track screens and actions"
+seotitle: "Tracking Screens and Actions with the Adobe Mobile SDK"
+description: "One API sends everything. What goes inside an ExperienceEvent, why it is XDM rather than context data, and how to specify it so a developer cannot guess wrong."
+slug: "track-screens-and-actions"
+weight: 9
+type: step
+params:
+  stepnum: 9
+  kbids: ["screens-vs-pageviews", "xdm-vs-contextdata"]
+---
+<div class="narrative">There is one API for this, and it takes one argument. Everything the app reports beyond lifecycle goes through <span class="mn">Edge.sendEvent</span> carrying an ExperienceEvent, and an ExperienceEvent is XDM: the field names agreed in the schema, filled in with values. No <span class="mn">trackAction</span>, no <span class="mn">trackState</span>, no context data bag. That is the shift a web practitioner has to make. It is easier here than anywhere else, because <b>the schema has already decided what the field names are.</b></div><div class="why-row"><span class="wl">Why?</span><a class="why" href="/aep-mobile-sdk/kb/xdm-vs-contextdata/" data-kb="xdm-vs-contextdata">Why not just send key-value pairs? <span class="arr">&#8599;</span></a><a class="why" href="/aep-mobile-sdk/kb/screens-vs-pageviews/" data-kb="screens-vs-pageviews">Is a screen a page view? <span class="arr">&#8599;</span></a></div><div class="actionblock"><div class="abh">Sending an event</div><div class="gstep">iOS &middot; Swift</div><div class="code"><button class="copy">Copy</button><pre>var xdmData: [String: Any] = [
+    "eventType": "application.interaction",
+    "appInteraction": [
+        "name": "add_to_basket"
+    ]
+]
+
+let event = ExperienceEvent(xdm: xdmData)
+Edge.sendEvent(experienceEvent: event)</pre></div><div class="gstep">Android &middot; Kotlin</div><div class="code"><button class="copy">Copy</button><pre>val xdmData = mutableMapOf&lt;String, Any&gt;(
+    "eventType" to "application.interaction",
+    "appInteraction" to mapOf(
+        "name" to "add_to_basket"
+    )
+)
+
+val event = ExperienceEvent.Builder()
+    .setXdmSchema(xdmData)
+    .build()
+
+Edge.sendEvent(event) { }</pre></div></div><p>The shape is the same on both platforms because the shape is the schema. A developer writing this does not invent field names, and that is the point of having done the schema first. What they need from you is the exact path and the exact value, written down.</p><figure class="fig-svg"><svg viewBox="0 0 700 200" role="img" aria-label="Firing an event when a button is tapped counts every attempt including the ones that fail, while firing it after the call succeeds counts only the completed actions." style="width:100%;height:auto;display:block"><rect x="16" y="34" width="316" height="130" rx="10" style="fill:var(--bg-soft, #f7f8fa);stroke:var(--danger, #a13030);stroke-width:1.6"/><text x="174" y="26" text-anchor="middle" style="font-size:12px;font-weight:700;fill:var(--danger, #a13030)">FIRED ON THE TAP</text><text x="40" y="62" style="font-size:12px;fill:var(--ink-soft, #3b4048)">tapped, succeeded</text><text x="292" y="62" text-anchor="end" style="font-size:12px;font-weight:700;fill:var(--ok, #1f7a4d)">counted</text><text x="40" y="88" style="font-size:12px;fill:var(--ink-soft, #3b4048)">tapped, network failed</text><text x="292" y="88" text-anchor="end" style="font-size:12px;font-weight:700;fill:var(--danger, #a13030)">counted</text><text x="40" y="114" style="font-size:12px;fill:var(--ink-soft, #3b4048)">tapped twice, impatient</text><text x="292" y="114" text-anchor="end" style="font-size:12px;font-weight:700;fill:var(--danger, #a13030)">counted twice</text><text x="174" y="148" text-anchor="middle" style="font-size:11.5px;fill:var(--muted, #6b7280)">agrees with nothing in the order system</text><rect x="368" y="34" width="316" height="130" rx="10" style="fill:var(--accent-soft, #e6f2f0);stroke:var(--accent, #0f6b62);stroke-width:1.6"/><text x="526" y="26" text-anchor="middle" style="font-size:12px;font-weight:700;fill:var(--accent, #0f6b62)">FIRED ON SUCCESS</text><text x="392" y="62" style="font-size:12px;fill:var(--ink-soft, #3b4048)">tapped, succeeded</text><text x="660" y="62" text-anchor="end" style="font-size:12px;font-weight:700;fill:var(--ok, #1f7a4d)">counted</text><text x="392" y="88" style="font-size:12px;fill:var(--ink-soft, #3b4048)">tapped, network failed</text><text x="660" y="88" text-anchor="end" style="font-size:12px;fill:var(--muted, #6b7280)">not counted</text><text x="392" y="114" style="font-size:12px;fill:var(--ink-soft, #3b4048)">tapped twice, impatient</text><text x="660" y="114" text-anchor="end" style="font-size:12px;font-weight:700;fill:var(--ok, #1f7a4d)">counted once</text><text x="526" y="148" text-anchor="middle" style="font-size:11.5px;fill:var(--muted, #6b7280)">reconciles with the business</text><text x="350" y="186" text-anchor="middle" style="font-size:11.5px;fill:var(--muted, #6b7280)">Same button, same code, four words different in the ticket.</text></svg><figcaption>The left column is not a bug anyone will report, because the number looks healthy and moves in the right direction. <b>It is simply measuring intention where somebody asked for outcome.</b></figcaption></figure>
+<div class="actionblock"><div class="abh">How to specify one, so it cannot be guessed wrong</div><div class="astep"><div class="an">1</div><div>
+  <div class="al"><span class="lbl">Give</span> The <b>eventType</b> string, exactly. <span class="mn">application.interaction</span> is not the same as <span class="mn">application.Interaction</span>.</div>
+</div></div>
+<div class="astep"><div class="an">2</div><div>
+  <div class="al"><span class="lbl">Give</span> The <b>full field path</b> from the schema, not a description of it. <span class="mn">appInteraction.name</span>, not &ldquo;the interaction name field&rdquo;.</div>
+</div></div>
+<div class="astep"><div class="an">3</div><div>
+  <div class="al"><span class="lbl">Give</span> The <b>exact value</b>, and say whether it is fixed or comes from the app. <span class="mn">add_to_basket</span> is fixed; a product ID is not.</div>
+</div></div>
+<div class="astep"><div class="an">4</div><div>
+  <div class="al"><span class="lbl">Give</span> <b>Where in the app</b> it fires, in words a developer can act on: after the basket call succeeds, not when the button is tapped.</div>
+</div></div></div><div class="call mistake"><span class="ct">Where this goes wrong</span><p>The event fires on the tap rather than on success. Every abandoned or failed action then counts as a completed one, the number runs consistently high, and it agrees with nothing in the order system. This is the most common specification failure in app tracking. It is caused by a ticket that said &ldquo;track add to basket&rdquo; and stopped there.</p></div><div class="call check"><span class="ct">&#10003; Ready when</span><p>Every event on your list from <a href="/aep-mobile-sdk/decide-what-to-track/">Decide what to track</a> has an eventType, a field path, a value, and a firing point written down. A developer can build from that document without asking you a question, which is the test of whether it is finished.</p></div>
