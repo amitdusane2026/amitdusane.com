@@ -2524,6 +2524,24 @@ than deleted, so the numbering and the cross-references to step 7 survive. Step
 11 mattered most: followed today it would have turned tracking off on the live
 site.
 
+### The Web SDK Migration guide links to nothing
+
+**Noted 6 September 2026, raised by Amit while designing the Mobile SDK
+section.** The migration guide launched as the site's first section, before the
+learning world existed, so it contains no links into Adobe Analytics Learning at
+all. Every concept it leans on and does not teach, eVars, events, report suites,
+processing rules, identity, is now covered properly a few URLs away and the
+reader is never told.
+
+That is a real gap and it is separate work: a pass over 13 steps and 24 KB
+articles, adding explicit links at the point of need. It is not a rewrite, and
+the completed-site rule already says how to word them, which is to name the
+concept, link it, and recap in a few words.
+
+**The same rule applies to everything written from here.** The Mobile SDK
+section links out inline wherever it leans on Adobe Analytics knowledge, and it
+was designed that way from the start rather than retrofitted.
+
 ### What the next session should pick up
 
 **Launch is fully closed.** Both remaining items went on 4 September 2026: the
