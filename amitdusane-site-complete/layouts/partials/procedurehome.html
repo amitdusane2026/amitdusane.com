@@ -64,12 +64,18 @@
     </div>
   </div>
 
-  {{- /* PART ONE, above the steps, for a world that declares `basics`.
+  <div class="mfront-panel">
+    <div class="mfront-cue">{{ $count }} step{{ if ne $n 1 }}s{{ end }}, {{ $w.cue }}</div>
+    {{ partial "stepmap.html" . }}
+  </div>
 
-       It goes first because its whole reason for existing is that the steps
-       stop making sense without it. A reader who already knows this material
-       sees a row of cards, recognises it, and scrolls past in two seconds,
-       which is the cost of putting it here and it is worth paying. */ -}}
+  {{- /* PART ONE, below the steps, for a world that declares `basics`.
+
+       It sits second on purpose. This section is an implementation guide and
+       a reader arrives wanting the steps, so the steps lead. The basics are
+       support rather than a gate: step one points at them in its opening, and
+       so does any later step that leans on them. A reader who needs them will
+       be sent here; one who does not is never made to scroll past them. */ -}}
   {{ with $w.basics }}
   {{ $topics := (where (where $.Site.RegularPages "Type" "basics") "Section" $.Section) }}
   {{ with $topics }}
@@ -83,10 +89,6 @@
   {{ end }}
   {{ end }}
 
-  <div class="mfront-panel">
-    <div class="mfront-cue">{{ $count }} step{{ if ne $n 1 }}s{{ end }}, {{ $w.cue }}</div>
-    {{ partial "stepmap.html" . }}
-  </div>
 
   {{- /* The two rooms off the corridor. The knowledge base and the references
        are not steps, so they do not belong in the sequence above, but a
