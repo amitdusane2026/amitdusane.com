@@ -2559,37 +2559,55 @@ concept, link it, and recap in a few words.
 section links out inline wherever it leans on Adobe Analytics knowledge, and it
 was designed that way from the start rather than retrofitted.
 
+### Where the Mobile SDK section stands, 6 September 2026
+
+**Section 3 exists and is roughly two thirds written.** It lives at
+`/aep-mobile-sdk/`, shares the procedure container with the migration guide,
+and carries its own teal accent. Nothing is published: `main` is untouched and
+everything below is on `develop` only.
+
+**Part Two, the implementation, is complete.** Fifteen steps, one diagram each,
+twenty-six knowledge base articles, a references page with twenty-three entries
+and fourteen inline citations, and a tile on the home page. Every API and field
+group in it was verified against Adobe documentation while drafting rather than
+recalled, and two would have been wrong from memory: `MobileCore.initialize`
+auto-registers extensions and enables lifecycle, and the read calls are all
+callback-based.
+
+**Part One, the mobile app basics, is three of fourteen topics.** Written:
+how mobile apps are built, React Native and Flutter, WebView and hybrid. That
+completes the "What kind of app is this" group. Remaining are six under "The
+developer's world", three under "How an app behaves" and two under "Working
+with the team"; of those eleven, five are new and six are promotions from the
+knowledge base that need expanding to Part One depth.
+
+**Still to do after the topics are written:**
+
+1. **Dissolve step 2 into Part One and renumber the steps to fourteen.** Step 2
+   configures nothing and says so in its own opening, which is orientation
+   wearing a step number. Free to do now, permanent after launch.
+2. **Wire step Why-rows to the promoted topics.** `openKB` already matches an
+   id as a path segment rather than a hardcoded `/kb/`, so this is front matter
+   rather than code.
+3. **Inline links into Adobe Analytics Learning** wherever the section leans on
+   analytics knowledge it does not teach. Amit's ruling: inline and explicit,
+   never a separate page, or the site becomes three sites in one.
+4. Full QA pass, then launch on Amit's word only.
+
 ### What the next session should pick up
-### Two registers in one world, and the reason
 
-**The Mobile SDK section deliberately writes at two depths, decided by Amit on
-6 September 2026.** Getting this wrong in either direction damages the section,
-so it is recorded rather than left to whoever measures next.
+**Write the remaining eleven Part One topics**, in the groups the map lists, and
+read `### Two registers in one world` above before starting. Part One is
+measured against the learning world, not against the steps next door. A short
+Part One page is a failed one.
 
-**Part Two, the implementation steps, keeps the migration guide's register.**
-Terse, roughly 300 words of prose, sentence median in the low teens, one diagram,
-a `dothis`-style action block. Quick turnaround is the point: a reader following
-steps wants the next instruction, not an essay.
+After the topics: dissolve step 2, renumber, wire the Why-rows, add the Adobe
+Analytics Learning links, QA, and stop. Launch only when Amit says so, in that
+session.
 
-**Part One, the mobile app basics, is the opposite and must not be measured
-against it.** The reader is assumed illiterate in app development, and the
-objective is that after reading they can sit in a room with mobile developers
-and not be an alien there. That needs real length, worked examples, stories and
-analogies carried through a whole page. Measure these against the **learning
-world**, not the procedure world: paragraph medians in the sixties, sentence
-median around twelve, an extended analogy per topic rather than a definition.
-
-**A short Part One page is a failed Part One page.** The failure mode is
-applying the step targets here and producing a glossary, which is exactly what
-Experience League already provides and exactly what this section exists to be
-better than.
-
-
-**Launch is fully closed.** Both remaining items went on 4 September 2026: the
-tracking switch decides from the baseURL, and amitdusane.in redirects to the
-.com. Nothing from the launch list is outstanding.
-
-Next is ordinary work, in no forced order: the two tech-debt rows, the component
-rulebook entry for M21's absent walkthroughs, and the surface API mention M17 s4
-never gained. After those, CJA is the third world, and `site-architecture.md`
-holds what a new world costs.
+**Ordinary work still queued elsewhere**, in no forced order: the two tech-debt
+rows, the component rulebook entry for M21's absent walkthroughs, the surface
+API mention M17 s4 never gained, and the three tasks recorded above under
+"Recorded for later, not now". After all of that, CJA is the fourth world, and
+`site-architecture.md` holds what a new world costs, corrected on 6 September to
+say what it actually costs rather than "a config block".

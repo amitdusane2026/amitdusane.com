@@ -52,12 +52,13 @@
 
 <h1>Adobe Experience Platform Mobile SDK</h1>
 <p class="sub">Curriculum map, drafted 6 September 2026 · Section 3, procedure shape · <code>/aep-mobile-sdk/</code><br>
-<b>This document is the naming authority for the section.</b> Titles, seotitles and slugs come from here, not from memory. Renaming after publication breaks URLs.</p>
+<b>This document is the naming authority for the section.</b> Titles, seotitles and slugs come from here, not from memory. Renaming after publication breaks URLs.<br>
+<b>The section has two parts.</b> Part Two, the implementation steps, is below and complete. Part One, the mobile app basics, was added on 6 September and is at the foot of this document.</p>
 
 <div class="stat">
-  <div><b>15</b><span>steps</span></div>
-  <div><b>25</b><span>KB articles</span></div>
-  <div><b>11</b><span>steps platform-neutral</span></div>
+  <div><b>15</b><span>steps, written</span></div>
+  <div><b>26</b><span>KB articles, written</span></div>
+  <div><b>3 / 14</b><span>Part One topics</span></div>
   <div><b>15</b><span>diagrams, one per step</span></div>
 </div>
 
@@ -241,6 +242,53 @@
 <h2>Deliberately absent</h2>
 <div class="panel">
 <p><b>No screenshots</b>, matching the procedure container. <b>No critique of Experience League</b> — Amit ruled that angle out; the objective is simply how to implement, not where Adobe's documentation falls short. <b>No certification content.</b> <b>No CJA analysis</b>: this section ends when data lands correctly in both destinations, and CJA Learning picks up from there.</p>
+</div>
+
+<h2>Part One &middot; Mobile app basics &mdash; added 6 September 2026</h2>
+<div class="panel">
+<p><b>The section grew a second part after this map was first written, and this map is the authority for it too.</b> Amit's diagnosis: mobile implementations fail because the analytics person does not know the app environment and the app developer does not know analytics, and the rare person who knows both is what makes a project succeed. So the section teaches the app environment as well as the SDK.</p>
+<p><b>It is a different shape from the steps and must stay one.</b> Unnumbered topic cards in groups, a grab-bag rather than a sequence, at <code>/aep-mobile-sdk/mobile-basics/</code>. Nobody reads all of it and nobody completes it.</p>
+<p><b>It sits BELOW the steps</b>, on the front page and in the rail. Amit's call on 6 September, reversing the first build: the section is an implementation guide, a reader arrives wanting the steps, and the basics are support signposted from step 1 and step 7 rather than a gate everyone is walked through.</p>
+<p><b>Register is the learning world, not the steps.</b> Recorded in full in <code>development-plan.md</code>. Roughly 1,200 to 2,900 words, worked examples, an analogy carried through a page. A short Part One page is a failed Part One page.</p>
+</div>
+
+<h3>Group 1 &middot; What kind of app is this &mdash; complete</h3>
+<table>
+<tr><th>Weight</th><th class="t">Title</th><th>Slug</th><th>State</th></tr>
+<tr><td class="n">101</td><td class="t">How mobile apps are actually built</td><td><span class="slug">how-mobile-apps-are-built</span></td><td><span class="tag neutral">written</span></td></tr>
+<tr><td class="n">102</td><td class="t">React Native and Flutter</td><td><span class="slug">react-native-and-flutter</span></td><td><span class="tag neutral">written</span></td></tr>
+<tr><td class="n">103</td><td class="t">WebView and hybrid apps</td><td><span class="slug">webview-and-hybrid</span></td><td><span class="tag neutral">written</span></td></tr>
+</table>
+
+<h3>Group 2 &middot; The developer's world &mdash; to write</h3>
+<table>
+<tr><th>Weight</th><th class="t">Title</th><th>Slug</th><th>State</th></tr>
+<tr><td class="n">201</td><td class="t">iOS: Swift, Xcode, and what your developer is looking at</td><td><span class="slug">ios-swift-and-xcode</span></td><td><span class="tag split">new</span></td></tr>
+<tr><td class="n">202</td><td class="t">Android: Kotlin, Android Studio, and the manifest</td><td><span class="slug">android-kotlin-and-studio</span></td><td><span class="tag split">new</span></td></tr>
+<tr><td class="n">203</td><td class="t">What a build actually is</td><td><span class="slug">what-a-build-is</span></td><td><span class="tag split">promote from KB</span></td></tr>
+<tr><td class="n">204</td><td class="t">What &ldquo;add the SDK&rdquo; means</td><td><span class="slug">dependency-managers</span></td><td><span class="tag split">promote from KB</span></td></tr>
+<tr><td class="n">205</td><td class="t">Debug builds and release builds</td><td><span class="slug">debug-and-release</span></td><td><span class="tag split">promote from KB</span></td></tr>
+<tr><td class="n">206</td><td class="t">Simulator, emulator and a real phone</td><td><span class="slug">simulator-and-device</span></td><td><span class="tag split">promote from KB</span></td></tr>
+</table>
+
+<h3>Group 3 &middot; How an app behaves &mdash; to write</h3>
+<table>
+<tr><th>Weight</th><th class="t">Title</th><th>Slug</th><th>State</th></tr>
+<tr><td class="n">301</td><td class="t">The app lifecycle: launch, background, terminate</td><td><span class="slug">the-app-lifecycle</span></td><td><span class="tag split">new</span></td></tr>
+<tr><td class="n">302</td><td class="t">A screen is not a page view</td><td><span class="slug">screens-not-pages</span></td><td><span class="tag split">promote from KB</span></td></tr>
+<tr><td class="n">303</td><td class="t">How a release actually reaches people</td><td><span class="slug">how-a-release-reaches-people</span></td><td><span class="tag split">promote from KB</span></td></tr>
+</table>
+
+<h3>Group 4 &middot; Working with the team &mdash; to write</h3>
+<table>
+<tr><th>Weight</th><th class="t">Title</th><th>Slug</th><th>State</th></tr>
+<tr><td class="n">401</td><td class="t">Where your job ends</td><td><span class="slug">where-your-job-ends</span></td><td><span class="tag split">promote from KB</span></td></tr>
+<tr><td class="n">402</td><td class="t">Reading enough code to be useful</td><td><span class="slug">reading-enough-code</span></td><td><span class="tag split">new</span></td></tr>
+</table>
+
+<div class="panel open">
+<p><b>Slugs above are proposed, not final.</b> The three written ones are fixed. The eleven remaining can still change, and should be settled before each is written rather than after, because a slug is permanent once published.</p>
+<p><b>Promoting a topic from the knowledge base means moving it and expanding it</b>, not copying. The KB version is a short answer to a question a step raised; the Part One version teaches the thing to somebody who has never met it. When all eleven are done the knowledge base drops from 26 articles to 18, all of them Adobe-side, which is a cleaner boundary than it has now.</p>
 </div>
 
 <p class="foot">
