@@ -1,0 +1,51 @@
+---
+published: 2026-09-06
+lastmod: 2026-09-06
+title: "Create the mobile tag property"
+seotitle: "Creating a Mobile Tag Property and Adding SDK Extensions"
+description: "Four extensions, one datastream per environment, and the Environment File ID that is the only thing a mobile developer needs from you."
+slug: "create-the-mobile-tag-property"
+weight: 6
+type: step
+params:
+  stepnum: 6
+  kbids: ["extensions"]
+---
+<div class="narrative">A mobile tag property looks like the web one and behaves nothing like it. On the web a property holds rules that run in the browser. Publishing changes what visitors execute within minutes. Here it holds no executable code at all. It holds <b>configuration</b>: which datastream to talk to, which extensions to switch on, what each is set to. The app fetches that configuration at launch. That is the one part of a mobile implementation that still behaves like the web.</div><div class="why-row"><span class="wl">Why?</span><a class="why" href="/aep-mobile-sdk/kb/extensions/" data-kb="extensions">Which extensions are actually needed? <span class="arr">&#8599;</span></a></div><div class="actionblock"><div class="abh">Build it</div><div class="astep"><div class="an">1</div><div>
+  <div class="al"><span class="lbl">Where</span> <span class="path">Data Collection &rsaquo; Tags &rsaquo; New Property</span></div>
+  <div class="al"><span class="lbl">Do</span> Choose platform <b>Mobile</b>. A Web property cannot be used by an app, and the two are not convertible.</div>
+</div></div>
+<div class="astep"><div class="an">2</div><div>
+  <div class="al"><span class="lbl">Do</span> Install four extensions: <b>Adobe Experience Platform Edge Network</b>, <b>Identity for Edge Network</b>, <b>Consent for Edge Network</b>, and <b>AEP Assurance</b>. Mobile Core is always present and needs no installing.</div>
+</div></div>
+<div class="astep"><div class="an">3</div><div>
+  <div class="al"><span class="lbl">Do</span> In the Edge Network extension, select the matching <b>datastream for each environment</b>: the development datastream against Development, staging against Staging, production against Production.</div>
+</div></div>
+<div class="astep"><div class="an">4</div><div>
+  <div class="al"><span class="lbl">Do</span> Publish a library to <b>Development</b>. Until something is published, the environment exists but serves nothing.</div>
+</div></div></div><p>The Edge Network extension will not work without Identity for Edge Network. Treat those two as one item, not two choices. Consent is separate, and deliberately so: a consent decision has to be expressible before any event is sent. Assurance earns its place by being the only way to see inside a compiled app.</p><figure class="fig-svg"><svg viewBox="0 0 700 200" role="img" aria-label="One mobile tag property holds three environments, each pointing at its own datastream and each issuing its own Environment File ID, and the app is built with exactly one of those IDs." style="width:100%;height:auto;display:block">
+<defs>
+<marker id="m6a" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" style="fill:var(--faint, #9aa1ab)"/></marker>
+<marker id="m6b" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" style="fill:var(--accent, #0f6b62)"/></marker>
+</defs>
+<rect x="14" y="66" width="150" height="62" rx="9" style="fill:var(--bg-soft, #f7f8fa);stroke:var(--line, #e4e6ea);stroke-width:1.5"/>
+<text x="89" y="92" text-anchor="middle" style="font-size:12.5px;font-weight:700;fill:var(--ink-soft, #3b4048)">one property</text>
+<text x="89" y="110" text-anchor="middle" style="font-size:11px;fill:var(--muted, #6b7280)">four extensions</text>
+<line x1="168" y1="80" x2="216" y2="46" style="stroke:var(--accent, #0f6b62);stroke-width:1.6" marker-end="url(#m6b)"/>
+<line x1="168" y1="97" x2="216" y2="97" style="stroke:var(--faint, #9aa1ab);stroke-width:1.4" marker-end="url(#m6a)"/>
+<line x1="168" y1="114" x2="216" y2="148" style="stroke:var(--faint, #9aa1ab);stroke-width:1.4" marker-end="url(#m6a)"/>
+<rect x="222" y="26" width="196" height="42" rx="8" style="fill:var(--accent-soft, #e6f2f0);stroke:var(--accent, #0f6b62);stroke-width:1.6"/>
+<text x="320" y="44" text-anchor="middle" style="font-size:12px;font-weight:700;fill:var(--accent, #0f6b62)">Development</text>
+<text x="320" y="60" text-anchor="middle" style="font-size:11px;fill:var(--muted, #6b7280)">dev datastream &middot; validation suite</text>
+<rect x="222" y="76" width="196" height="42" rx="8" style="fill:var(--bg, #ffffff);stroke:var(--line, #e4e6ea);stroke-width:1.4"/>
+<text x="320" y="94" text-anchor="middle" style="font-size:12px;fill:var(--ink-soft, #3b4048)">Staging</text>
+<text x="320" y="110" text-anchor="middle" style="font-size:11px;fill:var(--muted, #6b7280)">staging datastream</text>
+<rect x="222" y="126" width="196" height="42" rx="8" style="fill:var(--bg, #ffffff);stroke:var(--line, #e4e6ea);stroke-width:1.4"/>
+<text x="320" y="144" text-anchor="middle" style="font-size:12px;fill:var(--ink-soft, #3b4048)">Production</text>
+<text x="320" y="160" text-anchor="middle" style="font-size:11px;fill:var(--muted, #6b7280)">production datastream &middot; live suite</text>
+<line x1="422" y1="47" x2="470" y2="47" style="stroke:var(--accent, #0f6b62);stroke-width:1.6" marker-end="url(#m6b)"/>
+<rect x="476" y="26" width="208" height="42" rx="8" style="fill:var(--accent-soft, #e6f2f0);stroke:var(--accent, #0f6b62);stroke-width:1.6"/>
+<text x="580" y="44" text-anchor="middle" style="font-size:12px;font-weight:700;fill:var(--accent, #0f6b62)">Environment File ID</text>
+<text x="580" y="60" text-anchor="middle" style="font-size:11px;fill:var(--muted, #6b7280)">the one string the app is built with</text>
+<text x="350" y="192" text-anchor="middle" style="font-size:11.5px;fill:var(--muted, #6b7280)">Every environment issues its own ID. Handing over the wrong one is silent.</text>
+</svg><figcaption>Three environments, three datastreams, three IDs. <b>The app is compiled with exactly one of them</b>, and nothing in the build will tell anybody which.</figcaption></figure><div class="call mistake"><span class="ct">Where this goes wrong</span><p>The property is created as <b>Web</b> rather than Mobile. It offers a plausible-looking set of extensions, none of which an app can load. The mistake surfaces only when a developer reports the SDK cannot find its configuration. A property's platform is fixed at creation, so the fix is a new one.</p></div><div class="call check"><span class="ct">&#10003; Ready when</span><p>A Mobile property carries the four extensions, each environment points at its own datastream, and a library has been published to Development. The Development <b>Environment File ID</b> is now available under Environments, and that is the value a developer needs in <a href="/aep-mobile-sdk/get-the-sdk-into-the-app/">Get the SDK into the app</a>.</p></div>
