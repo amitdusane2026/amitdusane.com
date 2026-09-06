@@ -306,7 +306,7 @@
   </div>
   {{/* Each world searches its own index. SEARCH_HINTS is the tiny cross-world
        titles file, used only to say a term is also covered elsewhere. */}}
-  <script>window.SEARCH_INDEX="{{ (printf "%s/index.json" $world.root) | relURL }}";window.SEARCH_HINTS="{{ "index.json" | relURL }}";window.SEARCH_WORLD="{{ .Section }}";</script>
+  <script>window.SEARCH_INDEX="{{ (printf "%s/index.json" $world.root) | relURL }}";window.SEARCH_HINTS="{{ "index.json" | relURL }}";window.SEARCH_WORLD="{{ .Section }}";window.WORLD_ROOT="{{ $world.root | relURL }}";</script>
   <script src="{{ "search.js" | relURL }}?v={{ substr (sha256 (readFile "static/search.js")) 0 10 }}"></script>
   {{ end }}
   {{ if $proc }}

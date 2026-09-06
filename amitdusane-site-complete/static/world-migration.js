@@ -54,11 +54,22 @@
   }
 
 
+  /* THE REFERENCES PANEL, world-aware since 6 September 2026.
+
+     This fetched /web-sdk-migration/references/ by name, and this script is
+     shared by every procedure world. So on the Mobile SDK guide every citation
+     opened the MIGRATION guide reference carrying the same number: a real Adobe
+     link, plausibly worded, and the wrong document. Nothing errored, because
+     both pages have a #ref-5.
+
+     WORLD_ROOT is published by baseof.html from the registry, so the panel now
+     reads whichever world the reader is actually in. */
   var refsDoc = null, refsLoading = false;
+  var worldRoot = window.WORLD_ROOT || '/web-sdk-migration';
   function ensureRefs(cb) {
     if (refsDoc) { cb(); return; }
     if (refsLoading) return; refsLoading = true;
-    fetch('/web-sdk-migration/references/').then(function (r) { return r.text(); })
+    fetch(worldRoot + '/references/').then(function (r) { return r.text(); })
       .then(function (html) { refsDoc = new DOMParser().parseFromString(html, 'text/html'); refsLoading = false; cb(); })
       .catch(function () { refsLoading = false; });
   }
@@ -68,7 +79,7 @@
       if (!li) return;
       if (pKind) pKind.textContent = 'Reference';
       pBody.innerHTML = '<h2>Reference [' + n + ']</h2>' + li.innerHTML +
-        '<div class="panel-foot"><a href="/web-sdk-migration/references/#ref-' + n + '">Open in the full reference list &rarr;</a></div>';
+        '<div class="panel-foot"><a href="' + worldRoot + '/references/#ref-' + n + '">Open in the full reference list &rarr;</a></div>';
       openPanel();
     });
   }
