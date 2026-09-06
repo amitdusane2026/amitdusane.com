@@ -1102,6 +1102,10 @@ body.page-home .hm-tag{margin:0 0 12px;max-width:64ch;font-size:var(--h-fs-tag);
 .tile > *{position:relative}
 .tile-learning{--tc:186,33,66;  --tc-ink:#f27893}
 .tile-migration{--tc:31,95,174; --tc-ink:#5fa1e6}
+/* The Mobile SDK guide, added 6 September 2026. Same teal as its world accent
+   in world-shell.css, given here as an RGB triple because the tile mixes it at
+   several opacities. */
+.tile-mobile{--tc:15,107,98; --tc-ink:#4fc4b4}
 .tile:hover{
   border-color:var(--tc-ink);
   transform:translateY(-2px);

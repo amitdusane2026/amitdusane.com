@@ -58,23 +58,40 @@
   <section class="hm-topics" aria-labelledby="hm-topics-h">
     <h2 class="hm-h2" id="hm-topics-h">Guides</h2>
     <div class="hm-tiles">
+{{- /* THE GUIDE TILES, generated from [params.worlds] since 6 September 2026.
 
-      <a class="tile tile-learning" href="{{ "/adobe-analytics-learning/" | relURL }}">
+     They were three hand-written blocks carrying hand-typed counts: "21
+     modules &middot; 116 sections" and "13 steps &middot; 24 knowledge-base
+     entries". Both were correct when written and neither had any way of
+     staying correct, which is the same fault the migration front page carried
+     with the word "Thirteen".
+
+     Counts are now measured. Order comes from the registry rather than from
+     the order somebody happened to paste them in, and the tile class is the
+     bodyclass with its world- prefix removed, so a fourth world needs a colour
+     pair in chrome.css and nothing here. */ -}}
+      {{- $worlds := slice -}}
+      {{- range $k, $v := .Site.Params.worlds -}}{{- $worlds = $worlds | append (merge $v (dict "key" $k)) -}}{{- end -}}
+      {{- range sort $worlds "order" -}}
+      {{- $w := . -}}
+      {{- $sub := "" -}}
+      {{- if eq $w.shape "curriculum" -}}
+        {{- $m := len (where (where $.Site.Pages "Type" "module") "Section" $w.key) -}}
+        {{- $s := len (where (where $.Site.RegularPages "Type" "lesson") "Section" $w.key) -}}
+        {{- $sub = printf "%d modules &middot; %d sections" $m $s -}}
+      {{- else -}}
+        {{- $t := len (where (where $.Site.RegularPages "Type" "step") "Section" $w.key) -}}
+        {{- $k := len (where (where $.Site.RegularPages "Type" "kb") "Section" $w.key) -}}
+        {{- $sub = printf "%d steps &middot; %d knowledge-base entries" $t $k -}}
+      {{- end }}
+      <a class="tile tile-{{ strings.TrimPrefix "world-" $w.bodyclass }}" href="{{ (printf "%s/" $w.root) | relURL }}">
         <span class="tile-body">
-          <span class="tile-title">Adobe Analytics Learning</span>
-          <span class="tile-sub">21 modules &middot; 116 sections</span>
+          <span class="tile-title">{{ $w.fullname }}</span>
+          <span class="tile-sub">{{ $sub | safeHTML }}</span>
         </span>
         <span class="tile-go" aria-hidden="true"></span>
       </a>
-
-      <a class="tile tile-migration" href="{{ "/web-sdk-migration/" | relURL }}">
-        <span class="tile-body">
-          <span class="tile-title">Web SDK Migration</span>
-          <span class="tile-sub">13 steps &middot; 24 knowledge-base entries</span>
-        </span>
-        <span class="tile-go" aria-hidden="true"></span>
-      </a>
-
+      {{ end }}
     </div>
   </section>
 

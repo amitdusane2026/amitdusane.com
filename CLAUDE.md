@@ -222,7 +222,7 @@ On a CLI build that error is at least visible. **On `hugo server` it is not.** T
 
 **So when the served page is stale, check for a locked workbook before suspecting the watcher.** `Get-CimInstance Win32_Process -Filter "Name='EXCEL.EXE'"` names it, and closing the workbook is the whole fix. This will keep happening, because M20 tells the reader to open the validation report and follow along, which is exactly what Amit was doing.
 
-**Assert the page count after every build.** Current baseline: **198 pages on a production build, 199 on a staging build**, and it will keep climbing while the Mobile SDK world is written. It was 195 and 196 from 3 September 2026 until the sixth, when `/aep-mobile-sdk/` was registered and added three: its HTML page, its JSON search index and its RSS feed. **Every step and KB article written into that world adds one more**, so this number is a moving target for the first time on this project. What still holds is the shape of the check: a drop is never routine, and a non-production build reporting the production number, or the reverse, means the staging guard has inverted and should be investigated before anything else.
+**Assert the page count after every build.** Current baseline: **241 pages on a production build, 242 on a staging build**, and it will keep climbing while the Mobile SDK world is written. It was 195 and 196 from 3 September 2026 until the sixth, when `/aep-mobile-sdk/` was registered and added three: its HTML page, its JSON search index and its RSS feed. **Every step and KB article written into that world adds one more**, so this number is a moving target for the first time on this project. What still holds is the shape of the check: a drop is never routine, and a non-production build reporting the production number, or the reverse, means the staging guard has inverted and should be investigated before anything else.
 
 Before that it was 219 and 220, until RSS was built properly: Hugo had been emitting a feed for every section, 27 of them, none linked from anywhere, while the three pages a person would subscribe to had none. Killing the 27 and adding 3 is the whole of that difference. **HTML page count did not move: 187 before and after, with identical file lists.** Hugo counts each output format as a page, so a feed change moves this number without touching a word of the site. The extra one on a non-production build is the generated `_headers` file, which `layouts/index.headers` emits only when the baseURL is not amitdusane.com; on production the template produces nothing and Hugo writes no file. If the count drops, stop and find out why before doing anything else. This single check would have caught the 103-page outage in one second.
 
@@ -237,6 +237,16 @@ Then crawl the built HTML, not the source. Source passing every check proves not
 **Only one `hugo server` may run against this tree, and no CLI build may share its output or its cache.** Two servers plus a CLI build is what corrupted it. `.claude/launch.json` defines exactly one server, on port 1313, with `--poll 700ms`.
 
 That server is meant to stay up while work happens, so do not stop it out of habit. While it runs, verification builds go to a separate destination and cacheDir (see trap eleven); only the final build before a commit uses `rm -rf public && hugo --gc`, with the server stopped first. If a preview still looks stale, confirm the served markup carries something unique to your edit before debugging any CSS.
+
+**`public/` is the dev server's output too, so it stops being a production artefact the moment the server runs.** Found 6 September 2026 while checking the tracking guard: a clean `rm -rf public && hugo --gc` had produced a correct production build, the server was then restarted for a visual check, and half an hour later `public/` held the server's own build instead. Canonical `http://localhost:1313/`, a `_headers` file present, and zero GA pages, all of which read exactly like the guard had inverted.
+
+Nothing was wrong with the site. The check was reading the wrong build. **So never assert anything about production from `public/` unless the server has been down since that build**, and prefer a throwaway destination for any claim about what production will contain:
+
+```bash
+hugo --gc --source amitdusane-site-complete --destination "$SCRATCH/prod-check" --cacheDir "$SCRATCH/hc"
+```
+
+That form takes no `-b`, so it is a true production build, and it cannot be overwritten by anything.
 
 ---
 
