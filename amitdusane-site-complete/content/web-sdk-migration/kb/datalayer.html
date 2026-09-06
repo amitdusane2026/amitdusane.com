@@ -10,7 +10,6 @@ weight: 107
 params:
   group: concepts
   grouplabel: "Concepts"
-  hasfull: true
 ---
 <p class="khook">Your data layer is the menu the waiter reads from. The Web SDK can only serve what the menu describes clearly, so a migration is the rare moment to look hard at that menu.</p>
 <p>The Web SDK is agnostic about your data layer; it does not require the Adobe Client Data Layer. The meaningful distinction is <i>shape</i>. A computed-state layer (a <code>digitalData</code> object) is a photograph painted once at load; fine for traditional pages, but stale the instant a single-page-app changes route<a class="cite" href="/web-sdk-migration/references/#ref-35" data-ref="35">[35]</a>. An event-driven layer (ACDL or a Google <code>dataLayer</code>) is a live broadcast, the app pushes a message the moment something happens, so a beacon can't fire before its data exists.</p>

@@ -10,7 +10,6 @@ weight: 316
 params:
   group: reference
   grouplabel: "Reference"
-  hasfull: true
 ---
 <p>The old <code>doPlugins</code> was your "last call", the function that ran in the split second before every hit, your final chance to set or tweak variables. The Web SDK has no equivalent function, so that logic moves to two homes<a class="cite" href="/web-sdk-migration/references/#ref-16" data-ref="16">[16]</a><a class="cite" href="/web-sdk-migration/references/#ref-17" data-ref="17">[17]</a>: the <b>onBeforeEventSend</b> callback (a global last-call that mutates the payload before it sends)<a class="cite" href="/web-sdk-migration/references/#ref-15" data-ref="15">[15]</a> and the <b>Common Web SDK Plugins</b> extension, which ports the most-used plugins as native data elements<a class="cite" href="/web-sdk-migration/references/#ref-18" data-ref="18">[18]</a>.</p>
 <a class="cite" href="/web-sdk-migration/references/#ref-19" data-ref="19">[19]</a><a class="cite" href="/web-sdk-migration/references/#ref-20" data-ref="20">[20]</a><table class="mini-tbl">

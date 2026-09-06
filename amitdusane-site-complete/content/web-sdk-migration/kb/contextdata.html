@@ -10,7 +10,6 @@ weight: 106
 params:
   group: concepts
   grouplabel: "Concepts"
-  hasfull: true
 ---
 <p class="khook">Think of <code>data.__adobe.analytics.contextData</code> as a diplomatic pouch; it carries your old labels through customs untouched, so the officers on the other side (your existing processing rules) still recognise them.</p>
 <p>Many mature implementations lean on <code>s.contextData[...]</code> mapped to eVars and props by processing rules. Send those same keys via the data object's <code>contextData</code> and the Edge passes them to Analytics unchanged<a class="cite" href="/web-sdk-migration/references/#ref-36" data-ref="36">[36]</a>, your existing processing rules keep firing exactly as before, no rebuild required.</p>

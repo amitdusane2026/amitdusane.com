@@ -386,10 +386,22 @@
   .kb-expand{margin-top:22px}
   .kb-expand-btn{display:inline-flex;align-items:center;gap:8px;font-family:inherit;font-size:14px;font-weight:600;color:var(--accent);background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:9px;padding:10px 16px;cursor:pointer}
   .kb-expand-btn:hover{background:var(--accent);color:var(--bg)}
-  .kb-full{margin-top:20px;padding-top:20px;border-top:2px solid var(--line)}
+  /* .kb-full-static joined these selectors on 6 September 2026. The content
+     stopped using .kb-full at some point and switched to .kb-full-static, a
+     section that is always visible rather than revealed by a button, and the
+     stylesheet never followed. So on 19 KB articles the whole full-detail
+     block had no separating rule, its label rendered as body prose, and its
+     headings came out at default size. Nothing errored; the section simply
+     looked like more paragraphs.
+
+     The expand machinery below is now vestigial: no template emits
+     .kb-expand or .kb-back, no script sets [hidden], and the hasfull front
+     matter that once drove it was read by nothing. Left in place rather than
+     deleted, because it is harmless and the panel may want it back. */
+  .kb-full,.kb-full-static{margin-top:20px;padding-top:20px;border-top:2px solid var(--line)}
   .kb-full[hidden]{display:none}
-  .kb-full .fulltag{font-size:11px;letter-spacing:.7px;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:10px}
-  .kb-full h3{font-size:18px;font-family:var(--serif);margin:1.4em 0 .3em}
+  .kb-full .fulltag,.kb-full-static .fulltag{font-size:11px;letter-spacing:.7px;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:10px}
+  .kb-full h3,.kb-full-static h3{font-size:18px;font-family:var(--serif);margin:1.4em 0 .3em}
   .arch{margin:18px 0 4px;border:1px solid var(--accent-line);border-left:4px solid var(--accent);background:var(--accent-soft);border-radius:8px;padding:12px 15px}
   .arch .at{display:block;font-size:11px;letter-spacing:.6px;text-transform:uppercase;color:var(--accent);font-weight:800;margin-bottom:4px}
   .arch p{margin:.2em 0;font-size:14.5px;color:var(--ink)}

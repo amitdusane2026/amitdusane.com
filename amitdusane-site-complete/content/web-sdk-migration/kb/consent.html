@@ -10,7 +10,6 @@ weight: 105
 params:
   group: concepts
   grouplabel: "Concepts"
-  hasfull: true
 ---
 <p class="khook">Old consent was a blocked pipe: no permission, no beacon, no data. New consent is a valve on a queue, events wait safely behind it until the visitor says go.</p>
 <p>Three parts work together. <code>defaultConsent</code> sets the posture before the visitor chooses<a class="cite" href="/web-sdk-migration/references/#ref-10" data-ref="10">[10]</a>, <code>pending</code> queues events locally and sends nothing (the GDPR-friendly default), <code>in</code> collects, <code>out</code> discards. <code>setConsent</code> records the actual choice and flushes or drops the queue<a class="cite" href="/web-sdk-migration/references/#ref-11" data-ref="11">[11]</a>. The <code>kndctr_..._consent</code> cookie persists the preference, written either way.</p>

@@ -10,7 +10,6 @@ weight: 318
 params:
   group: reference
   grouplabel: "Reference"
-  hasfull: true
 ---
 <p class="khook">Assemble the sandwich before you hand it over. Launch will happily pass an empty plate to the customer if you don't tell it to make the sandwich first.</p>
 <p>The Web SDK splits collection into two rule actions: <b>Update Variable</b> (fill your <code>XDM - Global</code> object) and <b>Send Event</b> (dispatch it). The trouble is that Launch sorts rule components by their <b>Order</b> value before running them, so a Send Event with a default order can fire before the variables are populated.</p>

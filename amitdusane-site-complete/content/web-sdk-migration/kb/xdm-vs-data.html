@@ -10,7 +10,6 @@ weight: 103
 params:
   group: concepts
   grouplabel: "Concepts"
-  hasfull: true
 ---
 <p class="khook">Two ways to speak to Adobe Analytics through the Edge. The <code>xdm</code> object is emigrating and learning the language, hard up front, but you belong, and every service understands you. The <code>data</code> object is travelling with a phrasebook, instant, but you stay a tourist.</p>
 <p>The <b>xdm object</b> holds structured, schema-validated fields like <code>xdm.web.webPageDetails.name</code>; the Edge auto-translates recognised XDM into Analytics variables, and the same data is natively readable by CJA and RT-CDP. The <b>data object</b> lets you nest legacy names under <code>data.__adobe.analytics</code><a class="cite" href="/web-sdk-migration/references/#ref-36" data-ref="36">[36]</a> (<code>eVar1</code>, <code>events</code>, <code>products</code>) and the Edge forwards them to Analytics almost verbatim<a class="cite" href="/web-sdk-migration/references/#ref-34" data-ref="34">[34]</a>.</p>
