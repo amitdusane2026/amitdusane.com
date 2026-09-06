@@ -1,0 +1,44 @@
+---
+published: 2026-09-06
+lastmod: 2026-09-06
+title: "Validate in Assurance"
+seotitle: "Validating a Mobile SDK Implementation with Adobe Assurance"
+description: "The console a compiled app does not have. How to connect a device, read the event flow, and tell a healthy event from one that only looks healthy."
+slug: "validate-in-assurance"
+weight: 13
+type: step
+params:
+  stepnum: 13
+  kbids: ["assurance", "debug-vs-release", "simulator-vs-device"]
+---
+<div class="narrative">A browser gives you a network tab. An app gives you nothing, and that absence is the single biggest practical difference between web and mobile work. Assurance is what fills it. It connects to a running app on a real phone. It shows every event the SDK produces, follows each one to the Edge Network, and shows what came back. <b>Until this is working you are not testing an implementation, you are believing one</b>, and the distance between those two is where months get lost.</div><div class="why-row"><span class="wl">Why?</span><a class="why" href="/aep-mobile-sdk/kb/assurance/" data-kb="assurance">Why not just add log lines? <span class="arr">&#8599;</span></a><a class="why" href="/aep-mobile-sdk/kb/simulator-vs-device/" data-kb="simulator-vs-device">Does a simulator count? <span class="arr">&#8599;</span></a></div><div class="actionblock"><div class="abh">Connect a device</div><div class="astep"><div class="an">1</div><div>
+  <div class="al"><span class="lbl">Where</span> <span class="path">Adobe Experience Platform &rsaquo; Assurance &rsaquo; Create Session</span></div>
+  <div class="al"><span class="lbl">Do</span> Create a session and choose the app. Assurance gives you a QR code and a link.</div>
+</div></div>
+<div class="astep"><div class="an">2</div><div>
+  <div class="al"><span class="lbl">Do</span> Scan the QR code with the device running the app. The app opens and a PIN screen appears.</div>
+  <div class="al"><span class="lbl">Note</span> This needs a one-time deep link handler in the app. If nothing happens when you scan, that handler is missing, and it is a small job for a developer rather than a fault in your setup.</div>
+</div></div>
+<div class="astep"><div class="an">3</div><div>
+  <div class="al"><span class="lbl">Where</span> <span class="path">Assurance &rsaquo; Adobe Experience Platform Edge &rsaquo; Event Transactions</span></div>
+  <div class="al"><span class="lbl">Do</span> Use the app while watching. Events appear as you tap.</div>
+</div></div></div><figure class="fig-svg"><svg viewBox="0 0 700 200" role="img" aria-label="The Event Transactions view shows each event in processing order: raised on the client, accepted by the Edge Network, then handed to the upstream services, with an error response appearing in place of the last stage when something is rejected." style="width:100%;height:auto;display:block">
+<defs>
+<marker id="m13a" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" style="fill:var(--accent, #0f6b62)"/></marker>
+</defs>
+<rect x="16" y="52" width="180" height="62" rx="9" style="fill:var(--bg-soft, #f7f8fa);stroke:var(--line, #e4e6ea);stroke-width:1.5"/>
+<text x="106" y="78" text-anchor="middle" style="font-size:12.5px;font-weight:700;fill:var(--ink-soft, #3b4048)">client-side</text>
+<text x="106" y="97" text-anchor="middle" style="font-size:11px;fill:var(--muted, #6b7280)">the SDK raised it</text>
+<line x1="200" y1="83" x2="236" y2="83" style="stroke:var(--accent, #0f6b62);stroke-width:1.8" marker-end="url(#m13a)"/>
+<rect x="242" y="52" width="180" height="62" rx="9" style="fill:var(--accent-soft, #e6f2f0);stroke:var(--accent, #0f6b62);stroke-width:1.6"/>
+<text x="332" y="78" text-anchor="middle" style="font-size:12.5px;font-weight:700;fill:var(--accent, #0f6b62)">the Edge</text>
+<text x="332" y="97" text-anchor="middle" style="font-size:11px;fill:var(--muted, #6b7280)">it left the device</text>
+<line x1="426" y1="83" x2="462" y2="83" style="stroke:var(--accent, #0f6b62);stroke-width:1.8" marker-end="url(#m13a)"/>
+<rect x="468" y="52" width="216" height="62" rx="9" style="fill:var(--ok-soft, #e9f4ee);stroke:var(--ok, #1f7a4d);stroke-width:1.6"/>
+<text x="576" y="78" text-anchor="middle" style="font-size:12.5px;font-weight:700;fill:var(--ok, #1f7a4d)">post-processed data</text>
+<text x="576" y="97" text-anchor="middle" style="font-size:11px;fill:var(--muted, #6b7280)">the upstream service took it</text>
+<text x="16" y="34" style="font-size:12px;font-weight:700;fill:var(--ink-soft, #3b4048)">Read it left to right. Where it stops is the answer.</text>
+<text x="576" y="146" text-anchor="middle" style="font-size:11.5px;font-weight:700;fill:var(--danger, #a13030)">or: AEP Error Response</text>
+<text x="576" y="164" text-anchor="middle" style="font-size:11px;fill:var(--muted, #6b7280)">the payload was rejected, and it says why</text>
+<line x1="576" y1="118" x2="576" y2="132" style="stroke:var(--danger, #a13030);stroke-width:1.6"/>
+</svg><figcaption>An event that reaches the third column is genuinely working. <b>One that stops at the first has never left the phone</b>, and that difference decides which team you go and talk to.</figcaption></figure><p>The last column is the one that matters. An event visible on the client only proves the tracking code ran. Reaching post-processed data proves the Edge accepted the payload and handed it on, which is what anybody actually meant by &ldquo;is tracking working&rdquo;.</p><div class="call mistake"><span class="ct">Where this goes wrong</span><p>Everything is validated on a simulator, on a debug build, in an office with good wifi. All three flatter the implementation. Install attribution behaves differently on a real install. Release builds strip the logging that made debugging easy. And a queue that always drains instantly hides every question about what happens when it does not. Validate the release build on a real device before signing anything off.</p></div><div class="call check"><span class="ct">&#10003; Ready when</span><p>A real device on a release build shows Launch, Close, and every event from your list reaching post-processed data, with the customer ID attached where a person has signed in. Screenshot that view. It is the only evidence that survives the meeting.</p></div>
