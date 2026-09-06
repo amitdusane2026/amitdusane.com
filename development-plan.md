@@ -2586,13 +2586,31 @@ SDK logs one "Discovered extension" line per extension at debug level. The iOS
 page corrects a simplification step 7 makes, since a SwiftUI app may have no
 AppDelegate.
 
-**Measured against the register spec, and the three Group 1 pages miss it.**
-The two new pages sit at paragraph medians 72 and 59 with sentence medians 13
-and 14.5, nothing over 30 words. The three written earlier sit at 47 to 51 and
-15 to 17. They were written in the same session that recorded the spec, so they
-read as a first attempt at it rather than a deliberate choice. A tightening pass
-on those three is open and unresolved; Amit has not ruled on whether it is worth
-doing.
+**Measured against the register spec, and all five Part One pages now hold it.**
+Amit ruled on 6 September 2026 that the three Group 1 pages should be brought up,
+and they were rewritten the same day. They had sat at paragraph medians 47 to 51
+with sentence medians 15 to 17, and twelve sentences over 30 words between them.
+They now sit at 58, 60 and 62.5 on paragraphs, 12 to 13 on sentences, with none
+over 30 words. The two Group 2 pages are unchanged at 72 and 59, and the
+learning-world references measure 68 and 41 on paragraphs, 12 and 13 on
+sentences, so the whole group now sits inside one band.
+
+**The two failures pull in opposite directions, which is why a first attempt
+lands between them.** Raising a paragraph median means accumulating clauses;
+lowering a sentence median means splitting them. Doing one alone moves the other
+the wrong way. The pass that works is to write deliberately long paragraphs out
+of deliberately short sentences, then split any paragraph that runs past about
+120 words at a natural joint, because splitting paragraphs does not disturb the
+sentence median. The first rewrite of `how-mobile-apps-are-built` overshot to a
+paragraph median of 106 doing only the first half of that.
+
+**Word count moved with it, and that was the other half of the miss.** The three
+were 1,105 to 1,284 words against Group 2's 1,428 to 1,630, so they were short
+Part One pages, which the spec calls a failed Part One page. They are now 1,230
+to 1,343. Two content faults were fixed on the way: `react-native-and-flutter`
+told the reader the page was "worth twenty minutes of your time" while the byline
+computed six, and `how-mobile-apps-are-built` repeated "in under a minute" in
+both the prose and the action block directly beneath it.
 
 **The original three-of-fourteen note follows.**
 
