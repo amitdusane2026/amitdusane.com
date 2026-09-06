@@ -64,6 +64,25 @@
     </div>
   </div>
 
+  {{- /* PART ONE, above the steps, for a world that declares `basics`.
+
+       It goes first because its whole reason for existing is that the steps
+       stop making sense without it. A reader who already knows this material
+       sees a row of cards, recognises it, and scrolls past in two seconds,
+       which is the cost of putting it here and it is worth paying. */ -}}
+  {{ with $w.basics }}
+  {{ $topics := (where (where $.Site.RegularPages "Type" "basics") "Section" $.Section) }}
+  {{ with $topics }}
+  <div class="mfront-panel">
+    <div class="mfront-cue">{{ $w.basics.railtitle }}, {{ len . }} topic{{ if ne (len .) 1 }}s{{ end }}, in no particular order</div>
+    <p class="grp-blurb">{{ $w.basics.basicsintro }}</p>
+    <div class="kb-cards">
+      {{ range .ByWeight }}<a class="kb-card" href="{{ .RelPermalink }}"><div class="t">{{ .Title }}</div><div class="d">{{ .Description }}</div></a>{{ end }}
+    </div>
+  </div>
+  {{ end }}
+  {{ end }}
+
   <div class="mfront-panel">
     <div class="mfront-cue">{{ $count }} step{{ if ne $n 1 }}s{{ end }}, {{ $w.cue }}</div>
     {{ partial "stepmap.html" . }}

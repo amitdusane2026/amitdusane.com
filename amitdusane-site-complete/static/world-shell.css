@@ -228,6 +228,9 @@
   /* ---------- KB browse ---------- */
   .kb-intro{font-size:18px;color:var(--ink-soft);max-width:var(--measure)}
   .kb-grp-h{font-family:var(--serif);font-size:20px;margin:1.6em 0 .2em}
+  /* Part One groups carry a line of orientation under the heading; the KB
+     groups do not, and adding one there is not implied by this. */
+  .grp-blurb{font-size:15px;color:var(--muted);max-width:var(--measure);margin:.1em 0 .9em}
   .kb-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;margin:.8em 0}
   .kb-card{border:1px solid var(--line);border-radius:11px;padding:14px 16px;background:var(--bg);cursor:pointer;text-decoration:none;color:var(--ink)}
   .kb-card:hover{border-color:var(--accent);background:var(--bg-soft)}

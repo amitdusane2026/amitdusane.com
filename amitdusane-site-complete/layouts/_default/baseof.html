@@ -54,6 +54,17 @@
         <a class="navlink" href="{{ (printf "%s/kb/" $world.root) | relURL }}"><span class="ic">&#9671;</span><span>Knowledge Base</span></a>
         <a class="navlink" href="{{ (printf "%s/references/" $world.root) | relURL }}"><span class="ic">&#167;</span><span>References</span></a>
       </div>
+      {{- /* Part One sits above the steps in the rail as well as on the front
+           page, because a reader who needs it needs it before step one. It
+           renders only for a world that declares `basics`, so the migration
+           guide is untouched. */ -}}
+      {{ with $world.basics }}
+      <div class="grp do">&#9656; {{ .railtitle }}</div>
+      <div id="basicsNav">
+        {{ $topics := (where (where $.Site.RegularPages "Type" "basics") "Section" $.Section).ByWeight }}
+        {{ range $topics }}<a class="steplink{{ if eq $.RelPermalink .RelPermalink }} active{{ end }}" href="{{ .RelPermalink }}"><span class="sn">&#9702;</span><span>{{ .Title }}</span></a>{{ end }}
+      </div>
+      {{ end }}
       <div class="grp do">&#9656; {{ $world.railtitle }}</div>
       <div id="stepNav">
         {{ range $steps }}<a class="steplink{{ if eq .Params.stepnum $curnum }} active{{ else if lt .Params.stepnum $curnum }} done{{ end }}" href="{{ .RelPermalink }}"><span class="sn">{{ .Params.stepnum }}</span><span>{{ .Title }}</span></a>{{ end }}

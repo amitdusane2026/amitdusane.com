@@ -1,0 +1,33 @@
+{{ define "main" }}
+{{- /* PART ONE'S INDEX. Cards in groups, deliberately unnumbered.
+
+     The steps next door render through stepmap.html as a numbered spine,
+     because they are a sequence. This is not one. A reader arrives knowing
+     some of this and none of that, and the page has to let them see which is
+     which and take only what they need. Numbering would promise an order that
+     does not exist and a completion nobody should aim for.
+
+     Groups, labels and blurbs come from
+     [params.worlds.<world>.basicsgroups], so a group with no topics renders
+     nothing and the section can be written a group at a time. */ -}}
+{{ $w := index .Site.Params.worlds .Section }}
+{{ $groups := slice }}
+{{ range $k, $v := $w.basicsgroups }}{{ $groups = $groups | append (merge $v (dict "key" $k)) }}{{ end }}
+{{ $groups = sort $groups "order" }}
+<section class="view active">
+  <p class="crumb"><a href="{{ (printf "%s/" $w.root) | relURL }}">{{ $w.name }}</a> &rsaquo; {{ $w.basics.railtitle }}</p>
+  <div class="eyebrow">{{ $w.basics.railtitle }}</div>
+  <h1>{{ $w.basics.basicstitle }}</h1>
+  <p class="kb-intro">{{ $w.basics.basicsintro }}</p>
+  {{ range $g := $groups }}
+    {{ $items := (where $.Pages "Params.group" $g.key).ByWeight }}
+    {{ with $items }}
+      <div class="kb-grp-h">{{ $g.label }}</div>
+      {{ with $g.blurb }}<p class="grp-blurb">{{ . }}</p>{{ end }}
+      <div class="kb-cards">
+        {{ range . }}<a class="kb-card" href="{{ .RelPermalink }}"><div class="t">{{ .Title }}</div><div class="d">{{ .Description }}</div></a>{{ end }}
+      </div>
+    {{ end }}
+  {{ end }}
+</section>
+{{ end }}

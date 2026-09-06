@@ -2524,6 +2524,23 @@ than deleted, so the numbering and the cross-references to step 7 survive. Step
 11 mattered most: followed today it would have turned tracking off on the live
 site.
 
+### Recorded for later, not now
+
+Three tasks raised 6 September 2026 while designing the Mobile SDK section.
+None is started, and none should be started before the section is written.
+
+**1. Screenshots for the Web SDK Migration guide.** It has none. The procedure
+container carries zero `shot-box` components today, and the guide has always
+relied on diagrams and action blocks alone.
+
+**2. Screenshots for the Mobile SDK guide.** Same, and deliberately deferred.
+Amit will supply Android Studio and Xcode captures himself. **Do not create
+placeholders, and do not use `shot-pending`.** Write the pages as though no
+screenshot is coming; they get added later or not at all.
+
+**3. Inline links from the migration guide into Adobe Analytics Learning.**
+Recorded in full below.
+
 ### The Web SDK Migration guide links to nothing
 
 **Noted 6 September 2026, raised by Amit while designing the Mobile SDK
@@ -2543,6 +2560,30 @@ section links out inline wherever it leans on Adobe Analytics knowledge, and it
 was designed that way from the start rather than retrofitted.
 
 ### What the next session should pick up
+### Two registers in one world, and the reason
+
+**The Mobile SDK section deliberately writes at two depths, decided by Amit on
+6 September 2026.** Getting this wrong in either direction damages the section,
+so it is recorded rather than left to whoever measures next.
+
+**Part Two, the implementation steps, keeps the migration guide's register.**
+Terse, roughly 300 words of prose, sentence median in the low teens, one diagram,
+a `dothis`-style action block. Quick turnaround is the point: a reader following
+steps wants the next instruction, not an essay.
+
+**Part One, the mobile app basics, is the opposite and must not be measured
+against it.** The reader is assumed illiterate in app development, and the
+objective is that after reading they can sit in a room with mobile developers
+and not be an alien there. That needs real length, worked examples, stories and
+analogies carried through a whole page. Measure these against the **learning
+world**, not the procedure world: paragraph medians in the sixties, sentence
+median around twelve, an extended analogy per topic rather than a definition.
+
+**A short Part One page is a failed Part One page.** The failure mode is
+applying the step targets here and producing a glossary, which is exactly what
+Experience League already provides and exactly what this section exists to be
+better than.
+
 
 **Launch is fully closed.** Both remaining items went on 4 September 2026: the
 tracking switch decides from the baseURL, and amitdusane.in redirects to the

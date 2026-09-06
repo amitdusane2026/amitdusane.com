@@ -40,7 +40,10 @@
       var e = null, first = null, i, u;
       if (idx) for (i = 0; i < idx.length; i++) {
         u = idx[i].u || '';
-        if (u.indexOf('/kb/' + id + '/') === -1) continue;
+        /* Was '/kb/' + id, which is why a Why link could only ever reach a
+           knowledge base article. Part One topics live under a different
+           segment, so match the id as a path segment wherever it sits. */
+        if (u.indexOf('/' + id + '/') === -1) continue;
         if (!first) first = idx[i];
         if (u.indexOf('#') === -1) { e = idx[i]; break; }
       }
