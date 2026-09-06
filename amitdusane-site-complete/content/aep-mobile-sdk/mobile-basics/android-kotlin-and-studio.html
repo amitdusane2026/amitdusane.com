@@ -1,0 +1,61 @@
+---
+published: 2026-09-06
+lastmod: 2026-09-06
+title: "Android: Kotlin, Android Studio, and the manifest"
+seotitle: "Android Studio, Kotlin and the AndroidManifest for Analytics Teams"
+description: "The permission list a privacy review asks for is not in the file your developer sends, because an Android app's manifest is assembled rather than written."
+slug: "android-kotlin-and-studio"
+type: basics
+weight: 202
+params:
+  group: world
+  grouplabel: "The developer's world"
+---
+<p class="khook">A privacy review asks for the complete list of permissions the app requests. The developer sends the manifest. It says nothing at all about the internet, and the app plainly uses the internet. Both of those things are true at once.</p>
+<p>That contradiction is the best possible way into how an Android app is put together. The file the developer sent is real. It is simply not the whole document. An Android app's manifest is assembled at build time. The app contributes to it, and so does every library inside it. The version a phone sees has never existed as a file anybody typed.</p>
+<p>Understanding that one mechanism does more than settle the privacy question. It explains how the Adobe SDK registers its own extensions. It explains why nobody had to add an internet permission. And it explains where a whole class of silent startup failure comes from. This page covers the tools, the language, and that manifest.</p>
+<h2>Android Studio, and a build file you can actually read</h2>
+<p>The workshop is <b>Android Studio</b>, Google's development tool, built on top of a long-standing Java environment called IntelliJ. It plays the same role Xcode plays on iOS. Code is written there, builds are run there, and the app is signed and uploaded from there.</p>
+<p>One difference matters to you, and it works in your favour. On iOS the build settings live inside the project and are usually edited through the interface. On Android they live in <b>Gradle</b> files, which are plain text, checked into the repository, and readable by anybody. Gradle is the build system, and its files are themselves small programs rather than settings screens.</p>
+<p>The practical effect is that an Android developer can paste you the exact block that adds the Adobe SDK, and you can read it without opening anything. The dependency list, the version pinning and the build variants are all text. Ask for that block by name and you will usually get it in the reply rather than in a meeting.</p>
+<h2>Kotlin, and enough of it to read a line</h2>
+<p>The language is <b>Kotlin</b>. Google made it the preferred language for Android in 2019, displacing Java, which had been the platform's language since the beginning. Java has not gone anywhere. Any app with a few years behind it contains both, and developers move between them without ceremony.</p>
+<p>Two habits of the language will carry you through most of what you are shown. The first is the pair <span class="mn">val</span> and <span class="mn">var</span>. A <span class="mn">val</span> is set once and never changes. A <span class="mn">var</span> can be reassigned. Seeing which one a developer chose tells you whether a value is meant to move.</p>
+<p>The second is the question mark. A type written as <span class="mn">String?</span> is a string that might be absent, and Kotlin then forces the code to say what happens when it is. This is why you will see so many question marks around identity values and consent values. Those are exactly the things that can legitimately be missing when the SDK has not finished starting up.</p>
+<h2>The manifest is not one file</h2>
+<p>Every Android app has an <span class="mn">AndroidManifest.xml</span>. It is the app's declaration of itself. It names the screens, the services, the permissions the app requests, and the class that runs first when the app starts.</p>
+<p>What surprises people is that the app's own manifest is one contributor among many. Every library the project depends on ships a manifest fragment of its own. At build time Gradle merges them all into a single document, and that merged document is what goes into the app and what the operating system reads. A library can therefore declare a permission, register a service, or announce a component without anybody on the app team writing a line.</p>
+<p>The Adobe SDK does exactly that. Its Core library declares <span class="mn">android.permission.INTERNET</span> and <span class="mn">android.permission.ACCESS_NETWORK_STATE</span> in its own manifest fragment. Neither one is ever added by hand. Both arrive through the merge and both are in the shipped app. Both are also entirely correct. The SDK has to reach the network, and it checks connectivity before deciding whether to queue an event or send it.</p>
+<div class="call margin"><span class="ct">The document a privacy review actually wants</span><p>Android Studio can produce the merged manifest, and that is the file to hand over. The source file in the repository is a partial answer and will understate what the app requests. When a legal or privacy team asks what permissions an app uses, ask the developer for the merged manifest by that name. It takes them a few seconds and it is the only version that matches what a phone receives.</p></div>
+<h2>How the SDK finds its own extensions</h2>
+<p>One line starts the whole SDK, and it names no extensions at all.</p>
+<div class="code"><button class="copy">Copy</button><pre>MobileCore.initialize(this, "YOUR_ENVIRONMENT_FILE_ID")</pre></div>
+<p>The manifest merge is what makes that possible. Each Adobe library's manifest fragment registers the same small service and attaches a piece of metadata naming its own extension class. Once merged, that one service carries a list of every Adobe extension the app contains. On startup the SDK reads the list back and loads each class it finds.</p>
+<p>The consequence is worth holding onto, because it removes a whole category of mistake. The set of active extensions is exactly the set of dependencies. Adding a library registers it. Removing a library unregisters it. No second list exists anywhere to drift out of step with the first. That drift is precisely what used to go wrong when extensions were named by hand.</p>
+<p>It also gives you a fast way to check what is really in a build. At debug log level the SDK writes one line per extension it finds, each reading <span class="mn">Discovered extension:</span> followed by a class name. Ask a developer to launch the app and send you those lines. Counting them against what you asked for in the ticket takes a few seconds, and it answers a question you would otherwise be guessing at.</p>
+<h2>Build types and flavours, which are the same idea in Android words</h2>
+<p>Android splits the same job iOS gives to schemes and configurations, and it uses two words for it. A <b>build type</b> is debug or release, the same pair as everywhere else. A <b>product flavour</b> is an optional second axis, for genuinely different editions of one app. Free and paid, say, or one build per brand in a group that runs several.</p>
+<p>Combining them gives a <b>build variant</b>, and the variant name is the two words run together, as in <span class="mn">freeDebug</span> or <span class="mn">brandaRelease</span>. Where a project has flavours, the Environment File ID is very often set per variant, so that each brand reports to its own property.</p>
+<p>Asking which variant produced a build is therefore the Android form of asking which scheme and configuration. It is the question that resolves test data appearing in a production report, and it usually resolves it in a single reply.</p>
+<table class="mini-tbl">
+<tbody><tr><td><b>Build type</b></td><td>Debug or release. Which one you have decides logging, optimisation and, very often, which Adobe property receives the data.</td></tr>
+<tr><td><b>Product flavour</b></td><td>Optional. Genuinely different editions from one codebase, such as one per brand. Many apps have none at all.</td></tr>
+<tr><td><b>Build variant</b></td><td>The two combined, and the precise answer to &ldquo;which app am I looking at&rdquo;. Ask for it by name.</td></tr>
+</tbody></table>
+<h2>Where startup lives, and the silence when it is missing</h2>
+<p>Android has one conventional place for code that must run before anything else. A developer writes a class extending <span class="mn">Application</span> and puts startup work in its <span class="mn">onCreate</span> method. Initialising the Adobe SDK belongs there, and that is what the implementation step asks for.</p>
+<p>There is a second half to it that is easy to miss. Writing the class is not enough. The manifest has to point at it, through an <span class="mn">android:name</span> attribute on the application element. Only then does Android use your class instead of its own default one.</p>
+<p>Leave that attribute out and everything still works, in the sense that nothing complains. The class compiles. The code sits in the repository where anybody reviewing the pull request can see it. Android quietly uses its default Application instead, <span class="mn">onCreate</span> never runs, the SDK is never initialised, and not one event is ever sent. There is no crash and no error in the log, because from Android's point of view nothing went wrong.</p>
+<div class="call mistake"><span class="ct">Where this goes wrong</span><p>A reviewer reads the pull request, sees the initialisation code exactly where it was asked for, and approves it. The registration line in the manifest was never added. Weeks later the report is empty and the code still looks correct to everybody who opens it. When data does not arrive at all on Android, check that the manifest names the Application class before checking anything else. It costs one question and it is a more common cause than it has any right to be.</p></div>
+<h2>What to ask to see</h2>
+<p>Three requests cover this page. None needs a meeting, and a developer can answer all three from a laptop in about two minutes.</p>
+<div class="actionblock"><div class="abh">Three things to ask for</div><div class="do-intro">Send them together. Each one is a copy and paste at the other end.</div><div class="astep"><div class="an">1</div><div>
+  <div class="al"><span class="lbl">Ask</span> The <b>merged manifest</b>, not the source file, and confirmation that it names the Application class.</div>
+</div></div>
+<div class="astep"><div class="an">2</div><div>
+  <div class="al"><span class="lbl">Ask</span> Which <b>build variant</b> this is, and which Environment File ID that variant carries.</div>
+</div></div>
+<div class="astep"><div class="an">3</div><div>
+  <div class="al"><span class="lbl">Ask</span> The <b>Discovered extension</b> lines from a debug launch, so the list can be counted against the ticket.</div>
+</div></div></div>
+<div class="call check"><span class="ct">&#10003; What you can now do</span><p>You can explain to a privacy reviewer why the permission list they were sent is incomplete, and name the document that is not. You can read a Gradle dependency block and say which Adobe extensions the app contains. You can ask which build variant produced the data in front of you. And when Android sends nothing at all, you have a first question worth asking that most people reach only after a fortnight.</p></div>
