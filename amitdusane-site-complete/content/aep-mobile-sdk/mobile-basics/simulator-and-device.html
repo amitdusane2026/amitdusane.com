@@ -1,0 +1,52 @@
+---
+published: 2026-09-06
+lastmod: 2026-09-06
+title: "Simulator, emulator and a real phone"
+seotitle: "Why Simulator Testing Is Not Enough for Mobile Analytics"
+description: "A simulator proves the code runs. It says nothing useful about installs, networks, permissions or the identifiers your reports depend on."
+slug: "simulator-and-device"
+type: basics
+weight: 206
+params:
+  group: world
+  grouplabel: "The developer's world"
+---
+<p class="khook">A simulator is the app running on a laptop pretending to be a phone. The pretence is good enough for building and misleading for measuring.</p>
+<p>Somebody shares a screen showing what looks exactly like an iPhone, sitting in a window next to their code. Screens respond to clicks, the app navigates properly, and events appear in Assurance in the order they should. It is entirely reasonable to watch that and conclude the implementation works. Most people in the meeting will conclude exactly that.</p>
+<p>What you are watching is real in one sense and not in another. The logic is genuinely being exercised, and if the tracking were in the wrong place you would see it. The phone is not being exercised at all. Several of the things your reports depend on come from the phone rather than from the logic. Those are precisely the ones nobody has tested yet.</p>
+<h2>Two words that are not the same word</h2>
+<p>The iOS tool is a <b>simulator</b> and the Android tool is an <b>emulator</b>. That difference is real rather than branding. It explains why developers on the two platforms defend their tooling with different amounts of confidence.</p>
+<p>The iOS Simulator runs your app as an ordinary program on the Mac itself. It uses the Mac's processor, the Mac's memory and the Mac's network stack. The app is compiled specially in order to run there. What you get is iOS behaviour reproduced on desktop hardware. That makes it extremely fast, and it makes it a weaker imitation than the convincing picture of a handset suggests.</p>
+<p>The Android Emulator does considerably more. It runs a complete Android system image inside a virtual machine. A real Android operating system is booting and running in there, much as it would on a handset. It is closer to the real thing than its iOS counterpart, and it is slower for exactly that reason. It is still not a handset, and it still sits on a desk connected to office wifi.</p>
+<p>For your purposes the distinction changes little, because both fall short in the same four places. It is worth knowing only so that you understand the room. An Android developer will defend their emulator more strongly than an iOS developer defends the simulator. Both of them are right about what they have.</p>
+<h2>What it gets right</h2>
+<p>A simulator is excellent at logic, and logic is most of what goes wrong early in an implementation. If a tracking call sits in the wrong place, fires twice, or carries the wrong value, a simulator shows you. It shows you immediately and cheaply. If a screen name is misspelled, it is misspelled there too. Nothing about the pretence hides that class of fault, because that class of fault lives entirely in the code.</p>
+<p>It is also fast, free, and available to everybody without borrowing hardware from anyone. During the build phase, tracking is written and corrected several times an hour. Insisting on a physical device would burn real time for no benefit at all. Use the simulator freely while the work is being made. The argument on this page is about when to stop, not about whether to start.</p>
+<h2>Excellent for procedure, useless for weather</h2>
+<p>Pilots train in flight simulators, and airlines take that training extremely seriously. Procedures, sequences, instrument reading and emergency drills are all rehearsed there. Rehearsing an engine failure on a real aircraft full of passengers would be absurd. The simulator is not a cheap substitute in that world. For those purposes it is the correct tool and the aircraft is the wrong one.</p>
+<p>What no number of simulator hours does is certify that a particular aircraft is airworthy. The two questions are not in competition and they are not interchangeable. The simulator answers whether the pilot knows the procedure. The aircraft answers whether this machine, in this weather, on this runway, actually flies.</p>
+<p>Your split runs along the same line. The simulator answers whether the tracking logic is correct, which is a real question worth answering. A real phone on a real network answers whether the measurement works. The second question is the one your reports are built on. It is also the one a demonstration on a laptop cannot reach.</p>
+<h2>Four things a simulator will mislead you about</h2>
+<p><b>Installs.</b> An install on a simulator is a build being copied into place by a developer. It is not a person downloading an app from a store, and those two events have almost nothing in common underneath. Install attribution depends on the store transaction and the referral information carried around it. None of that machinery runs at all. Install and first-launch metrics from a simulator prove nothing whatsoever about install and first-launch metrics in production.</p>
+<p><b>The network.</b> A simulator uses the laptop's connection, which is stable, fast, and never in a lift or a basement car park. The SDK's offline queue exists because real connections fail in the middle of things. A queue that never fills is a queue nobody has tested. A failure can be forced deliberately, and even then what you get is a clean disconnection. Real networks produce an ugly half-connected state that is much harder to handle and much more common than a clean one.</p>
+<p><b>Permissions and identifiers.</b> Consent and tracking-permission flows can be walked through on a simulator, and they can look complete from end to end. The identifiers sitting behind those prompts do not behave as they do on hardware. The advertising identifier in particular cannot be relied on there. So a consent flow can be demonstrated convincingly without ever having been genuinely exercised. That is the most persuasive kind of false confidence available to a project.</p>
+<p><b>Everything physical.</b> Real devices are older, slower and fuller than a developer's laptop. They run out of storage. They lose focus to phone calls and get backgrounded by the operating system to save power. They are held by people who close the app halfway through a checkout. Lifecycle metrics are measurements of exactly those conditions, which means a simulator cannot produce an honest one.</p>
+<h2>Where the line sits</h2>
+<p>The rule is short enough to hold in a sentence. Use a simulator while you are checking behaviour, and move to a real device the moment you are checking numbers. Everything else on this page is an explanation of why that line falls where it does.</p>
+<p>Building tracking, correcting a screen name, confirming an event fires in the right order: simulator, all day, without apology. Validating install attribution, lifecycle metrics, offline behaviour or consent: a real phone, on a real connection, running a release build. Anything that will be quoted to the business belongs in that second list. It pairs with the build rule in <a href="/aep-mobile-sdk/mobile-basics/debug-and-release/">Debug builds and release builds</a>. A debug build on a real device is only half the requirement. A release build on a simulator is the other half missing.</p>
+<div class="call mistake"><span class="ct">Where this goes wrong</span><p>An implementation is demonstrated on a simulator, approved in the meeting, and released. Install numbers arrive looking implausible, and the offline queue turns out never to have run at all. Nobody misrepresented anything. Every event shown in that meeting was real. None of the conditions the failing metrics depend on had ever been present on a laptop.</p></div>
+<h2>What to ask for</h2>
+<p>Getting a real device into the loop is usually an organisational problem rather than a technical one. Somebody has to own a spare handset, or add you to a distribution list. Both are easy in week one and awkward in the week before launch. Ask early, while it is still a scheduling question rather than a favour.</p>
+<div class="actionblock"><div class="abh">Three requests worth making early</div><div class="do-intro">All three are easier to arrange in week one than in the week before launch.</div><div class="astep"><div class="an">1</div><div>
+  <div class="al"><span class="lbl">Ask</span> Was this shown on a <b>simulator or a device</b>?</div>
+  <div class="al"><span class="lbl">Why</span> It is not an accusation, and it changes what the demonstration actually proved.</div>
+</div></div>
+<div class="astep"><div class="an">2</div><div>
+  <div class="al"><span class="lbl">Ask</span> Can I get a <b>release build on my own phone</b>, through TestFlight or a testing track?</div>
+  <div class="al"><span class="lbl">Why</span> It lets you validate under real conditions yourself, instead of watching somebody else's screen.</div>
+</div></div>
+<div class="astep"><div class="an">3</div><div>
+  <div class="al"><span class="lbl">Ask</span> Which metrics have been checked on <b>hardware, over a real network</b>?</div>
+  <div class="al"><span class="lbl">Why</span> Installs, lifecycle, offline queueing and consent are the four a simulator cannot answer for.</div>
+</div></div></div>
+<div class="call check"><span class="ct">&#10003; What you can now do</span><p>Tell a simulator from an emulator, and know why neither one is a phone. Use one without guilt while tracking is being built, and stop using it the moment numbers are being judged. Name the four things it cannot tell you: installs, real network behaviour, permissions and identifiers, and everything physical about a device somebody actually owns. And ask for a release build on your own phone early enough that getting one is a scheduling question rather than a favour.</p></div>

@@ -2574,10 +2574,39 @@ recalled, and two would have been wrong from memory: `MobileCore.initialize`
 auto-registers extensions and enables lifecycle, and the read calls are all
 callback-based.
 
-**Part One, the mobile app basics, is five of fourteen topics as of 6
-September 2026.** Group 2's two new pages, `ios-swift-and-xcode` and
-`android-kotlin-and-studio`, are written; the four promotions in that group are
-not. Three facts in the Android page were verified against Adobe's own SDK
+**Part One, the mobile app basics, is nine of fourteen topics as of 6
+September 2026, and Group 2 is complete.** Its four promotions were written in
+one run on Amit's instruction: `what-a-build-is`, `dependency-managers`,
+`debug-and-release` and `simulator-and-device`, from the KB articles
+`app-build`, `dependency-managers`, `debug-vs-release` and
+`simulator-vs-device`. Two slugs changed on promotion, `debug-vs-release`
+becoming `debug-and-release` and `simulator-vs-device` becoming
+`simulator-and-device`, so the KB ids and the Part One slugs are no longer the
+same strings and the Why-row wiring has to map rather than reuse.
+
+**The KB articles were deliberately left in place.** Steps 2, 7 and 13 carry
+`why-row` links to all four, so deleting them now would break live bridges
+before the rewiring step runs. Removal belongs with that step, not with the
+writing.
+
+**The Gradle block on `dependency-managers` was verified against Adobe's own
+documentation while drafting**, not recalled: the bill of materials line is
+`implementation platform('com.adobe.marketing.mobile:sdk-bom:3.+')` and the
+member artefacts carry no version. One claim inherited from the KB article was
+**dropped rather than promoted**. The old `simulator-vs-device` said permission
+dialogs "may not appear at all" on a simulator, which does not hold up: the
+prompts do appear, and it is the identifiers behind them that misbehave. The
+page now makes the narrower claim, which is the true one.
+
+**The register trap fired again, in both directions, which is worth recording
+because it cost a full extra pass.** The first drafts came out at paragraph
+medians 47 to 51, exactly where the Group 1 pages had been. Deepening them to
+fix that pushed sentence medians up to 15 to 17. The fix is to treat the two as
+separate passes and to do them in this order: write long paragraphs first, then
+split sentences, because splitting sentences leaves paragraph length untouched
+while lengthening paragraphs always lifts the sentence median. All four now sit
+at 64 to 72 on paragraphs and 13 to 14 on sentences, 1,309 to 1,413 words, none
+over 30 words. Three facts in the Android page were verified against Adobe's own SDK
 source rather than recalled, because this environment's egress proxy blocks both
 `experienceleague.adobe.com` and `developer.adobe.com`: Core declares INTERNET
 and ACCESS_NETWORK_STATE in its own manifest fragment, each extension library
@@ -2671,7 +2700,7 @@ reword the pointer below with it.
 
 ### What the next session should pick up
 
-**Write the remaining eleven Part One topics**, in the groups the map lists, and
+**Write the remaining five Part One topics**, in the groups the map lists, and
 read `### Two registers in one world, and the reason` above before
 starting. Part One is
 measured against the learning world, not against the steps next door. A short

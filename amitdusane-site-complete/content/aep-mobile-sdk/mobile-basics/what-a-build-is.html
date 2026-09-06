@@ -1,0 +1,53 @@
+---
+published: 2026-09-06
+lastmod: 2026-09-06
+title: "What a build actually is"
+seotitle: "What a Mobile App Build Is, for Analytics Practitioners"
+description: "Source code becomes a sealed binary before anybody runs it, and that single fact is behind almost everything that makes mobile measurement harder than web."
+slug: "what-a-build-is"
+type: basics
+weight: 203
+params:
+  group: world
+  grouplabel: "The developer's world"
+---
+<p class="khook">A web page is delivered as the text somebody wrote. An app is delivered as a sealed object made from that text, and the text is nowhere inside it.</p>
+<p>A tracking value is wrong in production. On the web you would have it fixed within the hour, and you might fix it yourself. Open the tag property, correct the string, publish. The next person to load the page gets the new value, and nobody had to be asked.</p>
+<p>Ask for the same correction in an app and the answer is a date. Not a refusal, and not an estimate padded to buy time. A date, usually a fortnight out, offered by somebody who is being entirely straight with you. The reason is one technical fact that has nothing to do with analytics, and everything downstream of it follows. An app is <b>compiled</b>, and a web page is not.</p>
+<h2>What a compiler actually does</h2>
+<p>A developer writes Swift or Kotlin. Those are languages meant for people to read. A phone cannot run either of them. So a program called a compiler translates that text into machine instructions, and packages the result with the images, fonts, sounds and configuration the app needs. What comes out is a single file. That file is the app, and it is what reaches a phone.</p>
+<p>The translation runs one way. You cannot take the finished file and recover the Swift that produced it. There is no view-source pointed at an app, no way to open it and read the tracking call, and no way to edit one value in place. The text a developer wrote stays on their machine and in the company's repository. What the customer installs is the sealed object made from it.</p>
+<h2>The edition that has already gone to print</h2>
+<p>The useful comparison is a printed newspaper rather than a website. A website is corrected by editing the page. A newspaper is corrected by printing another edition tomorrow, because forty thousand copies are already on trains and doorsteps. Nothing about the correction is difficult. The difficulty is that the artefact carrying the mistake has already left the building.</p>
+<p>Everything about the press run follows from that. Corrections are held and printed together, because a second run costs the same whether it fixes one word or rewrites the front page. The edition is checked carefully before it goes, since checking afterwards changes nothing. And when somebody asks what the paper said, the honest question back is which edition they read. An app release behaves the same way in every one of those respects.</p>
+<p>The analogy also tells you where it stops. A newspaper cannot change after printing at all. An app can change one specific category of thing after shipping, and that category happens to be most of yours. That exception is worth a section of its own, further down.</p>
+<h2>What you lose the moment code becomes a binary</h2>
+<p>Web work rests on tools that assume you can see inside the running thing. None of them exist here, and the absences are worth naming individually rather than as a general complaint.</p>
+<p>There is no console to paste a check into. There is no network tab listing the requests the app made. There is no element inspector, because the screen was not built from markup. There is no way to confirm from the outside that a tracking call exists at all. On the web you answer all four of those questions yourself, in about ninety seconds, without asking anybody.</p>
+<p>This is why <a href="/aep-mobile-sdk/kb/assurance/">Assurance</a> exists and why it is not optional. A compiled app is opaque from the outside, so the only way to see inside a running one is a tool the app itself invites in. Assurance is that invitation. It is the network tab you no longer have, and it has to be built into the app before it can show you anything.</p>
+<h2>Why six characters and six thousand lines cost the same</h2>
+<p>Changing one string means compiling the whole app again. The new file then has to be tested, signed, submitted, reviewed by the store, and released. Nothing in that sequence is sensitive to the size of the change. A six-character correction and a rewritten payment flow travel the identical route and take the identical time.</p>
+<p>Once that is clear, developer behaviour that looks obstructive turns out to be rational. Changes get batched, because the expensive part is the release rather than the edit. Small requests wait for a build that is going anyway. A ticket that arrives the day after a submission waits for the next cycle, which may be a fortnight. Nobody is deprioritising you. The queue exists because releases are expensive and edits are nearly free.</p>
+<p>The practical consequence is that the shape of your request matters more than its size. Six separate tracking tickets across a quarter cost six releases of goodwill. The same six requirements in one specification cost one. Ask for everything you need at once, even the parts you are not certain about yet, because a placeholder that ships is cheaper than a change that has to.</p>
+<div class="call margin"><span class="ct">The exception, and it is most of your work</span><p>Anything the mobile tag property controls is fetched by the SDK while the app runs, rather than compiled into it. Changing a datastream, adjusting an extension's settings, or altering configuration in the tag property reaches installed apps within minutes and needs no release. The edge is precise and worth memorising. Configuration travels freely. Anything that needs a new line of code in the app does not.</p></div>
+<h2>The question that changes</h2>
+<p>On the web, asking whether something is in the code is a sensible question, because the code and the live site are the same thing. In an app they are two different objects with two different histories. The code can be perfectly correct while the app on your phone knows nothing about it.</p>
+<p>So the question has to change. Not "is the tracking in the code", which a developer will truthfully answer yes to, but <b>which build is it in</b>. Those are genuinely different questions. The first is about a file on somebody's machine. The second is about the artefact you are holding, and it is the only one of the two that can be tested. Most confused mobile validation sessions come down to two people answering different questions and agreeing with each other.</p>
+<p>Asking it precisely also stops you validating the wrong thing entirely, which is what <a href="/aep-mobile-sdk/mobile-basics/debug-and-release/">Debug builds and release builds</a> covers. A build has a version, a number and a kind, and all three are worth having in front of you before anybody looks at a report.</p>
+<p>The version and the number are two different things, and the distinction is useful. The <b>version</b> is the public one, something like 4.2.1, and it is what a customer sees in the store. The <b>build number</b> counts every attempt underneath that version. One public version routinely covers twenty or thirty builds, because each submission, each internal test and each fix produces another. Two people can therefore both be running version 4.2.1 and be running different software.</p>
+<p>That is why a version number alone never settles a validation question. Ask for both, and write them down next to whatever you observed. It costs one extra line in a ticket. It saves the conversation where two people compare results and agree they were on the same version. They then spend a day looking for a fault that is really just a build apart.</p>
+<h2>What to ask, and when</h2>
+<p>None of this needs you to read code or open a project. It needs you to ask about builds rather than about code, and to ask early enough that the answer can still change something.</p>
+<div class="actionblock"><div class="abh">Three habits that pay for themselves</div><div class="do-intro">None of these takes a developer more than a minute to answer.</div><div class="astep"><div class="an">1</div><div>
+  <div class="al"><span class="lbl">Ask</span> Which <b>build</b> is this, by version and build number, and is it the one in the store?</div>
+  <div class="al"><span class="lbl">Why</span> It separates a fault in the code from a fault in the artefact you are testing, which are fixed by different people.</div>
+</div></div>
+<div class="astep"><div class="an">2</div><div>
+  <div class="al"><span class="lbl">Ask</span> When is the <b>next release</b> going out, and what is already in it?</div>
+  <div class="al"><span class="lbl">Why</span> It tells you which train your request can still catch, and a request that catches a train costs nothing extra.</div>
+</div></div>
+<div class="astep"><div class="an">3</div><div>
+  <div class="al"><span class="lbl">Ask</span> Is what I am asking for <b>configuration or code</b>?</div>
+  <div class="al"><span class="lbl">Why</span> Configuration reaches phones this afternoon. Code waits for a build, and knowing which one you are asking for prevents both false urgency and false patience.</div>
+</div></div></div>
+<div class="call check"><span class="ct">&#10003; What you can now do</span><p>Explain why an app cannot be corrected the way a page can, without apologising for it. Ask which build a number came from rather than whether the code is right, which are different questions with different answers. Recognise that batching requests is rational rather than obstructive, and shape your specifications accordingly. And tell the difference between a change that ships this afternoon and one that waits a fortnight, before you promise either to anybody.</p></div>
