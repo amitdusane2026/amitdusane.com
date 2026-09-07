@@ -348,18 +348,20 @@ disableKinds = ["taxonomy", "term"]
   kbtitle = "The &ldquo;why&rdquo; behind every step"
   kbintro = "The background the steps lean on, grouped by what a reader is usually stuck on rather than by kind of knowledge. Browse it directly, or reach any topic in context through a step's &ldquo;Why?&rdquo; link."
 
+# "The app environment" was the fourth group here until 7 September 2026. Every
+# article in it was promoted into Part One, which left a configured group with
+# no members. The list template renders nothing for an empty group, so it was
+# invisible rather than broken -- and an obsolete grouping left in config is
+# exactly what the QA gate's category-ownership check exists to catch.
 [params.worlds.aep-mobile-sdk.kbgroups]
-  [params.worlds.aep-mobile-sdk.kbgroups.environment]
-    order = 1
-    label = "The app environment"
   [params.worlds.aep-mobile-sdk.kbgroups.shift]
-    order = 2
+    order = 1
     label = "The mental shift"
   [params.worlds.aep-mobile-sdk.kbgroups.plumbing]
-    order = 3
+    order = 2
     label = "The plumbing"
   [params.worlds.aep-mobile-sdk.kbgroups.failures]
-    order = 4
+    order = 3
     label = "Failure modes"
 
 # ---------------------------------------------------------------------------
