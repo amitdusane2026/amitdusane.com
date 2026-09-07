@@ -298,23 +298,23 @@ disableKinds = ["taxonomy", "term"]
   [params.worlds.aep-mobile-sdk.phases.ground]
     order = 1
     name = "Ground"
-    blurb = "What mobile changes, and enough of the app to be useful in the room."
-    steps = [1, 2, 3]
+    blurb = "What mobile changes, and what you are going to measure."
+    steps = [1, 2]
   [params.worlds.aep-mobile-sdk.phases.configure]
     order = 2
     name = "Configure"
     blurb = "Every bit of this is Adobe-side. You can finish it before you speak to a developer."
-    steps = [4, 5, 6]
+    steps = [3, 4, 5]
   [params.worlds.aep-mobile-sdk.phases.implement]
     order = 3
     name = "Implement"
     blurb = "The app itself, where you stop being able to do it alone."
-    steps = [7, 8, 9, 10, 11, 12]
+    steps = [6, 7, 8, 9, 10, 11]
   [params.worlds.aep-mobile-sdk.phases.prove]
     order = 4
     name = "Prove and ship"
     blurb = "Confirm the data arrives, find out why when it does not, then release."
-    steps = [13, 14, 15]
+    steps = [12, 13, 14]
 
 # ---------------------------------------------------------------------------
 # KNOWLEDGE BASE GROUPS, moved out of layouts/kb/list.html on 6 September 2026.

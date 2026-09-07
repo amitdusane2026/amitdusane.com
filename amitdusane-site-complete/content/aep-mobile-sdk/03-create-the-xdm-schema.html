@@ -5,10 +5,10 @@ title: "Create the XDM schema"
 seotitle: "Creating an XDM Schema for the Adobe Mobile SDK"
 description: "The class, the field groups, and the one rule that makes a schema different from an eVar: once a field has taken data, it can only be added to."
 slug: "create-the-xdm-schema"
-weight: 4
+weight: 3
 type: step
 params:
-  stepnum: 4
+  stepnum: 3
   kbids: ["mobile-schema", "xdm-vs-contextdata"]
 ---
 <div class="narrative">An eVar is a slot. You can fill it with anything, rename it on Tuesday, and repurpose it in March, and nothing objects. XDM does not work like that. A schema is agreed before any data moves, and once a field has received data it cannot be removed or retyped. It can only be added to. That reads as a restriction. It stops reading that way the first time somebody in Customer Journey Analytics asks what a field means and gets <b>one</b> answer instead of four.</div><div class="why-row"><span class="wl">Why?</span><a class="why" href="/aep-mobile-sdk/kb/mobile-schema/" data-kb="mobile-schema">What do the standard groups give me? <span class="arr">&#8599;</span></a><a class="why" href="/aep-mobile-sdk/kb/xdm-vs-contextdata/" data-kb="xdm-vs-contextdata">Why not just send key-value pairs? <span class="arr">&#8599;</span></a></div><p>A schema is a class plus field groups. The class fixes what kind of thing you are describing, and for app behaviour that is always <b>Experience Event</b>: something that happened at a moment in time. Field groups are the reusable blocks of fields you assemble on top.</p><div class="actionblock"><div class="abh">Build it</div><div class="astep"><div class="an">1</div><div>

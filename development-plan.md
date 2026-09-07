@@ -2734,24 +2734,39 @@ reword the pointer below with it.
 
 ### What the next session should pick up
 
-**Part One is written. The next work is the spine**, in this order, and the
-first two items are one job rather than two.
+**The spine is done as of 7 September 2026. Only QA remains before launch.**
 
-1. **Dissolve step 2 into Part One and renumber the steps to fourteen.**
-2. **Wire the step Why-rows to the promoted topics, and remove the eight
-   superseded KB articles.** These belong together because steps 2, 7 and 13
-   currently link to KB articles that Part One has replaced, so removing one
-   without rewiring the other breaks live links. **The wiring needs a mapping,
-   not a reuse**: two slugs changed on promotion, `debug-vs-release` becoming
-   `debug-and-release` and `simulator-vs-device` becoming `simulator-and-device`,
-   so KB id and Part One slug are no longer the same string. The seven
-   promotions plus `cross-platform` are the eight removals that take the KB from
-   26 to 18.
-3. **Inline links into Adobe Analytics Learning** wherever the section leans on
-   analytics knowledge it does not teach. Amit's ruling: inline and explicit,
-   never a separate page. The Web SDK Migration guide has none either, noted in
-   `5f64061`.
-4. **Full QA pass, then launch on Amit's word only.**
+1. **DONE. Step 2 dissolved into Part One, steps renumbered to fourteen.**
+   Everything `learn-the-app-environment` covered is now in Part One, so it was
+   deleted rather than merged. Slugs carry no number, so **no step URL changed**
+   and no alias was needed; only the dissolved step's own URL disappeared, and
+   the section has never been on production. `weight` and `stepnum` are set from
+   the filename prefix, the phase arrays in `hugo.toml` became [1,2], [3,4,5],
+   [6..11] and [12,13,14], and the Ground blurb was reworded since it no longer
+   covers the app environment.
+2. **DONE. Why-rows rewired and the eight KB articles removed.** The wiring was
+   a mapping rather than a reuse, because two slugs changed on promotion.
+   `openKB` needed no change: it already matches an id as a path segment, and
+   the panel labels a Part One target "Mobile app basics" on its own.
+3. **DONE. Inline Adobe Analytics Learning links**, twelve of them across four
+   steps, two KB articles and one Part One page, at the first substantive
+   mention of report suites, eVars and props, context data, processing rules,
+   the ECID and Customer Journey Analytics. The section previously had **none**.
+4. **Full QA pass, then launch on Amit's word only.** This is the only item
+   left.
+
+**Amit ruled on 7 September 2026 that a Why-row may link to Mobile Basics, not
+only to the knowledge base.** The code already allowed it; the restriction was
+only ever a habit. Step 1 gained a basics Why-link on the strength of that,
+since it is the entry point now that the vocabulary step is gone.
+
+**One thing worth knowing before touching the phases block again.** A greedy
+multiline `perl` substitution across `[params.worlds.aep-mobile-sdk.phases]`
+silently ate three of its four sections, because `[\s\S]*?` ran past the block
+it was anchored to. It was caught immediately by reading the file back and
+restored with `git checkout`. **Edit that block with exact single-line matches**,
+and read it back afterwards; a damaged phases block builds without error and
+simply empties the stage map.
 
 **Read `### Two registers in one world, and the reason` before writing anything
 else in this world**, including Part Two. Part One is measured against the

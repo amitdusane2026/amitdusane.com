@@ -5,10 +5,10 @@ title: "Debug when nothing arrives"
 seotitle: "Debugging an Adobe Mobile SDK Implementation When No Data Arrives"
 description: "Find where the event stopped before deciding whose problem it is. Five places it can stop, what each one means, and which of them are yours to fix."
 slug: "debug-when-nothing-arrives"
-weight: 14
+weight: 13
 type: step
 params:
-  stepnum: 14
+  stepnum: 13
   kbids: ["nothing-arrives", "schema-rejection", "timing"]
 ---
 <div class="narrative">Data stops arriving on a Thursday. The app team is asked and answers honestly that nothing changed on their side. A ticket is raised anyway, because that is what happens, and it sits in a sprint queue for eleven days. Somebody finally opens Assurance. The events are leaving the phone perfectly well and being rejected at the Edge. A field had been renamed in the schema three weeks earlier. Nobody in that story was careless. <b>The question was aimed at the wrong team in the first hour.</b> Eleven days went into confirming it.</div><div class="why-row"><span class="wl">Why?</span><a class="why" href="/aep-mobile-sdk/kb/nothing-arrives/" data-kb="nothing-arrives">Sent, or never sent? <span class="arr">&#8599;</span></a><a class="why" href="/aep-mobile-sdk/kb/schema-rejection/" data-kb="schema-rejection">What does a rejection look like? <span class="arr">&#8599;</span></a></div><p>There is one discipline here, and everything else follows from it. <b>Find where the event stopped before deciding whose problem it is.</b> An event can stop in five places. Only two of them belong to the app team, and the other three are yours, which is the reverse of what most people assume when data goes missing.</p><figure class="fig-svg"><svg viewBox="0 0 700 250" role="img" aria-label="An event can stop in five places between the app and the report, and three of those five are owned by the analytics practitioner rather than the mobile development team." style="width:100%;height:auto;display:block">

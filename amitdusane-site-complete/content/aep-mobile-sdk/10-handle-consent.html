@@ -5,10 +5,10 @@ title: "Handle consent"
 seotitle: "Implementing Consent in the Adobe Experience Platform Mobile SDK"
 description: "The default decides what happens before a person has chosen anything, and on a mobile app that window is the first launch, which is the one you cannot repeat."
 slug: "handle-consent"
-weight: 11
+weight: 10
 type: step
 params:
-  stepnum: 11
+  stepnum: 10
   kbids: ["consent-mobile"]
 ---
 <div class="narrative">A browser consent banner appears on a page that has usually already loaded, and a returning visitor carries a cookie that answers the question before it is asked. An app has neither. The first launch is a person opening something they just downloaded. No stored preference, no prior page. And the SDK starts sending events the moment it initialises. So the decision that matters is not which banner to build. It is <b>what the SDK does in the seconds before anybody has answered</b>, and that is a setting rather than code.</div><div class="why-row"><span class="wl">Why?</span><a class="why" href="/aep-mobile-sdk/kb/consent-mobile/" data-kb="consent-mobile">How does this differ from a web banner? <span class="arr">&#8599;</span></a></div><div class="actionblock"><div class="abh">Set the default first</div><div class="astep"><div class="an">1</div><div>

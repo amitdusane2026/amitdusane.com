@@ -5,10 +5,10 @@ title: "Create the datastream"
 seotitle: "Configuring a Datastream for Adobe Analytics and AEP"
 description: "One datastream, two services. This is the step that decides whether the app feeds Adobe Analytics only, or Analytics and Customer Journey Analytics together."
 slug: "create-the-datastream"
-weight: 5
+weight: 4
 type: step
 params:
-  stepnum: 5
+  stepnum: 4
   kbids: ["datastream-services", "edge-vs-direct", "wrong-dataset"]
 ---
 <div class="narrative">Everything so far has described data. The datastream is the first thing that moves it. It sits on Adobe's servers rather than in the app. It receives every event the SDK sends, then decides where each one goes. That last part is why this short step matters. <b>One event can land in two places.</b> The decision is made here rather than in the app, so it can be corrected later without a release.</div><div class="why-row"><span class="wl">Why?</span><a class="why" href="/aep-mobile-sdk/kb/datastream-services/" data-kb="datastream-services">How does one event reach two places? <span class="arr">&#8599;</span></a><a class="why" href="/aep-mobile-sdk/kb/edge-vs-direct/" data-kb="edge-vs-direct">Which path are you on? <span class="arr">&#8599;</span></a></div><div class="actionblock"><div class="abh">Build it</div><div class="astep"><div class="an">1</div><div>
@@ -16,7 +16,7 @@ params:
   <div class="al"><span class="lbl">Do</span> Create <b>three</b>: Development, Staging, Production. Point each at the schema from <a href="/aep-mobile-sdk/create-the-xdm-schema/">Create the XDM schema</a>.</div>
 </div></div>
 <div class="astep"><div class="an">2</div><div>
-  <div class="al"><span class="lbl">Do</span> On each, <b>Add Service &rsaquo; Adobe Analytics</b> and enter the report suite ID. On Development and Staging that must be a <b>validation</b> suite, never the live one.</div>
+  <div class="al"><span class="lbl">Do</span> On each, <b>Add Service &rsaquo; Adobe Analytics</b> and enter the <a href="/adobe-analytics-learning/foundations/report-suites/">report suite</a> ID. On Development and Staging that must be a <b>validation</b> suite, never the live one.</div>
 </div></div>
 <div class="astep"><div class="an">3</div><div>
   <div class="al"><span class="lbl">Do</span> On each, <b>Add Service &rsaquo; Adobe Experience Platform</b> and select the dataset. This is the half that feeds Customer Journey Analytics.<a class="cite" href="/aep-mobile-sdk/references/#ref-22" data-ref="22">[22]</a></div>

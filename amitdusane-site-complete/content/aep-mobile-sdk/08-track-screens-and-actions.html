@@ -5,13 +5,13 @@ title: "Track screens and actions"
 seotitle: "Tracking Screens and Actions with the Adobe Mobile SDK"
 description: "One API sends everything. What goes inside an ExperienceEvent, why it is XDM rather than context data, and how to specify it so a developer cannot guess wrong."
 slug: "track-screens-and-actions"
-weight: 9
+weight: 8
 type: step
 params:
-  stepnum: 9
-  kbids: ["screens-vs-pageviews", "xdm-vs-contextdata"]
+  stepnum: 8
+  kbids: ["screens-not-pages", "xdm-vs-contextdata"]
 ---
-<div class="narrative">There is one API for this, and it takes one argument. Everything the app reports beyond lifecycle goes through <span class="mn">Edge.sendEvent</span> carrying an ExperienceEvent, and an ExperienceEvent is XDM: the field names agreed in the schema, filled in with values. No <span class="mn">trackAction</span>, no <span class="mn">trackState</span>, no context data bag. That is the shift a web practitioner has to make. It is easier here than anywhere else, because <b>the schema has already decided what the field names are.</b></div><div class="why-row"><span class="wl">Why?</span><a class="why" href="/aep-mobile-sdk/kb/xdm-vs-contextdata/" data-kb="xdm-vs-contextdata">Why not just send key-value pairs? <span class="arr">&#8599;</span></a><a class="why" href="/aep-mobile-sdk/kb/screens-vs-pageviews/" data-kb="screens-vs-pageviews">Is a screen a page view? <span class="arr">&#8599;</span></a></div><div class="actionblock"><div class="abh">Sending an event</div><div class="gstep">iOS &middot; Swift</div><div class="code"><button class="copy">Copy</button><pre>var xdmData: [String: Any] = [
+<div class="narrative">There is one API for this, and it takes one argument. Everything the app reports beyond lifecycle goes through <span class="mn">Edge.sendEvent</span> carrying an ExperienceEvent, and an ExperienceEvent is XDM: the field names agreed in the schema, filled in with values. No <span class="mn">trackAction</span>, no <span class="mn">trackState</span>, no context data bag. That is the shift a web practitioner has to make. It is easier here than anywhere else, because <b>the schema has already decided what the field names are.</b></div><div class="why-row"><span class="wl">Why?</span><a class="why" href="/aep-mobile-sdk/kb/xdm-vs-contextdata/" data-kb="xdm-vs-contextdata">Why not just send key-value pairs? <span class="arr">&#8599;</span></a><a class="why" href="/aep-mobile-sdk/mobile-basics/screens-not-pages/" data-kb="screens-not-pages">Is a screen a page view? <span class="arr">&#8599;</span></a></div><div class="actionblock"><div class="abh">Sending an event</div><div class="gstep">iOS &middot; Swift</div><div class="code"><button class="copy">Copy</button><pre>var xdmData: [String: Any] = [
     "eventType": "application.interaction",
     "appInteraction": [
         "name": "add_to_basket"

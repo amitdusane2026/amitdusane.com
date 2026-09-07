@@ -5,13 +5,13 @@ title: "Set up identity"
 seotitle: "ECID and Customer IDs in the Adobe Mobile SDK"
 description: "The ECID identifies a device, not a person. Adding your own customer ID is what lets one human being be recognised across an app and a website."
 slug: "set-up-identity"
-weight: 10
+weight: 9
 type: step
 params:
-  stepnum: 10
+  stepnum: 9
   kbids: ["identity-on-mobile", "customer-id"]
 ---
-<div class="narrative">The SDK generates an ECID on first launch and attaches it to everything, with no work from anybody. That is genuinely useful and it is also the source of the most persistent misunderstanding in mobile analytics. <b>An ECID identifies an installation, not a human being.</b> The same person on a phone and a laptop is two ECIDs. The same person after a reinstall is two ECIDs. Every question that begins &ldquo;how many customers&rdquo; runs into that, and the answer is to send an identifier of your own alongside it.</div><div class="why-row"><span class="wl">Why?</span><a class="why" href="/aep-mobile-sdk/kb/identity-on-mobile/" data-kb="identity-on-mobile">What survives a reinstall? <span class="arr">&#8599;</span></a><a class="why" href="/aep-mobile-sdk/kb/customer-id/" data-kb="customer-id">Why is the ECID not enough? <span class="arr">&#8599;</span></a></div><figure class="fig-svg"><svg viewBox="0 0 700 200" role="img" aria-label="One person using a phone, a tablet and a website produces three separate ECIDs, and only a shared customer ID sent from all three lets them be recognised as one person." style="width:100%;height:auto;display:block">
+<div class="narrative">The SDK generates an ECID on first launch and attaches it to everything, with no work from anybody. That is genuinely useful and it is also the source of the most persistent misunderstanding in mobile analytics. <b>An <a href="/adobe-analytics-learning/collect/tracking-calls/experience-cloud-id-ecid/">ECID</a> identifies an installation, not a human being.</b> The same person on a phone and a laptop is two ECIDs. The same person after a reinstall is two ECIDs. Every question that begins &ldquo;how many customers&rdquo; runs into that, and the answer is to send an identifier of your own alongside it.</div><div class="why-row"><span class="wl">Why?</span><a class="why" href="/aep-mobile-sdk/kb/identity-on-mobile/" data-kb="identity-on-mobile">What survives a reinstall? <span class="arr">&#8599;</span></a><a class="why" href="/aep-mobile-sdk/kb/customer-id/" data-kb="customer-id">Why is the ECID not enough? <span class="arr">&#8599;</span></a></div><figure class="fig-svg"><svg viewBox="0 0 700 200" role="img" aria-label="One person using a phone, a tablet and a website produces three separate ECIDs, and only a shared customer ID sent from all three lets them be recognised as one person." style="width:100%;height:auto;display:block">
 <rect x="20" y="34" width="150" height="42" rx="8" style="fill:var(--bg-soft, #f7f8fa);stroke:var(--line, #e4e6ea);stroke-width:1.4"/>
 <text x="95" y="52" text-anchor="middle" style="font-size:12px;fill:var(--ink-soft, #3b4048)">phone app</text>
 <text x="95" y="68" text-anchor="middle" style="font-size:11px;fill:var(--muted, #6b7280)">ECID 4f2a...</text>
