@@ -26,9 +26,47 @@
          than on pages.dev: both guards would invert together, and both would
          then need the narrower test. Nothing is hosted that way today.
 
-         Property G-9817PZWN9H lives in hugo.toml.
+         SECOND GATE, ADDED 7 SEPTEMBER 2026: THE HOSTNAME THE READER IS ON.
+         The build-time test above answers "what baseURL was this built with",
+         which is not the same question as "where is this page being served
+         from". Three real cases separate them, and in all three the build-time
+         test alone says yes when the honest answer is no: a staging project
+         rebuilt without -b $CF_PAGES_URL/, so it inherits the hugo.toml
+         baseURL; a production build copied or mirrored somewhere else; and a
+         local `hugo server` run with -b https://amitdusane.com/ for a
+         canonical check. The snippet below therefore refuses to load gtag at
+         all unless the browser is actually on the live host.
+
+         This does NOT break the symmetry above. It is a second, narrower gate
+         on the same decision, and it can only ever withhold tracking, never
+         turn it on somewhere the build-time test had already refused. The
+         noindex guard needs no equivalent because a meta tag is decided when
+         the page is built and cannot be reconsidered at run time; its
+         protection at run time is the X-Robots-Tag in layouts/index.headers.
+
+         Replaces Hugo's _internal/google_analytics.html, which offers no hook
+         for a condition like this. Property ID still comes from hugo.toml, so
+         there is exactly one place to change it.
      =================================================================== */ -}}
-  {{ if strings.Contains .Site.BaseURL "amitdusane.com" }}{{ template "_internal/google_analytics.html" . }}{{ end }}
+  {{- $ga := site.Config.Services.GoogleAnalytics.ID -}}
+  {{ if and (strings.Contains .Site.BaseURL "amitdusane.com") $ga }}
+  <script>
+  (function(){
+    var h = location.hostname;
+    if (h !== "amitdusane.com" && h !== "www.amitdusane.com") { return; }
+    var id = {{ $ga }};
+    var s = document.createElement("script");
+    s.async = true;
+    s.src = "https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent(id);
+    document.head.appendChild(s);
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ window.dataLayer.push(arguments); }
+    window.gtag = gtag;
+    gtag("js", new Date());
+    gtag("config", id);
+  })();
+  </script>
+  {{ end }}
   {{- /* Per-page title + description. Real query-intent versions land in Phase 4. */ -}}
   <title>{{ if .Params.seotitle }}{{ .Params.seotitle }}{{ else if .IsHome }}{{ .Site.Title }} · Adobe Experience Platform{{ else }}{{ .Title }} · {{ .Site.Title }}{{ end }}</title>
   <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Summary | plainify | truncate 150 }}{{ end }}">
