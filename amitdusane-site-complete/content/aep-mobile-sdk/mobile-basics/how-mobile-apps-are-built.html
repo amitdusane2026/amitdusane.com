@@ -79,13 +79,13 @@ params:
   <div class="al"><span class="lbl">Ask</span> How much of the screen is a web view? If the answer is anything other than "none", find out exactly which screens before going further.</div>
 </div></div></div>
 <h2>What actually changes for you</h2>
-<p>Less than you might fear, and the part that does change is worth knowing precisely. <b>Everything on the Adobe side is identical in all four cases.</b> The schema does not change. Neither does the datastream, the tag property, the extensions, consent, identity or Assurance. None of them knows how the app was built, and none of them cares. They sit on Adobe's servers and receive events that look the same whatever produced them.</p>
+<p>Less than you might fear, and the part that does change is worth knowing precisely. <b>Everything on the Adobe side is identical in all four cases.</b> The schema does not change. Neither does the <a href="/aep-mobile-sdk/create-the-datastream/">datastream</a>, the tag property, the extensions, consent, identity or Assurance. None of them knows how the app was built, and none of them cares. They sit on Adobe's servers and receive events that look the same whatever produced them.</p>
 <p>What differs is on the app side, and it comes down to three things. Which language the tracking code is written in. How the SDK gets added to the project. And how many times each of your requests has to be implemented.</p>
 <table class="mini-tbl">
 <tbody><tr><td><b>Native</b></td><td>Swift and Kotlin. Two implementations of every request, on two schedules. Full SDK support, immediately.</td></tr>
 <tr><td><b>React Native</b></td><td>JavaScript or TypeScript. One implementation. A plugin wraps the native SDK, and occasionally trails it.</td></tr>
 <tr><td><b>Flutter</b></td><td>Dart. One implementation. Same wrapper arrangement as React Native.</td></tr>
-<tr><td><b>Hybrid or WebView</b></td><td>Web technologies inside a native shell. <b>May need the Web SDK instead, or as well.</b> Decide this before anything else.</td></tr>
+<tr><td><b>Hybrid or WebView</b></td><td>Web technologies inside a native shell. <b>May need the <a href="/web-sdk-migration/">Web SDK</a> instead, or as well.</b> Decide this before anything else.</td></tr>
 <tr><td><b>Game engine</b></td><td>Usually C#. Thinner Adobe support and more custom work. Rare, and worth flagging early if you meet one.</td></tr>
 </tbody></table>
 <div class="call check"><span class="ct">&#10003; What you can now do</span><p>Sit in a kick-off meeting and ask three short questions. The answers tell you whether this is two codebases or one, and which language your tracking will be written in. They also tell you whether the WebView question has to be settled before anything else starts. That is genuinely most of what this decision costs you.</p></div>
