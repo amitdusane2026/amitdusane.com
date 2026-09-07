@@ -1,0 +1,20 @@
+---
+published: 2026-09-07
+lastmod: 2026-09-07
+title: "What the tag property can change"
+seotitle: "What a Mobile Tag Property Can Change Without a Release"
+description: "The useful question is not whether things can be changed without shipping an app. It is which things, and the list is shorter than the web one."
+slug: "what-tags-can-change"
+type: kb
+weight: 206
+params:
+  group: shift
+  grouplabel: "The mental shift"
+---
+<p class="khook">The useful question is not whether you can change something without a release. It is which things, and the list is shorter than the web one and a good deal longer than nothing.</p>
+<p>Start with what travels freely. The property is fetched by the SDK when the app launches, so anything held in it reaches phones that are already installed, with nobody shipping anything. Which datastream each environment talks to. Which extensions are switched on, and what each one is configured with. The default consent value. The lifecycle session timeout. All of that is yours, in a browser, this afternoon.</p>
+<p>It also holds rules, which surprises people who have been told that mobile has none. Two actions matter for measurement. <b>Attach Data</b> adds values to an SDK event and never overwrites: where the rule and the event disagree, the event wins. <b>Modify Data</b> is the stronger one and can add, change or remove values, overwriting where they conflict.</p>
+<p>Then the limit, which is the part worth memorising. <b>A rule can only act on an event the app already fires.</b> It cannot invent an event the app never sends. It cannot read a data layer, because there is none. It cannot reach a value the app never put anywhere. Everything a rule works with is already on the event, already in the SDK's own shared state, or typed into the rule as a constant. It decorates; it does not originate.</p>
+<p>Which turns "can we add this in Launch" into a question back, and the question is always the same one. Is the value already on an event that already fires? If it is, then often yes. If it is not, then never, and what the request actually needs is a developer and a release.</p>
+<p><b>For your implementation:</b> ask that question before promising anything to anybody. The gap between "we can do that in the tag property" and what the tag property can do is where three weeks disappear.</p>
+<div class="arch"><span class="at">&#9873; Architect&rsquo;s Decision</span><p>Push every decision you can into the tag property and the datastream, and none that you cannot. The test has not changed: if getting it wrong would need a release to fix, it is in the wrong place.</p></div>
