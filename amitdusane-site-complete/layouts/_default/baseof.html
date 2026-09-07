@@ -49,27 +49,45 @@
   {{ partial "siteheader.html" . }}
   <div class="layout">
     <nav class="rail" id="rail">
+      {{- /* PART ONE IS A DOOR, NOT A LIST. Changed 7 September 2026.
+
+           It used to render all fourteen topics flat, BELOW the fourteen steps,
+           on the reasoning that a reader arrives wanting the implementation and
+           the basics are support. The reasoning was right and the placement was
+           not: the rail carried 28 items, Part One occupied the bottom half of
+           it, and on a phone it sat far below the fold. Amit's read was that it
+           was buried, and it was.
+
+           It is now one link at the TOP, pointing at the front page Part One
+           already had -- four groups, fourteen cards -- which the rail was
+           duplicating rather than using. That is exactly how Knowledge Base has
+           always behaved here, so the two now work the same way, and both
+           single-page templates already carry a breadcrumb back to their front
+           page so the return path needed no new work.
+
+           It is also better for search. Fourteen thin rail links from every page
+           became one link from every page to the hub, which concentrates
+           internal link equity on the page that should rank for the orientation
+           queries; the topics keep their links from that hub, from step
+           Why-rows, and from the inline links added the same day.
+
+           Still guarded on `$world.basics`, so the migration guide -- which
+           declares none -- renders exactly as before. */ -}}
+      {{ with $world.basics }}
+      <div class="grp kb railmore-h">Start here</div>
+      <div class="railmore">
+        <a class="navlink{{ if eq $.Type "basics" }} active{{ end }}" href="{{ (printf "%s/" .root) | relURL }}"><span class="ic">&#9672;</span><span>{{ .railtitle }}</span></a>
+      </div>
+      {{ end }}
+      <div class="grp do">&#9656; {{ $world.railtitle }}</div>
+      <div id="stepNav">
+        {{ range $steps }}<a class="steplink{{ if eq .Params.stepnum $curnum }} active{{ else if lt .Params.stepnum $curnum }} done{{ end }}" href="{{ .RelPermalink }}"><span class="sn">{{ .Params.stepnum }}</span><span>{{ .Title }}</span></a>{{ end }}
+      </div>
       <div class="grp kb railmore-h">More</div>
       <div class="railmore">
         <a class="navlink" href="{{ (printf "%s/kb/" $world.root) | relURL }}"><span class="ic">&#9671;</span><span>Knowledge Base</span></a>
         <a class="navlink" href="{{ (printf "%s/references/" $world.root) | relURL }}"><span class="ic">&#167;</span><span>References</span></a>
       </div>
-      <div class="grp do">&#9656; {{ $world.railtitle }}</div>
-      <div id="stepNav">
-        {{ range $steps }}<a class="steplink{{ if eq .Params.stepnum $curnum }} active{{ else if lt .Params.stepnum $curnum }} done{{ end }}" href="{{ .RelPermalink }}"><span class="sn">{{ .Params.stepnum }}</span><span>{{ .Title }}</span></a>{{ end }}
-      </div>
-      {{- /* Part One sits BELOW the steps, deliberately. The implementation is what
-           this section is, and a reader arrives wanting it. The basics are
-           support: signposted from step one and from any step that needs
-           them, rather than placed in front of everybody. Renders only for a
-           world that declares `basics`, so the migration guide is untouched. */ -}}
-      {{ with $world.basics }}
-      <div class="grp do">&#9656; {{ .railtitle }}</div>
-      <div id="basicsNav">
-        {{ $topics := (where (where $.Site.RegularPages "Type" "basics") "Section" $.Section).ByWeight }}
-        {{ range $topics }}<a class="steplink{{ if eq $.RelPermalink .RelPermalink }} active{{ end }}" href="{{ .RelPermalink }}"><span class="sn">&#9702;</span><span>{{ .Title }}</span></a>{{ end }}
-      </div>
-      {{ end }}
     </nav>
     <main class="main">{{ block "main" . }}{{ end }}</main>
   </div>
