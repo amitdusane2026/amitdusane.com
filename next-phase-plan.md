@@ -58,7 +58,7 @@ The part Amit asked for help with: he knows what he needs, not where it lands.
 
 ## Part C — The steps
 
-### Step 1 — Fix the left rail, before any writing
+### Step 1 — Fix the left rail, before any writing  ·  **DONE 7 Sep 2026**
 
 **The problem, measured.** The rail carries **28 items**: fourteen steps, then
 fourteen Part One topics listed flat underneath. Part One is therefore at the
@@ -106,7 +106,7 @@ before and after.*
 
 ---
 
-### Step 2 — Fix the factual error in mobile step 5
+### Step 2 — Fix the factual error in mobile step 5  ·  **DONE 7 Sep 2026**
 
 `05-create-the-mobile-tag-property.html` says the mobile tag property "holds no
 executable code at all". That is **wrong**. The Mobile SDK has a rules engine,
@@ -122,7 +122,7 @@ cannot originate.**
 
 ---
 
-### Step 3 — Answer objectives 1, 2 and 4
+### Step 3 — Answer objectives 1, 2 and 4  ·  **DONE 7 Sep 2026**
 
 **Two knowledge base articles, not one.** Amit's decision. They answer different
 questions and deserve separate front doors.
@@ -153,7 +153,7 @@ Then wire them: **step 1** gains a short mental-model paragraph linking to both;
 
 ---
 
-### Step 4 — Two demonstrations, mobile world
+### Step 4 — Two demonstrations, mobile world  ·  **DONE 7 Sep 2026**
 
 Two requirements, in this order, because the first is universal and the second
 is the custom case built on top of it.
@@ -211,7 +211,7 @@ views and custom actions.
 
 ---
 
-### Step 5 — The same two things in Web SDK Migration
+### Step 5 — The same two things in Web SDK Migration  ·  **DONE 7 Sep 2026**
 
 The migration guide has the identical holes: no demonstration, and the mental
 model break is implied rather than stated.
@@ -230,7 +230,7 @@ makes the pair read as a genuine comparison rather than a repeat.
 
 ---
 
-### Step 6 — Web SDK Implementation, a new section
+### Step 6 — Web SDK Implementation, a new section  ·  **THE ONLY STEP LEFT**
 
 **Standalone and complete.** It explains every concept it uses, including ones
 the migration guide also explains. Interlinking where useful, dependency

@@ -2752,8 +2752,26 @@ reword the pointer below with it.
    steps, two KB articles and one Part One page, at the first substantive
    mention of report suites, eVars and props, context data, processing rules,
    the ECID and Customer Journey Analytics. The section previously had **none**.
-4. **Full QA pass, then launch on Amit's word only.** This is the only item
-   left.
+4. **DONE 7 September 2026. The QA pass ran** against the 13-point gate in
+   `QA_Rulebook.html`, across all 50 files in the world. Three defect classes
+   found and fixed: thirteen seotitles over the 62-character house limit, an
+   obsolete knowledge base group left configured after its articles were
+   promoted, and three Ask items using first person where twenty-six do not.
+   Three further flags were investigated and dismissed with evidence rather than
+   "fixed": index-page field rules, entities in body prose, and uncited
+   references on a page that describes itself as a bibliography.
+
+**A NEW PHASE OPENED THE SAME DAY, AND IT HAS ITS OWN FILE.** Read
+`next-phase-plan.md`. It governs the work that follows and holds decisions this
+file does not: where XDM values come from in each of the three paths, the two
+demonstrations, the rail restructure, and the decision to build **Web SDK
+Implementation** as a standalone complete section. Steps 1 to 5 of that plan are
+done. **Step 6, Web SDK Implementation, is the only one left.**
+
+**Nothing launches yet.** The Mobile SDK section is written and has passed the
+structural gate, and Amit will read it word for word and give his own verdict
+before any launch is discussed. The tracker deliberately holds
+`Content QA'd = No` throughout, because the gate is not the acceptance step.
 
 **Amit ruled on 7 September 2026 that a Why-row may link to Mobile Basics, not
 only to the knowledge base.** The code already allowed it; the restriction was
