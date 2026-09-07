@@ -48,7 +48,21 @@
          for a condition like this. Property ID still comes from hugo.toml, so
          there is exactly one place to change it.
      =================================================================== */ -}}
+  {{- /* THE 404 REPORTS AS /404, NOT AS THE PAGE SOMEBODY ASKED FOR.
+         Added 7 September 2026, from a real confusion. GA4 showed views of
+         /aep-mobile-sdk/mobile-basics/... on days when those pages existed only
+         on develop, which reads exactly like staging leaking into the live
+         property. It was not. Every one of those was a 404 on amitdusane.com:
+         the page does not exist, Hugo serves 404.html through this same head,
+         and gtag defaults page_location to the URL that was requested. So a
+         missing page is recorded under its own path and is indistinguishable
+         in the Pages report from a page that really exists.
+
+         404s are still tracked, because a list of paths people ask for and do
+         not get is worth having. They are just reported honestly: one /404 row,
+         with the attempted path carried in the title so it stays diagnosable. */ -}}
   {{- $ga := site.Config.Services.GoogleAnalytics.ID -}}
+  {{- $is404 := eq .Kind "404" -}}
   {{ if and (strings.Contains .Site.BaseURL "amitdusane.com") $ga }}
   <script>
   (function(){
@@ -63,7 +77,14 @@
     function gtag(){ window.dataLayer.push(arguments); }
     window.gtag = gtag;
     gtag("js", new Date());
+    {{ if $is404 }}
+    gtag("config", id, {
+      page_location: location.origin + "/404",
+      page_title: "404: " + location.pathname
+    });
+    {{ else }}
     gtag("config", id);
+    {{ end }}
   })();
   </script>
   {{ end }}
