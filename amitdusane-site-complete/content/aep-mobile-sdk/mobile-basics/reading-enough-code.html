@@ -1,0 +1,98 @@
+---
+published: 2026-09-07
+lastmod: 2026-09-07
+title: "Reading enough code to be useful"
+seotitle: "How Analytics Practitioners Can Read Mobile Tracking Code"
+description: "You will never write Swift or Kotlin. Reading four lines of it with confidence changes what you can settle yourself and what has to become a meeting."
+slug: "reading-enough-code"
+type: basics
+weight: 402
+params:
+  group: team
+  grouplabel: "Working with the team"
+---
+<p class="khook">You are not learning to program. You are learning to look at four lines somebody pasted into a ticket and say something useful about them.</p>
+<p>A developer pastes a snippet into a thread and asks whether it looks right. Everybody waits. The honest answer is that you cannot tell. So the thread becomes a meeting. The meeting then establishes something that was visible in the snippet the whole time. Nobody in that thread lacked skill. The person who could see it was not looking, and the people looking could not see it.</p>
+<p>The gap here is much smaller than it looks. You do not need to write a line of Swift or Kotlin, ever, and you should not offer to. What you need is to recognise five shapes, and to know which single question the code can answer for you. That is an afternoon of attention rather than a course. None of it makes you a developer, and none of it is meant to.</p>
+<h2>What you are actually trying to find out</h2>
+<p>Start with the question, because it keeps the rest in proportion. You are almost never asking whether the code is <i>good</i>. That is not your call and you have no basis for it. Whether it is idiomatic, efficient or well structured is a developer's judgment. Offering one costs you standing rather than earning it.</p>
+<p>You are asking three much narrower things. Does the tracking call exist at all. Does it carry the values your specification asked for. And is it in the place your specification asked for. That is the whole list, and all three are answerable by reading rather than by understanding. That distinction is the whole trick. You are matching text against a specification, not following logic.</p>
+<p>Everything on this page serves those three. Anything beyond them belongs to the developer. The moment you drift into opinions about the code itself, you stop being useful and start being expensive. The line is easy to cross, because reading a little makes the next step feel available.</p>
+<h2>Five shapes worth recognising</h2>
+<p>Programming languages differ far less than they appear to, and the differences are mostly punctuation. Five shapes carry almost everything you will need. <b>A function call</b> is a name followed by brackets: <span class="mn">sendEvent(...)</span>. Something is being done, and the name usually says what. <b>A string</b> is text in quotes, and this is where your values live. If your specification said the event should be called <span class="mn">purchase</span>, the word purchase should be visible in quotes somewhere.</p>
+<p><b>A variable</b> is a name with no quotes around it, standing in for a value decided elsewhere. This is the one that matters most, and the next section is about why. <b>A condition</b> starts with <span class="mn">if</span> and means the code below only runs sometimes. <b>A comment</b> starts with <span class="mn">//</span> and is a note to humans that the machine ignores entirely.</p>
+<p>That is enough to read a tracking call. Not enough to review one, and not enough to suggest a change, which are different activities you are not being asked to do. Knowing where the skill stops is as useful as the skill itself.</p>
+<h2>The same call, in three languages</h2>
+<p>Here is a tracking call in Swift, which is iOS. Two things are happening: a dictionary of values is assembled, then it is sent. Read past the punctuation and the shape is plain enough.</p>
+<div class="code"><button class="copy">Copy</button><pre>var xdmData : [String: Any] = ["eventType" : "SampleXDMEvent",
+                              "sample": "data"]
+
+let experienceEvent = ExperienceEvent(xdm: xdmData)
+Edge.sendEvent(experienceEvent: experienceEvent)</pre></div>
+<p>Read it as a sentence and it is not mysterious. The first part builds a labelled list of values, and the words in quotes are yours: <span class="mn">eventType</span> is a field name from the schema. The value beside it is what will arrive in the dataset. The last line sends it. The name <span class="mn">Edge</span> tells you which extension is doing the sending, and <span class="mn">sendEvent</span> tells you what it is doing.</p>
+<p>Now the same thing on Android, in Kotlin. The punctuation changes and nothing else does. Notice that the words in quotes are identical to the Swift version. Those come from your schema rather than from the language.</p>
+<div class="code"><button class="copy">Copy</button><pre>val xdmData = mutableMapOf&lt;String, Any&gt;()
+xdmData["eventType"] = "SampleXDMEvent"
+xdmData["sample"] = "data"
+
+val experienceEvent = ExperienceEvent.Builder()
+  .setXdmSchema(xdmData)
+  .build()
+
+Edge.sendEvent(experienceEvent)</pre></div>
+<p>Same three parts, in the same order. Values are collected under field names, an event is assembled from them, and the event is sent. If you can find the field names and the values in one of these, you can find them in the other. That is genuinely most of the skill.</p>
+<figure class="fig-svg"><svg viewBox="0 0 700 226" role="img" aria-label="An annotated tracking call. The extension name says which part of the SDK is acting, the method name says what it is doing, text in quotes is a fixed value you can check against your specification, and a bare name without quotes is a value decided elsewhere at run time that no snippet can show you." style="width:100%;height:auto;display:block">
+<text x="24" y="22" style="font-size:12.5px;font-weight:700;fill:var(--ink-soft, #3b4048)">One line, and the four things worth seeing in it</text>
+<rect x="24" y="86" width="652" height="46" rx="8" style="fill:var(--bg-soft, #f7f8fa);stroke:var(--line, #e4e6ea);stroke-width:1.5"/>
+<text x="44" y="115" class="mn" style="font-size:13px;fill:var(--accent, #0f6b62);font-weight:700">Edge</text>
+<text x="88" y="115" class="mn" style="font-size:13px;fill:var(--ink, #1c1f24)">.</text>
+<text x="96" y="115" class="mn" style="font-size:13px;fill:var(--ink, #1c1f24);font-weight:700">sendEvent</text>
+<text x="184" y="115" class="mn" style="font-size:13px;fill:var(--ink, #1c1f24)">( xdm: [</text>
+<text x="248" y="115" class="mn" style="font-size:13px;fill:var(--ok, #1f7a4d)">"eventType"</text>
+<text x="348" y="115" class="mn" style="font-size:13px;fill:var(--ink, #1c1f24)">:</text>
+<text x="360" y="115" class="mn" style="font-size:13px;fill:var(--ok, #1f7a4d)">"commerce.purchases"</text>
+<text x="536" y="115" class="mn" style="font-size:13px;fill:var(--ink, #1c1f24)">,</text>
+<text x="548" y="115" class="mn" style="font-size:13px;fill:var(--danger, #a13030)">total</text>
+<text x="592" y="115" class="mn" style="font-size:13px;fill:var(--ink, #1c1f24)">] )</text>
+<line x1="60" y1="82" x2="60" y2="62" style="stroke:var(--accent, #0f6b62);stroke-width:1.2"/>
+<text x="60" y="54" text-anchor="middle" style="font-size:11px;font-weight:700;fill:var(--accent, #0f6b62)">which extension</text>
+<line x1="140" y1="82" x2="180" y2="46" style="stroke:var(--faint, #9aa1ab);stroke-width:1.2"/>
+<text x="184" y="44" style="font-size:11px;font-weight:700;fill:var(--ink-soft, #3b4048)">what it is doing</text>
+<line x1="300" y1="136" x2="300" y2="158" style="stroke:var(--ok, #1f7a4d);stroke-width:1.2"/>
+<text x="300" y="172" text-anchor="middle" style="font-size:11px;font-weight:700;fill:var(--ok, #1f7a4d)">in quotes: fixed, and checkable</text>
+<text x="300" y="188" text-anchor="middle" style="font-size:11px;fill:var(--ink-soft, #3b4048)">read it straight off against your specification</text>
+<line x1="566" y1="136" x2="566" y2="158" style="stroke:var(--danger, #a13030);stroke-width:1.2"/>
+<text x="566" y="172" text-anchor="middle" style="font-size:11px;font-weight:700;fill:var(--danger, #a13030)">no quotes: decided elsewhere</text>
+<text x="566" y="188" text-anchor="middle" style="font-size:11px;fill:var(--ink-soft, #3b4048)">no snippet can tell you what this is</text>
+<text x="24" y="214" style="font-size:11px;fill:var(--ink-soft, #3b4048)">The green half you can settle on your own. The red half is the question worth asking, and the answer lives in Assurance.</text>
+</svg><figcaption>Two of the four are readable from the snippet and two are not. <b>The value with no quotes around it is where the faults actually live</b>, because it looks equally correct in a ticket and cannot be checked by looking.</figcaption></figure>
+<h2>The variable is where the real faults hide</h2>
+<p>Here is the single most useful thing on this page. Look at what is <b>not</b> in quotes. A value in quotes is fixed and you can read it directly. A value that is a bare name is decided somewhere else, at the moment the code runs. You cannot see it from the snippet at all. Both look equally correct in a ticket, and only one of them can be verified by looking.</p>
+<div class="code"><button class="copy">Copy</button><pre>xdmData["eventType"] = "commerce.purchases"   // fixed, and readable
+xdmData["currencyCode"] = cart.currency       // decided elsewhere, invisible here</pre></div>
+<p>The second line might be perfect. It might also be empty on the screens where the cart has not loaded, or lowercase where your schema expects uppercase, or null for guest checkout. Nothing in the snippet tells you, and no amount of staring will. That is not a fault in the code, it is a limit on what reading can establish.</p>
+<p>So when you see a bare name where a value should be, you have found the one thing worth asking about. What is that at run time, and what is it when things go wrong? Then you confirm the answer in Assurance, on a real device, because that is the tool that shows the value rather than the intention.</p>
+<h2>The skill that beats reading: searching</h2>
+<p>Reading a snippet somebody chose to show you is the weak version. The strong version is finding out whether something exists at all, and that is searching rather than reading. A snippet answers whether one call is right. A search answers whether the call exists anywhere, which is a different and usually more urgent question.</p>
+<p>You do not need repository access to benefit from this, though it helps if you have it. What you need is to ask the right search, and to ask a developer to run it if you cannot. Searching for <span class="mn">sendEvent</span> finds every place the app sends anything. Searching for a field name from your schema finds every place that field is populated. More usefully, it reveals whether that is one place or nine.</p>
+<p>That second answer is the valuable one and it is invisible from any single snippet. A field set in one place is a field you can reason about. The same field set in nine places, by four people, over two years, is something else. It is the explanation for a value that is right most of the time. Consistency is not something you can read out of one snippet, and it is very often the answer.</p>
+<h2>What not to do with this</h2>
+<p>One boundary, stated plainly, because crossing it costs more than the skill is worth. <b>Do not propose code changes.</b> Reading four lines does not qualify anybody to edit them. An analytics person who arrives with a suggested patch has moved from their side of the line to somebody else's. <a href="/aep-mobile-sdk/mobile-basics/where-your-job-ends/">Where your job ends</a> sets out that line in full. The developer now has to review your code and manage the conversation, which is slower than if you had simply described the problem.</p>
+<p>Describe what you observed and what you expected. "The event fires on the confirmation screen but currencyCode arrives empty for guest checkout" is worth a great deal. It takes no position on how it should be fixed. That sentence is what reading code is for. Everything else on this page exists so that you can write that one sentence with confidence.</p>
+<div class="actionblock"><div class="abh">What to do with a snippet in a ticket</div><div class="do-intro">Four passes, in this order, and none of them needs the developer present.</div><div class="astep"><div class="an">1</div><div>
+  <div class="al"><span class="lbl">Find</span> The <b>field names and values in quotes</b>, and check them against your specification.</div>
+  <div class="al"><span class="lbl">Why</span> Misspelled field names are the most common fault and the easiest to see.</div>
+</div></div>
+<div class="astep"><div class="an">2</div><div>
+  <div class="al"><span class="lbl">Find</span> The values that are <b>not</b> in quotes.</div>
+  <div class="al"><span class="lbl">Why</span> Those are the ones no snippet can verify, so they are the ones worth a question.</div>
+</div></div>
+<div class="astep"><div class="an">3</div><div>
+  <div class="al"><span class="lbl">Ask</span> For a <b>search</b>, not a snippet: how many places set this field?</div>
+  <div class="al"><span class="lbl">Why</span> One place is a value you can trust. Nine places is the answer to a discrepancy you have not investigated yet.</div>
+</div></div>
+<div class="astep"><div class="an">4</div><div>
+  <div class="al"><span class="lbl">Confirm</span> In <b>Assurance</b>, on a real device, before concluding anything.</div>
+  <div class="al"><span class="lbl">Why</span> Code shows intention. Assurance shows what actually left the phone, and only one of those is evidence.</div>
+</div></div></div>
+<div class="call check"><span class="ct">&#10003; What you can now do</span><p>Recognise a function call, a string, a variable, a condition and a comment, which is enough to read a tracking call in any of the three languages you will meet. Check field names and fixed values against your specification without asking anybody. Spot the values that are decided elsewhere, and know those are the ones worth a question rather than a guess. Ask for a search instead of a snippet when the question is whether something exists. And describe problems without proposing patches, which keeps you on your own side of a line worth respecting.</p></div>

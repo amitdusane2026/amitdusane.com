@@ -1,0 +1,77 @@
+---
+published: 2026-09-07
+lastmod: 2026-09-07
+title: "Where your job ends"
+seotitle: "Analytics and Mobile Development: Who Owns What"
+description: "A dividing line worth agreeing on day one, because most mobile implementations fail at the seam rather than on either side of it."
+slug: "where-your-job-ends"
+type: basics
+weight: 401
+params:
+  group: team
+  grouplabel: "Working with the team"
+---
+<p class="khook">Nobody writes this down, and then everybody discovers it under pressure, which is the worst possible moment to negotiate a boundary.</p>
+<p>Two weeks before launch, an event is missing. You believe the developer was asked for it. The developer believes they built what was asked for. Both of you are right, and the ticket that would settle it says something like "track add to cart" with nothing underneath.</p>
+<p>Nobody was careless. The work simply fell into a gap that neither side thought they owned, and that gap is where mobile implementations fail. Not on the Adobe side, which you control completely, and not inside the app, which they control completely. At the seam between them.</p>
+<h2>The line is cleaner than it looks</h2>
+<p>The good news is that the boundary is not blurry. It is close to absolute, and it can be stated in two sentences that are worth agreeing out loud in the first week. Saying it out loud matters more than writing it down. The person who needs to agree is in the room rather than reading a document.</p>
+<p><b>Everything on Adobe's side is yours.</b> The schema, the dataset, the datastream, the tag property, the extensions, the consent default and every environment mapping. You create, change and correct all of it in a browser, without asking anybody, and without a release. That last part is the whole reason the boundary matters, and it is covered in <a href="/aep-mobile-sdk/mobile-basics/how-a-release-reaches-people/">How a release actually reaches people</a>.</p>
+<p><b>Everything inside the app is theirs.</b> Adding the dependency, initialising the SDK, and placing tracking calls where the app knows something happened. You cannot do any of it, and you should not want to. It goes through their review, their tests and their release, exactly as every other line in the app does.</p>
+<h2>The architect and the builder</h2>
+<p>The relationship is the one between an architect and a builder, and the analogy holds further than most. An architect does not lay bricks and is not expected to. A builder does not decide where the kitchen goes. Neither of those is a limitation on the other, and neither role is senior to the other. They fail in different ways. An architect fails by specifying something unbuildable or ambiguous. A builder fails by building something other than what was drawn.</p>
+<p>What matters is the third thing, which is the drawing. Most disputes on a building site are not about competence on either side. They are about what the drawing did not say, and about the assumption each party made instead, silently and reasonably. Your specification is the drawing, and it fails the same way. Not because it was wrong, but because it was silent exactly where it needed to be specific.</p>
+<h2>The seam, and its three items</h2>
+<p>The seam is small. It has exactly three items, and every one of them is yours to define and theirs to execute. Because they belong to both sides, they are the three things that never get written down.</p>
+<p><b>The Environment File ID.</b> One string, handed over precisely, telling the SDK which Adobe property it belongs to. Development and production values differ, and which build gets which is part of the handover rather than an afterthought. Handing over the wrong one is the quietest failure available. Everything works, and the data lands somewhere nobody is watching.</p>
+<p><b>The specification of what to track.</b> Each event named, with its fields, the values they carry, and the type of each. Not a description of a goal. A list somebody can build from without asking a follow-up question. If a developer has to ask what a field should contain, the specification was not finished when it was sent.</p>
+<p><b>The firing points.</b> Where in the app each event belongs, in the app's own terms. "When the confirmation screen appears" is a firing point. "On purchase" is a description of a business moment and is the sentence that produces the wrong implementation. The developer will pick a moment. It will be a reasonable moment, and it will not necessarily be yours.</p>
+<div class="call mistake"><span class="ct">Where this goes wrong</span><p>A ticket says "track add to cart". The developer fires it when the button is tapped, which is the obvious reading. You meant when the item is actually in the basket, after the stock check that sometimes fails. The numbers run consistently higher than the order system all year. Nobody can find a fault. Both parties can point at the ticket and be right.</p></div>
+<figure class="fig-svg"><svg viewBox="0 0 700 252" role="img" aria-label="Everything on Adobe's side belongs to the analytics practitioner and is changeable in a browser without a release. Everything inside the app belongs to the developers and needs a build. Between them sits a seam of exactly three items, the Environment File ID, the specification of what to track, and the firing points, each of which is defined by one side and executed by the other." style="width:100%;height:auto;display:block">
+<text x="24" y="22" style="font-size:12.5px;font-weight:700;fill:var(--ink-soft, #3b4048)">Two territories, and the three things that belong to neither</text>
+<rect x="24" y="40" width="196" height="168" rx="10" style="fill:var(--accent-soft, #e6f2f0);stroke:var(--accent, #0f6b62);stroke-width:1.5"/>
+<text x="40" y="64" style="font-size:11px;font-weight:700;fill:var(--accent, #0f6b62)">YOURS</text>
+<text x="40" y="88" style="font-size:11.5px;fill:var(--ink, #1c1f24)">Schema and dataset</text>
+<text x="40" y="110" style="font-size:11.5px;fill:var(--ink, #1c1f24)">Datastream</text>
+<text x="40" y="132" style="font-size:11.5px;fill:var(--ink, #1c1f24)">Tag property, extensions</text>
+<text x="40" y="154" style="font-size:11.5px;fill:var(--ink, #1c1f24)">Consent default</text>
+<text x="40" y="176" style="font-size:11.5px;fill:var(--ink, #1c1f24)">Environment mappings</text>
+<text x="40" y="197" style="font-size:11px;font-style:italic;fill:var(--ink-soft, #3b4048)">Changeable in a browser. No release.</text>
+<rect x="480" y="40" width="196" height="168" rx="10" style="fill:var(--bg-soft, #f7f8fa);stroke:var(--line, #e4e6ea);stroke-width:1.5"/>
+<text x="496" y="64" style="font-size:11px;font-weight:700;fill:var(--muted, #6b7280)">THEIRS</text>
+<text x="496" y="88" style="font-size:11.5px;fill:var(--ink, #1c1f24)">Adding the dependency</text>
+<text x="496" y="110" style="font-size:11.5px;fill:var(--ink, #1c1f24)">Initialising the SDK</text>
+<text x="496" y="132" style="font-size:11.5px;fill:var(--ink, #1c1f24)">Placing the tracking calls</text>
+<text x="496" y="154" style="font-size:11.5px;fill:var(--ink, #1c1f24)">Everything else in the app</text>
+<text x="496" y="197" style="font-size:11px;font-style:italic;fill:var(--ink-soft, #3b4048)">Needs a build, and a release.</text>
+<rect x="240" y="52" width="220" height="144" rx="10" style="fill:var(--warn-soft, #fbf2e3);stroke:var(--warn, #9a5b00);stroke-width:2"/>
+<text x="350" y="76" text-anchor="middle" style="font-size:11px;font-weight:700;fill:var(--warn, #9a5b00)">THE SEAM</text>
+<text x="350" y="98" text-anchor="middle" style="font-size:11.5px;font-weight:700;fill:var(--ink, #1c1f24)">Environment File ID</text>
+<text x="350" y="126" text-anchor="middle" style="font-size:11.5px;font-weight:700;fill:var(--ink, #1c1f24)">The specification</text>
+<text x="350" y="154" text-anchor="middle" style="font-size:11.5px;font-weight:700;fill:var(--ink, #1c1f24)">The firing points</text>
+<text x="350" y="180" text-anchor="middle" style="font-size:11px;fill:var(--ink-soft, #3b4048)">Yours to define. Theirs to execute.</text>
+<line x1="220" y1="124" x2="238" y2="124" style="stroke:var(--warn, #9a5b00);stroke-width:2"/>
+<line x1="462" y1="124" x2="478" y2="124" style="stroke:var(--warn, #9a5b00);stroke-width:2"/>
+<text x="24" y="236" style="font-size:11px;fill:var(--ink-soft, #3b4048)">Implementations rarely fail inside either territory. They fail in the middle box, which belongs to both and gets written down by neither.</text>
+</svg><figcaption>Neither side is short of skill, and the middle is where the work goes missing. <b>All three seam items are yours to define and theirs to execute</b>, which is exactly why they are the three nobody writes down.</figcaption></figure>
+<h2>When data is missing, which side is it on</h2>
+<p>The instinct when an event does not arrive is to raise it with the app team. That instinct is usually wrong, and knowing why saves a great deal of goodwill. It also saves time, because the checks on your own side are faster than any conversation. And it keeps the relationship intact for the week you genuinely need something built quickly.</p>
+<p>An event can stop in five places. It might not be firing in the app at all, which is the only one on their side. Or it is firing and the datastream is not forwarding it. Or the schema rejects it, because the field does not exist or the type disagrees. Or it is mapped to the wrong dataset. Or consent is withholding it.</p>
+<p><b>Four of those five are yours</b>, and all four are checkable in a browser in a few minutes. So the order of investigation is your side first, entirely, before anything is raised. Assurance will show you whether the event left the device, which settles the only question that requires them at all.</p>
+<p>Doing it this way is not just courtesy. An analytics person who arrives with "the event is leaving the device correctly, and it is being rejected by the schema, and here is the field" is a colleague. One who arrives with "tracking is broken" three times in a fortnight, and is wrong twice, spends credibility that is needed later.</p>
+<h2>Owning the specification completely</h2>
+<p>All of which reduces to one position worth taking early and holding. <b>Own the specification completely and the code not at all.</b> That is not a modest claim, because the specification is the hard part. It requires knowing the business question, the data model, the firing points, and what the app is actually capable of telling you. A developer cannot write it and should not have to. What they need is to receive it in a form they can build from without a meeting.</p>
+<p>The standard to hold yourself to is a single test. A tracking request that names the event, the fields, the values and the firing point is finished. A developer can build it without asking you anything. Anything less than that is not a request, it is the start of a conversation, and the conversation is where implementations go wrong.</p>
+<div class="actionblock"><div class="abh">Three things to agree in week one</div><div class="do-intro">All three are conversations, and all three are much harder in week ten.</div><div class="astep"><div class="an">1</div><div>
+  <div class="al"><span class="lbl">Agree</span> The line out loud: <b>Adobe side yours, app internals theirs</b>, and the three seam items written down.</div>
+  <div class="al"><span class="lbl">Why</span> It costs ten minutes now and prevents the two-weeks-before-launch version of the same conversation.</div>
+</div></div>
+<div class="astep"><div class="an">2</div><div>
+  <div class="al"><span class="lbl">Write</span> Every event with its <b>fields, values and firing point</b>, in the app's own vocabulary.</div>
+  <div class="al"><span class="lbl">Why</span> A firing point stated as a business moment is the single most common cause of a number that never reconciles.</div>
+</div></div>
+<div class="astep"><div class="an">3</div><div>
+  <div class="al"><span class="lbl">Check</span> Your four before raising their one, and bring the <b>Assurance evidence</b> when you do.</div>
+  <div class="al"><span class="lbl">Why</span> Four of the five places an event can stop are on your side, which is the opposite of most people's first instinct.</div>
+</div></div></div>
+<div class="call check"><span class="ct">&#10003; What you can now do</span><p>State the boundary in two sentences, and name the three items on the seam that belong to neither side alone. Write a tracking request a developer can build without asking a follow-up question, with the firing point in the app's own words rather than the business's. Investigate your four possible causes before raising the one that is theirs. And hold the line that the specification is entirely yours, which is a larger claim than it sounds.</p></div>

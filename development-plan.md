@@ -2574,8 +2574,42 @@ recalled, and two would have been wrong from memory: `MobileCore.initialize`
 auto-registers extensions and enables lifecycle, and the read calls are all
 callback-based.
 
-**Part One, the mobile app basics, is nine of fourteen topics as of 6
-September 2026, and Group 2 is complete.** Its four promotions were written in
+**Part One is COMPLETE: fourteen of fourteen topics, as of 7 September 2026.**
+Groups 3 and 4 were written in one run on Amit's instruction. Two were new
+writing with no KB source, `the-app-lifecycle` and `reading-enough-code`, and
+three were promotions: `screens-not-pages` from `screens-vs-pageviews`,
+`how-a-release-reaches-people` from `release-not-deploy`, and
+`where-your-job-ends` from `who-does-what`. All five carry a figure, so ten of
+the fourteen topics now have one. `dependency-managers` and the three pages the
+cloud session wrote are the four without, which is deliberate rather than
+outstanding.
+
+**The register trap fired a third time, in the same order as before, which now
+makes it a rule rather than an observation.** First drafts came in at paragraph
+medians 47 to 61 with sentence medians 14 to 15. The sequence that fixed it is
+the one recorded under Group 2 and it worked without any rethinking: merge the
+single-sentence bridge paragraphs into the paragraph they introduce, then deepen
+what is still thin, then split sentences last. The five now sit at 59 to 61 on
+paragraphs and 11 to 14 on sentences, 1,173 to 1,385 words, none over 30 words.
+**Anybody writing Part Two or a new world should plan for two register passes
+rather than hoping the first draft lands.**
+
+**`Edge.sendEvent` samples on `reading-enough-code` were verified against
+developer.adobe.com while drafting**, in both Swift and Kotlin, rather than
+recalled. The page teaches reading rather than writing, so a wrong signature
+would have been quoted back at somebody.
+
+**The five figures were verified by measurement, not by eye**, because the
+browser pane in that session would not produce a screenshot. Every text bounding
+box sits inside its viewBox, no two text elements collide, and contrast was
+computed against the innermost rect each label sits on, in both themes. Three
+real geometry faults were caught and fixed that way: two label collisions and a
+one-pixel overflow. **Aesthetic judgment was not verified and is Amit's to make.**
+
+**The superseded note follows.**
+
+**Part One, the mobile app basics, was nine of fourteen topics as of 6
+September 2026, and Group 2 was complete.** Its four promotions were written in
 one run on Amit's instruction: `what-a-build-is`, `dependency-managers`,
 `debug-and-release` and `simulator-and-device`, from the KB articles
 `app-build`, `dependency-managers`, `debug-vs-release` and
@@ -2700,15 +2734,29 @@ reword the pointer below with it.
 
 ### What the next session should pick up
 
-**Write the remaining five Part One topics**, in the groups the map lists, and
-read `### Two registers in one world, and the reason` above before
-starting. Part One is
-measured against the learning world, not against the steps next door. A short
-Part One page is a failed one.
+**Part One is written. The next work is the spine**, in this order, and the
+first two items are one job rather than two.
 
-After the topics: dissolve step 2, renumber, wire the Why-rows, add the Adobe
-Analytics Learning links, QA, and stop. Launch only when Amit says so, in that
-session.
+1. **Dissolve step 2 into Part One and renumber the steps to fourteen.**
+2. **Wire the step Why-rows to the promoted topics, and remove the eight
+   superseded KB articles.** These belong together because steps 2, 7 and 13
+   currently link to KB articles that Part One has replaced, so removing one
+   without rewiring the other breaks live links. **The wiring needs a mapping,
+   not a reuse**: two slugs changed on promotion, `debug-vs-release` becoming
+   `debug-and-release` and `simulator-vs-device` becoming `simulator-and-device`,
+   so KB id and Part One slug are no longer the same string. The seven
+   promotions plus `cross-platform` are the eight removals that take the KB from
+   26 to 18.
+3. **Inline links into Adobe Analytics Learning** wherever the section leans on
+   analytics knowledge it does not teach. Amit's ruling: inline and explicit,
+   never a separate page. The Web SDK Migration guide has none either, noted in
+   `5f64061`.
+4. **Full QA pass, then launch on Amit's word only.**
+
+**Read `### Two registers in one world, and the reason` before writing anything
+else in this world**, including Part Two. Part One is measured against the
+learning world, not against the steps next door, and a short Part One page is a
+failed one. Plan for two register passes rather than one.
 
 **Ordinary work still queued elsewhere**, in no forced order: the two tech-debt
 rows, the component rulebook entry for M21's absent walkthroughs, the surface

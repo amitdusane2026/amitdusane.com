@@ -1,0 +1,89 @@
+---
+published: 2026-09-07
+lastmod: 2026-09-07
+title: "The app lifecycle: launch, background, terminate"
+seotitle: "App Lifecycle States Explained for Analytics Practitioners"
+description: "A page loads and unloads. An app does neither, and the states it moves through instead are what decide where your sessions begin and end."
+slug: "the-app-lifecycle"
+type: basics
+weight: 301
+params:
+  group: behaviour
+  grouplabel: "How an app behaves"
+---
+<p class="khook">A web page has two moments that matter: it loads, and it goes away. An app has neither of those. The states it moves through instead are the reason app numbers behave the way they do.</p>
+<p>Somebody asks why the app reports four times as many sessions as the website gets visits. It does that from a fifth of the audience. It sounds like a tracking fault, and the first instinct is to look for double counting. Nothing is double counted. The two systems are counting different things, and the difference is not in the tracking at all.</p>
+<p>It is in what happens to an app between the moment somebody opens it and the moment it stops existing. That sequence has no equivalent on the web. Until you can describe it, several numbers on your own reports will look wrong when they are correct.</p>
+<h2>A page loads and unloads. An app does neither.</h2>
+<p>A web page has a clean life. It is requested, it loads, the reader does things, and then they navigate away and it is destroyed. Nothing survives. The next page is a fresh load with a fresh start. Analytics has hooked onto both ends of that for twenty years. Load is a page view, and leaving is the end of one.</p>
+<p>An app is opened once and then persists. It stays in memory while somebody uses it. It stays in memory when they leave it. It is still there, holding everything it had, when they come back forty minutes later. There is no reload, no fresh start, and nothing that corresponds to a page unloading. The moments analytics traditionally hangs on simply are not there.</p>
+<p>So the SDK hangs on different moments instead. Those moments are the lifecycle, and there are four states worth knowing by name.</p>
+<h2>The four states, and which ones you can see</h2>
+<p><b>Not running.</b> The app is installed and is not in memory. Opening it now is a cold start, which means everything has to be built from nothing. This is the state a phone is in before the first launch of the day. It is also the state after any termination, whether somebody chose it or the phone did. Nothing in memory survives, though anything the app wrote to storage is still waiting.</p>
+<p><b>Foreground.</b> The app is on screen and the person is using it. This is the only state in which anybody is looking at anything. It is the state your engagement numbers are measuring. It is the only state that contributes to session length. Everything else on this list is time the app existed without being watched.</p>
+<p><b>Background.</b> The app is no longer on screen and is still in memory. Somebody took a call, replied to a message, checked the time, or locked the phone. The app still exists with everything in it. Coming back is a warm start and is nearly instant, because nothing had to be rebuilt. This is by far the most common state after foreground. It is also the one that ends your sessions, which is why it gets a section to itself below.</p>
+<p><b>Terminated.</b> The app is gone from memory. Sometimes a person swiped it away deliberately. Far more often the operating system removed it while it sat in the background. It does that to free memory for whatever is on screen now. The next open is a cold start again. Nobody is notified when the system does this. Not the person, and not the app, which matters more than it sounds.</p>
+<figure class="fig-svg"><svg viewBox="0 0 700 262" role="img" aria-label="An app moves between four states. Launching from not running is a cold start. Leaving the foreground for the background ends the session, and returning starts a new one. The operating system can terminate a backgrounded app without warning and without running any code, after which the next open is a cold start again." style="width:100%;height:auto;display:block">
+<text x="24" y="22" style="font-size:12.5px;font-weight:700;fill:var(--ink-soft, #3b4048)">The four states, and which transitions you can measure</text>
+<rect x="24" y="98" width="124" height="52" rx="8" style="fill:var(--bg-soft, #f7f8fa);stroke:var(--line, #e4e6ea);stroke-width:1.5"/>
+<text x="86" y="120" text-anchor="middle" style="font-size:11.5px;font-weight:700;fill:var(--ink, #1c1f24)">Not running</text>
+<text x="86" y="137" text-anchor="middle" style="font-size:11px;fill:var(--ink-soft, #3b4048)">not in memory</text>
+<line x1="148" y1="112" x2="212" y2="86" style="stroke:var(--ok, #1f7a4d);stroke-width:1.8"/>
+<polygon points="212,86 203,87 206,94" style="fill:var(--ok, #1f7a4d)"/>
+<text x="150" y="72" style="font-size:11px;font-weight:700;fill:var(--ok, #1f7a4d)">cold start</text>
+<rect x="214" y="52" width="176" height="56" rx="8" style="fill:var(--accent-soft, #e6f2f0);stroke:var(--accent, #0f6b62);stroke-width:2"/>
+<text x="302" y="76" text-anchor="middle" style="font-size:11.5px;font-weight:700;fill:var(--accent, #0f6b62)">Foreground</text>
+<text x="302" y="94" text-anchor="middle" style="font-size:11px;fill:var(--ink-soft, #3b4048)">the only state anybody is watching</text>
+<line x1="272" y1="108" x2="272" y2="150" style="stroke:var(--warn, #9a5b00);stroke-width:1.8"/>
+<polygon points="272,150 268,141 276,141" style="fill:var(--warn, #9a5b00)"/>
+<text x="284" y="124" style="font-size:11px;font-weight:700;fill:var(--warn, #9a5b00)">session ENDS</text>
+<line x1="336" y1="150" x2="336" y2="108" style="stroke:var(--ok, #1f7a4d);stroke-width:1.8"/>
+<polygon points="336,108 332,117 340,117" style="fill:var(--ok, #1f7a4d)"/>
+<text x="348" y="142" style="font-size:11px;font-weight:700;fill:var(--ok, #1f7a4d)">new session</text>
+<rect x="214" y="152" width="176" height="56" rx="8" style="fill:var(--bg-soft, #f7f8fa);stroke:var(--line, #e4e6ea);stroke-width:1.5"/>
+<text x="302" y="176" text-anchor="middle" style="font-size:11.5px;font-weight:700;fill:var(--ink, #1c1f24)">Background</text>
+<text x="302" y="194" text-anchor="middle" style="font-size:11px;fill:var(--ink-soft, #3b4048)">still in memory, nothing lost</text>
+<line x1="390" y1="180" x2="466" y2="180" style="stroke:var(--danger, #a13030);stroke-width:1.8;stroke-dasharray:5 4"/>
+<polygon points="466,180 457,176 457,184" style="fill:var(--danger, #a13030)"/>
+<text x="392" y="170" style="font-size:11px;font-weight:700;fill:var(--danger, #a13030)">no code runs</text>
+<rect x="468" y="152" width="176" height="56" rx="8" style="fill:var(--danger-soft, #f8ecec);stroke:var(--danger, #a13030);stroke-width:1.5"/>
+<text x="556" y="176" text-anchor="middle" style="font-size:11.5px;font-weight:700;fill:var(--danger, #a13030)">Terminated</text>
+<text x="556" y="194" text-anchor="middle" style="font-size:11px;fill:var(--ink-soft, #3b4048)">the system reclaims memory</text>
+<line x1="556" y1="208" x2="556" y2="228" style="stroke:var(--faint, #9aa1ab);stroke-width:1.5"/>
+<line x1="556" y1="228" x2="86" y2="228" style="stroke:var(--faint, #9aa1ab);stroke-width:1.5"/>
+<line x1="86" y1="228" x2="86" y2="152" style="stroke:var(--faint, #9aa1ab);stroke-width:1.5"/>
+<polygon points="86,150 82,160 90,160" style="fill:var(--faint, #9aa1ab)"/>
+<text x="330" y="222" text-anchor="middle" style="font-size:11px;fill:var(--ink-soft, #3b4048)">next open is a cold start, and nobody was told the app had gone</text>
+<text x="24" y="252" style="font-size:11px;fill:var(--ink-soft, #3b4048)">The two vertical arrows are your session boundaries. The dashed one is the transition no analytics can observe.</text>
+</svg><figcaption>Backgrounding is the transition that decides your numbers, and it happens every time somebody takes a call. <b>Termination is the one you cannot measure at all</b>, because the operating system does not run the app's code before removing it.</figcaption></figure>
+<h2>The hotel room you keep the key to</h2>
+<p>Think of the app as a hotel room with your things in it. While you are in the room, you are in the foreground. Step out for dinner and you are in the background. The room is untouched, your things are where you left them, and walking back in costs nothing. You did not check out.</p>
+<p>The room is reclaimed at some point, and this is the part with no web equivalent. The hotel decides, not you. It happens while you are out, on the hotel's judgment about who needs the space more. Nobody phones to tell you. You find out the next time you go back, when you have to check in again and the room is empty.</p>
+<p>That is exactly how termination works. The operating system reclaims memory from apps that are not on screen, whenever something in front needs it. The app is not consulted and the person is not told. Most terminations are this, rather than somebody deliberately closing anything.</p>
+<h2>Why backgrounding is the state that matters</h2>
+<p>Of the four, backgrounding is the one that decides your numbers. The SDK ends a session when the app leaves the foreground, and starts a new one when it returns. A session is foreground time, and nothing else counts. Time spent in the background is not shortening somebody's session. It is ending it.</p>
+<p>Now think about how often an app leaves the foreground. A message arrives and is read. A call comes in. The phone locks in a pocket. Somebody checks a train time and comes back. Each of those ends a session and the return starts another. A single twenty-minute shopping trip can be four sessions, and every one of them is genuine.</p>
+<p>On the web the equivalent boundary is thirty minutes of inactivity, which is a timer rather than an event. A reader who leaves a tab open and comes back after ten minutes continues the same visit. In an app they do not. That single difference produces most of the gap between app session counts and web visit counts. No configuration on either side will close it.</p>
+<h2>The termination you will never see</h2>
+<p>There is a specific trap in the fourth state. It is worth knowing before somebody asks you for the number. You cannot reliably measure app closes. When the operating system terminates a backgrounded app, it does not run your code first. There is no reliable final event, no chance to send anything, and no notification afterwards. The app simply stops existing, and the SDK was not told either.</p>
+<p>This is why session length is measured from the pair of foreground events rather than from anything at the end. The close you can see is the app leaving the foreground. What happens after that is invisible by design, on both platforms. It is not a gap in the SDK. Anybody asking how many people closed the app deliberately is asking for a number that does not exist.</p>
+<div class="call mistake"><span class="ct">Where this goes wrong</span><p>A tracking plan asks for an explicit app-close event. A developer builds one against the last hook the platform offers. It fires when somebody swipes the app away and stays silent for every operating-system termination, which is most of them. The number that arrives looks like a real count of people leaving. It is a partial count of one particular way of leaving.</p></div>
+<h2>What this does to your numbers</h2>
+<p>Three effects follow, and all three arrive without anybody writing a line of tracking code. Sessions are shorter and far more numerous than web visits. That is correct rather than inflated. Session length measures foreground attention. That is a stricter and more honest measure than a web visit, and it will always look smaller beside one.</p>
+<p>Launches are not installs. A launch happens every time the app comes to the foreground, including after a two-second glance at a notification. Installs are the first launch after installation, and upgrades the first after a version change. All of it arrives automatically from two events, which <a href="/aep-mobile-sdk/kb/lifecycle-metrics/">What arrives without asking</a> lists in full.</p>
+<p>And any chart that puts app sessions beside web visits will mislead whoever reads it, permanently, whatever the tracking does. The two are measuring different things by design. <a href="/aep-mobile-sdk/mobile-basics/screens-not-pages/">A screen is not a page view</a> covers the other half of that mismatch.</p>
+<h2>What to ask, and what to refuse</h2>
+<p>Most of the work here is expectation setting, done before anybody builds a report rather than after somebody queries one. None of it is configuration. All of it is a sentence said early enough to land as a design fact, rather than as an excuse for a disappointing number.</p>
+<div class="actionblock"><div class="abh">Three things to settle early</div><div class="do-intro">All three are conversations rather than tickets.</div><div class="astep"><div class="an">1</div><div>
+  <div class="al"><span class="lbl">Say</span> A session ends when the app is <b>backgrounded</b>, so app sessions are shorter and more numerous than web visits.</div>
+  <div class="al"><span class="lbl">Why</span> Said once at the start, it is a design fact. Said after a stakeholder sees the number, it sounds like an excuse.</div>
+</div></div>
+<div class="astep"><div class="an">2</div><div>
+  <div class="al"><span class="lbl">Refuse</span> A reliable <b>app close</b> or "time until they quit" metric.</div>
+  <div class="al"><span class="lbl">Why</span> The operating system terminates apps without running their code, so any number built for this counts one minority case and silently misses the rest.</div>
+</div></div>
+<div class="astep"><div class="an">3</div><div>
+  <div class="al"><span class="lbl">Ask</span> Is <b>automatic lifecycle</b> on, or is the app calling lifecycle start and pause by hand?</div>
+  <div class="al"><span class="lbl">Why</span> Modern initialisation switches it on for you. Older apps do it manually, and that is where launches and sessions go missing.</div>
+</div></div></div>
+<div class="call check"><span class="ct">&#10003; What you can now do</span><p>Name the four states an app moves through and say which one your engagement numbers measure. Explain why backgrounding ends a session, and why that alone makes app sessions shorter and more numerous than web visits. Tell a stakeholder, before they ask, that a dependable app-close metric does not exist and why. And recognise that a chart comparing app sessions to web visits is misleading whatever the tracking underneath it does.</p></div>
