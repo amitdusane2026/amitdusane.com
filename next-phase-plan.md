@@ -314,10 +314,20 @@ recalled:
 - Which XDM field group a property identifier conventionally belongs in, so the
   demonstration puts it somewhere a reader can reuse rather than inventing a
   field.
-- The exact datastream mapping route for a custom XDM field into an Adobe
-  Analytics variable, for link 6 of the chain.
-- Whether Data Prep on the datastream applies to mobile-sourced events as it
-  does to web, which is documented for web and was not confirmed for mobile.
+- ~~The datastream route for a custom XDM field into an Analytics variable.~~
+  **VERIFIED 7 September 2026.** Two routes. Values written into the Analytics
+  field group paths, such as `_experience.analytics.customDimensions.eVars.eVar1`,
+  map automatically with no configuration. A custom XDM field outside that table
+  does not: it arrives at Analytics as context data prefixed `a.x.`, and a
+  **processing rule** in the report suite assigns it to an eVar, prop or event.
+  So processing rules are still the mechanism on the Analytics side, and they
+  are changeable without an app release. CJA needs none of this: the field lands
+  in the dataset as itself.
+- ~~Whether Data Prep applies to mobile-sourced events.~~ **VERIFIED
+  7 September 2026.** It does. Adobe describes mapping mobile context data to
+  XDM in Data Prep as optional and "not necessary specifically for Analytics",
+  because Edge Bridge context data reaches Analytics on its own. It is required
+  when the same data has to land usefully in an AEP dataset for CJA.
 
 ---
 
