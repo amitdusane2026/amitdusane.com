@@ -1,6 +1,6 @@
 ---
 published: 2026-09-06
-lastmod: 2026-09-06
+lastmod: 2026-09-08
 title: "Which Adobe mobile SDK is this"
 seotitle: "AEP Mobile SDK, Mobile Services and AppMeasurement Compared"
 description: "Three generations of Adobe mobile tooling share vocabulary and behave differently. Working out which one an app has decides most of what follows."
@@ -11,9 +11,10 @@ params:
   group: shift
   grouplabel: "The mental shift"
 ---
-<p class="khook">Search for Adobe mobile tracking and you will find three products wearing similar names, two of them retired, all of them still documented somewhere.</p>
-<p><b>AppMeasurement</b> and the older <b>Adobe Mobile Services</b> SDK belong to the previous generation. They think in context data: a flat bag of keys sent with a hit, mapped to eVars and props by processing rules on the Adobe side. Many production apps still run this, and it still works.</p>
-<p>The <b>Adobe Experience Platform Mobile SDK</b> is the current one, and it is a set of extensions rather than a single library. Sending data through its Edge Network path means sending <b>XDM</b>: a defined schema with typed, nested fields agreed before any data moves. That is a different model, not a renamed one.</p>
-<p>The confusion is worth naming because the older material is still the first result for many searches. Code samples calling <span class="mn">trackAction</span> with a context data dictionary are almost always from that earlier world. Copying them into a new implementation produces something that works and is shaped wrongly for anything beyond Adobe Analytics.</p>
-<p><b>For your implementation:</b> establish which one the app has before planning anything. An app on the old SDK is a migration. An app with no SDK is a fresh build. They are different projects with different lengths.</p>
-<div class="arch"><span class="at">&#9873; Architect&rsquo;s Decision</span><p>For anything new, the Experience Platform Mobile SDK on the Edge Network path, sending XDM. The older model is only the right answer when you are keeping an existing implementation alive rather than building one.</p></div>
+<p class="khook">Search for Adobe mobile tracking and you will find three products with similar names. Two of them are retired, and all three are still documented somewhere.</p>
+<p><b>AppMeasurement</b> and the older <b>Adobe Mobile Services SDK</b> belong to the previous generation. They think in context data: a flat bag of keys sent with a hit, turned into eVars and props by processing rules on the Adobe side. Many production apps still run this, and it still works.</p>
+<p><b>The Adobe Experience Platform Mobile SDK</b> is the current one, and it is a set of extensions rather than a single library. Sending data through its Edge Network path means sending XDM: a defined schema with typed, nested fields agreed before any data moves.</p>
+<p>That is a different model, not a renamed one.</p>
+<p>The confusion is worth naming, because the older material is still the first result for many searches. Code samples calling <span class="mn">trackAction</span> with a context data dictionary are almost always from that earlier world. Copying them into a new implementation produces something that works and is shaped wrongly for anything beyond Adobe Analytics.</p>
+<p><b>For your implementation:</b> establish which one the app has before planning anything. An app on the old SDK is a migration. An app with no SDK is a fresh build. Those are different projects with different lengths.</p>
+<div class="arch"><span class="at">&#9873; Architect&rsquo;s Decision</span><p>For anything new, the Experience Platform Mobile SDK on the Edge Network path, sending XDM. The older model is only right when you are keeping an existing implementation alive rather than building one.</p></div>

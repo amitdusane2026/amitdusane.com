@@ -238,7 +238,9 @@ On a CLI build that error is at least visible. **On `hugo server` it is not.** T
 
 **So when the served page is stale, check for a locked workbook before suspecting the watcher.** `Get-CimInstance Win32_Process -Filter "Name='EXCEL.EXE'"` names it, and closing the workbook is the whole fix. This will keep happening, because M20 tells the reader to open the validation report and follow along, which is exactly what Amit was doing.
 
-**Assert the page count after every build.** Current baseline: **249 pages on a production build, 250 on a staging build** (7 September 2026), and it will keep climbing while the Mobile SDK world is written. It was 195 and 196 from 3 September 2026 until the sixth, when `/aep-mobile-sdk/` was registered and added three: its HTML page, its JSON search index and its RSS feed. **Every step and KB article written into that world adds one more**, so this number is a moving target for the first time on this project. What still holds is the shape of the check: a drop is never routine, and a non-production build reporting the production number, or the reverse, means the staging guard has inverted and should be investigated before anything else.
+**Assert the page count after every build.** Current baseline: **254 pages on a production build, 255 on a staging build** (9 September 2026). It rose from 249 when the Mobile SDK spine went from fourteen steps to fifteen and step six gained four platform pages of its own.
+
+**That check earned its place again on 9 September, for the third time.** Four new pages were dated from the local calendar at 00:46 IST, when UTC was still the previous day, so Hugo silently dropped all four and the count stayed at 249 with the build reporting success. **Nothing else would have caught it.** The danger window is 18:30 IST to 05:30 IST; take the date from `date -u` and never from what the session says today is. It was 195 and 196 from 3 September 2026 until the sixth, when `/aep-mobile-sdk/` was registered and added three: its HTML page, its JSON search index and its RSS feed. **Every step and KB article written into that world adds one more**, so this number is a moving target for the first time on this project. What still holds is the shape of the check: a drop is never routine, and a non-production build reporting the production number, or the reverse, means the staging guard has inverted and should be investigated before anything else.
 
 Before that it was 219 and 220, until RSS was built properly: Hugo had been emitting a feed for every section, 27 of them, none linked from anywhere, while the three pages a person would subscribe to had none. Killing the 27 and adding 3 is the whole of that difference. **HTML page count did not move: 187 before and after, with identical file lists.** Hugo counts each output format as a page, so a feed change moves this number without touching a word of the site. The extra one on a non-production build is the generated `_headers` file, which `layouts/index.headers` emits only when the baseURL is not amitdusane.com; on production the template produces nothing and Hugo writes no file. If the count drops, stop and find out why before doing anything else. This single check would have caught the 103-page outage in one second.
 
@@ -269,6 +271,12 @@ That form takes no `-b`, so it is a true production build, and it cannot be over
 ## What this site is for, and why anyone would return to it
 
 **Write for one reader: somebody who has already been through the documentation, still has questions, and finds the topic rigid and boring.** Not a beginner, and not someone who needs convincing that Adobe Analytics exists. Somebody stuck. That single assumption decides what to explain and what to take as read, and it is the most useful line in this file.
+
+**That reader is not a native English speaker.** Stated by Amit on 8 September 2026 as a permanent extension of the definition, and it had never been written down, although the same problem had already been fixed once by hand in the learning world. It governs every word choice in every section.
+
+**It inverts the usual readability advice, which is why it needs saying rather than assuming.** Idioms and phrasal verbs are built from short, common words, so Flesch and every test like it *reward* them, while they are exactly what a non-native reader cannot decode. Amit's own example: "catches people out" should be "confuses people". The idiom scores as the easier of the two and is far harder to read. So **a page can pass every readability check and still be the hardest thing on the site**, which is precisely what Mobile Basics was on 8 September: the best Flesch score in the corpus and the worst idiom rate.
+
+**Plain word over idiom, every time.** Analogies only from things every human has met, such as a shop, a key, a queue or a lock, never cricket, baseball or anything culture-specific. Define a technical term before using it in an argument. This is global, across all section types.
 
 **The site is not a replacement for Adobe's documentation. It is what makes that documentation legible.** Adobe writes reference material for people who already know what they need, which is a permanent constraint rather than a failing: they sell to every customer, so every answer has to be "it depends". That constraint is exactly why the gap here is durable. A reader who understands why a thing exists can go back to Experience League and find that it suddenly makes sense, including the parts that previously looked arbitrary. **The `ref-box` is that handoff, not a courtesy** — it is where an equipped reader goes next.
 
@@ -335,7 +343,7 @@ The second is an extended scenario or analogy carried through the whole section,
 
 **That split makes every corpus search a trap.** Grepping `do not sum` misses a section that says `don't sum`, and the result looks exactly like a gap. On 10 Aug 2026 that produced a proposed addition to M03 §6 that duplicated an info-box already sitting three paragraphs away. **Always search both forms**, or match on the distinctive noun rather than the verb phrase.
 
-**Sentence rhythm is long and comma-chained, broken by one-sentence paragraphs used as beats.** "The data is not lost. It is in the wrong building." A long paragraph is almost always followed by a short one. Nothing exceeds about 120 words.
+**Sentence rhythm was long and comma-chained in the July 2026 modules, and that is no longer the target.** Superseded 8 September 2026. The learning world still carries it and is not being rewritten, so the measurements below describe that corpus rather than prescribe it for new work. **New work follows the plain-language rules above and the per-section-type rules below.**
 
 **That ratio is the single easiest thing to get backwards, and getting it backwards is what makes writing read as generic.** During M14 the beats became the default texture and the long accumulating sentence nearly disappeared. Amit's diagnosis: "typical hook style, half sentences and pauses, dramatic, typical AI language." He was right, and the fault is measurable. Paragraph medians, taken from the corpus:
 
@@ -346,7 +354,9 @@ The second is an extended scenario or analogy carried through the whole section,
 | M14 §4 **before** the fix | 39 words | 10% |
 | M14 §4 **after** the fix | 72 words | 3% |
 
-**Measure a draft against M13 §1 and M11 §2 before declaring it done.** Median paragraph in the sixties or seventies, beats at roughly one per section, not one per heading.
+**That paragraph target is withdrawn for new work.** A median in the sixties or seventies is what produced the Mobile Basics pages Amit could not read, and it did so while every other check passed. **Target a paragraph median of 35 to 45, and one idea per paragraph: three sentences typical, four at most.**
+
+**The mechanism, because it is not obvious.** Short, easy sentences packed tight into long paragraphs and joined by pronouns. Measured on Mobile Basics before the rewrite: 4.6 sentences per paragraph against the learning world's 3.3, and bare `this / that / it` as a sentence subject at 8.1 per 1,000 words against 5.1. Every sentence is easy; the paragraph is not. **When the subject changes, name it again** rather than reaching for "this" or "it".
 
 **Paragraph median is not sufficient, and on 26 Aug 2026 it passed while the writing failed.** M15 cleared it and Amit still had to read sentences two and three times. His diagnosis: it read like a movie script, where the first pass does not land, the second does, and the third makes you admire the construction. The fault was at sentence level, which nothing was measuring.
 
@@ -367,7 +377,7 @@ became
 The problem is structural rather than stylistic, and six habits fix it:
 
 1. **Openers are unfolding situations with people and time passing**, never aphorisms. M13 §1 opens on three requests across one working day before any summary lands. "Nobody has ever been persuaded by a table" is the failure mode.
-2. **Accumulate, do not reveal.** Paragraphs pile clauses until they arrive somewhere. The setup-turn-landing unit, repeated, is the signature of persuasive-essay AI prose.
+2. **Do not accumulate.** This rule used to say the opposite, and it was withdrawn on 8 September 2026 because piling clauses until a paragraph arrives somewhere is what makes a paragraph need two readings. Say the thing, then explain it.
 3. **Cut the turn construction.** "It is not." "You have not." "It never had." This was the most artificial habit in the writing and it was everywhere.
 4. **Headings ask or reassure**, rather than declaring. "Why not just call it a filter" beats a label.
 5. **Enumerate fully instead of compressing elegantly.** "Referrer Type report, then calculated metrics, then flows, then fallout" is better than "five report types". The full list is what makes a reader feel the weight.
@@ -378,6 +388,38 @@ Add connective tissue, and allow productive redundancy: say a hard idea a second
 **Openers are never definitions.** Three patterns recur: a continuity recap that walks back over what the reader has and names the gap; a concrete scenario or extended metaphor carried through the whole section; or the failing report shown before the feature is named.
 
 **Humour is dry, structural, and rare.** A wry observation inside an otherwise serious paragraph. Never a joke, never an exclamation mark, never a parenthetical aside.
+
+---
+
+## Each section type has its own rules, and copying between them is what broke the Mobile SDK guide
+
+Decided by Amit on 8 September 2026. **Everything above about voice was measured in the learning world, and applying it unchanged to a step-by-step guide is what made that guide hard to read.**
+
+It is measurable. Paragraph median, by when the content was written: **Web SDK Migration steps, June 2026, before any rules existed: 29.** The learning world, where the rules were written: 43. **Mobile steps, September, under those rules: 56. Mobile Basics, same period: 63.** The migration guide is the same shape of thing as the mobile steps and delivered its content in paragraphs half the size. Mobile Part Two even hit its 300-word target while packing those words into paragraphs twice as dense: the word budget was obeyed and the register was not.
+
+**The rule is: match the delivery to what the reader already knows.**
+
+| Section type | Reader | Rule |
+|---|---|---|
+| **Learning** (curriculum) | Knows Adobe Analytics | Keep scenario openers, why-before-what, argument. The scenario works because it is a *recognition* device. |
+| **Step-by-step guide** (procedure) | Working, wants the next instruction | **No why before what.** Say what the thing is, then what to do. The WHY moves to the knowledge base and is reached through the existing `Why?` row. |
+| **Certification prep** | Not designed | — |
+
+Amit's words on the second one: *"it explains technology, concept, technical thing in simplest form. No why before what. That is for learning thing which needs time. Step-by-step guides are supposed to be used for quick work."*
+
+**Inside a procedure world there are three page types, and writing all three the same way was the actual fault.**
+
+| Page type | Rule |
+|---|---|
+| **Basics** (Part One) | Teaches a foreign vocabulary. The simplest English on the site. Opens with a quiet `call margin` premise callout saying it will not teach app development. Target roughly 800 to 1,000 words. |
+| **Step** | What to do, what to check, what breaks. Terse. |
+| **KB** | Where the WHY lives. Keeps explaining, but under the plain-language rules. |
+
+**A Basics page opens by naming the thing, never on a puzzle.** The Android page used to open on a privacy contradiction that only makes sense once you know what a manifest is, and did not define "manifest" for another six hundred words. Amit: *"the reader who doesn't know app, mobile sdk, etc coming to our website... he reads this and understands nothing."*
+
+**Watch the ratio of reading time to payload.** That same page ran 1,449 words and ten minutes to deliver six facts. Amit: *"I read everything, I needed good 5-10 minutes for it and now I start thinking ohh it was only about these 3 things."* Prefer a list when the content is a list, and cut framing sentences that announce what is coming instead of delivering it.
+
+**Mobile SDK is the reference implementation for step-by-step guides**, the way M13 §1 is for the learning world. Measured after the 8 to 9 September rewrite: Part One at 0.21 idioms per 1,000 words and a paragraph median of 41; steps at 33; KB at 32.
 
 ---
 

@@ -2797,3 +2797,37 @@ API mention M17 s4 never gained, and the three tasks recorded above under
 "Recorded for later, not now". After all of that, CJA is the fourth world, and
 `site-architecture.md` holds what a new world costs, corrected on 6 September to
 say what it actually costs rather than "a config block".
+
+---
+
+## 8-9 September 2026 — the Mobile SDK plain-language rewrite
+
+**The whole Mobile SDK section was rewritten for language, and the spine was
+restructured for app type.** Read `next-phase-plan.md` step 7 for the detail.
+Two things belong here because they change how future work is planned.
+
+**Web SDK Implementation is parked, not cancelled.** It was "the only step left"
+in the phase plan and is now behind the Mobile SDK work by Amit's decision, so
+that the procedure rulebook is derived from a finished section rather than
+guessed at. Rewriting Web SDK Migration is parked with it. Neither is to be
+started without him saying so.
+
+**`CLAUDE.md` gained a section-type rulebook, and three of its voice rules were
+withdrawn.** The long comma-chained sentence, the sixty-to-seventy-word
+paragraph median, and "accumulate, do not reveal" were all measured in the
+learning world and all of them made the step guides worse. The learning world
+keeps them and is not being rewritten. New work follows the plain-language rules
+and the per-section-type table.
+
+**The reader is not a native English speaker.** That is now recorded in
+`CLAUDE.md` as a global constraint. It had been fixed once by hand in the
+learning world and never written down, which is why it recurred.
+
+### What the next session should pick up first
+
+**Amit reads the rewritten Mobile SDK section end to end and gives his verdict.**
+Nothing is launched, the tracker still holds `Content QA'd = No` throughout, and
+that is deliberate: the gate is not the acceptance step.
+
+After that, in order: any corrections he raises, then Web SDK Implementation,
+then the Web SDK Migration rewrite.

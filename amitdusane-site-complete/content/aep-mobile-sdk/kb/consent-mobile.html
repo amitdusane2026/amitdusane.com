@@ -1,9 +1,9 @@
 ---
 published: 2026-09-06
-lastmod: 2026-09-06
+lastmod: 2026-09-08
 title: "Consent on a device"
 seotitle: "How Mobile App Consent Differs from a Web Cookie Banner"
-description: "An app has no prior page and no returning cookie, so the setting that matters is what happens in the seconds before anybody has answered."
+description: "An app has no earlier page and no returning cookie, so the setting that matters is what happens before anybody has answered."
 slug: "consent-mobile"
 type: kb
 weight: 307
@@ -12,8 +12,14 @@ params:
   grouplabel: "The plumbing"
 ---
 <p class="khook">On the web, consent is a banner. In an app, consent is a default, and the banner is only how that default gets replaced.</p>
-<p>A browser has a page already loading and, for a returning visitor, a stored answer. An app on first launch has neither. Somebody has just downloaded it and opened it, and the SDK initialises immediately, so events begin before any interface has had a chance to ask a question.</p>
-<p>The Consent extension holds a <b>default</b> governing that window. <span class="mn">Pending</span> holds events in a queue and sends nothing until an answer arrives, at which point the queue is either delivered or discarded. <span class="mn">Yes</span> collects from the first millisecond. <span class="mn">No</span> collects nothing until told otherwise, so the first session is lost even from people who would have agreed.</p>
-<p>Pending is the only one of the three that neither collects before permission nor throws away the session of somebody who says yes. It is a setting on the tag property rather than app code, so it changes without a release, which makes it one of the few genuinely reversible decisions in a mobile implementation.</p>
-<p><b>For your implementation:</b> set the default deliberately and have somebody with legal responsibility agree it. Then wire both answers rather than only the acceptance, because an app that records agreement alone has implemented a button rather than consent.</p>
-<div class="arch"><span class="at">&#9873; Architect&rsquo;s Decision</span><p>Pending, unless instructed otherwise in writing. It is the defensible position in every market, and the queue means choosing it costs nothing in data from people who consent.</p></div>
+<p>A browser has a page already loading, and for a returning visitor a stored answer. An app on first launch has neither. Somebody has just downloaded it and opened it, and the SDK starts immediately, so events begin before anything has had a chance to ask a question.</p>
+<p>The Consent extension holds a default that governs that window. There are three.</p>
+<table class="mini-tbl"><tbody>
+<tr><td>Pending</td><td>Holds events in a queue and sends nothing. When the answer arrives the queue is either delivered or thrown away.</td></tr>
+<tr><td>Yes</td><td>Collects from the first millisecond, before the question has been asked.</td></tr>
+<tr><td>No</td><td>Collects nothing until told otherwise, so the first session is lost even from people who would have agreed.</td></tr>
+</tbody></table>
+<p><b>Pending is the only one that neither collects before permission nor throws away the session of somebody who says yes.</b></p>
+<p>It is a setting on the tag property rather than app code, so it changes without a release. That makes it one of the few genuinely reversible decisions in a mobile implementation.</p>
+<p><b>For your implementation:</b> set the default deliberately and have somebody with legal responsibility agree it. Then wire both answers rather than only the acceptance. An app that records agreement alone has implemented a button, not consent.</p>
+<div class="arch"><span class="at">&#9873; Architect&rsquo;s Decision</span><p>Pending, unless instructed otherwise in writing. It is defensible in every market, and the queue means it costs you no data from the people who consent.</p></div>

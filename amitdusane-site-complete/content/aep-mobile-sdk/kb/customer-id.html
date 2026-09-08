@@ -1,6 +1,6 @@
 ---
 published: 2026-09-06
-lastmod: 2026-09-06
+lastmod: 2026-09-08
 title: "Why the ECID is not enough"
 seotitle: "Setting a Customer ID in the Adobe Mobile SDK"
 description: "One shared identifier, sent under one agreed namespace from every channel, is what turns several device histories into one customer."
@@ -11,9 +11,14 @@ params:
   group: plumbing
   grouplabel: "The plumbing"
 ---
-<p class="khook">Cross-channel analysis is usually described as a platform capability. In practice it is a string agreed between two teams who have never met.</p>
-<p>Sending your own identifier alongside the ECID is what lets one person be recognised across an app, a tablet and a website. The mechanism is an identity map: a value, a namespace, and a claim about whether the person proved who they are.</p>
-<p>Three parts need deciding by you rather than by whoever writes the code. The <b>namespace</b> must be the same string every channel sends. If the app writes CustomerID and the website writes customerId, both implementations pass their own tests and the profiles never join. The <b>identifier</b> should be the one the business already uses, not one invented for analytics, so it can be reconciled with systems outside Adobe. And the <b>authenticated state</b> is a real claim rather than a formality: marking everything authenticated when it is not degrades every downstream decision built on it.</p>
-<p>Removing the identity on sign-out matters as much as setting it, and it is the half people forget. A shared device that keeps the previous person's identifier attributes their behaviour to somebody else.</p>
+<p class="khook">Cross-channel analysis is usually described as a platform capability. In practice it is a piece of text agreed between two teams who have never met.</p>
+<p>Sending your own identifier alongside the ECID is what lets one person be recognised across an app, a tablet and a website. The mechanism is an <b>identity map</b>: a value, a namespace, and a claim about whether the person proved who they are.</p>
+<p>Three parts are yours to decide rather than the developer&rsquo;s.</p>
+<table class="mini-tbl"><tbody>
+<tr><td>Namespace</td><td>The same text in every channel. If the app writes <span class="mn">CustomerID</span> and the website writes <span class="mn">customerId</span>, both implementations pass their own tests and the profiles never join.</td></tr>
+<tr><td>The value</td><td>The identifier the business already uses, not one invented for analytics, so it can be matched against systems outside Adobe.</td></tr>
+<tr><td>Auth state</td><td>A real claim rather than a formality. Marking everything authenticated when it is not damages every decision built on it later.</td></tr>
+</tbody></table>
+<p>Removing the identity on sign-out matters as much as setting it, and it is the half people forget. A shared phone that keeps the previous person&rsquo;s identifier gives their behaviour to somebody else.</p>
 <p><b>For your implementation:</b> agree the namespace in writing with whoever owns the web implementation before either side builds anything. It is a five-minute conversation that is very expensive to have late.</p>
-<div class="arch"><span class="at">&#9873; Architect&rsquo;s Decision</span><p>One namespace, agreed once, written down, and used by every channel without exception. This is the single highest-value decision in a cross-channel implementation and it costs nothing to get right at the start.</p></div>
+<div class="arch"><span class="at">&#9873; Architect&rsquo;s Decision</span><p>One namespace, agreed once, written down, used by every channel without exception. This is the highest-value decision in a cross-channel implementation and it costs nothing to get right at the start.</p></div>

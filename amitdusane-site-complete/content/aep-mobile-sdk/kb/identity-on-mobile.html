@@ -1,9 +1,9 @@
 ---
 published: 2026-09-06
-lastmod: 2026-09-06
+lastmod: 2026-09-08
 title: "What survives a reinstall"
 seotitle: "How the ECID Persists on a Mobile Device"
-description: "The ECID lives in app storage, which means it identifies an installation rather than a person, and it does not survive being deleted."
+description: "The ECID lives in app storage, so it identifies an installation rather than a person, and it does not survive being deleted."
 slug: "identity-on-mobile"
 type: kb
 weight: 305
@@ -12,8 +12,9 @@ params:
   grouplabel: "The plumbing"
 ---
 <p class="khook">A cookie and an app identifier feel like the same idea until somebody asks how many customers you have.</p>
-<p>The SDK generates an ECID on first launch and stores it in the app's own storage on the device. It persists across launches, upgrades and reboots, and it is attached to every event without anybody arranging it. Within one installation it is completely reliable.</p>
-<p>What it does not do is identify a person. Delete the app and reinstall it and the storage goes with it, so the same human returns as a new ECID with no history. The same person on a phone and a tablet is two ECIDs that will never meet. The same person on your website is a third.</p>
+<p>The SDK creates an ECID on first launch and stores it in the app&rsquo;s own storage on the phone. It survives launches, upgrades and restarts, and it is attached to every event without anybody arranging it. Within one installation it is completely reliable.</p>
+<p><b>What it does not do is identify a person.</b></p>
+<p>Delete the app and install it again and the storage goes with it, so the same human returns as a new ECID with no history. The same person on a phone and a tablet is two ECIDs that will never meet. The same person on your website is a third.</p>
 <p>This is not a defect to be worked around. It is what a device identifier is, and every platform has been steadily tightening what can be known across installations rather than loosening it. Anything that promises to survive a reinstall is usually something you should not be doing.</p>
-<p><b>For your implementation:</b> use the ECID for what it is good at, which is stitching one installation's behaviour together, and send an identifier of your own for anything about people. Expect reinstalls to appear as new users, because that is what the data honestly says.</p>
-<div class="arch"><span class="at">&#9873; Architect&rsquo;s Decision</span><p>Never answer a question about customers using ECID counts. If a stakeholder asks how many people use the app, the honest answer needs an authenticated identifier, and saying so early is better than producing a number that quietly means installations.</p></div>
+<p><b>For your implementation:</b> use the ECID for what it is good at, which is joining one installation&rsquo;s behaviour together. Send an identifier of your own for anything about people. Expect reinstalls to appear as new users, because that is what the data honestly says.</p>
+<div class="arch"><span class="at">&#9873; Architect&rsquo;s Decision</span><p>Never answer a question about customers using ECID counts. If a stakeholder asks how many people use the app, the honest answer needs a signed-in identifier, and saying so early beats producing a number that quietly means installations.</p></div>

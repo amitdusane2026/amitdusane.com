@@ -1,9 +1,9 @@
 ---
 published: 2026-09-05
-lastmod: 2026-09-05
+lastmod: 2026-09-08
 title: "Get the SDK into the app"
-seotitle: "Installing the Adobe Mobile SDK on iOS and Android"
-description: "The one step you cannot do yourself. What to put in the ticket, what the developer adds to the app, and how to tell whether they added the right thing."
+seotitle: "Install the Adobe Mobile SDK: iOS, Android, Cross-Platform"
+description: "The one step you cannot do yourself. What to put in the ticket, what the developer adds, and how to tell whether they added the right thing."
 slug: "get-the-sdk-into-the-app"
 weight: 6
 type: step
@@ -11,55 +11,36 @@ params:
   stepnum: 6
   kbids: ["dependency-managers", "how-a-release-reaches-people", "react-native-and-flutter"]
 ---
-<div class="narrative">A ticket goes to the mobile team on a Tuesday: add the Adobe SDK. Three weeks later a build reaches the store with the SDK inside it, and nothing arrives anywhere. Nobody was careless. The dependency was added, the project compiled, and the release passed review. One string was left as the placeholder. That string tells the SDK which Adobe property it belongs to, and the ticket never said which value to use. It is the <b>Environment File ID</b>. It comes from the tag property you already built, and handing it over precisely is most of what this step asks of you.</div><div class="why-row"><span class="wl">Why?</span><a class="why" href="/aep-mobile-sdk/mobile-basics/dependency-managers/" data-kb="dependency-managers">What does &ldquo;add the SDK&rdquo; mean? <span class="arr">&#8599;</span></a><a class="why" href="/aep-mobile-sdk/mobile-basics/how-a-release-reaches-people/" data-kb="how-a-release-reaches-people">Why can this not ship today? <span class="arr">&#8599;</span></a><a class="why" href="/aep-mobile-sdk/mobile-basics/react-native-and-flutter/" data-kb="react-native-and-flutter">Is the app React Native or Flutter? <span class="arr">&#8599;</span></a></div><div class="call margin"><span class="ct">Before this step</span><p>This is the first step you cannot do alone, and the vocabulary changes here. If a compiled binary, a dependency manager and a build are not things you could explain to somebody else, <a href="/aep-mobile-sdk/mobile-basics/">Mobile app basics</a> is worth ten minutes first. The rest of this page will read as instructions rather than as jargon.</p></div><p>Everything before this step happened in a browser tab, on properties you control. None of it needed anyone else to act. This one is different. The SDK goes inside the application binary. A developer opens a project you cannot open, and ships a build you cannot ship. What you still own is the specification. A vague one is what produces the silent build above.</p><div class="actionblock"><div class="abh">What to hand over</div><div class="do-intro">Three things, in one ticket, so that none of them is guessed.</div><div class="astep"><div class="an">1</div><div>
+<div class="narrative">A ticket goes to the mobile team on a Tuesday: add the Adobe SDK. Three weeks later a build reaches the store with the SDK inside it, and nothing arrives anywhere.<br><br>Nobody was careless. The library was added, the project compiled, the release passed review. One string was left as the placeholder.<br><br>That string tells the SDK which Adobe property it belongs to. It is the <b>Environment File ID</b>, it comes from the tag property you just built, and handing it over precisely is most of what this step asks of you.</div>
+<div class="call margin"><span class="ct">Before this step</span><p>This is the first step you cannot do alone, and the vocabulary changes here. If a compiled file, a dependency manager and a build are not things you could explain to somebody else, <a href="/aep-mobile-sdk/mobile-basics/">Mobile app basics</a> is worth ten minutes first. The rest of this page then reads as instructions rather than as jargon.</p></div>
+<div class="why-row"><span class="wl">Why?</span><a class="why" href="/aep-mobile-sdk/mobile-basics/dependency-managers/" data-kb="dependency-managers">What does &ldquo;add the SDK&rdquo; mean? <span class="arr">&#8599;</span></a><a class="why" href="/aep-mobile-sdk/mobile-basics/how-a-release-reaches-people/" data-kb="how-a-release-reaches-people">Why can this not ship today? <span class="arr">&#8599;</span></a><a class="why" href="/aep-mobile-sdk/mobile-basics/react-native-and-flutter/" data-kb="react-native-and-flutter">Is the app React Native or Flutter? <span class="arr">&#8599;</span></a></div>
+<h2>Everything before this was yours. This is not.</h2>
+<p>Every step so far happened in a browser tab, on properties you control. None of it needed anyone else to act.</p>
+<p>The SDK goes inside the app itself. A developer opens a project you cannot open, and ships a build you cannot ship.</p>
+<p>What you still own is the specification. A vague one is what produces the silent build above.</p>
+<div class="actionblock"><div class="abh">What to give the developer</div><div class="do-intro">Three things, in one ticket, so that none of them is guessed.</div><div class="astep"><div class="an">1</div><div>
   <div class="al"><span class="lbl">Where</span> <span class="path">Data Collection &rsaquo; Tags &rsaquo; your mobile property &rsaquo; Environments</span></div>
-  <div class="al"><span class="lbl">Do</span> Copy the <b>Environment File ID</b> for <b>Development</b>. Say in the ticket that it is the development one.</div>
+  <div class="al"><span class="lbl">Do</span> Copy the Environment File ID for <b>Development</b>. Say in the ticket that it is the development one.</div>
 </div></div>
 <div class="astep"><div class="an">2</div><div>
-  <div class="al"><span class="lbl">Do</span> Name the extensions the app needs: <b>Core, Edge, Edge Identity, Edge Consent, Lifecycle, Assurance</b>. Anything else is added later, by another ticket.</div>
+  <div class="al"><span class="lbl">Do</span> Name the extensions the app needs: Core, Edge, Edge Identity, Edge Consent, Lifecycle, Assurance. Anything else is a later ticket.</div>
 </div></div>
 <div class="astep"><div class="an">3</div><div>
-  <div class="al"><span class="lbl">Do</span> Say where initialisation goes. &ldquo;Somewhere at startup&rdquo; is not an instruction: <span class="path">AppDelegate</span> on iOS, the <span class="path">Application</span> subclass on Android.</div>
-</div></div></div><p>One call now does the whole job. <span class="mn">MobileCore.initialize</span> registers every extension bundled with the app. It also switches on lifecycle tracking by default. So there is no list of classes to keep in step with the dependency list. Older guides show <span class="mn">registerExtensions</span> with an array and a completion block. That form still works, and most existing apps contain it, so expect to meet it. It is no longer the shorter path.<a class="cite" href="/aep-mobile-sdk/references/#ref-2" data-ref="2">[2]</a></p><div class="actionblock"><div class="abh">The code they add</div><div class="gstep">iOS &middot; Swift Package Manager, then AppDelegate</div><div class="code"><button class="copy">Copy</button><pre>// Add each package in Xcode: File &gt; Add Package Dependencies
-//   https://github.com/adobe/aepsdk-core-ios
-//   https://github.com/adobe/aepsdk-edge-ios
-//   https://github.com/adobe/aepsdk-edgeidentity-ios
-//   https://github.com/adobe/aepsdk-edgeconsent-ios
-//   https://github.com/adobe/aepsdk-assurance-ios
-
-import AEPCore
-import AEPEdge
-import AEPEdgeIdentity
-import AEPEdgeConsent
-import AEPLifecycle
-import AEPAssurance
-
-func application(_ application: UIApplication,
-                 didFinishLaunchingWithOptions launchOptions:
-                 [UIApplication.LaunchOptionsKey: Any]?) -&gt; Bool {
-
-    MobileCore.setLogLevel(.debug)
-    MobileCore.initialize(appId: "YOUR_ENVIRONMENT_FILE_ID")
-
-    return true
-}</pre></div><div class="gstep">Android &middot; Gradle, then the Application subclass</div><div class="code"><button class="copy">Copy</button><pre>// build.gradle.kts (Module :app)
-implementation(platform("com.adobe.marketing.mobile:sdk-bom:3.+"))
-implementation("com.adobe.marketing.mobile:core")
-implementation("com.adobe.marketing.mobile:edge")
-implementation("com.adobe.marketing.mobile:edgeidentity")
-implementation("com.adobe.marketing.mobile:edgeconsent")
-implementation("com.adobe.marketing.mobile:lifecycle")
-implementation("com.adobe.marketing.mobile:assurance")
-
-// MainApplication.kt
-class MainApplication : Application() {
-    override fun onCreate() {
-        super.onCreate()
-
-        MobileCore.setLogLevel(LoggingMode.DEBUG)
-        MobileCore.initialize(this, "YOUR_ENVIRONMENT_FILE_ID")
-    }
-}</pre></div></div><p>The Android dependency block names no versions. That is the <span class="mn">sdk-bom</span> line doing its job. It pins one set of versions known to work together, and every extension below it inherits from that set. A developer who lists versions by hand will eventually pin two that disagree. That failure surfaces at build time rather than in your reports, which is the better place for it.</p><div class="call mistake"><span class="ct">Where this goes wrong</span><p>The production Environment File ID reaches a debug build. Every developer test, every simulator run and every QA pass then lands in the property your business is watching. None of it can be separated out afterwards. Ask for the development ID by name. Confirm the value in the build before anybody tests against it.</p></div><figure class="fig-svg"><svg viewBox="0 0 700 250" role="img" aria-label="The Environment File ID is the only thing that crosses from the Adobe side, which the analytics practitioner owns, to the app project, which the mobile developer owns." style="width:100%;height:auto;display:block">
+  <div class="al"><span class="lbl">Do</span> Say where the SDK is started. &ldquo;Somewhere at startup&rdquo; is not an instruction. The platform pages below say exactly where.</div>
+</div></div></div>
+<h2>One call does the whole job</h2>
+<p><span class="mn">MobileCore.initialize</span> registers every extension bundled with the app, and switches on lifecycle tracking at the same time. There is no list of classes to keep matched to the library list.</p>
+<p>Older guides show <span class="mn">registerExtensions</span> with an array and a completion block. That form still works and most existing apps contain it, so expect to meet it. It is no longer the shorter path<a class="cite" href="/aep-mobile-sdk/references/#ref-2" data-ref="2">[2]</a>.</p>
+<h2>Now pick your platform</h2>
+<p>Installing the SDK is the one step where the four kinds of app genuinely differ. Different tools, different files, different commands. Everything after this step is the same work in a different language.</p>
+<p>Open the page that matches the app. If you do not know which it is, the three questions in <a href="/aep-mobile-sdk/mobile-basics/how-mobile-apps-are-built/">How mobile apps are actually built</a> settle it in one conversation.</p>
+<table class="mini-tbl"><tbody>
+<tr><td><a href="/aep-mobile-sdk/get-the-sdk-ios/">iOS</a></td><td>Swift. Swift Package Manager or CocoaPods, then the app&rsquo;s startup file.</td></tr>
+<tr><td><a href="/aep-mobile-sdk/get-the-sdk-android/">Android</a></td><td>Kotlin. Gradle and the bill of materials, then the Application class.</td></tr>
+<tr><td><a href="/aep-mobile-sdk/get-the-sdk-react-native/">React Native</a></td><td>JavaScript. npm or Yarn, and no native code at all on version 7 and later.</td></tr>
+<tr><td><a href="/aep-mobile-sdk/get-the-sdk-flutter/">Flutter</a></td><td>Dart. pub, and no native code at all on version 5 and later.</td></tr>
+</tbody></table>
+<figure class="fig-svg"><svg viewBox="0 0 700 250" role="img" aria-label="The Environment File ID is the only thing that crosses from the Adobe side, which the analytics practitioner owns, to the app project, which the mobile developer owns." style="width:100%;height:auto;display:block">
 <defs>
 <marker id="mah" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" style="fill:var(--accent, #0f6b62)"/></marker>
 </defs>
@@ -82,4 +63,7 @@ class MainApplication : Application() {
 <rect x="444" y="130" width="210" height="42" rx="8" style="fill:var(--bg, #ffffff);stroke:var(--line, #e4e6ea);stroke-width:1.5"/>
 <text x="549" y="156" text-anchor="middle" style="font-size:12px;font-family:monospace;fill:var(--ink-soft, #3b4048)">MobileCore.initialize(...)</text>
 <text x="350" y="236" text-anchor="middle" style="font-size:11.5px;fill:var(--muted, #6b7280)">and then a build, and a release, which is weeks rather than minutes</text>
-</svg><figcaption>One value crosses the boundary. Everything to the left is yours, and reversible in a browser. Everything to the right needs a build. <b>Getting that value right the first time is worth more than any other check in this step.</b></figcaption></figure><div class="call check"><span class="ct">&#10003; Ready when</span><p>The app compiles with the SDK in it. The development Environment File ID is the value in the build. SDK logs appear at debug level on launch. Nothing is being tracked yet, and that is correct. The SDK is present and configured, which is all this step claims.</p></div>
+</svg><figcaption>One value crosses the boundary. Everything to the left is yours, and reversible in a browser. Everything to the right needs a build. <b>Getting that value right the first time is worth more than any other check in this step.</b></figcaption></figure>
+
+<div class="call mistake"><span class="ct">Where this goes wrong</span><p>The production Environment File ID reaches a debug build. Every developer test, every simulator run and every QA pass then lands in the property your business is watching, and none of it can be separated out afterwards. Ask for the development ID by name, and confirm the value in the build before anybody tests against it.</p></div>
+<div class="call check"><span class="ct">&#10003; Ready when</span><p>The app compiles with the SDK in it, the development Environment File ID is the value in the build, and SDK logs appear at debug level on launch. Nothing is being tracked yet, and that is correct. The SDK is present and configured, which is all this step claims.</p></div>

@@ -1,6 +1,6 @@
 ---
 published: 2026-09-06
-lastmod: 2026-09-06
+lastmod: 2026-09-08
 title: "Who is still on an old build"
 seotitle: "Managing the Long Tail of Old App Versions in Analytics"
 description: "Every version you have ever shipped is still installed somewhere, still reporting, and still using the tracking it was built with."
@@ -12,8 +12,9 @@ params:
   grouplabel: "The plumbing"
 ---
 <p class="khook">On the web there is one version of your tracking. In an app there are as many as you have ever released, all running at once.</p>
-<p>People update at their own pace. A release reaches a fraction of users in its first week, most within a month, and a stubborn remainder never. Devices too old to run the newest build hold their last compatible version indefinitely. So the population sending you data is always a mixture, and the mixture shifts every day.</p>
-<p>Two things follow. A tracking change is never fully deployed, so a field added this quarter is absent from a slice of your data for a long time afterwards, and that absence is not a fault. And any trend spanning a release contains two different implementations, which means a metric can move because behaviour changed or because adoption did.</p>
-<p>Telling those apart is easy if you prepared and awkward if you did not. App version arrives on every event from Lifecycle without anybody asking for it, so the breakdown is available from the first day.</p>
-<p><b>For your implementation:</b> build a version breakdown before you need one. Adding it while somebody is questioning a number is slower and looks worse than having had it all along.</p>
-<div class="arch"><span class="at">&#9873; Architect&rsquo;s Decision</span><p>Segment by app version whenever a number moves near a release. Ask whether the population changed before asking whether the users did, because most surprising post-release trends are adoption wearing a disguise.</p></div>
+<p>People update at their own pace. A release reaches a fraction of users in its first week and most within a month. A stubborn remainder never update at all, and phones too old to run the newest build keep their last compatible version for good.</p>
+<p>So the population sending you data is always a mixture, and the mixture shifts every day.</p>
+<p>Two things follow. <b>A tracking change is never fully deployed</b>, so a field added this quarter is missing from part of your data for a long time afterwards, and that gap is not a fault. And <b>any trend that spans a release contains two different implementations</b>, so a metric can move because behaviour changed or because adoption did.</p>
+<p>Telling those apart is easy if you prepared and awkward if you did not. App version arrives on every event from Lifecycle without anybody asking, so the breakdown is available from the first day.</p>
+<p><b>For your implementation:</b> build a version breakdown before you need one. Adding it while somebody is questioning a number is slower, and it looks worse, than having had it all along.</p>
+<div class="arch"><span class="at">&#9873; Architect&rsquo;s Decision</span><p>Split by app version whenever a number moves near a release. Ask whether the population changed before asking whether the users did. Most surprising post-release trends are adoption in disguise.</p></div>

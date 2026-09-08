@@ -1,9 +1,9 @@
 ---
 published: 2026-09-06
-lastmod: 2026-09-06
+lastmod: 2026-09-08
 title: "What “add the SDK” means"
 seotitle: "Swift Package Manager, CocoaPods and Gradle Explained"
-description: "Dependency managers explained for somebody who has never opened an IDE, and why the version numbers are worth caring about even though you never type one."
+description: "Dependency managers explained for somebody who has never opened a developer tool, and why the version numbers matter even though you never type one."
 slug: "dependency-managers"
 type: basics
 weight: 204
@@ -12,42 +12,58 @@ params:
   grouplabel: "The developer's world"
 ---
 <p class="khook">Nobody copies the Adobe SDK into an app. They write down its name and a version, and a tool fetches it while the app is being built.</p>
-<p>A ticket goes to the mobile team saying add the Adobe SDK. It sounds like one action. On the web it would be one action, roughly equivalent to pasting a script tag into a page template. That impression survives right up until something goes wrong. Then a developer mentions that the versions are not aligned, or that the build failed while resolving dependencies. The conversation moves somewhere you cannot follow it. The vocabulary is unfamiliar and the concepts underneath it are not.</p>
-<p>You are never going to type any of this. You should still understand the shape of it. Two of the things that commonly go wrong in a mobile implementation go wrong here. Both are visible in a short block of text. A developer can paste it into a message in ten seconds. Reading that block is a skill worth ten minutes, and it does not require knowing the language it is written in.</p>
+<div class="call margin"><span class="ct">Before you start</span><p>This page will not teach you to build mobile apps. It teaches you enough of the mobile world to understand what a developer is saying, to answer questions in a meeting when no developer is there, and to tell a developer exactly what you need and where it has to change. Words like Xcode, Gradle, native, Flutter and WebView are used here on purpose. You will hear them in every meeting.</p></div>
 <h2>A list, not a parcel</h2>
-<p>The Adobe SDK does not get copied into the project. What goes into the project is a list, and that list names each library the app depends on. When somebody builds the app, a tool reads that list. It downloads each library from a public repository and links the results into the build. The libraries are not stored alongside the company's own code. They arrive fresh every time anybody builds.</p>
-<p>That tool is a <b>dependency manager</b>, and every serious project has one. The arrangement is closer to a shopping list than to a delivery. The list is the part that lives in the code, gets reviewed, and can be argued about in a pull request. The goods themselves come from somewhere else, at the last moment, and nobody looks at them on the way in. This is completely standard practice and it is not a weakness. It is how essentially all modern software is assembled.</p>
-<p>One consequence matters to you immediately. Two developers can build from identical code and finish with different libraries inside their apps. That happens whenever the list allows any latitude about which version to fetch. The code was the same and the list was the same. What the list <i>resolved to</i> was not, and nothing in the process announces that it has happened.</p>
+<p>The Adobe SDK is not copied into the project. What goes into the project is a <b>list</b>, and that list names each library the app needs.</p>
+<p>When somebody builds the app, a tool reads the list, downloads each library from a public store, and joins the results into the build. The libraries are not kept next to the company&rsquo;s own code. They arrive fresh every time anybody builds.</p>
+<p>That tool is called a <b>dependency manager</b>, and every serious project has one. Think of a shopping list rather than a delivery. The list lives in the code, gets reviewed, and can be argued about. The goods come from somewhere else, at the last moment.</p>
+<p>This is completely normal and it is not a weakness. It is how almost all modern software is put together.</p>
+<p>One result matters to you straight away. <b>Two developers can build from identical code and finish with different libraries inside their apps.</b> That happens whenever the list leaves any freedom about which version to fetch. The code was the same and the list was the same. What the list resolved to was not, and nothing announces it.</p>
 <h2>Three tools doing one job</h2>
-<p>Three names come up, and the differences between them are much smaller than the job they share. On iOS, <b>Swift Package Manager</b> is Apple's own and is built directly into Xcode. <b>CocoaPods</b> is older, was the standard for years, and is still in a great many production apps that are not worth migrating. On Android there is <b>Gradle</b>, which handles dependencies and is also the build system itself rather than a separate tool bolted onto one.</p>
-<p>All three read a list of libraries, fetch them, and resolve versions so the set fits together. Which one a project uses was decided years ago, usually by whoever started it. That choice is not worth relitigating now. The choice changes the file a developer opens and the command they run. It changes nothing you are going to ask for, and nothing about how the Adobe SDK behaves once it is in there.</p>
+<p>Three names come up, and the differences between them matter far less than the job they share.</p>
+<table class="mini-tbl"><tbody>
+<tr><td>Swift PM</td><td>Apple&rsquo;s own, built into Xcode. The current default on iPhone.</td></tr>
+<tr><td>CocoaPods</td><td>Older, was the iPhone standard for years, still in many working apps.</td></tr>
+<tr><td>Gradle</td><td>Android. Handles libraries and is the build system itself.</td></tr>
+</tbody></table>
+<p>All three read a list of libraries, fetch them, and make the versions fit together. Which one a project uses was decided years ago. That choice changes the file a developer opens and the command they run. It changes nothing you will ask for, and nothing about how the Adobe SDK behaves once it is in there.</p>
 <h2>The SDK is not one library</h2>
-<p>Here is the fact that makes versions matter at all. The Adobe Mobile SDK is not a single library. It is a set of them, usually six or seven in a working implementation. They are built, tested and released together as a matched set.</p>
-<p>Core is one of them. Identity is another. So are Lifecycle, Signal, the Edge extensions and the Assurance extension, each of which is switched on in the <a href="/aep-mobile-sdk/create-the-mobile-tag-property/">mobile tag property</a>. Each is a separate library with its own version number, listed separately and fetched separately by the dependency manager. Each one expects the others to come from the same release, because that is the only combination anybody tested. They are components of one product that happen to be delivered as several parcels.</p>
-<p>Mix versions from different releases and one of two things happens. Either the build fails outright, which is the good outcome, because somebody has to deal with it before anything can ship. Or the app builds successfully and behaves strangely afterwards. That second outcome reaches you weeks later, as a data problem with no obvious cause. By then nobody connects it to a dependency file. That file was edited during a different piece of work entirely.</p>
-<h2>The bill of materials, and why it is the answer</h2>
-<p>Adobe solves this on Android with a <b>bill of materials</b>, published as an artefact called <span class="mn">sdk-bom</span>. It is a single line declaring a known-good combination of every library in the set. Each Adobe library listed after it inherits its version from that combination. That is why the individual libraries carry no version numbers of their own.</p>
+<p>This is the fact that makes versions matter. The Adobe Mobile SDK is a <b>set</b> of libraries, usually six or seven in a working implementation. They are built, tested and released together.</p>
+<p>Core is one. Identity is another. So are Lifecycle, Signal, the Edge extensions and the Assurance extension. Each is a separate library with its own version number, listed separately and fetched separately.</p>
+<p>Each one expects the others to come from the same release, because that is the only combination anybody tested. They are parts of one product that happen to be delivered as several parcels.</p>
+<p>Mix versions from different releases and one of two things happens.</p>
+<table class="mini-tbl"><tbody>
+<tr><td>Build fails</td><td>The good outcome. Somebody has to deal with it before anything can ship.</td></tr>
+<tr><td>Build works</td><td>The bad outcome. The app behaves strangely weeks later, as a data problem with no obvious cause, and nobody connects it to a dependency file edited during different work.</td></tr>
+</tbody></table>
+<h2>The bill of materials</h2>
+<p>Adobe solves this on Android with a <b>bill of materials</b>, published as <span class="mn">sdk-bom</span>. It is a single line naming a combination of every library in the set that is known to work together. Each Adobe library listed after it takes its version from that combination, which is why those lines carry no version numbers of their own.</p>
 <div class="code"><button class="copy">Copy</button><pre>implementation platform('com.adobe.marketing.mobile:sdk-bom:3.+')
 implementation 'com.adobe.marketing.mobile:core'
 implementation 'com.adobe.marketing.mobile:identity'
 implementation 'com.adobe.marketing.mobile:signal'
 implementation 'com.adobe.marketing.mobile:lifecycle'</pre></div>
-<p>The arrangement is visible in that block even without knowing Gradle. The first line pins the set. The four lines after it name members of the set and state no version at all. The first line already decided for them. Adding a fifth extension later means one more line with no version on it. It cannot drift out of step with the others, because there is no separate number on it to drift.</p>
-<p>The equivalent discipline on iOS is one consistent version range across all the Adobe packages. The alternative is each package pinned by hand, to whatever happened to be current on the day somebody added it. The mechanism differs from Android and the principle does not. One decision about versions, made once, in one place. The alternative is seven decisions, made on seven different afternoons, by people who were each solving something else.</p>
-<p>Adobe's own example uses <span class="mn">3.+</span>, which means the latest release of major version three. That is a reasonable default and it is not the strictest option available. The <span class="mn">+</span> is a moving target, so two builds a month apart can legitimately resolve to different versions. A team that needs builds to be reproducible later will pin an exact bill of materials version instead. They then raise it deliberately, when they choose to. That is the arrangement worth asking for on anything subject to audit.</p>
+<p>You can see the arrangement without knowing Gradle. The first line pins the set. The four lines after it name members of the set and give no version at all, because the first line already decided for them.</p>
+<p>Adding a fifth extension later means one more line with no version on it. It cannot drift away from the others, because it has no separate number to drift.</p>
+<p>On iPhone the equivalent is one consistent version range across all the Adobe packages. The mechanism differs and the principle does not: <b>one decision about versions, made once, in one place.</b> The alternative is seven decisions made on seven different afternoons by people who were each solving something else.</p>
+<p>Adobe&rsquo;s example uses <span class="mn">3.+</span>, which means the newest release of version three. That is a reasonable default and not the strictest option. The <span class="mn">+</span> moves, so two builds a month apart can honestly resolve to different versions. A team that needs to rebuild an old version exactly will pin a fixed bill of materials instead and raise it deliberately. Ask for that on anything subject to audit.</p>
 <h2>Reading a dependency block without knowing the language</h2>
-<p>Real value comes out of this without learning Gradle or Swift. Ask a developer to paste the Adobe lines from the dependency file, which is the handover described in <a href="/aep-mobile-sdk/get-the-sdk-into-the-app/">Get the SDK into the app</a>. It takes them about ten seconds and requires no preparation. Then read the shape of what comes back rather than the syntax of it, looking for three things.</p>
-<p>A bill of materials line, or on iOS one version range covering everything, means somebody has thought about this. The set will stay coherent on its own. Seven Adobe lines each carrying its own version number means nobody has thought about it. The set will drift the first time one of them is updated alone. Versions that visibly disagree, a five on one line and a three on another, are worth asking about. The alternative is a week spent debugging behaviour with a one-line cause.</p>
-<p>That is the whole of the skill, and it is smaller than it sounds. You are not auditing the build or second-guessing an engineer. You are checking that one decision was made deliberately rather than by accident. It is very cheap to ask at the start of an implementation and expensive to ask after a release. Almost everything in this section follows that pattern.</p>
-<div class="call mistake"><span class="ct">Where this goes wrong</span><p>An extension is added months after the original implementation, pinned by hand to whatever version was current that week. Everything builds and the app ships. The mismatch surfaces later as behaviour nobody can reproduce: events arriving intermittently, or an extension that registers on one platform and not the other. The dependency block had the answer in it the whole time, and nobody outside the mobile team had ever looked at it.</p></div>
+<p>Ask a developer to paste the Adobe lines from the dependency file. It takes them about ten seconds. Then read the <b>shape</b> of what comes back, not the syntax, and look for three things.</p>
+<table class="mini-tbl"><tbody>
+<tr><td>Good</td><td>A bill of materials line, or on iPhone one version range covering everything. Somebody has thought about this and the set will stay coherent by itself.</td></tr>
+<tr><td>Weak</td><td>Seven Adobe lines each carrying its own version number. The set will drift the first time one of them is updated alone.</td></tr>
+<tr><td>Ask</td><td>Versions that visibly disagree, a five on one line and a three on another. That is worth a question now rather than a week of debugging later.</td></tr>
+</tbody></table>
+<p>That is the whole skill, and it is smaller than it sounds. You are not auditing the build or second-guessing an engineer. You are checking that one decision was made on purpose rather than by accident.</p>
+<div class="call mistake"><span class="ct">Where this goes wrong</span><p>An extension is added months after the original work, pinned manually to whatever version was current that week. Everything builds and the app ships. The mismatch appears later as behaviour nobody can reproduce: events arriving sometimes, or an extension that registers on one platform and not the other. The dependency block held the answer the whole time, and nobody outside the mobile team had ever looked at it.</p></div>
 <h2>What to ask for</h2>
-<p>Two requests cover everything on this page. Neither asks a developer to justify themselves, which is part of why both land well. They are questions about arrangement rather than about competence. The answer to the second one usually contains the answer to the first.</p>
-<div class="actionblock"><div class="abh">Two things, once, early</div><div class="do-intro">Ask at the start of the implementation, not when something is already wrong.</div><div class="astep"><div class="an">1</div><div>
-  <div class="al"><span class="lbl">Ask</span> On Android, is the <b>bill of materials</b> in use? On iOS, is there <b>one version range</b> across the Adobe packages?</div>
+<p>Two requests cover this page. Neither asks a developer to justify themselves, which is part of why both land well. They are questions about arrangement, not about competence.</p>
+<div class="actionblock"><div class="abh">Two things, once, early</div><div class="do-intro">Ask at the start of the work, not when something is already wrong.</div><div class="astep"><div class="an">1</div><div>
+  <div class="al"><span class="lbl">Ask</span> On Android, is the bill of materials in use? On iPhone, is there one version range across the Adobe packages?</div>
   <div class="al"><span class="lbl">Why</span> It is the difference between a set that stays coherent by design and one that stays coherent by luck.</div>
 </div></div>
 <div class="astep"><div class="an">2</div><div>
-  <div class="al"><span class="lbl">Ask</span> Paste the <b>Adobe dependency lines</b> as they currently stand.</div>
-  <div class="al"><span class="lbl">Why</span> Ten seconds of a developer's time, and it answers the first question and several you have not thought of yet.</div>
+  <div class="al"><span class="lbl">Ask</span> Paste the Adobe dependency lines as they stand today.</div>
+  <div class="al"><span class="lbl">Why</span> Ten seconds of a developer&rsquo;s time, and it answers the first question and several you have not thought of yet.</div>
 </div></div></div>
-<div class="call check"><span class="ct">&#10003; What you can now do</span><p>Say what a dependency manager does, and why an app fetches the SDK rather than containing it. Name the three tools, and know that the choice between them changes nothing you will ask for. Explain why the Adobe libraries are a matched set, and why mixing versions produces either an honest build failure or a dishonest data problem. And read a dependency block well enough to tell a deliberate arrangement from an accidental one.</p></div>
+<div class="call check"><span class="ct">&#10003; What you can now do</span><p>You can say what a dependency manager does, and why an app fetches the SDK rather than containing it. You can name the three tools and know the choice between them changes nothing you will ask for. You can explain why the Adobe libraries are a matched set, and why mixing versions gives you either an honest build failure or a dishonest data problem. And you can read a dependency block well enough to tell a deliberate arrangement from an accidental one.</p></div>

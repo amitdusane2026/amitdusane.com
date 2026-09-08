@@ -1,9 +1,9 @@
 ---
 published: 2026-09-06
-lastmod: 2026-09-06
+lastmod: 2026-09-08
 title: "Handle consent"
 seotitle: "Implementing Consent in the Adobe Mobile SDK"
-description: "The default decides what happens before a person has chosen anything, and on a mobile app that window is the first launch, which is the one you cannot repeat."
+description: "The default decides what happens before a person has chosen anything, and on a mobile app that window is the first launch, which you cannot repeat."
 slug: "handle-consent"
 weight: 10
 type: step
@@ -11,20 +11,56 @@ params:
   stepnum: 10
   kbids: ["consent-mobile"]
 ---
-<div class="narrative">A browser consent banner appears on a page that has usually already loaded, and a returning visitor carries a cookie that answers the question before it is asked. An app has neither. The first launch is a person opening something they just downloaded. No stored preference, no prior page. And the SDK starts sending events the moment it initialises. So the decision that matters is not which banner to build. It is <b>what the SDK does in the seconds before anybody has answered</b>, and that is a setting rather than code.</div><div class="why-row"><span class="wl">Why?</span><a class="why" href="/aep-mobile-sdk/kb/consent-mobile/" data-kb="consent-mobile">How does this differ from a web banner? <span class="arr">&#8599;</span></a></div><div class="actionblock"><div class="abh">Set the default first</div><div class="astep"><div class="an">1</div><div>
+<div class="narrative">A browser consent banner appears on a page that has usually already loaded, and a returning visitor carries a cookie that answers the question before it is asked.<br><br>An app has neither. The first launch is somebody opening a thing they just downloaded: no stored preference, no earlier page. And the SDK starts sending events the moment it starts.<br><br>So the decision that matters is not which banner to build. It is <b>what the SDK does in the seconds before anybody has answered</b>, and that is a setting rather than code.</div>
+<div class="why-row"><span class="wl">Why?</span><a class="why" href="/aep-mobile-sdk/kb/consent-mobile/" data-kb="consent-mobile">How does this differ from a web banner? <span class="arr">&#8599;</span></a></div>
+<div class="actionblock"><div class="abh">Set the default first</div><div class="do-intro">This one is in a browser, and it changes without an app release.</div><div class="astep"><div class="an">1</div><div>
   <div class="al"><span class="lbl">Where</span> <span class="path">Data Collection &rsaquo; Tags &rsaquo; your mobile property &rsaquo; Extensions &rsaquo; Consent for Edge Network</span></div>
-  <div class="al"><span class="lbl">Do</span> Set <b>Default Consent</b>. <span class="mn">Pending</span> holds events in a queue until a person answers. <span class="mn">Yes</span> collects immediately. <span class="mn">No</span> collects nothing until told otherwise.</div>
+  <div class="al"><span class="lbl">Do</span> Set Default Consent. <b>Pending</b> holds events in a queue until somebody answers. <b>Yes</b> collects immediately. <b>No</b> collects nothing until told otherwise.</div>
 </div></div>
 <div class="astep"><div class="an">2</div><div>
-  <div class="al"><span class="lbl">Do</span> Publish the library. This is a property setting, so it changes without an app release, which makes it one of the few things here you can correct quickly.</div>
-</div></div></div><p>Choose <span class="mn">Pending</span> unless somebody with legal responsibility has told you otherwise in writing. It is the only default that neither discards a first session nor collects before permission. Events queue. They are sent or dropped once the answer arrives. <span class="mn">Yes</span> is defensible in some markets and indefensible in others, which is not a judgment to make on a developer's behalf.</p><figure class="fig-svg"><svg viewBox="0 0 700 210" role="img" aria-label="With the default set to pending, events generated before a person answers the consent prompt are held in a queue and then either sent to the Edge Network or discarded once the answer arrives." style="width:100%;height:auto;display:block"><defs><marker id="m11a" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" style="fill:var(--ok, #1f7a4d)"/></marker><marker id="m11b" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" style="fill:var(--faint, #9aa1ab)"/></marker></defs><rect x="16" y="76" width="128" height="56" rx="9" style="fill:var(--bg, #ffffff);stroke:var(--line, #e4e6ea);stroke-width:1.5"/><text x="80" y="99" text-anchor="middle" style="font-size:12px;font-weight:700;fill:var(--ink-soft, #3b4048)">first launch</text><text x="80" y="117" text-anchor="middle" style="font-size:11px;fill:var(--muted, #6b7280)">events happening</text><line x1="148" y1="104" x2="186" y2="104" style="stroke:var(--accent, #0f6b62);stroke-width:1.8"/><rect x="192" y="64" width="150" height="80" rx="9" style="fill:var(--accent-soft, #e6f2f0);stroke:var(--accent, #0f6b62);stroke-width:1.8"/><text x="267" y="90" text-anchor="middle" style="font-size:12.5px;font-weight:700;fill:var(--accent, #0f6b62)">the queue</text><text x="267" y="110" text-anchor="middle" style="font-size:11px;fill:var(--ink-soft, #3b4048)">default: Pending</text><text x="267" y="128" text-anchor="middle" style="font-size:11px;fill:var(--muted, #6b7280)">nothing sent yet</text><text x="378" y="40" style="font-size:11.5px;font-weight:700;fill:var(--ink-soft, #3b4048)">the person answers</text><line x1="346" y1="92" x2="420" y2="66" style="stroke:var(--ok, #1f7a4d);stroke-width:1.8" marker-end="url(#m11a)"/><line x1="346" y1="118" x2="420" y2="146" style="stroke:var(--faint, #9aa1ab);stroke-width:1.6" marker-end="url(#m11b)"/><rect x="426" y="48" width="258" height="42" rx="8" style="fill:var(--ok-soft, #e9f4ee);stroke:var(--ok, #1f7a4d);stroke-width:1.6"/><text x="555" y="65" text-anchor="middle" style="font-size:12px;font-weight:700;fill:var(--ok, #1f7a4d)">yes: the queue is sent</text><text x="555" y="81" text-anchor="middle" style="font-size:11px;fill:var(--muted, #6b7280)">the first session is not lost</text><rect x="426" y="126" width="258" height="42" rx="8" style="fill:var(--bg-soft, #f7f8fa);stroke:var(--line, #e4e6ea);stroke-width:1.5"/><text x="555" y="143" text-anchor="middle" style="font-size:12px;font-weight:700;fill:var(--ink-soft, #3b4048)">no: the queue is discarded</text><text x="555" y="159" text-anchor="middle" style="font-size:11px;fill:var(--muted, #6b7280)">nothing ever reached Adobe</text><text x="350" y="196" text-anchor="middle" style="font-size:11.5px;fill:var(--muted, #6b7280)">Yes collects before the question. No loses the answer that says yes. Pending does neither.</text></svg><figcaption>The queue is what makes Pending the defensible default. <b>It is the only setting where the first session survives a yes and vanishes on a no</b>, which is what both the lawyer and the analyst are actually asking for.</figcaption></figure>
-<div class="actionblock"><div class="abh">Record the answer when it comes</div><div class="gstep">iOS &middot; Swift</div><div class="code"><button class="copy">Copy</button><pre>let collectConsent = ["collect": ["val": "y"]]
+  <div class="al"><span class="lbl">Do</span> Publish the library. This is a property setting, so it is one of the few things here you can correct quickly.</div>
+</div></div></div>
+<h2>Choose Pending</h2>
+<p>Choose Pending unless somebody with legal responsibility has told you otherwise in writing.</p>
+<p>It is the only default that neither discards a first session nor collects before permission. Events queue, and are sent or dropped once the answer arrives.</p>
+<p>Yes is defensible in some markets and indefensible in others, which is not a judgment to make on a developer&rsquo;s behalf.</p>
+<figure class="fig-svg"><svg viewBox="0 0 700 210" role="img" aria-label="With the default set to pending, events generated before a person answers the consent prompt are held in a queue and then either sent to the Edge Network or discarded once the answer arrives." style="width:100%;height:auto;display:block"><defs><marker id="m11a" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" style="fill:var(--ok, #1f7a4d)"/></marker><marker id="m11b" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" style="fill:var(--faint, #9aa1ab)"/></marker></defs><rect x="16" y="76" width="128" height="56" rx="9" style="fill:var(--bg, #ffffff);stroke:var(--line, #e4e6ea);stroke-width:1.5"/><text x="80" y="99" text-anchor="middle" style="font-size:12px;font-weight:700;fill:var(--ink-soft, #3b4048)">first launch</text><text x="80" y="117" text-anchor="middle" style="font-size:11px;fill:var(--muted, #6b7280)">events happening</text><line x1="148" y1="104" x2="186" y2="104" style="stroke:var(--accent, #0f6b62);stroke-width:1.8"/><rect x="192" y="64" width="150" height="80" rx="9" style="fill:var(--accent-soft, #e6f2f0);stroke:var(--accent, #0f6b62);stroke-width:1.8"/><text x="267" y="90" text-anchor="middle" style="font-size:12.5px;font-weight:700;fill:var(--accent, #0f6b62)">the queue</text><text x="267" y="110" text-anchor="middle" style="font-size:11px;fill:var(--ink-soft, #3b4048)">default: Pending</text><text x="267" y="128" text-anchor="middle" style="font-size:11px;fill:var(--muted, #6b7280)">nothing sent yet</text><text x="378" y="40" style="font-size:11.5px;font-weight:700;fill:var(--ink-soft, #3b4048)">the person answers</text><line x1="346" y1="92" x2="420" y2="66" style="stroke:var(--ok, #1f7a4d);stroke-width:1.8" marker-end="url(#m11a)"/><line x1="346" y1="118" x2="420" y2="146" style="stroke:var(--faint, #9aa1ab);stroke-width:1.6" marker-end="url(#m11b)"/><rect x="426" y="48" width="258" height="42" rx="8" style="fill:var(--ok-soft, #e9f4ee);stroke:var(--ok, #1f7a4d);stroke-width:1.6"/><text x="555" y="65" text-anchor="middle" style="font-size:12px;font-weight:700;fill:var(--ok, #1f7a4d)">yes: the queue is sent</text><text x="555" y="81" text-anchor="middle" style="font-size:11px;fill:var(--muted, #6b7280)">the first session is not lost</text><rect x="426" y="126" width="258" height="42" rx="8" style="fill:var(--bg-soft, #f7f8fa);stroke:var(--line, #e4e6ea);stroke-width:1.5"/><text x="555" y="143" text-anchor="middle" style="font-size:12px;font-weight:700;fill:var(--ink-soft, #3b4048)">no: the queue is discarded</text><text x="555" y="159" text-anchor="middle" style="font-size:11px;fill:var(--muted, #6b7280)">nothing ever reached Adobe</text><text x="350" y="196" text-anchor="middle" style="font-size:11.5px;fill:var(--muted, #6b7280)">Yes collects before the question. No loses the answer that says yes. Pending does neither.</text></svg><figcaption>The queue is what makes Pending the defensible default. <b>It is the only setting where the first session survives a yes and vanishes on a no</b>, which is what both the lawyer and the analyst are actually asking for.</figcaption></figure>
+
+<h2>Record the answer when it comes</h2>
+<div class="pfswitch">
+  <div class="pfs-tabs" role="tablist">
+    <button class="pfs-tab" data-pf="ios" type="button" role="tab">iOS &middot; Swift</button>
+    <button class="pfs-tab" data-pf="android" type="button" role="tab">Android &middot; Kotlin</button>
+    <button class="pfs-tab" data-pf="rn" type="button" role="tab">React Native</button>
+    <button class="pfs-tab" data-pf="flutter" type="button" role="tab">Flutter &middot; Dart</button>
+  </div>
+  <div class="pfs-pane" data-pf="ios"><p class="pfs-lbl">iOS &middot; Swift</p>
+    <div class="code"><button class="copy">Copy</button><pre>let collectConsent = ["collect": ["val": "y"]]
 let currentConsents = ["consents": collectConsent]
-
-Consent.update(with: currentConsents)</pre></div><div class="gstep">Android &middot; Kotlin</div><div class="code"><button class="copy">Copy</button><pre>val collectConsents = mutableMapOf&lt;String, Any&gt;()
+Consent.update(with: currentConsents)</pre></div>
+  </div>
+  <div class="pfs-pane" data-pf="android"><p class="pfs-lbl">Android &middot; Kotlin</p>
+    <div class="code"><button class="copy">Copy</button><pre>val collectConsents = mutableMapOf&lt;String, Any&gt;()
 collectConsents["collect"] = mutableMapOf("val" to "y")
-
 val consents = mutableMapOf&lt;String, Any&gt;()
 consents["consents"] = collectConsents
+Consent.update(consents)</pre></div>
+  </div>
+  <div class="pfs-pane" data-pf="rn"><p class="pfs-lbl">React Native &middot; JavaScript</p>
+    <div class="code"><button class="copy">Copy</button><pre>import { Consent } from '@adobe/react-native-aepedgeconsent';
 
-Consent.update(consents)</pre></div></div><p>Sending <span class="mn">n</span> instead of <span class="mn">y</span> records a refusal, and it has to be wired up with the same care as the acceptance. An app that records only agreement has not implemented consent. It has implemented a button that sometimes does nothing.<a class="cite" href="/aep-mobile-sdk/references/#ref-7" data-ref="7">[7]</a></p><div class="call mistake"><span class="ct">Where this goes wrong</span><p>The default is left at <span class="mn">Yes</span> because it was the value that made testing easy, and nobody revisits it before release. Every first launch is then collected before the person has been asked, in every market, and the fault is invisible in reports because the data looks complete. Complete data is exactly what the failure produces.</p></div><div class="call check"><span class="ct">&#10003; Ready when</span><p>The default is set deliberately and somebody other than you has agreed it. Both answers are wired, not only the yes. A refusal on first launch results in no events reaching the Edge, and you have watched that happen rather than assumed it.</p></div>
+const consents = { "consents": { "collect": { "val": "y" } } };
+Consent.update(consents);</pre></div>
+  </div>
+  <div class="pfs-pane" data-pf="flutter"><p class="pfs-lbl">Flutter &middot; Dart</p>
+    <div class="code"><button class="copy">Copy</button><pre>import 'package:flutter_aepedgeconsent/flutter_aepedgeconsent.dart';
+
+Map&lt;String, dynamic&gt; consents = {
+  "consents": {"collect": {"val": "y"}}
+};
+Consent.update(consents);</pre></div>
+  </div>
+</div>
+<p>Sending <span class="mn">n</span> instead of <span class="mn">y</span> records a refusal, and it has to be wired up with the same care as the acceptance. <b>An app that records only agreement has not implemented consent.</b> It has implemented a button that sometimes does nothing<a class="cite" href="/aep-mobile-sdk/references/#ref-7" data-ref="7">[7]</a>.</p>
+<div class="call mistake"><span class="ct">Where this goes wrong</span><p>The default is left at Yes because it was the value that made testing easy, and nobody revisits it before release. Every first launch is then collected before the person has been asked, in every market, and the fault is invisible in reports because the data looks complete. Complete data is exactly what the failure produces.</p></div>
+<div class="call check"><span class="ct">&#10003; Ready when</span><p>The default is set deliberately and somebody other than you has agreed it. Both answers are wired, not only the yes. A refusal on first launch results in no events reaching the Edge, and you have watched that happen rather than assumed it.</p></div>

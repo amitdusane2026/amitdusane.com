@@ -1,9 +1,9 @@
 ---
 published: 2026-09-06
-lastmod: 2026-09-06
+lastmod: 2026-09-08
 title: "React Native and Flutter"
 seotitle: "React Native and Flutter for Analytics Practitioners"
-description: "What cross-platform frameworks actually are, why a team chose one, and the three things that genuinely change when your tracking runs inside one."
+description: "What cross-platform frameworks are, why a team chose one, and the three things that change when your tracking runs inside one."
 slug: "react-native-and-flutter"
 type: basics
 weight: 102
@@ -11,33 +11,46 @@ params:
   group: kind
   grouplabel: "What kind of app is this"
 ---
-<p class="khook">Somebody says the app is React Native, and the room nods. Half of them are nodding because they know what that means and half because they do not want to be the person who asks.</p>
-<p>This one is worth understanding properly. Cross-platform frameworks are now a large share of the apps you will meet. The honest answer to what changes for you is short, and it is reassuring. Most of what you will read online about this is written for developers deciding which framework to use. You are not deciding. You arrived after the decision was made, probably years after, and you need to know what it means for the work in front of you.</p>
-<h2>The problem they exist to solve</h2>
-<p>Apple and Google built two entirely separate worlds. An iPhone app is written in <b>Swift</b>, built in Apple's tool called Xcode, and follows Apple's rules. An Android app is written in <b>Kotlin</b>, built in Google's tool called Android Studio, and follows Google's. The two share almost nothing. A button has to be built twice. So does a list, and a screen transition, and the animation between them. Two people do that work, and neither of them can read the other's.</p>
-<p>For a company that wants both, this is expensive in a way that compounds. Two teams. Two codebases. Two sets of bugs. Every feature is specified once and built twice, which means every feature can be built subtly differently twice. And when the business asks for something on a deadline, the deadline is set by whichever team is slower. Cross-platform frameworks are the response to all of that. Write the app once, in one language, and let the framework produce both. That is the entire pitch. When it works, it halves the most expensive part of building an app.</p>
-<h2>What React Native actually is</h2>
-<p>React Native comes from Meta, and its name is two ideas stuck together. <b>React</b> is a way of building interfaces that web developers have used for over a decade. You describe what a screen should look like. The framework works out how to draw it, and how to redraw it when something changes. <b>Native</b> is the second half of the promise. What gets drawn is not a web page pretending to be an app. It is the phone's own real buttons, real lists and real keyboards.</p>
-<p>So a React Native app is written in <b>JavaScript</b> or TypeScript. Those are the same languages your website almost certainly uses. What it produces is something a user cannot tell apart from a native app. That combination is why it spread so fast. A company with web developers already on staff could build a mobile app without hiring two new teams, and the people it needed were already sitting in the building.</p>
-<p>Underneath, there are still two real apps. The framework carries a small piece of native code for each platform, and your JavaScript talks to it across a bridge. That layer is the only place your work changes. Everything else you know still holds.</p>
-<h2>What Flutter actually is</h2>
-<p>Flutter comes from Google and takes a different route to the same place. It is written in a language called <b>Dart</b>, which is not a language you will meet anywhere else. Instead of using the phone's own buttons, it draws every pixel itself. That sounds like a disadvantage and mostly is not. Drawing everything means a Flutter app looks precisely the same on both platforms. Designers tend to like that, and it keeps a brand consistent.</p>
-<p>It also means the app is never waiting for the framework to support a new native control, because it was never using native controls in the first place. The trade is that a Flutter app can feel very slightly unlike the platform it is sitting on. Most users never consciously notice. For your purposes Flutter and React Native behave almost identically, and everything below applies to both of them equally.</p>
-<div class="call margin"><span class="ct">Why a team chose one</span><p>Almost always cost and staffing rather than technology. A company with web developers picks React Native because those people can start on Monday. A company starting fresh, or one that cares strongly about a consistent look, more often picks Flutter. Neither choice was made with analytics in mind, and neither is a problem for you.</p></div>
-<h2>The three things that change</h2>
-<p>Here is the part worth carrying into a meeting. Everything on the Adobe side is <b>identical</b>. The schema is the same. So are the datastream, the <a href="/aep-mobile-sdk/create-the-mobile-tag-property/">tag property</a>, the extensions, consent, identity and Assurance. None of them knows how the app was built, and none of them cares. They sit on Adobe servers and receive events that look the same whatever produced them. Nothing in this guide changes on that side, which means the great majority of what you are about to design is unaffected.</p>
+<p class="khook">React Native and Flutter are the two ways of writing one app that runs on both phones. A large share of the apps you will meet are built this way, and the honest answer to what changes for you is short.</p>
+<div class="call margin"><span class="ct">Before you start</span><p>This page will not teach you to build mobile apps. It teaches you enough of the mobile world to understand what a developer is saying, to answer questions in a meeting when no developer is there, and to tell a developer exactly what you need and where it has to change. Words like Xcode, Gradle, native, Flutter and WebView are used here on purpose. You will hear them in every meeting.</p></div>
+<h2>The problem they solve</h2>
+<p>An iPhone app is written in a language called Swift, in Apple&rsquo;s tool, following Apple&rsquo;s rules. An Android app is written in Kotlin, in Google&rsquo;s tool, following Google&rsquo;s rules. The two share almost nothing.</p>
+<p>So a button has to be built twice. So does a list, a screen, and the animation between screens. Two people do that work, and neither of them can read the other&rsquo;s code.</p>
+<p>For a company that wants both, this is expensive. Two teams. Two sets of code. Two sets of bugs. Every feature is specified once and built twice, so every feature can be built slightly differently twice.</p>
+<p>Cross-platform frameworks are the answer to that. Write the app once, in one language, and let the framework produce both. That is the whole idea.</p>
+<h2>What React Native is</h2>
+<p>React Native comes from Meta. The name is two ideas joined together.</p>
+<p><b>React</b> is a way of building screens that web developers have used for over ten years. You describe what a screen should look like, and the framework decides how to draw it.</p>
+<p><b>Native</b> means what gets drawn is not a web page pretending to be an app. It is the phone&rsquo;s own real buttons, real lists and real keyboards.</p>
+<p>A React Native app is written in JavaScript or TypeScript. Those are the same languages your website almost certainly uses, which is why React Native spread so quickly. A company with web developers already on staff could build a mobile app without hiring two new teams.</p>
+<h2>What Flutter is</h2>
+<p>Flutter comes from Google. It is written in a language called Dart, which you will not meet anywhere else.</p>
+<p>Flutter does not use the phone&rsquo;s own buttons. It draws every pixel itself. That sounds like a disadvantage and mostly is not. Drawing everything means a Flutter app looks exactly the same on both phones, which designers like and which keeps a brand consistent.</p>
+<p>The trade is that a Flutter app can feel very slightly unlike the phone it is running on. Most users never notice. For your work, Flutter and React Native behave almost identically, and everything below applies to both.</p>
+<div class="call margin"><span class="ct">Why a team chose one</span><p>Almost always cost and staffing, not technology. A company with web developers picks React Native, because those people can start on Monday. A company starting fresh, or one that wants the same look on both phones, more often picks Flutter. Neither choice was made with analytics in mind, and neither is a problem for you.</p></div>
+<h2>Nothing on the Adobe side changes</h2>
+<p>This is the part worth carrying into a meeting. The schema, the datastream, the tag property, the extensions, consent, identity and Assurance are all identical. None of them knows how the app was built, and none of them cares. They sit on Adobe servers and receive events that look the same whatever produced them.</p>
 <p>Three things change, and all three are on the app side.</p>
-<p><b>The language your tracking is written in.</b> Not Swift or Kotlin but JavaScript, or Dart if the app is Flutter. When you read a code sample in Adobe documentation, you will need the plugin version rather than the native one. The plugin is added the same way the native SDK is, which is <a href="/aep-mobile-sdk/get-the-sdk-into-the-app/">Get the SDK into the app</a>. The method names are recognisable but not always identical, so a sample copied from the wrong page will not run.</p>
-<p><b>How the SDK gets in.</b> Native projects add dependencies through Swift Package Manager, CocoaPods or Gradle. A React Native project adds them through the JavaScript package manager, npm or Yarn. A Flutter project uses its own tool. It is the same idea in every case, and only the command differs.</p>
-<p><b>How many times each request lands.</b> This one is in your favour. One codebase means one implementation. An event fires from one place, so it cannot drift between iOS and Android. That entire class of discrepancy disappears. The one where a number disagrees between platforms, because two developers read the same ticket differently, simply cannot happen here.</p>
-<h2>The one real risk, and how to test for it</h2>
-<p>The plugins are wrappers around the native SDK, and a wrapper can trail what it wraps. When Adobe ships something new, the native SDK gets it first. The React Native and Flutter plugins follow, usually within weeks and occasionally longer. That gap is the only structural risk cross-platform adds to a project like this one.</p>
-<p>In practice it almost never bites. The things you need for an implementation like this one have been supported for years and are stable: sending events, identity, consent, lifecycle and Assurance. It bites when somebody wants a newer or more specialised capability, and it bites late, after the schema is agreed and the work is underway. So there is one question worth asking at the very start, and it costs nothing to ask.</p>
-<div class="actionblock"><div class="abh">Ask this in the kick-off</div><div class="astep"><div class="an">1</div><div>
-  <div class="al"><span class="lbl">Ask</span> Which plugin version is the project on, and does it support everything on the list?</div>
-  <div class="al"><span class="lbl">Why</span> It takes a developer two minutes to check, and it is the only cross-platform risk that has ever mattered on a project like this.</div>
+<h2>1. The language your tracking is written in</h2>
+<p>Not Swift or Kotlin, but JavaScript, or Dart if the app is Flutter. When you read a code sample in Adobe documentation, you need the plugin version rather than the native one. The method names look similar but are not always identical, so a sample copied from the wrong page will not run.</p>
+<h2>2. How the SDK gets in</h2>
+<p>A native project adds the SDK through a tool called Swift Package Manager, CocoaPods or Gradle. A React Native project adds it through the JavaScript package manager, npm or Yarn. A Flutter project uses its own tool. It is the same idea every time, and only the command differs. <a href="/aep-mobile-sdk/get-the-sdk-into-the-app/">Get the SDK into the app</a> covers the commands.</p>
+<h2>3. How many times each request is built</h2>
+<p>This one is good news. One set of code means one implementation. An event fires from one place, so it cannot drift between iPhone and Android.</p>
+<p>On a native project, two developers read the same ticket and can build it slightly differently, and then the two numbers never match. On a cross-platform project that cannot happen.</p>
+<h2>The one real risk</h2>
+<p>The plugins are wrappers around the native SDK, and a wrapper can fall behind the thing it wraps. When Adobe ships something new, the native SDK gets it first. The React Native and Flutter plugins follow, usually within weeks and sometimes longer.</p>
+<p>In practice this rarely causes trouble. Everything you need for an implementation like this one has been supported for years: sending events, identity, consent, lifecycle and Assurance. It becomes a problem only when somebody wants a newer or unusual feature, and it becomes a problem late, after the schema is agreed and the work has started.</p>
+<p>So there is one question worth asking at the very beginning, and it costs nothing.</p>
+<div class="actionblock"><div class="abh">Ask this in the kick-off</div><div class="do-intro">Two minutes of a developer&rsquo;s time, once.</div><div class="astep"><div class="an">1</div><div>
+  <div class="al"><span class="lbl">Ask</span> Which plugin version is the project on, and does that version support everything on our list?</div>
+  <div class="al"><span class="lbl">Why</span> It is the only cross-platform risk that has ever mattered on a project like this one.</div>
 </div></div></div>
-<h2>How to spot one without asking</h2>
-<p>You usually can, from things you already have access to. A repository whose files end in <span class="mn">.js</span>, <span class="mn">.jsx</span> or <span class="mn">.ts</span>, and which contains a <span class="mn">package.json</span>, is React Native. Files ending in <span class="mn">.dart</span> alongside a <span class="mn">pubspec.yaml</span> are Flutter. Two separate folders, one full of <span class="mn">.swift</span> files and one full of <span class="mn">.kt</span> files, is native.</p>
-<p>You do not need to read any of those files. Recognising the shape is enough. Being the analytics person who recognises it changes how the rest of the project treats you. It moves you out of the category of people that things have to be explained to.</p>
-<div class="call check"><span class="ct">&#10003; What you can now do</span><p>Say what React Native and Flutter are in a sentence each, explain why a team would choose one, and state confidently that nothing on the Adobe side changes. Ask the one question that matters, about plugin version and feature support. And know that a single codebase quietly removes the most common source of iOS and Android disagreement in mobile reporting.</p></div>
+<h2>How to recognise one without asking</h2>
+<p>You can usually tell from the files, and you do not need to read any of them. Recognising the shape is enough.</p>
+<table class="mini-tbl"><tbody>
+<tr><td>React Native</td><td>Files ending <span class="mn">.js</span>, <span class="mn">.jsx</span> or <span class="mn">.ts</span>, and a file called <span class="mn">package.json</span>.</td></tr>
+<tr><td>Flutter</td><td>Files ending <span class="mn">.dart</span>, and a file called <span class="mn">pubspec.yaml</span>.</td></tr>
+<tr><td>Native</td><td>Two separate folders, one full of <span class="mn">.swift</span> files and one full of <span class="mn">.kt</span> files.</td></tr>
+</tbody></table>
+<div class="call check"><span class="ct">&#10003; What you can now do</span><p>You can say what React Native and Flutter are in one sentence each, explain why a team would choose one, and state confidently that nothing on the Adobe side changes. You can ask the one question that matters, about plugin version and feature support. And you know that one set of code removes the most common cause of iPhone and Android numbers disagreeing.</p></div>

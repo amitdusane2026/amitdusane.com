@@ -1,6 +1,6 @@
 ---
 published: 2026-09-06
-lastmod: 2026-09-06
+lastmod: 2026-09-08
 title: "What a rejection looks like"
 seotitle: "Reading an AEP Error Response When the Edge Rejects a Payload"
 description: "The Edge refuses payloads that do not match the schema, and it names the field. Reading that message is faster than any other kind of investigation."
@@ -12,8 +12,14 @@ params:
   grouplabel: "Failure modes"
 ---
 <p class="khook">A rejection is the friendliest failure in this whole system, because unlike almost everything else on mobile, it tells you what is wrong.</p>
-<p>XDM is validated. When a payload does not match the schema, the Edge refuses it and returns an error response, which appears in Assurance in place of the post-processed data you were expecting. The message names the field and the problem: a path that does not exist, a value of the wrong type, a required field absent.</p>
-<p>Three causes account for most of them. A <b>field was renamed</b> in the schema after the app was built, so the app is sending a path that no longer exists. A <b>type changed</b>, and a value that used to be a string is arriving where a number is expected. Or the app is <b>spelling the path differently</b> from the schema, which is usually a capital letter.</p>
-<p>All three are fixed on your side, except the last, and even that begins with you supplying the exact path rather than describing it. What matters is that a rejection is never a mystery: the answer is in the message.</p>
-<p><b>For your implementation:</b> read the error before forming a theory. It is genuinely quicker than reasoning about what might have changed, and the field it names is almost always exactly the field at fault.</p>
-<div class="arch"><span class="at">&#9873; Architect&rsquo;s Decision</span><p>Never rename or retype a field in a live schema on the assumption that apps will catch up. Every already-installed version keeps sending the old shape, and each one of those events is rejected until its user updates.</p></div>
+<p>XDM is checked. When a payload does not match the schema, the Edge refuses it and returns an error response, which appears in Assurance in place of the post-processed data you were expecting.</p>
+<p><b>The message names the field and the problem:</b> a path that does not exist, a value of the wrong type, a required field missing.</p>
+<p>Three causes account for most of them.</p>
+<table class="mini-tbl"><tbody>
+<tr><td>Renamed</td><td>A field was renamed in the schema after the app was built, so the app is sending a path that no longer exists.</td></tr>
+<tr><td>Retyped</td><td>A value that used to be text is arriving where a number is expected.</td></tr>
+<tr><td>Spelling</td><td>The app spells the path differently from the schema, usually a capital letter.</td></tr>
+</tbody></table>
+<p>The first two are fixed on your side. Even the third begins with you supplying the exact path rather than describing it.</p>
+<p><b>For your implementation:</b> read the error before forming a theory. It is genuinely quicker than reasoning about what might have changed, and the field it names is almost always the field at fault.</p>
+<div class="arch"><span class="at">&#9873; Architect&rsquo;s Decision</span><p>Never rename or retype a field in a live schema on the assumption that apps will catch up. Every already-installed version keeps sending the old shape, and each of those events is rejected until its user updates.</p></div>

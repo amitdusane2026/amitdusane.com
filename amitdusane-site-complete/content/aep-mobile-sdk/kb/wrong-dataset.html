@@ -1,6 +1,6 @@
 ---
 published: 2026-09-06
-lastmod: 2026-09-06
+lastmod: 2026-09-08
 title: "Data arriving where you did not expect"
 seotitle: "Troubleshooting Mobile Events Landing in the Wrong Dataset"
 description: "Events reach Adobe, reports stay empty, and nothing anywhere reports an error. Usually the routing is right and pointed somewhere else."
@@ -13,7 +13,12 @@ params:
 ---
 <p class="khook">The confusing version of missing data is not an error. It is a report that stays empty while Assurance insists everything was accepted.</p>
 <p>When the Edge accepts an event and the report does not show it, the event went somewhere. Four causes account for nearly all of it, and all four are settings rather than code.</p>
-<p>The <b>environment</b> may be wrong: a build carrying the development Environment File ID reports through the development datastream, into a validation report suite, exactly as designed. The <b>service</b> may be missing: a datastream with only the Analytics service sends nothing to any dataset, and Customer Journey Analytics stays empty while Analytics looks perfect. The <b>dataset</b> selected may be a different one from the one being queried. Or the <b>report suite</b> on that datastream may not be the one open on your screen.</p>
+<table class="mini-tbl"><tbody>
+<tr><td>Environment</td><td>A build carrying the development Environment File ID reports through the development datastream into a validation report suite, exactly as designed.</td></tr>
+<tr><td>Service</td><td>A datastream with only the Analytics service sends nothing to any dataset. Customer Journey Analytics stays empty while Analytics looks perfect.</td></tr>
+<tr><td>Dataset</td><td>The dataset selected is a different one from the dataset being queried.</td></tr>
+<tr><td>Report suite</td><td>The suite on that datastream is not the one open on your screen.</td></tr>
+</tbody></table>
 <p>None of these produces a warning, because none of them is a fault. The pipeline is doing exactly what it was configured to do, and the configuration is the thing that is wrong.</p>
 <p><b>For your implementation:</b> when data is accepted but absent, read the datastream for the environment the build is actually using, rather than the one you were thinking of. That single check resolves most of these in a minute.</p>
-<div class="arch"><span class="at">&#9873; Architect&rsquo;s Decision</span><p>Write down which Environment File ID, datastream, report suite and dataset belong to each environment, and keep it where the whole team can see it. Most of this class of problem is caused by two people holding different versions of that mapping in their heads.</p></div>
+<div class="arch"><span class="at">&#9873; Architect&rsquo;s Decision</span><p>Write down which Environment File ID, datastream, report suite and dataset belong to each environment, and keep it where the whole team can see it. Most of this kind of problem is caused by two people holding different versions of that mapping in their heads.</p></div>

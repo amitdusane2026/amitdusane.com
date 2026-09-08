@@ -42,7 +42,7 @@
      `page-about` narrows that to About alone, because About is pinned to the
      light palette and the 404 is not. Two classes rather than one so the
      shared shell rules stay shared. */}}
-<body class="{{ if $bodyclass }}{{ $bodyclass }}{{ else if .IsHome }}page-home{{ else }}page-plain{{ if eq .Type "about" }} page-about{{ end }}{{ end }}{{ if eq .Type "lesson" }} has-rail{{ end }}{{ if $asks }} asks{{ end }}">
+<body class="{{ if $bodyclass }}{{ $bodyclass }}{{ else if .IsHome }}page-home{{ else }}page-plain{{ if eq .Type "about" }} page-about{{ end }}{{ end }}{{ if eq .Type "lesson" }} has-rail{{ end }}{{ if $asks }} asks{{ end }}"{{ with .Params.pfpage }} data-pf-page="{{ . }}"{{ end }}>
 {{ if $proc }}
   {{ $steps := (where (where .Site.RegularPages "Type" "step") "Section" .Section).ByWeight }}
   {{ $curnum := 0 }}{{ if eq .Type "step" }}{{ $curnum = .Params.stepnum }}{{ end }}
@@ -80,9 +80,63 @@
       </div>
       {{ end }}
       <div class="grp do">&#9656; {{ $world.railtitle }}</div>
-      <div id="stepNav">
-        {{ range $steps }}<a class="steplink{{ if eq .Params.stepnum $curnum }} active{{ else if lt .Params.stepnum $curnum }} done{{ end }}" href="{{ .RelPermalink }}"><span class="sn">{{ .Params.stepnum }}</span><span>{{ .Title }}</span></a>{{ end }}
+      {{- /* THE SPINE. Two renderings, chosen by `railgroups` in the registry.
+
+           FLAT is the original and is what the migration guide still gets: one
+           anchor per step, in weight order, nothing to open or close.
+
+           GROUPED arrived on 9 September 2026 for the Mobile SDK guide, whose
+           spine reached fifteen steps once the WebView step was added, plus
+           four platform children under step six. Nineteen flat rows is the
+           problem Part One already had and was fixed for in September: a rail
+           long enough that the bottom of it is never seen on a phone.
+
+           So the steps sit inside their four phases, which already existed in
+           the registry and were previously used only by the front-page map.
+           The accordion markup and behaviour are borrowed from the learning
+           world rather than invented, so a reader who has used one rail
+           already knows this one.
+
+           SUB-STEPS. A step carrying `substep` is a platform variant of its
+           parent and never appears in the spine on its own. It is rendered as
+           a nested list under the parent it shares a `stepnum` with, ordered
+           by `substep`. Today that is step six alone, where installing the SDK
+           is genuinely four different jobs rather than one job with four
+           snippets. */ -}}
+      {{ $spine := where $steps "Params.substep" nil }}
+      {{ if $world.railgroups }}
+      <div id="stepNav" class="railgrp">
+        {{ $phases := slice }}
+        {{ range $k, $v := $world.phases }}{{ $phases = $phases | append (merge $v (dict "key" $k)) }}{{ end }}
+        {{ range sort $phases "order" }}
+          {{ $ph := . }}
+          {{ $isCur := in $ph.steps $curnum }}
+          <div class="rphase">
+            <button class="rp-head{{ if $isCur }} open{{ end }}" type="button" data-rp="rp-{{ $ph.key }}" aria-expanded="{{ if $isCur }}true{{ else }}false{{ end }}" aria-label="Toggle {{ $ph.name }} steps">
+              <span class="rp-name">{{ $ph.name }}</span><span class="rp-chev" aria-hidden="true">&#9660;</span>
+            </button>
+            <div class="rp-body{{ if $isCur }} open{{ end }}" id="rp-{{ $ph.key }}">
+              {{ range $spine }}
+                {{ if in $ph.steps .Params.stepnum }}
+                  {{ $parent := . }}
+                  <a class="steplink{{ if eq .Params.stepnum $curnum }} active{{ else if lt .Params.stepnum $curnum }} done{{ end }}" href="{{ .RelPermalink }}"><span class="sn">{{ .Params.stepnum }}</span><span>{{ .Title }}</span></a>
+                  {{ $kids := sort (where (where $steps "Params.stepnum" $parent.Params.stepnum) "Params.substep" "!=" nil) "Params.substep" }}
+                  {{ with $kids }}
+                  <div class="rsubs">
+                    {{ range . }}<a class="rsub{{ if eq $.RelPermalink .RelPermalink }} active{{ end }}" href="{{ .RelPermalink }}">{{ .Params.subtitle | default .Title }}</a>{{ end }}
+                  </div>
+                  {{ end }}
+                {{ end }}
+              {{ end }}
+            </div>
+          </div>
+        {{ end }}
       </div>
+      {{ else }}
+      <div id="stepNav">
+        {{ range $spine }}<a class="steplink{{ if eq .Params.stepnum $curnum }} active{{ else if lt .Params.stepnum $curnum }} done{{ end }}" href="{{ .RelPermalink }}"><span class="sn">{{ .Params.stepnum }}</span><span>{{ .Title }}</span></a>{{ end }}
+      </div>
+      {{ end }}
       <div class="grp kb railmore-h">More</div>
       <div class="railmore">
         <a class="navlink" href="{{ (printf "%s/kb/" $world.root) | relURL }}"><span class="ic">&#9671;</span><span>Knowledge Base</span></a>

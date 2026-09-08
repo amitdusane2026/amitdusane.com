@@ -132,6 +132,93 @@
     } else { fallback(); flash(); }
   });
 
+  /* THE RAIL PHASE ACCORDION. Added 9 September 2026, and it does nothing
+     unless the markup is there, so the migration rail is untouched.
+
+     One phase open at a time, matching the learning world. The phase holding
+     the current step is rendered open by the template, so a reader always
+     arrives with their own group expanded and the other three closed. */
+  document.addEventListener('click', function (ev) {
+    var h = ev.target.closest ? ev.target.closest('.rp-head') : null;
+    if (!h) return;
+    var tgt = document.getElementById(h.getAttribute('data-rp'));
+    if (!tgt) return;
+    var willOpen = !tgt.classList.contains('open');
+    if (willOpen) {
+      var sib = document.querySelectorAll('.rp-body.open');
+      for (var i = 0; i < sib.length; i++) {
+        sib[i].classList.remove('open');
+        var sh = sib[i].parentNode.querySelector('.rp-head');
+        if (sh) { sh.classList.remove('open'); sh.setAttribute('aria-expanded', 'false'); }
+      }
+    }
+    tgt.classList.toggle('open', willOpen);
+    h.classList.toggle('open', willOpen);
+    h.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+  });
+
+  /* THE PLATFORM SWITCHER. One reader, one platform, remembered.
+
+     A mobile implementation is written once in whichever language the app is
+     built in, so a reader who has told us they are on Flutter should not be
+     asked again on every later step. The choice is stored and applied to every
+     switcher on every page of this world.
+
+     Storage is wrapped because a private window, cleared site data, or a
+     browser set to block storage all throw on access rather than returning
+     null, and a throw here would take the accordion above down with it.
+
+     The default is the first pane the page happens to declare rather than a
+     hardcoded platform, so a step that only offers two languages still works.
+
+     `pfs-ready` is added only once this runs, which is what leaves all four
+     panes visible when JavaScript does not. */
+  var KEY = 'mobile-platform';
+  function readPf() { try { return localStorage.getItem(KEY); } catch (e) { return null; } }
+  function writePf(v) { try { localStorage.setItem(KEY, v); } catch (e) {} }
+
+  function applyPf(pf) {
+    var boxes = document.querySelectorAll('.pfswitch');
+    for (var i = 0; i < boxes.length; i++) {
+      var box = boxes[i],
+          panes = box.querySelectorAll('.pfs-pane'),
+          tabs = box.querySelectorAll('.pfs-tab'),
+          has = box.querySelector('.pfs-pane[data-pf="' + pf + '"]'),
+          use = has ? pf : (panes[0] ? panes[0].getAttribute('data-pf') : null);
+      if (!use) continue;
+      for (var p = 0; p < panes.length; p++) {
+        panes[p].classList.toggle('on', panes[p].getAttribute('data-pf') === use);
+      }
+      for (var t = 0; t < tabs.length; t++) {
+        var on = tabs[t].getAttribute('data-pf') === use;
+        tabs[t].classList.toggle('on', on);
+        tabs[t].setAttribute('aria-selected', on ? 'true' : 'false');
+      }
+      box.classList.add('pfs-ready');
+    }
+  }
+
+  if (document.querySelector('.pfswitch')) {
+    var firstPane = document.querySelector('.pfs-pane');
+    applyPf(readPf() || (firstPane ? firstPane.getAttribute('data-pf') : 'ios'));
+    document.addEventListener('click', function (ev) {
+      var tab = ev.target.closest ? ev.target.closest('.pfs-tab') : null;
+      if (!tab) return;
+      var pf = tab.getAttribute('data-pf');
+      if (!pf) return;
+      writePf(pf);
+      applyPf(pf);
+    });
+  }
+
+  /* A platform child of step six sets the same preference just by being read.
+     Somebody who opens the React Native install page has told us what they are
+     building, so the code samples on every later step should already be
+     JavaScript when they get there, without another click. */
+  if (document.body.getAttribute('data-pf-page')) {
+    writePf(document.body.getAttribute('data-pf-page'));
+  }
+
   /* The print document moved to printdoc.js on 2 Sep 2026, shared with every
      other world. */
 })();

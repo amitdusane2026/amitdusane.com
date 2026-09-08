@@ -1,0 +1,43 @@
+---
+published: 2026-09-08
+lastmod: 2026-09-08
+title: "Get the SDK in: Flutter"
+seotitle: "Install the Adobe Mobile SDK in a Flutter App"
+description: "Five pub packages and one call in Dart. Since version 5 there is no native code to write, which removes the step that used to cause the trouble."
+slug: "get-the-sdk-flutter"
+weight: 6
+type: step
+params:
+  stepnum: 6
+  substep: 4
+  subtitle: "Flutter"
+  pfpage: "flutter"
+  kbids: ["dependency-managers", "react-native-and-flutter"]
+---
+<div class="narrative">A Flutter app is written once, in a language called Dart, and produces both the iPhone and the Android app.<br><br>Adobe ships a set of plugins that wrap the same native SDK underneath. So everything on the Adobe side behaves exactly as it does for a native app, and your request is built once rather than twice.</div>
+<div class="why-row"><span class="wl">Why?</span><a class="why" href="/aep-mobile-sdk/mobile-basics/react-native-and-flutter/" data-kb="react-native-and-flutter">What is Flutter? <span class="arr">&#8599;</span></a><a class="why" href="/aep-mobile-sdk/mobile-basics/dependency-managers/" data-kb="dependency-managers">What does &ldquo;add the SDK&rdquo; mean? <span class="arr">&#8599;</span></a></div>
+<h2>The packages</h2>
+<p>Five packages, added to <span class="mn">pubspec.yaml</span> with Flutter&rsquo;s own tool.</p>
+<div class="code"><button class="copy">Copy</button><pre>flutter pub add flutter_aepcore
+flutter pub add flutter_aepedge
+flutter pub add flutter_aepedgeidentity
+flutter pub add flutter_aepedgeconsent
+flutter pub add flutter_aepassurance</pre></div>
+<p>Lifecycle is inside the core package, so there is nothing separate to add.</p>
+<div class="call check"><span class="ct">&#10003; No native code, since version 5</span><p>Worth knowing, because older guides say otherwise. From version 5 of the Flutter plugins there is <b>no need to start the SDK in the native iOS or Android files</b>. Everything happens in Dart. On version 4 and earlier a developer had to edit AppDelegate and the Application class too, and that second half is where implementations used to be left half-finished.</p></div>
+<h2>Starting the SDK</h2>
+<div class="code"><button class="copy">Copy</button><pre>import 'package:flutter_aepcore/flutter_aepcore.dart';
+
+MobileCore.setLogLevel(LogLevel.debug);
+MobileCore.initializeWithAppId("YOUR_ENVIRONMENT_FILE_ID");</pre></div>
+<p>Put that where the app starts, before the first screen is drawn. An event fired before the SDK is ready is not queued and not retried.</p>
+<h2>The one risk cross-platform adds</h2>
+<p>The plugins wrap the native SDK, and a wrapper can fall behind the thing it wraps. When Adobe ships something new, the native SDK gets it first and the plugins follow, usually within weeks.</p>
+<p>In practice this rarely causes trouble. Everything this guide needs has been supported for years: sending events, identity, consent, lifecycle and Assurance.</p>
+<p>It becomes a problem only when somebody wants a newer or unusual feature, and it becomes a problem late, after the schema is agreed.</p>
+<div class="actionblock"><div class="abh">Ask this in the kick-off</div><div class="do-intro">Two minutes of a developer&rsquo;s time, once.</div><div class="astep"><div class="an">1</div><div>
+  <div class="al"><span class="lbl">Ask</span> Which plugin version is the project on, and does it support everything on our list?</div>
+  <div class="al"><span class="lbl">Why</span> It is the only cross-platform risk that has ever mattered on a project like this one.</div>
+</div></div></div>
+<div class="call mistake"><span class="ct">Where this goes wrong</span><p>The team is on version 4, where native startup was still required, and follows a guide written for version 5. The Dart call is added and the native half is not. The app builds, runs, and sends nothing, and the code looks complete to everybody reading it. Confirm the plugin version before anybody follows any instructions, including these.</p></div>
+<div class="call check"><span class="ct">&#10003; Ready when</span><p>The five packages are in <span class="mn">pubspec.yaml</span>, the SDK is started in Dart with the development Environment File ID, and SDK logs appear at debug level when the app launches. Then continue at <a href="/aep-mobile-sdk/turn-on-lifecycle/">Turn on lifecycle</a>.</p></div>

@@ -1,0 +1,43 @@
+---
+published: 2026-09-08
+lastmod: 2026-09-08
+title: "Get the SDK in: React Native"
+seotitle: "Install the Adobe Mobile SDK in a React Native App"
+description: "Five npm packages and one call in JavaScript. Since version 7 there is no native code to write, which removes the step that used to cause the trouble."
+slug: "get-the-sdk-react-native"
+weight: 6
+type: step
+params:
+  stepnum: 6
+  substep: 3
+  subtitle: "React Native"
+  pfpage: "rn"
+  kbids: ["dependency-managers", "react-native-and-flutter"]
+---
+<div class="narrative">A React Native app is written once, in JavaScript, and produces both the iPhone and the Android app.<br><br>Adobe ships a set of plugins that wrap the same native SDK underneath. So everything on the Adobe side behaves exactly as it does for a native app, and your request is built once rather than twice.</div>
+<div class="why-row"><span class="wl">Why?</span><a class="why" href="/aep-mobile-sdk/mobile-basics/react-native-and-flutter/" data-kb="react-native-and-flutter">What is React Native? <span class="arr">&#8599;</span></a><a class="why" href="/aep-mobile-sdk/mobile-basics/dependency-managers/" data-kb="dependency-managers">What does &ldquo;add the SDK&rdquo; mean? <span class="arr">&#8599;</span></a></div>
+<h2>The packages</h2>
+<p>Five packages, added with npm or Yarn, whichever the project already uses.</p>
+<div class="code"><button class="copy">Copy</button><pre>npm install @adobe/react-native-aepcore
+npm install @adobe/react-native-aepedge
+npm install @adobe/react-native-aepedgeidentity
+npm install @adobe/react-native-aepedgeconsent
+npm install @adobe/react-native-aepassurance</pre></div>
+<p>Lifecycle is inside the core package, so there is nothing separate to add.</p>
+<div class="call check"><span class="ct">&#10003; No native code, since version 7</span><p>This is the part worth knowing, because older guides and older colleagues will tell you otherwise. From version 7 of the React Native plugins there is <b>no need to start the SDK in the native iOS or Android files</b>. Everything happens in JavaScript. On version 6 and earlier a developer had to edit AppDelegate and the Application class as well, and that second half is exactly where implementations used to be half-finished.</p></div>
+<h2>Starting the SDK</h2>
+<div class="code"><button class="copy">Copy</button><pre>import { MobileCore, LogLevel } from '@adobe/react-native-aepcore';
+
+MobileCore.setLogLevel(LogLevel.DEBUG);
+MobileCore.initializeWithAppId("YOUR_ENVIRONMENT_FILE_ID");</pre></div>
+<p>Put that where the app starts, before the first screen is drawn. An event fired before the SDK is ready is not queued and not retried.</p>
+<h2>The one risk cross-platform adds</h2>
+<p>The plugins wrap the native SDK, and a wrapper can fall behind the thing it wraps. When Adobe ships something new, the native SDK gets it first and the plugins follow, usually within weeks.</p>
+<p>In practice this rarely causes trouble. Everything this guide needs has been supported for years: sending events, identity, consent, lifecycle and Assurance.</p>
+<p>It becomes a problem only when somebody wants a newer or unusual feature, and it becomes a problem late, after the schema is agreed. So ask one question at the start.</p>
+<div class="actionblock"><div class="abh">Ask this in the kick-off</div><div class="do-intro">Two minutes of a developer&rsquo;s time, once.</div><div class="astep"><div class="an">1</div><div>
+  <div class="al"><span class="lbl">Ask</span> Which plugin version is the project on, and does it support everything on our list?</div>
+  <div class="al"><span class="lbl">Why</span> It is the only cross-platform risk that has ever mattered on a project like this one.</div>
+</div></div></div>
+<div class="call mistake"><span class="ct">Where this goes wrong</span><p>The team is on version 6, where native startup was still required, and follows a guide written for version 7. The JavaScript call is added and the native half is not. The app builds, runs, and sends nothing, and the code looks complete to everybody reading it. Confirm the plugin version before anybody follows any instructions, including these.</p></div>
+<div class="call check"><span class="ct">&#10003; Ready when</span><p>The five packages are in <span class="mn">package.json</span>, the SDK is started in JavaScript with the development Environment File ID, and SDK logs appear at debug level when the app launches. Then continue at <a href="/aep-mobile-sdk/turn-on-lifecycle/">Turn on lifecycle</a>.</p></div>

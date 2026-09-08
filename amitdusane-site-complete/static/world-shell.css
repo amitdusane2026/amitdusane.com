@@ -101,6 +101,59 @@
   .navlink:hover{background:var(--line-soft);color:var(--ink)}
   .navlink.active{background:var(--accent-soft);color:var(--accent);border-left-color:var(--accent);font-weight:600}
   .navlink .ic{color:var(--faint)}
+
+  /* THE PHASE ACCORDION IN THE RAIL. Added 9 September 2026, and it renders
+     only where the registry sets `railgroups`, which today is the Mobile SDK
+     guide alone. The migration rail is untouched and must stay that way.
+
+     Why it exists: that spine reached fifteen steps plus four platform
+     children under step six, and nineteen flat rows is the same problem Part
+     One had before it became a single door -- a rail whose bottom half nobody
+     on a phone ever sees. Four collapsible groups is shorter than the twelve
+     rows it replaced, despite carrying more pages.
+
+     The pattern is the learning world's, deliberately, so that a reader who
+     has used one rail already knows this one. It is a leaner copy rather than
+     a shared file, because the two live in different stylesheets and sharing
+     one would mean moving both into chrome.css for no other gain. */
+  .rp-head{display:flex;align-items:center;justify-content:space-between;width:100%;
+    background:none;border:0;font:inherit;cursor:pointer;padding:9px 18px;text-align:left;
+    color:var(--muted);font-size:11.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase}
+  .rp-head:hover{color:var(--ink)}
+  .rp-chev{font-size:9px;color:var(--faint);transition:transform .18s}
+  .rp-head.open .rp-chev{transform:rotate(180deg)}
+  .rp-body{display:none}
+  .rp-body.open{display:block}
+  .rphase + .rphase{border-top:1px solid var(--line-soft)}
+
+  /* Platform children of one step. The 52px indent lines them up under the
+     parent's title rather than under its number: 18px of rail padding, a 22px
+     number chip, and the 11px gap between them. */
+  .rsubs{padding:1px 0 6px 52px}
+  .rsub{display:block;padding:5px 18px 5px 0;font-size:13px;line-height:1.35;
+    color:var(--muted);text-decoration:none}
+  .rsub:hover{color:var(--ink)}
+  .rsub.active{color:var(--accent);font-weight:600}
+
+  /* THE PLATFORM SWITCHER, on steps that carry the same instruction in four
+     languages. One choice, remembered, applied to every switcher on the page
+     and to every later step the reader opens.
+
+     It degrades correctly. Without JavaScript no `.pfs-ready` class is ever
+     added, so all four panes stay visible and each one keeps its own label.
+     That is also what a crawler sees, which is why the tabs cost nothing in
+     search: every sample is in the HTML either way. */
+  .pfswitch{margin:14px 0}
+  .pfs-tabs{display:flex;flex-wrap:wrap;gap:3px;border-bottom:1px solid var(--line)}
+  .pfs-tab{background:none;border:0;font:inherit;font-size:13px;font-weight:600;cursor:pointer;
+    padding:7px 12px;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-1px}
+  .pfs-tab:hover{color:var(--ink);background:var(--bg-soft)}
+  .pfs-tab.on{color:var(--accent);border-bottom-color:var(--accent)}
+  .pfs-pane{padding-top:6px}
+  .pfs-lbl{font-size:12px;color:var(--muted);margin:6px 0 0}
+  .pfswitch.pfs-ready .pfs-pane{display:none}
+  .pfswitch.pfs-ready .pfs-pane.on{display:block}
+  .pfswitch.pfs-ready .pfs-lbl{display:none}
   .aboutlink{display:flex;align-items:flex-start;gap:11px;padding:8px 18px;cursor:pointer;color:var(--ink-soft);font-size:14px;border-left:3px solid transparent;text-decoration:none;line-height:1.35}
   .aboutlink:hover{background:var(--line-soft);color:var(--ink)}
   .aboutlink.active{background:#fdeef2;color:#e11d48;border-left-color:#e11d48;font-weight:600}

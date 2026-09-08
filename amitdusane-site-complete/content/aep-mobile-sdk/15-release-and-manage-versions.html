@@ -1,0 +1,47 @@
+---
+published: 2026-09-06
+lastmod: 2026-09-08
+title: "Release and manage versions"
+seotitle: "Releasing a Mobile SDK Build and Managing App Versions"
+description: "Shipping is not the end of it. Old versions keep reporting, adoption takes months, and every trend line during a rollout has two populations in it."
+slug: "release-and-manage-versions"
+weight: 15
+type: step
+params:
+  stepnum: 15
+  kbids: ["how-a-release-reaches-people", "app-versions", "offline-queue"]
+---
+<div class="narrative">A web launch has a moment. The tag publishes, and from that second every visitor is on the new version.<br><br>An app release has no such moment. It has a staged rollout that reaches one percent of users on the first day, a store review that may add days in front of that, then a tail of people who will not update for months and a few who never will.<br><br><b>Launch day starts a slow replacement rather than completing one.</b></div>
+<div class="why-row"><span class="wl">Why?</span><a class="why" href="/aep-mobile-sdk/kb/app-versions/" data-kb="app-versions">Who is still on last year&rsquo;s build? <span class="arr">&#8599;</span></a><a class="why" href="/aep-mobile-sdk/mobile-basics/how-a-release-reaches-people/" data-kb="how-a-release-reaches-people">How long until everyone has the fix? <span class="arr">&#8599;</span></a><a class="why" href="/aep-mobile-sdk/kb/offline-queue/" data-kb="offline-queue">Why did yesterday&rsquo;s number change? <span class="arr">&#8599;</span></a></div>
+<figure class="fig-svg"><svg viewBox="0 0 700 210" role="img" aria-label="After a release the previous app version declines slowly while the new one grows, so for several weeks reports contain both populations and any comparison spans a mixture." style="width:100%;height:auto;display:block">
+<line x1="50" y1="160" x2="670" y2="160" style="stroke:var(--line, #e4e6ea);stroke-width:1.5"/>
+<line x1="50" y1="40" x2="50" y2="160" style="stroke:var(--line, #e4e6ea);stroke-width:1.5"/>
+<path d="M50 50 L150 56 L260 76 L380 104 L500 126 L620 142" style="fill:none;stroke:var(--faint, #9aa1ab);stroke-width:2.4"/>
+<path d="M50 158 L150 152 L260 130 L380 100 L500 76 L620 58" style="fill:none;stroke:var(--accent, #0f6b62);stroke-width:2.6"/>
+<text x="150" y="46" style="font-size:11.5px;font-weight:700;fill:var(--faint, #9aa1ab)">the old version</text>
+<text x="470" y="52" style="font-size:11.5px;font-weight:700;fill:var(--accent, #0f6b62)">the new one</text>
+<line x1="50" y1="170" x2="50" y2="178" style="stroke:var(--line, #e4e6ea);stroke-width:1.5"/>
+<text x="50" y="192" text-anchor="middle" style="font-size:11px;fill:var(--muted, #6b7280)">release</text>
+<line x1="380" y1="170" x2="380" y2="178" style="stroke:var(--line, #e4e6ea);stroke-width:1.5"/>
+<text x="380" y="192" text-anchor="middle" style="font-size:11px;fill:var(--muted, #6b7280)">a month later</text>
+<line x1="620" y1="170" x2="620" y2="178" style="stroke:var(--line, #e4e6ea);stroke-width:1.5"/>
+<text x="620" y="192" text-anchor="middle" style="font-size:11px;fill:var(--muted, #6b7280)">a quarter later</text>
+<text x="360" y="120" text-anchor="middle" style="font-size:11.5px;fill:var(--muted, #6b7280)">both reporting, the whole time</text>
+</svg><figcaption>The lines cross somewhere around a month, and the old one never quite reaches zero. <b>Any week-on-week comparison during this period is comparing two different implementations</b>, not two weeks of behaviour.</figcaption></figure>
+
+<p>The lines cross somewhere around a month, and the old one never quite reaches zero. Any week-on-week comparison during that period is comparing two different implementations rather than two weeks of behaviour.</p>
+<div class="actionblock"><div class="abh">Ship it, then watch the right things</div><div class="do-intro">The third one is the habit that pays for itself all quarter.</div><div class="astep"><div class="an">1</div><div>
+  <div class="al"><span class="lbl">Where</span> <span class="path">Data Collection &rsaquo; Tags &rsaquo; your mobile property &rsaquo; Publishing Flow</span></div>
+  <div class="al"><span class="lbl">Do</span> Publish to Production, and confirm the production environment points at the production datastream and the live report suite.</div>
+</div></div>
+<div class="astep"><div class="an">2</div><div>
+  <div class="al"><span class="lbl">Do</span> Have the app released with the production Environment File ID. This is the same value that caused trouble at installation time, and it is worth checking twice.</div>
+</div></div>
+<div class="astep"><div class="an">3</div><div>
+  <div class="al"><span class="lbl">Do</span> Build a report broken down by app version on day one. Not later, when a number looks wrong and nobody can tell whether the cause is behaviour or adoption<a class="cite" href="/aep-mobile-sdk/references/#ref-12" data-ref="12">[12]</a>.</div>
+</div></div></div>
+<h2>Two habits make the next quarter readable</h2>
+<p><b>Report on app version from the start</b>, so a strange trend can be checked against adoption in one click rather than argued about.</p>
+<p><b>When a number moves, ask whether the population moved</b> before asking whether the users did.</p>
+<div class="call mistake"><span class="ct">Where this goes wrong</span><p>A metric climbs steadily for three weeks after release and is presented as an improvement. It is adoption. The new version reports something the old one never did, so the line rises exactly as fast as people update, and it flattens the moment the rollout completes. Presenting that as a result once is survivable. Building a target on it is not.</p></div>
+<div class="call check"><span class="ct">&#10003; Ready when</span><p>The production build is live with the production ID, Assurance shows healthy events from it, and a version breakdown exists before anybody asks for one. The implementation is finished. What has started is the longer job of keeping it honest as the app changes around it.</p></div>

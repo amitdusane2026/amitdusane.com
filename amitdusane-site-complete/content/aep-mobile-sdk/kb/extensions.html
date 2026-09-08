@@ -1,9 +1,9 @@
 ---
 published: 2026-09-06
-lastmod: 2026-09-06
+lastmod: 2026-09-08
 title: "Which extensions you actually need"
 seotitle: "Adobe Experience Platform Mobile SDK Extensions Explained"
-description: "Four extensions cover an Edge Network implementation, one of them will not start without another, and the rest can wait until something needs them."
+description: "Four extensions cover an Edge Network implementation, one will not start without another, and the rest can wait until something needs them."
 slug: "extensions"
 type: kb
 weight: 304
@@ -12,8 +12,14 @@ params:
   grouplabel: "The plumbing"
 ---
 <p class="khook">The extension catalogue is long, most of it belongs to products you are not implementing, and installing extras is not free.</p>
-<p>Four cover an Edge Network implementation. <b>Adobe Experience Platform Edge Network</b> is the one that sends events, and it is where you select the datastream for each environment. <b>Identity for Edge Network</b> manages the ECID and any identifiers you add, and the Edge extension will not operate without it, so the two are one decision rather than two. <b>Consent for Edge Network</b> carries the collect preference and holds the default that applies before anybody has answered. <b>AEP Assurance</b> is how you see inside a running app, which on mobile is not optional.</p>
-<p>Mobile Core is always present and is not something you install. Lifecycle rides along with the modern initialiser.</p>
-<p>Everything else in the catalogue belongs to a product: Messaging, Optimize, Places, Target. Each adds size to the app and configuration to maintain, and a mobile developer will reasonably ask why an analytics project is enlarging their binary. Add them when the product they serve is actually being implemented.</p>
-<p><b>For your implementation:</b> ask for four, name them exactly, and resist adding a fifth speculatively. Extensions are added later without difficulty, and every one you carry unused is weight somebody else is paying for.</p>
-<div class="arch"><span class="at">&#9873; Architect&rsquo;s Decision</span><p>Four extensions, and Assurance is one of them from day one rather than added when something breaks. Retrofitting it during an incident means waiting for a release at the worst possible moment.</p></div>
+<p>Four cover an Edge Network implementation.</p>
+<table class="mini-tbl"><tbody>
+<tr><td>Edge Network</td><td>Sends the events, and holds the datastream for each environment.</td></tr>
+<tr><td>Edge Identity</td><td>Manages the ECID and any identifiers you add. <b>Edge will not work without it</b>, so the two are one decision rather than two.</td></tr>
+<tr><td>Edge Consent</td><td>Carries the collect preference and the default that applies before anybody has answered.</td></tr>
+<tr><td>Assurance</td><td>How you see inside a running app, which on mobile is not optional.</td></tr>
+</tbody></table>
+<p>Mobile Core is always present and is not something you install. Lifecycle comes along with the modern startup call.</p>
+<p>Everything else in the catalogue belongs to a product: Messaging, Optimize, Places, Target. Each one adds size to the app and settings to maintain, and a mobile developer will reasonably ask why an analytics project is making their app bigger.</p>
+<p><b>For your implementation:</b> ask for four, name them exactly, and resist adding a fifth in case it is useful. Extensions are added later without difficulty, and every one you carry unused is weight somebody else is paying for.</p>
+<div class="arch"><span class="at">&#9873; Architect&rsquo;s Decision</span><p>Four extensions, and Assurance is one of them from day one rather than added when something breaks. Adding it during an incident means waiting for a release at the worst possible moment.</p></div>

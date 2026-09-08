@@ -1,6 +1,6 @@
 ---
 published: 2026-09-06
-lastmod: 2026-09-06
+lastmod: 2026-09-08
 title: "WebView and hybrid apps"
 seotitle: "WebView Apps and When to Use the Web SDK Instead"
 description: "The one case where the answer may not be the Mobile SDK at all. How to spot a WebView screen, and why measuring one twice is worse than not measuring it."
@@ -11,27 +11,34 @@ params:
   group: kind
   grouplabel: "What kind of app is this"
 ---
-<p class="khook">A screen in an app can be a web page wearing a costume. It looks native, it behaves almost native, and it is served from a URL like anything else on your website.</p>
-<p>This is the only topic in this section that can change which guide you should be reading. It is worth reading carefully even if the rest of this felt familiar. Every other decision about how an app is built changes the language your tracking is written in. This one can change the product you implement, and it can change it after the schema has been agreed.</p>
+<p class="khook">A screen in an app can be a web page in disguise. It looks like part of the app, and it is served from a web address like any other page on your website.</p>
+<div class="call margin"><span class="ct">Before you start</span><p>This page will not teach you to build mobile apps. It teaches you enough of the mobile world to understand what a developer is saying, to answer questions in a meeting when no developer is there, and to tell a developer exactly what you need and where it has to change. Words like Xcode, Gradle, native, Flutter and WebView are used here on purpose. You will hear them in every meeting.</p></div>
+<p>Read this page carefully even if the rest of this section felt familiar. Every other choice about how an app is built changes the language your tracking is written in. This one can change which Adobe product you implement, and it can change it after the schema has been agreed.</p>
 <h2>What a WebView is</h2>
-<p>Every phone provides a component that displays a web page inside an app. On iOS it is called a <b>WKWebView</b>. On Android it is called a <b>WebView</b>. The idea is the same on both. It is a rectangle on the screen that is, underneath, a browser without any of the browser furniture. No address bar. No tabs. No back button unless somebody drew one.</p>
-<p>The page inside it is a real web page. It is fetched over the network from a real URL. It runs real JavaScript. It can load anything a browser can load, and that includes your existing web analytics, already deployed, already collecting.</p>
-<p>Developers reach for this constantly, and usually for good reasons. Terms and conditions are frequently WebViews. So are help centres, promotional campaigns, loyalty programmes and checkout flows. The content on those screens changes weekly. Nobody wants a store release every time the legal team edits a paragraph. Remember what an app release costs and the appeal becomes obvious.</p>
-<h2>Hybrid apps take that to its conclusion</h2>
-<p>If one screen can be a web page, why not most of them? That is what a <b>hybrid</b> app is. The container is a real app you install from a store, and nearly everything inside it is web content running in a WebView. Apache Cordova and Ionic are the frameworks that do this. They were popular enough that you will meet their output for years to come.</p>
-<p>The strength is that a hybrid app is a website your web team already knows how to build, delivered through an app store. The weakness is that users can often feel it. Scrolling is slightly wrong. Transitions are slightly slow. The app is slightly less responsive than its native neighbours.</p>
-<p>Most real apps sit between the two extremes. A native or React Native app with three WebView screens in it is far more common than a fully hybrid one. It is also far easier to miss. Nobody thinks to mention three screens, because to the people who built them they are just screens.</p>
+<p>Every phone provides a component that displays a web page inside an app. On iPhone it is called a WKWebView. On Android it is called a WebView. The idea is the same on both.</p>
+<p>A WebView is a rectangle on the screen that is, underneath, a browser with none of the browser furniture. No address bar. No tabs. No back button unless somebody drew one.</p>
+<p>The page inside is a real web page. It is fetched over the network from a real web address. It runs real JavaScript. It can load anything a browser can load, and that includes your existing web analytics, already built and already collecting.</p>
+<h2>Why developers use them</h2>
+<p>Constantly, and usually for good reasons. Terms and conditions are often WebViews. So are help centres, promotions, loyalty programmes and checkout flows.</p>
+<p>The content on those screens changes every week. Nobody wants an app store release every time the legal team edits a paragraph, and a release takes days. A web page can be changed this afternoon.</p>
+<h2>Hybrid apps take that further</h2>
+<p>If one screen can be a web page, why not most of them? That is what a hybrid app is. The container is a real app you install from a store, and nearly everything inside it is web content running in a WebView. Cordova and Ionic are the tools that build them.</p>
+<p>The strength is that a hybrid app is a website your web team already knows how to build, delivered through an app store. The weakness is that users can often feel it. Scrolling is slightly wrong. Screens change slightly too slowly.</p>
+<p>Most real apps sit between the two extremes. A native or React Native app with three WebView screens inside it is far more common than a fully hybrid one, and far easier to miss. Nobody thinks to mention three screens, because to the people who built them they are just screens.</p>
 <h2>Why this matters more than the rest</h2>
-<p>The Mobile SDK lives in the app and measures the app. A WebView is a browser, and the Mobile SDK cannot see inside it. Somebody opens a WebView screen, reads it for four minutes and buys something. As far as the SDK is concerned, that person has done nothing at all. Meanwhile the page inside that WebView can carry the <a href="/web-sdk-migration/">Web SDK</a>, exactly as your website does, and can measure itself perfectly well.</p>
-<p>So there are three possible arrangements. Picking the wrong one is expensive in a way that the other decisions in this section are not, because the cost arrives late and lands on somebody else's deadline.</p>
-<div class="actionblock"><div class="abh">The three arrangements</div>
-<table class="mini-tbl">
-<tbody><tr><td><b>Mobile SDK only</b></td><td>Right when WebViews are incidental: a terms page, a help centre, anything nobody needs measured. The screens are invisible to reporting and that is an acceptable gap.</td></tr>
-<tr><td><b>Both, carefully</b></td><td>Right when WebView screens carry real behaviour, such as checkout. The app measures itself, the pages measure themselves, and the two are joined by a shared identifier. This needs deliberate design.</td></tr>
-<tr><td><b>Web SDK mostly</b></td><td>Right for a genuinely hybrid app, where nearly everything is web content. The Mobile SDK still earns its place for lifecycle and installs, which no web page can see.</td></tr>
-</tbody></table></div>
+<p>The Mobile SDK lives in the app and measures the app. A WebView is a browser, and the Mobile SDK cannot see inside it.</p>
+<p>So somebody opens a WebView screen, reads it for four minutes and buys something. As far as the Mobile SDK is concerned, that person did nothing at all.</p>
+<p>Meanwhile the page inside that WebView can carry the Web SDK, exactly as your website does, and can measure itself perfectly well. That gives you three possible arrangements.</p>
+<table class="mini-tbl"><tbody>
+<tr><td>Mobile only</td><td>Right when WebViews are incidental: a terms page, a help centre, anything nobody needs measured. Those screens are invisible in reporting, and that is an acceptable gap.</td></tr>
+<tr><td>Both</td><td>Right when WebView screens carry real behaviour, such as checkout. The app measures itself, the pages measure themselves, and the two are joined by a shared identifier. This needs deliberate design.</td></tr>
+<tr><td>Web mostly</td><td>Right for a genuinely hybrid app, where nearly everything is web content. The Mobile SDK still earns its place for lifecycle and installs, which no web page can see.</td></tr>
+</tbody></table>
 <h2>The trap in the middle option</h2>
-<p>The second arrangement is the common one, and it is the one that goes wrong. Two implementations are measuring one person. Unless they are joined deliberately, that person is <b>two people</b>. The app knows them by an ECID stored in app storage. The page inside the WebView is a browser and gets its own ECID, stored in browser storage. Same human, same phone, same session, two identities. The checkout appears to have been done by a stranger who arrived from nowhere.</p>
+<p>The second arrangement is the common one, and it is the one that causes problems.</p>
+<p>Two implementations are measuring one person. Unless they are joined deliberately, that person becomes two people.</p>
+<p>The app knows the person by an ECID, which is the visitor ID Adobe assigns, stored in the app&rsquo;s own storage. The page inside the WebView is a browser, so it gets its own ECID, stored in browser storage. Same human, same phone, same session, two identities.</p>
+<p>The result is that the checkout looks like it was done by a stranger who arrived from nowhere.</p>
 <figure class="fig-svg"><svg viewBox="0 0 700 250" role="img" aria-label="One person on one phone opens an app that carries the Mobile SDK and an ECID stored in app storage, then a WebView screen inside it that carries the Web SDK and its own separate ECID stored in browser storage. Without a shared identity the two are reported as two different people." style="width:100%;height:auto;display:block">
 <text x="24" y="22" style="font-size:12.5px;font-weight:700;fill:var(--ink-soft, #3b4048)">One person, one phone, one session &#8212; and two identities</text>
 <rect x="24" y="40" width="300" height="180" rx="10" style="fill:var(--bg-soft, #f7f8fa);stroke:var(--line, #e4e6ea);stroke-width:1.5"/>
@@ -59,15 +66,23 @@ params:
 <text x="535" y="200" text-anchor="middle" style="font-size:11.5px;font-weight:700;fill:var(--danger, #a13030)">Two people. Same human.</text>
 <text x="24" y="240" style="font-size:11px;fill:var(--muted, #6b7280)">The fix is one arrow: the app passes its ECID into the WebView, on every WebView, before the page sends anything.</text>
 </svg><figcaption>Neither side is broken, and each is doing its job correctly. <b>The damage is done by the join that was never specified</b>, which is why this has to be settled before the schema rather than after the numbers look wrong.</figcaption></figure>
-<p>Worse, the two can measure the same thing twice. The app fires an event when the WebView opens. The page fires its own event on load. One action has now produced two records, and reports quietly run high. Nobody sees an error, because nothing has gone wrong in any way a system can detect.</p>
-<p>None of this is unsolvable. Identity is passed from the app into the WebView, so that both sides agree who they are talking to. The two implementations are specified together, so neither measures what the other measures. It is real design work, done once, at the start. It is very unpleasant to retrofit, and retrofitting is when most teams meet it.</p>
+
+<p>Neither side is broken. Each is doing its job correctly. The damage is done by a join that nobody specified, which is why this has to be settled before the schema rather than after the numbers look wrong.</p>
+<p>There is a second problem in the same place. The two can measure the same thing twice. The app fires an event when the WebView opens, and the page fires its own event when it loads. One action has now produced two records, and reports quietly run high. Nobody sees an error, because nothing has gone wrong in a way any system can detect.</p>
 <h2>How the two sides are joined</h2>
-<p>The mechanism is worth knowing in outline, because you will be asked whether it is possible and the answer is yes. The app reads its own ECID from the SDK and passes it into the WebView. <a href="/aep-mobile-sdk/set-up-identity/">Set up identity</a> carries the exact call and the five-minute trap that comes with it. There are two ordinary ways to do that. It can be added to the URL the WebView loads, as a parameter the page reads on arrival. Or the app can inject it directly into the page once loaded, which developers describe as evaluating JavaScript in the WebView.</p>
-<p>The page then tells the Web SDK to use that identity rather than minting its own. Both sides are now talking about the same person. Behaviour in the app and behaviour in the page join into one journey, and the checkout stops looking like a stranger.</p>
-<p>Two details decide whether it works. The identity has to be passed on <b>every</b> WebView, not just the first, because each one is a fresh browser context. And it has to be passed before the page sends anything. If the first event carries the wrong identity, nothing later can repair it. This is a conversation to have with whoever owns the web implementation as well as the app team, and it is a short conversation if you have it early.</p>
-<div class="call mistake"><span class="ct">Where this goes wrong</span><p>Nobody mentions the WebView screens because nobody thinks of them as screens. The implementation is built, validated and signed off, and then somebody asks why checkout conversion looks impossible. Two implementations were measuring one journey and disagreeing about who the customer was, and the answer needed a plan that was never made.</p></div>
+<p>You will be asked whether this can be fixed. It can, and the mechanism is worth knowing in outline.</p>
+<p>The app reads its own ECID from the SDK and passes it into the WebView. There are two ordinary ways to do that. The ECID can be added to the web address the WebView loads, as a parameter the page reads on arrival. Or the app can put it directly into the page once the page has loaded.</p>
+<p>The page then tells the Web SDK to use that identity instead of creating its own. Both sides are now talking about the same person, and the app journey and the page journey join into one. <a href="/aep-mobile-sdk/set-up-identity/">Set up identity</a> carries the exact call.</p>
+<p>Two details decide whether it works.</p>
+<table class="mini-tbl"><tbody>
+<tr><td>Every one</td><td>The identity has to be passed into every WebView, not just the first, because each one is a fresh browser.</td></tr>
+<tr><td>Early</td><td>It has to be passed before the page sends anything. If the first event carries the wrong identity, nothing later can repair it.</td></tr>
+</tbody></table>
+<div class="call mistake"><span class="ct">Where this goes wrong</span><p>Nobody mentions the WebView screens, because nobody thinks of them as screens. The implementation is built, checked and approved. Then somebody asks why checkout conversion looks impossible. Two implementations were measuring one journey and disagreeing about who the customer was, and the fix needed a plan that was never made.</p></div>
 <h2>How to find them</h2>
-<p>Asking works, but ask precisely. "Are there any web views" invites a no from somebody who is thinking about the main navigation and has forgotten the loyalty section. They are not hiding anything. They answered the question you asked. Ask which screens are web content and you get a list instead.</p>
-<p>There is also a test you can run yourself, on your own phone, in a minute. Open the app and go to a screen you suspect. Turn on airplane mode, then pull down to refresh or navigate away and back. A native screen usually still renders, because its layout was compiled into the app. A WebView screen tends to go blank or show a connection error, because it was fetching a page and the page never arrived.</p>
-<p>The test is not infallible, and it is remarkably useful. It also demonstrates something to the app team. The analytics person is paying attention to how the thing is actually built, which changes what they tell you next time without anybody discussing it.</p>
-<div class="call check"><span class="ct">&#10003; What you can now do</span><p>Recognise that a screen can be a web page, and ask which screens are web content rather than whether any are. Know that a WebView carrying real behaviour needs the Web SDK inside it, and a shared identity with the app around it. Settle this before the schema is designed, because it decides whether you are implementing one thing or two.</p></div>
+<p>Asking works, but ask precisely. &ldquo;Are there any web views?&rdquo; invites a no from somebody who is thinking about the main navigation and has forgotten the loyalty section. They are not hiding anything. They answered the question you asked.</p>
+<p>Ask <b>which screens are web content</b> and you get a list instead.</p>
+<p>There is also a test you can run yourself, on your own phone, in a minute. Open the app and go to a screen you suspect. Turn on airplane mode, then pull down to refresh, or leave the screen and come back.</p>
+<p>A native screen usually still appears, because its layout was built into the app. A WebView screen tends to go blank or show a connection error, because it was fetching a page and the page never arrived.</p>
+<p>The test is not perfect, and it is very useful. It also shows the app team that the analytics person is paying attention to how the thing is really built, which changes what they tell you next time.</p>
+<div class="call check"><span class="ct">&#10003; What you can now do</span><p>You know that a screen can be a web page, and you can ask which screens are web content rather than whether any are. You know that a WebView carrying real behaviour needs the Web SDK inside it and a shared identity with the app around it. And you know to settle this before the schema is designed, because it decides whether you are implementing one thing or two.</p></div>

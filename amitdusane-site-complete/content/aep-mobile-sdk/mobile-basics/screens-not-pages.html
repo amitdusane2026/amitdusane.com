@@ -1,9 +1,9 @@
 ---
 published: 2026-09-07
-lastmod: 2026-09-07
+lastmod: 2026-09-08
 title: "A screen is not a page view"
 seotitle: "Screens Versus Page Views in Mobile Analytics"
-description: "They look alike in a report and behave differently in the wild, which is why app session counts and web visit counts never quite line up."
+description: "They look alike in a report and behave differently in real use, which is why app session counts and web visit counts never quite line up."
 slug: "screens-not-pages"
 type: basics
 weight: 302
@@ -12,16 +12,22 @@ params:
   grouplabel: "How an app behaves"
 ---
 <p class="khook">Both are somebody looking at something. The similarity ends at about that point, and the gap between them is where reconciliation arguments come from.</p>
-<p>The instinct is a reasonable one. A screen is where a person is, and so is a page. Both are the unit everything else gets divided by. Every report you have built for a decade has page views underneath it somewhere. So the first mobile tracking plan usually maps screens onto page names and moves on.</p>
-<p>It works for about a quarter, and then somebody compares the two and the numbers do not behave. This is not a tracking fault and it does not get configured away. A page and a screen guarantee different things, and the differences are worth having in your head before you name anything. None of them is exotic. They are the ordinary consequences of an app being a program rather than a document.</p>
-<h2>What a page guarantees that a screen does not</h2>
-<p>A web page comes with four things you have quietly relied on. It has a <b>URL</b>, so it has a name nobody had to invent. It has a <b>referrer</b>, so you know where the reader came from. It has a <b>load</b>, a single moment that begins the page and can be hooked. And it is <b>destroyed</b> when the reader leaves, so the next one starts clean.</p>
-<p>A screen has none of these by default. It has no address, so its name is whatever a developer decided to call it. That is very often the name of a class rather than anything a human would recognise. It has no referrer. It has no single load moment, because it can appear in several ways. And it is not destroyed when the person moves on, which is the difference that causes the most trouble.</p>
+<div class="call margin"><span class="ct">Before you start</span><p>This page will not teach you to build mobile apps. It teaches you enough of the mobile world to understand what a developer is saying, to answer questions in a meeting when no developer is there, and to tell a developer exactly what you need and where it has to change. Words like Xcode, Gradle, native, Flutter and WebView are used here on purpose. You will hear them in every meeting.</p></div>
+<h2>What a page gives you that a screen does not</h2>
+<p>A web page comes with four things you have quietly relied on.</p>
+<table class="mini-tbl"><tbody>
+<tr><td>A URL</td><td>So it has a name nobody had to invent.</td></tr>
+<tr><td>A referrer</td><td>So you know where the reader came from.</td></tr>
+<tr><td>A load</td><td>One moment that begins the page, and can be hooked.</td></tr>
+<tr><td>An end</td><td>It is destroyed when the reader leaves, so the next one starts clean.</td></tr>
+</tbody></table>
+<p>A screen has none of these. It has no address, so its name is whatever a developer decided to call it, which is very often the name of a class rather than anything a person would recognise. It has no referrer. It has no single load moment, because it can appear in several ways. And it is not destroyed when the person moves on, which is the difference that causes the most trouble.</p>
 <h2>The stack, and why going back is not a new view</h2>
-<p>Screens are arranged in a stack, like plates. Opening a product from a list pushes the product screen on top. The list screen underneath is not gone. It is still in memory, still holding its scroll position, still holding what was typed into its search box. Nothing about it was thrown away, because nothing needed to be.</p>
-<p>Press back and the top plate is removed. The list is on screen again, exactly as it was, and here is the important part: <b>it did not reload</b>. Nothing was requested, nothing was rebuilt, and no moment occurred that resembles a page load. If your tracking fires a screen view when a screen is created, that second appearance of the list produces nothing at all.</p>
-<p>On the web this problem does not exist, because going back genuinely loads a page. In an app it has to be handled deliberately, by tracking the moment a screen <i>appears</i> rather than the moment it is built. That is the decision <a href="/aep-mobile-sdk/track-screens-and-actions/">Track screens and actions</a> asks you to make. Both platforms provide that moment. It is simply a decision somebody has to make. A tracking plan that says "fire a screen view for each screen" has not made it.</p>
-<div class="call mistake"><span class="ct">Where this goes wrong</span><p>Screen views are wired to the moment each screen is constructed, which is the obvious place and the wrong one. Every screen reports correctly the first time and never again on the way back through. Funnels look like people vanish at the second step, because returning to a list from a product is invisible. The fix needs a developer to move the call. It is not something you can correct on the Adobe side.</p></div>
+<p>Screens are arranged in a stack, like plates. Opening a product from a list puts the product screen on top. <b>The list screen underneath is not gone.</b> It is still in memory, still holding its scroll position, still holding whatever was typed into its search box.</p>
+<p>Press back and the top plate is removed. The list is on screen again, exactly as it was. And here is the important part: <b>it did not reload.</b> Nothing was requested and nothing was rebuilt.</p>
+<p>So if your tracking fires a screen view when a screen is created, that second appearance of the list produces nothing at all.</p>
+<p>On the web this problem does not exist, because going back genuinely loads a page. In an app it has to be handled on purpose, by tracking the moment a screen <b>appears</b> rather than the moment it is <b>built</b>. Both platforms provide that moment. Somebody just has to choose it, and that is the decision <a href="/aep-mobile-sdk/track-screens-and-actions/">Track screens and actions</a> asks you to make.</p>
+<p>A tracking plan that says &ldquo;fire a screen view for each screen&rdquo; has not made it.</p>
 <figure class="fig-svg"><svg viewBox="0 0 700 268" role="img" aria-label="On the web each navigation destroys the current page and loads a new one, so every arrival is a fresh load and a page view. In an app screens stack on top of one another, so going back removes the top screen and reveals the one underneath, which was never destroyed and never reloads, and therefore produces no second screen view unless one was asked for deliberately." style="width:100%;height:auto;display:block">
 <text x="24" y="22" style="font-size:12.5px;font-weight:700;fill:var(--ink-soft, #3b4048)">Going back on the web, and going back in an app</text>
 <text x="24" y="50" style="font-size:11px;font-weight:700;fill:var(--muted, #6b7280)">WEB &#8212; each arrival is a fresh load</text>
@@ -54,29 +60,32 @@ params:
 <text x="593" y="227" text-anchor="middle" style="font-size:11.5px;font-weight:700;fill:var(--warn, #9a5b00)">no reload, no second view</text>
 <text x="24" y="258" style="font-size:11px;fill:var(--ink-soft, #3b4048)">Unless somebody asked for the screen view to fire when a screen appears, rather than when it is created.</text>
 </svg><figcaption>The web gives you a second page view for free, because going back genuinely loads a page. <b>In an app that return is invisible unless it was specified</b>, which is why funnels appear to lose people at the step where they went back.</figcaption></figure>
+
+<div class="call mistake"><span class="ct">Where this goes wrong</span><p>Screen views are wired to the moment each screen is built, which is the obvious place and the wrong one. Every screen reports correctly the first time and never again on the way back. Funnels look like people vanish at the second step, because returning to a list from a product is invisible. The fix needs a developer to move the call, so it is not something you can correct on the Adobe side.</p></div>
 <h2>Where sessions diverge</h2>
-<p>The second mismatch is at the other end of the scale, and it is the one that reaches stakeholders. Web visits and app sessions do not end for the same reason. That sounds like a technicality. It is the single biggest source of disagreement between an app report and a web report.</p>
-<p>A web visit ends after thirty minutes of inactivity. It is a timer. Somebody leaves a tab open, makes a coffee, and comes back inside half an hour. They are still in the same visit. Inactivity is the only thing being measured. The reader does nothing to stay inside the visit.</p>
-<p>An app session ends when the app leaves the foreground, which is an event rather than a timer. Reading a message ends it. Taking a call ends it. Locking the phone ends it. Returning starts a new one immediately, so a single twenty-minute shopping trip can honestly be four sessions. <a href="/aep-mobile-sdk/mobile-basics/the-app-lifecycle/">The app lifecycle</a> covers why that boundary sits where it does.</p>
-<p>So app sessions are shorter and far more numerous than web visits, from the same behaviour by the same person. That is correct measurement rather than a fault, and it cannot be configured away on either side. Both numbers are right. They are answers to different questions, and only one of them is about attention.</p>
+<p>The second mismatch is the one that reaches stakeholders. Web visits and app sessions do not end for the same reason.</p>
+<p>A <b>web visit</b> ends after thirty minutes of inactivity. It is a timer. Somebody leaves a tab open, makes a coffee, comes back inside half an hour, and is still in the same visit.</p>
+<p>An <b>app session</b> ends when the app leaves the foreground, which is an event rather than a timer. Reading a message ends it. Taking a call ends it. Locking the phone ends it. Returning starts a new one immediately. <a href="/aep-mobile-sdk/mobile-basics/the-app-lifecycle/">The app lifecycle</a> covers why that boundary sits there.</p>
+<p>So app sessions are shorter and far more numerous than web visits, from the same behaviour by the same person. That is correct measurement rather than a fault, and it cannot be configured away on either side. Both numbers are right, and they answer different questions.</p>
 <h2>The comparison that will mislead everybody</h2>
-<p>All of which leads to one rule worth stating plainly, because somebody will ask for the chart. Do not put app sessions and web visits in the same trend line. Not with a footnote, and not with a caveat in the title. The chart is the claim, and nobody reads the footnote.</p>
-<p>They count different things. A line that puts them side by side invites exactly one conclusion. Either the app is more engaging or the website is collapsing. Neither is supported by the numbers underneath. The chart is not wrong in its arithmetic. It is wrong in what it implies, which is worse, because nothing on the chart admits it.</p>
-<p>If somebody genuinely needs one number across both, that is a <a href="/adobe-analytics-learning/deliver/adobe-analytics-cja/what-is-customer-journey-analytics/">Customer Journey Analytics</a> question rather than a <a href="/adobe-analytics-learning/foundations/report-suites/">report suite</a> one. It needs the two datasets stitched on a shared identity and a considered definition of what a session means across them. It is a real piece of work with a real answer, and it is not a chart you assemble in an afternoon.</p>
-<h2>Naming screens, and the trap of mirroring the website</h2>
-<p>Since a screen has no URL, somebody has to name it, and that somebody should be you. The temptation is to reuse the website's page names so the two line up in reporting. It looks like tidiness. It is really a promise that two products will stay in step, and that is not a promise either team has made.</p>
-<p>Resist it. A screen that maps neatly onto a web page today will stop doing so at the next redesign. The two products are redesigned independently. Apps also merge things the web splits. A mobile checkout is often one screen where a site has four pages. The mapping is not one to one even on the day you invent it.</p>
-<p>Name screens for what they are in the app. Use the words the product team uses in its own meetings. Those are the words that will survive a redesign. They are also the words somebody will use when they ask you about the number. Then a report reads like the app rather than like a translation of the website.</p>
+<p><b>Do not put app sessions and web visits in the same trend line.</b> Not with a footnote, and not with a caveat in the title. The chart is the claim, and nobody reads the footnote.</p>
+<p>They count different things. A line putting them side by side invites exactly one conclusion: either the app is more engaging or the website is collapsing. Neither is supported by the numbers underneath. The arithmetic is not wrong. What the chart implies is wrong, which is worse, because nothing on it admits that.</p>
+<p>If somebody genuinely needs one number across both, that is a Customer Journey Analytics question. It needs the two datasets joined on a shared identity and a considered definition of what a session means across them. That is real work with a real answer, and it is not a chart you assemble in an afternoon.</p>
+<h2>Naming screens</h2>
+<p>Since a screen has no URL, somebody has to name it, and that somebody should be you.</p>
+<p>The temptation is to reuse the website&rsquo;s page names so the two line up in reporting. It looks tidy. It is really a promise that two products will stay matched, and neither team has made that promise.</p>
+<p>Resist it. A screen that maps neatly onto a web page today will stop doing so at the next redesign, because the two products are redesigned separately. Apps also merge things the web splits: a mobile checkout is often one screen where a site has four pages. The mapping is not one to one even on the day you invent it.</p>
+<p><b>Name screens for what they are in the app</b>, using the words the product team uses in its own meetings. Those words will survive a redesign, and they are the words somebody will use when they ask you about the number.</p>
 <div class="actionblock"><div class="abh">Three decisions to make before anyone builds</div><div class="do-intro">All three are yours, and all three are cheaper now than after the first release.</div><div class="astep"><div class="an">1</div><div>
-  <div class="al"><span class="lbl">Specify</span> Screen views fire when a screen <b>appears</b>, not when it is created.</div>
+  <div class="al"><span class="lbl">Specify</span> Screen views fire when a screen appears, not when it is built.</div>
   <div class="al"><span class="lbl">Why</span> It is the difference between counting a return to a list and losing it silently.</div>
 </div></div>
 <div class="astep"><div class="an">2</div><div>
-  <div class="al"><span class="lbl">Name</span> Screens after what they are in the <b>app's own language</b>, not after website page names.</div>
-  <div class="al"><span class="lbl">Why</span> The two products get redesigned separately, and a mapping made today does not survive either one.</div>
+  <div class="al"><span class="lbl">Name</span> Screens after what they are in the app&rsquo;s own language, not after website page names.</div>
+  <div class="al"><span class="lbl">Why</span> The two products get redesigned separately, and a mapping made today survives neither.</div>
 </div></div>
 <div class="astep"><div class="an">3</div><div>
-  <div class="al"><span class="lbl">Agree</span> App sessions and web visits are <b>never</b> compared in one trend.</div>
+  <div class="al"><span class="lbl">Agree</span> App sessions and web visits are never compared in one trend.</div>
   <div class="al"><span class="lbl">Why</span> Say it while it is a principle. After somebody has built the chart it becomes an argument.</div>
 </div></div></div>
-<div class="call check"><span class="ct">&#10003; What you can now do</span><p>Name the four things a web page gives you free that a screen does not: a URL, a referrer, a load, and destruction on leaving. Explain why pressing back produces no second screen view unless somebody asked for it deliberately. Say why app sessions are shorter and more numerous than web visits without it sounding like an apology. And push back on the one chart that will mislead everybody who sees it.</p></div>
+<div class="call check"><span class="ct">&#10003; What you can now do</span><p>You can name the four things a web page gives you free that a screen does not: a URL, a referrer, a load, and destruction on leaving. You can explain why pressing back produces no second screen view unless somebody asked for it deliberately. You can say why app sessions are shorter and more numerous than web visits without it sounding like an apology. And you can push back on the one chart that will mislead everybody who sees it.</p></div>

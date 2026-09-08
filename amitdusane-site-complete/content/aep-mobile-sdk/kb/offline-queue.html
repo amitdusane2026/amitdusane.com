@@ -1,9 +1,9 @@
 ---
 published: 2026-09-06
-lastmod: 2026-09-06
+lastmod: 2026-09-08
 title: "Events that arrive late"
 seotitle: "How the Adobe Mobile SDK Queues Events Without a Connection"
-description: "Phones lose signal constantly. The SDK holds events rather than losing them, which is the right behaviour and complicates every daily number."
+description: "Phones lose signal constantly. The SDK holds events rather than losing them, which is right, and it complicates every daily number."
 slug: "offline-queue"
 type: kb
 weight: 309
@@ -12,8 +12,9 @@ params:
   grouplabel: "The plumbing"
 ---
 <p class="khook">A browser that loses its connection loses the hit. A phone keeps it and hands it over later, which is better behaviour and harder to report on.</p>
-<p>People use apps in tunnels, on aeroplanes, in lifts, and in buildings with bad reception. The SDK is built for that. Events that cannot be sent are held on the device and delivered when a connection returns, so nothing is discarded and somebody browsing a timetable underground is measured properly.</p>
-<p>The consequence is that yesterday's number is not final at midnight. A batch of events can arrive hours or occasionally days late, so a figure checked on Monday morning may be slightly higher on Monday afternoon. Nothing is broken when that happens. It is the queue draining.</p>
-<p>This also explains a class of confusing test result. On office wifi the queue always drains instantly, so nobody sees the behaviour during validation, and it appears for the first time in production data where it looks like a fault.</p>
-<p><b>For your implementation:</b> tell whoever consumes the reports that same-day app numbers settle rather than finalise. Saying it once, early, prevents a recurring conversation about whether the tracking is unreliable.</p>
-<div class="arch"><span class="at">&#9873; Architect&rsquo;s Decision</span><p>Never compare a same-day app figure against a same-day web figure. Give app data a settling period before anybody treats it as final, and state what that period is rather than leaving it to be discovered.</p></div>
+<p>People use apps in tunnels, on planes, in lifts and in buildings with bad reception. The SDK is built for that. Events that cannot be sent are held on the phone and delivered when a connection returns, so nothing is thrown away.</p>
+<p>The result is that <b>yesterday&rsquo;s number is not final at midnight.</b> A batch of events can arrive hours or occasionally days late, so a figure checked on Monday morning may be slightly higher on Monday afternoon.</p>
+<p>Nothing is broken when that happens. It is the queue draining.</p>
+<p>This also explains a confusing kind of test result. On office wifi the queue always drains instantly, so nobody sees this behaviour during validation, and it appears for the first time in production data where it looks like a fault.</p>
+<p><b>For your implementation:</b> tell whoever reads the reports that same-day app numbers settle rather than finalise. Saying it once, early, prevents a recurring conversation about whether the tracking is reliable.</p>
+<div class="arch"><span class="at">&#9873; Architect&rsquo;s Decision</span><p>Never compare a same-day app figure against a same-day web figure. Give app data a settling period before anybody treats it as final, and say what that period is rather than leaving it to be discovered.</p></div>

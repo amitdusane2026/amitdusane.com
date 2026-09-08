@@ -1,6 +1,6 @@
 ---
 published: 2026-09-07
-lastmod: 2026-09-07
+lastmod: 2026-09-08
 title: "Where XDM values come from"
 seotitle: "Where XDM Values Come From in a Mobile Implementation"
 description: "On the web a rule reads the page and builds the payload. A mobile app has no page to read, so the values have to arrive another way entirely."
@@ -11,10 +11,13 @@ params:
   group: shift
   grouplabel: "The mental shift"
 ---
-<p class="khook">On the web a rule reads the page and assembles what gets sent. A mobile app has no page to read, so something else has to supply every value.</p>
-<p>Start with the web model, because the contrast is the whole answer. A data layer sits on the page. A rule in the tag property reads it, assembles XDM from what it finds, and hands that to the SDK. Three parties: the page publishes, the rule assembles, the SDK sends. The middle one belongs to the analytics practitioner, which is why that work has always felt like theirs to do.</p>
-<p>There is no data layer on mobile. Nothing publishes values into a place a rule could read, because there is no page and no document. The app assembles the XDM itself and hands it to <span class="mn">Edge.sendEvent</span>. Every value in that payload exists because a developer wrote it into the call, and it exists nowhere else.</p>
-<p>A second path carries the old vocabulary, and it is the one worth knowing. An app already calling <span class="mn">MobileCore.trackAction</span> or <span class="mn">trackState</span> can keep calling them, and the Edge Bridge extension forwards those calls to the Edge Network instead of to the old Analytics extension. Their context data lands in the event's <span class="mn">data</span> node rather than in XDM, and Data Prep on the datastream maps it onward from there. <b>Context data did not disappear on mobile. It moved to the datastream.</b></p>
-<p>So the answer to whether there is a rule for each event, the way there is on a website, is no. That is not an inconsistency somebody failed to tidy up. A browser has a page to read and an app does not, and everything downstream follows from that one difference.</p>
+<p class="khook">On the web a rule reads the page and builds what gets sent. A mobile app has no page to read, so something else has to supply every value.</p>
+<p>Start with the web model, because the contrast is the whole answer. A <b>data layer</b> sits on the page, holding values the page has published about itself. A rule in the tag property reads it, builds XDM from what it finds, and hands that to the SDK.</p>
+<p>Three parties: the page publishes, the rule builds, the SDK sends. The middle one belongs to the analytics practitioner, which is why that work has always felt like theirs to do.</p>
+<p><b>There is no data layer on mobile.</b> Nothing publishes values into a place a rule could read, because there is no page and no document.</p>
+<p>The app builds the XDM itself and hands it to <span class="mn">Edge.sendEvent</span>. Every value in that payload exists because a developer wrote it into the call, and it exists nowhere else.</p>
+<p>A second path carries the old vocabulary, and it is worth knowing. An app already calling <span class="mn">MobileCore.trackAction</span> or <span class="mn">trackState</span> can keep calling them, and the Edge Bridge extension forwards those calls to the Edge Network instead of to the old Analytics extension. Their context data lands in the event&rsquo;s data node rather than in XDM, and Data Prep on the datastream maps it onward from there.</p>
+<p>So context data did not disappear on mobile. <b>It moved to the datastream.</b></p>
+<p>And the answer to whether there is a rule for each event, the way there is on a website, is no. That is not an inconsistency somebody failed to tidy up. A browser has a page to read and an app does not, and everything else follows from that one difference.</p>
 <p><b>For your implementation:</b> find out which of the two paths the app is on before you specify anything. It decides whether your list of fields goes to a developer and waits for a release, or goes into a datastream mapping and is live this afternoon.</p>
-<div class="arch"><span class="at">&#9873; Architect&rsquo;s Decision</span><p>If an app is already sending context data through Edge Bridge, do not rewrite it into native XDM for tidiness. The mapping is server-side and changeable; the rewrite is a release, and it buys nothing a reader of the dataset can see.</p></div>
+<div class="arch"><span class="at">&#9873; Architect&rsquo;s Decision</span><p>If an app is already sending context data through Edge Bridge, do not rewrite it into native XDM for tidiness. The mapping is on the server and changeable; the rewrite is a release, and it buys nothing a reader of the dataset can see.</p></div>

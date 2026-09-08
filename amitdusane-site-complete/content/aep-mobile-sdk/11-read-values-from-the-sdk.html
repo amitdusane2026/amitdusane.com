@@ -1,6 +1,6 @@
 ---
 published: 2026-09-06
-lastmod: 2026-09-06
+lastmod: 2026-09-08
 title: "Read values from the SDK"
 seotitle: "Reading ECID, Consent and Identity from the Adobe Mobile SDK"
 description: "How to ask the SDK what it thinks its own state is. Three calls that turn an argument about whether tracking works into a question with an answer."
@@ -11,30 +11,65 @@ params:
   stepnum: 11
   kbids: ["identity-on-mobile", "timing"]
 ---
-<div class="narrative">Sooner or later a meeting happens where the app team believes tracking is working and the numbers say it is not, and neither side can prove anything. On the web that argument lasts a minute, because somebody opens a console. In an app there is nothing to open. What there is instead is a set of calls that ask the SDK for its own state. A developer can put those behind a hidden debug screen in an afternoon. <b>That screen is worth more to you than any dashboard</b>, because it ends the argument with a value rather than an opinion.</div><div class="why-row"><span class="wl">Why?</span><a class="why" href="/aep-mobile-sdk/kb/timing/" data-kb="timing">Why does it sometimes come back empty? <span class="arr">&#8599;</span></a><a class="why" href="/aep-mobile-sdk/kb/identity-on-mobile/" data-kb="identity-on-mobile">What should the ECID look like? <span class="arr">&#8599;</span></a></div><div class="actionblock"><div class="abh">The three questions worth asking</div>
-<table class="mini-tbl">
-<tbody><tr><td><span class="mn">getExperienceCloudId</span></td><td>Is the SDK initialised at all? An ECID exists from first launch. No ECID means nothing else is worth checking.</td></tr>
-<tr><td><span class="mn">getIdentities</span></td><td>Is your customer ID actually attached, on the namespace you agreed? This is the cross-channel question.</td></tr>
-<tr><td><span class="mn">getConsents</span></td><td>What does the SDK believe it is allowed to do? An unexpected value here explains most cases of missing data.</td></tr>
-</tbody></table></div><figure class="fig-svg"><svg viewBox="0 0 700 210" role="img" aria-label="The three read calls form a ladder: no ECID means the SDK never started, no customer identity means cross-channel analysis will fail, and an unexpected consent value explains missing data." style="width:100%;height:auto;display:block"><defs><marker id="m12a" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" style="fill:var(--accent, #0f6b62)"/></marker></defs><rect x="16" y="30" width="188" height="58" rx="9" style="fill:var(--bg-soft, #f7f8fa);stroke:var(--line, #e4e6ea);stroke-width:1.5"/><text x="110" y="53" text-anchor="middle" style="font-size:12px;font-weight:700;fill:var(--ink-soft, #3b4048)">ECID?</text><text x="110" y="72" text-anchor="middle" style="font-size:11px;fill:var(--muted, #6b7280)">did the SDK start at all</text><text x="216" y="47" style="font-size:11.5px;fill:var(--danger, #a13030)">empty: nothing else matters.</text><text x="216" y="65" style="font-size:11.5px;fill:var(--muted, #6b7280)">Wrong Environment File ID, or</text><text x="216" y="81" style="font-size:11.5px;fill:var(--muted, #6b7280)">initialise never ran.</text><line x1="110" y1="92" x2="110" y2="106" style="stroke:var(--accent, #0f6b62);stroke-width:1.6" marker-end="url(#m12a)"/><rect x="16" y="112" width="188" height="58" rx="9" style="fill:var(--bg-soft, #f7f8fa);stroke:var(--line, #e4e6ea);stroke-width:1.5"/><text x="110" y="135" text-anchor="middle" style="font-size:12px;font-weight:700;fill:var(--ink-soft, #3b4048)">identities?</text><text x="110" y="154" text-anchor="middle" style="font-size:11px;fill:var(--muted, #6b7280)">is your customer ID attached</text><text x="216" y="129" style="font-size:11.5px;fill:var(--warn, #9a5b00)">missing or wrong namespace:</text><text x="216" y="147" style="font-size:11.5px;fill:var(--muted, #6b7280)">app and web never join, and</text><text x="216" y="163" style="font-size:11.5px;fill:var(--muted, #6b7280)">every report still looks fine.</text><rect x="16" y="182" width="668" height="0.1" style="fill:none"/><line x1="110" y1="174" x2="110" y2="182" style="stroke:var(--accent, #0f6b62);stroke-width:1.6"/><text x="216" y="196" style="font-size:11.5px;font-weight:700;fill:var(--accent, #0f6b62)">consents?</text><text x="300" y="196" style="font-size:11.5px;fill:var(--muted, #6b7280)">an unexpected value here explains most missing data.</text></svg><figcaption>Read them in that order. <b>Each answer rules out a different half of the problem</b>, and skipping to the interesting one is how an afternoon goes into a fault the first call would have found.</figcaption></figure>
-<div class="actionblock"><div class="abh">Reading them</div><div class="gstep">iOS &middot; Swift</div><div class="code"><button class="copy">Copy</button><pre>Identity.getExperienceCloudId { ecid, error in
+<div class="narrative">Sooner or later there is a meeting where the app team believes tracking works and the numbers say it does not, and neither side can prove anything.<br><br>On the web that argument lasts a minute, because somebody opens a console. In an app there is nothing to open.<br><br>What there is instead is a set of calls that ask the SDK for its own state. A developer can put those behind a hidden debug screen in an afternoon, and that screen is worth more to you than any dashboard.</div>
+<div class="why-row"><span class="wl">Why?</span><a class="why" href="/aep-mobile-sdk/kb/timing/" data-kb="timing">Why does it sometimes come back empty? <span class="arr">&#8599;</span></a><a class="why" href="/aep-mobile-sdk/kb/identity-on-mobile/" data-kb="identity-on-mobile">What should the ECID look like? <span class="arr">&#8599;</span></a></div>
+<h2>The three questions worth asking</h2>
+<table class="mini-tbl"><tbody>
+<tr><td>ECID</td><td>Is the SDK started at all? An ECID exists from first launch. No ECID means nothing else is worth checking.</td></tr>
+<tr><td>Identities</td><td>Is your customer ID actually attached, on the namespace you agreed? This is the cross-channel question.</td></tr>
+<tr><td>Consents</td><td>What does the SDK believe it is allowed to do? An unexpected value here explains most cases of missing data.</td></tr>
+</tbody></table>
+<figure class="fig-svg"><svg viewBox="0 0 700 210" role="img" aria-label="The three read calls form a ladder: no ECID means the SDK never started, no customer identity means cross-channel analysis will fail, and an unexpected consent value explains missing data." style="width:100%;height:auto;display:block"><defs><marker id="m12a" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" style="fill:var(--accent, #0f6b62)"/></marker></defs><rect x="16" y="30" width="188" height="58" rx="9" style="fill:var(--bg-soft, #f7f8fa);stroke:var(--line, #e4e6ea);stroke-width:1.5"/><text x="110" y="53" text-anchor="middle" style="font-size:12px;font-weight:700;fill:var(--ink-soft, #3b4048)">ECID?</text><text x="110" y="72" text-anchor="middle" style="font-size:11px;fill:var(--muted, #6b7280)">did the SDK start at all</text><text x="216" y="47" style="font-size:11.5px;fill:var(--danger, #a13030)">empty: nothing else matters.</text><text x="216" y="65" style="font-size:11.5px;fill:var(--muted, #6b7280)">Wrong Environment File ID, or</text><text x="216" y="81" style="font-size:11.5px;fill:var(--muted, #6b7280)">initialise never ran.</text><line x1="110" y1="92" x2="110" y2="106" style="stroke:var(--accent, #0f6b62);stroke-width:1.6" marker-end="url(#m12a)"/><rect x="16" y="112" width="188" height="58" rx="9" style="fill:var(--bg-soft, #f7f8fa);stroke:var(--line, #e4e6ea);stroke-width:1.5"/><text x="110" y="135" text-anchor="middle" style="font-size:12px;font-weight:700;fill:var(--ink-soft, #3b4048)">identities?</text><text x="110" y="154" text-anchor="middle" style="font-size:11px;fill:var(--muted, #6b7280)">is your customer ID attached</text><text x="216" y="129" style="font-size:11.5px;fill:var(--warn, #9a5b00)">missing or wrong namespace:</text><text x="216" y="147" style="font-size:11.5px;fill:var(--muted, #6b7280)">app and web never join, and</text><text x="216" y="163" style="font-size:11.5px;fill:var(--muted, #6b7280)">every report still looks fine.</text><rect x="16" y="182" width="668" height="0.1" style="fill:none"/><line x1="110" y1="174" x2="110" y2="182" style="stroke:var(--accent, #0f6b62);stroke-width:1.6"/><text x="216" y="196" style="font-size:11.5px;font-weight:700;fill:var(--accent, #0f6b62)">consents?</text><text x="300" y="196" style="font-size:11.5px;fill:var(--muted, #6b7280)">an unexpected value here explains most missing data.</text></svg><figcaption>Read them in that order. <b>Each answer removes a different half of the problem</b>, and skipping to the interesting one is how an afternoon goes into a fault the first call would have found.</figcaption></figure>
+
+<p><b>Read them in that order.</b> Each answer removes a different half of the problem, and skipping to the interesting one is how an afternoon goes into a fault the first call would have found.</p>
+<h2>Reading them</h2>
+<div class="pfswitch">
+  <div class="pfs-tabs" role="tablist">
+    <button class="pfs-tab" data-pf="ios" type="button" role="tab">iOS &middot; Swift</button>
+    <button class="pfs-tab" data-pf="android" type="button" role="tab">Android &middot; Kotlin</button>
+    <button class="pfs-tab" data-pf="rn" type="button" role="tab">React Native</button>
+    <button class="pfs-tab" data-pf="flutter" type="button" role="tab">Flutter &middot; Dart</button>
+  </div>
+  <div class="pfs-pane" data-pf="ios"><p class="pfs-lbl">iOS &middot; Swift</p>
+    <div class="code"><button class="copy">Copy</button><pre>Identity.getExperienceCloudId { ecid, error in
     print("ECID: \(ecid ?? "none")")
 }
-
 Identity.getIdentities { identityMap, error in
     print("Identities: \(String(describing: identityMap))")
 }
-
 Consent.getConsents { consents, error in
     print("Consents: \(String(describing: consents))")
-}</pre></div><div class="gstep">Android &middot; Kotlin</div><div class="code"><button class="copy">Copy</button><pre>Identity.getExperienceCloudId { ecid -&gt;
+}</pre></div>
+  </div>
+  <div class="pfs-pane" data-pf="android"><p class="pfs-lbl">Android &middot; Kotlin</p>
+    <div class="code"><button class="copy">Copy</button><pre>Identity.getExperienceCloudId { ecid -&gt;
     Log.d("Adobe", "ECID: $ecid")
 }
-
 Identity.getIdentities { identityMap -&gt;
     Log.d("Adobe", "Identities: $identityMap")
 }
-
 Consent.getConsents { consents -&gt;
     Log.d("Adobe", "Consents: $consents")
-}</pre></div></div><p>Every one of these hands its answer to a callback rather than returning it.<a class="cite" href="/aep-mobile-sdk/references/#ref-6" data-ref="6">[6]</a> That is not a style choice. The SDK may still be starting up, and a value that does not exist yet cannot be returned on the spot. Code written as though these return immediately will read an empty value, and it will do so intermittently, which is the worst way for a bug to behave.</p><div class="call mistake"><span class="ct">Where this goes wrong</span><p>The debug screen is built, the ECID shows, and everybody declares the implementation sound. The ECID proves the SDK started and nothing more. It is present on an app with no events, no consent and no customer ID. Treat it as the first of three checks rather than the whole of one.</p></div><div class="call check"><span class="ct">&#10003; Ready when</span><p>A hidden debug screen shows all three values, and you have seen them on a real device rather than in a screenshot. Ask for it early. It costs a developer an afternoon and it saves whole meetings later, which is a trade nobody regrets.</p></div>
+}</pre></div>
+  </div>
+  <div class="pfs-pane" data-pf="rn"><p class="pfs-lbl">React Native &middot; JavaScript</p>
+    <div class="code"><button class="copy">Copy</button><pre>import { Identity } from '@adobe/react-native-aepedgeidentity';
+import { Consent } from '@adobe/react-native-aepedgeconsent';
+
+Identity.getExperienceCloudId().then(ecid =&gt; console.log("ECID: " + ecid));
+Identity.getIdentities().then(ids =&gt; console.log(JSON.stringify(ids)));
+Consent.getConsents().then(c =&gt; console.log(JSON.stringify(c)));</pre></div>
+  </div>
+  <div class="pfs-pane" data-pf="flutter"><p class="pfs-lbl">Flutter &middot; Dart</p>
+    <div class="code"><button class="copy">Copy</button><pre>import 'package:flutter_aepedgeidentity/flutter_aepedgeidentity.dart';
+import 'package:flutter_aepedgeconsent/flutter_aepedgeconsent.dart';
+
+String ecid = await Identity.experienceCloudId;
+IdentityMap ids = await Identity.identities;
+Map&lt;String, dynamic&gt; consents = await Consent.consents;</pre></div>
+  </div>
+</div>
+<p>On iPhone and Android every one of these hands its answer to a callback rather than returning it, and on React Native and Flutter it returns a promise or a future you have to wait for<a class="cite" href="/aep-mobile-sdk/references/#ref-6" data-ref="6">[6]</a>.</p>
+<p>That is not a style choice. The SDK may still be starting, and a value that does not exist yet cannot be returned on the spot. Code written as though these answer immediately will read an empty value, and it will do so only sometimes, which is the worst way for a fault to behave.</p>
+<div class="call mistake"><span class="ct">Where this goes wrong</span><p>The debug screen is built, the ECID shows, and everybody declares the implementation sound. The ECID proves the SDK started and nothing more. It is present on an app with no events, no consent and no customer ID. Treat it as the first of three checks rather than the whole of one.</p></div>
+<div class="call check"><span class="ct">&#10003; Ready when</span><p>A hidden debug screen shows all three values, and you have seen them on a real phone rather than in a screenshot. Ask for it early. It costs a developer an afternoon and it saves whole meetings later.</p></div>

@@ -1,9 +1,9 @@
 ---
 published: 2026-09-06
-lastmod: 2026-09-06
+lastmod: 2026-09-08
 title: "How mobile apps are actually built"
 seotitle: "Native, Cross-Platform and Hybrid Apps Explained"
-description: "There are four ways to build a mobile app, the choice was made before you arrived, and it decides who you work with and what you can ask for."
+description: "There are four ways to build a mobile app. The choice was made before you arrived, and it decides who you work with and what you can ask for."
 slug: "how-mobile-apps-are-built"
 type: basics
 weight: 101
@@ -11,21 +11,27 @@ params:
   group: kind
   grouplabel: "What kind of app is this"
 ---
-<p class="khook">Somebody chose how this app would be built, probably years ago, probably for reasons that had nothing to do with analytics. You inherit that choice, and almost everything about your project follows from it.</p>
-<p>There is no such thing as <i>a mobile app</i> in the singular. There are four broadly different ways to make one. All four produce something that looks identical on a phone. Underneath they are as different as a brick house is from a timber one. Somebody commissioned this app and made the choice years ago. Nobody wrote it down anywhere you can see. Nobody will think to tell you either.</p>
-<p>Yet the choice decides which developer you work with, what language your tracking is written in, and how quickly a change can reach you. In one case it decides whether this is even the right guide. So the first useful question in a mobile measurement project is not about measurement at all. It is <b>what kind of app is this</b>, and it belongs in your first conversation.</p>
-<h2>The book that has to be published in two countries</h2>
-<p>The reason there are four approaches is that there are two phones. Apple's iPhone runs iOS. Google's ecosystem runs Android. The two have nothing in common underneath: different programming languages, different tools, different rules about what an app may do. A company that wants to reach everybody has to reach both. Each of the four approaches is a different answer to that one problem.</p>
-<p>Think of a publisher with a book that has to come out in two countries at once, in two languages. There are a few ways to do that. Each of them trades cost against quality, and you will recognise the trade as soon as you see it.</p>
-<h2>Native: write it twice, properly</h2>
-<p>The first approach is to write the app twice. One team builds the iOS version in Apple's language, and another builds the Android version in Google's. The two are genuinely separate programs. They happen to look the same and do the same things, and that is where the resemblance stops. This is what <b>native</b> means. It remains what most large, long-lived, heavily used apps are built as.</p>
-<p>In the publishing analogy this is hiring two authors. Each writes for their own country, in their own language, free to use the idioms their readers expect. The result reads perfectly naturally in both places. It also costs about twice as much, and two teams have to maintain it forever.</p>
-<p>What native buys is everything the platform can do, the moment the platform can do it. Apple ships a new capability in September. A native iOS app can use it in September. Performance is as good as the device allows. Every Adobe SDK feature works on day one, because the SDK was written for this case first. What native costs, apart from money, is that <b>every request you make lands twice</b>.</p>
-<p>Ask for one tracking event and two developers implement it. They work in two languages, on two schedules, from one ticket they each read slightly differently. The two implementations can therefore disagree. That disagreement is quiet, and it is common. An event fires at a slightly different moment on each platform, and the two numbers never reconcile.</p>
-<h2>Cross-platform: write it once, translate it well</h2>
-<p>The second approach is to write the app once, in a single language. A framework then produces both versions from that one codebase. <b>React Native</b> and <b>Flutter</b> are the two you will meet. Between them they account for a large and growing share of apps. This is the publisher writing one manuscript and running it through a very good translation engine. One author, one manuscript, two editions that read almost natively. It is enormously cheaper. For most kinds of book it is good enough that readers never notice.</p>
-<p>The word doing the work there is <i>almost</i>. A cross-platform framework covers the common ground extremely well. It reaches the edges more slowly. When a platform ships something new, the framework has to catch up before an app can use it, and that lag is measured in months rather than days. Occasionally a joke does not survive translation. The developer then writes a small piece of genuinely native code and bolts it on.</p>
-<p>For your purposes the important fact is a reassuring one. Adobe ships plugins for both frameworks, those plugins wrap the same native SDK, and everything on the Adobe side behaves identically. One codebase also means <b>a tracking request lands once rather than twice</b>, which removes an entire class of iOS-and-Android disagreement before it can happen.</p>
+<p class="khook">There are four ways to build a mobile app. All four look the same on a phone. Underneath they are completely different, and the difference decides who you work with and what you can ask them for.</p>
+<div class="call margin"><span class="ct">Before you start</span><p>This page will not teach you to build mobile apps. It teaches you enough of the mobile world to understand what a developer is saying, to answer questions in a meeting when no developer is there, and to tell a developer exactly what you need and where it has to change. Words like Xcode, Gradle, native, Flutter and WebView are used here on purpose. You will hear them in every meeting.</p></div>
+<h2>The four kinds</h2>
+<p>Somebody chose how this app would be built, often years ago, for reasons that had nothing to do with analytics. Nobody wrote the choice down where you can see it. Nobody will think to tell you either. So ask.</p>
+<table class="mini-tbl"><tbody>
+<tr><td>Native</td><td>Written twice. One version for iPhone, one for Android. Two teams, two languages.</td></tr>
+<tr><td>Cross&#8209;platform</td><td>Written once, then turned into both apps by a framework. React Native and Flutter.</td></tr>
+<tr><td>Hybrid</td><td>Web pages inside a thin app. Cordova and Ionic.</td></tr>
+<tr><td>Game engine</td><td>Built in a game tool, almost always Unity.</td></tr>
+</tbody></table>
+<h2>Why there are four</h2>
+<p>There are two phones. Apple&rsquo;s iPhone runs iOS. Most other phones run Android. The two share almost nothing underneath: different programming languages, different tools, different rules about what an app may do.</p>
+<p>A company that wants to reach everybody has to build for both. Each of the four kinds is a different answer to that one problem. Each answer trades cost against quality.</p>
+<h2>Native: written twice</h2>
+<p>A native app is built twice. One team writes the iPhone version in a language called Swift. A second team writes the Android version in a language called Kotlin. The two are separate programs that happen to look the same and do the same things.</p>
+<p>Native gives you everything the phone can do, on the day the phone can do it. Every Adobe SDK feature works immediately, because Adobe builds the SDK for native first.</p>
+<p>The cost is that every request you make is built twice. You ask for one tracking event. Two developers read your one ticket, in two languages, on two schedules. They can build it slightly differently. Then the iPhone number and the Android number never match, and nothing tells you why.</p>
+<h2>Cross-platform: written once</h2>
+<p>A cross-platform app is written once, in one language. A framework then turns that single set of code into both apps. The two frameworks you will meet are React Native and Flutter.</p>
+<p>This is much cheaper, and for most apps the result is good enough that users never notice. The trade is speed of support. When Apple or Google adds something new, the framework has to catch up first, and that takes months rather than days.</p>
+<p>For you this is good news. Adobe ships a plugin for both frameworks. Both plugins use the same native SDK underneath, so everything on the Adobe side behaves identically. One set of code also means your request is built once, so the iPhone and Android numbers cannot drift apart.</p>
 <figure class="fig-svg"><svg viewBox="0 0 700 262" role="img" aria-label="One tracking request follows two routes. On a native project it is implemented separately by an iOS developer in Swift and an Android developer in Kotlin, producing two implementations that can disagree. On a cross-platform project one developer implements it once, so the two platforms cannot drift apart." style="width:100%;height:auto;display:block">
 <text x="24" y="22" style="font-size:12.5px;font-weight:700;fill:var(--ink-soft, #3b4048)">One tracking request, and how many times it gets built</text>
 <rect x="24" y="112" width="132" height="52" rx="8" style="fill:var(--accent-soft, #e6f2f0);stroke:var(--accent-line, #c2e0db);stroke-width:1.5"/>
@@ -59,33 +65,32 @@ params:
 <text x="582" y="219" style="font-size:11px;font-weight:700;fill:var(--ok, #1f7a4d)">cannot</text>
 <text x="582" y="235" style="font-size:11px;font-weight:700;fill:var(--ok, #1f7a4d)">drift</text>
 </svg><figcaption>The same request, on the two kinds of project. <b>Nothing on the Adobe side changes between these two routes</b>, and the only thing that does is how many people have to interpret your ticket.</figcaption></figure>
-<h2>Hybrid: put a web page inside an app</h2>
-<p>The third approach is to build the screens as web pages and wrap them in a thin app that displays them. The container is a real app you download from a store. Much of what you see inside it is a website, rendering in a component called a <b>WebView</b>. Apache Cordova and Ionic are the names you will hear. A great many apps use this for part of themselves rather than all of themselves.</p>
-<p>The publisher here has printed the same pages for both countries and bound them in a locally produced cover. It is the cheapest of the four by a wide margin. It ships fastest. Readers can usually tell.</p>
-<p>This one matters to you more than the others. It is the case where the answer to your question may not be the Mobile SDK at all. If a screen is a web page, it can carry the <b>Web SDK</b>, exactly as your website does. If the shell around it is a real app, that shell can carry the Mobile SDK.</p>
-<p>An app that is substantially WebView may need one, the other, or a carefully agreed combination. Getting that decision wrong is expensive in a way the other three are not, because it surfaces late and it gets retrofitted under pressure.</p>
-<div class="call margin"><span class="ct">The question worth asking on day one</span><p>If anybody says the app is Cordova, Ionic, or "mostly web views", stop and work out where the screens actually live before agreeing to any implementation approach. That single question can change the entire shape of the project, and it is far cheaper to ask now than to discover in testing.</p></div>
-<h2>Game engines, and the apps nobody expects</h2>
-<p>The fourth approach is a game engine, most often Unity. Games are built this way almost universally. So are a surprising number of things that are not games. Retail experiences with three-dimensional product views are built in Unity. So are training simulators and some interactive marketing apps. These are a different world again, with their own tooling and their own conventions, and Adobe's support for them is thinner. If you find yourself on one, expect the implementation to need more custom work. Expect fewer people to have done it before you, inside your company and outside it.</p>
+
+<h2>Hybrid: web pages inside an app</h2>
+<p>A hybrid app is a thin app shell with web pages inside it. You install it from the app store like any other app, but much of what you see is a website. The component that displays a web page inside an app is called a WebView. Cordova and Ionic are the tools that build apps this way.</p>
+<p>Hybrid is the cheapest of the four and the fastest to ship. Users can often tell.</p>
+<p>This kind matters more than the others, because it can change which Adobe product you implement. A WebView is a browser, and the Mobile SDK cannot see inside a browser. If a screen is a web page, that page can carry the Web SDK instead, exactly as your website does.</p>
+<div class="call warn"><span class="ct">Ask about this on day one</span><p>If anybody says the app is Cordova, Ionic, or mostly web views, find out which screens are web pages before you agree to any approach. That one answer can change the whole shape of the project, and it is far cheaper to ask now than to discover it during testing. <a href="/aep-mobile-sdk/mobile-basics/webview-and-hybrid/">WebView and hybrid apps</a> covers it in full.</p></div>
+<h2>Game engines</h2>
+<p>The fourth kind is built in a game engine, almost always one called Unity. Games use it. So do some things that are not games: 3D product views, training simulators, some marketing apps. The language is usually C#.</p>
+<p>Adobe&rsquo;s support for game engines is thinner than for the other three. If you get one, expect more custom work and fewer people who have done it before you.</p>
+<h2>What changes for you</h2>
+<p>Less than you might fear. Everything on the Adobe side is identical in all four cases. The schema, the datastream, the tag property, the extensions, consent, identity and Assurance do not know how the app was built, and do not care. They sit on Adobe servers and receive events that look the same whatever produced them.</p>
+<p>Three things change, and all three are on the app side.</p>
+<table class="mini-tbl"><tbody>
+<tr><td>Language</td><td>Swift and Kotlin for native. JavaScript for React Native. Dart for Flutter. C# for Unity.</td></tr>
+<tr><td>Adding it</td><td>Each kind adds the SDK its own way. Same idea every time, different command.</td></tr>
+<tr><td>Repeats</td><td>Native builds every request twice. The other three build it once.</td></tr>
+</tbody></table>
 <h2>How to find out which one you have</h2>
-<p>You do not need to read any code to answer this. Ask, and the answer arrives in one sentence. But ask precisely. "It is an app" is not an answer, and people offer it in good faith, because to them the question sounded like it had already been settled. The three questions below are the precise version, and asking them in the first conversation costs you nothing at all.</p>
+<p>You do not need to read any code. Ask, and the answer arrives in one sentence. But ask precisely. &ldquo;It is an app&rdquo; is not an answer, and people offer it in good faith, because to them the question sounded already settled.</p>
 <div class="actionblock"><div class="abh">Three questions, in the first conversation</div><div class="do-intro">Any developer can answer all three in under a minute.</div><div class="astep"><div class="an">1</div><div>
-  <div class="al"><span class="lbl">Ask</span> Is there one codebase or two? Two means native. One means cross-platform, hybrid or a game engine.</div>
+  <div class="al"><span class="lbl">Ask</span> Is there one set of code or two? Two means native. One means cross-platform, hybrid or a game engine.</div>
 </div></div>
 <div class="astep"><div class="an">2</div><div>
-  <div class="al"><span class="lbl">Ask</span> What is it written in? <b>Swift or Kotlin</b> means native. <b>JavaScript or TypeScript</b> means React Native or hybrid. <b>Dart</b> means Flutter. <b>C#</b> usually means Unity.</div>
+  <div class="al"><span class="lbl">Ask</span> What is it written in? Swift or Kotlin means native. JavaScript means React Native or hybrid. Dart means Flutter. C# usually means Unity.</div>
 </div></div>
 <div class="astep"><div class="an">3</div><div>
-  <div class="al"><span class="lbl">Ask</span> How much of the screen is a web view? If the answer is anything other than "none", find out exactly which screens before going further.</div>
+  <div class="al"><span class="lbl">Ask</span> How much of the screen is a web view? If the answer is anything other than none, find out exactly which screens before going further.</div>
 </div></div></div>
-<h2>What actually changes for you</h2>
-<p>Less than you might fear, and the part that does change is worth knowing precisely. <b>Everything on the Adobe side is identical in all four cases.</b> The schema does not change. Neither does the <a href="/aep-mobile-sdk/create-the-datastream/">datastream</a>, the tag property, the extensions, consent, identity or Assurance. None of them knows how the app was built, and none of them cares. They sit on Adobe's servers and receive events that look the same whatever produced them.</p>
-<p>What differs is on the app side, and it comes down to three things. Which language the tracking code is written in. How the SDK gets added to the project. And how many times each of your requests has to be implemented.</p>
-<table class="mini-tbl">
-<tbody><tr><td><b>Native</b></td><td>Swift and Kotlin. Two implementations of every request, on two schedules. Full SDK support, immediately.</td></tr>
-<tr><td><b>React Native</b></td><td>JavaScript or TypeScript. One implementation. A plugin wraps the native SDK, and occasionally trails it.</td></tr>
-<tr><td><b>Flutter</b></td><td>Dart. One implementation. Same wrapper arrangement as React Native.</td></tr>
-<tr><td><b>Hybrid or WebView</b></td><td>Web technologies inside a native shell. <b>May need the <a href="/web-sdk-migration/">Web SDK</a> instead, or as well.</b> Decide this before anything else.</td></tr>
-<tr><td><b>Game engine</b></td><td>Usually C#. Thinner Adobe support and more custom work. Rare, and worth flagging early if you meet one.</td></tr>
-</tbody></table>
-<div class="call check"><span class="ct">&#10003; What you can now do</span><p>Sit in a kick-off meeting and ask three short questions. The answers tell you whether this is two codebases or one, and which language your tracking will be written in. They also tell you whether the WebView question has to be settled before anything else starts. That is genuinely most of what this decision costs you.</p></div>
+<div class="call check"><span class="ct">&#10003; What you can now do</span><p>You can sit in a kick-off meeting and ask three short questions. The answers tell you whether this is one set of code or two, which language your tracking will be written in, and whether the WebView question has to be settled before anything else starts.</p></div>

@@ -1,9 +1,9 @@
 ---
 published: 2026-09-06
-lastmod: 2026-09-06
+lastmod: 2026-09-08
 title: "Why not just add log lines"
 seotitle: "What Adobe Assurance Does for Mobile Validation"
-description: "Logging shows what the app decided to say. Assurance shows what the Edge received and what it sent back, which is a different and better question."
+description: "Logging shows what the app decided to say. Assurance shows what the Edge received and what it sent back, which is a better question."
 slug: "assurance"
 type: kb
 weight: 401
@@ -12,8 +12,9 @@ params:
   grouplabel: "Failure modes"
 ---
 <p class="khook">Asking a developer to add a log line works once, costs a build, and answers only the question you thought to ask.</p>
-<p>Logging is written in advance by somebody guessing what will matter later. It shows the app's own account of itself: this function ran, this value was set. That account is honest and incomplete, because it stops at the edge of the app and everything interesting happens after that.</p>
-<p>Assurance connects to a running app and shows the whole path. Every event the SDK raises, whether it left the device, what the Edge Network made of it, and what came back, including a rejection and its reason. It arrives through an extension already in your property, so there is no build to wait for and no guessing in advance about what to record.</p>
-<p>The practical difference is the third column of the event view. An event visible client-side proves the tracking code ran, which is what a log line would have told you. An event reaching post-processed data proves the Edge accepted it and passed it on, which is what anybody actually meant by asking whether tracking works.</p>
-<p><b>For your implementation:</b> get Assurance working before you need it. Retrofitting it during an incident means waiting for a release at the worst possible moment, and that wait is how a two-hour problem becomes a two-week one.</p>
-<div class="arch"><span class="at">&#9873; Architect&rsquo;s Decision</span><p>Assurance goes in the first extension list, not the second. Any implementation without it is one where every future question costs a build.</p></div>
+<p>A log line is written in advance by somebody guessing what will matter later. It shows the app&rsquo;s own account of itself: this function ran, this value was set.</p>
+<p>That account is honest and incomplete, because it stops at the edge of the app. Everything interesting happens after that.</p>
+<p>Assurance connects to a running app and shows the whole path: every event the SDK raises, whether it left the phone, what the Edge Network made of it, and what came back, including a rejection and its reason. It arrives through an extension already in your property, so there is no build to wait for.</p>
+<p>The practical difference is the third column of the event view. <b>An event visible on the client proves the tracking code ran</b>, which is what a log line would have told you. <b>An event reaching post-processed data proves the Edge accepted it</b>, which is what anybody meant by asking whether tracking works.</p>
+<p><b>For your implementation:</b> get Assurance working before you need it. Adding it during an incident means waiting for a release at the worst possible moment, and that wait turns a two-hour problem into a two-week one.</p>
+<div class="arch"><span class="at">&#9873; Architect&rsquo;s Decision</span><p>Assurance goes in the first extension list, not the second. An implementation without it is one where every future question costs a build.</p></div>

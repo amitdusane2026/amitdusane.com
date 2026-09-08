@@ -1,6 +1,6 @@
 ---
 published: 2026-09-06
-lastmod: 2026-09-06
+lastmod: 2026-09-08
 title: "What the standard field groups give you"
 seotitle: "Mobile XDM Field Groups in an Adobe Experience Platform Schema"
 description: "Two of the three field groups in a mobile schema are handed to you already built, and the only one you design is the only one you can get wrong."
@@ -12,8 +12,12 @@ params:
   grouplabel: "The plumbing"
 ---
 <p class="khook">A schema looks like a blank page until you notice that most of it has already been written for you.</p>
-<p>A mobile schema is the <b>Experience Event</b> class plus field groups. The class fixes what kind of thing you are describing: something that happened at a moment in time. The field groups are reusable blocks of fields, and two of them arrive complete.</p>
-<p><b>Consumer Experience Event</b> is the standard group carrying fields common to almost any customer interaction, and using it means Platform services recognise your data without being told how. <b>AEP Mobile Lifecycle Details</b> is where the Lifecycle extension puts installs, upgrades, launches, session length and device detail. Neither needs designing, and neither should be replaced with a hand-built equivalent.</p>
-<p>What is left is one group of your own, holding the handful of events specific to this app. One group, named for the app rather than for the project, is the shape that ages well. A group per event produces a schema nobody can read after six months.</p>
-<p><b>For your implementation:</b> add both standard groups before you design anything. Most of what a first tracking plan asks for is already inside them, and building a custom field that duplicates a standard one is work you will maintain forever for no benefit.</p>
-<div class="arch"><span class="at">&#9873; Architect&rsquo;s Decision</span><p>Standard groups first, one custom group second, and nothing else. If a field seems to need a third group, it is usually a sign the event was described in terms of a screen rather than an action.</p></div>
+<p>A mobile schema is the <b>Experience Event</b> class plus <b>field groups</b>. The class fixes what kind of thing you are describing: something that happened at a moment in time. The field groups are reusable blocks of fields, and two of them arrive complete.</p>
+<table class="mini-tbl"><tbody>
+<tr><td>Consumer<br>Experience Event</td><td>The standard group carrying fields common to almost any customer interaction. Using it means Platform services recognise your data without being told how.</td></tr>
+<tr><td>AEP Mobile<br>Lifecycle Details</td><td>Where the Lifecycle extension puts installs, upgrades, launches, session length and device detail.</td></tr>
+</tbody></table>
+<p>Neither needs designing, and neither should be replaced with a hand-built version of the same thing.</p>
+<p>What is left is one group of your own, holding the handful of events specific to this app. <b>One group, named for the app rather than for the project</b>, is the shape that ages well. A group per event produces a schema nobody can read after six months.</p>
+<p><b>For your implementation:</b> add both standard groups before you design anything. Most of what a first tracking plan asks for is already inside them, and building a custom field that repeats a standard one is work you will maintain forever for no benefit.</p>
+<div class="arch"><span class="at">&#9873; Architect&rsquo;s Decision</span><p>Standard groups first, one custom group second, and nothing else. If a field seems to need a third group, that is usually a sign the event was described in terms of a screen rather than an action.</p></div>

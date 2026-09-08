@@ -185,6 +185,15 @@ disableKinds = ["taxonomy", "term"]
     punch_b   = "You will still have to debug it."
     cue       = "in the order the work happens"
     og        = "og-aep-mobile-sdk.jpg"
+    # THE RAIL IS GROUPED BY PHASE IN THIS WORLD ONLY, 9 September 2026.
+    # The spine reached fifteen steps when the WebView step was added and step
+    # six gained four platform children, which is nineteen rows in a flat list.
+    # Grouping collapses that to four, and it borrows the learning world's
+    # accordion rather than inventing a second pattern.
+    #
+    # It is an explicit flag rather than a test for `phases`, because the
+    # migration guide declares phases too and must render exactly as before.
+    railgroups = true
 
 # ---------------------------------------------------------------------------
 # Module downloads, added 30 August 2026 for M19.
@@ -309,12 +318,12 @@ disableKinds = ["taxonomy", "term"]
     order = 3
     name = "Implement"
     blurb = "The app itself, where you stop being able to do it alone."
-    steps = [6, 7, 8, 9, 10, 11]
+    steps = [6, 7, 8, 9, 10, 11, 12]
   [params.worlds.aep-mobile-sdk.phases.prove]
     order = 4
     name = "Prove and ship"
     blurb = "Confirm the data arrives, find out why when it does not, then release."
-    steps = [12, 13, 14]
+    steps = [13, 14, 15]
 
 # ---------------------------------------------------------------------------
 # KNOWLEDGE BASE GROUPS, moved out of layouts/kb/list.html on 6 September 2026.
@@ -384,7 +393,7 @@ disableKinds = ["taxonomy", "term"]
   root = "/aep-mobile-sdk/mobile-basics"
   railtitle = "Mobile app basics"
   basicstitle = "The ground a mobile implementation stands on"
-  basicsintro = "Enough of the mobile app world to hold your own in the room. Not how to build an app, and not a glossary either: what the pieces are, why teams choose one over another, and which of it changes what you measure. Take what you are missing and skip what you already know."
+  basicsintro = "Enough of the mobile app world to follow what a developer is saying, and to answer questions when no developer is there. Not how to build an app, and not a glossary either: what the pieces are, why teams choose one over another, and which of it changes what you measure. Take what you are missing and skip what you already know."
 
 [params.worlds.aep-mobile-sdk.basicsgroups]
   [params.worlds.aep-mobile-sdk.basicsgroups.kind]

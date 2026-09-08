@@ -230,7 +230,22 @@ makes the pair read as a genuine comparison rather than a repeat.
 
 ---
 
-### Step 6 — Web SDK Implementation, a new section  ·  **THE ONLY STEP LEFT**
+### Step 6 — Web SDK Implementation, a new section  ·  **PARKED 9 Sep 2026**
+
+**Not started, and not to be started without Amit saying so.** Parked deliberately
+when he narrowed the scope to the Mobile SDK section alone. Everything written
+below still stands as the design; only the timing changed.
+
+**Why it is parked.** It would be built under rules that were still being
+derived. Mobile SDK becomes the finished exemplar for step-by-step guide
+sections first, and the procedure rulebook gets written from it rather than
+guessed at. Building the fourth world under half-formed rules is exactly how the
+Mobile SDK section inherited the learning world register and became hard to read.
+
+**Rewriting Web SDK Migration is parked with it**, and it needs the work more
+than anything else on the site: its knowledge base measures at reading grade
+11.2 and Flesch 47.0, against 6.7 for the rewritten Mobile Basics.
+
 
 **Standalone and complete.** It explains every concept it uses, including ones
 the migration guide also explains. Interlinking where useful, dependency
@@ -339,3 +354,50 @@ recalled:
   decisions. Supersedes the plan section briefly added to `development-plan.md`
   earlier that day, which was written before Amit rejected the "do not repeat
   the migration guide" condition. That condition is withdrawn.
+
+---
+
+## Step 7 — The Mobile SDK plain-language rewrite  ·  **DONE 8-9 September 2026**
+
+Added after the phase had already been planned, because Amit read the finished
+Mobile SDK section and found it accurate and hard to read. It displaced step 6,
+with his agreement.
+
+**What he said, and it is worth keeping in his words.** *"Content is good,
+language is the concern... Sentences are unnecessarily written in difficult
+manner. One sentence or paragraph needs 2-3 times reading."* And the constraint
+that had never been recorded anywhere: *"our learner or website visitor is just
+now new to mobile app development but also he is not native english speaker.
+Remember this always."*
+
+**The measurement that changed the diagnosis.** Mobile Basics scored as the
+*easiest* content on the site — Flesch 69.0, sentence median 13, one sentence in
+a thousand over thirty words — and was still the one he could not read. What no
+existing check could see was **idiom density**: 3.16 per 1,000 words in the five
+pages he named. Flesch actively prefers an idiom, because "catches people out"
+is four short common words and "confuses people" contains a Latinate one.
+
+**What shipped, in four batches.**
+
+1. **All 14 Part One pages rewritten.** Idioms 2.11 to 0.21 per 1,000, paragraph
+   median 63 to 41, 18,909 words to 14,354. Every fact kept, eight diagrams kept.
+   A premise callout on every page saying it will not teach app development.
+2. **The platform restructure.** Step 6 became a router plus four platform pages
+   (iOS, Android, React Native, Flutter), a new step 12 covers WebView screens,
+   and the spine went from fourteen steps to fifteen. Steps 7 to 11 carry a
+   platform switcher that remembers the reader's choice across the whole world.
+   The rail is grouped by the four existing phases, borrowing the learning
+   world's accordion, and is shorter than before despite four more pages.
+3. **All 15 steps rewritten** to the step register: what before why, lists where
+   the content is a list, the WHY left to the knowledge base.
+4. **All 20 KB articles rewritten** to the plain-language rules, keeping their
+   explaining job and their Architect's Decision boxes.
+
+**One factual correction found while verifying.** React Native and Flutter no
+longer need native startup code: from React Native plugin 7.x and Flutter 5.x,
+initialisation happens entirely in JavaScript or Dart. Every guide written
+before that says otherwise, and the pages now say so explicitly, because a team
+on an older version following newer instructions ships an app that builds, runs
+and sends nothing.
+
+**Build baseline moved from 249 to 254 pages.**

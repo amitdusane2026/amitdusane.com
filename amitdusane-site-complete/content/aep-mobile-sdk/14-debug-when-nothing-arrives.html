@@ -1,0 +1,55 @@
+---
+published: 2026-09-06
+lastmod: 2026-09-08
+title: "Debug when nothing arrives"
+seotitle: "Debugging an Adobe Mobile SDK When No Data Arrives"
+description: "Find where the event stopped before deciding whose problem it is. Five places it can stop, what each one means, and which of them are yours to fix."
+slug: "debug-when-nothing-arrives"
+weight: 14
+type: step
+params:
+  stepnum: 14
+  kbids: ["nothing-arrives", "schema-rejection", "timing", "where-your-job-ends"]
+---
+<div class="narrative">Data stops arriving on a Thursday. The app team is asked, and answers honestly that nothing changed on their side. A ticket is raised anyway and sits in a queue for eleven days.<br><br>Somebody finally opens Assurance. The events are leaving the phone perfectly well and being rejected at the Edge, because a field had been renamed in the schema three weeks earlier.<br><br>Nobody in that story was careless. The question was aimed at the wrong team in the first hour.</div>
+<div class="why-row"><span class="wl">Why?</span><a class="why" href="/aep-mobile-sdk/kb/nothing-arrives/" data-kb="nothing-arrives">Sent, or never sent? <span class="arr">&#8599;</span></a><a class="why" href="/aep-mobile-sdk/mobile-basics/where-your-job-ends/" data-kb="where-your-job-ends">Whose fault is it, yours or theirs? <span class="arr">&#8599;</span></a><a class="why" href="/aep-mobile-sdk/kb/schema-rejection/" data-kb="schema-rejection">What does a rejection look like? <span class="arr">&#8599;</span></a></div>
+<h2>One discipline, and everything follows from it</h2>
+<p><b>Find where the event stopped before deciding whose problem it is.</b></p>
+<p>An event can stop in five places. Only two of them can involve the app team at all, and even those usually turn on a value you supplied. The other three are entirely yours, and all of them are checkable in a browser in minutes.</p>
+<p>That is the reverse of what most people assume when data goes missing, and the instinct to raise a ticket first is what costs the weeks.</p>
+<figure class="fig-svg"><svg viewBox="0 0 700 250" role="img" aria-label="An event can stop in five places between the app and the report, and three of those five are owned by the analytics practitioner rather than the mobile development team." style="width:100%;height:auto;display:block">
+<text x="16" y="24" style="font-size:12px;font-weight:700;fill:var(--ink-soft, #3b4048)">Where it stopped</text>
+<text x="560" y="24" style="font-size:12px;font-weight:700;fill:var(--ink-soft, #3b4048)">Whose fix</text>
+<rect x="16" y="34" width="470" height="36" rx="7" style="fill:var(--bg-soft, #f7f8fa);stroke:var(--line, #e4e6ea);stroke-width:1.4"/>
+<text x="30" y="57" style="font-size:12px;fill:var(--ink-soft, #3b4048)">1 &nbsp; Assurance will not connect</text>
+<rect x="494" y="34" width="190" height="36" rx="7" style="fill:var(--warn-soft, #fbf2e3);stroke:var(--warn, #9a5b00);stroke-width:1.4"/>
+<text x="589" y="57" text-anchor="middle" style="font-size:11.5px;font-weight:700;fill:var(--warn, #9a5b00)">shared: the ID was yours</text>
+<rect x="16" y="76" width="470" height="36" rx="7" style="fill:var(--bg-soft, #f7f8fa);stroke:var(--line, #e4e6ea);stroke-width:1.4"/>
+<text x="30" y="99" style="font-size:12px;fill:var(--ink-soft, #3b4048)">2 &nbsp; Connects, but no events at all</text>
+<rect x="494" y="76" width="190" height="36" rx="7" style="fill:var(--accent-soft, #e6f2f0);stroke:var(--accent, #0f6b62);stroke-width:1.4"/>
+<text x="589" y="99" text-anchor="middle" style="font-size:11.5px;font-weight:700;fill:var(--accent, #0f6b62)">usually yours: consent</text>
+<rect x="16" y="118" width="470" height="36" rx="7" style="fill:var(--bg-soft, #f7f8fa);stroke:var(--line, #e4e6ea);stroke-width:1.4"/>
+<text x="30" y="141" style="font-size:12px;fill:var(--ink-soft, #3b4048)">3 &nbsp; Events on the client, nothing at the Edge</text>
+<rect x="494" y="118" width="190" height="36" rx="7" style="fill:var(--accent-soft, #e6f2f0);stroke:var(--accent, #0f6b62);stroke-width:1.4"/>
+<text x="589" y="141" text-anchor="middle" style="font-size:11.5px;font-weight:700;fill:var(--accent, #0f6b62)">yours: the tag property</text>
+<rect x="16" y="160" width="470" height="36" rx="7" style="fill:var(--bg-soft, #f7f8fa);stroke:var(--line, #e4e6ea);stroke-width:1.4"/>
+<text x="30" y="183" style="font-size:12px;fill:var(--ink-soft, #3b4048)">4 &nbsp; AEP Error Response at the Edge</text>
+<rect x="494" y="160" width="190" height="36" rx="7" style="fill:var(--accent-soft, #e6f2f0);stroke:var(--accent, #0f6b62);stroke-width:1.4"/>
+<text x="589" y="183" text-anchor="middle" style="font-size:11.5px;font-weight:700;fill:var(--accent, #0f6b62)">yours: the schema</text>
+<rect x="16" y="202" width="470" height="36" rx="7" style="fill:var(--bg-soft, #f7f8fa);stroke:var(--line, #e4e6ea);stroke-width:1.4"/>
+<text x="30" y="225" style="font-size:12px;fill:var(--ink-soft, #3b4048)">5 &nbsp; Accepted, but missing from the report</text>
+<rect x="494" y="202" width="190" height="36" rx="7" style="fill:var(--accent-soft, #e6f2f0);stroke:var(--accent, #0f6b62);stroke-width:1.4"/>
+<text x="589" y="225" text-anchor="middle" style="font-size:11.5px;font-weight:700;fill:var(--accent, #0f6b62)">yours: the datastream</text>
+</svg><figcaption>Only the first two can involve app code at all, and even those usually turn on a value you supplied. <b>The instinct to raise a ticket first is what costs the weeks</b>, because four of these five are fixed in a browser in minutes.</figcaption></figure>
+
+<h2>Walk it in order</h2>
+<p>Each rung removes everything below it. Do not skip to the interesting one.</p>
+<table class="mini-tbl"><tbody>
+<tr><td>1</td><td><b>Assurance will not connect.</b> The SDK never started, or started against the wrong property. Check the Environment File ID in the build, then that the deep link handler exists.</td></tr>
+<tr><td>2</td><td><b>Connects, but no events at all.</b> Read <span class="mn">getConsents</span> first. A pending or refused consent produces exactly this, and looks identical to broken tracking code.</td></tr>
+<tr><td>3</td><td><b>Events on the client, nothing at the Edge.</b> The datastream selected in the tag property, for that environment. Also the queue: a phone with no connection holds events rather than losing them.</td></tr>
+<tr><td>4</td><td><b>An error response at the Edge.</b> The payload did not match the schema. Open the error; it names the field<a class="cite" href="/aep-mobile-sdk/references/#ref-17" data-ref="17">[17]</a>. Almost always a renamed or retyped field, or a path the app spelled differently.</td></tr>
+<tr><td>5</td><td><b>Accepted, but missing from the report.</b> The service on the datastream. A missing Adobe Experience Platform service sends nothing to the dataset while Analytics keeps working perfectly.</td></tr>
+</tbody></table>
+<div class="call mistake"><span class="ct">Where this goes wrong</span><p>The ticket goes to the app team before Assurance has been opened. They investigate honestly, find nothing, and reply that their side is fine, which is true and takes a fortnight to establish. Meanwhile the fault was a checkbox on a datastream. <b>Open Assurance first, every time.</b> Five minutes there decides whether this is a conversation or a sprint.</p></div>
+<div class="call check"><span class="ct">&#10003; Ready when</span><p>You can say which of the five rungs a problem sits on before anybody is asked to change code, and you can show the evidence for it. That sentence is the whole reason this guide exists: an analytics practitioner who can locate a fault in somebody else&rsquo;s app is worth more than one who can only report that it is broken.</p></div>

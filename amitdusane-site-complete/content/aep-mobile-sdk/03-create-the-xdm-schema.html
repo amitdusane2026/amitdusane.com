@@ -1,6 +1,6 @@
 ---
 published: 2026-09-06
-lastmod: 2026-09-06
+lastmod: 2026-09-08
 title: "Create the XDM schema"
 seotitle: "Creating an XDM Schema for the Adobe Mobile SDK"
 description: "The class, the field groups, and the one rule that makes a schema different from an eVar: once a field has taken data, it can only be added to."
@@ -11,20 +11,27 @@ params:
   stepnum: 3
   kbids: ["mobile-schema", "xdm-vs-contextdata"]
 ---
-<div class="narrative">An eVar is a slot. You can fill it with anything, rename it on Tuesday, and repurpose it in March, and nothing objects. XDM does not work like that. A schema is agreed before any data moves, and once a field has received data it cannot be removed or retyped. It can only be added to. That reads as a restriction. It stops reading that way the first time somebody in Customer Journey Analytics asks what a field means and gets <b>one</b> answer instead of four.</div><div class="why-row"><span class="wl">Why?</span><a class="why" href="/aep-mobile-sdk/kb/mobile-schema/" data-kb="mobile-schema">What do the standard groups give me? <span class="arr">&#8599;</span></a><a class="why" href="/aep-mobile-sdk/kb/xdm-vs-contextdata/" data-kb="xdm-vs-contextdata">Why not just send key-value pairs? <span class="arr">&#8599;</span></a></div><p>A schema is a class plus field groups. The class fixes what kind of thing you are describing, and for app behaviour that is always <b>Experience Event</b>: something that happened at a moment in time. Field groups are the reusable blocks of fields you assemble on top.</p><div class="actionblock"><div class="abh">Build it</div><div class="astep"><div class="an">1</div><div>
+<div class="narrative">An eVar is a slot. You can fill it with anything, rename it on Tuesday and repurpose it in March, and nothing objects.<br><br>XDM does not work that way. A schema is agreed before any data moves, and <b>once a field has received data it cannot be removed or retyped.</b> It can only be added to.</div>
+<div class="why-row"><span class="wl">Why?</span><a class="why" href="/aep-mobile-sdk/kb/mobile-schema/" data-kb="mobile-schema">What do the standard groups give me? <span class="arr">&#8599;</span></a><a class="why" href="/aep-mobile-sdk/kb/xdm-vs-contextdata/" data-kb="xdm-vs-contextdata">Why not just send key-value pairs? <span class="arr">&#8599;</span></a></div>
+<h2>What a schema is made of</h2>
+<p>A schema is a <b>class</b> plus <b>field groups</b>.</p>
+<p>The class fixes what kind of thing you are describing. For app behaviour that is always <b>Experience Event</b>: something that happened at a moment in time.</p>
+<p>Field groups are the reusable blocks of fields you assemble on top. Two of the three you need are handed to you.</p>
+<div class="actionblock"><div class="abh">Build it</div><div class="do-intro">All of this happens in a browser. No developer is needed for any of it.</div><div class="astep"><div class="an">1</div><div>
   <div class="al"><span class="lbl">Where</span> <span class="path">Data Collection &rsaquo; Schemas &rsaquo; Create schema</span></div>
-  <div class="al"><span class="lbl">Do</span> Choose the <b>Experience Event</b> class. Name the schema for the app, not for the project.</div>
+  <div class="al"><span class="lbl">Do</span> Choose the Experience Event class. Name the schema for the app, not for the project.</div>
 </div></div>
 <div class="astep"><div class="an">2</div><div>
-  <div class="al"><span class="lbl">Do</span> Add <b>Consumer Experience Event</b>, the standard group carrying the common fields, and <b>AEP Mobile Lifecycle Details</b>, which is where Lifecycle puts installs, upgrades, launches and session length.<a class="cite" href="/aep-mobile-sdk/references/#ref-9" data-ref="9">[9]</a></div>
+  <div class="al"><span class="lbl">Do</span> Add <b>Consumer Experience Event</b>, which carries the common fields, and <b>AEP Mobile Lifecycle Details</b>, which is where Lifecycle puts installs, upgrades, launches and session length<a class="cite" href="/aep-mobile-sdk/references/#ref-9" data-ref="9">[9]</a>.</div>
 </div></div>
 <div class="astep"><div class="an">3</div><div>
-  <div class="al"><span class="lbl">Do</span> Add one field group of your own for the events you listed in <a href="/aep-mobile-sdk/decide-what-to-track/">Decide what to track</a>. One group, named for the app, rather than a group per event.</div>
+  <div class="al"><span class="lbl">Do</span> Add one field group of your own, for the events you listed in <a href="/aep-mobile-sdk/decide-what-to-track/">Decide what to track</a>. One group named for the app, rather than a group per event.</div>
 </div></div>
 <div class="astep"><div class="an">4</div><div>
   <div class="al"><span class="lbl">Where</span> <span class="path">Data Collection &rsaquo; Datasets &rsaquo; Create dataset from schema</span></div>
-  <div class="al"><span class="lbl">Do</span> Create the dataset. The schema describes the shape; the dataset is the table the data actually lands in.</div>
-</div></div></div><figure class="fig-svg"><svg viewBox="0 0 700 220" role="img" aria-label="An XDM schema is built from the Experience Event class plus three field groups, two standard and one custom, and a dataset is then created from that schema." style="width:100%;height:auto;display:block">
+  <div class="al"><span class="lbl">Do</span> Create the dataset. The schema describes the shape. The dataset is the table the data lands in.</div>
+</div></div></div>
+<figure class="fig-svg"><svg viewBox="0 0 700 220" role="img" aria-label="An XDM schema is built from the Experience Event class plus three field groups, two standard and one custom, and a dataset is then created from that schema." style="width:100%;height:auto;display:block">
 <defs>
 <marker id="m4a" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" style="fill:var(--accent, #0f6b62)"/></marker>
 </defs>
@@ -45,4 +52,7 @@ params:
 <rect x="514" y="86" width="170" height="68" rx="9" style="fill:var(--bg-soft, #f7f8fa);stroke:var(--line, #e4e6ea);stroke-width:1.5"/>
 <text x="599" y="118" text-anchor="middle" style="font-size:13px;font-weight:700;fill:var(--ink-soft, #3b4048)">the dataset</text>
 <text x="599" y="136" text-anchor="middle" style="font-size:11px;fill:var(--muted, #6b7280)">where rows land</text>
-</svg><figcaption>Two of the three field groups are handed to you. <b>The only one you design is the last</b>, and it is the only one anybody can later get wrong.</figcaption></figure><div class="call mistake"><span class="ct">Where this goes wrong</span><p>Fields named after today's screens. A field called <span class="mn">checkoutStep3Viewed</span> is accurate for one release and misleading after the next redesign, and it cannot be removed once it has taken data. Name fields for what a person did, never for where they were standing when they did it.</p></div><div class="call check"><span class="ct">&#10003; Ready when</span><p>The schema exists, carries both standard field groups plus one of your own, and a dataset has been created from it. Nothing is sending data yet. What you have is the agreement everything downstream reads from.</p></div>
+</svg><figcaption>Two of the three field groups are handed to you. <b>The only one you design is the last</b>, and it is the only one anybody can later get wrong.</figcaption></figure>
+
+<div class="call mistake"><span class="ct">Where this goes wrong</span><p>Fields named after today&rsquo;s screens. A field called <span class="mn">checkoutStep3Viewed</span> is accurate for one release and misleading after the next redesign, and it cannot be removed once it has taken data. Name fields for what a person did, never for where they were standing when they did it.</p></div>
+<div class="call check"><span class="ct">&#10003; Ready when</span><p>The schema exists, carries both standard field groups plus one of your own, and a dataset has been created from it. Nothing is sending data yet. What you have is the agreement everything downstream reads from.</p></div>

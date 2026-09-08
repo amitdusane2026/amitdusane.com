@@ -1,0 +1,99 @@
+---
+published: 2026-09-08
+lastmod: 2026-09-08
+title: "Measure WebView screens"
+seotitle: "Measuring WebView Screens and Passing the ECID"
+description: "A WebView is a browser, so it makes its own ECID and one person becomes two. One call joins them, and its timing decides whether it works."
+slug: "measure-webview-screens"
+weight: 12
+type: step
+params:
+  stepnum: 12
+  kbids: ["identity-on-mobile", "webview-and-hybrid", "customer-id"]
+---
+<div class="narrative">This step applies only if a screen in the app is a web page inside a WebView. Many apps have three or four and nobody mentions them, because to the people who built them they are just screens.<br><br>Skip it if the answer is genuinely none. Do not skip it because nobody has asked.</div>
+<div class="why-row"><span class="wl">Why?</span><a class="why" href="/aep-mobile-sdk/mobile-basics/webview-and-hybrid/" data-kb="webview-and-hybrid">What is a WebView? <span class="arr">&#8599;</span></a><a class="why" href="/aep-mobile-sdk/kb/identity-on-mobile/" data-kb="identity-on-mobile">Why does it get its own ECID? <span class="arr">&#8599;</span></a></div>
+<h2>First, decide which SDK measures what</h2>
+<p>The Mobile SDK lives in the app and measures the app. <b>A WebView is a browser, and the Mobile SDK cannot see inside it.</b></p>
+<p>The page inside can carry the Web SDK, exactly as your website does. So there are three arrangements, and picking the wrong one is expensive because the cost arrives late.</p>
+<table class="mini-tbl"><tbody>
+<tr><td>Mobile only</td><td>Right when WebViews are incidental: a terms page, a help centre, anything nobody needs measured. Those screens are invisible in reporting, and that is an acceptable gap.</td></tr>
+<tr><td>Both</td><td>Right when WebView screens carry real behaviour, such as checkout. The rest of this step is about making that work.</td></tr>
+<tr><td>Web mostly</td><td>Right for a genuinely hybrid app. The Mobile SDK still earns its place for lifecycle and installs, which no web page can see.</td></tr>
+</tbody></table>
+<h2>The problem, in one sentence</h2>
+<p>The ECID belongs to the app. A WebView is a browser, and a browser creates its own.</p>
+<p>Leave them alone and <b>one person becomes two</b>: an app journey that ends nowhere, and a checkout that arrived from nowhere.</p>
+<p>There is a second problem in the same place. Both sides can measure the same thing twice. The app fires an event when the WebView opens, the page fires its own on load, and one action produces two records. Reports quietly run high and nothing errors.</p>
+<h2>Hand the identity into the WebView</h2>
+<p>The fix is one call on the app side and <b>nothing at all on the web side</b>.</p>
+<p>The app asks the SDK for its identity as a query string, then appends it to the address the WebView loads. The Web SDK on the page reads that parameter on arrival and adopts the identity instead of creating its own.</p>
+<figure class="fig-svg"><svg viewBox="0 0 700 244" role="img" aria-label="The app asks the Identity extension for URL variables, which returns an adobe_mc query string carrying the ECID and organisation ID. The app appends that string to the address it loads in the WebView. The Web SDK on that page reads the parameter and adopts the app's identity, so both sides report the same person." style="width:100%;height:auto;display:block">
+<defs>
+<marker id="mw1" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" style="fill:var(--accent, #0f6b62)"/></marker>
+</defs>
+<text x="20" y="22" style="font-size:12.5px;font-weight:700;fill:var(--ink-soft, #3b4048)">One call, and both sides agree who this is</text>
+<rect x="20" y="42" width="176" height="60" rx="9" style="fill:var(--accent-soft, #e6f2f0);stroke:var(--accent, #0f6b62);stroke-width:1.6"/>
+<text x="108" y="66" text-anchor="middle" style="font-size:12px;font-weight:700;fill:var(--accent, #0f6b62)">The app</text>
+<text x="108" y="84" text-anchor="middle" style="font-size:11px;fill:var(--ink-soft, #3b4048)">getUrlVariables</text>
+<line x1="196" y1="72" x2="248" y2="72" style="stroke:var(--accent, #0f6b62);stroke-width:1.8" marker-end="url(#mw1)"/>
+<rect x="254" y="42" width="230" height="60" rx="9" style="fill:var(--bg-soft, #f7f8fa);stroke:var(--line, #e4e6ea);stroke-width:1.5"/>
+<text x="369" y="66" text-anchor="middle" style="font-size:12px;font-weight:700;fill:var(--ink, #1c1f24)">adobe_mc=&hellip;</text>
+<text x="369" y="84" text-anchor="middle" style="font-size:11px;fill:var(--muted, #6b7280)">ECID, org ID, timestamp</text>
+<line x1="484" y1="72" x2="536" y2="72" style="stroke:var(--accent, #0f6b62);stroke-width:1.8" marker-end="url(#mw1)"/>
+<rect x="542" y="42" width="138" height="60" rx="9" style="fill:var(--bg, #ffffff);stroke:var(--accent, #0f6b62);stroke-width:1.6"/>
+<text x="611" y="66" text-anchor="middle" style="font-size:12px;font-weight:700;fill:var(--accent, #0f6b62)">The page</text>
+<text x="611" y="84" text-anchor="middle" style="font-size:11px;fill:var(--ink-soft, #3b4048)">Web SDK adopts it</text>
+<rect x="20" y="126" width="660" height="46" rx="8" style="fill:var(--warn-soft, #fbf2e3);stroke:var(--warn, #9a5b00);stroke-width:1.6"/>
+<text x="36" y="146" style="font-size:11.5px;font-weight:700;fill:var(--warn, #9a5b00)">The parameter expires after five minutes.</text>
+<text x="36" y="164" style="font-size:11px;fill:var(--ink-soft, #3b4048)">Fetch it immediately before the load, never once at launch and cached.</text>
+<text x="20" y="196" style="font-size:11px;fill:var(--ink-soft, #3b4048)">Every WebView needs its own call, because each one is a fresh browser.</text>
+<text x="20" y="216" style="font-size:11px;fill:var(--ink-soft, #3b4048)">It travels one way only, from app to web. Nothing is written on the page side.</text>
+<text x="20" y="236" style="font-size:11px;fill:var(--ink-soft, #3b4048)">Needs Identity for Edge Network 1.1.0 or later, and Web SDK 2.11.0 or later.</text>
+</svg><figcaption>The app reads its own identity and hands it over on the address it is about to load. <b>Nobody writes anything on the web side</b>, which is why this is one of the cheapest fixes in the guide and one of the most commonly skipped.</figcaption></figure>
+<div class="pfswitch">
+  <div class="pfs-tabs" role="tablist">
+    <button class="pfs-tab" data-pf="ios" type="button" role="tab">iOS &middot; Swift</button>
+    <button class="pfs-tab" data-pf="android" type="button" role="tab">Android &middot; Kotlin</button>
+    <button class="pfs-tab" data-pf="rn" type="button" role="tab">React Native</button>
+    <button class="pfs-tab" data-pf="flutter" type="button" role="tab">Flutter &middot; Dart</button>
+  </div>
+  <div class="pfs-pane" data-pf="ios"><p class="pfs-lbl">iOS &middot; Swift</p>
+    <div class="code"><button class="copy">Copy</button><pre>Identity.getUrlVariables { (urlVariables, error) in
+    guard let vars = urlVariables else { return }
+    let url = URL(string: "https://example.com/loyalty?" + vars)
+    // load `url` in the WebView
+}</pre></div>
+  </div>
+  <div class="pfs-pane" data-pf="android"><p class="pfs-lbl">Android &middot; Kotlin</p>
+    <div class="code"><button class="copy">Copy</button><pre>Identity.getUrlVariables { urlVariables -&gt;
+    val url = "https://example.com/loyalty?" + urlVariables
+    webView.loadUrl(url)
+}</pre></div>
+  </div>
+  <div class="pfs-pane" data-pf="rn"><p class="pfs-lbl">React Native &middot; JavaScript</p>
+    <div class="code"><button class="copy">Copy</button><pre>import { Identity } from '@adobe/react-native-aepedgeidentity';
+
+Identity.getUrlVariables().then(urlVariables =&gt; {
+  const url = "https://example.com/loyalty?" + urlVariables;
+  // load `url` in the WebView component
+});</pre></div>
+  </div>
+  <div class="pfs-pane" data-pf="flutter"><p class="pfs-lbl">Flutter &middot; Dart</p>
+    <div class="code"><button class="copy">Copy</button><pre>import 'package:flutter_aepedgeidentity/flutter_aepedgeidentity.dart';
+
+String urlVariables = await Identity.urlVariables;
+String url = "https://example.com/loyalty?" + urlVariables;
+// load `url` in the WebView widget</pre></div>
+  </div>
+</div>
+<p>What comes back is a query string called <span class="mn">adobe_mc</span>, carrying the ECID as <span class="mn">MCMID</span>, your organisation as <span class="mn">MCORGID</span>, and a timestamp<a class="cite" href="/aep-mobile-sdk/references/#ref-6" data-ref="6">[6]</a>. Append it to the address and stop.</p>
+<h2>Three details decide whether it works</h2>
+<table class="mini-tbl"><tbody>
+<tr><td>Five minutes</td><td>The parameter expires. Fetch it immediately before the load, not at launch.</td></tr>
+<tr><td>Every one</td><td>Each WebView is a fresh browser, so each one needs its own call.</td></tr>
+<tr><td>One way</td><td>App to web only. There is no path back, and none is needed, because the app&rsquo;s ECID is the one both sides share.</td></tr>
+</tbody></table>
+<div class="call mistake"><span class="ct">Where this goes wrong</span><p>A developer calls <span class="mn">getUrlVariables</span> once at startup and stores the result, which is what anybody would do with a value that looks like a device identifier. Every WebView opened in the first five minutes joins correctly, and every one after that quietly does not. The implementation passes testing, because testing happens in the first five minutes, and the discrepancy that appears later has no obvious cause.</p></div>
+<div class="call margin"><span class="ct">The web half</span><p>If the pages inside your WebViews already run the Web SDK, that side is finished and this step is the whole of the join. The web-side identity work is the same as <a href="/web-sdk-migration/migrate-identity-ecid/">Migrate identity (ECID)</a> in the Web SDK Migration guide.</p></div>
+<div class="call check"><span class="ct">&#10003; Ready when</span><p>You can name which screens are web content rather than guessing. Where those screens carry real behaviour, the identity is handed into them immediately before each load, and you have watched one app journey and one WebView journey arrive under the same ECID.</p></div>

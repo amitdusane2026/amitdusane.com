@@ -1,0 +1,48 @@
+---
+published: 2026-09-08
+lastmod: 2026-09-08
+title: "Get the SDK in: Android"
+seotitle: "Install the Adobe Mobile SDK on Android with Gradle"
+description: "The Gradle block, the bill of materials that keeps the versions matched, and the one line in the manifest that decides whether any of it runs."
+slug: "get-the-sdk-android"
+weight: 6
+type: step
+params:
+  stepnum: 6
+  substep: 2
+  subtitle: "Android"
+  pfpage: "android"
+  kbids: ["dependency-managers", "android-kotlin-and-studio"]
+---
+<div class="narrative">Two things happen on Android. A developer adds the libraries in a Gradle file, then starts the SDK in a class that runs before anything else.<br><br>There is a third thing that is easy to miss, and it fails in total silence.</div>
+<div class="why-row"><span class="wl">Why?</span><a class="why" href="/aep-mobile-sdk/mobile-basics/dependency-managers/" data-kb="dependency-managers">What does &ldquo;add the SDK&rdquo; mean? <span class="arr">&#8599;</span></a><a class="why" href="/aep-mobile-sdk/mobile-basics/android-kotlin-and-studio/" data-kb="android-kotlin-and-studio">What is the manifest? <span class="arr">&#8599;</span></a></div>
+<h2>The Gradle block</h2>
+<div class="code"><button class="copy">Copy</button><pre>// build.gradle.kts (Module :app)
+implementation(platform("com.adobe.marketing.mobile:sdk-bom:3.+"))
+implementation("com.adobe.marketing.mobile:core")
+implementation("com.adobe.marketing.mobile:edge")
+implementation("com.adobe.marketing.mobile:edgeidentity")
+implementation("com.adobe.marketing.mobile:edgeconsent")
+implementation("com.adobe.marketing.mobile:lifecycle")
+implementation("com.adobe.marketing.mobile:assurance")</pre></div>
+<p>Notice that none of those lines names a version. That is the <span class="mn">sdk-bom</span> line at the top doing its job: it pins one set of versions known to work together, and every library below it takes its version from that set.</p>
+<p>A developer who lists versions manually will eventually pin two that disagree. That failure shows up at build time rather than in your reports, which is the better place for it.</p>
+<h2>Starting the SDK</h2>
+<p>One call registers every extension in the app and switches on lifecycle tracking.</p>
+<div class="code"><button class="copy">Copy</button><pre>// MainApplication.kt
+class MainApplication : Application() {
+    override fun onCreate() {
+        super.onCreate()
+        MobileCore.setLogLevel(LoggingMode.DEBUG)
+        MobileCore.initialize(this, "YOUR_ENVIRONMENT_FILE_ID")
+    }
+}</pre></div>
+<h2>The line in the manifest that decides everything</h2>
+<p>Writing that class is not enough. <b>The manifest has to point at it</b>, through an <span class="mn">android:name</span> attribute on the application element. Only then does Android use that class instead of its own default one.</p>
+<p>Leave the attribute out and nothing complains. The class compiles. The code sits in the project where any reviewer can see it. Android quietly uses its default class, <span class="mn">onCreate</span> never runs, the SDK never starts, and not one event is ever sent.</p>
+<p>There is no crash and no error, because from Android&rsquo;s point of view nothing went wrong.</p>
+<div class="call mistake"><span class="ct">Where this goes wrong</span><p>A reviewer reads the change, sees the startup code exactly where it was asked for, and approves it. The line in the manifest was never added. Weeks later the report is empty and the code still looks correct to everybody who opens it. <b>When no data arrives at all on Android, check that the manifest names the Application class before you check anything else.</b></p></div>
+<h2>Checking what is really in the build</h2>
+<p>At debug log level the SDK writes one line for each extension it finds, reading <span class="mn">Discovered extension:</span> and then a class name.</p>
+<p>Ask a developer to launch the app and send you those lines, then count them against what you asked for in the ticket. It takes them ten seconds and it answers a question you would otherwise be guessing at.</p>
+<div class="call check"><span class="ct">&#10003; Ready when</span><p>The Gradle block carries the bill of materials line, the Application class starts the SDK with the development Environment File ID, the manifest names that class, and the Discovered extension lines match your list. Then continue at <a href="/aep-mobile-sdk/turn-on-lifecycle/">Turn on lifecycle</a>.</p></div>
