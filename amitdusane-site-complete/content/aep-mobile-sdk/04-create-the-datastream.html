@@ -29,7 +29,7 @@ params:
 </defs>
 <rect x="14" y="88" width="120" height="52" rx="9" style="fill:var(--bg, #ffffff);stroke:var(--line, #e4e6ea);stroke-width:1.5"/>
 <text x="74" y="112" text-anchor="middle" style="font-size:12.5px;font-weight:700;fill:var(--ink-soft, #3b4048)">the app</text>
-<text x="74" y="129" text-anchor="middle" style="font-size:11px;fill:var(--muted, #6b7280)">one XDM event</text>
+<text x="74" y="129" text-anchor="middle" style="font-size:11px;fill:var(--ink-soft, #3b4048)">one XDM event</text>
 <line x1="138" y1="114" x2="186" y2="114" style="stroke:var(--accent, #0f6b62);stroke-width:1.8" marker-end="url(#m5a)"/>
 <rect x="192" y="70" width="188" height="88" rx="10" style="fill:var(--accent-soft, #e6f2f0);stroke:var(--accent, #0f6b62);stroke-width:1.8"/>
 <text x="286" y="98" text-anchor="middle" style="font-size:12.5px;font-weight:700;fill:var(--accent, #0f6b62)">the datastream</text>
@@ -39,12 +39,11 @@ params:
 <line x1="384" y1="130" x2="446" y2="158" style="stroke:var(--accent, #0f6b62);stroke-width:1.8" marker-end="url(#m5a)"/>
 <rect x="452" y="40" width="234" height="54" rx="9" style="fill:var(--bg-soft, #f7f8fa);stroke:var(--line, #e4e6ea);stroke-width:1.5"/>
 <text x="569" y="64" text-anchor="middle" style="font-size:12.5px;font-weight:700;fill:var(--ink-soft, #3b4048)">Adobe Analytics</text>
-<text x="569" y="81" text-anchor="middle" style="font-size:11px;fill:var(--muted, #6b7280)">a report suite, the reporting you have</text>
+<text x="569" y="81" text-anchor="middle" style="font-size:11px;fill:var(--ink-soft, #3b4048)">a report suite, the reporting you have</text>
 <rect x="452" y="136" width="234" height="54" rx="9" style="fill:var(--bg-soft, #f7f8fa);stroke:var(--line, #e4e6ea);stroke-width:1.5"/>
 <text x="569" y="160" text-anchor="middle" style="font-size:12.5px;font-weight:700;fill:var(--ink-soft, #3b4048)">Experience Platform</text>
-<text x="569" y="177" text-anchor="middle" style="font-size:11px;fill:var(--muted, #6b7280)">a dataset, the analysis you are building toward</text>
-<text x="350" y="216" text-anchor="middle" style="font-size:11.5px;fill:var(--muted, #6b7280)">Two services on one datastream. The app sends the event once and knows nothing about either.</text>
-</svg><figcaption>The app is deliberately ignorant of destinations. Adding, removing or repointing a service is a change on Adobe's side, so <b>a mistake here costs an afternoon rather than a release cycle.</b></figcaption></figure>
+<text x="569" y="177" text-anchor="middle" style="font-size:11px;fill:var(--ink-soft, #3b4048)">a dataset, read by CJA</text>
+</svg><figcaption>One event leaves the app once and lands in two places.</figcaption></figure>
 
 <p>The app is deliberately ignorant of destinations. Adding, removing or repointing a service is a change on Adobe&rsquo;s side, so a mistake here costs an afternoon rather than a release.</p>
 <div class="call mistake"><span class="ct">Where this goes wrong</span><p>Only the Adobe Analytics service gets added, because that is the familiar half. Everything looks correct for months and the reports fill up. Then somebody asks for Customer Journey Analytics and finds no dataset has ever received a row. The app needs no change to fix it. The months of history cannot be recovered.</p></div>

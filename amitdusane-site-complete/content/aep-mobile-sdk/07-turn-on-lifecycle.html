@@ -19,27 +19,26 @@ params:
 <p>Every number a product team asks for in the first month comes out of those two events<a class="cite" href="/aep-mobile-sdk/references/#ref-4" data-ref="4">[4]</a>.</p>
 <figure class="fig-svg"><svg viewBox="0 0 700 190" role="img" aria-label="Across one day a user launches the app, backgrounds it to answer a call, returns, and backgrounds it again, producing a pair of launch and close events for each visit and a session length for each gap." style="width:100%;height:auto;display:block">
 <line x1="30" y1="112" x2="670" y2="112" style="stroke:var(--line, #e4e6ea);stroke-width:2"/>
-<text x="350" y="176" text-anchor="middle" style="font-size:11.5px;fill:var(--muted, #6b7280)">one person, one day. Two sessions, four events, and nobody wrote any of it.</text>
+<text x="350" y="176" text-anchor="middle" style="font-size:11.5px;fill:var(--ink-soft, #3b4048)">One person, one day</text>
 <line x1="90" y1="96" x2="90" y2="128" style="stroke:var(--ok, #1f7a4d);stroke-width:2.5"/>
 <text x="90" y="86" text-anchor="middle" style="font-size:11.5px;font-weight:700;fill:var(--ok, #1f7a4d)">Launch</text>
-<text x="90" y="146" text-anchor="middle" style="font-size:11px;fill:var(--muted, #6b7280)">09:12</text>
-<rect x="94" y="104" width="132" height="16" rx="4" style="fill:var(--accent-soft, #e6f2f0)"/>
+<text x="90" y="146" text-anchor="middle" style="font-size:11px;fill:var(--ink-soft, #3b4048)">09:12</text>
+<rect x="94" y="98" width="132" height="28" rx="4" style="fill:var(--accent-soft, #e6f2f0)"/>
 <text x="160" y="116" text-anchor="middle" style="font-size:11px;fill:var(--accent, #0f6b62)">session 1</text>
 <line x1="230" y1="96" x2="230" y2="128" style="stroke:var(--faint, #9aa1ab);stroke-width:2.5"/>
-<text x="230" y="86" text-anchor="middle" style="font-size:11.5px;fill:var(--muted, #6b7280)">Close</text>
-<text x="230" y="146" text-anchor="middle" style="font-size:11px;fill:var(--muted, #6b7280)">09:16</text>
-<text x="330" y="116" text-anchor="middle" style="font-size:11px;font-style:italic;fill:var(--faint, #9aa1ab)">a phone call</text>
+<text x="230" y="86" text-anchor="middle" style="font-size:11.5px;fill:var(--ink-soft, #3b4048)">Close</text>
+<text x="230" y="146" text-anchor="middle" style="font-size:11px;fill:var(--ink-soft, #3b4048)">09:16</text>
+<text x="330" y="116" text-anchor="middle" style="font-size:11px;font-style:italic;fill:var(--ink-soft, #3b4048)">a phone call</text>
 <line x1="430" y1="96" x2="430" y2="128" style="stroke:var(--ok, #1f7a4d);stroke-width:2.5"/>
 <text x="430" y="86" text-anchor="middle" style="font-size:11.5px;font-weight:700;fill:var(--ok, #1f7a4d)">Launch</text>
-<text x="430" y="146" text-anchor="middle" style="font-size:11px;fill:var(--muted, #6b7280)">09:24</text>
-<rect x="434" y="104" width="146" height="16" rx="4" style="fill:var(--accent-soft, #e6f2f0)"/>
+<text x="430" y="146" text-anchor="middle" style="font-size:11px;fill:var(--ink-soft, #3b4048)">09:24</text>
+<rect x="434" y="98" width="146" height="28" rx="4" style="fill:var(--accent-soft, #e6f2f0)"/>
 <text x="507" y="116" text-anchor="middle" style="font-size:11px;fill:var(--accent, #0f6b62)">session 2</text>
 <line x1="584" y1="96" x2="584" y2="128" style="stroke:var(--faint, #9aa1ab);stroke-width:2.5"/>
-<text x="584" y="86" text-anchor="middle" style="font-size:11.5px;fill:var(--muted, #6b7280)">Close</text>
-<text x="584" y="146" text-anchor="middle" style="font-size:11px;fill:var(--muted, #6b7280)">09:29</text>
+<text x="584" y="86" text-anchor="middle" style="font-size:11.5px;fill:var(--ink-soft, #3b4048)">Close</text>
+<text x="584" y="146" text-anchor="middle" style="font-size:11px;fill:var(--ink-soft, #3b4048)">09:29</text>
 <text x="30" y="40" style="font-size:12.5px;font-weight:700;fill:var(--ink-soft, #3b4048)">What lifecycle sees</text>
-<text x="30" y="60" style="font-size:11.5px;fill:var(--muted, #6b7280)">A background is a close. Returning is a new launch. That is why app session counts run higher than web visit counts.</text>
-</svg><figcaption>Backgrounding an app ends a session, and answering a call backgrounds it. <b>App sessions are shorter and more numerous than web visits by their nature</b>, so comparing the two counts directly will mislead whoever does it.</figcaption></figure>
+</svg><figcaption>Four events and two sessions, with no tracking code written.</figcaption></figure>
 
 <p>Backgrounding an app ends a session, and answering a call backgrounds it. So app sessions are shorter and more numerous than web visits by their nature, and comparing the two counts directly will mislead whoever does it.</p>
 <div class="actionblock"><div class="abh">Confirm it, or fix it</div><div class="do-intro">Two questions. The first one usually ends the step.</div><div class="astep"><div class="an">1</div><div>

@@ -560,6 +560,24 @@ Every SVG needs `role="img"` and a full-sentence `aria-label`.
 
 **Nothing in a diagram should be authored below 11px.** The corpus still has 141 places at 8 to 10.5px, 16 of which land under the ~9px legibility floor; those are known and listed under CMP-12. An HTML/CSS diagram layout does not have this problem at all — it is real DOM text, so it reflows and keeps its size, which is the strongest argument for reaching for an HTML layout over an SVG when a diagram can be built either way.
 
+### A figure carries labels, not prose
+
+Amit's rule, 9 September 2026, after finding a caption that repeated the paragraph under it word for word: **a visual should not carry heavy text, or it defeats the purpose of being a visual.**
+
+There are three places text can sit around a figure, and each has one job:
+
+| | Job | Length |
+|---|---|---|
+| **Text inside the frame** | Labels the parts. A title line at the top is allowed. | Labels only. **No explanatory sentences.** |
+| **`figcaption`** | One takeaway the reader should leave with. | **One sentence.** |
+| **The paragraph after** | Does the explaining. | Normal prose. |
+
+**All three saying the same thing is the failure, and it was the state of the Mobile SDK section.** Measured before the fix: 909 words of caption across 25 figures, 1,449 words of text inside the drawings, and **nine captions that duplicated the paragraph beneath them**. After: 234 caption words, and no duplication. Write the caption so it repeats neither the figure's own title nor the prose that follows.
+
+**None of that text was ever measured.** Every readability and idiom number reported for this site came from scripts reading `<p>`, `.narrative` and `<li>`. Captions and SVG text were invisible to all of it, so a section could be reported as plain while carrying two thousand unmeasured words. **Include figure text in any language measurement.**
+
+**Run `diagram-check.js` before declaring any figure done, in both themes.** It covers both worlds since 9 September 2026; before that it scanned `.diagram-box` only and had never run against either procedure guide, which is how four text-over-shape overlaps shipped. Its own instructions say to verify against a clean build rather than a running `hugo server`, and that is not optional advice: on 9 September the server served stale pages through four rounds of fixes and made correct edits look like they had done nothing.
+
 ---
 
 ## Front matter

@@ -37,7 +37,7 @@ params:
 </defs>
 <rect x="16" y="30" width="180" height="40" rx="8" style="fill:var(--bg-soft, #f7f8fa);stroke:var(--line, #e4e6ea);stroke-width:1.5"/>
 <text x="106" y="55" text-anchor="middle" style="font-size:12.5px;font-weight:700;fill:var(--ink-soft, #3b4048)">Experience Event</text>
-<text x="106" y="88" text-anchor="middle" style="font-size:11px;fill:var(--muted, #6b7280)">the class</text>
+<text x="106" y="88" text-anchor="middle" style="font-size:11px;fill:var(--ink-soft, #3b4048)">the class</text>
 <rect x="16" y="104" width="180" height="34" rx="7" style="fill:var(--ok-soft, #e9f4ee);stroke:var(--ok, #1f7a4d);stroke-width:1.4"/>
 <text x="106" y="126" text-anchor="middle" style="font-size:11.5px;fill:var(--ok, #1f7a4d)">Consumer Experience Event</text>
 <rect x="16" y="144" width="180" height="34" rx="7" style="fill:var(--ok-soft, #e9f4ee);stroke:var(--ok, #1f7a4d);stroke-width:1.4"/>
@@ -47,12 +47,12 @@ params:
 <line x1="204" y1="120" x2="266" y2="120" style="stroke:var(--accent, #0f6b62);stroke-width:1.8" marker-end="url(#m4a)"/>
 <rect x="272" y="86" width="170" height="68" rx="9" style="fill:var(--bg, #ffffff);stroke:var(--accent, #0f6b62);stroke-width:1.8"/>
 <text x="357" y="118" text-anchor="middle" style="font-size:13px;font-weight:700;fill:var(--accent, #0f6b62)">the schema</text>
-<text x="357" y="136" text-anchor="middle" style="font-size:11px;fill:var(--muted, #6b7280)">a contract, not a slot</text>
+<text x="357" y="136" text-anchor="middle" style="font-size:11px;fill:var(--ink-soft, #3b4048)">a contract, not a slot</text>
 <line x1="446" y1="120" x2="508" y2="120" style="stroke:var(--accent, #0f6b62);stroke-width:1.8" marker-end="url(#m4a)"/>
 <rect x="514" y="86" width="170" height="68" rx="9" style="fill:var(--bg-soft, #f7f8fa);stroke:var(--line, #e4e6ea);stroke-width:1.5"/>
 <text x="599" y="118" text-anchor="middle" style="font-size:13px;font-weight:700;fill:var(--ink-soft, #3b4048)">the dataset</text>
-<text x="599" y="136" text-anchor="middle" style="font-size:11px;fill:var(--muted, #6b7280)">where rows land</text>
-</svg><figcaption>Two of the three field groups are handed to you. <b>The only one you design is the last</b>, and it is the only one anybody can later get wrong.</figcaption></figure>
+<text x="599" y="136" text-anchor="middle" style="font-size:11px;fill:var(--ink-soft, #3b4048)">where rows land</text>
+</svg><figcaption>Two field groups are given to you. You design only the third.</figcaption></figure>
 
 <div class="call mistake"><span class="ct">Where this goes wrong</span><p>Fields named after today&rsquo;s screens. A field called <span class="mn">checkoutStep3Viewed</span> is accurate for one release and misleading after the next redesign, and it cannot be removed once it has taken data. Name fields for what a person did, never for where they were standing when they did it.</p></div>
 <div class="call check"><span class="ct">&#10003; Ready when</span><p>The schema exists, carries both standard field groups plus one of your own, and a dataset has been created from it. Nothing is sending data yet. What you have is the agreement everything downstream reads from.</p></div>

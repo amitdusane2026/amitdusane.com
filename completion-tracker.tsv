@@ -319,3 +319,5 @@ Platform	infrastructure		Part One vessel: a second content shape in one world, u
 Platform	navigation	8	Part One as a rail door, not a flat list	Feature	layouts/_default/baseof.html	NA	NA	NA	NA	NA	NA	Yes	No	No
 Platform	navigation		Mobile SDK rail grouped by phase, borrowing the learning world accordion; sub-steps nested under step 6	Feature	layouts/_default/baseof.html	NA	NA	NA	NA	NA	NA	Yes	No	No
 Platform	presentation		Platform switcher on step code blocks; choice remembered across the world in localStorage	Feature	static/world-migration.js	NA	NA	NA	NA	NA	NA	Yes	No	No
+Platform	presentation		Figure pass across the Mobile SDK section: 4 text-over-shape overlaps fixed, all contrast raised above 4.5:1, uppercase labels removed, captions cut from 909 to 234 words	Feature	amitdusane-site-complete/content/aep-mobile-sdk/	NA	NA	NA	NA	NA	NA	Yes	No	No
+Platform	tech-debt		diagram-check.js now covers both worlds, skips two learning-world-only checks, and no longer treats an unfilled stroke as an obstacle	Feature	diagram-check.js	NA	NA	NA	NA	NA	NA	Yes	No	No

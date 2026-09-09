@@ -77,7 +77,17 @@ window.DGC = function () {
   const lines = [];
   let figures = 0, failures = 0;
 
-  document.querySelectorAll('.diagram-box').forEach((box, i) => {
+  /* BOTH WORLDS, since 9 September 2026. This scanned `.diagram-box` only,
+     which is the learning world's figure class, so it had never once run
+     against the Web SDK Migration or Mobile SDK guides — 25 figures that were
+     never geometry-checked, four of which carried a real text-over-shape
+     overlap. The procedure worlds wrap an inline SVG in `figure.fig-svg`.
+
+     `PROC` is read once and used to skip the two checks below that are
+     calibrated for the learning world's fixed 700px figure column and mean
+     nothing where a figure scales to fit. */
+  const PROC = !!document.querySelector('.fig-svg');
+  document.querySelectorAll('.diagram-box, .fig-svg').forEach((box, i) => {
     const id = 'fig' + (i + 1);
     const svg = box.querySelector('svg');
     if (!svg) { lines.push(id + '  STILL HTML — not yet redrawn'); failures++; return; }
@@ -145,7 +155,12 @@ window.DGC = function () {
 
     // --- budget -----------------------------------------------------------
     const count = shapes.length + texts.length;
-    if (count < 20) bad.push('only ' + count + ' elements, band is 20-45');
+    // The 20-45 band is a learning-world figure budget. A procedure figure is
+    // deliberately plainer, and after the 9 Sep 2026 text cull most sit in the
+    // teens, so the lower bound would fire on every one of them and mean
+    // nothing. The upper bound still applies everywhere: too much in one frame
+    // is too much in either world.
+    if (!PROC && count < 20) bad.push('only ' + count + ' elements, band is 20-45');
     if (count > 45) bad.push(count + ' elements, band is 20-45');
 
     // --- geometry ---------------------------------------------------------
@@ -161,9 +176,19 @@ window.DGC = function () {
         // visible band extends half the stroke either side, so labels sitting
         // ON the band read as collisions against a box they are legitimately
         // outside. Only a shape with an actual fill can hide text behind it.
+        // Corrected 9 September 2026. This used to exclude an unfilled shape
+        // only when its stroke was thicker than 6, which was written for the
+        // donut case. But the sentence above is the real rule and it has no
+        // thickness in it: an unfilled stroke cannot hide text whatever its
+        // width. A trend line drawn as `path fill:none stroke-width:2.6` has a
+        // bounding box covering the whole plot area, so every label inside the
+        // chart read as a collision against a line it was nowhere near. That
+        // produced a false failure on the release-adoption figure.
+        //
+        // What is still caught: any shape with a real fill, which is the only
+        // kind that can actually sit on top of text.
         const cs = getComputedStyle(sh);
-        const unfilledBand = cs.fill === 'none' && parseFloat(cs.strokeWidth) > 6;
-        if (unfilledBand) return;
+        if (cs.fill === 'none') return;
         const sb = sh.getBBox();
         if (overlaps(tb, sb) && !contains(tb, sb)) {
           bad.push('"' + t.textContent.slice(0, 18) + '" overlaps a ' + sh.tagName);
@@ -233,7 +258,13 @@ window.DGC = function () {
 
     // --- rendering --------------------------------------------------------
     const rendered = Math.round(svg.getBoundingClientRect().width);
-    if (rendered !== 700) bad.push('renders at ' + rendered + 'px, not 700 — authored px is no longer rendered px');
+    // Learning world only. There a figure holds --diagram-min (700px) so that
+    // authored px equals rendered px. The procedure worlds set
+    // .fig-svg svg{width:100%} with no floor, deliberately, so a figure scales
+    // to the column and rendering at 897px is correct rather than a fault.
+    // Scaling UP is never the problem; only scaling down below legibility is,
+    // and the smallest-font check above already covers that.
+    if (!PROC && rendered !== 700) bad.push('renders at ' + rendered + 'px, not 700 — authored px is no longer rendered px');
 
     if (bad.length) failures++;
     lines.push(
@@ -252,3 +283,31 @@ window.DGC = function () {
     ...lines
   ].join('\n');
 };
+
+/* ---------------------------------------------------------------------------
+   REVISION HISTORY
+
+   9 September 2026 — three corrections, all found by running this file against
+   the Mobile SDK guide for the first time.
+
+   1. IT NOW SCANS BOTH WORLDS. It looked only for `.diagram-box`, the learning
+      world's figure class, so it had never once run against Web SDK Migration
+      or Mobile SDK. Twenty-five figures had never been geometry-checked, and
+      four carried a real text-over-shape overlap, one of which Amit spotted on
+      the page before any check did. It now scans `.diagram-box, .fig-svg`.
+
+   2. AN UNFILLED STROKE IS NEVER AN OBSTACLE. The donut exclusion only applied
+      when stroke-width was over 6, but the rule written above it has no
+      thickness in it. A trend line drawn as `path fill:none stroke-width:2.6`
+      has a bounding box covering the whole plot area, so every label inside a
+      line chart read as a collision. Now any `fill:none` shape is skipped.
+
+   3. TWO CHECKS ARE LEARNING-WORLD ONLY, and are skipped where a `.fig-svg` is
+      present. The 700px render check assumes `--diagram-min`; the procedure
+      worlds set `.fig-svg svg{width:100%}` with no floor, deliberately, so a
+      figure scaling to 897px is correct rather than a fault. The 20-45 element
+      band is a learning-world budget; a procedure figure is plainer by design
+      and most sit in the teens. The upper bound still applies everywhere.
+
+   After these corrections all 25 Mobile SDK figures pass in both themes.
+--------------------------------------------------------------------------- */

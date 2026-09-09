@@ -30,7 +30,7 @@ params:
 <p>A tracking plan that says &ldquo;fire a screen view for each screen&rdquo; has not made it.</p>
 <figure class="fig-svg"><svg viewBox="0 0 700 268" role="img" aria-label="On the web each navigation destroys the current page and loads a new one, so every arrival is a fresh load and a page view. In an app screens stack on top of one another, so going back removes the top screen and reveals the one underneath, which was never destroyed and never reloads, and therefore produces no second screen view unless one was asked for deliberately." style="width:100%;height:auto;display:block">
 <text x="24" y="22" style="font-size:12.5px;font-weight:700;fill:var(--ink-soft, #3b4048)">Going back on the web, and going back in an app</text>
-<text x="24" y="50" style="font-size:11px;font-weight:700;fill:var(--muted, #6b7280)">WEB &#8212; each arrival is a fresh load</text>
+<text x="24" y="50" style="font-size:11px;font-weight:700;fill:var(--ink-soft, #3b4048)">Web &#8212; each arrival is a fresh load</text>
 <rect x="24" y="62" width="96" height="40" rx="6" style="fill:var(--bg-soft, #f7f8fa);stroke:var(--line, #e4e6ea);stroke-width:1.5"/>
 <text x="72" y="86" text-anchor="middle" style="font-size:11.5px;fill:var(--ink, #1c1f24)">List page</text>
 <line x1="120" y1="82" x2="152" y2="82" style="stroke:var(--faint, #9aa1ab);stroke-width:1.5"/>
@@ -46,7 +46,7 @@ params:
 <text x="416" y="80" style="font-size:11px;font-weight:700;fill:var(--ok, #1f7a4d)">a real load,</text>
 <text x="416" y="96" style="font-size:11px;font-weight:700;fill:var(--ok, #1f7a4d)">so a second page view</text>
 <line x1="24" y1="124" x2="676" y2="124" style="stroke:var(--line, #e4e6ea);stroke-width:1;stroke-dasharray:4 4"/>
-<text x="24" y="148" style="font-size:11px;font-weight:700;fill:var(--muted, #6b7280)">APP &#8212; screens stack, and nothing underneath is destroyed</text>
+<text x="24" y="148" style="font-size:11px;font-weight:700;fill:var(--ink-soft, #3b4048)">App &#8212; screens stack, and nothing underneath is destroyed</text>
 <rect x="24" y="204" width="180" height="34" rx="6" style="fill:var(--bg-soft, #f7f8fa);stroke:var(--line, #e4e6ea);stroke-width:1.5"/>
 <text x="114" y="226" text-anchor="middle" style="font-size:11.5px;fill:var(--ink, #1c1f24)">List screen</text>
 <rect x="40" y="166" width="180" height="34" rx="6" style="fill:var(--accent-soft, #e6f2f0);stroke:var(--accent, #0f6b62);stroke-width:1.5"/>
@@ -58,8 +58,7 @@ params:
 <text x="489" y="214" text-anchor="middle" style="font-size:11px;fill:var(--ink-soft, #3b4048)">back</text>
 <rect x="510" y="205" width="166" height="34" rx="6" style="fill:var(--warn-soft, #fbf2e3);stroke:var(--warn, #9a5b00);stroke-width:1.5"/>
 <text x="593" y="227" text-anchor="middle" style="font-size:11.5px;font-weight:700;fill:var(--warn, #9a5b00)">no reload, no second view</text>
-<text x="24" y="258" style="font-size:11px;fill:var(--ink-soft, #3b4048)">Unless somebody asked for the screen view to fire when a screen appears, rather than when it is created.</text>
-</svg><figcaption>The web gives you a second page view for free, because going back genuinely loads a page. <b>In an app that return is invisible unless it was specified</b>, which is why funnels appear to lose people at the step where they went back.</figcaption></figure>
+</svg><figcaption>The second view is free on the web and invisible in an app.</figcaption></figure>
 
 <div class="call mistake"><span class="ct">Where this goes wrong</span><p>Screen views are wired to the moment each screen is built, which is the obvious place and the wrong one. Every screen reports correctly the first time and never again on the way back. Funnels look like people vanish at the second step, because returning to a list from a product is invisible. The fix needs a developer to move the call, so it is not something you can correct on the Adobe side.</p></div>
 <h2>Where sessions diverge</h2>
