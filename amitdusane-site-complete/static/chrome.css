@@ -1109,6 +1109,7 @@ body.page-home .hm-tag{margin:0 0 12px;max-width:64ch;font-size:var(--h-fs-tag);
 /* Mobile App Basics, 11 September 2026. Its terracotta accent from
    world-basics.css, as an RGB triple for the same reason as the teal above. */
 .tile-mab{--tc:163,64,28; --tc-ink:#f08a5d}
+.tile-wsb{--tc:138,44,110; --tc-ink:#e896cf}
 .tile:hover{
   border-color:var(--tc-ink);
   transform:translateY(-2px);

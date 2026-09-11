@@ -1,0 +1,85 @@
+---
+published: 2026-09-11
+lastmod: 2026-09-11
+title: "What a URL is made of"
+linkTitle: "Parts of a URL"
+seotitle: "Parts of a URL: Domain, Path, Query String and Fragment"
+description: "Every web address has the same five parts, and each one reaches your reports differently. Where campaign codes live, and the part the server never sees."
+slug: "parts-of-a-url"
+type: topic
+weight: 103
+params:
+  group: pages
+  oneline: "A URL is an address in five parts: the protocol, the domain, the path, the query string and the fragment. Different things read different parts."
+  cando: "Point at any part of an address and say whether your reports can see it, and whether a redirect will keep it."
+  words:
+    - t: "Domain"
+      d: "The name of the site, such as example.com. It decides which cookies a page can read."
+    - t: "Subdomain"
+      d: "A name in front of the domain, such as shop in shop.example.com."
+    - t: "Path"
+      d: "The part after the domain that names one page, such as /women/shoes/."
+    - t: "Query string"
+      d: "The part after the question mark. It carries extra values, such as campaign codes."
+    - t: "Parameter"
+      d: "One name and value in the query string, such as cid=summer. Parameters are joined with &."
+    - t: "Fragment"
+      d: "The part after the # sign. The browser keeps it and never sends it to the server."
+  ask:
+    - "Do our redirects keep everything after the question mark?"
+    - "Does any part of the site use the # part of the address to change screens?"
+    - "Are these two addresses the same page, or does the server treat them differently?"
+---
+<h2>Why it matters to you</h2>
+<p>Your reports are organised by address. Page names, campaign codes, referrers and site sections often come from parts of a URL. When you can name each part, you can say which part a problem lives in, and who can fix it.</p>
+<h2>Five parts, read from left to right</h2>
+<p>Every web address has the same parts in the same order. Take this one:</p>
+<p><span class="mn">https://shop.example.com/women/shoes/?cid=em_summer&amp;utm_medium=email#reviews</span></p>
+<figure class="fig-svg"><svg viewBox="0 0 700 184" role="img" aria-label="The address https://shop.example.com/women/shoes/?cid=em_summer&amp;utm_medium=email#reviews split into five parts: the protocol, the domain with the subdomain shop, the path naming one page, a query string holding two parameters, and a fragment that is never sent to the server." style="width:100%;height:auto;display:block">
+<text x="24" y="22" style="font-size:12.5px;font-weight:700;fill:var(--ink-soft, #3b4048)">Five parts of one address</text>
+<text x="24" y="62" class="mn" textLength="62" lengthAdjust="spacingAndGlyphs" style="font-size:13px;fill:var(--ink, #1c1f24)">https://</text>
+<text x="86" y="62" class="mn" textLength="125" lengthAdjust="spacingAndGlyphs" style="font-size:13px;font-weight:700;fill:var(--accent, #8a2c6e)">shop.example.com</text>
+<text x="211" y="62" class="mn" textLength="101" lengthAdjust="spacingAndGlyphs" style="font-size:13px;fill:var(--ink, #1c1f24)">/women/shoes/</text>
+<text x="312" y="62" class="mn" textLength="242" lengthAdjust="spacingAndGlyphs" style="font-size:13px;fill:var(--ink, #1c1f24)">?cid=em_summer&amp;utm_medium=email</text>
+<text x="554" y="62" class="mn" textLength="62" lengthAdjust="spacingAndGlyphs" style="font-size:13px;fill:var(--ink-soft, #3b4048)">#reviews</text>
+<path d="M27,70 V76 H83 V70" style="fill:none;stroke:var(--faint, #9aa1ab);stroke-width:1.5"/>
+<path d="M89,70 V76 H208 V70" style="fill:none;stroke:var(--faint, #9aa1ab);stroke-width:1.5"/>
+<path d="M214,70 V76 H309 V70" style="fill:none;stroke:var(--faint, #9aa1ab);stroke-width:1.5"/>
+<path d="M315,70 V76 H551 V70" style="fill:none;stroke:var(--faint, #9aa1ab);stroke-width:1.5"/>
+<path d="M557,70 V76 H613 V70" style="fill:none;stroke:var(--faint, #9aa1ab);stroke-width:1.5"/>
+<text x="55" y="94" text-anchor="middle" style="font-size:11.5px;font-weight:700;fill:var(--ink, #1c1f24)">Protocol</text>
+<text x="148" y="94" text-anchor="middle" style="font-size:11.5px;font-weight:700;fill:var(--ink, #1c1f24)">Domain</text>
+<text x="262" y="94" text-anchor="middle" style="font-size:11.5px;font-weight:700;fill:var(--ink, #1c1f24)">Path</text>
+<text x="433" y="94" text-anchor="middle" style="font-size:11.5px;font-weight:700;fill:var(--ink, #1c1f24)">Query string</text>
+<text x="585" y="94" text-anchor="middle" style="font-size:11.5px;font-weight:700;fill:var(--ink, #1c1f24)">Fragment</text>
+<text x="148" y="110" text-anchor="middle" style="font-size:11px;fill:var(--ink-soft, #3b4048)">subdomain: shop</text>
+<text x="262" y="110" text-anchor="middle" style="font-size:11px;fill:var(--ink-soft, #3b4048)">one page</text>
+<text x="433" y="110" text-anchor="middle" style="font-size:11px;fill:var(--ink-soft, #3b4048)">two parameters, joined by &amp;</text>
+<text x="585" y="110" text-anchor="middle" style="font-size:11px;fill:var(--danger, #a13030)">never sent</text>
+<text x="585" y="124" text-anchor="middle" style="font-size:11px;fill:var(--danger, #a13030)">to the server</text>
+<text x="24" y="170" style="font-size:11px;fill:var(--ink-soft, #3b4048)">The server receives everything before the # sign.</text>
+</svg><figcaption>Everything after the # stays in the browser.</figcaption></figure>
+<table class="mini-tbl"><tbody>
+<tr><td>Protocol</td><td><span class="mn">https://</span> is how the browser talks to the server. The s means the connection is encrypted.</td></tr>
+<tr><td>Domain</td><td><span class="mn">shop.example.com</span> names the site. <span class="mn">shop</span> is a subdomain of <span class="mn">example.com</span>.</td></tr>
+<tr><td>Path</td><td><span class="mn">/women/shoes/</span> names one page on that site.</td></tr>
+<tr><td>Query string</td><td>Everything after the question mark. Here it holds two parameters.</td></tr>
+<tr><td>Fragment</td><td><span class="mn">#reviews</span> points to a place on the page.</td></tr>
+</tbody></table>
+<p>Think of a postal address. The domain is the building, the path is the flat number, and the query string is a note written on the envelope. The fragment is a sticky note you keep for yourself. It never goes in the post.</p>
+<h2>The domain decides who can read what</h2>
+<p>Browsers keep cookies by domain. A page on <span class="mn">shop.example.com</span> can read a cookie set for <span class="mn">example.com</span>. A page on another domain cannot, even when your company owns both.</p>
+<p>That rule is why a visitor who moves from <span class="mn">example.com</span> to <span class="mn">example-travel.com</span> can arrive in your reports as a new visitor. The same person walked from one building into another, and the second building has never seen the ticket from the first. How to join the two is covered in <a href="/adobe-analytics-learning/collect/tracking-calls/cross-domain-tracking/">Cross-Domain Tracking</a>.</p>
+<h2>The query string is where campaigns live</h2>
+<p>The query string is a list of <b>parameters</b>. Each one is a name and a value joined by an equals sign, and parameters are joined to each other by <span class="mn">&amp;</span>. Marketing teams put campaign codes there, such as <span class="mn">cid=em_summer</span>.</p>
+<p>Parameters are easy to lose. A redirect can drop them. A person can copy a link without them. A form can send the visitor to a new address that does not carry them. Each of these turns a campaign visit into direct traffic, and none of them shows an error.</p>
+<p>Some characters cannot sit in an address as they are, so they are written as codes. A space becomes <span class="mn">%20</span> or a plus sign. When a campaign code looks strange in a report, check whether it was written with spaces or other special characters.</p>
+<h2>The fragment never reaches the server</h2>
+<p>Everything after the <span class="mn">#</span> stays in the browser. It is not sent to the server, and it is not included in the referrer that the next page receives. Pages use it to jump to a heading, which is why a link ending in <span class="mn">#reviews</span> scrolls straight to the reviews.</p>
+<p>Some older single-page apps use the fragment to change screens, with addresses such as <span class="mn">example.com/#/checkout</span>. Anything that reads the address on the server sees only <span class="mn">example.com/</span> for every screen. Tracking has to read the fragment in the browser instead. More on these sites is in <a href="/website-basics/single-page-apps/">Single-page apps</a>.</p>
+<h2>The referrer is the address before</h2>
+<p>When a visitor clicks a link, the browser usually tells the next site where the visitor came from. That address is the referrer, and your reports use it to decide whether a visit came from search, from another site or from nowhere.</p>
+<p>Browsers now send less of it. When a visitor moves between two different sites, most browsers send only the domain of the previous site, not its path or query string. So a report can know that a visit came from a search engine without knowing what was searched. Some links also tell the browser to send no referrer at all, and those visits arrive as direct traffic.</p>
+<h2>Many addresses, one page</h2>
+<p>Servers often show the same page at several addresses: with and without <span class="mn">www</span>, with and without a slash at the end, with and without tracking parameters. A report that stores the full address splits one page into many rows.</p>
+<p>That is why most implementations set the page name on purpose instead of copying the address. When two rows in a report look like the same page, compare the two addresses character by character. The difference is almost always in one of these five parts.</p>

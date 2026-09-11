@@ -1,0 +1,62 @@
+---
+published: 2026-09-11
+lastmod: 2026-09-11
+title: "Developer tools and the network tab"
+linkTitle: "Developer tools"
+seotitle: "Browser Developer Tools and the Network Tab for Analytics"
+description: "The browser's own inspection tools answer most tracking questions in a minute, without waiting for anyone. Where they are, and which parts you need."
+slug: "developer-tools"
+type: topic
+weight: 201
+params:
+  group: browser
+  oneline: "Every desktop browser has built-in developer tools. Their network tab lists every request a page sends, including your tracking calls, and most questions are answered there."
+  cando: "Check yourself whether a tracking call was sent and what it carried, before you raise a ticket."
+  words:
+    - t: "Developer tools"
+      d: "The inspection panels built into every desktop browser. Open them with F12, or Cmd+Option+I on a Mac."
+    - t: "Network tab"
+      d: "The list of every request the page has sent, in order, with what was sent and what came back."
+    - t: "Console"
+      d: "The panel that shows script errors, and where you can type JavaScript to ask the page a question."
+    - t: "Payload"
+      d: "The data a request carries. For a tracking call, these are your variables and their values."
+    - t: "Preserve log"
+      d: "A network tab setting that keeps requests when the page changes, so calls sent as you leave a page are not lost."
+    - t: "Application tab"
+      d: "The panel that lists the cookies and stored values a site has saved in the browser."
+  ask:
+    - "Can you show the problem with the network tab open and send me the request you see?"
+    - "Are there any errors in the console on this page?"
+    - "Which filter should I use on this site to find the tracking calls?"
+---
+<h2>Why it matters to you</h2>
+<p>Most tracking questions start the same way: was the call sent, and what did it carry? The answer is on your own screen in under a minute. Checking before you raise a ticket turns "the numbers look wrong" into "this call is missing this value", which a developer can act on.</p>
+<h2>Opening them</h2>
+<p>Every desktop browser has <b>developer tools</b> built in. Press F12 on Windows, or Cmd+Option+I on a Mac. You can also right-click anywhere on a page and choose Inspect. In Safari, first turn on the Develop menu in the settings.</p>
+<p>The tools open as a panel with several tabs. Four of them do almost all of your work.</p>
+<table class="mini-tbl"><tbody>
+<tr><td>Elements</td><td>The DOM, the live page. Use it to find an element's id, class and data attributes.</td></tr>
+<tr><td>Console</td><td>Script errors in red, and a line where you can type JavaScript to ask the page a question.</td></tr>
+<tr><td>Network</td><td>Every request the page sends, in order. Your tracking calls are here.</td></tr>
+<tr><td>Application</td><td>Cookies and stored values. Firefox calls this tab Storage.</td></tr>
+</tbody></table>
+<h2>Finding your tracking call</h2>
+<p>Open the <b>network tab</b> before you load the page, because it only records requests made while it is open. Then load the page and type a filter into its search box. The filter depends on how the site sends data to Adobe.</p>
+<div class="code"><button class="copy">Copy</button><pre>b/ss       classic Adobe Analytics (AppMeasurement)
+interact   Adobe Web SDK
+collect    Adobe Web SDK, for calls sent as a page closes</pre></div>
+<p>Click a request to open it. The headers show the full address and the status code. The <b>payload</b> shows the data the call carried, which for a tracking call means your variables and their values. Read them there, value by value, against what you asked for.</p>
+<div class="call warn"><span class="ct">A success code is not the whole story</span><p>A status of 200 or 204 means the request reached Adobe. It does not mean the data was kept or reported the way you expect, because rules on Adobe's side can still change or remove it. The network tab proves what left the browser, and nothing after that.</p></div>
+<h2>Keep the log when the page changes</h2>
+<p>When a click takes the visitor to a new page, the network tab normally clears its list. The call sent on that click disappears with it, and it looks as if no call was sent at all.</p>
+<p>Tick <b>Preserve log</b> at the top of the network tab. Firefox calls it Persist Logs. The list then keeps every request across page changes. Leave it ticked whenever you test links, forms and anything else that leaves the page.</p>
+<h2>The console, for errors and quick questions</h2>
+<p>Red lines in the <b>console</b> are script errors. One error can stop every script that runs after it, including tracking. When a call is missing, look here before anything else.</p>
+<p>You can also ask the page questions. Typing <span class="mn">adobeDataLayer</span> and pressing Enter shows the Adobe Client Data Layer on sites that use it. Typing <span class="mn">_satellite.buildInfo</span> on a site with Adobe Tags shows when the loaded tag library was built. Anything you type there affects only your own browser.</p>
+<h2>The Application tab shows what the site remembered</h2>
+<p>The <b>Application tab</b> lists every cookie the site has set, with its domain and expiry date. Adobe's visitor ID cookies appear there with names that start with <span class="mn">AMCV_</span> or <span class="mn">kndctr_</span>.</p>
+<p>You can delete cookies from this tab to test as a brand-new visitor. What those cookies are, and why browsers delete them, is covered in <a href="/website-basics/cookies-and-storage/">Cookies and browser storage</a>.</p>
+<h2>What these tools cannot tell you</h2>
+<p>Developer tools show what left your browser. They cannot show what Adobe did with the data after it arrived. A call can be perfect and the report still wrong, because <a href="/adobe-analytics-learning/shape/processing-rules/what-are-processing-rules/">processing rules</a> and other settings change data on its way into reports.</p>
+<p>When the call is right and the report is not, the problem has moved to Adobe's side. The next question is for whoever manages the report suite, and you can now show them exactly what was sent.</p>

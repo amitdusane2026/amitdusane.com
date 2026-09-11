@@ -96,6 +96,7 @@ A Basics instance is one block in `[params.worlds]`, keyed on its section:
 | `order`, `tilesub` | Its sort order, and the line under its tile, in the home page's "Start here" row |
 | `og` | The social card. Mobile App Basics borrows the Mobile SDK card until one is made |
 | `premise` | What the section is and what it will not teach. Shown once on the front page; every topic links back to it |
+| `remind` | The one line under every topic headline, such as "Not a course in building websites." Added with Website Basics, because the template had "apps" written into it |
 | `groups` | A table of groups, each with `order` and `label` (a one- or two-word name). A topic's `group` names one. A group with no topics renders nothing, so a section can be written one group at a time. Groups are the first tier of "See where this fits". The `blurb` each group once carried went with the old front page on 11 September 2026 |
 
 **A guide links to a Basics section from its content, never from its rail.** Where a step needs the vocabulary, its prose links the section and its Why? row links the exact topic. A `basicsworld` key that put a "Start here" row in the guide's rail was built and removed on 11 September 2026, at Amit's request.
@@ -128,15 +129,16 @@ Previous and next run through every topic in weight order, across group boundari
 
 This is the whole list, and Website Basics is the test of it:
 
-1. A `[params.worlds.<key>]` block and its `groups`.
+1. A `[params.worlds.<key>]` block with its `groups`, `premise` and `remind`.
 2. An accent rule for its body class in `world-basics.css`, light and dark. **Without one the section renders in the neutral grey default and nothing reports it.**
-3. `layouts/<key>/list.html`, one line.
-4. `content/<key>/_index.html` with the three outputs, and `content/<key>/glossary.html`.
-5. The topics.
-6. An OG image, or a deliberate borrow.
-7. Links from any guide that leans on it: in step prose to the section, in Why? rows to the exact topic.
+3. A tile colour for its body class in `chrome.css` (`.tile-<class without "world-">`), for the home page's "Start here" row.
+4. `layouts/<key>/list.html`, one line.
+5. `content/<key>/_index.html` with the three outputs, and `content/<key>/glossary.html`.
+6. The topics, at most six words each.
+7. An OG image, or a deliberate borrow.
+8. Links from any guide that leans on it: in step prose to the section, in Why? rows to the exact topic.
 
-It needs nothing in `phases`, no template of its own and no change to `baseof.html`. **If Website Basics needs more than this list, the container is not reusable yet, and that should be said rather than patched.**
+It needs nothing in `phases`, no template of its own and no change to `baseof.html`. **Website Basics was the test, on 11 September 2026, and it passed with one fix**: the template had the word "apps" in the line under every headline, which became `remind`. The tile colour was always needed and was missing from this list.
 
 ---
 
@@ -170,7 +172,7 @@ Order as planned. The first two are live; the third is written and on `develop` 
 
 Also planned, shape assigned but not sequenced: Mobile Analytics legacy implementation (procedure), Setting up CJA reports (procedure).
 
-**Basics sections sit beside this list, not in it**, because each exists to serve guides rather than as a destination of its own. Mobile App Basics has been on `develop` since 11 September 2026 and is not launched. Website Basics is next, on Amit's go-ahead, and goes ahead of the parked Web SDK Implementation and the Web SDK Migration rewrite.
+**Basics sections sit beside this list, not in it**, because each exists to serve guides rather than as a destination of its own. Mobile App Basics and Website Basics have both been on `develop` since 11 September 2026, and neither is launched. The parked Web SDK Implementation and Web SDK Migration rewrite come after them.
 
 **Mobile SDK moved from seventh to third on 6 September 2026**, ahead of CJA
 and the three other curriculum worlds. Amit's reason is that CJA is the real

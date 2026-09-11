@@ -44,7 +44,7 @@
   <div class="b-cols">
     <div class="b-art">
       {{ with .Params.oneline }}<div class="b-one"><span class="b-one-l">In one sentence</span><p>{{ . }}</p></div>{{ end }}
-      <p class="b-remind">Not a course in building apps. Just enough to follow the conversation. <a href="{{ (printf "%s/#premise" $w.root) | relURL }}">About this section</a></p>
+      <p class="b-remind">{{ $w.remind | default "Just enough to follow the conversation." }} <a href="{{ (printf "%s/#premise" $w.root) | relURL }}">About this section</a></p>
       <div class="b-body">{{ .Content }}</div>
       {{ with .Params.ask }}
       <section class="b-ask" id="ask">

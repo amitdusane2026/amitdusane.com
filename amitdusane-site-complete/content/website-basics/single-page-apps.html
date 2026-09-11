@@ -1,0 +1,92 @@
+---
+published: 2026-09-11
+lastmod: 2026-09-11
+title: "Single-page apps: one load, many screens"
+linkTitle: "Single-page apps"
+seotitle: "Single-Page Apps Explained for Analytics Practitioners"
+description: "A single-page app loads once and then changes screens without loading again, so nothing tells your tracking a new page appeared unless somebody does."
+slug: "single-page-apps"
+type: topic
+weight: 104
+params:
+  group: pages
+  oneline: "A single-page app loads one page and then changes what you see with JavaScript. The address changes, but the page never loads again."
+  cando: "Tell in a minute whether a site is a single-page app, and know what the developer must add so each screen is counted."
+  words:
+    - t: "Single-page app"
+      d: "A site that loads once and then changes screens with JavaScript, without loading a new page."
+    - t: "Framework"
+      d: "A ready-made toolkit for building sites, such as React, Angular or Vue."
+    - t: "Route"
+      d: "One screen of a single-page app and its address, such as /checkout."
+    - t: "Virtual page view"
+      d: "A page view sent by code when the screen changes, because no real page load happened."
+    - t: "History change"
+      d: "The browser signal when a single-page app changes the address without loading a page."
+    - t: "Multi-page site"
+      d: "A traditional site where every click loads a complete new page from the server."
+  ask:
+    - "Is this part of the site a single-page app, and which framework is it built with?"
+    - "Can the site send an event every time the route changes, after the new screen is ready?"
+    - "How are old values cleared when the visitor moves to the next screen?"
+---
+<h2>Why it matters to you</h2>
+<p>Classic tracking counts a page view each time a page loads. A single-page app loads only once. Without extra work, a visitor who looks at ten screens is counted as one page view, and everything they did after the first screen is credited to the wrong page.</p>
+<h2>One load, then the screen changes</h2>
+<p>In a <b>multi-page site</b>, every click asks the server for a new page. The screen goes blank for a moment and the new page is built from the start.</p>
+<p>In a <b>single-page app</b>, the first request brings the whole application, most of it JavaScript. After that, a click does not ask for a new page. JavaScript replaces the content on the screen and changes the address in the address bar. To the visitor, it looks like a new page. To the browser, nothing loaded.</p>
+<figure class="fig-svg"><svg viewBox="0 0 700 222" role="img" aria-label="On a multi-page site, each of three screens, Home, Shoes and Basket, loads as a new page and sends a page view. In a single-page app only Home loads and sends a page view; Shoes and Basket are screen changes that send nothing unless the site sends an event." style="width:100%;height:auto;display:block">
+<text x="24" y="22" style="font-size:12.5px;font-weight:700;fill:var(--ink-soft, #3b4048)">Three screens on two kinds of site</text>
+<text x="24" y="48" style="font-size:11px;font-weight:700;fill:var(--ink-soft, #3b4048)">Multi-page site</text>
+<rect x="24" y="58" width="176" height="46" rx="6" style="fill:var(--bg-soft, #f7f8fa);stroke:var(--line, #e4e6ea);stroke-width:1.5"/>
+<text x="112" y="77" text-anchor="middle" style="font-size:11.5px;font-weight:700;fill:var(--ink, #1c1f24)">Home</text>
+<text x="112" y="94" text-anchor="middle" style="font-size:11px;fill:var(--ok, #1f7a4d)">loads, page view sent</text>
+<line x1="200" y1="81" x2="254" y2="81" style="stroke:var(--faint, #9aa1ab);stroke-width:1.5"/>
+<polygon points="262,81 254,77 254,85" style="fill:var(--faint, #9aa1ab)"/>
+<rect x="262" y="58" width="176" height="46" rx="6" style="fill:var(--bg-soft, #f7f8fa);stroke:var(--line, #e4e6ea);stroke-width:1.5"/>
+<text x="350" y="77" text-anchor="middle" style="font-size:11.5px;font-weight:700;fill:var(--ink, #1c1f24)">Shoes</text>
+<text x="350" y="94" text-anchor="middle" style="font-size:11px;fill:var(--ok, #1f7a4d)">loads, page view sent</text>
+<line x1="438" y1="81" x2="492" y2="81" style="stroke:var(--faint, #9aa1ab);stroke-width:1.5"/>
+<polygon points="500,81 492,77 492,85" style="fill:var(--faint, #9aa1ab)"/>
+<rect x="500" y="58" width="176" height="46" rx="6" style="fill:var(--bg-soft, #f7f8fa);stroke:var(--line, #e4e6ea);stroke-width:1.5"/>
+<text x="588" y="77" text-anchor="middle" style="font-size:11.5px;font-weight:700;fill:var(--ink, #1c1f24)">Basket</text>
+<text x="588" y="94" text-anchor="middle" style="font-size:11px;fill:var(--ok, #1f7a4d)">loads, page view sent</text>
+<text x="24" y="132" style="font-size:11px;font-weight:700;fill:var(--ink-soft, #3b4048)">Single-page app</text>
+<rect x="24" y="142" width="176" height="46" rx="6" style="fill:var(--bg-soft, #f7f8fa);stroke:var(--line, #e4e6ea);stroke-width:1.5"/>
+<text x="112" y="161" text-anchor="middle" style="font-size:11.5px;font-weight:700;fill:var(--ink, #1c1f24)">Home</text>
+<text x="112" y="178" text-anchor="middle" style="font-size:11px;fill:var(--ok, #1f7a4d)">loads, page view sent</text>
+<line x1="200" y1="165" x2="254" y2="165" style="stroke:var(--faint, #9aa1ab);stroke-width:1.5"/>
+<polygon points="262,165 254,161 254,169" style="fill:var(--faint, #9aa1ab)"/>
+<rect x="262" y="142" width="176" height="46" rx="6" style="fill:var(--bg, #ffffff);stroke:var(--faint, #9aa1ab);stroke-width:1.5;stroke-dasharray:4 3"/>
+<text x="350" y="161" text-anchor="middle" style="font-size:11.5px;font-weight:700;fill:var(--ink, #1c1f24)">Shoes</text>
+<text x="350" y="178" text-anchor="middle" style="font-size:11px;fill:var(--danger, #a13030)">screen changes, nothing sent</text>
+<line x1="438" y1="165" x2="492" y2="165" style="stroke:var(--faint, #9aa1ab);stroke-width:1.5"/>
+<polygon points="500,165 492,161 492,169" style="fill:var(--faint, #9aa1ab)"/>
+<rect x="500" y="142" width="176" height="46" rx="6" style="fill:var(--bg, #ffffff);stroke:var(--faint, #9aa1ab);stroke-width:1.5;stroke-dasharray:4 3"/>
+<text x="588" y="161" text-anchor="middle" style="font-size:11.5px;font-weight:700;fill:var(--ink, #1c1f24)">Basket</text>
+<text x="588" y="178" text-anchor="middle" style="font-size:11px;fill:var(--danger, #a13030)">screen changes, nothing sent</text>
+<text x="24" y="212" style="font-size:11px;fill:var(--ink-soft, #3b4048)">Unless the site sends an event each time the screen changes.</text>
+</svg><figcaption>A single-page app loads once, so only its first screen is counted without extra work.</figcaption></figure>
+<p>Think of a book and a slideshow. In a book you turn to a new page. In a slideshow the frame stays and only the picture changes. A counter that counts page turns works for the book, and stays at one for the whole slideshow.</p>
+<h2>How developers build them</h2>
+<p>Most single-page apps are built with a <b>framework</b>, a ready-made toolkit that handles the screen changes. The names you will hear most are React, Angular and Vue, and Next.js, which is built on React.</p>
+<p>Each screen of the app is a <b>route</b>, and every route has its own address, such as <span class="mn">/checkout</span>. When the route changes, the framework updates the address through the browser's history. That update is the <b>history change</b>, and it is the one signal every single-page app gives without extra code.</p>
+<h2>Telling in one minute</h2>
+<ol>
+<li>Open the browser's developer tools and choose the Network tab.</li>
+<li>Choose the filter for documents, usually called Doc.</li>
+<li>Click a link inside the site.</li>
+<li>If the address changed and no new document appeared in the list, you are in a single-page app.</li>
+</ol>
+<p>Many sites mix both kinds. The shop is a normal site, and the checkout is a single-page app. Check the part of the site you are asking about, not just the home page.</p>
+<h2>What has to be added</h2>
+<p>Somebody has to tell the tracking that the screen changed. The page view it then sends is called a <b>virtual page view</b>, because no real page loaded. There are two common ways to trigger one.</p>
+<table class="mini-tbl"><tbody>
+<tr><td>History change</td><td>The tag manager listens for the address to change. No developer work, but it can fire before the new screen's values are ready.</td></tr>
+<tr><td>A site event</td><td>The site sends its own event once the new screen and its values are ready. It needs a developer, and it is reliable.</td></tr>
+</tbody></table>
+<p>Ask for the site event. The history change is tempting because it costs nothing today, but it often reports the new address with the old screen's values. How Adobe Analytics handles these screens is covered in <a href="/adobe-analytics-learning/collect/tracking-calls/spa-tracking/">SPA Tracking</a>.</p>
+<h2>Values that stay behind</h2>
+<p>On a normal site, each page starts clean. In a single-page app the page never reloads, so values set on one screen can still be there on the next. A search term, a product name or an error message can travel forward and be reported again on screens where it does not belong.</p>
+<div class="call mistake"><span class="ct">Where this goes wrong</span><p>A visitor views a product and then opens the basket. The product name from the product screen is still set, so the basket view is reported against that product. It happens for every visitor, and the product looks far more popular than it is.</p></div>
+<p>So the tracking must clear old values before it sends each new screen. Ask the developer how values are reset between screens, then check it yourself by moving between two screens with the network tab open.</p>

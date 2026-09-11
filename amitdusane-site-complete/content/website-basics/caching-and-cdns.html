@@ -1,0 +1,80 @@
+---
+published: 2026-09-11
+lastmod: 2026-09-11
+title: "Caching: why the old version keeps showing"
+linkTitle: "Caching and CDNs"
+seotitle: "Caching and CDNs Explained for Analytics Practitioners"
+description: "A change can be published and still not reach every visitor for hours, because old copies are kept on the way. Where those copies live, and how to clear them."
+slug: "caching-and-cdns"
+type: topic
+weight: 302
+params:
+  group: changes
+  oneline: "A cache is a saved copy of a file, kept so a site loads faster. When the file changes, some visitors keep getting the old copy until the saved one expires."
+  cando: "Explain why a fix you published is not on the page yet, and check whether you are looking at the new version."
+  words:
+    - t: "Cache"
+      d: "A saved copy of a file, kept so it does not have to be fetched again."
+    - t: "CDN"
+      d: "Content delivery network. Servers around the world that keep copies of a site's files close to visitors."
+    - t: "Time to live"
+      d: "How long a saved copy may be used before it must be fetched again. Often shortened to TTL."
+    - t: "Cache busting"
+      d: "Giving a file a new name when its content changes, so no old copy can be used."
+    - t: "Hard refresh"
+      d: "Reloading a page while ignoring saved copies. Ctrl+Shift+R, or Cmd+Shift+R on a Mac in Chrome."
+    - t: "Purge"
+      d: "Deleting saved copies on a CDN so every visitor gets the new file."
+  ask:
+    - "How long are our JavaScript files cached, in the browser and on the CDN?"
+    - "Do our file names change when their content changes?"
+    - "Can you purge the CDN after this release?"
+---
+<h2>Why it matters to you</h2>
+<p>A published fix is not the same as a fix every visitor has. Between the server and the visitor there are saved copies of the old files. Knowing where they are explains the hours between "it is live" and "it works everywhere", and it stops you testing the old version by mistake.</p>
+<h2>Why sites keep copies</h2>
+<p>Downloading every file on every visit would make sites slow. So browsers and networks keep saved copies of files, called a <b>cache</b>. A visitor who comes back gets the saved copy, and the page appears faster.</p>
+<p>Think of a supermarket. The factory changes a recipe, but the shelves are still full of boxes made last week. Customers buy the old recipe until those boxes are sold. Nobody did anything wrong. The new recipe simply has to wait for the old stock to run out.</p>
+<h2>Three places an old copy can live</h2>
+<figure class="fig-svg"><svg viewBox="0 0 700 182" role="img" aria-label="A new version of a file sits on your server, but a CDN still holds an old copy for a few more hours, the browser cache holds an old copy until it expires, and so the visitor sees the old file. Cache busting gives a changed file a new name so no old copy can match it; a purge clears the CDN and a hard refresh clears your own browser." style="width:100%;height:auto;display:block">
+<text x="24" y="22" style="font-size:12.5px;font-weight:700;fill:var(--ink-soft, #3b4048)">A new file on the server, and old copies on the way</text>
+<rect x="24" y="42" width="150" height="58" rx="6" style="fill:var(--ok-soft, #e9f4ee);stroke:var(--ok, #1f7a4d);stroke-width:1.5"/>
+<text x="99" y="66" text-anchor="middle" style="font-size:11.5px;font-weight:700;fill:var(--ink, #1c1f24)">Your server</text>
+<text x="99" y="84" text-anchor="middle" style="font-size:11px;fill:var(--ok, #1f7a4d)">new version</text>
+<line x1="174" y1="71" x2="200" y2="71" style="stroke:var(--faint, #9aa1ab);stroke-width:1.5"/>
+<polygon points="208,71 200,67 200,75" style="fill:var(--faint, #9aa1ab)"/>
+<rect x="208" y="42" width="150" height="58" rx="6" style="fill:var(--warn-soft, #fbf2e3);stroke:var(--warn, #9a5b00);stroke-width:1.5"/>
+<text x="283" y="66" text-anchor="middle" style="font-size:11.5px;font-weight:700;fill:var(--ink, #1c1f24)">CDN</text>
+<text x="283" y="84" text-anchor="middle" style="font-size:11px;fill:var(--warn, #9a5b00)">old copy, hours left</text>
+<line x1="358" y1="71" x2="384" y2="71" style="stroke:var(--faint, #9aa1ab);stroke-width:1.5"/>
+<polygon points="392,71 384,67 384,75" style="fill:var(--faint, #9aa1ab)"/>
+<rect x="392" y="42" width="150" height="58" rx="6" style="fill:var(--warn-soft, #fbf2e3);stroke:var(--warn, #9a5b00);stroke-width:1.5"/>
+<text x="467" y="66" text-anchor="middle" style="font-size:11.5px;font-weight:700;fill:var(--ink, #1c1f24)">Browser cache</text>
+<text x="467" y="84" text-anchor="middle" style="font-size:11px;fill:var(--warn, #9a5b00)">old copy, until expiry</text>
+<line x1="542" y1="71" x2="568" y2="71" style="stroke:var(--faint, #9aa1ab);stroke-width:1.5"/>
+<polygon points="576,71 568,67 568,75" style="fill:var(--faint, #9aa1ab)"/>
+<rect x="576" y="42" width="100" height="58" rx="6" style="fill:var(--bg, #ffffff);stroke:var(--ink-soft, #3b4048);stroke-width:1.5"/>
+<text x="626" y="66" text-anchor="middle" style="font-size:11.5px;font-weight:700;fill:var(--ink, #1c1f24)">Visitor</text>
+<text x="626" y="84" text-anchor="middle" style="font-size:11px;fill:var(--ink-soft, #3b4048)">sees old file</text>
+<text x="24" y="142" style="font-size:11px;fill:var(--ink-soft, #3b4048)">Cache busting gives a changed file a new name, so no old copy can match it.</text>
+<text x="24" y="166" style="font-size:11px;fill:var(--ink-soft, #3b4048)">A purge clears the CDN. A hard refresh clears your own browser.</text>
+</svg><figcaption>A fix is live on the server before it is live for every visitor.</figcaption></figure>
+<table class="mini-tbl"><tbody>
+<tr><td>Browser cache</td><td>On the visitor's own device. Kept until it expires, or until the visitor forces a reload.</td></tr>
+<tr><td>CDN</td><td>On servers around the world between the site and its visitors. Kept until it expires, or until the team clears it.</td></tr>
+<tr><td>Server cache</td><td>On the site's own servers, for pages that take work to build. Kept until the site rebuilds them.</td></tr>
+</tbody></table>
+<p>A <b>CDN</b>, or content delivery network, keeps copies of a site's files in many countries so they reach visitors quickly. Akamai, Cloudflare and Fastly are the names you will hear most. Adobe Tags libraries are also delivered from a CDN.</p>
+<h2>How long a copy is kept</h2>
+<p>Every file comes with an instruction that says how long a saved copy may be used. That period is its <b>time to live</b>, often shortened to TTL. A long TTL makes the site fast and changes slow. A short TTL makes changes fast and the site a little slower.</p>
+<p>Scripts are often kept for hours or days. So a change to a script can take that long to reach everyone, even after it is live on the server.</p>
+<h2>The real fix is a new name</h2>
+<p>The reliable way around old copies is <b>cache busting</b>: giving a file a new name, or a new code in its address, whenever its content changes. A copy saved under the old name can never be mistaken for the new file.</p>
+<p>Most modern build tools do this automatically, with names such as <span class="mn">app.4f3a9c.js</span>. When a change seems to reach some visitors and not others, ask whether the file name changed with it.</p>
+<p>A team can also <b>purge</b> the CDN, which deletes the saved copies there so every visitor receives the new file. A purge does not reach the copies already saved inside visitors' browsers.</p>
+<h2>Checking which version you are looking at</h2>
+<p>Your own browser keeps saved copies too. Before you test a fix, do a <b>hard refresh</b>: Ctrl+Shift+R on Windows, or Cmd+Shift+R on a Mac in Chrome. In the network tab you can also tick Disable cache, which ignores saved copies while the tools are open.</p>
+<p>On a site with Adobe Tags, you can check the library directly. Type this into the console and compare the build time with the time you published.</p>
+<div class="code"><button class="copy">Copy</button><pre>_satellite.buildInfo</pre></div>
+<div class="call mistake"><span class="ct">Where this goes wrong</span><p>A fix is published and tested at once. The tester's browser still holds yesterday's library, so the test fails. A second fix is published on top of the first, which was working. Now there are two changes to separate instead of one.</p></div>
+<p>So after any publish, confirm the version first and test second. It adds a minute, and it avoids the most confusing kind of failed test: one where the fix was right and the test was looking at the past.</p>

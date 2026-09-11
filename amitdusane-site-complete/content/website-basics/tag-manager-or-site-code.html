@@ -1,0 +1,64 @@
+---
+published: 2026-09-11
+lastmod: 2026-09-11
+title: "Tag managers and site code"
+linkTitle: "Tag manager or code"
+seotitle: "Tag Managers vs Site Code: Who Can Change What"
+description: "Some tracking changes take you ten minutes and some wait for a developer and a release. The line between the two, and how to tell which side a request is on."
+slug: "tag-manager-or-site-code"
+type: topic
+weight: 303
+params:
+  group: changes
+  oneline: "A tag manager adds tracking to a site without changing the site's code. It can do a great deal, but only with what the page already contains."
+  cando: "Sort a tracking request into a same-day tag manager change or a developer change that waits for a release."
+  words:
+    - t: "Tag"
+      d: "A piece of code from another company, such as an analytics or advertising script, added to a page."
+    - t: "Tag manager"
+      d: "A tool that loads and controls tags from one place, such as Adobe Tags or Google Tag Manager."
+    - t: "Embed code"
+      d: "The one line of code a developer adds to every page so the tag manager can load."
+    - t: "Rule"
+      d: "An instruction in a tag manager: when this happens, do that. For example, when the page loads, send a page view."
+    - t: "Data element"
+      d: "A named value the tag manager reads from the page, such as the product ID or the page name."
+    - t: "Hard-coded"
+      d: "Written directly into the site's code, so only a developer and a release can change it."
+  ask:
+    - "Is this value already on the page, in the data layer or anywhere else?"
+    - "Is any tracking hard-coded in the site itself?"
+    - "Where does the embed code sit, and is it the same on every page?"
+---
+<h2>Why it matters to you</h2>
+<p>Some tracking changes take you ten minutes. Others wait for a developer and a release. Knowing which is which is the difference between promising a date and promising a week, and it tells you who to ask before you ask anyone.</p>
+<h2>What a tag manager is</h2>
+<p>A <b>tag</b> is a piece of code from another company, such as an analytics or advertising script. A <b>tag manager</b> is a tool that loads and controls all of those tags from one place. Adobe Tags and Google Tag Manager are the two you will hear most.</p>
+<p>Think of a noticeboard in a shared office. The building team fixes the board to the wall once. After that, anybody with the key can pin up notices without calling the builders. The board is the tag manager, and the notices are your tracking.</p>
+<p>Fixing the board to the wall is the <b>embed code</b>: one line a developer adds to every page so the tag manager can load. Everything the tag manager does after that is set up inside the tool, not in the site's code.</p>
+<h2>What the tag manager can do alone</h2>
+<p>Inside the tag manager, a <b>rule</b> says: when this happens, do that. A <b>data element</b> is a named value the tag manager reads from the page, such as the page name or a product ID. With those two, the tag manager can:</p>
+<ul>
+<li>send page views, and track clicks on elements that already exist on the page</li>
+<li>read values that are already on the page, in the address, in a cookie or in the data layer</li>
+<li>decide which variable each value goes into, and change that later</li>
+<li>add, remove or pause tags from other companies</li>
+</ul>
+<p>All of this can be changed and published the same day, usually by the team that owns analytics. How it is organised is covered in <a href="/adobe-analytics-learning/collect/adobe-launch-tags/launch-architecture/">Launch Architecture</a>.</p>
+<h2>Where the embed code sits matters</h2>
+<p>The embed code usually sits in the head of every page, the part the browser reads before the visible content. Developers often load it in a way that does not hold up the rest of the page. The page is faster, and the tag manager may start a moment after the page has begun.</p>
+<p>Anything that happens before the tag manager starts is invisible to it. A very fast click, or a value the page sets and then removes, can be missed. So if a tracking problem only happens on quick clicks, or only on the first page of a visit, ask where the embed code sits and how it is loaded.</p>
+<h2>What only the site's code can do</h2>
+<p>A tag manager can only work with what the page already contains. It cannot invent information the page does not have, and it cannot react to moments the page does not announce.</p>
+<table class="mini-tbl"><tbody>
+<tr><td>Tag manager</td><td>Track clicks on the Buy button. Move a value from one variable to another. Add a new tag from another company.</td></tr>
+<tr><td>Site code</td><td>Tell tracking whether the customer is signed in. Send the order total from the server. Announce each screen change in a single-page app.</td></tr>
+<tr><td>Both</td><td>The site puts a value in the data layer, and the tag manager sends it.</td></tr>
+</tbody></table>
+<p>The quick test: if the value or the moment is not visible anywhere on the page today, it needs a developer.</p>
+<h2>The data layer is where the two meet</h2>
+<p>The <b>data layer</b> is an agreed place on the page where the site puts values for tracking to read. Developers fill it, and the tag manager reads it. Once it holds the right values, most later changes are tag manager work only. What goes into one is covered in <a href="/adobe-analytics-learning/collect/data-layers/what-is-a-data-layer/">What Is a Data Layer</a>.</p>
+<h2>Watch for hard-coded tracking</h2>
+<p>Some tracking is <b>hard-coded</b>, which means it is written directly into the site's code instead of the tag manager. Older sites often have some, usually on a few important pages. A tag manager cannot change it, and it cannot see it.</p>
+<div class="call mistake"><span class="ct">Where this goes wrong</span><p>Page views on the checkout are counted twice. The rule in the tag manager looks correct. Years ago a developer added a tracking call to the checkout template, and both have run on every checkout page since.</p></div>
+<p>So when a number is doubled, ask whether anything is hard-coded before you change a single rule. The answer takes one question to a developer, and it can save a week of changing rules that were never the problem.</p>

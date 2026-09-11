@@ -1,0 +1,66 @@
+---
+published: 2026-09-11
+lastmod: 2026-09-11
+title: "HTML, CSS and JavaScript"
+linkTitle: "HTML, CSS, JavaScript"
+seotitle: "HTML, CSS, JavaScript and the DOM for Analytics Practitioners"
+description: "Three languages build every web page, and one of them runs your tracking. What each one does, what the DOM is, and why a redesign can break a click rule."
+slug: "html-css-and-javascript"
+type: topic
+weight: 102
+params:
+  group: pages
+  oneline: "HTML says what is on a page, CSS says how it looks, and JavaScript makes it do things. The browser turns all three into the DOM, the live page your tracking reads."
+  cando: "Understand why a redesign that changed nothing you can see can still stop a click from being tracked."
+  words:
+    - t: "HTML"
+      d: "The text file that says what is on a page: headings, paragraphs, buttons, links and images."
+    - t: "CSS"
+      d: "The rules that decide how a page looks: colours, sizes, spacing and position."
+    - t: "JavaScript"
+      d: "The language that makes a page do things. Tracking code is JavaScript."
+    - t: "DOM"
+      d: "The browser's live model of the page, built from the HTML. Scripts read it and change it."
+    - t: "Element"
+      d: "One piece of a page, such as a button, a link or a heading."
+    - t: "CSS selector"
+      d: "A short pattern that finds elements on a page, such as every button with the class buy."
+  ask:
+    - "Which elements have a stable id or data attribute that will not change in a redesign?"
+    - "Is this button in the page from the start, or added by JavaScript later?"
+    - "Can you add a data attribute to the elements we track, so our rules do not depend on styling?"
+---
+<h2>Why it matters to you</h2>
+<p>Your tracking lives inside a page built from three languages. A tag manager finds buttons and links by reading that page. When a developer changes the page, your tracking can stop without any error. Knowing what each language does is how you see that coming.</p>
+<h2>Three languages, three jobs</h2>
+<p>Think of a house. <b>HTML</b> is the structure: the walls, the doors and the rooms. <b>CSS</b> is the decoration: the paint, the furniture and the lights. <b>JavaScript</b> is the electricity, which makes the doorbell ring and the lights turn on.</p>
+<p>A house can stand without paint, and a page can show without CSS. It just looks plain. A page without JavaScript still shows its text, but nothing on it reacts, and no tracking runs, because tracking is JavaScript.</p>
+<p>Here is one button written in all three languages.</p>
+<div class="code"><button class="copy">Copy</button><pre>&lt;!-- HTML: what the button is --&gt;
+&lt;button id="buy" class="btn-primary" data-track="add-to-cart"&gt;Add to cart&lt;/button&gt;
+
+/* CSS: how it looks */
+.btn-primary { background: green; color: white; }
+
+// JavaScript: what happens when it is clicked
+document.getElementById("buy").addEventListener("click", addToCart);</pre></div>
+<p>You do not need to write any of these lines. You only need to recognise which language you are looking at, because each one is changed by different people for different reasons.</p>
+<h2>The DOM is the page your tracking sees</h2>
+<p>The browser does not keep the HTML file as it arrived. It reads the file and builds a live model of the page called the <b>DOM</b>, short for Document Object Model. Every heading, link and button becomes an <b>element</b> in that model.</p>
+<p>JavaScript changes the DOM all the time. It adds a product to a list, opens a pop-up, or fills in a price. The HTML file on the server stays the same. That is why the source of a page and the page on your screen can disagree. The page source shows the file the server sent. The browser's developer tools show the DOM as it is now.</p>
+<p>Your tag manager reads the DOM, not the file. So what matters is what is on the page at the moment the tracking runs.</p>
+<h2>How a tag manager finds a button</h2>
+<p>Elements carry labels called attributes. Three of them matter to tracking. An <b>id</b> is a unique name for one element. A <b>class</b> is a label for styling, and many elements can share it. A <b>data attribute</b> is a custom label that starts with <span class="mn">data-</span>.</p>
+<p>A <b>CSS selector</b> is a short pattern that finds elements by those labels. Tag managers use selectors to decide which clicks to track.</p>
+<table class="mini-tbl"><tbody>
+<tr><td>#buy</td><td>The one element whose id is buy. Stable, if the developers treat ids as fixed.</td></tr>
+<tr><td>.btn-primary</td><td>Every element with that class. Fragile, because classes change with the design.</td></tr>
+<tr><td>[data-track]</td><td>Every element with a tracking label. The most stable, because it exists only for tracking.</td></tr>
+</tbody></table>
+<h2>Why a redesign breaks click tracking</h2>
+<p>Classes exist for designers. When a designer renames <span class="mn">btn-primary</span> to <span class="mn">button-main</span>, the visitor sees no difference. The rule that looked for <span class="mn">.btn-primary</span> now finds nothing, and no error appears anywhere.</p>
+<div class="call mistake"><span class="ct">Where this goes wrong</span><p>A click rule finds a button by its class. A redesign renames the class. The site looks the same, the rule matches nothing, and the click report drops to zero on the day of the release. The drop is read as a change in customer behaviour.</p></div>
+<p>The fix is to ask developers for data attributes that exist only for tracking, such as <span class="mn">data-track="add-to-cart"</span>. Designers leave them alone, because they change nothing on screen. How rules use these selectors is covered in <a href="/adobe-analytics-learning/collect/adobe-launch-tags/rules/">Rules</a>.</p>
+<h2>Elements that arrive late</h2>
+<p>Some elements are not in the HTML at all. JavaScript adds them after the page loads: a pop-up, a list of products that grows as you scroll, a form inside a drawer. A rule that looks for an element when the page loads cannot find one that arrives later.</p>
+<p>So before you ask for a click to be tracked, ask whether the element is in the page from the start or added later. The answer decides how the tracking has to be built. Sites that change the whole screen this way are covered in <a href="/website-basics/single-page-apps/">Single-page apps</a>.</p>

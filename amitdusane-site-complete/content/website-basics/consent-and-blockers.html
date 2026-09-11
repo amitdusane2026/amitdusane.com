@@ -1,0 +1,69 @@
+---
+published: 2026-09-11
+lastmod: 2026-09-11
+title: "Consent banners, blockers and tracking protection"
+linkTitle: "Consent and blockers"
+seotitle: "Consent Banners, Ad Blockers and Tracking Protection"
+description: "Some visitors never appear in your reports, because of the law, their own choice or their browser. The three causes, and how to tell them apart."
+slug: "consent-and-blockers"
+type: topic
+weight: 203
+params:
+  group: browser
+  oneline: "A consent banner asks permission before tracking. Ad blockers and browser protections limit tracking without asking. All three remove visitors from your reports."
+  cando: "Explain in a meeting why analytics will never match orders or server logs, and which part of the gap is expected."
+  words:
+    - t: "Consent banner"
+      d: "The message that asks a visitor whether the site may use cookies and tracking."
+    - t: "CMP"
+      d: "Consent management platform. The tool that shows the banner and remembers each answer, such as OneTrust."
+    - t: "Opt-in"
+      d: "Tracking waits until the visitor says yes. Common in Europe."
+    - t: "Opt-out"
+      d: "Tracking runs until the visitor says no. Common in the United States."
+    - t: "Ad blocker"
+      d: "A browser add-on that stops requests to known advertising and analytics addresses."
+    - t: "Tracking protection"
+      d: "Browser rules that limit tracking on their own, such as Safari's Intelligent Tracking Prevention."
+  ask:
+    - "What does our tracking do before the visitor answers the banner?"
+    - "Which consent category is analytics in, and in which countries do we ask first?"
+    - "How does the tag manager learn the visitor's answer?"
+---
+<h2>Why it matters to you</h2>
+<p>Your reports only contain the visitors your tracking was allowed to see. Three separate things remove people: the visitor's answer to a banner, a tool they installed, and their browser. When someone asks why analytics shows fewer orders than the order system, these three are most of the answer.</p>
+<h2>The consent banner</h2>
+<p>In many countries the law requires permission before a site uses cookies that are not strictly necessary. The <b>consent banner</b> is how a site asks. It is shown by a <b>CMP</b>, a consent management platform such as OneTrust or Cookiebot.</p>
+<p>The CMP stores each visitor's answer, usually in its own cookie, and tells the other scripts on the page what the answer was. Answers are grouped into categories such as necessary, analytics and marketing. Analytics usually has its own category, so a visitor can accept analytics and refuse advertising.</p>
+<h2>Opt-in and opt-out</h2>
+<table class="mini-tbl"><tbody>
+<tr><td>Opt-in</td><td>Nothing is tracked until the visitor says yes. Visitors who say no, or never answer, do not appear. Common in Europe.</td></tr>
+<tr><td>Opt-out</td><td>Tracking starts at once and stops if the visitor says no. Common in the United States.</td></tr>
+</tbody></table>
+<p>One site can use both, depending on where the visitor is. So the share of visitors you can see differs from country to country, and a report that combines countries mixes very different levels of coverage.</p>
+<h2>The moment before the answer</h2>
+<p>The most important consent setting is also the least discussed: what the tracking does before the visitor answers. The first page view happens before most people have even read the banner.</p>
+<p>Some setups send nothing until the answer arrives. Others hold the tracking and send it if the answer is yes. If the tracking waits and the visitor accepts on their second page, the landing page may never be recorded. Entry pages, campaigns and referrers all depend on that first page, so this one setting can change your marketing reports more than any campaign.</p>
+<p>How this works in Adobe Tags is covered in <a href="/adobe-analytics-learning/collect/adobe-launch-tags/consent-and-tag-management/">Consent and Tag Management</a>.</p>
+<h2>Ad blockers</h2>
+<p>An <b>ad blocker</b> is an add-on that carries a list of addresses known to belong to advertising and analytics companies. Requests to those addresses are stopped before they leave the browser. There is no banner and no question, and the visitor may not know it is happening.</p>
+<p>Some browsers, such as Brave, block this way by default. Sending tracking through an address on your own domain reduces blocking, but no setup avoids it completely.</p>
+<h2>Protection built into browsers</h2>
+<p>Browsers now limit tracking without any add-on. Safari's Intelligent Tracking Prevention and Firefox's Enhanced Tracking Protection shorten cookies, as described in <a href="/website-basics/cookies-and-storage/">Cookies and browser storage</a>. In private browsing, Safari also removes some known tracking parameters from links.</p>
+<p><b>Tracking protection</b> does not usually hide a visit. It hides the connection between visits, so one returning person looks like several new ones.</p>
+<h2>Checking consent yourself</h2>
+<ol>
+<li>Open a private window, so no earlier answer is stored.</li>
+<li>Open the network tab and load the page. Do not answer the banner yet.</li>
+<li>Look for your tracking calls. On an opt-in site there should be none.</li>
+<li>Refuse analytics, move to a second page, and check again. There should still be none.</li>
+<li>Open a new private window, accept, and check that the calls now appear, including one for the page where you accepted.</li>
+</ol>
+<p>Run the same five steps once for each country setup the site uses. A consent fault never shows as an error. It shows as calls that should not exist, or as a missing first page, and only a test like this one finds either.</p>
+<h2>Telling the three apart</h2>
+<table class="mini-tbl"><tbody>
+<tr><td>Consent</td><td>The visitor chose. The CMP's own reports show how many people said yes.</td></tr>
+<tr><td>Ad blocker</td><td>The request never left the browser. Visible only when you compare with server or order data.</td></tr>
+<tr><td>Browser</td><td>The visit is counted, but as a new visitor. Visible as a rise in new visitors after a browser update.</td></tr>
+</tbody></table>
+<p>Analytics will never match the order system, and it should not be expected to. Measure the gap once, explain which of the three causes it, and then watch whether it changes. A stable gap is normal. A gap that suddenly grows is a problem worth a ticket.</p>

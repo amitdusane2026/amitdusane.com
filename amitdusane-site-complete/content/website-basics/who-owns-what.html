@@ -1,0 +1,69 @@
+---
+published: 2026-09-11
+lastmod: 2026-09-11
+title: "Where your job ends on a website"
+linkTitle: "Who owns what"
+seotitle: "Analytics and Web Development: Who Owns What on a Website"
+description: "Most website tracking fails in the gap between teams, not inside any one of them. Who owns each part, and what to hand over so the gap closes."
+slug: "who-owns-what"
+type: topic
+weight: 402
+params:
+  group: team
+  oneline: "On a website, developers own the page and its data, the tag manager owner owns the rules, and you own the question the data must answer. Tracking breaks where these meet."
+  cando: "Write a tracking request a developer can build without a meeting, and know which parts you must check yourself."
+  words:
+    - t: "Specification"
+      d: "The written list of what to track: each event, its values, and when it fires."
+    - t: "Data layer"
+      d: "An agreed place on the page where the site puts values for tracking to read."
+    - t: "Ticket"
+      d: "One request in the development team's tracking system, such as Jira."
+    - t: "Acceptance criteria"
+      d: "The checks that decide whether a ticket is finished. Written before the work starts."
+    - t: "Sprint"
+      d: "A fixed period of development work, often two weeks. Work is chosen at its start."
+    - t: "Code freeze"
+      d: "The days before a release when no new changes are accepted."
+  ask:
+    - "What do you need from me before this ticket can start?"
+    - "When is the next sprint planned, and when is the next release?"
+    - "Who checks the tracking before the release, and on which environment?"
+---
+<h2>Why it matters to you</h2>
+<p>A website's tracking passes through several hands: developers, the owner of the tag manager, sometimes an agency, and you. Each can do their part correctly and the result can still be wrong, because nobody owned the places where the parts meet. Knowing who owns what, and what each person needs from you, is most of what gets tracking delivered on time.</p>
+<h2>Who usually owns what</h2>
+<table class="mini-tbl"><tbody>
+<tr><td>Developers</td><td>The page, the data layer, the embed code and any hard-coded tracking.</td></tr>
+<tr><td>Tag manager owner</td><td>Rules, data elements, other companies' tags and publishing. Often the analytics team.</td></tr>
+<tr><td>You</td><td>The business question, the specification, the variables, and checking the data.</td></tr>
+<tr><td>Marketing</td><td>Campaign links and the codes inside them.</td></tr>
+<tr><td>Legal or privacy</td><td>What consent is needed, and for what.</td></tr>
+</tbody></table>
+<p>Names differ between companies, and one person can hold several of these roles. What matters is that each part has one named owner.</p>
+<h2>The specification is your half of the agreement</h2>
+<p>Think of having a kitchen built. The carpenter builds exactly what the drawing shows. A vague drawing produces a kitchen that matches the drawing and not the one you needed.</p>
+<p>Your drawing is the <b>specification</b>: every event, the exact moment it fires, every value it carries, an example of each value, and where each value comes from. Developers build from it, so everything you leave out is something they have to guess. How to build one is covered in <a href="/adobe-analytics-learning/deliver/solution-design-reference/what-is-an-sdr/">What Is an SDR</a>.</p>
+<h2>A ticket a developer can build</h2>
+<p>Developers work from a <b>ticket</b>, one request in a tracking system such as Jira. A good tracking ticket answers four things.</p>
+<ol>
+<li><b>What</b>: the values to add to the <b>data layer</b>, with their names.</li>
+<li><b>When</b>: the exact moment, such as when the order confirmation screen has loaded.</li>
+<li><b>Example</b>: the object you expect, written out in full.</li>
+<li><b>Done means</b>: the checks that decide whether the work is finished.</li>
+</ol>
+<div class="code"><button class="copy">Copy</button><pre>window.adobeDataLayer.push({
+  event: "purchase",
+  order: { id: "ORD-55120", total: 128.40, currency: "EUR" }
+});</pre></div>
+<p>The last point is the <b>acceptance criteria</b>, and it matters most. Write it before the work starts, for example: one purchase event per order, the total as a number, after discount. Then everyone agrees in advance what finished looks like.</p>
+<h2>When work actually happens</h2>
+<p>Most development teams plan their work in a <b>sprint</b>, a fixed period that is often two weeks. Work is chosen at the start of the sprint. A ticket that arrives in the middle usually waits for the next one.</p>
+<p>Before a release there is often a <b>code freeze</b>, a few days when no new changes are accepted. So ask for two dates early: when the next sprint is planned, and when the next release goes out. Then work backwards from them.</p>
+<h2>Keep your own record</h2>
+<p>Write down every tracking change with three facts: what changed, when it reached production, and who asked for it. Keep the list where the people who read your reports can find it.</p>
+<p>A year from now, somebody will ask why a number jumped in March. Without a record, the answer depends on who still remembers. With one, it takes a minute. Analysis Workspace lets you attach a dated note to your reports for this reason, and a shared list of changes does the same job for the whole team.</p>
+<h2>The part only you can check</h2>
+<p>Developers test that their code runs. The tag manager owner tests that the rule fires. Only you know whether the value is right for the question the report must answer.</p>
+<div class="call mistake"><span class="ct">Where this goes wrong</span><p>The developer confirms the data layer holds a price. The tag manager owner confirms the rule sends it. Nobody checks that it is the price before the discount, not after, and revenue is overstated for a whole quarter.</p></div>
+<p>So check the values yourself after every release, on the live site, as described in <a href="/website-basics/environments-and-releases/">Development, staging and production</a>. It is the one check nobody else is in a position to make.</p>

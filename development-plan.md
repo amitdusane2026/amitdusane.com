@@ -3043,16 +3043,53 @@ onto main as b49c5e0, tagged v2.1, and cherry-picked onto develop cleanly.
 Google updates the name and icon on its own schedule. Request indexing of the
 home page in Search Console to prompt it.
 
+---
+
+## 11 September 2026: Website Basics, built end to end
+
+Amit handed Website Basics over with full authority over the content, and
+Mobile App Basics as the design to follow. It is on develop, not launched, and
+waiting for his reading.
+
+**Twelve topics in four groups, at /website-basics/:**
+
+- Web pages: What happens when a page loads; HTML, CSS and JavaScript; What a
+  URL is made of; Single-page apps
+- The browser: Developer tools and the network tab; Cookies and browser
+  storage; Consent banners, blockers and tracking protection
+- Shipping changes: Development, staging and production; Caching; Tag managers
+  and site code
+- Working together: Reading enough JavaScript to be useful; Where your job
+  ends on a website
+
+Each follows the fixed topic shape, carries six words (72 in the glossary),
+three questions to ask a developer, and links into Adobe Analytics Learning
+where it leans on something that section teaches properly. Five carry a
+figure; all five pass diagram-check.js in both themes at 1440 and 375.
+Measured: paragraph median 40, sentence median 12, no sentence over 34 words,
+no idioms from the scan list, no dashes, no contractions, no first person.
+
+**Length is under the 800 to 1,000 guide on most topics.** The first drafts ran
+565 to 863 words. Seven gained one practical section each (checking consent
+yourself, feature flags, what code to ignore, keeping a record, where the embed
+code sits, reading cookies, the referrer), which brought the range up without
+padding. Amit's earlier ruling on reading time against payload was the reason
+not to push further.
+
+**The container passed its test with one fix.** The registry block, an accent
+pair (plum, 7.9:1 on white), a home-page tile colour, a one-line list template
+and the content were all it needed, as site-architecture.md predicted, except
+that the line under every topic headline had "apps" written into the template.
+It is now the registry's `remind`, set for both Basics sections. The tile
+colour was always needed and was missing from the list; the list now has it.
+
+**Page baseline 273 production, 274 staging.**
+
 ### What the next session should pick up first
 
-**Phase E, Website Basics, on Amit's go-ahead only.** About twelve topics. The
-name is "Website Basics", never "Web Basics". By the list in
-`site-architecture.md` it costs a registry block, an accent rule, a one-line
-list template, an `_index.html`, a `glossary.html` and the topics. **If it needs
-anything more, the container is not yet reusable, and that is worth saying out
-loud rather than patching.**
+**Amit reads Website Basics and Mobile App Basics end to end** and gives his
+verdict. Neither is marked QA'd in the tracker, deliberately: his reading is
+the acceptance step, not the gate. Neither is launched.
 
-It goes ahead of the parked Web SDK Implementation and the Web SDK Migration
-rewrite, which still wait. Neither Mobile App Basics nor the Mobile SDK guide
-is marked QA'd in the tracker, deliberately: Amit's reading is the acceptance
-step, not the gate.
+After that, the parked Web SDK Implementation and the Web SDK Migration
+rewrite, in that order, and only when he says so.

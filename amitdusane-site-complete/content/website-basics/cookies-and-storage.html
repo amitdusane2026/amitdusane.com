@@ -1,0 +1,59 @@
+---
+published: 2026-09-11
+lastmod: 2026-09-11
+title: "Cookies and browser storage"
+linkTitle: "Cookies and storage"
+seotitle: "Cookies and Browser Storage Explained for Analytics Teams"
+description: "Your visitor counts depend on small files the browser keeps, and the browser also deletes. What a cookie is, who can read it, and how long it lasts."
+slug: "cookies-and-storage"
+type: topic
+weight: 202
+params:
+  group: browser
+  oneline: "A cookie is a small piece of text a site asks the browser to keep. Analytics uses one to recognise a returning browser, and the browser decides how long it stays."
+  cando: "Explain why visitor counts are higher than the number of real people, and why they jump after a browser update."
+  words:
+    - t: "Cookie"
+      d: "A small piece of text a site stores in the browser and reads again on the next visit."
+    - t: "First-party cookie"
+      d: "A cookie set for the site the visitor is on, such as example.com."
+    - t: "Third-party cookie"
+      d: "A cookie set for another company's domain while the visitor is on your site."
+    - t: "Expiry"
+      d: "The date a cookie is deleted. The site asks for one, and the browser can shorten it."
+    - t: "Local storage"
+      d: "Another place a site can keep values in the browser. Only JavaScript can read it."
+    - t: "Session storage"
+      d: "Like local storage, but it belongs to one tab and is emptied when the tab closes."
+  ask:
+    - "Which domain are our analytics cookies set on?"
+    - "Are they set by JavaScript in the browser, or by our own server?"
+    - "Does anything on the site delete, rename or move cookies?"
+---
+<h2>Why it matters to you</h2>
+<p>A unique visitor in your reports is really a unique cookie. Clear the cookie and the same person becomes a new visitor. Every major browser now limits cookies, so your visitor numbers depend partly on decisions made by Apple, Mozilla and Google.</p>
+<h2>A cookie is a cloakroom ticket</h2>
+<p>When you leave a coat in a cloakroom, you get a ticket with a number. The ticket does not describe you. It only lets the cloakroom match you to the same coat later.</p>
+<p>A <b>cookie</b> works the same way. On the first visit, the site gives the browser a random ID and asks it to keep it. On the next visit, the browser shows the ID again, and the visit is joined to the earlier ones. Lose the ticket, and the cloakroom sees a new customer.</p>
+<p>The ticket belongs to a browser, not a person. Somebody who uses a phone, a laptop and a work computer holds three tickets, and appears as three visitors until they sign in somewhere their visits can be joined.</p>
+<h2>First-party and third-party cookies</h2>
+<p>Every cookie belongs to a domain. A <b>first-party cookie</b> belongs to the site in the address bar. A <b>third-party cookie</b> belongs to another company's domain, such as an advertising network, and is set while the visitor is on your site.</p>
+<p>Safari and Firefox block third-party cookies by default, and Chrome lets people block them. So analytics relies on first-party cookies. Adobe keeps its visitor ID in a first-party cookie on your own domain.</p>
+<table class="mini-tbl"><tbody>
+<tr><td>AMCV_…</td><td>The visitor ID on sites using classic Adobe Analytics with the Experience Cloud ID service.</td></tr>
+<tr><td>kndctr_…_identity</td><td>The visitor ID on sites using the Adobe Web SDK.</td></tr>
+</tbody></table>
+<p>What that ID is and how it joins visits is covered in <a href="/adobe-analytics-learning/collect/tracking-calls/experience-cloud-id-ecid/">Experience Cloud ID (ECID)</a>.</p>
+<h2>The browser decides how long a cookie lasts</h2>
+<p>A site asks for an <b>expiry</b> date when it sets a cookie. The browser does not always agree. Safari limits cookies written by JavaScript to seven days. A person who returns to your site on Safari after eight days arrives with no ticket, and is counted as a new visitor.</p>
+<p>Cookies set by the site's own server usually last longer, which is why many teams set the analytics cookie from their server. Safari limits some of those too, depending on how the server is set up. The details are covered in <a href="/adobe-analytics-learning/collect/tracking-calls/first-party-cookies/">First-Party Cookies</a>.</p>
+<h2>Local storage and session storage</h2>
+<p>Cookies are not the only place a site can keep values. <b>Local storage</b> keeps values in the browser until something clears them. Only JavaScript on the same site can read it, and it is never sent to the server with requests.</p>
+<p><b>Session storage</b> works the same way, but it belongs to one tab and is emptied when that tab closes. Developers use it for values that should not outlive the visit, such as a step in a form. Safari also clears script-written storage for sites a person has not used for seven days.</p>
+<h2>Looking at the cookies yourself</h2>
+<p>Open the browser's developer tools and choose the Application tab, called Storage in Firefox. Choose Cookies and then your site's domain. Each row shows a cookie's name, its value, its domain and its expiry date.</p>
+<p>Find the Adobe cookie and read its domain and expiry. The domain should be your site's own. To test as a new visitor, delete that cookie, or open a private window, and load the page again. How to read the rest of these tools is covered in <a href="/website-basics/developer-tools/">Developer tools and the network tab</a>.</p>
+<h2>What this does to your numbers</h2>
+<p>Unique visitors are always more than the real number of people. The gap grows when browsers tighten their rules, because more tickets are lost. When a browser update shortens cookies, new visitors rise and returning visitors fall, and nobody's behaviour has changed.</p>
+<div class="call mistake"><span class="ct">Where this goes wrong</span><p>New visitors rise sharply in the month after a browser update. The rise is presented as a marketing success. The same people came back as before, but their cookies had been deleted, so they were counted again as new.</p></div>
+<p>So before you explain a change in new or returning visitors, check two things: whether a browser changed its rules, and whether the site changed where or how it sets its cookies. Either one changes the count without changing the people.</p>

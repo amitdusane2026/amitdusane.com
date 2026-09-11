@@ -1,0 +1,97 @@
+---
+published: 2026-09-11
+lastmod: 2026-09-11
+title: "What happens when a page loads"
+linkTitle: "How a page loads"
+seotitle: "What Happens When a Web Page Loads, for Analytics Teams"
+description: "A page arrives in pieces, in a fixed order, and your tracking runs near the end. Knowing that order explains most missing and doubled page views."
+slug: "how-a-page-loads"
+type: topic
+weight: 101
+params:
+  group: pages
+  oneline: "A browser asks a server for a page, gets back one text file, and builds the page from it piece by piece. Your tracking is one of those pieces, and it runs late."
+  cando: "Explain why a page view was counted, missed or counted twice, by knowing when the tracking ran."
+  words:
+    - t: "Request"
+      d: "What the browser sends to ask for something: a page, an image, a script or a tracking call."
+    - t: "Response"
+      d: "What comes back. It carries a status code and, usually, the thing that was asked for."
+    - t: "Server"
+      d: "The computer that holds the website and answers requests."
+    - t: "Status code"
+      d: "A three-digit number in every response. 200 means success, 404 means not found, 500 means the server failed."
+    - t: "Redirect"
+      d: "A response that says the page has moved and gives the new address. The browser follows it on its own."
+    - t: "Page load"
+      d: "The moment the browser has finished building the page, with its pictures and scripts."
+  ask:
+    - "Where on the page does the tag manager load, and does anything run before it?"
+    - "Does this page redirect before it shows, and does the redirect keep everything after the question mark?"
+    - "Is the page view sent when the page starts loading, or after it has finished?"
+---
+<h2>Why it matters to you</h2>
+<p>Every page view in your reports says two things: a page loaded, and your tracking ran on it. Most arguments about missing or doubled page views are really about the order in which a page is built. When you know that order, you can say where a number went wrong instead of guessing.</p>
+<h2>A page is built from many requests</h2>
+<p>Typing an address and pressing Enter makes the browser send a <b>request</b> to a <b>server</b>, the computer that holds the website.</p>
+<p>The server sends back a <b>response</b>. That first response is not the finished page. It is one text file of HTML, a list of instructions for building the page.</p>
+<p>The browser reads that file from the top. Every time it finds a picture, a style file or a script, it sends another request. A normal page sends dozens of them, and a busy one sends more than a hundred. Your tracking call is one of those requests, and it usually leaves near the end.</p>
+<figure class="fig-svg"><svg viewBox="0 0 700 180" role="img" aria-label="Pressing Enter sends a request. The HTML file arrives, the browser requests styles and images, the scripts and the tag manager run, and the tracking call is sent last. A visitor who leaves before the end is never counted." style="width:100%;height:auto;display:block">
+<text x="24" y="22" style="font-size:12.5px;font-weight:700;fill:var(--ink-soft, #3b4048)">One page, many requests, and the tracking call comes last</text>
+<rect x="24" y="44" width="104" height="48" rx="6" style="fill:var(--bg-soft, #f7f8fa);stroke:var(--line, #e4e6ea);stroke-width:1.5"/>
+<text x="76" y="64" text-anchor="middle" style="font-size:11.5px;font-weight:700;fill:var(--ink, #1c1f24)">Request</text>
+<text x="76" y="80" text-anchor="middle" style="font-size:11px;fill:var(--ink-soft, #3b4048)">browser asks</text>
+<line x1="128" y1="68" x2="136" y2="68" style="stroke:var(--faint, #9aa1ab);stroke-width:1.5"/>
+<polygon points="140,68 132,64 132,72" style="fill:var(--faint, #9aa1ab)"/>
+<rect x="140" y="44" width="112" height="48" rx="6" style="fill:var(--bg-soft, #f7f8fa);stroke:var(--line, #e4e6ea);stroke-width:1.5"/>
+<text x="196" y="64" text-anchor="middle" style="font-size:11.5px;font-weight:700;fill:var(--ink, #1c1f24)">HTML arrives</text>
+<text x="196" y="80" text-anchor="middle" style="font-size:11px;fill:var(--ink-soft, #3b4048)">one text file</text>
+<line x1="252" y1="68" x2="260" y2="68" style="stroke:var(--faint, #9aa1ab);stroke-width:1.5"/>
+<polygon points="264,68 256,64 256,72" style="fill:var(--faint, #9aa1ab)"/>
+<rect x="264" y="44" width="120" height="48" rx="6" style="fill:var(--bg-soft, #f7f8fa);stroke:var(--line, #e4e6ea);stroke-width:1.5"/>
+<text x="324" y="64" text-anchor="middle" style="font-size:11.5px;font-weight:700;fill:var(--ink, #1c1f24)">More requests</text>
+<text x="324" y="80" text-anchor="middle" style="font-size:11px;fill:var(--ink-soft, #3b4048)">styles, images</text>
+<line x1="384" y1="68" x2="392" y2="68" style="stroke:var(--faint, #9aa1ab);stroke-width:1.5"/>
+<polygon points="396,68 388,64 388,72" style="fill:var(--faint, #9aa1ab)"/>
+<rect x="396" y="44" width="112" height="48" rx="6" style="fill:var(--bg-soft, #f7f8fa);stroke:var(--line, #e4e6ea);stroke-width:1.5"/>
+<text x="452" y="64" text-anchor="middle" style="font-size:11.5px;font-weight:700;fill:var(--ink, #1c1f24)">Scripts run</text>
+<text x="452" y="80" text-anchor="middle" style="font-size:11px;fill:var(--ink-soft, #3b4048)">tag manager</text>
+<line x1="508" y1="68" x2="516" y2="68" style="stroke:var(--faint, #9aa1ab);stroke-width:1.5"/>
+<polygon points="520,68 512,64 512,72" style="fill:var(--faint, #9aa1ab)"/>
+<rect x="520" y="44" width="156" height="48" rx="6" style="fill:var(--accent-soft, #f8ecf4);stroke:var(--accent, #8a2c6e);stroke-width:1.5"/>
+<text x="598" y="64" text-anchor="middle" style="font-size:11.5px;font-weight:700;fill:var(--accent, #8a2c6e)">Tracking call</text>
+<text x="598" y="80" text-anchor="middle" style="font-size:11px;fill:var(--ink-soft, #3b4048)">page view recorded</text>
+<line x1="24" y1="124" x2="668" y2="124" style="stroke:var(--faint, #9aa1ab);stroke-width:1.5"/>
+<polygon points="676,124 668,120 668,128" style="fill:var(--faint, #9aa1ab)"/>
+<line x1="324" y1="114" x2="324" y2="134" style="stroke:var(--danger, #a13030);stroke-width:2"/>
+<text x="24" y="148" style="font-size:11px;fill:var(--ink-soft, #3b4048)">Enter pressed</text>
+<text x="676" y="148" text-anchor="end" style="font-size:11px;fill:var(--ink-soft, #3b4048)">a few seconds later</text>
+<text x="324" y="170" text-anchor="middle" style="font-size:11px;font-weight:700;fill:var(--danger, #a13030)">A visitor who leaves here is never counted</text>
+</svg><figcaption>The page view is one of the last requests a page makes.</figcaption></figure>
+<p>So a page view is not recorded when a visitor arrives. It is recorded when the page has been built far enough for your tracking to run. Everything that happens before that moment is invisible to your reports.</p>
+<h2>Think of a restaurant bill</h2>
+<p>A page load works like a meal in a restaurant. You order, and the dishes arrive one by one: bread, then soup, then the main course. Each dish takes its own time, and some arrive together.</p>
+<p>Your tracking call is the bill. The restaurant only records the meal when the bill is printed. A guest who leaves after the soup is never recorded. A bill printed twice records two meals. In both cases the kitchen did its job. The record is what went wrong.</p>
+<h2>Status codes say what the server answered</h2>
+<p>Every response carries a <b>status code</b>, a three-digit number. You will see these numbers in the browser's network tab, and developers use them all the time.</p>
+<table class="mini-tbl"><tbody>
+<tr><td>200</td><td>Success. The server sent what was asked for.</td></tr>
+<tr><td>301, 302</td><td>Moved. The server gives a new address, and the browser goes there.</td></tr>
+<tr><td>304</td><td>Not changed. The browser uses the copy it already saved.</td></tr>
+<tr><td>404</td><td>Not found. Nothing exists at that address.</td></tr>
+<tr><td>500</td><td>The server failed while answering.</td></tr>
+</tbody></table>
+<p>A 404 page is still a page, so it can still load your tracking. That is how a report can show views of an address that does not exist. The row does not prove the page is real. It only proves that somebody asked for that address.</p>
+<h2>Redirects can lose your campaign codes</h2>
+<p>A <b>redirect</b> is a response that says the page has moved and gives the new address. The browser follows it at once, and the visitor does not notice. Redirects are normal. An old product page points to a new one, and every http address points to its https version.</p>
+<p>The risk is the part of the address after the question mark, where campaign codes are kept. A redirect that does not copy that part onto the new address throws the campaign code away. The visit still arrives, but your reports count it as direct traffic.</p>
+<div class="call mistake"><span class="ct">Where this goes wrong</span><p>An email links to an old address. The server redirects it to the new page and drops everything after the question mark. For weeks the email seems to bring no visits, and direct traffic seems to grow. Nothing looks broken to the visitor, so nobody reports a problem.</p></div>
+<h2>When the tracking runs decides who is counted</h2>
+<p>Two moments matter. The first is when the browser has read the HTML and the page structure exists. The second is the <b>page load</b> event, when the pictures and scripts have finished too. Your page view can be set to fire at either one.</p>
+<p>Firing early counts more visitors, including people who leave in the first second. Firing late misses those people, but more values are ready by then, such as details the page adds as it loads.</p>
+<p>Neither choice is wrong. The mistake is changing from one to the other without telling anyone, because every trend line moves on that day.</p>
+<p>How Adobe Analytics records that moment is covered in <a href="/adobe-analytics-learning/collect/tracking-calls/page-view-tracking/">Page View Tracking</a>.</p>
+<h2>What a faster page can do to your numbers</h2>
+<p>People leave slow pages. If the tracking runs near the end, the people who leave first are never recorded. Your bounce rate then looks better than the truth, because the visitors most likely to bounce were never counted.</p>
+<p>So when a developer says a change will make a page faster, ask one more question: does it make the tracking run earlier or later? A faster page with later tracking can show fewer visits in your reports even while more people see it.</p>
+<p>To watch these requests yourself, open the <a href="/website-basics/developer-tools/">browser's developer tools</a>.</p>

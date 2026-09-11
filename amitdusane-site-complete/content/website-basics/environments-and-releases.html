@@ -1,0 +1,89 @@
+---
+published: 2026-09-11
+lastmod: 2026-09-11
+title: "Development, staging and production"
+linkTitle: "Environments"
+seotitle: "Development, Staging and Production Environments Explained"
+description: "A website exists in several copies, and only one of them is real. Which copy you test decides whether your test proves anything at all."
+slug: "environments-and-releases"
+type: topic
+weight: 301
+params:
+  group: changes
+  oneline: "Developers keep several copies of a website: one to build in, one to test in, and the live one. A change moves from copy to copy before real visitors see it."
+  cando: "Ask which environment a test ran in, and know when a change you approved will reach real visitors."
+  words:
+    - t: "Environment"
+      d: "One working copy of a website. Most sites have at least three."
+    - t: "Development"
+      d: "The copy where developers build and try things, often on their own computers."
+    - t: "Staging"
+      d: "A copy set up like the live site, used for testing before a release. Also called QA or test."
+    - t: "Production"
+      d: "The live site that real visitors use."
+    - t: "Deploy"
+      d: "Moving a version of the code onto an environment."
+    - t: "Rollback"
+      d: "Putting the previous version back after a release goes wrong."
+  ask:
+    - "Which environment is this, and which tag manager library does it load?"
+    - "When is the next release to production, and is this change in it?"
+    - "Does staging send its data to a separate report suite?"
+---
+<h2>Why it matters to you</h2>
+<p>You will often be asked to check tracking before a release. Whether that check means anything depends on which copy of the site you checked. Testing the wrong copy is the most common way a tracking fault reaches the live site after it was approved.</p>
+<h2>Three copies of one site</h2>
+<p>Developers keep several working copies of a website, each called an <b>environment</b>. Most teams have at least three.</p>
+<p>Think of a play. <b>Development</b> is the rehearsal room, where actors try things and make mistakes. <b>Staging</b> is the dress rehearsal on the real stage, with costumes and lights but no audience. <b>Production</b> is opening night, in front of real people.</p>
+<figure class="fig-svg"><svg viewBox="0 0 700 200" role="img" aria-label="Code moves from development to staging to production by deploys. Developers build in development, testers and you check in staging, and real visitors use production. Each copy of the site loads the tag manager library with the same name: development, staging or production." style="width:100%;height:auto;display:block">
+<text x="24" y="22" style="font-size:12.5px;font-weight:700;fill:var(--ink-soft, #3b4048)">Three copies of the site, and three tag libraries to match</text>
+<rect x="24" y="40" width="190" height="50" rx="6" style="fill:var(--bg-soft, #f7f8fa);stroke:var(--line, #e4e6ea);stroke-width:1.5"/>
+<text x="119" y="60" text-anchor="middle" style="font-size:11.5px;font-weight:700;fill:var(--ink, #1c1f24)">Development</text>
+<text x="119" y="78" text-anchor="middle" style="font-size:11px;fill:var(--ink-soft, #3b4048)">developers build</text>
+<text x="234" y="57" text-anchor="middle" style="font-size:11px;fill:var(--ink-soft, #3b4048)">deploy</text>
+<line x1="214" y1="67" x2="247" y2="67" style="stroke:var(--faint, #9aa1ab);stroke-width:1.5"/>
+<polygon points="255,67 247,63 247,71" style="fill:var(--faint, #9aa1ab)"/>
+<rect x="255" y="40" width="190" height="50" rx="6" style="fill:var(--bg-soft, #f7f8fa);stroke:var(--line, #e4e6ea);stroke-width:1.5"/>
+<text x="350" y="60" text-anchor="middle" style="font-size:11.5px;font-weight:700;fill:var(--ink, #1c1f24)">Staging</text>
+<text x="350" y="78" text-anchor="middle" style="font-size:11px;fill:var(--ink-soft, #3b4048)">testers and you check</text>
+<text x="465" y="57" text-anchor="middle" style="font-size:11px;fill:var(--ink-soft, #3b4048)">deploy</text>
+<line x1="445" y1="67" x2="478" y2="67" style="stroke:var(--faint, #9aa1ab);stroke-width:1.5"/>
+<polygon points="486,67 478,63 478,71" style="fill:var(--faint, #9aa1ab)"/>
+<rect x="486" y="40" width="190" height="50" rx="6" style="fill:var(--accent-soft, #f8ecf4);stroke:var(--accent, #8a2c6e);stroke-width:1.5"/>
+<text x="581" y="60" text-anchor="middle" style="font-size:11.5px;font-weight:700;fill:var(--accent, #8a2c6e)">Production</text>
+<text x="581" y="78" text-anchor="middle" style="font-size:11px;fill:var(--ink-soft, #3b4048)">real visitors</text>
+<line x1="119" y1="90" x2="119" y2="128" style="stroke:var(--faint, #9aa1ab);stroke-width:1.5;stroke-dasharray:3 3"/>
+<line x1="350" y1="90" x2="350" y2="128" style="stroke:var(--faint, #9aa1ab);stroke-width:1.5;stroke-dasharray:3 3"/>
+<line x1="581" y1="90" x2="581" y2="128" style="stroke:var(--faint, #9aa1ab);stroke-width:1.5;stroke-dasharray:3 3"/>
+<text x="126" y="113" style="font-size:11px;fill:var(--ink-soft, #3b4048)">loads</text>
+<text x="357" y="113" style="font-size:11px;fill:var(--ink-soft, #3b4048)">loads</text>
+<text x="588" y="113" style="font-size:11px;fill:var(--ink-soft, #3b4048)">loads</text>
+<rect x="24" y="128" width="190" height="42" rx="6" style="fill:var(--bg-soft, #f7f8fa);stroke:var(--line, #e4e6ea);stroke-width:1.5"/>
+<text x="119" y="146" text-anchor="middle" style="font-size:11.5px;font-weight:700;fill:var(--ink, #1c1f24)">Tag library</text>
+<text x="119" y="162" text-anchor="middle" style="font-size:11px;fill:var(--ink-soft, #3b4048)">development</text>
+<rect x="255" y="128" width="190" height="42" rx="6" style="fill:var(--bg-soft, #f7f8fa);stroke:var(--line, #e4e6ea);stroke-width:1.5"/>
+<text x="350" y="146" text-anchor="middle" style="font-size:11.5px;font-weight:700;fill:var(--ink, #1c1f24)">Tag library</text>
+<text x="350" y="162" text-anchor="middle" style="font-size:11px;fill:var(--ink-soft, #3b4048)">staging</text>
+<rect x="486" y="128" width="190" height="42" rx="6" style="fill:var(--accent-soft, #f8ecf4);stroke:var(--accent, #8a2c6e);stroke-width:1.5"/>
+<text x="581" y="146" text-anchor="middle" style="font-size:11.5px;font-weight:700;fill:var(--accent, #8a2c6e)">Tag library</text>
+<text x="581" y="162" text-anchor="middle" style="font-size:11px;fill:var(--ink-soft, #3b4048)">production</text>
+<text x="24" y="192" style="font-size:11px;fill:var(--ink-soft, #3b4048)">Each copy of the site must load the library with the same name.</text>
+</svg><figcaption>A test only counts when the site copy and the tag library match.</figcaption></figure>
+<p>Each environment has its own address, such as <span class="mn">dev.example.com</span>, <span class="mn">staging.example.com</span> and <span class="mn">www.example.com</span>. The names vary. You may also hear QA, test or UAT, which are all kinds of staging.</p>
+<h2>How a change moves</h2>
+<p>A developer writes a change in development. The change is then copied to staging, which is called a <b>deploy</b>. Testers check it there, and so do you. Finally it is deployed to production, and real visitors see it.</p>
+<p>Many teams release to production on a fixed schedule, such as every two weeks. If a release goes wrong, the team can put the previous version back, which is called a <b>rollback</b>. A rollback removes your tracking change too, if it was part of that release.</p>
+<h2>Released is not the same as switched on</h2>
+<p>Many teams hide new features behind a switch called a feature flag. The code goes to production with the release, but the feature stays off until somebody turns it on, sometimes for a small share of visitors first.</p>
+<p>So a release date and a launch date can be weeks apart. Tracking for a new feature can be live in production and still send nothing, because no visitor can reach the feature yet. When the flag is turned on for some visitors only, the numbers grow in steps.</p>
+<p>Ask two questions about any new feature: when is the code released, and when is the flag turned on, and for whom? Plan your checks for the second date, not the first.</p>
+<h2>Staging is close to production, never identical</h2>
+<p>Staging is built to behave like the live site, but it is not the live site. It usually has test products and fake orders. Payments go to a test account. Search engines are kept out. Some services it connects to are test versions.</p>
+<p>Tracking on staging should also send its data to a separate report suite, so test visits never mix with real ones. So a test on staging proves that the logic works. A short check on production after the release proves that it works for real visitors.</p>
+<h2>The tag manager has its own copies</h2>
+<p>Adobe Tags keeps development, staging and production libraries, each with its own embed code. The site's staging copy should load the staging library, and production should load the production library.</p>
+<div class="call mistake"><span class="ct">Where this goes wrong</span><p>The staging site loads the production tag library. Testers click through the checkout all week, and their test orders arrive in the real report suite. The revenue report for that week includes hundreds of orders nobody paid for.</p></div>
+<p>How those libraries move from one environment to the next is covered in <a href="/adobe-analytics-learning/collect/adobe-launch-tags/environments/">Environments</a> and <a href="/adobe-analytics-learning/collect/adobe-launch-tags/publishing-workflow/">Publishing Workflow</a>.</p>
+<h2>Your part in a release</h2>
+<p>Before the release, test on staging and write down exactly what you checked. After the release, check production the same day with the network tab open. The next morning, compare the numbers with the day before.</p>
+<p>Ask for the date and time of every release that carries a tracking change. Without that moment, nobody can separate a change in the data from a change in the site. How to look inside the pages you test is covered in <a href="/website-basics/developer-tools/">Developer tools and the network tab</a>.</p>

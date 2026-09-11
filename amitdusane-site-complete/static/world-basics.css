@@ -51,6 +51,13 @@
 body.world-mab{ --accent:#a3401c; --accent-soft:#fbeee8; --accent-line:#f0cdbd; }
 [data-theme="dark"] body.world-mab{ --accent:#f08a5d; --accent-soft:#2b1a12; --accent-line:#5a3423; }
 
+/* PER-INSTANCE ACCENT, Website Basics. Plum: clear of the learning crimson,
+   the migration blue, the Mobile SDK teal and the Mobile App Basics terracotta,
+   and of the semantic amber, green, blue and the path violet. 7.9:1 on white;
+   the dark value is 8.4:1 on the dark ground. */
+body.world-wsb{ --accent:#8a2c6e; --accent-soft:#f8ecf4; --accent-line:#ecc6df; }
+[data-theme="dark"] body.world-wsb{ --accent:#e896cf; --accent-soft:#2a1624; --accent-line:#5a2a4d; }
+
 *{box-sizing:border-box}
 body.world-basics{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
   font-size:var(--b-fs-body);line-height:1.7;-webkit-font-smoothing:antialiased;padding-top:var(--header-h)}

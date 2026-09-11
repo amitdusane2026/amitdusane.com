@@ -1,0 +1,77 @@
+---
+published: 2026-09-11
+lastmod: 2026-09-11
+title: "Reading enough JavaScript to be useful"
+linkTitle: "Reading page code"
+seotitle: "Reading JavaScript Tracking Code, for Analytics Practitioners"
+description: "You will not write JavaScript. Reading a data layer push or a tracking call with confidence lets you settle questions yourself instead of in a meeting."
+slug: "reading-page-code"
+type: topic
+weight: 401
+params:
+  group: team
+  oneline: "Most tracking code is made of the same few shapes: objects, arrays and function calls. Once you can read those, you can read most tracking code on a page."
+  cando: "Read a data layer push or a tracking call and say which values it sends and where each one comes from."
+  words:
+    - t: "Object"
+      d: "A set of named values inside curly brackets, such as { page: 'home' }."
+    - t: "Array"
+      d: "A list of values inside square brackets, such as [ 'shoes', 'bags' ]. Counting starts at zero."
+    - t: "Function"
+      d: "A named action that runs when it is called, written with round brackets after its name."
+    - t: "String"
+      d: "A piece of text inside quotes. '42' is a string, and 42 is a number."
+    - t: "JSON"
+      d: "A text format for objects and arrays, used to send data between systems."
+    - t: "Event listener"
+      d: "Code that waits for something to happen, such as a click, and then runs."
+  ask:
+    - "Where does each value in this snippet come from: the page, the server or the visitor?"
+    - "Is this value sent as a number or as text?"
+    - "What triggers this code, and does it run once or on every click?"
+---
+<h2>Why it matters to you</h2>
+<p>A developer sends you a few lines of code and asks whether it is what you wanted. You will never write JavaScript, but you can learn to read these lines in an afternoon. Most tracking code uses the same few shapes, and once you know them, a reply replaces a meeting.</p>
+<h2>An object is a form with labelled boxes</h2>
+<p>An <b>object</b> is a set of named values inside curly brackets. Think of a paper form: the label is printed on the left, and what was written in is on the right.</p>
+<div class="code"><button class="copy">Copy</button><pre>{
+  page: "product",
+  productId: "SKU-1042",
+  price: 49.99,
+  inStock: true
+}</pre></div>
+<p>Each line is a name, a colon and a value, and the lines are separated by commas. Text inside quotes is a <b>string</b>. A number without quotes is a number. The words <span class="mn">true</span> and <span class="mn">false</span>, without quotes, mean yes and no.</p>
+<h2>An array is a list</h2>
+<p>An <b>array</b> is a list of values inside square brackets. The values can be strings, numbers or whole objects.</p>
+<div class="code"><button class="copy">Copy</button><pre>products: [
+  { id: "SKU-1042", quantity: 1 },
+  { id: "SKU-2210", quantity: 2 }
+]</pre></div>
+<p>This basket holds two products. Programmers count from zero, so <span class="mn">products[0]</span> is the first product and <span class="mn">products[1]</span> is the second. When a developer says "item zero", they mean the first one.</p>
+<h2>A function call does something</h2>
+<p>A <b>function</b> is a named action. A name followed by round brackets calls it, and whatever sits inside the brackets is what the function is given to work with. These three calls are the ones you will meet most in Adobe tracking.</p>
+<div class="code"><button class="copy">Copy</button><pre>window.adobeDataLayer.push({ event: "addToCart", product: { id: "SKU-1042" } });
+
+alloy("sendEvent", { xdm: { eventType: "commerce.productListAdds" } });
+
+_satellite.track("add-to-cart");</pre></div>
+<table class="mini-tbl"><tbody>
+<tr><td>adobeDataLayer.push</td><td>Adds an object to the Adobe Client Data Layer. The tag manager can react to it.</td></tr>
+<tr><td>alloy("sendEvent")</td><td>Sends an event to Adobe directly, using the Web SDK.</td></tr>
+<tr><td>_satellite.track</td><td>Tells Adobe Tags to run the rule set up for that name.</td></tr>
+</tbody></table>
+<h2>An event listener says when</h2>
+<p>An <b>event listener</b> is code that waits for something to happen and then runs.</p>
+<div class="code"><button class="copy">Copy</button><pre>button.addEventListener("click", function () {
+  _satellite.track("add-to-cart");
+});</pre></div>
+<p>Read it as a sentence: when this button is clicked, run the add-to-cart rule. The first word inside the brackets names the moment. That moment is often the most important thing to check, because a call sent at the wrong moment sends the right values at the wrong time.</p>
+<h2>A number in quotes is not a number</h2>
+<p><span class="mn">price: 49.99</span> is a number. <span class="mn">price: "49.99"</span> is text that looks like a number. Some systems accept either. Others reject the wrong one, or store it where you do not expect. Adobe Experience Platform checks this strictly: a field defined as a number that receives text is rejected.</p>
+<p><b>JSON</b> is the text format used to send objects and arrays between systems. It uses the same shapes, with every name in double quotes. When a developer sends you JSON, read it exactly as you would read the object above.</p>
+<h2>What you can ignore</h2>
+<p>Much of the code on a page is not for you. Lines that start with <span class="mn">//</span>, and text between <span class="mn">/*</span> and <span class="mn">*/</span>, are comments. They are notes for developers, and the browser skips them. Lines with <span class="mn">console.log</span> only print messages in the console.</p>
+<p>Code on a live site is often minified: squeezed onto one very long line, with short names such as <span class="mn">a</span> and <span class="mn">b</span>, so that it downloads faster. You are not expected to read it. In the developer tools, the Sources tab has a button marked with curly brackets that spreads it back into readable lines. For a tracking question, ask the developer for the readable version instead.</p>
+<h2>Three questions for any snippet</h2>
+<div class="call check"><span class="ct">Before you reply</span><p>When does it run? Which values does it send? Where does each value come from: the page, the server or the visitor? If you can answer all three, you understand the snippet well enough to approve it or correct it.</p></div>
+<p>How to design the objects that go into a data layer is covered in <a href="/adobe-analytics-learning/collect/data-layers/data-layer-design/">Data Layer Design</a>.</p>

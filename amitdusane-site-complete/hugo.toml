@@ -219,6 +219,9 @@ disableKinds = ["taxonomy", "term"]
   # Reuses the Mobile SDK card until one is made for this section.
   og        = "og-aep-mobile-sdk.jpg"
   premise   = "This section will not teach you to build mobile apps. It teaches you enough of the mobile world to understand what a developer is saying, to answer questions in a meeting when no developer is there, and to tell a developer exactly what you need and where it has to change. Words like Xcode, Gradle, native, Flutter and WebView are used here on purpose, because you will hear them in every meeting."
+  # The line under every topic headline. Per instance since Website Basics,
+  # because the topic template used to say "apps" for every Basics section.
+  remind    = "Not a course in building apps. Just enough to follow the conversation."
 
 [params.worlds.mobile-app-basics.groups]
   [params.worlds.mobile-app-basics.groups.kind]
@@ -231,6 +234,46 @@ disableKinds = ["taxonomy", "term"]
     order = 3
     label = "App behaviour"
   [params.worlds.mobile-app-basics.groups.team]
+    order = 4
+    label = "Working together"
+
+# ---------------------------------------------------------------------------
+# THE SECOND BASICS SECTION, 11 September 2026: Website Basics.
+#
+# The vocabulary of the web for an analytics practitioner: how a page loads,
+# what the browser keeps, and how a change reaches the live site. It is the
+# test of the Basics container, and it cost this block, an accent pair in
+# world-basics.css, a tile colour in chrome.css, a one-line list template and
+# the content. The one container change it needed was `remind` below, which
+# the topic template used to hard-code with the word "apps".
+# The name is "Website Basics", never "Web Basics".
+# ---------------------------------------------------------------------------
+[params.worlds.website-basics]
+  css       = "world-basics.css"
+  js        = "world-basics.js"
+  root      = "/website-basics"
+  shape     = "basics"
+  order     = 11
+  bodyclass = "world-wsb"
+  name      = "Website Basics"
+  fullname  = "Website Basics"
+  tilesub   = "The words a web developer uses, explained plainly"
+  # A deliberate borrow of the Web SDK card until one is made for this section.
+  og        = "og-web-sdk-migration.jpg"
+  premise   = "This section will not teach you to build websites. It teaches you enough of the web to understand what a developer is saying, to answer questions in a meeting when no developer is there, and to tell a developer exactly what you need and where it has to change. Words like DOM, query string, network tab, cache and staging are used here on purpose, because you will hear them in every meeting."
+  remind    = "Not a course in building websites. Just enough to follow the conversation."
+
+[params.worlds.website-basics.groups]
+  [params.worlds.website-basics.groups.pages]
+    order = 1
+    label = "Web pages"
+  [params.worlds.website-basics.groups.browser]
+    order = 2
+    label = "The browser"
+  [params.worlds.website-basics.groups.changes]
+    order = 3
+    label = "Shipping changes"
+  [params.worlds.website-basics.groups.team]
     order = 4
     label = "Working together"
 
