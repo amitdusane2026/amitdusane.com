@@ -7,17 +7,24 @@
        1  In one sentence      front matter `oneline`   what the thing is
        2  the body             .Content                 opens with "Why it
                                                         matters to you"
-       3  Words you will hear  front matter `words`     term + plain meaning
-       4  What to ask          front matter `ask`
-       5  Where this shows up  front matter `usedin`    the handoff to the
-                                                        guides that use it
+       3  Ask a developer      front matter `ask`       closes the article
+       4  Words you will hear  front matter `words`     term + plain meaning
 
-     Structured front matter rather than prose for 1, 3, 4 and 5, because the
-     same data feeds the front-page cards, the word picker and the generated
-     word list. Written once, used three times, never out of step.
+     Structured front matter rather than prose for 1, 3 and 4, because the
+     same data feeds the front-page cards, the word picker and the glossary.
+     Written once, used three times, never out of step.
 
-     No step numbers and no "next step": topics are not a sequence. Previous and
-     next exist only as a convenience for a reader who wants to browse.
+     THE WORDS SIT BESIDE THE ARTICLE ON A WIDE SCREEN, held in view while the
+     reader scrolls, so a word's meaning is next to the sentence that uses it.
+     Below 1240px, and on paper, they follow the article. "Ask a developer"
+     stays IN the article at every width: Amit's call, the same day, because it
+     is the part a reader acts on and a side column buried it. An "On this
+     page" list was tried there too and removed, because a topic is not long
+     enough to need one.
+
+     `linkTitle` is the short name used in the rail and in previous/next; the
+     page headline stays the full title. "Where this shows up" was built and
+     removed the same day at Amit's request.
      =========================================================================== */ -}}
 {{ $w := index .Site.Params.worlds .Section }}
 {{ $g := index $w.groups .Params.group }}
@@ -29,37 +36,37 @@
   {{ if not $found }}{{ $prev = . }}{{ end }}
 {{ end }}
 <section class="view active b-topic">
-  <p class="crumb"><a href="{{ (printf "%s/" $w.root) | relURL }}">{{ $w.name }}</a>{{ with $g }} &rsaquo; {{ .label }}{{ end }}</p>
-  <h1>{{ .Title }}</h1>
-  {{ partial "byline.html" (dict "page" . "full" true) }}
-  {{ with .Params.oneline }}<div class="b-one"><span class="b-one-l">In one sentence</span><p>{{ . }}</p></div>{{ end }}
-  <p class="b-remind">Not a course in building apps. Just enough to follow the conversation. <a href="{{ (printf "%s/#premise" $w.root) | relURL }}">About this section</a></p>
-  <div class="b-body">{{ .Content }}</div>
-  <div class="b-end">
+  <header class="b-head">
+    <p class="crumb"><a href="{{ (printf "%s/" $w.root) | relURL }}">{{ $w.name }}</a>{{ with $g }} &rsaquo; {{ .label }}{{ end }}</p>
+    <h1>{{ .Title }}</h1>
+    {{ partial "byline.html" (dict "page" . "full" true) }}
+  </header>
+  <div class="b-cols">
+    <div class="b-art">
+      {{ with .Params.oneline }}<div class="b-one"><span class="b-one-l">In one sentence</span><p>{{ . }}</p></div>{{ end }}
+      <p class="b-remind">Not a course in building apps. Just enough to follow the conversation. <a href="{{ (printf "%s/#premise" $w.root) | relURL }}">About this section</a></p>
+      <div class="b-body">{{ .Content }}</div>
+      {{ with .Params.ask }}
+      <section class="b-ask" id="ask">
+        <div class="b-ask-row"><h2>Ask a developer</h2><button type="button" class="b-copyq" hidden>Copy</button></div>
+        <ol>{{ range . }}<li>{{ . }}</li>{{ end }}</ol>
+      </section>
+      {{ end }}
+    </div>
     {{ with .Params.words }}
-    <section class="b-words" id="words">
-      <h2>Words you will hear</h2>
-      <dl class="b-dl">{{ range . }}<div class="b-w" id="w-{{ urlize .t }}"><dt>{{ .t }}</dt><dd>{{ .d }}</dd></div>{{ end }}</dl>
-    </section>
-    {{ end }}
-    {{ with .Params.ask }}
-    <section class="b-ask">
-      <h2>What to ask a developer</h2>
-      <ol>{{ range . }}<li>{{ . }}</li>{{ end }}</ol>
-    </section>
-    {{ end }}
-    {{ with .Params.usedin }}
-    <section class="b-used">
-      <h2>Where this shows up</h2>
-      <div class="b-used-list">{{ range . }}<a class="b-used-a" href="{{ .u | relURL }}"><span class="b-used-t">{{ .t }}</span>{{ with .s }}<span class="b-used-s">{{ . }}</span>{{ end }}</a>{{ end }}</div>
-    </section>
-    {{ end }}
-    {{ if or $prev $next }}
-    <nav class="b-pn" aria-label="More topics">
-      {{ with $prev }}<a class="prev" href="{{ .RelPermalink }}"><span class="k">Previous topic</span><span class="t">{{ .Title }}</span></a>{{ end }}
-      {{ with $next }}<a class="next" href="{{ .RelPermalink }}"><span class="k">Next topic</span><span class="t">{{ .Title }}</span></a>{{ end }}
-    </nav>
+    <aside class="b-side" aria-label="Words you will hear">
+      <section class="b-words" id="words">
+        <h2 class="b-side-h">Words you will hear</h2>
+        <dl class="b-dl">{{ range . }}<div class="b-w" id="w-{{ urlize .t }}"><dt>{{ .t }}</dt><dd>{{ .d }}</dd></div>{{ end }}</dl>
+      </section>
+    </aside>
     {{ end }}
   </div>
+  {{ if or $prev $next }}
+  <nav class="b-pn" aria-label="More topics">
+    {{ with $prev }}<a class="prev" href="{{ .RelPermalink }}"><span class="k">Previous topic</span><span class="t">{{ .LinkTitle }}</span></a>{{ end }}
+    {{ with $next }}<a class="next" href="{{ .RelPermalink }}"><span class="k">Next topic</span><span class="t">{{ .LinkTitle }}</span></a>{{ end }}
+  </nav>
+  {{ end }}
 </section>
 {{ end }}

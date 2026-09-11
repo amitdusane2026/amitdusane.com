@@ -32,7 +32,7 @@
      world. Aiming at the navigation alone left the bar sitting over the Adobe
      links and the screen path, which are just as much "the reader has finished"
      as the navigation is. */
-  var stop = document.querySelector('.path-box, .ref-box, .lpn, .stepnav, .b-end');
+  var stop = document.querySelector('.path-box, .ref-box, .lpn, .stepnav, .b-pn');
   var addrEl = document.getElementById('askAddr');
   if (!main || !addrEl) return;
 

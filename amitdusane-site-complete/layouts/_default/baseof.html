@@ -149,15 +149,20 @@
   {{ partial "siteheader.html" . }}
   <div class="b-layout">
     <nav class="b-rail" id="bRail" aria-label="{{ $world.name }} topics">
-      <a class="b-rail-home{{ if eq .Kind "section" }} active{{ end }}" href="{{ (printf "%s/" $world.root) | relURL }}">Overview</a>
+      {{- /* No "Overview" row: the section name in the header already goes to
+           the front page, as in the learning world. The glossary sits at the
+           top, as it does there, with a count taken from the topics' own
+           words so it cannot drift. */ -}}
+      {{ with .Site.GetPage (printf "%s/glossary" $world.root) }}
+      {{ $nw := 0 }}{{ range $bTopics }}{{ $nw = add $nw (len .Params.words) }}{{ end }}
+      <a class="b-rail-gloss{{ if eq $.RelPermalink .RelPermalink }} active{{ end }}" href="{{ .RelPermalink }}"><span>Glossary</span><span class="b-rail-gloss-n">{{ $nw }}</span></a>
+      {{ end }}
       {{ range $g := $bGroups }}{{ with where $bTopics "Params.group" $g.key }}
       <div class="b-rail-grp">
         <div class="b-rail-h">{{ $g.label }}</div>
-        {{ range . }}<a class="b-rail-a{{ if eq $.RelPermalink .RelPermalink }} active{{ end }}" href="{{ .RelPermalink }}">{{ .Title }}</a>{{ end }}
+        {{ range . }}<a class="b-rail-a{{ if eq $.RelPermalink .RelPermalink }} active{{ end }}" href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>{{ end }}
       </div>
-      {{ end }}{{ end }}
-      <a class="b-rail-words{{ if eq .Type "wordlist" }} active{{ end }}" href="{{ (printf "%s/words/" $world.root) | relURL }}">All words</a>
-    </nav>
+      {{ end }}{{ end }}    </nav>
     <main class="main b-main">{{ block "main" . }}{{ end }}</main>
   </div>
   <div class="b-scrim" id="bScrim"></div>

@@ -34,6 +34,21 @@
     } else { flash(); }
   });
 
+  /* COPY THE QUESTIONS, as a numbered list ready to paste into a ticket or a
+     chat with the developer. */
+  var cq = document.querySelector('.b-copyq');
+  if (cq && navigator.clipboard) {
+    cq.hidden = false;
+    cq.addEventListener('click', function () {
+      var items = document.querySelectorAll('.b-ask li'), t = [];
+      for (var q = 0; q < items.length; q++) t.push((q + 1) + '. ' + items[q].textContent);
+      navigator.clipboard.writeText(t.join('\n')).then(function () {
+        cq.textContent = 'Copied';
+        setTimeout(function () { cq.textContent = 'Copy'; }, 1500);
+      });
+    });
+  }
+
   /* THE WORD PICKER. The reader taps the words that are new to them and the
      topics covering those words light up; everything else fades back.
 

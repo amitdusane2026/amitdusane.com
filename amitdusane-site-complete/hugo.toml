@@ -232,19 +232,19 @@ disableKinds = ["taxonomy", "term"]
 [params.worlds.mobile-app-basics.groups]
   [params.worlds.mobile-app-basics.groups.kind]
     order = 1
-    label = "What kind of app is this"
+    label = "App types"
     blurb = "Work this out first. The answer decides who builds the app, what they build it in, and sometimes which Adobe product you need."
   [params.worlds.mobile-app-basics.groups.world]
     order = 2
-    label = "The developer's world"
+    label = "Developer tools"
     blurb = "The tools, languages and files a mobile developer uses every day, explained for somebody who will never open them."
   [params.worlds.mobile-app-basics.groups.behaviour]
     order = 3
-    label = "How an app behaves"
+    label = "App behaviour"
     blurb = "The parts of app behaviour that decide what your numbers mean, and where habits from the web give the wrong answer."
   [params.worlds.mobile-app-basics.groups.team]
     order = 4
-    label = "Working with the team"
+    label = "Working together"
     blurb = "Where your job ends, where theirs begins, and how to be useful between the two."
 
 # ---------------------------------------------------------------------------
