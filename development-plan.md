@@ -3022,6 +3022,27 @@ configuration, produced this build?". The glossary went from 79 terms to 75.
 Measured again on all 14 topics: none scrolls at 1280x720, 1366x768,
 1440x900, 1536x864 or 1920x1080. Six words per topic is now the rule.
 
+### Then: v2.1 live, the site name and favicons, and nothing else
+
+Google showed the site as "amitdusane.com" with an old red "A" icon. Both were
+ours to fix. The site name comes from the home page's WebSite data, its
+og:site_name and its title; the first two said "Amit G Dusane" and the title
+ended "| amitdusane.com", so Google fell back to the domain. The live icon was
+already the AD monogram; Google had kept an old copy, and our largest PNG was
+32px against Google's 48px minimum, with /favicon.ico returning the 404 page.
+
+Amit chose "Amit G Dusane" as the site name and a home title that covers every
+planned section: "Adobe Experience Cloud, Explained | Amit G Dusane". Because
+develop carries a lot of unreleased work, only these changes went live: a
+hotfix branch from main with the new title, alternateName "amitdusane.com",
+48/96/192px icons from favicon.svg and a root favicon.ico. It was verified
+against a build of main (195 pages, every page gaining only the three icon
+links, the home page only its titles and the alternateName), fast-forwarded
+onto main as b49c5e0, tagged v2.1, and cherry-picked onto develop cleanly.
+
+Google updates the name and icon on its own schedule. Request indexing of the
+home page in Search Console to prompt it.
+
 ### What the next session should pick up first
 
 **Phase E, Website Basics, on Amit's go-ahead only.** About twelve topics. The
