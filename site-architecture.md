@@ -4,18 +4,19 @@
 
 ---
 
-## The four shapes
+## The shapes
 
 Ten planned sections, but far fewer designs. A section's shape is decided by what the reader is doing, not by which Adobe product it covers.
 
 | Shape | Reader is | Sections | Status |
 |---|---|---|---|
 | **Curriculum** | Learning a subject in order | Adobe Analytics Learning, CJA Learning, RTCDP, AJO, AEP Fundamentals | Built: `world-learning.css` |
-| **Procedure** | Executing a task with a correct sequence | Web SDK Migration, Mobile Web SDK implementation, Mobile Analytics (legacy), Setting up CJA reports | Built: `world-shell.css` |
+| **Procedure** | Executing a task with a correct sequence | Web SDK Migration, Adobe Experience Platform Mobile SDK, Web SDK Implementation, Mobile Analytics (legacy), Setting up CJA reports | Built: `world-shell.css` |
+| **Basics** | New to a field, learning its vocabulary | Mobile App Basics, Website Basics | Built: `world-basics.css`, 11 September 2026 |
 | **Certification** | Testing recall and finding gaps | Cert prep per product | Not designed |
 | **Playbook** | Producing an artifact | Delivery documents, long-term project management | Not designed |
 
-**The two built shapes are templates, not one-offs.** Mobile Web SDK implementation is the procedure shape almost unchanged: `step`, `kb`, `ref` types, the `actionblock` and `astep` walkthrough, the `Why?` bridge to knowledge-base articles, numbered citations against a references page. Three future sections fit it.
+**The three built shapes are templates, not one-offs.** The Adobe Experience Platform Mobile SDK guide was the procedure shape almost unchanged: `step`, `kb`, `ref` types, the `actionblock` and `astep` walkthrough, the `Why?` bridge to knowledge-base articles, numbered citations against a references page. Three future sections fit it.
 
 Certification and Playbook are genuinely new and need design before content.
 
@@ -58,22 +59,82 @@ per-world at `params.worlds.<world>.phases` (INF-05), and the switch keys off
 `.Section` as above. Verified against `hugo.toml` and the templates on
 6 September 2026.
 
-**But "a third world is a config block" overstates it, and this is the part to
-know before costing one.** `baseof.html` still carries `$mig` and `$learn`
-booleans with **twelve** references between them, because forty-odd lines of
-shell markup genuinely differ: the body class, two full content shells, the Ask
-Amit bar (migration only), the search placeholder wording, and two world-specific
-script blocks. A third world naively added becomes a third branch through all of
-it.
+**The shell is chosen by `shape`, never by world name.** `baseof.html` reads
+`shape` from the registry into three booleans, `$proc`, `$learn` and `$basics`,
+and each one renders its own shell. The old `$mig` flag was generalised to
+`$proc` on 6 September 2026, when the Mobile SDK guide became the second
+procedure world, and it held: that guide needed no branch of its own. `$basics`
+was added on 11 September 2026 for a shape that genuinely differs, not as a
+variant of either.
 
-**So the right move for a second procedure world is to generalise the flag
-rather than add a branch** — `$mig` becomes "is this a procedure-shaped world",
-read from the registry, and the existing shell serves both. That is the
-container claim finally being tested rather than asserted. If the migration
-shell cannot serve a second procedure world without forking, the container is
-not reusable and it is better to learn that on the cheap section than on CJA.
+**So a new world of an existing shape is a registry block plus content, and a
+new shape is a new branch** through `baseof.html`, `list.json` and the home
+page. The Basics section below lists exactly what one Basics instance costs.
 
 For a new **curriculum** world the CSS is cheap: copy `world-learning.css`, change `--accent`, `--accent2`, `--accent-light` only. Every component is already token-driven.
+
+---
+
+## The Basics shape
+
+*Added 11 September 2026, when Mobile App Basics became the first instance. Website Basics is the second.*
+
+A Basics section teaches the vocabulary of a whole field to somebody new to it. The rules for writing one are in `CLAUDE.md`; this is how the container is built.
+
+**It is a shape of its own, not the procedure shell with the steps removed.** `baseof.html` renders it when the registry says `shape = "basics"`: the shared header, a rail of topic groups with the glossary pinned above them, the reading column, and the shared print document. `world-basics.css` and `world-basics.js` serve every instance, and `baseof.html` adds a `world-basics` body class beside the instance's own.
+
+### Registry keys
+
+A Basics instance is one block in `[params.worlds]`, keyed on its section:
+
+| Key | What it does |
+|---|---|
+| `css`, `js` | Always `world-basics.css` and `world-basics.js` |
+| `root`, `shape` | The URL prefix, and `"basics"` |
+| `bodyclass` | The instance's own body class, such as `world-mab`. The accent hangs off it |
+| `name`, `fullname` | The header and breadcrumb label |
+| `order`, `tilesub` | Its sort order, and the line under its tile, in the home page's "Start here" row |
+| `og` | The social card. Mobile App Basics borrows the Mobile SDK card until one is made |
+| `premise` | What the section is and what it will not teach. Shown once on the front page; every topic links back to it |
+| `groups` | A table of groups, each with `order`, `label` and `blurb`. A topic's `group` names one. A group with no topics renders nothing, so a section can be written one group at a time |
+
+**One key lives on the other side.** A guide that leans on a Basics section names it with `basicsworld` in its own block, and its rail links to it under "Start here". The Mobile SDK guide carries `basicsworld = "mobile-app-basics"`; the migration guide carries none and renders as it always did.
+
+### The topic
+
+Every topic is `type: topic`, and `layouts/topic/single.html` enforces one shape: **In one sentence**, then the body, then **Ask a developer**, with **Words you will hear** beside the article from 1240px and after it below that and on paper. Three of the four parts are front matter rather than prose, because the same data feeds the front-page cards, the word picker and the glossary:
+
+| Front matter | Feeds |
+|---|---|
+| `params.oneline` | The In one sentence box |
+| `params.cando` | The line on the topic's front-page card |
+| `params.words` | A list of `t` (term) and `d` (plain meaning): Words you will hear, the picker and the glossary. The picker shows each topic's first two before "Show all" |
+| `params.ask` | The Ask a developer list, copyable |
+| `params.group` | Which group the topic sits in |
+| `linkTitle` | The short name in the rail and in previous and next |
+| `weight` | Group order times 100 plus position: `203` is the third topic of the second group |
+
+Previous and next run through every topic in weight order, across group boundaries.
+
+### The front page and the glossary
+
+**The front page is generated from the topics.** `layouts/<section>/list.html` is one line calling `partials/basicshome.html`, which draws the premise, the word picker and the cards in their groups. `_index.html` is front matter only, and needs `outputs: ["HTML","JSON","RSS"]` for the section to get a search index and a feed.
+
+**The glossary is generated too.** `content/<section>/glossary.html` is front matter only, `type: wordlist`, and `layouts/wordlist/single.html` gathers every topic's `words` A to Z, each term linking to its entry on the topic page. **Its path is load-bearing:** the rail finds it with `GetPage "<root>/glossary"`, so a glossary saved under any other name builds cleanly and the rail silently shows no Glossary link.
+
+### What a new instance needs
+
+This is the whole list, and Website Basics is the test of it:
+
+1. A `[params.worlds.<key>]` block and its `groups`.
+2. An accent rule for its body class in `world-basics.css`, light and dark. **Without one the section renders in the neutral grey default and nothing reports it.**
+3. `layouts/<key>/list.html`, one line.
+4. `content/<key>/_index.html` with the three outputs, and `content/<key>/glossary.html`.
+5. The topics.
+6. An OG image, or a deliberate borrow.
+7. `basicsworld` in any guide that should link to it.
+
+It needs nothing in `phases`, no template of its own and no change to `baseof.html`. **If Website Basics needs more than this list, the container is not reusable yet, and that should be said rather than patched.**
 
 ---
 
@@ -92,11 +153,11 @@ A design supplied as pictures alone means guessing at the rules behind it, and p
 
 ## Section roadmap
 
-Order as planned. Only the first two exist.
+Order as planned. The first two are live; the third is written and on `develop` only.
 
 1. **Web SDK Migration** — live since June 2026. Procedure shape.
 2. **Adobe Analytics Learning** — live since 4 September 2026. Curriculum shape.
-3. **Adobe Experience Platform Mobile SDK** — next. Procedure shape. `/aep-mobile-sdk/`.
+3. **Adobe Experience Platform Mobile SDK** — on `develop` since 6 September 2026, not launched. Procedure shape. `/aep-mobile-sdk/`.
 4. CJA Learning — curriculum
 5. RTCDP — curriculum
 6. AJO — curriculum
@@ -106,6 +167,8 @@ Order as planned. Only the first two exist.
 10. A RAG chatbot over the whole site
 
 Also planned, shape assigned but not sequenced: Mobile Analytics legacy implementation (procedure), Setting up CJA reports (procedure).
+
+**Basics sections sit beside this list, not in it**, because each exists to serve guides rather than as a destination of its own. Mobile App Basics has been on `develop` since 11 September 2026 and is not launched. Website Basics is next, on Amit's go-ahead, and goes ahead of the parked Web SDK Implementation and the Web SDK Migration rewrite.
 
 **Mobile SDK moved from seventh to third on 6 September 2026**, ahead of CJA
 and the three other curriculum worlds. Amit's reason is that CJA is the real

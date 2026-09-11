@@ -2823,11 +2823,64 @@ and the per-section-type table.
 `CLAUDE.md` as a global constraint. It had been fixed once by hand in the
 learning world and never written down, which is why it recurred.
 
+
+---
+
+## 11 September 2026 — Basics becomes a section type
+
+**Phases A to C are done and on `develop`. `main` is untouched and nothing is
+live.** Amit decided the same day that Basics is a section type of its own,
+beside learning, step-by-step and certification. A Basics section teaches the
+vocabulary of a whole field to somebody new to it: enough to follow a developer,
+answer in a meeting and ask for the right thing. It is not a course in the
+field.
+
+What shipped, in two commits:
+
+- **`da2ef04`, the container and the move.** The Basics shape:
+  `world-basics.css`, `world-basics.js`, `partials/basicshome.html`,
+  `layouts/topic/single.html` and `layouts/wordlist/single.html`, switched on
+  by `shape = "basics"` in the registry. Mobile App Basics at
+  `/mobile-app-basics/` is the first instance. The fourteen topics of the
+  Mobile SDK guide's Part One moved into it, and every old URL and the old
+  Part One page is an alias. The guide now links out to it through
+  `basicsworld`, eighteen links were repointed, and a Why? link into another
+  world navigates instead of doing nothing. The home page gained a "Start here"
+  row above the guides.
+- **`ccb9800`, Amit's review.** The topic shape he settled: In one sentence,
+  the body opening on "Why it matters to you", Ask a developer boxed in the
+  article with a Copy button, and Words you will hear beside the article from
+  1240px. He removed "Where this shows up", "On this page" and the rail's
+  Overview row. "All words" became the Glossary, pinned at the top of the rail
+  with its count and built like the Adobe Analytics glossary. Print, anchor and
+  header-colour fixes.
+
+**Phase D, the records, is this entry.** `CLAUDE.md` no longer lists Basics as a
+procedure page type: it has its own section with its rules, and the page
+baseline is 257 production and 258 staging, both confirmed by a build.
+`site-architecture.md` has the Basics shape, its registry keys, the topic
+shape, the glossary, and the full list of what a new instance needs. In the
+tracker the fourteen topic rows moved to `/mobile-app-basics/`, each checked
+against its file's front matter. The two Part One Feature rows described code
+that no longer exists and were removed, and thirteen Feature rows record the
+container.
+
+**The records had drifted where the code had not.** `site-architecture.md`
+still said only two sections existed, and described a `$mig` flag that was
+generalised on 6 September. A comment in `baseof.html` still described the
+rail's Overview row and a word list at the foot, both removed in `ccb9800`. All
+three corrected to match the code.
+
 ### What the next session should pick up first
 
-**Amit reads the rewritten Mobile SDK section end to end and gives his verdict.**
-Nothing is launched, the tracker still holds `Content QA'd = No` throughout, and
-that is deliberate: the gate is not the acceptance step.
+**Phase E, Website Basics, on Amit's go-ahead only.** About twelve topics. The
+name is "Website Basics", never "Web Basics". By the list in
+`site-architecture.md` it costs a registry block, an accent rule, a one-line
+list template, an `_index.html`, a `glossary.html` and the topics. **If it needs
+anything more, the container is not yet reusable, and that is worth saying out
+loud rather than patching.**
 
-After that, in order: any corrections he raises, then Web SDK Implementation,
-then the Web SDK Migration rewrite.
+It goes ahead of the parked Web SDK Implementation and the Web SDK Migration
+rewrite, which still wait. Neither Mobile App Basics nor the Mobile SDK guide
+is marked QA'd in the tracker, deliberately: Amit's reading is the acceptance
+step, not the gate.

@@ -86,7 +86,7 @@ So whenever something written here is made wrong, narrower, or redundant by a la
 | `content-component-rulebook.html` | Every component, its tier, when it is earned, prose rules, the 20-item checklist | Writing any section body |
 | `QA_Rulebook.html` | The 13-point delivery gate, binary PASS/FAILED | Declaring anything done |
 | `completion-tracker.tsv` | Which pages are written, QA'd, SEO-complete | Deciding what to work on |
-| `site-architecture.md` | The four section shapes, what carries between them, world mechanics, the roadmap, hosting at scale | Starting a new section, designing a new world, or deciding what a section inherits |
+| `site-architecture.md` | The section shapes, what a new Basics instance needs, what carries between them, world mechanics, the roadmap, hosting at scale | Starting a new section, designing a new world, or deciding what a section inherits |
 | `development-plan.md` | Phases, status, what is next | Deciding what to work on |
 | `template-source/README.md` | How the five downloadable workbooks are built, and how the M19 screenshots are captured | Changing anything in a template, or reshooting a spreadsheet |
 
@@ -104,11 +104,11 @@ These documents were produced during earlier plain chat sessions. They are close
 
 **New content files are `.html`, never `.md`.** `hugo.toml` has no `[markup.goldmark.renderer]` block, so `unsafe` defaults to false and Goldmark silently strips raw HTML from Markdown. This shipped as a live bug on five category pages until August 2026.
 
-**The site is reusable containers, not one-off sections.** Two exist: a heavy-content container that teaches a whole platform (Adobe Analytics, then CJA, RTCDP, AJO) and a step-by-step task container (Web SDK migration, then mobile SDK, then Analytics to CJA). A certification-prep container is undesigned. **A new section should cost content and nothing else**, which is the whole reason the shared layer below exists. Stated by Amit 2 Sep 2026.
+**The site is reusable containers, not one-off sections.** Three exist: a heavy-content container that teaches a whole platform (Adobe Analytics, then CJA, RTCDP, AJO), a step-by-step task container (Web SDK migration, then mobile SDK, then Analytics to CJA), and a Basics container that teaches the vocabulary of a whole field (Mobile App Basics, then Website Basics), added 11 Sep 2026. A certification-prep container is undesigned. **A new section should cost content and nothing else**, which is the whole reason the shared layer below exists. Stated by Amit 2 Sep 2026.
 
 **The global layer, shared by every world and living in `chrome.css` plus four scripts.** The header (`partials/siteheader.html` + `siteheader.js`), the print document (`partials/printdoc.html` + `printdoc.js`), the byline, the search shell (`search.js`), figure zoom and the overlay (`figures.js`), the Ask Amit bar (`askbar.js`), and the About mark with its overlay. `--header-h` is owned by `chrome.css` and read by both worlds' layouts. **Anything genuinely identical in two worlds belongs here, not copied.**
 
-**A "world" is what remains after that**: a top-level `.Section` with its own stylesheet, JS and content shell. Two exist: `/web-sdk-migration/` (blue accent, `world-shell.css`) and `/adobe-analytics-learning/` (crimson accent, `world-learning.css`). The switch is a lookup in `[params.worlds]` in `hugo.toml`, keyed on `.Section`, carrying each world's `css`, `js` and `root`. **Adding a world is a config block, not a new branch** — INF-05 and INF-06, done 20 Aug 2026, deliberately before CJA becomes the third one. Each world also owns its own `phases`; they used to sit in a single global `[params.phases]` that any world using `wherefits.html` or `homemap.html` would silently inherit.
+**A "world" is what remains after that**: a top-level `.Section` with its own stylesheet, JS and content shell. Four exist: `/web-sdk-migration/` (blue accent, `world-shell.css`), `/aep-mobile-sdk/` (teal, the same stylesheet), `/adobe-analytics-learning/` (crimson, `world-learning.css`) and `/mobile-app-basics/` (terracotta, `world-basics.css`). The switch is a lookup in `[params.worlds]` in `hugo.toml`, keyed on `.Section`, carrying each world's `css`, `js`, `root` and `shape`; `shape` is `curriculum`, `procedure` or `basics`, and it decides which shell `baseof.html` renders. **Adding a world is a config block, not a new branch** — INF-05 and INF-06, done 20 Aug 2026, deliberately before CJA becomes the third one. Each world also owns its own `phases`; they used to sit in a single global `[params.phases]` that any world using `wherefits.html` or `homemap.html` would silently inherit.
 
 
 **Every size comes from a token. Never hard-code a px in a component.** `:root` in `world-learning.css` carries a type scale (`--fs-title` 34, `--fs-h3` 24, `--fs-body` 17, `--fs-sm`, `--fs-label`, `--fs-meta`, `--fs-micro`, `--fs-code`), a spacing scale (`--sp-xs` 6 through `--sp-xl` 48), line-heights, and one column width (`--column` 760px, prose and figures alike). Each has a mobile step in the 880px query and the type scale has a print step in points. Changing a size means changing a token, never a rule. Before this existed the whole reading column was 16px and component margins had drifted across five arbitrary values.
@@ -144,7 +144,7 @@ Everything else is **IBM Plex Sans**, inherited from `body`: all prose, lesson a
 **Never verify a typeface from `getComputedStyle().fontFamily`.** It reports what the CSS asked for, not what the browser drew, and it will report `"IBM Plex Sans"` on a page rendering Segoe UI. The only honest check is to measure: put the string in an off-screen `white-space:nowrap` span at the element's own size and weight, once with the page's stack and once with each candidate named alone, and compare widths. Identical width to the candidate is the proof. `[...document.fonts].map(f => f.family + ':' + f.status)` is the second check and should list all three families as `loaded`.
 
 **A section page is three columns above 1244px**: sidebar, article, and the in-page spine. The spine is built by `world-learning.js` from the h3 stack and is switched on by the `has-rail` body class, which `baseof.html` adds for `type: lesson` only. Below 1244px it becomes a drawer on a floating button. It is generated, never authored.
-**Content types** map to templates by front matter `type`: `category`, `module`, `lesson`, `glossary` in the learning world; `step`, `kb`, `ref` in the migration world.
+**Content types** map to templates by front matter `type`: `category`, `module`, `lesson`, `glossary` in the learning world; `step`, `kb`, `ref` in the procedure worlds; `topic` and `wordlist` in a Basics world.
 
 ---
 
@@ -238,9 +238,9 @@ On a CLI build that error is at least visible. **On `hugo server` it is not.** T
 
 **So when the served page is stale, check for a locked workbook before suspecting the watcher.** `Get-CimInstance Win32_Process -Filter "Name='EXCEL.EXE'"` names it, and closing the workbook is the whole fix. This will keep happening, because M20 tells the reader to open the validation report and follow along, which is exactly what Amit was doing.
 
-**Assert the page count after every build.** Current baseline: **254 pages on a production build, 255 on a staging build** (9 September 2026). It rose from 249 when the Mobile SDK spine went from fourteen steps to fifteen and step six gained four platform pages of its own.
+**Assert the page count after every build.** Current baseline: **257 pages on a production build, 258 on a staging build** (11 September 2026). It rose from 254 when Mobile App Basics became a section of its own, and from 249 before that, when the Mobile SDK spine went from fourteen steps to fifteen and step six gained four platform pages of its own.
 
-**That check earned its place again on 9 September, for the third time.** Four new pages were dated from the local calendar at 00:46 IST, when UTC was still the previous day, so Hugo silently dropped all four and the count stayed at 249 with the build reporting success. **Nothing else would have caught it.** The danger window is 18:30 IST to 05:30 IST; take the date from `date -u` and never from what the session says today is. It was 195 and 196 from 3 September 2026 until the sixth, when `/aep-mobile-sdk/` was registered and added three: its HTML page, its JSON search index and its RSS feed. **Every step and KB article written into that world adds one more**, so this number is a moving target for the first time on this project. What still holds is the shape of the check: a drop is never routine, and a non-production build reporting the production number, or the reverse, means the staging guard has inverted and should be investigated before anything else.
+**That check earned its place again on 9 September, for the third time.** Four new pages were dated from the local calendar at 00:46 IST, when UTC was still the previous day, so Hugo silently dropped all four and the count stayed at 249 with the build reporting success. **Nothing else would have caught it.** The danger window is 18:30 IST to 05:30 IST; take the date from `date -u` and never from what the session says today is. It was 195 and 196 from 3 September 2026 until the sixth, when `/aep-mobile-sdk/` was registered and added three: its HTML page, its JSON search index and its RSS feed. **Every step, KB article and Basics topic adds one more, and a new Basics section adds four before its first topic**: its front page, search index, RSS feed and glossary. So this number is a moving target for the first time on this project. What still holds is the shape of the check: a drop is never routine, and a non-production build reporting the production number, or the reverse, means the staging guard has inverted and should be investigated before anything else.
 
 Before that it was 219 and 220, until RSS was built properly: Hugo had been emitting a feed for every section, 27 of them, none linked from anywhere, while the three pages a person would subscribe to had none. Killing the 27 and adding 3 is the whole of that difference. **HTML page count did not move: 187 before and after, with identical file lists.** Hugo counts each output format as a page, so a feed change moves this number without touching a word of the site. The extra one on a non-production build is the generated `_headers` file, which `layouts/index.headers` emits only when the baseURL is not amitdusane.com; on production the template produces nothing and Hugo writes no file. If the count drops, stop and find out why before doing anything else. This single check would have caught the 103-page outage in one second.
 
@@ -403,23 +403,54 @@ It is measurable. Paragraph median, by when the content was written: **Web SDK M
 |---|---|---|
 | **Learning** (curriculum) | Knows Adobe Analytics | Keep scenario openers, why-before-what, argument. The scenario works because it is a *recognition* device. |
 | **Step-by-step guide** (procedure) | Working, wants the next instruction | **No why before what.** Say what the thing is, then what to do. The WHY moves to the knowledge base and is reached through the existing `Why?` row. |
+| **Basics** | New to a whole field, not to analytics | Vocabulary, not a course. Its own section below. |
 | **Certification prep** | Not designed | — |
 
 Amit's words on the second one: *"it explains technology, concept, technical thing in simplest form. No why before what. That is for learning thing which needs time. Step-by-step guides are supposed to be used for quick work."*
 
-**Inside a procedure world there are three page types, and writing all three the same way was the actual fault.**
+**Inside a procedure world there are two page types, and writing them the same way was part of the fault.**
 
 | Page type | Rule |
 |---|---|
-| **Basics** (Part One) | Teaches a foreign vocabulary. The simplest English on the site. Opens with a quiet `call margin` premise callout saying it will not teach app development. Target roughly 800 to 1,000 words. |
 | **Step** | What to do, what to check, what breaks. Terse. |
 | **KB** | Where the WHY lives. Keeps explaining, but under the plain-language rules. |
+
+**Mobile SDK is the reference implementation for step-by-step guides**, the way M13 §1 is for the learning world. Measured after the 8 to 9 September rewrite: steps at a paragraph median of 33, KB at 32.
+
+**A procedure guide no longer carries its own basics.** The Mobile SDK guide's Part One became a section of its own on 11 September 2026. A guide now names the Basics section it leans on with `basicsworld` in its registry block, and its rail links out to it under "Start here". A Why? row may point into it, and a link into another world navigates instead of opening the panel.
+
+### Basics is a section type of its own
+
+Decided by Amit on 11 September 2026. A Basics section teaches the vocabulary of a whole field to somebody new to it: enough to follow what a developer is saying, to answer in a meeting when no developer is there, and to ask for the right thing. **It is not a course in the field.** The premise says so once, from the registry's `premise`, on the section's front page, and every topic links back to it from one line under its headline.
+
+Mobile App Basics at `/mobile-app-basics/` is the first instance, fourteen topics moved out of the Mobile SDK guide with every old URL aliased. Website Basics is the second. **The name is "Website Basics", never "Web Basics".**
+
+**Nothing in a Basics section is numbered**, because there is no order to promise. The reader arrives knowing some of the field and none of the rest, so the front page shows every topic at once, in groups, with a word picker that lights up the topics covering the words they do not know.
+
+**It is its own design, not the procedure shell with the steps taken out.** `world-basics.css` and `world-basics.js` serve every instance; each instance adds a registry block, an accent rule and content. `site-architecture.md` lists everything a new instance needs.
 
 **A Basics page opens by naming the thing, never on a puzzle.** The Android page used to open on a privacy contradiction that only makes sense once you know what a manifest is, and did not define "manifest" for another six hundred words. Amit: *"the reader who doesn't know app, mobile sdk, etc coming to our website... he reads this and understands nothing."*
 
 **Watch the ratio of reading time to payload.** That same page ran 1,449 words and ten minutes to deliver six facts. Amit: *"I read everything, I needed good 5-10 minutes for it and now I start thinking ohh it was only about these 3 things."* Prefer a list when the content is a list, and cut framing sentences that announce what is coming instead of delivering it.
 
-**Mobile SDK is the reference implementation for step-by-step guides**, the way M13 §1 is for the learning world. Measured after the 8 to 9 September rewrite: Part One at 0.21 idioms per 1,000 words and a paragraph median of 41; steps at 33; KB at 32.
+**Keep a topic to roughly 800 to 1,000 words, in the simplest English on the site.** Mobile App Basics is the reference: 0.21 idioms per 1,000 words and a paragraph median of 41, measured after the 8 to 9 September rewrite, when it was still Part One of the Mobile SDK guide.
+
+**The topic shape is fixed, and `layouts/topic/single.html` enforces it**, so no topic can drift from it:
+
+| Part | Comes from | Where it sits |
+|---|---|---|
+| **In one sentence** | front matter `oneline` | First, in an accent box |
+| **The body** | the page content | Opens on `<h2>Why it matters to you</h2>` |
+| **Ask a developer** | front matter `ask` | Closes the article, boxed, with a Copy button, at every width |
+| **Words you will hear** | front matter `words` | Beside the article from 1240px and held in view; after it below that and on paper |
+
+**Headings inside a topic are plain `h2`**, not the learning world's `h3.subsec-title`, and nothing builds a spine from them.
+
+Three more front matter keys feed other pages: `cando` is the line on the front-page card, `group` places the topic, and `linkTitle` is the short name in the rail and in previous and next. **Keep `linkTitle` to about four words and group labels to one or two**; the full title stays the headline. **Order `words` deliberately**: the front-page picker shows each topic's first two, so put first the two a newcomer is most likely to have heard.
+
+**The glossary is generated, never written.** `glossary.html` is front matter only (`type: wordlist`), and the page gathers every topic's `words` A to Z, each term linking to the topic that explains it. It sits at the top of the rail with a counted total, the way the Adobe Analytics glossary does.
+
+**Removed on Amit's review, 11 September 2026, and not to be brought back:** "Where this shows up", an "On this page" list, and an "Overview" row in the rail. The section name in the header already goes to the front page.
 
 ---
 

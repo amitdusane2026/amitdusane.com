@@ -138,9 +138,9 @@
   {{ partial "printdoc.html" . }}
 {{ else if $basics }}
   {{- /* A BASICS SECTION, 11 September 2026. Its own shell, not the procedure
-       one with the steps removed: a rail of topic groups with no numbers, an
-       Overview link to the front page, and the generated word list at the
-       foot. Groups come from [params.worlds.<world>.groups]; a group with no
+       one with the steps removed: a rail of topic groups with no numbers, and
+       the generated glossary pinned above them (see the note inside the rail).
+       Groups come from [params.worlds.<world>.groups]; a group with no
        topics renders nothing, so a section can be written a group at a time. */ -}}
   {{ $bTopics := (where (where .Site.RegularPages "Section" .Section) "Type" "topic").ByWeight }}
   {{ $bGroups := slice }}
