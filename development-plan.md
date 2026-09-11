@@ -3011,6 +3011,15 @@ topics: no scrolling at 1440x900, 1536x864 or 1920x1080. At 1366x768 the two
 by 87 and 124px. Closing that would take type below the learning rail's or
 fewer words on those two topics; left for Amit.
 
+**Amit chose fewer words.** Both topics went from eight to six. iOS lost
+Target, never used in its body, and AppDelegate, which the body explains over
+two paragraphs. Android lost Build variant, never used, and "val and var",
+defined in the sentence that uses it. Scheme was the first candidate on iOS
+and stayed, because the topic's key question is "which scheme, and which
+configuration, produced this build?". The glossary went from 79 terms to 75.
+Measured again on all 14 topics: none scrolls at 1280x720, 1366x768,
+1440x900, 1536x864 or 1920x1080. Six words per topic is now the rule.
+
 ### What the next session should pick up first
 
 **Phase E, Website Basics, on Amit's go-ahead only.** About twelve topics. The
