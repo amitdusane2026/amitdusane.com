@@ -2934,6 +2934,24 @@ game is seeing where you are against everything left to do.
   every source; their bracketed numbers went too, since nothing points at them
   any more. The reference panel that the markers opened was removed with them.
 
+### Then: the Why? panel shows the article, not the index
+
+Amit found the panel on migration step 2 showing a wall of run-together words
+for the variable mapping catalog. The panel was built from the search index's
+plain text, first three "sentences". Plain text has no idea what a table is,
+so on a KB article that is mostly a table every cell ran together, cut
+wherever a full stop happened to fall.
+
+The panel now fetches the article itself and takes its opening prose only:
+the paragraphs after the title, stopping at the first table, code block,
+figure or heading, at three paragraphs or at about 110 words. KB articles and
+Basics topics go through the same reader, and the index path is gone.
+
+Audited the same day across every Why? link in both guides: 32 step pages, 49
+distinct targets. None came out empty, none ran past 110 words, and none was
+mostly code. The catalog panel now shows its one-paragraph introduction and
+"Read the full topic".
+
 ### What the next session should pick up first
 
 **Phase E, Website Basics, on Amit's go-ahead only.** About twelve topics. The

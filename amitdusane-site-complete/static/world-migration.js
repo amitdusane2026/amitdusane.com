@@ -17,87 +17,51 @@
   function closePanel() { body.classList.remove('panel-open'); if (panel) panel.setAttribute('aria-hidden', 'true'); }
   if (pClose) pClose.addEventListener('click', closePanel);
 
-  var idx = null, loading = false;
-  function ensureIdx(cb) {
-    if (idx) { cb(); return; }
-    if (loading) return; loading = true;
-    fetch(window.SEARCH_INDEX || '/index.json').then(function (r) { return r.json(); })
-      .then(function (d) { idx = d; loading = false; cb(); })
-      /* A failed fetch used to stop here and the Why link did nothing. Now the
-         lookup runs against an empty index, finds nothing, and openKB falls
-         back to following the link. */
-      .catch(function () { idx = []; loading = false; cb(); });
-  }
-  function firstSentences(t, n) { var p = (t || '').split(/(?<=[.!?])\s+/); return p.slice(0, n || 3).join(' '); }
-  function openKB(id, href) {
-    ensureIdx(function () {
-      /* The index keys are one character (u, t, x, g) since they repeat once
-         per entry. This panel used to read .url/.title/.text/.group, and when
-         the index was rebuilt per world on 1 Sep 2026 those became undefined:
-         nothing ever matched, openKB returned silently, and every "Why" link
-         stopped opening with no error in the console.
+  /* THE PANEL READS THE PAGE, NOT THE SEARCH INDEX. Since 11 September 2026.
 
-         The index is also per SECTION HEADING now, not per page, so one KB
-         topic yields several entries. Prefer the page-level one, the entry with
-         no #anchor, so the panel opens on the topic's own opening rather than
-         halfway down it. */
-      var e = null, first = null, i, u;
-      if (idx) for (i = 0; i < idx.length; i++) {
-        u = idx[i].u || '';
-        /* Match the id as a path segment wherever it sits, not only under
-           /kb/, so any page in this world's index can be opened. */
-        if (u.indexOf('/' + id + '/') === -1) continue;
-        if (!first) first = idx[i];
-        if (u.indexOf('#') === -1) { e = idx[i]; break; }
-      }
-      e = e || first;
-      /* NOTHING FOUND MEANS FOLLOW THE LINK. This returned silently, so a Why
-         link whose page was not in the index did nothing at all when clicked:
-         no panel, no navigation, no error. */
-      if (!e) { if (href) window.location.href = href; return; }
-      if (pKind) pKind.textContent = e.g || 'Knowledge Base';
-      pBody.innerHTML = '<h2>' + e.t + '</h2><p>' + firstSentences(e.x, 3) + '</p>' +
-        '<div class="panel-foot"><a href="' + e.u + '">Read the full topic &rarr;</a></div>';
-      openPanel();
-    });
-  }
+     It used to show the first three "sentences" of the search index's plain
+     text for the topic. Plain text does not know what a table is, so on a KB
+     article that is mostly a table (the variable mapping catalog, the plugin
+     cookbook) the panel showed every cell run together as one wall of words,
+     cut wherever a full stop happened to fall. Amit caught it on step 2 of the
+     migration guide.
 
-
-  /* NO CITATION PANEL. The inline [n] markers and the panel that opened a
-     reference from them were removed on 11 September 2026, at Amit's request:
-     they distracted and read as low confidence. Sources live on the
-     References page and nowhere else. WORLD_ROOT is published by baseof.html
-     from the registry. */
-  var worldRoot = window.WORLD_ROOT || '/web-sdk-migration';
-
-  /* THE BASICS PANEL. Since 11 September 2026, Amit's call.
-
-     A Why link into a Basics section (Mobile App Basics today, Website Basics
-     next) used to leave the guide for the other section. It now opens in the
-     same panel as a KB article, so the reader keeps their place in the step:
-     the topic's title, its "In one sentence", and the opening of its "Why it
-     matters to you", then a link to the full topic.
-
-     It reads the topic page itself rather than a search index, because a
-     Basics topic has no h3 stack for the index to cut, and the page already
-     carries the summary in known places: .b-one for the sentence, the first h2
-     of .b-body for the opening. A page without .b-topic, or a failed fetch,
-     simply navigates. */
-  var basicsCache = {};
-  function readBasics(html) {
+     Now the panel fetches the article and takes its opening prose, and only
+     prose: the paragraphs after the title, stopping at the first table, code
+     block, figure or heading, at three paragraphs, or at about 110 words. The
+     rest is behind "Read the full topic". The same reader serves a Basics
+     topic (.b-topic), where it takes the "Why it matters to you" opening and
+     adds the "In one sentence" box. An unreadable page, or a failed fetch,
+     simply follows the link. */
+  var pageCache = {};
+  function wordCount(el) { return (el.textContent || '').trim().split(/\s+/).filter(Boolean).length; }
+  function readPage(html) {
     var doc = new DOMParser().parseFromString(html, 'text/html');
-    var t = doc.querySelector('.b-topic');
-    if (!t) return null;
-    var h1 = t.querySelector('h1'), one = t.querySelector('.b-one p'), crumb = t.querySelector('.crumb a'),
-        bb = t.querySelector('.b-body'), kids = bb ? bb.children : [], paras = [], started = false;
-    for (var i = 0; i < kids.length && paras.length < 2; i++) {
-      if (kids[i].tagName === 'H2') { if (started) break; started = true; continue; }
-      if (kids[i].tagName === 'P') paras.push(kids[i]);
+    var bt = doc.querySelector('.b-topic');
+    var root = bt ? bt.querySelector('.b-body') : doc.querySelector('.main .view.active');
+    var h1 = bt ? bt.querySelector('h1') : (root && root.querySelector('h1'));
+    if (!root || !h1) return null;
+    var paras = [], n = 0, kids = root.children, i, el, w;
+    /* A KB article's prose starts after its h1 and byline; a Basics topic's
+       summary is the section under its first h2 and ends at the next one. */
+    var inside = false;
+    for (i = 0; i < kids.length; i++) {
+      el = kids[i];
+      if (!bt && el === h1) { inside = true; continue; }
+      if (bt && el.tagName === 'H2') { if (inside) break; inside = true; continue; }
+      if (!inside || /byline|crumb|eyebrow/.test(el.className || '')) continue;
+      if (el.tagName !== 'P') { if (paras.length) break; continue; }
+      w = wordCount(el);
+      if (!w) continue;
+      if (paras.length && n + w > 110) break;
+      paras.push(el); n += w;
+      if (paras.length === 3) break;
     }
-    return { kind: crumb ? crumb.textContent.trim() : 'Basics', title: h1 ? h1.textContent.trim() : '',
-             one: one ? one.textContent.trim() : '', paras: paras };
+    var one = bt ? bt.querySelector('.b-one p') : null, crumb = bt ? bt.querySelector('.crumb a') : null;
+    return { basics: !!bt, kind: bt ? (crumb ? crumb.textContent.trim() : 'Basics') : 'Knowledge Base',
+             title: h1.textContent.trim(), one: one ? one.textContent.trim() : '', paras: paras };
   }
-  function showBasics(d, href) {
+  function showPage(d, href) {
     if (pKind) pKind.textContent = d.kind;
     pBody.innerHTML = '';
     var h = document.createElement('h2'); h.textContent = d.title; pBody.appendChild(h);
@@ -108,29 +72,40 @@
     }
     for (var i = 0; i < d.paras.length; i++) pBody.appendChild(document.importNode(d.paras[i], true));
     var foot = document.createElement('div'), a = document.createElement('a');
-    foot.className = 'panel-foot'; a.href = href; a.textContent = 'Open the full topic in ' + d.kind + ' →';
+    foot.className = 'panel-foot'; a.href = href;
+    a.textContent = d.basics ? 'Open the full topic in ' + d.kind + ' →' : 'Read the full topic →';
     foot.appendChild(a); pBody.appendChild(foot);
     openPanel();
   }
-  function openBasics(href) {
+  function openPage(href) {
     var go = function () { window.location.href = href; };
-    if (Object.prototype.hasOwnProperty.call(basicsCache, href)) {
-      if (basicsCache[href]) showBasics(basicsCache[href], href); else go();
+    if (Object.prototype.hasOwnProperty.call(pageCache, href)) {
+      if (pageCache[href]) showPage(pageCache[href], href); else go();
       return;
     }
     fetch(href).then(function (r) { if (!r.ok) throw new Error(r.status); return r.text(); })
-      .then(function (html) { var d = readBasics(html); basicsCache[href] = d; if (d) showBasics(d, href); else go(); })
+      .then(function (html) {
+        var d = readPage(html);
+        if (d && !d.paras.length && !d.one) d = null;
+        pageCache[href] = d;
+        if (d) showPage(d, href); else go();
+      })
       .catch(go);
   }
 
+
+  /* NO CITATION PANEL. The inline [n] markers and the panel that opened a
+     reference from them were removed on 11 September 2026, at Amit's request:
+     they distracted and read as low confidence. Sources live on the
+     References page and nowhere else. */
+
   document.addEventListener('click', function (ev) {
+    /* Every Why link, KB or Basics, goes through the one page reader above. */
     var a = ev.target.closest ? ev.target.closest('a.why[data-kb]') : null;
     if (a) {
       var href = a.getAttribute('href') || '';
-      ev.preventDefault();
-      /* Outside this world's root means a Basics topic: the Basics panel. */
-      if (href.charAt(0) === '/' && href.indexOf(worldRoot + '/') !== 0) { openBasics(href); return; }
-      openKB(a.getAttribute('data-kb'), href); return;
+      if (href.charAt(0) !== '/') return;
+      ev.preventDefault(); openPage(href); return;
     }
     /* A TAP ANYWHERE OUTSIDE AN OPEN PANEL CLOSES IT, the header included, on
        every screen size. Since 11 September 2026: on a phone the panel covered
