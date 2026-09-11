@@ -98,7 +98,7 @@ A Basics instance is one block in `[params.worlds]`, keyed on its section:
 | `premise` | What the section is and what it will not teach. Shown once on the front page; every topic links back to it |
 | `groups` | A table of groups, each with `order`, `label` and `blurb`. A topic's `group` names one. A group with no topics renders nothing, so a section can be written one group at a time |
 
-**One key lives on the other side.** A guide that leans on a Basics section names it with `basicsworld` in its own block, and its rail links to it under "Start here". The Mobile SDK guide carries `basicsworld = "mobile-app-basics"`; the migration guide carries none and renders as it always did.
+**A guide links to a Basics section from its content, never from its rail.** Where a step needs the vocabulary, its prose links the section and its Why? row links the exact topic. A `basicsworld` key that put a "Start here" row in the guide's rail was built and removed on 11 September 2026, at Amit's request.
 
 ### The topic
 
@@ -132,7 +132,7 @@ This is the whole list, and Website Basics is the test of it:
 4. `content/<key>/_index.html` with the three outputs, and `content/<key>/glossary.html`.
 5. The topics.
 6. An OG image, or a deliberate borrow.
-7. `basicsworld` in any guide that should link to it.
+7. Links from any guide that leans on it: in step prose to the section, in Why? rows to the exact topic.
 
 It needs nothing in `phases`, no template of its own and no change to `baseof.html`. **If Website Basics needs more than this list, the container is not reusable yet, and that should be said rather than patched.**
 

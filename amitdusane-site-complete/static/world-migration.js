@@ -147,31 +147,6 @@
     } else { fallback(); flash(); }
   });
 
-  /* THE RAIL PHASE ACCORDION. Added 9 September 2026, and it does nothing
-     unless the markup is there, so the migration rail is untouched.
-
-     One phase open at a time, matching the learning world. The phase holding
-     the current step is rendered open by the template, so a reader always
-     arrives with their own group expanded and the other three closed. */
-  document.addEventListener('click', function (ev) {
-    var h = ev.target.closest ? ev.target.closest('.rp-head') : null;
-    if (!h) return;
-    var tgt = document.getElementById(h.getAttribute('data-rp'));
-    if (!tgt) return;
-    var willOpen = !tgt.classList.contains('open');
-    if (willOpen) {
-      var sib = document.querySelectorAll('.rp-body.open');
-      for (var i = 0; i < sib.length; i++) {
-        sib[i].classList.remove('open');
-        var sh = sib[i].parentNode.querySelector('.rp-head');
-        if (sh) { sh.classList.remove('open'); sh.setAttribute('aria-expanded', 'false'); }
-      }
-    }
-    tgt.classList.toggle('open', willOpen);
-    h.classList.toggle('open', willOpen);
-    h.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
-  });
-
   /* THE PLATFORM SWITCHER. One reader, one platform, remembered.
 
      A mobile implementation is written once in whichever language the app is
@@ -181,7 +156,7 @@
 
      Storage is wrapped because a private window, cleared site data, or a
      browser set to block storage all throw on access rather than returning
-     null, and a throw here would take the accordion above down with it.
+     null, and a throw here would take the handlers above down with it.
 
      The default is the first pane the page happens to declare rather than a
      hardcoded platform, so a step that only offers two languages still works.

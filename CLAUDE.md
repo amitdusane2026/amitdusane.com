@@ -417,7 +417,9 @@ Amit's words on the second one: *"it explains technology, concept, technical thi
 
 **Mobile SDK is the reference implementation for step-by-step guides**, the way M13 §1 is for the learning world. Measured after the 8 to 9 September rewrite: steps at a paragraph median of 33, KB at 32.
 
-**A procedure guide no longer carries its own basics.** The Mobile SDK guide's Part One became a section of its own on 11 September 2026. A guide now names the Basics section it leans on with `basicsworld` in its registry block, and its rail links out to it under "Start here". A Why? row may point into it, and a link into another world navigates instead of opening the panel.
+**A procedure guide no longer carries its own basics, and its rail does not link to them.** The Mobile SDK guide's Part One became Mobile App Basics on 11 September 2026. Where a step needs that vocabulary, the step says so in its prose and links the Basics section, and its Why? row links the exact topic, which navigates instead of opening the panel. A "Start here" rail row was built and removed the same day at Amit's request.
+
+**The procedure rail is flat.** One row per step. A platform sub-step (`substep` in front matter, step six today) is always listed under its parent as 6.1 to 6.4, never folded away; on a sub-step page the parent is marked `inside` so only one row reads as selected. A phase accordion ran on the Mobile SDK rail from 9 to 11 September and was removed; do not bring it back. The phases still drive the front-page map.
 
 ### Basics is a section type of its own
 

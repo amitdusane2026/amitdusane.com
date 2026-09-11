@@ -185,19 +185,10 @@ disableKinds = ["taxonomy", "term"]
     punch_b   = "You will still have to debug it."
     cue       = "in the order the work happens"
     og        = "og-aep-mobile-sdk.jpg"
-    # THE RAIL IS GROUPED BY PHASE IN THIS WORLD ONLY, 9 September 2026.
-    # The spine reached fifteen steps when the WebView step was added and step
-    # six gained four platform children, which is nineteen rows in a flat list.
-    # Grouping collapses that to four, and it borrows the learning world's
-    # accordion rather than inventing a second pattern.
-    #
-    # It is an explicit flag rather than a test for `phases`, because the
-    # migration guide declares phases too and must render exactly as before.
-    railgroups = true
-    # The Basics section this guide leans on. The rail links to it under
-    # "Start here". Its fourteen topics were this guide's Part One until
-    # 11 September 2026.
-    basicsworld = "mobile-app-basics"
+    # No `railgroups` and no `basicsworld` since 11 September 2026. The rail is
+    # flat, every step and sub-step visible, and it no longer links to Mobile
+    # App Basics: the steps do that themselves, in the prose and in Why? rows
+    # pointing at the exact topic. Amit's call, the same day both were built.
 
 # ---------------------------------------------------------------------------
 # THE FIRST BASICS SECTION, 11 September 2026.

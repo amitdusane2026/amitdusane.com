@@ -2871,6 +2871,25 @@ generalised on 6 September. A comment in `baseof.html` still described the
 rail's Overview row and a word list at the foot, both removed in `ccb9800`. All
 three corrected to match the code.
 
+### Later the same day: the Mobile SDK rail is flat, and does not link to Basics
+
+Amit's call after seeing the rail. Two things built earlier were removed:
+
+- **The "Start here" row** linking to Mobile App Basics, and the `basicsworld`
+  registry key behind it. The guide already carries that link where a reader
+  needs it: its front page and steps 1 and 6 tell the reader to read Mobile App
+  Basics first and link the section, and the Why? rows about app vocabulary
+  link the exact topic.
+- **The phase accordion** of 9 September, with its CSS, its JS and the
+  `railgroups` key. The rail is one row per step, fifteen of them, with step
+  six's four platform sub-steps always listed under it as 6.1 to 6.4. On a
+  sub-step page the parent is marked `inside` and the sub-step is the one
+  selected row. The phases stay in the registry because the front-page stage
+  map uses them.
+- **The step counter** counted pages, so step 6.1 read "Step 06 of 19". It
+  now counts steps: "Step 06.1 of 15", and the percentage runs to 100 at
+  step 15. Previous and next still walk every page, 6 then 6.1 to 6.4 then 7.
+
 ### What the next session should pick up first
 
 **Phase E, Website Basics, on Amit's go-ahead only.** About twelve topics. The

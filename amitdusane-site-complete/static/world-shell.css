@@ -102,38 +102,24 @@
   .navlink.active{background:var(--accent-soft);color:var(--accent);border-left-color:var(--accent);font-weight:600}
   .navlink .ic{color:var(--faint)}
 
-  /* THE PHASE ACCORDION IN THE RAIL. Added 9 September 2026, and it renders
-     only where the registry sets `railgroups`, which today is the Mobile SDK
-     guide alone. The migration rail is untouched and must stay that way.
+  /* PLATFORM SUB-STEPS, always open. The rail is flat since 11 September 2026:
+     the phase accordion added on 9 September was removed at Amit's request, so
+     every step and every sub-step is visible without a click.
 
-     Why it exists: that spine reached fifteen steps plus four platform
-     children under step six, and nineteen flat rows is the same problem Part
-     One had before it became a single door -- a rail whose bottom half nobody
-     on a phone ever sees. Four collapsible groups is shorter than the twelve
-     rows it replaced, despite carrying more pages.
-
-     The pattern is the learning world's, deliberately, so that a reader who
-     has used one rail already knows this one. It is a leaner copy rather than
-     a shared file, because the two live in different stylesheets and sharing
-     one would mean moving both into chrome.css for no other gain. */
-  .rp-head{display:flex;align-items:center;justify-content:space-between;width:100%;
-    background:none;border:0;font:inherit;cursor:pointer;padding:9px 18px;text-align:left;
-    color:var(--muted);font-size:11.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase}
-  .rp-head:hover{color:var(--ink)}
-  .rp-chev{font-size:9px;color:var(--faint);transition:transform .18s}
-  .rp-head.open .rp-chev{transform:rotate(180deg)}
-  .rp-body{display:none}
-  .rp-body.open{display:block}
-  .rphase + .rphase{border-top:1px solid var(--line-soft)}
-
-  /* Platform children of one step. The 52px indent lines them up under the
-     parent's title rather than under its number: 18px of rail padding, a 22px
-     number chip, and the 11px gap between them. */
-  .rsubs{padding:1px 0 6px 52px}
-  .rsub{display:block;padding:5px 18px 5px 0;font-size:13px;line-height:1.35;
-    color:var(--muted);text-decoration:none}
-  .rsub:hover{color:var(--ink)}
-  .rsub.active{color:var(--accent);font-weight:600}
+     Sub-steps hang off a hairline that starts under the parent's title rather
+     than its number (18px of rail padding, a 22px number chip, the 11px gap),
+     and each carries its own "6.1", so the four read as parts of step six and
+     not as stray links. Selected, a sub-step gets the same wash and bar as a
+     selected step; its parent is marked `inside`, accent text and chip only. */
+  .rsubs{margin:0 0 6px 51px;border-left:1px solid var(--line)}
+  .rsub{display:flex;align-items:baseline;gap:9px;padding:6px 18px 6px 12px;margin-left:-1px;
+    border-left:2px solid transparent;font-size:13.5px;line-height:1.35;color:var(--ink-soft);text-decoration:none}
+  .rsub .ssn{font-variant-numeric:tabular-nums;font-size:11.5px;font-weight:700;color:var(--muted);min-width:22px}
+  .rsub:hover{background:var(--line-soft);color:var(--ink)}
+  .rsub.active{background:var(--accent-soft);color:var(--accent);border-left-color:var(--accent);font-weight:600}
+  .rsub.active .ssn{color:var(--accent)}
+  .steplink.inside{color:var(--accent);font-weight:600}
+  .steplink.inside .sn{background:var(--accent)}
 
   /* THE PLATFORM SWITCHER, on steps that carry the same instruction in four
      languages. One choice, remembered, applied to every switcher on the page
