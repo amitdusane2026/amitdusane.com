@@ -585,6 +585,8 @@ Never nest a `code-block` inside a `warn-box`, `pro-tip`, or `info-box`. State t
 
 `code-lang` is a **label, not a language**. "Marketing Channel Rule", "club-members.csv", "Follow along: build a basic sequence" are all correct. The component's most valuable use is UI configuration walkthroughs, not code.
 
+**On a phone, code wraps rather than scrolling sideways, in every world**: `white-space:pre-wrap` from 880px down, with the type left at its normal size. The learning world decided it first, on the measurement that the longest line wraps to two at most. The two step guides and Mobile App Basics followed on 11 September 2026, after Amit had to swipe inside a code block on a phone to read it. Their blocks carry a Copy button over the top corner, so there the wrapped code gets top padding to clear it. Copy still copies the original lines.
+
 **SVG colour must live in a `style` attribute with a hex fallback.** `fill="var(--accent)"` as a presentation attribute does not resolve reliably. Correct form:
 
 ```html

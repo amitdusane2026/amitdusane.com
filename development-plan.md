@@ -2952,6 +2952,20 @@ distinct targets. None came out empty, none ran past 110 words, and none was
 mostly code. The catalog panel now shows its one-paragraph introduction and
 "Read the full topic".
 
+### Then: code wraps on a phone in every world
+
+Amit found a code block on the Web SDK plugins page that had to be swiped
+sideways on a phone to read each line. The learning world had already decided
+this one, wrap rather than scroll and do not shrink the type, but the two step
+guides and Mobile App Basics each had their own code style and had never
+picked the decision up.
+
+From 880px down, code in those three now wraps, with top padding so the first
+line clears the Copy button over the corner. Copy still copies the original
+lines. One dead rule went with it: the step guides' 560px query set the code
+size to 11.5px, and a base rule later in the file had overridden it at equal
+specificity ever since, so it never applied.
+
 ### What the next session should pick up first
 
 **Phase E, Website Basics, on Amit's go-ahead only.** About twelve topics. The

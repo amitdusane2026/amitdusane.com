@@ -232,6 +232,9 @@ body.world-basics .ask-bar b,body.world-basics .ask-kicker{color:var(--accent)}
   body.nav-open .b-scrim{display:block;position:fixed;top:var(--header-h);left:0;right:0;bottom:0;background:rgba(0,0,0,.28);z-index:60}
   .b-main{padding:22px 18px 96px}
   .b-one p{font-size:17px}
+  /* Code wraps on a phone instead of scrolling sideways, as in every world
+     since 11 September 2026; the padding clears the Copy button. */
+  .code pre{white-space:pre-wrap;overflow-wrap:anywhere;overflow-x:visible;padding-top:36px}
 }
 @media (max-width:560px){
   .b-w{grid-template-columns:1fr}
