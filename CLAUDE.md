@@ -436,7 +436,7 @@ Decided by Amit on 11 September 2026. A Basics section teaches the vocabulary of
 
 Mobile App Basics at `/mobile-app-basics/` is the first instance, fourteen topics moved out of the Mobile SDK guide with every old URL aliased. Website Basics is the second. **The name is "Website Basics", never "Web Basics".**
 
-**Nothing in a Basics section is numbered**, because there is no order to promise. The reader arrives knowing some of the field and none of the rest, so the front page shows every topic at once, in groups, with a word picker that lights up the topics covering the words they do not know.
+**Nothing in a Basics section is numbered**, because there is no order to promise. The reader arrives knowing some of the field and none of the rest, so the front page shows every topic at once, in groups. **Keep that page simple** (Amit, 11 September 2026): the title, one lead line, then every topic as a plainly tappable row with an arrow, because a phone has no hover to say "this opens"; the premise sits under the list. A word picker that lit up topics by unfamiliar word was built and removed the same day: fourteen topics do not need a tool with a learning curve, and on a phone it filled the first screen. **Orienting is done by "See where this fits"** on every topic, the learning world's pocket map with two tiers, groups then topics (`wherefits.html`, `wherefits.js` shared by both worlds). From 1240px it heads the topic's side column; below that it is the floating green tab.
 
 **It is its own design, not the procedure shell with the steps taken out.** `world-basics.css` and `world-basics.js` serve every instance; each instance adds a registry block, an accent rule and content. `site-architecture.md` lists everything a new instance needs.
 
@@ -457,7 +457,7 @@ Mobile App Basics at `/mobile-app-basics/` is the first instance, fourteen topic
 
 **Headings inside a topic are plain `h2`**, not the learning world's `h3.subsec-title`, and nothing builds a spine from them.
 
-Three more front matter keys feed other pages: `cando` is the line on the front-page card, `group` places the topic, and `linkTitle` is the short name in the rail and in previous and next. **Keep `linkTitle` to about four words and group labels to one or two**; the full title stays the headline. **Order `words` deliberately**: the front-page picker shows each topic's first two, so put first the two a newcomer is most likely to have heard.
+Three more front matter keys feed other pages: `cando` is the line on the front-page card, `group` places the topic, and `linkTitle` is the short name in the rail and in previous and next. **Keep `linkTitle` to about four words and group labels to one or two**; the full title stays the headline. `words` feeds Words you will hear and the glossary.
 
 **The glossary is generated, never written.** `glossary.html` is front matter only (`type: wordlist`), and the page gathers every topic's `words` A to Z, each term linking to the topic that explains it. It sits at the top of the rail with a counted total, the way the Adobe Analytics glossary does.
 

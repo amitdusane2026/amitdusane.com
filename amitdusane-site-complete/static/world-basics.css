@@ -148,37 +148,47 @@ code,.b-body .mn{font-family:var(--mono);font-size:.88em;background:var(--bg-sof
 .fig-svg .mn{font-family:var(--mono)}
 .fig-svg figcaption{margin-top:10px;font-size:13px;color:var(--ink-soft);text-align:center;line-height:1.5}
 
-/* ---------- Front page: the whole field on one screen ---------- */
-.b-lead{font-size:18.5px;line-height:1.6;color:var(--ink-soft);max-width:var(--measure);margin:0 0 18px}
-.b-premise{max-width:var(--measure);border-left:4px solid var(--accent);background:var(--bg-soft);border-radius:0 10px 10px 0;padding:12px 16px;margin:0 0 26px}
+/* ---------- Front page: simple, every topic one tap away ----------
+   Rebuilt 11 September 2026 on Amit's review. The word picker is gone, and a
+   topic is a row that looks tappable without hover: a border, a whole-row
+   target of at least 56px, and an arrow in an accent disc at the end. Two
+   columns where there is room, one on a phone. The premise follows the list. */
+.b-lead{font-size:18px;line-height:1.6;color:var(--ink-soft);max-width:var(--measure);margin:0 0 28px}
+.b-grp{margin:0 0 26px}
+.b-grp-h{font-size:16px;line-height:1.3;margin:0 0 10px;font-weight:700;color:var(--ink)}
+.b-list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px}
+.b-list li{margin:0}
+.b-item{display:flex;align-items:center;gap:12px;min-height:56px;padding:12px 14px 12px 16px;border:1px solid var(--line);border-radius:12px;
+  background:var(--bg);text-decoration:none;transition:border-color .15s,background-color .15s}
+.b-item:hover{border-color:var(--accent)}
+.b-item:active{background:var(--accent-soft)}
+.b-item:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.b-item-tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
+.b-item-t{font-weight:700;font-size:15.5px;line-height:1.35;color:var(--ink)}
+.b-item-d{font-size:13.5px;line-height:1.45;color:var(--ink-soft)}
+.b-item-go{flex:none;display:flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;
+  background:var(--accent-soft);color:var(--accent);font-size:20px;line-height:1;padding-bottom:2px;box-sizing:border-box}
+.b-item:hover .b-item-go{background:var(--accent);color:var(--on-accent)}
+.b-premise{max-width:var(--measure);border-left:4px solid var(--accent);background:var(--bg-soft);border-radius:0 10px 10px 0;padding:12px 16px;margin:34px 0 14px}
 .b-premise-l{display:block;font-size:13px;font-weight:700;color:var(--ink);margin-bottom:2px}
 .b-premise p{margin:0;font-size:var(--b-fs-sm);color:var(--ink-soft)}
-.b-pick{border:1px solid var(--line);border-radius:14px;padding:16px 18px 12px;margin:0 0 32px;background:var(--bg)}
-.b-pick-q{margin:0 0 10px;font-weight:700;font-size:16px}
-.b-chips{display:flex;flex-wrap:wrap;gap:8px}
-.b-chip{font:inherit;font-size:14px;line-height:1.2;padding:7px 13px;border-radius:999px;border:1px solid var(--line);background:var(--bg-soft);color:var(--ink);cursor:pointer}
-.b-chip:hover{border-color:var(--accent)}
-.b-chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
-.b-chip:focus-visible,.b-card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.b-pick-foot{display:flex;align-items:center;gap:14px;min-height:30px;margin-top:8px}
-.b-pick-out{margin:0;font-size:var(--b-fs-sm);color:var(--ink-soft)}
-.b-pick-clear{font:inherit;font-size:13px;background:none;border:0;color:var(--accent);cursor:pointer;text-decoration:underline;padding:0}
-.b-pick-more{font:inherit;font-size:13.5px;font-weight:600;background:none;border:0;color:var(--accent);cursor:pointer;padding:0;margin-top:10px}
-.b-pick-more:hover{text-decoration:underline}
-.b-grp{margin:0 0 30px}
-.b-grp-h{font-size:var(--b-fs-h2);line-height:1.3;margin:0 0 4px;font-weight:700}
-.b-grp-blurb{margin:0 0 12px;color:var(--ink-soft);font-size:var(--b-fs-sm);max-width:var(--measure)}
-.b-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
-.b-card{display:flex;flex-direction:column;gap:5px;text-decoration:none;border:1px solid var(--line);border-radius:12px;padding:15px 17px;background:var(--bg);
-  transition:border-color .15s,transform .15s,opacity .15s,background-color .15s}
-.b-card:hover{border-color:var(--accent);transform:translateY(-1px)}
-.b-card-t{font-weight:700;color:var(--ink);font-size:16px;line-height:1.35}
-.b-card-d{color:var(--ink-soft);font-size:14px;line-height:1.5}
-.b-card-m{margin-top:auto;padding-top:4px;color:var(--muted);font-size:var(--b-fs-meta)}
-.b-card.is-hit{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent);background:var(--accent-soft)}
-.b-card.is-hit .b-card-m{color:var(--ink-soft)}
-.b-card.is-dim{opacity:.42}
 .b-front-foot{margin:8px 0 0;font-size:var(--b-fs-sm)}
+
+/* ---------- "See where this fits" ----------
+   On a topic page from 1240px, a green button heads the side column, the way
+   the learning world puts its pocket map at the top of its right rail; the
+   floating tab steps aside there so the two are never on screen together.
+   Below 1240px the floating tab (chrome.css) is the way in. Both open the one
+   map, wherefits.js. Green #15803d carries white text at 5:1. */
+.b-wf{display:none;width:100%;align-items:center;gap:10px;margin:0 0 16px;padding:11px 14px;border:0;border-radius:12px;
+  background:#15803d;color:#fff;font:inherit;text-align:left;cursor:pointer;box-shadow:0 4px 14px rgba(21,128,61,.28)}
+.b-wf:hover{background:#166534}
+.b-wf:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.b-wf svg{flex:none;width:18px;height:18px}
+.b-wf b{display:block;font-size:14px;font-weight:700;line-height:1.3}
+.b-wf em{display:block;font-style:normal;font-size:12px;opacity:.92;line-height:1.3}
+@media (min-width:1240px){ .b-wf{display:flex} body.world-basics .wf-tab{display:none} }
+@media print{ .b-wf{display:none !important} }
 
 /* ---------- Glossary ----------
    The pattern of the Adobe Analytics glossary: an A to Z strip pinned under

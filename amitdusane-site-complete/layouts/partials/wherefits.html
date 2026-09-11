@@ -11,6 +11,52 @@
 
      A module landing lights its own module. A phase landing lights only the
      phase, since no single module is "here". */}}
+{{/* A BASICS TOPIC gets a two-tier map, since 11 September 2026: the
+     section's groups, then the topics of the chosen group, with the current
+     topic lit. The markup and classes are the three-tier map's, so chrome.css
+     styles it and wherefits.js drives it unchanged. A topic is a plain link
+     with no data-mod, so tapping one opens it, and the second arrow never
+     draws because there is no third tier. */}}
+{{ $bw := index .Site.Params.worlds .Section }}
+{{ if and $bw (eq $bw.shape "basics") }}
+{{ $cur := . }}
+{{ $topics := (where (where .Site.RegularPages "Section" .Section) "Type" "topic").ByWeight }}
+{{ $groups := slice }}
+{{ range $k, $v := $bw.groups }}{{ $groups = $groups | append (merge $v (dict "key" $k)) }}{{ end }}
+{{ $groups = sort $groups "order" }}
+{{ $curG := index $bw.groups .Params.group }}
+<button class="wf-tab" id="wfFab" aria-label="See where this fits">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polygon points="15.5 8.5 13 13 8.5 15.5 11 11 15.5 8.5"/></svg>
+  <span class="wf-tab-txt"><span class="wf-tab-l1">See where</span><span class="wf-tab-l2">this fits</span></span>
+</button>
+<div class="wf-overlay" id="wfOverlay">
+  <div class="wf-map" role="dialog" aria-modal="true" aria-label="Where this fits">
+    <svg class="wf-arrows" aria-hidden="true">
+      <defs><marker id="wfHead" markerWidth="9" markerHeight="9" refX="6" refY="4.5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4.5 L0,9 Z" fill="#22c55e"/></marker></defs>
+      <line class="wf-a-cm" marker-end="url(#wfHead)"/>
+    </svg>
+    <button class="wf-x" id="wfClose" aria-label="Close">&times;</button>
+    <div class="wf-here">
+      <span class="wf-here-lab">You are here</span>
+      <span class="wf-here-path">{{ $bw.name }} <i>&rsaquo;</i> {{ with $curG }}{{ .label }} <i>&rsaquo;</i> {{ end }}{{ .LinkTitle }}</span>
+      <span class="wf-guide"><span class="wf-guide-d">Click a group to see its topics. Click a topic to open it.</span><span class="wf-guide-m">Tap a group to see its topics. Tap a topic to open it.</span></span>
+    </div>
+    <div class="wf-tier">
+      <div class="wf-row wf-row-cat">
+        {{ range $groups }}<button class="wf-cat{{ if eq .key $cur.Params.group }} on{{ end }}" data-cat="{{ .key }}" type="button"><span class="wf-lab">{{ .label }}</span></button>{{ end }}
+      </div>
+    </div>
+    <div class="wf-arrow" aria-hidden="true"></div>
+    <div class="wf-tier">
+      {{ range $g := $groups }}
+      <div class="wf-row wf-row-mod{{ if eq $g.key $cur.Params.group }} show{{ end }}" data-catgroup="{{ $g.key }}">
+        {{ range where $topics "Params.group" $g.key }}<a class="wf-mod{{ if eq .RelPermalink $cur.RelPermalink }} on{{ end }}" href="{{ .RelPermalink }}"><span class="wf-lab">{{ .LinkTitle }}</span></a>{{ end }}
+      </div>
+      {{ end }}
+    </div>
+  </div>
+</div>
+{{ else }}
 {{ $cur := . }}
 {{ $isLesson := eq .Type "lesson" }}
 {{ $isModule := eq .Type "module" }}
@@ -118,3 +164,4 @@
 
   </div>
 </div>
+{{ end }}

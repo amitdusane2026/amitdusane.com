@@ -96,7 +96,7 @@ A Basics instance is one block in `[params.worlds]`, keyed on its section:
 | `order`, `tilesub` | Its sort order, and the line under its tile, in the home page's "Start here" row |
 | `og` | The social card. Mobile App Basics borrows the Mobile SDK card until one is made |
 | `premise` | What the section is and what it will not teach. Shown once on the front page; every topic links back to it |
-| `groups` | A table of groups, each with `order`, `label` and `blurb`. A topic's `group` names one. A group with no topics renders nothing, so a section can be written one group at a time |
+| `groups` | A table of groups, each with `order` and `label` (a one- or two-word name). A topic's `group` names one. A group with no topics renders nothing, so a section can be written one group at a time. Groups are the first tier of "See where this fits". The `blurb` each group once carried went with the old front page on 11 September 2026 |
 
 **A guide links to a Basics section from its content, never from its rail.** Where a step needs the vocabulary, its prose links the section and its Why? row links the exact topic. A `basicsworld` key that put a "Start here" row in the guide's rail was built and removed on 11 September 2026, at Amit's request.
 
@@ -107,8 +107,8 @@ Every topic is `type: topic`, and `layouts/topic/single.html` enforces one shape
 | Front matter | Feeds |
 |---|---|
 | `params.oneline` | The In one sentence box |
-| `params.cando` | The line on the topic's front-page card |
-| `params.words` | A list of `t` (term) and `d` (plain meaning): Words you will hear, the picker and the glossary. The picker shows each topic's first two before "Show all" |
+| `params.cando` | The line under the topic's title on the front-page row |
+| `params.words` | A list of `t` (term) and `d` (plain meaning): Words you will hear and the glossary |
 | `params.ask` | The Ask a developer list, copyable |
 | `params.group` | Which group the topic sits in |
 | `linkTitle` | The short name in the rail and in previous and next |
@@ -118,7 +118,9 @@ Previous and next run through every topic in weight order, across group boundari
 
 ### The front page and the glossary
 
-**The front page is generated from the topics.** `layouts/<section>/list.html` is one line calling `partials/basicshome.html`, which draws the premise, the word picker and the cards in their groups. `_index.html` is front matter only, and needs `outputs: ["HTML","JSON","RSS"]` for the section to get a search index and a feed.
+**The front page is generated from the topics.** `layouts/<section>/list.html` is one line calling `partials/basicshome.html`, which draws the title, a lead line, every topic as a tappable row in its group, then the premise and a glossary link. Simple by design, after a word picker built for it on 11 September 2026 was removed the same day.
+
+**"See where this fits" is shared with the learning world, not copied.** `wherefits.html` has a two-tier branch for a Basics topic (groups, then topics, the current one lit) using the same classes as the learning world's three tiers, so `chrome.css` styles both and one script, `wherefits.js`, drives both. It renders on every topic page: the floating green tab below 1240px, and a button heading the side column from 1240px. A new Basics instance gets it for free. `_index.html` is front matter only, and needs `outputs: ["HTML","JSON","RSS"]` for the section to get a search index and a feed.
 
 **The glossary is generated too.** `content/<section>/glossary.html` is front matter only, `type: wordlist`, and `layouts/wordlist/single.html` gathers every topic's `words` A to Z, each term linking to its entry on the topic page. **Its path is load-bearing:** the rail finds it with `GetPage "<root>/glossary"`, so a glossary saved under any other name builds cleanly and the rail silently shows no Glossary link.
 

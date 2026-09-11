@@ -2966,6 +2966,30 @@ lines. One dead rule went with it: the step guides' 560px query set the code
 size to 11.5px, and a base rule later in the file had overridden it at equal
 specificity ever since, so it never applied.
 
+### Then: Mobile App Basics front page made simple, and "See where this fits"
+
+Amit liked the word picker as a component and removed it anyway, for the
+reader: it has a learning curve, and on a phone it filled the whole first
+screen before any topic appeared. Fourteen topics do not need that tool. He
+also found the topic cards did not look tappable on a phone, where there is no
+hover to give the hint, and the page as a whole too dense.
+
+- **The front page is now simple.** Title, one lead line, then every topic as
+  a bordered row with its one-line "what this lets you do" and an arrow in an
+  accent disc, grouped under one- or two-word headings, two columns where
+  there is room and one on a phone. The premise moved under the list, the
+  order the learning landings use, and the group blurbs went.
+- **"See where this fits" came across from the learning world**, as Amit
+  asked, and it does the orienting the picker was meant to do. On a topic it
+  is a two-tier map: the four groups, then the topics of the chosen one, the
+  current topic lit. From 1240px it heads the side column; below that it is
+  the floating green tab. The script moved out of world-learning.js into a
+  shared wherefits.js, so both worlds run one copy, and a Basics instance gets
+  the map with no work.
+- **A bug the move would have shipped:** clicking a group looked for the
+  first module's data-mod to open its sections. Basics topics have none, the
+  value read as null, and every topic in the row was marked selected. Guarded.
+
 ### What the next session should pick up first
 
 **Phase E, Website Basics, on Amit's go-ahead only.** About twelve topics. The

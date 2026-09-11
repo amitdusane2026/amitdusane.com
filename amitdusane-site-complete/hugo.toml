@@ -224,19 +224,15 @@ disableKinds = ["taxonomy", "term"]
   [params.worlds.mobile-app-basics.groups.kind]
     order = 1
     label = "App types"
-    blurb = "Work this out first. The answer decides who builds the app, what they build it in, and sometimes which Adobe product you need."
   [params.worlds.mobile-app-basics.groups.world]
     order = 2
     label = "Developer tools"
-    blurb = "The tools, languages and files a mobile developer uses every day, explained for somebody who will never open them."
   [params.worlds.mobile-app-basics.groups.behaviour]
     order = 3
     label = "App behaviour"
-    blurb = "The parts of app behaviour that decide what your numbers mean, and where habits from the web give the wrong answer."
   [params.worlds.mobile-app-basics.groups.team]
     order = 4
     label = "Working together"
-    blurb = "Where your job ends, where theirs begins, and how to be useful between the two."
 
 # ---------------------------------------------------------------------------
 # Module downloads, added 30 August 2026 for M19.
