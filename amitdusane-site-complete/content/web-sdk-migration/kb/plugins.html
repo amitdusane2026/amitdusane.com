@@ -11,8 +11,8 @@ params:
   group: reference
   grouplabel: "Reference"
 ---
-<p>The old <code>doPlugins</code> was your "last call", the function that ran in the split second before every hit, your final chance to set or tweak variables. The Web SDK has no equivalent function, so that logic moves to two homes<a class="cite" href="/web-sdk-migration/references/#ref-16" data-ref="16">[16]</a><a class="cite" href="/web-sdk-migration/references/#ref-17" data-ref="17">[17]</a>: the <b>onBeforeEventSend</b> callback (a global last-call that mutates the payload before it sends)<a class="cite" href="/web-sdk-migration/references/#ref-15" data-ref="15">[15]</a> and the <b>Common Web SDK Plugins</b> extension, which ports the most-used plugins as native data elements<a class="cite" href="/web-sdk-migration/references/#ref-18" data-ref="18">[18]</a>.</p>
-<a class="cite" href="/web-sdk-migration/references/#ref-19" data-ref="19">[19]</a><a class="cite" href="/web-sdk-migration/references/#ref-20" data-ref="20">[20]</a><table class="mini-tbl">
+<p>The old <code>doPlugins</code> was your "last call", the function that ran in the split second before every hit, your final chance to set or tweak variables. The Web SDK has no equivalent function, so that logic moves to two homes: the <b>onBeforeEventSend</b> callback (a global last-call that mutates the payload before it sends) and the <b>Common Web SDK Plugins</b> extension, which ports the most-used plugins as native data elements.</p>
+<table class="mini-tbl">
 <tbody><tr><td>getQueryParam</td><td><b>Clean</b>, URL Parameter data element</td></tr>
 <tr><td>getValOnce</td><td><b>Clean</b>, Common Web SDK Plugins data element</td></tr>
 <tr><td>getPreviousValue</td><td><b>Clean</b>, plugins data element (on SPAs, verify it reads <i>previous</i>, not current)</td></tr>
@@ -22,13 +22,13 @@ params:
 <tr><td>crossVisitParticipation</td><td><b>Reconsider</b>, often better served by Attribution IQ than re-porting</td></tr>
 </tbody></table>
 <p><b>For your migration:</b> the Common Web SDK Plugins are Adobe-Consulting courtesy code, not Customer Care–supported, and several aren't available for raw-library use. For the awkward ones, first ask whether a Workspace feature makes the plugin unnecessary at all.</p><section class="kb-full-static"><div class="fulltag">Full detail, the complete reference</div><h3>doPlugins had no successor function; it has two</h3>
-<p><code>doPlugins</code> was your "last call": the function that ran in the split second before every hit, your final chance to set or tweak variables. The Web SDK has no single equivalent, so that logic moves to two homes used together. The first is <b>onBeforeEventSend</b>, a callback registered on the extension (Configure → Data Collection → "on before event send callback code")<a class="cite" href="/web-sdk-migration/references/#ref-15" data-ref="15">[15]</a> that runs before every event and receives the payload to mutate; <code>return false</code> aborts the send. The second is the <b>Common Web SDK Plugins</b> extension<a class="cite" href="/web-sdk-migration/references/#ref-18" data-ref="18">[18]</a>, which ports the most-used plugins as native data elements.</p>
+<p><code>doPlugins</code> was your "last call": the function that ran in the split second before every hit, your final chance to set or tweak variables. The Web SDK has no single equivalent, so that logic moves to two homes used together. The first is <b>onBeforeEventSend</b>, a callback registered on the extension (Configure → Data Collection → "on before event send callback code") that runs before every event and receives the payload to mutate; <code>return false</code> aborts the send. The second is the <b>Common Web SDK Plugins</b> extension, which ports the most-used plugins as native data elements.</p>
 <h3>Worked: campaign tracking with de-duplication</h3>
 <p>Old <code>doPlugins</code> grabbed a campaign code, de-duped it for the session, and counted it once:</p>
 <div class="code"><button class="copy">Copy</button><pre>s.campaign = s.Util.getQueryParam("cid");
 s.campaign = s.getValOnce(s.campaign, "s_camp", 0);
 if (s.campaign) { s.events = s.apl(s.events, "event1", ",", 2); }</pre></div>
-<p>The Web SDK rebuild is three named pieces, no doPlugins: a <b>URL Parameter</b> data element for <code>cid</code>; a <b>getValOnce</b> data element (from the plugins extension) wrapping it<a class="cite" href="/web-sdk-migration/references/#ref-19" data-ref="19">[19]</a>; mapped into <code>xdm.marketing.trackingCode</code>. The <code>apl</code> step has no native element, so it goes in onBeforeEventSend:</p>
+<p>The Web SDK rebuild is three named pieces, no doPlugins: a <b>URL Parameter</b> data element for <code>cid</code>; a <b>getValOnce</b> data element (from the plugins extension) wrapping it; mapped into <code>xdm.marketing.trackingCode</code>. The <code>apl</code> step has no native element, so it goes in onBeforeEventSend:</p>
 <div class="code"><button class="copy">Copy</button><pre>function (content) {
   var tc = content.xdm &amp;&amp; content.xdm.marketing &amp;&amp; content.xdm.marketing.trackingCode;
   if (tc) {

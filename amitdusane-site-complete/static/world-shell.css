@@ -287,11 +287,6 @@
   .why:hover{background:var(--accent);color:var(--bg)}
   .why .arr{font-size:11px;opacity:.8}
 
-  /* ---------- Citations ---------- */
-  .cite{color:var(--accent);text-decoration:none;font-variant-numeric:tabular-nums;font-size:11px;
-    vertical-align:super;cursor:pointer;padding:0 1px}
-  .cite:hover{text-decoration:underline}
-
   /* ---------- Infographics (Phase 5) ---------- */
   .fig-svg{margin:22px 0;border:1px solid var(--line);border-radius:12px;background:var(--bg);padding:18px 18px 12px}
   .fig-svg svg{display:block;width:100%;height:auto}
@@ -340,7 +335,14 @@
   /* ---------- Slide-over Panel (A) ---------- */
   .scrim{position:fixed;inset:0;background:rgba(20,24,30,.34);z-index:60;opacity:0;pointer-events:none;transition:opacity .2s}
   body.panel-open .scrim{opacity:1;pointer-events:auto}
-  .panel{position:fixed;top:0;right:0;height:100vh;width:var(--panel);max-width:92vw;background:var(--bg);z-index:70;
+  /* THE PANEL STARTS BELOW THE HEADER. Fixed 11 September 2026. It sat at top:0
+     under the site header, which is fixed at z-index 1000, so the header drew
+     over the panel's own head and hid the close button; on a phone, with the
+     panel full width, a reader had no way out but "Read the full topic". Below
+     the header the head is always visible. Any tap outside the panel closes it
+     too (world-migration.js), the header included. */
+  .panel{position:fixed;top:var(--header-h);right:0;height:calc(100vh - var(--header-h));height:calc(100dvh - var(--header-h));
+    width:var(--panel);max-width:92vw;background:var(--bg);z-index:70;
     box-shadow:-12px 0 40px rgba(0,0,0,.18);transform:translateX(100%);transition:transform .24s cubic-bezier(.4,0,.2,1);
     display:flex;flex-direction:column}
   body.panel-open .panel{transform:none}
@@ -354,6 +356,10 @@
   .panel-foot{margin-top:18px;padding-top:14px;border-top:1px solid var(--line-soft)}
   .panel-foot a{color:var(--accent);text-decoration:none;font-size:13.5px;cursor:pointer}
   .panel-foot a:hover{text-decoration:underline}
+  /* A Basics topic in the panel: its "In one sentence", boxed as on the topic. */
+  .panel-body .pb-one{background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:10px;padding:10px 14px;margin:0 0 12px}
+  .panel-body .pb-one-l{display:block;font-size:12px;font-weight:700;color:var(--accent);margin-bottom:2px}
+  .panel-body .pb-one p{margin:0}
 
   /* ---------- References ---------- */
   .reflist{list-style:none;padding:0;margin:1em 0}
@@ -390,7 +396,10 @@
     .brandmark svg{width:17px;height:17px}
     .main{padding:22px 16px 92px}
     .view.active{padding:18px 16px;border-radius:11px}
-    .panel{width:100vw;max-width:100vw}
+    /* Not full width: a strip of the page stays visible beside the panel, so
+       there is always somewhere to tap to close it. */
+    .panel{width:88vw;max-width:88vw}
+    .panel-head .px{width:40px;height:40px;font-size:18px}
     h1{font-size:27px}
     /* .narrative's mobile step moved to the later 560px query on 6 September
        2026. It sat here, above its own base rule, so at equal specificity source

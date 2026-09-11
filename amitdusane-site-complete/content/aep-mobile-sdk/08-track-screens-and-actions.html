@@ -14,7 +14,7 @@ params:
 <div class="narrative">There is one API for this and it takes one argument.<br><br>Everything the app reports beyond lifecycle goes through <span class="mn">Edge.sendEvent</span> carrying an <b>ExperienceEvent</b>, and an ExperienceEvent is XDM: the field names agreed in the schema, filled in with values.<br><br>No <span class="mn">trackAction</span>, no <span class="mn">trackState</span>, no context data bag.</div>
 <div class="why-row"><span class="wl">Why?</span><a class="why" href="/aep-mobile-sdk/kb/xdm-vs-contextdata/" data-kb="xdm-vs-contextdata">Why not just send key-value pairs? <span class="arr">&#8599;</span></a><a class="why" href="/mobile-app-basics/screens-not-pages/" data-kb="screens-not-pages">Is a screen a page view? <span class="arr">&#8599;</span></a></div>
 <h2>Sending an event</h2>
-<p>The shape is the same on every platform, because the shape is the schema<a class="cite" href="/aep-mobile-sdk/references/#ref-5" data-ref="5">[5]</a>. A developer writing this does not invent field names, which is the point of having done the schema first.</p>
+<p>The shape is the same on every platform, because the shape is the schema. A developer writing this does not invent field names, which is the point of having done the schema first.</p>
 <div class="pfswitch">
   <div class="pfs-tabs" role="tablist">
     <button class="pfs-tab" data-pf="ios" type="button" role="tab">iOS &middot; Swift</button>

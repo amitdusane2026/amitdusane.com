@@ -81,7 +81,7 @@ Identity.updateIdentities(identityMap);</pre></div>
 <table class="mini-tbl"><tbody>
 <tr><td>Namespace</td><td>Must be the same string the website sends, or the two channels never join.</td></tr>
 <tr><td>The value</td><td>Must be the identifier your business already uses, not one invented for analytics.</td></tr>
-<tr><td>Auth state</td><td>A real claim about whether this person proved who they are. It should be accurate rather than always set to authenticated<a class="cite" href="/aep-mobile-sdk/references/#ref-6" data-ref="6">[6]</a>.</td></tr>
+<tr><td>Auth state</td><td>A real claim about whether this person proved who they are. It should be accurate rather than always set to authenticated.</td></tr>
 </tbody></table>
 <div class="call mistake"><span class="ct">Where this goes wrong</span><p>The app sends a customer ID and the website sends the same value under a different namespace. Both implementations pass their own tests, both look correct on their own, and the profiles never join. Agree the namespace once, in writing, before either side builds anything.</p></div>
 <div class="call margin"><span class="ct">If the app has WebView screens</span><p>A WebView is a browser, so it gets its own ECID and one person becomes two. Joining them is one call on the app side and nothing at all on the web side, and it is the whole of <a href="/aep-mobile-sdk/measure-webview-screens/">Measure WebView screens</a>. If you do not yet know whether the app has any, settle that before you finish this step rather than after.</p></div>

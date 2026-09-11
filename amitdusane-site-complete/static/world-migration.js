@@ -13,7 +13,7 @@
 
   var panel = document.getElementById('panel'), pBody = document.getElementById('panelBody'),
       pKind = document.getElementById('panelKind'), pClose = document.getElementById('panelClose');
-  function openPanel() { body.classList.add('panel-open'); if (panel) panel.setAttribute('aria-hidden', 'false'); }
+  function openPanel() { body.classList.add('panel-open'); if (panel) panel.setAttribute('aria-hidden', 'false'); if (pBody) pBody.scrollTop = 0; }
   function closePanel() { body.classList.remove('panel-open'); if (panel) panel.setAttribute('aria-hidden', 'true'); }
   if (pClose) pClose.addEventListener('click', closePanel);
 
@@ -63,51 +63,81 @@
   }
 
 
-  /* THE REFERENCES PANEL, world-aware since 6 September 2026.
-
-     This fetched /web-sdk-migration/references/ by name, and this script is
-     shared by every procedure world. So on the Mobile SDK guide every citation
-     opened the MIGRATION guide reference carrying the same number: a real Adobe
-     link, plausibly worded, and the wrong document. Nothing errored, because
-     both pages have a #ref-5.
-
-     WORLD_ROOT is published by baseof.html from the registry, so the panel now
-     reads whichever world the reader is actually in. */
-  var refsDoc = null, refsLoading = false;
+  /* NO CITATION PANEL. The inline [n] markers and the panel that opened a
+     reference from them were removed on 11 September 2026, at Amit's request:
+     they distracted and read as low confidence. Sources live on the
+     References page and nowhere else. WORLD_ROOT is published by baseof.html
+     from the registry. */
   var worldRoot = window.WORLD_ROOT || '/web-sdk-migration';
-  function ensureRefs(cb) {
-    if (refsDoc) { cb(); return; }
-    if (refsLoading) return; refsLoading = true;
-    fetch(worldRoot + '/references/').then(function (r) { return r.text(); })
-      .then(function (html) { refsDoc = new DOMParser().parseFromString(html, 'text/html'); refsLoading = false; cb(); })
-      .catch(function () { refsLoading = false; });
+
+  /* THE BASICS PANEL. Since 11 September 2026, Amit's call.
+
+     A Why link into a Basics section (Mobile App Basics today, Website Basics
+     next) used to leave the guide for the other section. It now opens in the
+     same panel as a KB article, so the reader keeps their place in the step:
+     the topic's title, its "In one sentence", and the opening of its "Why it
+     matters to you", then a link to the full topic.
+
+     It reads the topic page itself rather than a search index, because a
+     Basics topic has no h3 stack for the index to cut, and the page already
+     carries the summary in known places: .b-one for the sentence, the first h2
+     of .b-body for the opening. A page without .b-topic, or a failed fetch,
+     simply navigates. */
+  var basicsCache = {};
+  function readBasics(html) {
+    var doc = new DOMParser().parseFromString(html, 'text/html');
+    var t = doc.querySelector('.b-topic');
+    if (!t) return null;
+    var h1 = t.querySelector('h1'), one = t.querySelector('.b-one p'), crumb = t.querySelector('.crumb a'),
+        bb = t.querySelector('.b-body'), kids = bb ? bb.children : [], paras = [], started = false;
+    for (var i = 0; i < kids.length && paras.length < 2; i++) {
+      if (kids[i].tagName === 'H2') { if (started) break; started = true; continue; }
+      if (kids[i].tagName === 'P') paras.push(kids[i]);
+    }
+    return { kind: crumb ? crumb.textContent.trim() : 'Basics', title: h1 ? h1.textContent.trim() : '',
+             one: one ? one.textContent.trim() : '', paras: paras };
   }
-  function openRef(n) {
-    ensureRefs(function () {
-      var li = refsDoc && refsDoc.getElementById('ref-' + n);
-      if (!li) return;
-      if (pKind) pKind.textContent = 'Reference';
-      pBody.innerHTML = '<h2>Reference [' + n + ']</h2>' + li.innerHTML +
-        '<div class="panel-foot"><a href="' + worldRoot + '/references/#ref-' + n + '">Open in the full reference list &rarr;</a></div>';
-      openPanel();
-    });
+  function showBasics(d, href) {
+    if (pKind) pKind.textContent = d.kind;
+    pBody.innerHTML = '';
+    var h = document.createElement('h2'); h.textContent = d.title; pBody.appendChild(h);
+    if (d.one) {
+      var box = document.createElement('div'), l = document.createElement('span'), p = document.createElement('p');
+      box.className = 'pb-one'; l.className = 'pb-one-l'; l.textContent = 'In one sentence'; p.textContent = d.one;
+      box.appendChild(l); box.appendChild(p); pBody.appendChild(box);
+    }
+    for (var i = 0; i < d.paras.length; i++) pBody.appendChild(document.importNode(d.paras[i], true));
+    var foot = document.createElement('div'), a = document.createElement('a');
+    foot.className = 'panel-foot'; a.href = href; a.textContent = 'Open the full topic in ' + d.kind + ' →';
+    foot.appendChild(a); pBody.appendChild(foot);
+    openPanel();
+  }
+  function openBasics(href) {
+    var go = function () { window.location.href = href; };
+    if (Object.prototype.hasOwnProperty.call(basicsCache, href)) {
+      if (basicsCache[href]) showBasics(basicsCache[href], href); else go();
+      return;
+    }
+    fetch(href).then(function (r) { if (!r.ok) throw new Error(r.status); return r.text(); })
+      .then(function (html) { var d = readBasics(html); basicsCache[href] = d; if (d) showBasics(d, href); else go(); })
+      .catch(go);
   }
 
   document.addEventListener('click', function (ev) {
     var a = ev.target.closest ? ev.target.closest('a.why[data-kb]') : null;
-    /* A WHY LINK INTO ANOTHER SECTION IS AN ORDINARY LINK. Since 11 September
-       2026. The panel reads this world's search index only, so a Why link to
-       Mobile App Basics used to be intercepted, looked up, not found, and
-       dropped: the reader clicked and nothing happened. Links outside this
-       world's root now navigate like any other link. */
     if (a) {
       var href = a.getAttribute('href') || '';
-      if (href.charAt(0) === '/' && href.indexOf(worldRoot + '/') !== 0) return;
-      ev.preventDefault(); openKB(a.getAttribute('data-kb'), href); return;
+      ev.preventDefault();
+      /* Outside this world's root means a Basics topic: the Basics panel. */
+      if (href.charAt(0) === '/' && href.indexOf(worldRoot + '/') !== 0) { openBasics(href); return; }
+      openKB(a.getAttribute('data-kb'), href); return;
     }
-    var c = ev.target.closest ? ev.target.closest('a.cite') : null;
-    if (c) { ev.preventDefault(); var n = c.getAttribute('data-ref') || (c.getAttribute('href') || '').replace(/.*#ref-/, ''); openRef(n); return; }
-    if (ev.target === scrim) { closePanel(); closeNav(); }
+    /* A TAP ANYWHERE OUTSIDE AN OPEN PANEL CLOSES IT, the header included, on
+       every screen size. Since 11 September 2026: on a phone the panel covered
+       the whole screen and its close button was hidden, so there was no way
+       back to the step. The tap still does whatever it would have done. */
+    if (body.classList.contains('panel-open') && panel && !panel.contains(ev.target)) closePanel();
+    if (ev.target === scrim) closeNav();
   });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { closePanel(); closeNav(); } });
 

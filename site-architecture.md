@@ -16,7 +16,7 @@ Ten planned sections, but far fewer designs. A section's shape is decided by wha
 | **Certification** | Testing recall and finding gaps | Cert prep per product | Not designed |
 | **Playbook** | Producing an artifact | Delivery documents, long-term project management | Not designed |
 
-**The three built shapes are templates, not one-offs.** The Adobe Experience Platform Mobile SDK guide was the procedure shape almost unchanged: `step`, `kb`, `ref` types, the `actionblock` and `astep` walkthrough, the `Why?` bridge to knowledge-base articles, numbered citations against a references page. Three future sections fit it.
+**The three built shapes are templates, not one-offs.** The Adobe Experience Platform Mobile SDK guide was the procedure shape almost unchanged: `step`, `kb`, `ref` types, the `actionblock` and `astep` walkthrough, the `Why?` bridge to knowledge-base articles, a references page listing every source, with no inline citation markers (removed 11 September 2026). Three future sections fit it.
 
 Certification and Playbook are genuinely new and need design before content.
 

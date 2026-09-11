@@ -2915,6 +2915,25 @@ game is seeing where you are against everything left to do.
   environment**, which Mobile App Basics covers now. That paragraph renders
   only into the search index, not onto the page.
 
+### Then: the Why? panel, and no more citation markers
+
+- **The panel could not be closed on a phone.** It started at the top of the
+  screen, and the fixed site header, drawn above everything, covered the
+  panel's own head and its close button. On a phone the panel was also full
+  width, so a reader's only way out was "Read the full topic". It now starts
+  below the header, it is 88% wide on a phone so a strip of the page stays
+  visible, and a tap anywhere outside it closes it, the header included.
+- **Why? links into Mobile App Basics open the panel too**, the way a KB
+  article does: the topic's title, its one-sentence summary and the opening of
+  its "Why it matters to you", then "Open the full topic in Mobile App
+  Basics". The script reads the topic page itself, so a Website Basics topic
+  will work the same way. If the page cannot be read, the link navigates.
+- **Every inline citation marker is gone.** Amit: the `[23]` markers were a
+  distraction and signalled low confidence in our own content. 91 came out of
+  both guides' steps and KB articles, and 84 from the unlinked offline copy of the old migration guide in static/. The References pages keep
+  every source; their bracketed numbers went too, since nothing points at them
+  any more. The reference panel that the markers opened was removed with them.
+
 ### What the next session should pick up first
 
 **Phase E, Website Basics, on Amit's go-ahead only.** About twelve topics. The
