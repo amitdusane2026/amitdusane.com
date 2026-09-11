@@ -2990,6 +2990,27 @@ hover to give the hint, and the page as a whole too dense.
   first module's data-mod to open its sections. Basics topics have none, the
   value read as null, and every topic in the row was marked selected. Guarded.
 
+### Then: Basics topics on the learning world's three columns
+
+Amit found empty page to the right of the Basics side column, while the side
+column itself had to scroll. The topic centred a 1120px block, so at 1920px
+the column ended 307px from the edge.
+
+A topic now takes the learning world's measurements from 1240px, measured off
+a learning section rather than read from its stylesheet: a 280px rail, a 760px
+reading column centred in the remaining space, and a 250px right rail against
+the page edge, 40px from the text. At 1920 and at 1366 the right rail ends on
+the same pixel as the learning world's. The topic itself is the grid, so the
+title, the article and previous/next share the reading column and the right
+rail stays in view down the whole page.
+
+The right rail took the learning rail's small type, and each term now runs on
+one line with its meaning, which saves a line per word. Measured on all 14
+topics: no scrolling at 1440x900, 1536x864 or 1920x1080. At 1366x768 the two
+8-word topics, iOS and Android, still scroll by 39 and 76px, and at 1280x720
+by 87 and 124px. Closing that would take type below the learning rail's or
+fewer words on those two topics; left for Amit.
+
 ### What the next session should pick up first
 
 **Phase E, Website Basics, on Amit's go-ahead only.** About twelve topics. The

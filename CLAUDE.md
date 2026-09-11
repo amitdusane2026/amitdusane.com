@@ -455,6 +455,8 @@ Mobile App Basics at `/mobile-app-basics/` is the first instance, fourteen topic
 | **Ask a developer** | front matter `ask` | Closes the article, boxed, with a Copy button, at every width |
 | **Words you will hear** | front matter `words` | Beside the article from 1240px and held in view; after it below that and on paper |
 
+**From 1240px a topic takes the learning world's three-column measurements** (Amit, 11 September 2026): a 280px rail, a 760px reading column centred in the space that remains, and a 250px right rail against the page edge, 40px from the text (`--b-rail`, `--measure`, `--b-side`, `--b-side-gap` in `world-basics.css`). The first version centred a 1120px block, which left empty page to the right of a side column that still had to scroll. The right rail uses the learning rail's small type, and each term runs on one line with its meaning, the way a printed glossary sets them. With that it fits without scrolling on every topic at 1440x900 and above; at 1366x768 the two 8-word topics, iOS and Android, still scroll by 39 and 76px.
+
 **Headings inside a topic are plain `h2`**, not the learning world's `h3.subsec-title`, and nothing builds a spine from them.
 
 Three more front matter keys feed other pages: `cando` is the line on the front-page card, `group` places the topic, and `linkTitle` is the short name in the rail and in previous and next. **Keep `linkTitle` to about four words and group labels to one or two**; the full title stays the headline. `words` feeds Words you will hear and the glossary.

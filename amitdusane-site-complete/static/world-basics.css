@@ -10,11 +10,10 @@
    It is a new design, not the procedure shell with the steps taken out:
 
      - no sequence, so nothing is numbered and the rail lists topics in groups
-     - the front page shows the whole field at once, with a word picker that
-       lights up the topics covering the words a reader does not know
+     - the front page lists every topic as a tappable row, in its group
      - every topic has one fixed shape, enforced by the template rather than
-       by the author: one-sentence definition, body, words, what to ask, where
-       this shows up
+       by the author: one-sentence definition, body, what to ask a developer,
+       and the words you will hear
 
    Labels are sentence case and carry their weight through size and weight,
    never through capitals or letter-spacing. That is the site rule, and this
@@ -30,7 +29,9 @@
   --code-bg:#1c2128; --code-ink:#e7ebf0;
   --sans:'IBM Plex Sans',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
   --mono:'IBM Plex Mono',"SFMono-Regular",ui-monospace,Menlo,Consolas,monospace;
-  --b-rail:288px; --measure:720px;
+  /* The three columns take the learning world's measurements (11 September
+     2026): a 280px rail, a 760px reading column, a 250px right rail 40px away. */
+  --b-rail:280px; --measure:760px; --b-side:250px; --b-side-gap:40px;
   --b-fs-h1:32px; --b-fs-h2:21px; --b-fs-body:17px; --b-fs-sm:14.5px; --b-fs-meta:12.5px;
 }
 [data-theme="dark"]{
@@ -213,27 +214,45 @@ body.world-basics .gl-letter{font-size:18px;font-weight:700;color:var(--accent);
 /* ---------- Global chrome that names worlds by class ---------- */
 body.world-basics .ask-bar b,body.world-basics .ask-kicker{color:var(--accent)}
 
-/* ---------- Wide: the side column beside the article ----------
-   From 1240px the words and the questions sit beside the text and stay in
-   view while the reader scrolls, under an "On this page" list. The column
-   scrolls on its own if a topic has many words, so it never runs off the
-   screen. The word list page goes to two columns at the same width. */
+/* ---------- Wide: three columns, on the learning world's measurements ----------
+   From 1240px a topic is laid out the way a learning-world section is: the
+   rail on the left, the reading column centred in the space that remains, and
+   a 250px right rail against the page's right edge, 40px from the text. Amit,
+   11 September 2026: the first version centred a 1120px block, which left a
+   band of empty page to the right of a 300px side column that still had to
+   scroll. The words take the right rail's smaller type so they fit.
+
+   The topic becomes the grid and .b-cols steps aside (display:contents), so
+   the title, the article and the previous/next links share the reading column
+   while the right rail spans all three rows and stays in view as the reader
+   scrolls. It still scrolls on its own as a last resort, and ends 112px above
+   the bottom so the round About mark never sits on its last lines. */
 @media (min-width:1240px){
-  .b-cols{display:grid;grid-template-columns:minmax(0,var(--measure)) 300px;gap:56px;align-items:start}
-  .b-side{position:sticky;top:calc(var(--header-h) + 24px);margin-top:18px;border-top:0;
-    max-height:calc(100vh - var(--header-h) - 112px);overflow-y:auto;overscroll-behavior:contain;padding:0 4px 24px 0}
-  /* 112px, not 48: the column ends above the round About mark in the bottom
-     corner, which otherwise sat on top of its last lines. */
+  .b-main{padding:34px 32px 120px}
+  .b-topic{max-width:none;display:grid;grid-template-columns:minmax(0,1fr) var(--b-side);column-gap:var(--b-side-gap);align-items:start}
+  .b-cols{display:contents}
+  .b-topic > .b-head,.b-cols > .b-art,.b-topic > .b-pn{grid-column:1;width:100%;max-width:var(--measure);margin-left:auto;margin-right:auto}
+  .b-side{grid-column:2;grid-row:1 / span 3;position:sticky;top:calc(var(--header-h) + 24px);margin-top:4px;border-top:0;max-width:none;
+    max-height:calc(100vh - var(--header-h) - 112px);overflow-y:auto;overscroll-behavior:contain;padding:0 2px 8px 0}
   /* Every block in the side column is a grey card, except the green "See
      where this fits" button. This rule sits later than .b-wf at equal
      specificity, so without the :not() it painted the button grey and left its
      white text on near-white, which is how it shipped on 11 September 2026. */
-  .b-side > :not(.b-wf){background:var(--bg-soft);border:1px solid var(--line);border-radius:12px;padding:14px 16px 10px;margin:0 0 14px}
-  .b-side .b-side-h{font-size:13px;line-height:1.3;margin:0 0 8px;color:var(--ink-soft)}
-  .b-side .b-w{display:block;padding:8px 0;border-bottom:1px solid var(--line)}
+  .b-side > :not(.b-wf){background:var(--bg-soft);border:1px solid var(--line);border-radius:10px;padding:10px 12px 4px;margin:0 0 10px}
+  .b-side .b-side-h{font-size:12px;line-height:1.3;margin:0 0 4px;color:var(--ink-soft)}
+  /* Term and meaning run on one line, the way a printed glossary sets them,
+     rather than stacked. Stacked, the two heaviest topics (8 words) overran a
+     1366x768 screen by up to 161px; one line saved per word is what brings
+     them inside it. */
+  .b-side .b-w{display:block;padding:5px 0;border-bottom:1px solid var(--line);font-size:12.5px;line-height:1.45}
   .b-side .b-w:last-child{border-bottom:0}
-  .b-side .b-w dt{font-size:14px}
-  .b-side .b-w dd{font-size:13px;line-height:1.5}
+  .b-side .b-w dt{display:inline;font-size:inherit;line-height:inherit;font-weight:700;color:var(--ink)}
+  .b-side .b-w dt::after{content:" "}
+  .b-side .b-w dd{display:inline;margin:0;font-size:inherit;line-height:inherit;color:var(--ink-soft)}
+  .b-wf{padding:9px 12px;margin:0 0 10px;gap:9px}
+  .b-wf svg{width:16px;height:16px}
+  .b-wf b{font-size:13px}
+  .b-wf em{font-size:11.5px}
 }
 
 /* ---------- Phone ---------- */
