@@ -2978,7 +2978,9 @@ hover to give the hint, and the page as a whole too dense.
   a bordered row with its one-line "what this lets you do" and an arrow in an
   accent disc, grouped under one- or two-word headings, two columns where
   there is room and one on a phone. The premise moved under the list, the
-  order the learning landings use, and the group blurbs went.
+  order the learning landings use, and the group blurbs went. **Reversed the same
+  day:** Amit moved the premise back to the top, under the lead, because
+  "What this section is" is what a learner has to read before anything else.
 - **"See where this fits" came across from the learning world**, as Amit
   asked, and it does the orienting the picker was meant to do. On a topic it
   is a two-tier map: the four groups, then the topics of the chosen one, the

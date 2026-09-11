@@ -153,8 +153,9 @@ code,.b-body .mn{font-family:var(--mono);font-size:.88em;background:var(--bg-sof
    Rebuilt 11 September 2026 on Amit's review. The word picker is gone, and a
    topic is a row that looks tappable without hover: a border, a whole-row
    target of at least 56px, and an arrow in an accent disc at the end. Two
-   columns where there is room, one on a phone. The premise follows the list. */
-.b-lead{font-size:18px;line-height:1.6;color:var(--ink-soft);max-width:var(--measure);margin:0 0 28px}
+   columns where there is room, one on a phone. The premise comes first, under
+   the lead, because it is what a learner reads before anything else. */
+.b-lead{font-size:18px;line-height:1.6;color:var(--ink-soft);max-width:var(--measure);margin:0 0 16px}
 .b-grp{margin:0 0 26px}
 .b-grp-h{font-size:16px;line-height:1.3;margin:0 0 10px;font-weight:700;color:var(--ink)}
 .b-list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px}
@@ -170,7 +171,7 @@ code,.b-body .mn{font-family:var(--mono);font-size:.88em;background:var(--bg-sof
 .b-item-go{flex:none;display:flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;
   background:var(--accent-soft);color:var(--accent);font-size:20px;line-height:1;padding-bottom:2px;box-sizing:border-box}
 .b-item:hover .b-item-go{background:var(--accent);color:var(--on-accent)}
-.b-premise{max-width:var(--measure);border-left:4px solid var(--accent);background:var(--bg-soft);border-radius:0 10px 10px 0;padding:12px 16px;margin:34px 0 14px}
+.b-premise{max-width:var(--measure);border-left:4px solid var(--accent);background:var(--bg-soft);border-radius:0 10px 10px 0;padding:12px 16px;margin:0 0 30px}
 .b-premise-l{display:block;font-size:13px;font-weight:700;color:var(--ink);margin-bottom:2px}
 .b-premise p{margin:0;font-size:var(--b-fs-sm);color:var(--ink-soft)}
 .b-front-foot{margin:8px 0 0;font-size:var(--b-fs-sm)}

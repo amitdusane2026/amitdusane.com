@@ -118,7 +118,7 @@ Previous and next run through every topic in weight order, across group boundari
 
 ### The front page and the glossary
 
-**The front page is generated from the topics.** `layouts/<section>/list.html` is one line calling `partials/basicshome.html`, which draws the title, a lead line, every topic as a tappable row in its group, then the premise and a glossary link. Simple by design, after a word picker built for it on 11 September 2026 was removed the same day.
+**The front page is generated from the topics.** `layouts/<section>/list.html` is one line calling `partials/basicshome.html`, which draws the title, a lead line, the premise ("What this section is", which a learner reads first), every topic as a tappable row in its group, and a glossary link. Simple by design, after a word picker built for it on 11 September 2026 was removed the same day.
 
 **"See where this fits" is shared with the learning world, not copied.** `wherefits.html` has a two-tier branch for a Basics topic (groups, then topics, the current one lit) using the same classes as the learning world's three tiers, so `chrome.css` styles both and one script, `wherefits.js`, drives both. It renders on every topic page: the floating green tab below 1240px, and a button heading the side column from 1240px. A new Basics instance gets it for free. `_index.html` is front matter only, and needs `outputs: ["HTML","JSON","RSS"]` for the section to get a search index and a feed.
 

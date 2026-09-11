@@ -10,9 +10,13 @@
 
      So: the title, one line saying what the section is for, then every topic
      as a plainly tappable row, grouped, each with the one thing it lets you do
-     and an arrow, because a phone has no hover to say "this opens". The
-     premise sits under the list, the order the learning landings use: the map
-     first, the prose below it. Every topic links back to it as #premise.
+     and an arrow, because a phone has no hover to say "this opens".
+
+     THE PREMISE COMES FIRST, right under the lead. It sat under the list for
+     an hour, in the order the learning landings use, and Amit moved it back
+     the same day: "What this section is" is the thing a learner needs to read
+     before anything else, so it cannot wait at the foot of the page. Every
+     topic links back to it as #premise.
 
      Nothing is numbered, because there is no sequence to promise, and
      everything comes from the topics' own front matter: the row line is
@@ -27,6 +31,7 @@
   <div class="eyebrow">Basics</div>
   <h1>{{ .Title }}</h1>
   {{ with .Description }}<p class="b-lead">{{ . }}</p>{{ end }}
+  {{ with $w.premise }}<div class="b-premise" id="premise"><span class="b-premise-l">What this section is</span><p>{{ . }}</p></div>{{ end }}
   {{ range $g := $groups }}
     {{ $items := where $topics "Params.group" $g.key }}
     {{ if $items }}
@@ -40,6 +45,5 @@
     </section>
     {{ end }}
   {{ end }}
-  {{ with $w.premise }}<div class="b-premise" id="premise"><span class="b-premise-l">What this section is</span><p>{{ . }}</p></div>{{ end }}
   <p class="b-front-foot"><a href="{{ (printf "%s/glossary/" $w.root) | relURL }}">Glossary: every word in this section, explained &rarr;</a></p>
 </section>
