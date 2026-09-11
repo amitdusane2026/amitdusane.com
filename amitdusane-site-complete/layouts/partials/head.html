@@ -31,6 +31,13 @@
   <link rel="canonical" href="{{ .Permalink }}">
   <link rel="icon" href="{{ "favicon.svg" | relURL }}" type="image/svg+xml">
   <link rel="icon" href="{{ "favicon-32.png" | relURL }}" sizes="32x32" type="image/png">
+  {{- /* Sizes in multiples of 48, added 11 September 2026: Google recommends a
+       favicon of at least 48x48 for search results, and the largest here was
+       32. favicon.ico sits at the site root with no link, because that address
+       is requested directly and used to return the 404 page. */}}
+  <link rel="icon" href="{{ "favicon-48.png" | relURL }}" sizes="48x48" type="image/png">
+  <link rel="icon" href="{{ "favicon-96.png" | relURL }}" sizes="96x96" type="image/png">
+  <link rel="icon" href="{{ "favicon-192.png" | relURL }}" sizes="192x192" type="image/png">
   <link rel="apple-touch-icon" href="{{ "apple-touch-icon.png" | relURL }}">
   <link rel="stylesheet" href="{{ "chrome.css" | relURL }}?v={{ substr (sha256 (readFile "static/chrome.css")) 0 10 }}">
   {{- $ogtitle := cond (ne (string .Params.seotitle) "") (string .Params.seotitle) (printf "%s · %s" .Title .Site.Title) -}}
