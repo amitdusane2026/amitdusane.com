@@ -419,7 +419,11 @@ Amit's words on the second one: *"it explains technology, concept, technical thi
 
 **A procedure guide no longer carries its own basics, and its rail does not link to them.** The Mobile SDK guide's Part One became Mobile App Basics on 11 September 2026. Where a step needs that vocabulary, the step says so in its prose and links the Basics section, and its Why? row links the exact topic, which navigates instead of opening the panel. A "Start here" rail row was built and removed the same day at Amit's request.
 
-**The procedure rail is flat.** One row per step. A platform sub-step (`substep` in front matter, step six today) is always listed under its parent as 6.1 to 6.4, never folded away; on a sub-step page the parent is marked `inside` so only one row reads as selected. A phase accordion ran on the Mobile SDK rail from 9 to 11 September and was removed; do not bring it back. The phases still drive the front-page map.
+**The procedure rail is a progress track, and nothing on it folds.** Amit's brief, 11 September 2026: a step-by-step guide is meant to be worked through in one sitting, so its rail is a live dashboard, not a menu. "Now I am on step 5, now step 6, now I am close to done." So every step is visible at once, compact enough that fifteen steps and four sub-steps end at 583px on a 1366x768 screen. A line through the step chips is green up to the current step; done chips are green, the current one carries the accent, the rest are hollow. The progress bar at the top of each step stays for the same reason.
+
+A platform sub-step (`substep` in front matter, step six today) is always listed under its parent as 6.1 to 6.4, never folded away; on a sub-step page the parent is marked `inside` so only one row reads as selected. Counters count steps, not pages: "Step 06.1 of 15". A phase accordion ran on the Mobile SDK rail from 9 to 11 September and was removed; **do not bring it back, and do not let anything else push the steps down the rail.** The phases still drive the front-page map. Accordions stay right for the heavy-content sections, which are read rather than worked through.
+
+**Knowledge Base and References sit in a sticky "Look it up" card on the right from 1240px** (`.gside` in `baseof.html`, totals counted), and pinned to the foot of the rail below that width (`.railfoot`, sticky, one row of two), so the steps can never push them off the screen. Never both at once. The guide's front page has its own links and no card.
 
 ### Basics is a section type of its own
 

@@ -45,7 +45,9 @@
 {{- $words := slice "Zero" "One" "Two" "Three" "Four" "Five" "Six" "Seven" "Eight" "Nine" "Ten"
                     "Eleven" "Twelve" "Thirteen" "Fourteen" "Fifteen" "Sixteen" "Seventeen"
                     "Eighteen" "Nineteen" "Twenty" -}}
-{{- $n := len $steps -}}
+{{- /* Steps, not pages: a platform sub-step (6.1 to 6.4) is part of its
+       parent, so the Mobile SDK guide has fifteen steps, not nineteen. */ -}}
+{{- $n := len (where $steps "Params.substep" nil) -}}
 {{- $count := cond (le $n 20) (index $words $n) (string $n) -}}
 <section class="view active">
 

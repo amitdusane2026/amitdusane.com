@@ -48,7 +48,10 @@
   {{ $steps := (where (where .Site.RegularPages "Type" "step") "Section" .Section).ByWeight }}
   {{ $curnum := 0 }}{{ if eq .Type "step" }}{{ $curnum = .Params.stepnum }}{{ end }}
   {{ partial "siteheader.html" . }}
-  <div class="layout">
+  {{- /* The guide's front page has its own Knowledge Base and References links,
+       so it alone gets no right-hand column. */ -}}
+  {{ $isFront := eq .RelPermalink (printf "%s/" $world.root) }}
+  <div class="layout{{ if not $isFront }} has-side{{ end }}">
     <nav class="rail" id="rail">
       <div class="grp do">&#9656; {{ $world.railtitle }}</div>
       {{- /* THE SPINE: every step, flat, with sub-steps always open. Since
@@ -75,19 +78,40 @@
           {{ $here := eq .RelPermalink $.RelPermalink }}
           <a class="steplink{{ if $here }} active{{ else if eq .Params.stepnum $curnum }} inside{{ else if lt .Params.stepnum $curnum }} done{{ end }}" href="{{ .RelPermalink }}"><span class="sn">{{ .Params.stepnum }}</span><span>{{ .Title }}</span></a>
           {{ with sort (where (where $steps "Params.stepnum" $parent.Params.stepnum) "Params.substep" "!=" nil) "Params.substep" }}
-          <div class="rsubs">
+          <div class="rsubs{{ if lt $parent.Params.stepnum $curnum }} done{{ end }}">
             {{ range . }}<a class="rsub{{ if eq $.RelPermalink .RelPermalink }} active{{ end }}" href="{{ .RelPermalink }}"><span class="ssn">{{ $parent.Params.stepnum }}.{{ .Params.substep }}</span><span>{{ .Params.subtitle | default .Title }}</span></a>{{ end }}
           </div>
           {{ end }}
         {{ end }}
       </div>
-      <div class="grp kb railmore-h">More</div>
-      <div class="railmore">
-        <a class="navlink" href="{{ (printf "%s/kb/" $world.root) | relURL }}"><span class="ic">&#9671;</span><span>Knowledge Base</span></a>
-        <a class="navlink" href="{{ (printf "%s/references/" $world.root) | relURL }}"><span class="ic">&#167;</span><span>References</span></a>
+      {{- /* Pinned to the foot of the rail below 1240px, one row of two, so no
+           number of steps can push them off the screen. From 1240px the
+           right-hand card carries them and this is hidden. */ -}}
+      <div class="railfoot">
+        <a class="navlink{{ if eq .Type "kb" }} active{{ end }}" href="{{ (printf "%s/kb/" $world.root) | relURL }}"><span class="ic">&#9671;</span><span>Knowledge Base</span></a>
+        <a class="navlink{{ if eq .Type "ref" }} active{{ end }}" href="{{ (printf "%s/references/" $world.root) | relURL }}"><span class="ic">&#167;</span><span>References</span></a>
       </div>
     </nav>
     <main class="main">{{ block "main" . }}{{ end }}</main>
+    {{- /* LOOK IT UP: Knowledge Base and References in a right-hand column.
+         Since 11 September 2026. At the foot of the rail they sat below every
+         step and were the first thing a long spine pushed off the screen. From
+         1240px they live here, beside the article, where the page had empty
+         space; below that the CSS hides this and they stay at the rail's foot.
+
+         Both counts are counted: KB pages by type, references by the
+         `id="ref-N"` each entry on the references page carries. */ -}}
+    {{ if not $isFront }}
+    {{ $kbN := len (where (where .Site.RegularPages "Section" .Section) "Type" "kb") }}
+    {{ $refN := 0 }}{{ with .Site.GetPage (printf "%s/references" $world.root) }}{{ $refN = len (findRE `id="ref-\d+"` .Content) }}{{ end }}
+    <aside class="gside" aria-label="Look it up">
+      <div class="gs-card">
+        <div class="gs-h">Look it up</div>
+        <a class="gs-link{{ if eq .Type "kb" }} active{{ end }}" href="{{ (printf "%s/kb/" $world.root) | relURL }}"><span class="gs-ic" aria-hidden="true">&#9671;</span><span class="gs-t">Knowledge Base</span><span class="gs-d">Why each step works the way it does</span><span class="gs-n">{{ $kbN }} articles</span></a>
+        <a class="gs-link{{ if eq .Type "ref" }} active{{ end }}" href="{{ (printf "%s/references/" $world.root) | relURL }}"><span class="gs-ic" aria-hidden="true">&#167;</span><span class="gs-t">References</span><span class="gs-d">The Adobe documentation behind every claim</span><span class="gs-n">{{ $refN }} sources</span></a>
+      </div>
+    </aside>
+    {{ end }}
   </div>
   <div class="scrim" id="scrim"></div>
   <aside class="panel" id="panel" aria-hidden="true">

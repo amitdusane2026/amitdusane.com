@@ -2890,6 +2890,31 @@ Amit's call after seeing the rail. Two things built earlier were removed:
   now counts steps: "Step 06.1 of 15", and the percentage runs to 100 at
   step 15. Previous and next still walk every page, 6 then 6.1 to 6.4 then 7.
 
+### Then: the rail as a progress track, and a place for the lookups
+
+Amit's brief, in his words: a step-by-step guide is done in one sitting, so it
+works like a live dashboard. "Now I am step 5, now I moved on, now I am close
+to completion." That is what the green and grey chips were already doing, and
+why the progress bar sits at the top of every step. Heavy-content sections can
+hide topics behind an accordion; a procedure guide cannot, because the whole
+game is seeing where you are against everything left to do.
+
+- **The rail is compact and reads as progress.** Tighter rows, so fifteen
+  steps and four sub-steps end at 583px on a 1366x768 screen with nothing to
+  scroll. A line runs through the step chips and is green up to the current
+  step; done chips are green, the current one carries the accent, and the
+  steps ahead are hollow. The sub-steps are dots on the same line.
+- **Knowledge Base and References moved to the right.** A sticky "Look it up"
+  card beside the article from 1240px, with counted totals: 20 articles and
+  23 sources on the Mobile SDK guide, 24 and 36 on the migration guide. Below
+  1240px they are pinned to the foot of the rail, one row of two buttons,
+  because at 1100x700 an unpinned foot ended at 742px, below the screen. The guide's front page has its own two links and gets no card.
+- **The front page said "Nineteen steps"**, counting the sub-steps, the same
+  fault the step header had. It now says fifteen.
+- **The front-page intro no longer says the guide covers the app
+  environment**, which Mobile App Basics covers now. That paragraph renders
+  only into the search index, not onto the page.
+
 ### What the next session should pick up first
 
 **Phase E, Website Basics, on Amit's go-ahead only.** About twelve topics. The

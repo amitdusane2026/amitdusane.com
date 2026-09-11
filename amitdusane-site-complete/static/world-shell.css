@@ -15,7 +15,7 @@
     --sans:'IBM Plex Sans',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
     --serif:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
     --mono:"SFMono-Regular",ui-monospace,Menlo,Consolas,monospace;
-    --rail:300px; --panel:480px; --measure:760px;
+    --rail:264px; --gside:236px; --panel:480px; --measure:760px;
     --page:#f4f6f9; --surface:#ffffff; --card-shadow:0 1px 2px rgba(16,24,40,.04),0 1px 3px rgba(16,24,40,.03);
   }
   [data-theme="dark"]{
@@ -80,46 +80,103 @@
   /* ---------- Layout ---------- */
   .layout{display:flex;align-items:flex-start}
   .rail{position:sticky;top:var(--header-h);width:var(--rail);height:calc(100vh - var(--header-h));overflow-y:auto;
-    border-right:1px solid var(--line);background:var(--page);padding:14px 0 60px}
+    border-right:1px solid var(--line);background:var(--page);padding:12px 0 0}
   .rail .grp{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--ink);font-weight:800;
-    margin:6px 18px 8px;display:flex;align-items:center;gap:8px}
+    margin:4px 14px 6px;display:flex;align-items:center;gap:8px}
   .rail .grp.do{color:var(--accent)}
-  .rail .grp.kb{margin-top:0}
-  .railmore{padding-bottom:14px;margin-bottom:6px;border-bottom:1px solid var(--line)}
+  /* THE RAIL FOOT: Knowledge Base and References, pinned. Sticky to the bottom
+     of the rail's own scroll box, so on a short screen the steps scroll under
+     it and the two links never leave view. One row of two buttons keeps it to
+     about 46px. The rail has no bottom padding, so it sits flush. */
+  .railfoot{position:sticky;bottom:0;z-index:2;display:flex;gap:6px;margin-top:10px;padding:8px 10px 10px;
+    background:var(--page);border-top:1px solid var(--line)}
+  .railfoot .navlink{flex:1 1 0;min-width:0;justify-content:center;align-items:center;gap:5px;padding:6px 6px;
+    border:1px solid var(--line);border-radius:8px;background:var(--surface);font-size:12.5px;white-space:nowrap}
+  .railfoot .navlink:hover{border-color:var(--accent);color:var(--accent);background:var(--surface)}
+  .railfoot .navlink.active{border-color:var(--accent);background:var(--accent-soft)}
 
-  .steplink{display:flex;align-items:flex-start;gap:11px;padding:8px 18px;cursor:pointer;color:var(--ink-soft);
-    font-size:14px;border-left:3px solid transparent;text-decoration:none;line-height:1.35}
+  /* THE RAIL IS A PROGRESS TRACK. Since 11 September 2026, from Amit's brief:
+     a step-by-step guide is meant to be worked through in one sitting, so its
+     rail is a live dashboard rather than a menu. Every step is visible without
+     opening anything or scrolling on an ordinary laptop, and progress reads at
+     a glance: a line runs through the step chips and is green up to the
+     current step. Done chips are filled green, the current one is filled with
+     the accent, the rest are hollow.
+
+     Sized for that: fifteen steps and four sub-steps come to about 530px,
+     which fits under the header on a 768px-tall laptop screen. From 1240px the
+     Knowledge Base and References move to the right-hand column (.gside), so
+     there the rail holds nothing but the steps.
+
+     Geometry, because the line has to pass through the chip centres: a row
+     has a 3px left border and 14px padding, the chip is 20px wide, so its
+     centre is 27px from the rail edge. The 2px line sits at 26 to 28. */
+  .steplink{position:relative;display:flex;align-items:flex-start;gap:10px;padding:4px 14px;cursor:pointer;color:var(--ink-soft);
+    font-size:13.25px;border-left:3px solid transparent;text-decoration:none;line-height:1.32}
   .steplink:hover{background:var(--line-soft);color:var(--ink)}
   .steplink.active{background:var(--accent-soft);color:var(--accent);border-left-color:var(--accent);font-weight:600}
-  .steplink .sn{font-variant-numeric:tabular-nums;font-size:12px;font-weight:700;color:#fff;background:var(--faint);
-    border-radius:5px;min-width:22px;height:20px;display:flex;align-items:center;justify-content:center;flex:0 0 auto;margin-top:1px}
-  .steplink.active .sn{background:var(--accent)}
-  .steplink.done .sn{background:var(--ok)}
+  .steplink .sn{position:relative;z-index:1;font-variant-numeric:tabular-nums;font-size:11px;font-weight:700;color:var(--muted);
+    background:var(--page);box-shadow:inset 0 0 0 1.5px var(--faint);border-radius:5px;min-width:20px;height:18px;
+    display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .steplink.active .sn,.steplink.inside .sn{background:var(--accent);color:var(--surface);box-shadow:none}
+  .steplink.done .sn{background:var(--ok);color:var(--surface);box-shadow:none}
+  .steplink.inside{color:var(--accent);font-weight:600}
+  #stepNav .steplink::before{content:"";position:absolute;left:23px;top:0;bottom:0;width:2px;background:var(--line)}
+  #stepNav .steplink.done::before{background:var(--ok)}
+  #stepNav .steplink.active::before,#stepNav .steplink.inside::before{background:linear-gradient(var(--ok) 50%,var(--line) 50%)}
+  #stepNav > .steplink:first-child::before{top:50%;background:var(--line)}
+  #stepNav > .steplink:first-child.done::before{background:var(--ok)}
+  #stepNav > .steplink:last-child::before{bottom:50%}
 
-  .navlink{display:flex;align-items:baseline;gap:10px;padding:8px 18px;cursor:pointer;color:var(--ink-soft);
-    font-size:14px;border-left:3px solid transparent;text-decoration:none}
+  .navlink{display:flex;align-items:baseline;gap:10px;padding:6px 14px;cursor:pointer;color:var(--ink-soft);
+    font-size:13.25px;border-left:3px solid transparent;text-decoration:none}
   .navlink:hover{background:var(--line-soft);color:var(--ink)}
   .navlink.active{background:var(--accent-soft);color:var(--accent);border-left-color:var(--accent);font-weight:600}
   .navlink .ic{color:var(--faint)}
 
-  /* PLATFORM SUB-STEPS, always open. The rail is flat since 11 September 2026:
-     the phase accordion added on 9 September was removed at Amit's request, so
-     every step and every sub-step is visible without a click.
-
-     Sub-steps hang off a hairline that starts under the parent's title rather
-     than its number (18px of rail padding, a 22px number chip, the 11px gap),
-     and each carries its own "6.1", so the four read as parts of step six and
-     not as stray links. Selected, a sub-step gets the same wash and bar as a
-     selected step; its parent is marked `inside`, accent text and chip only. */
-  .rsubs{margin:0 0 6px 51px;border-left:1px solid var(--line)}
-  .rsub{display:flex;align-items:baseline;gap:9px;padding:6px 18px 6px 12px;margin-left:-1px;
-    border-left:2px solid transparent;font-size:13.5px;line-height:1.35;color:var(--ink-soft);text-decoration:none}
-  .rsub .ssn{font-variant-numeric:tabular-nums;font-size:11.5px;font-weight:700;color:var(--muted);min-width:22px}
+  /* PLATFORM SUB-STEPS, always open, never folded. The track line runs on
+     through them, and each sub-step is a small dot on it, so the four read as
+     parts of step six. They are alternatives (one per platform), not a
+     sequence, so they are never marked done one by one: the whole group turns
+     green once the reader is past step six. On a sub-step page the parent is
+     marked `inside`, so one row reads as selected. Titles line up at 47px,
+     the same as a step title. */
+  .rsubs{position:relative;margin:0 0 2px}
+  .rsubs::before{content:"";position:absolute;left:26px;top:0;bottom:0;width:2px;background:var(--line)}
+  .rsubs.done::before{background:var(--ok)}
+  .rsub{position:relative;display:flex;align-items:baseline;gap:8px;padding:3px 14px 3px 44px;border-left:3px solid transparent;
+    font-size:12.75px;line-height:1.32;color:var(--ink-soft);text-decoration:none}
+  .rsub::before{content:"";position:absolute;left:20px;top:50%;margin-top:-4px;width:8px;height:8px;box-sizing:border-box;
+    border-radius:50%;background:var(--page);border:2px solid var(--faint)}
+  .rsubs.done .rsub::before{border-color:var(--ok)}
+  .rsub .ssn{font-variant-numeric:tabular-nums;font-size:11px;font-weight:700;color:var(--muted);min-width:22px}
   .rsub:hover{background:var(--line-soft);color:var(--ink)}
   .rsub.active{background:var(--accent-soft);color:var(--accent);border-left-color:var(--accent);font-weight:600}
   .rsub.active .ssn{color:var(--accent)}
-  .steplink.inside{color:var(--accent);font-weight:600}
-  .steplink.inside .sn{background:var(--accent)}
+  .rsub.active::before{background:var(--accent);border-color:var(--accent)}
+
+  /* LOOK IT UP, the right-hand column. From 1240px, on every page of a guide
+     except its front page. Hidden below that, where the same two links are
+     pinned to the foot of the rail; above it that foot is hidden, so the two
+     routes are never on screen together. Sticky, so it stays beside the article
+     while the reader scrolls. Label in sentence case, as every label is. */
+  .gside{display:none}
+  .gs-card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 10px 8px;box-shadow:var(--card-shadow)}
+  .gs-h{font-size:12.5px;font-weight:700;color:var(--muted);margin:0 6px 6px}
+  .gs-link{display:grid;grid-template-columns:18px 1fr;column-gap:8px;padding:8px 8px 9px;border-radius:9px;color:var(--ink);text-decoration:none}
+  .gs-link + .gs-link{margin-top:2px}
+  .gs-link:hover{background:var(--line-soft);text-decoration:none}
+  .gs-link.active{background:var(--accent-soft)}
+  .gs-ic{grid-row:span 3;color:var(--accent);font-size:15px;line-height:1.3}
+  .gs-t{font-size:14px;font-weight:600;line-height:1.3}
+  .gs-link.active .gs-t{color:var(--accent)}
+  .gs-d{font-size:12.5px;line-height:1.35;color:var(--muted);margin-top:2px}
+  .gs-n{font-size:11.5px;font-weight:600;color:var(--muted);font-variant-numeric:tabular-nums;margin-top:4px}
+  @media(min-width:1240px){
+    .layout.has-side .gside{display:block;position:sticky;top:var(--header-h);flex:0 0 var(--gside);padding:28px 22px 28px 0}
+    .layout.has-side .main{padding-right:22px}
+    .layout.has-side .rail .railfoot{display:none}
+  }
 
   /* THE PLATFORM SWITCHER, on steps that carry the same instruction in four
      languages. One choice, remembered, applied to every switcher on the page
