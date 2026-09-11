@@ -69,26 +69,6 @@
     {{ partial "stepmap.html" . }}
   </div>
 
-  {{- /* PART ONE, below the steps, for a world that declares `basics`.
-
-       It sits second on purpose. This section is an implementation guide and
-       a reader arrives wanting the steps, so the steps lead. The basics are
-       support rather than a gate: step one points at them in its opening, and
-       so does any later step that leans on them. A reader who needs them will
-       be sent here; one who does not is never made to scroll past them. */ -}}
-  {{ with $w.basics }}
-  {{ $topics := (where (where $.Site.RegularPages "Type" "basics") "Section" $.Section) }}
-  {{ with $topics }}
-  <div class="mfront-panel">
-    <div class="mfront-cue">{{ $w.basics.railtitle }}, {{ len . }} topic{{ if ne (len .) 1 }}s{{ end }}, in no particular order</div>
-    <p class="grp-blurb">{{ $w.basics.basicsintro }}</p>
-    <div class="kb-cards">
-      {{ range .ByWeight }}<a class="kb-card" href="{{ .RelPermalink }}"><div class="t">{{ .Title }}</div><div class="d">{{ .Description }}</div></a>{{ end }}
-    </div>
-  </div>
-  {{ end }}
-  {{ end }}
-
 
   {{- /* The two rooms off the corridor. The knowledge base and the references
        are not steps, so they do not belong in the sequence above, but a

@@ -1,6 +1,6 @@
 ---
 published: 2026-09-05
-lastmod: 2026-09-08
+lastmod: 2026-09-11
 title: "Get the SDK into the app"
 seotitle: "Install the Adobe Mobile SDK: iOS, Android, Cross-Platform"
 description: "The one step you cannot do yourself. What to put in the ticket, what the developer adds, and how to tell whether they added the right thing."
@@ -12,8 +12,8 @@ params:
   kbids: ["dependency-managers", "how-a-release-reaches-people", "react-native-and-flutter"]
 ---
 <div class="narrative">A ticket goes to the mobile team on a Tuesday: add the Adobe SDK. Three weeks later a build reaches the store with the SDK inside it, and nothing arrives anywhere.<br><br>Nobody was careless. The library was added, the project compiled, the release passed review. One string was left as the placeholder.<br><br>That string tells the SDK which Adobe property it belongs to. It is the <b>Environment File ID</b>, it comes from the tag property you just built, and handing it over precisely is most of what this step asks of you.</div>
-<div class="call margin"><span class="ct">Before this step</span><p>This is the first step you cannot do alone, and the vocabulary changes here. If a compiled file, a dependency manager and a build are not things you could explain to somebody else, <a href="/aep-mobile-sdk/mobile-basics/">Mobile app basics</a> is worth ten minutes first. The rest of this page then reads as instructions rather than as jargon.</p></div>
-<div class="why-row"><span class="wl">Why?</span><a class="why" href="/aep-mobile-sdk/mobile-basics/dependency-managers/" data-kb="dependency-managers">What does &ldquo;add the SDK&rdquo; mean? <span class="arr">&#8599;</span></a><a class="why" href="/aep-mobile-sdk/mobile-basics/how-a-release-reaches-people/" data-kb="how-a-release-reaches-people">Why can this not ship today? <span class="arr">&#8599;</span></a><a class="why" href="/aep-mobile-sdk/mobile-basics/react-native-and-flutter/" data-kb="react-native-and-flutter">Is the app React Native or Flutter? <span class="arr">&#8599;</span></a></div>
+<div class="call margin"><span class="ct">Before this step</span><p>This is the first step you cannot do alone, and the words change here. A <b>build</b> is the finished app file made from the developer&rsquo;s code. A <b>dependency manager</b> is the tool that fetches the SDK while the build is made. <a href="/mobile-app-basics/">Mobile App Basics</a> explains both, and the rest of the mobile vocabulary, in plain terms.</p></div>
+<div class="why-row"><span class="wl">Why?</span><a class="why" href="/mobile-app-basics/dependency-managers/" data-kb="dependency-managers">What does &ldquo;add the SDK&rdquo; mean? <span class="arr">&#8599;</span></a><a class="why" href="/mobile-app-basics/how-a-release-reaches-people/" data-kb="how-a-release-reaches-people">Why can this not ship today? <span class="arr">&#8599;</span></a><a class="why" href="/mobile-app-basics/react-native-and-flutter/" data-kb="react-native-and-flutter">Is the app React Native or Flutter? <span class="arr">&#8599;</span></a></div>
 <h2>Everything before this was yours. This is not.</h2>
 <p>Every step so far happened in a browser tab, on properties you control. None of it needed anyone else to act.</p>
 <p>The SDK goes inside the app itself. A developer opens a project you cannot open, and ships a build you cannot ship.</p>
@@ -33,12 +33,12 @@ params:
 <p>Older guides show <span class="mn">registerExtensions</span> with an array and a completion block. That form still works and most existing apps contain it, so expect to meet it. It is no longer the shorter path<a class="cite" href="/aep-mobile-sdk/references/#ref-2" data-ref="2">[2]</a>.</p>
 <h2>Now pick your platform</h2>
 <p>Installing the SDK is the one step where the four kinds of app genuinely differ. Different tools, different files, different commands. Everything after this step is the same work in a different language.</p>
-<p>Open the page that matches the app. If you do not know which it is, the three questions in <a href="/aep-mobile-sdk/mobile-basics/how-mobile-apps-are-built/">How mobile apps are actually built</a> settle it in one conversation.</p>
+<p>Open the page that matches the app. If you do not know which it is, the three questions in <a href="/mobile-app-basics/how-mobile-apps-are-built/">How mobile apps are actually built</a> settle it in one conversation.</p>
 <table class="mini-tbl"><tbody>
-<tr><td><a href="/aep-mobile-sdk/get-the-sdk-ios/">iOS</a></td><td>Swift. Swift Package Manager or CocoaPods, then the app&rsquo;s startup file.</td></tr>
-<tr><td><a href="/aep-mobile-sdk/get-the-sdk-android/">Android</a></td><td>Kotlin. Gradle and the bill of materials, then the Application class.</td></tr>
-<tr><td><a href="/aep-mobile-sdk/get-the-sdk-react-native/">React Native</a></td><td>JavaScript. npm or Yarn, and no native code at all on version 7 and later.</td></tr>
-<tr><td><a href="/aep-mobile-sdk/get-the-sdk-flutter/">Flutter</a></td><td>Dart. pub, and no native code at all on version 5 and later.</td></tr>
+<tr><td><a href="/aep-mobile-sdk/get-the-sdk-ios/">iOS</a></td><td>Swift. Swift Package Manager or CocoaPods fetches the SDK, then a line in the app&rsquo;s startup file starts it.</td></tr>
+<tr><td><a href="/aep-mobile-sdk/get-the-sdk-android/">Android</a></td><td>Kotlin. Gradle, the Android build tool, fetches the SDK, then the Application class, the code that runs first, starts it.</td></tr>
+<tr><td><a href="/aep-mobile-sdk/get-the-sdk-react-native/">React Native</a></td><td>JavaScript. npm or Yarn fetches the packages, and no native code at all on version 7 and later.</td></tr>
+<tr><td><a href="/aep-mobile-sdk/get-the-sdk-flutter/">Flutter</a></td><td>Dart. pub, Flutter&rsquo;s own tool, fetches the packages, and no native code at all on version 5 and later.</td></tr>
 </tbody></table>
 <figure class="fig-svg"><svg viewBox="0 0 700 250" role="img" aria-label="The Environment File ID is the only thing that crosses from the Adobe side, which the analytics practitioner owns, to the app project, which the mobile developer owns." style="width:100%;height:auto;display:block">
 <defs>
@@ -64,5 +64,5 @@ params:
 <text x="549" y="156" text-anchor="middle" class="mn" style="font-size:12px;fill:var(--ink-soft, #3b4048)">MobileCore.initialize(...)</text>
 </svg><figcaption>One value crosses the boundary. Everything past it needs a build.</figcaption></figure>
 
-<div class="call mistake"><span class="ct">Where this goes wrong</span><p>The production Environment File ID reaches a debug build. Every developer test, every simulator run and every QA pass then lands in the property your business is watching, and none of it can be separated out afterwards. Ask for the development ID by name, and confirm the value in the build before anybody tests against it.</p></div>
+<div class="call mistake"><span class="ct">Where this goes wrong</span><p>The production Environment File ID reaches a debug build. Every developer test, every run on a developer&rsquo;s laptop and every QA pass then lands in the property your business is watching, and none of it can be separated out afterwards. Ask for the development ID by name, and confirm the value in the build before anybody tests against it.</p></div>
 <div class="call check"><span class="ct">&#10003; Ready when</span><p>The app compiles with the SDK in it, the development Environment File ID is the value in the build, and SDK logs appear at debug level on launch. Nothing is being tracked yet, and that is correct. The SDK is present and configured, which is all this step claims.</p></div>

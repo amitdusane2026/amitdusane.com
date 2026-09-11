@@ -1,19 +1,44 @@
 ---
 published: 2026-09-06
-lastmod: 2026-09-08
+lastmod: 2026-09-11
 title: "WebView and hybrid apps"
 seotitle: "WebView Apps and When to Use the Web SDK Instead"
 description: "The one case where the answer may not be the Mobile SDK at all. How to spot a WebView screen, and why measuring one twice is worse than not measuring it."
 slug: "webview-and-hybrid"
-type: basics
+aliases: ["/aep-mobile-sdk/mobile-basics/webview-and-hybrid/"]
+type: topic
 weight: 103
 params:
   group: kind
-  grouplabel: "What kind of app is this"
+  oneline: "A WebView is a part of an app that shows a web page. A hybrid app is an app where most screens are web pages."
+  cando: "Find the screens that are really web pages, before anyone designs the schema."
+  words:
+    - t: "WebView"
+      d: "The part of an app that shows a web page. A browser with no address bar."
+    - t: "Hybrid app"
+      d: "An installed app where most of the screens are web pages running in a WebView."
+    - t: "WKWebView"
+      d: "The name of the WebView component on iPhone."
+    - t: "Cordova and Ionic"
+      d: "Tools that build hybrid apps."
+    - t: "ECID"
+      d: "The visitor ID Adobe assigns. The app and a WebView each create their own unless they are joined."
+    - t: "Web SDK"
+      d: "Adobe's library for websites. A web page inside a WebView can carry it."
+  ask:
+    - "Which screens in the app are web content? Not whether there are any, but which ones."
+    - "Does the app send an event when a WebView opens, and does the page inside it send its own as well?"
+    - "Does the app pass its ECID into every WebView before the page sends anything?"
+  usedin:
+    - t: "Measure WebView screens"
+      s: "Mobile SDK Implementation, step 12"
+      u: "/aep-mobile-sdk/measure-webview-screens/"
+    - t: "Set up identity"
+      s: "Mobile SDK Implementation, step 9"
+      u: "/aep-mobile-sdk/set-up-identity/"
 ---
-<p class="khook">A screen in an app can be a web page in disguise. It looks like part of the app, and it is served from a web address like any other page on your website.</p>
-<div class="call margin"><span class="ct">Before you start</span><p>This page will not teach you to build mobile apps. It teaches you enough of the mobile world to understand what a developer is saying, to answer questions in a meeting when no developer is there, and to tell a developer exactly what you need and where it has to change. Words like Xcode, Gradle, native, Flutter and WebView are used here on purpose. You will hear them in every meeting.</p></div>
-<p>Read this page carefully even if the rest of this section felt familiar. Every other choice about how an app is built changes the language your tracking is written in. This one can change which Adobe product you implement, and it can change it after the schema has been agreed.</p>
+<h2>Why it matters to you</h2>
+<p>Every other choice about how an app is built changes the language your tracking is written in. This one can change which Adobe product you implement, and it can change it after the schema has been agreed.</p>
 <h2>What a WebView is</h2>
 <p>Every phone provides a component that displays a web page inside an app. On iPhone it is called a WKWebView. On Android it is called a WebView. The idea is the same on both.</p>
 <p>A WebView is a rectangle on the screen that is, underneath, a browser with none of the browser furniture. No address bar. No tabs. No back button unless somebody drew one.</p>
@@ -84,4 +109,3 @@ params:
 <p>There is also a test you can run yourself, on your own phone, in a minute. Open the app and go to a screen you suspect. Turn on airplane mode, then pull down to refresh, or leave the screen and come back.</p>
 <p>A native screen usually still appears, because its layout was built into the app. A WebView screen tends to go blank or show a connection error, because it was fetching a page and the page never arrived.</p>
 <p>The test is not perfect, and it is very useful. It also shows the app team that the analytics person is paying attention to how the thing is really built, which changes what they tell you next time.</p>
-<div class="call check"><span class="ct">&#10003; What you can now do</span><p>You know that a screen can be a web page, and you can ask which screens are web content rather than whether any are. You know that a WebView carrying real behaviour needs the Web SDK inside it and a shared identity with the app around it. And you know to settle this before the schema is designed, because it decides whether you are implementing one thing or two.</p></div>

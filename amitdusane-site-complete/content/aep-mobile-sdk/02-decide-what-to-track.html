@@ -12,7 +12,7 @@ params:
   kbids: ["screens-not-pages", "lifecycle-metrics"]
 ---
 <div class="narrative">The usual first move is to open the web tracking specification and translate it. That is the wrong move, and the result is easy to recognise: an app measured as though it were a slow website, full of screen views nobody analyses, missing the two or three things a product team actually argues about.<br><br>Mobile reports a great deal on its own. The events worth specifying are fewer than a web practitioner expects.</div>
-<div class="why-row"><span class="wl">Why?</span><a class="why" href="/aep-mobile-sdk/kb/lifecycle-metrics/" data-kb="lifecycle-metrics">What arrives without asking? <span class="arr">&#8599;</span></a><a class="why" href="/aep-mobile-sdk/mobile-basics/screens-not-pages/" data-kb="screens-not-pages">Is a screen a page view? <span class="arr">&#8599;</span></a></div>
+<div class="why-row"><span class="wl">Why?</span><a class="why" href="/aep-mobile-sdk/kb/lifecycle-metrics/" data-kb="lifecycle-metrics">What arrives without asking? <span class="arr">&#8599;</span></a><a class="why" href="/mobile-app-basics/screens-not-pages/" data-kb="screens-not-pages">Is a screen a page view? <span class="arr">&#8599;</span></a></div>
 <h2>Start with what is free</h2>
 <p>The Lifecycle extension reports two events on its own: <b>Application Launch</b> and <b>Application Close</b>. They carry a standard field group called AEP Mobile Lifecycle Details.</p>
 <p>Between them you get installs, upgrades, launch counts, session length and device detail. No tracking code and no ticket. Lifecycle is on by default when the SDK is started<a class="cite" href="/aep-mobile-sdk/references/#ref-4" data-ref="4">[4]</a>.</p>
@@ -39,7 +39,7 @@ params:
 <h2>A screen is not a page view</h2>
 <p>However similar the two look in a report, they are not the same thing.</p>
 <p>A web page has a URL, a referrer, and a load that ends. A screen can be pushed, popped, returned to, or kept alive in the background while somebody answers a call.</p>
-<p>Count screens the way you count pages and you get session numbers nobody trusts. <a href="/aep-mobile-sdk/mobile-basics/screens-not-pages/">A screen is not a page view</a> covers why the two never line up.</p>
+<p>Count screens the way you count pages and you get session numbers nobody trusts. <a href="/mobile-app-basics/screens-not-pages/">A screen is not a page view</a> covers why the two never line up.</p>
 <h2>Decide the WebView question now</h2>
 <p>If any screen in the app is a web page inside a WebView, that screen may need the Web SDK rather than this one, and the two need a shared identity.</p>
 <p>Settle it before the schema, not after. It is step 12, <a href="/aep-mobile-sdk/measure-webview-screens/">Measure WebView screens</a>, and the reason it is worth asking about on day one is that the answer can change what you are building.</p>

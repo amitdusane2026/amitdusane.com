@@ -1,18 +1,44 @@
 ---
 published: 2026-09-06
-lastmod: 2026-09-08
+lastmod: 2026-09-11
 title: "What a build actually is"
 seotitle: "What a Mobile App Build Is, for Analytics Practitioners"
 description: "Source code becomes a sealed file before anybody runs it, and that one fact is behind almost everything that makes mobile measurement harder than web."
 slug: "what-a-build-is"
-type: basics
+aliases: ["/aep-mobile-sdk/mobile-basics/what-a-build-is/"]
+type: topic
 weight: 203
 params:
   group: world
-  grouplabel: "The developer's world"
+  oneline: "A build is the single sealed file a compiler makes from the app's code. It is what reaches a phone, and nobody can open it or edit it."
+  cando: "Tell a change that reaches phones this afternoon from one that waits two weeks for a release."
+  words:
+    - t: "Build"
+      d: "The finished app file made from the code. A new one is needed for every code change."
+    - t: "Compiler"
+      d: "The program that turns code people can read into instructions a phone can run."
+    - t: "Release"
+      d: "A build sent through the store to the public."
+    - t: "Version"
+      d: "The public number of a release, such as 4.2.1, shown in the store."
+    - t: "Build number"
+      d: "The count of every build under one version. One version can have thirty builds."
+    - t: "Assurance"
+      d: "Adobe's tool for seeing inside a running app, which replaces the browser's network tab."
+  ask:
+    - "Which build is this, by version and build number, and is it the one in the store?"
+    - "When does the next release go out, and what is already in it?"
+    - "Is this request configuration or code?"
+  usedin:
+    - t: "Validate in Assurance"
+      s: "Mobile SDK Implementation, step 13"
+      u: "/aep-mobile-sdk/validate-in-assurance/"
+    - t: "Release and manage versions"
+      s: "Mobile SDK Implementation, step 15"
+      u: "/aep-mobile-sdk/release-and-manage-versions/"
 ---
-<p class="khook">A web page is delivered as the text somebody wrote. An app is delivered as a sealed file made from that text, and the text is nowhere inside it.</p>
-<div class="call margin"><span class="ct">Before you start</span><p>This page will not teach you to build mobile apps. It teaches you enough of the mobile world to understand what a developer is saying, to answer questions in a meeting when no developer is there, and to tell a developer exactly what you need and where it has to change. Words like Xcode, Gradle, native, Flutter and WebView are used here on purpose. You will hear them in every meeting.</p></div>
+<h2>Why it matters to you</h2>
+<p>A web page is delivered as the text somebody wrote. An app is delivered as a sealed file made from that text, and the text is nowhere inside it. That one fact is behind almost everything that makes mobile measurement slower than web.</p>
 <h2>What a compiler does</h2>
 <p>A developer writes Swift or Kotlin. Those languages are meant for people to read, and a phone cannot run either of them.</p>
 <p>So a program called a compiler translates that text into instructions the phone understands. It packages the result with the images, fonts, sounds and settings the app needs. What comes out is a single file. That file is the app, and it is what reaches a phone.</p>
@@ -85,18 +111,3 @@ params:
 <p>The <b>version</b> is the public one, something like 4.2.1, and it is what a customer sees in the store.</p>
 <p>The <b>build number</b> counts every attempt underneath that version. One public version routinely covers twenty or thirty builds, because each submission, each internal test and each fix produces another.</p>
 <p>So two people can both be running version 4.2.1 and be running different software. A version number alone never settles a validation question. Ask for both and write them next to whatever you saw. It costs one extra line in a ticket, and it saves the day two people spend hunting a fault that is really just one build apart.</p>
-<h2>What to ask, and when</h2>
-<p>None of this needs you to read code. It needs you to ask about builds rather than about code, early enough that the answer can still change something.</p>
-<div class="actionblock"><div class="abh">Three habits that pay for themselves</div><div class="do-intro">None of these takes a developer more than a minute to answer.</div><div class="astep"><div class="an">1</div><div>
-  <div class="al"><span class="lbl">Ask</span> Which build is this, by version and build number, and is it the one in the store?</div>
-  <div class="al"><span class="lbl">Why</span> It separates a fault in the code from a fault in the app you are testing. Different people fix those.</div>
-</div></div>
-<div class="astep"><div class="an">2</div><div>
-  <div class="al"><span class="lbl">Ask</span> When is the next release going out, and what is already in it?</div>
-  <div class="al"><span class="lbl">Why</span> It tells you which train your request can still catch, and catching one costs nothing extra.</div>
-</div></div>
-<div class="astep"><div class="an">3</div><div>
-  <div class="al"><span class="lbl">Ask</span> Is this request configuration or code?</div>
-  <div class="al"><span class="lbl">Why</span> Configuration reaches phones this afternoon. Code waits for a build.</div>
-</div></div></div>
-<div class="call check"><span class="ct">&#10003; What you can now do</span><p>You can explain why an app cannot be corrected the way a page can, without apologising for it. You can ask which build a number came from rather than whether the code is right. You know that collecting requests together is sensible rather than obstructive, so you can shape your specifications for it. And you can tell a change that ships this afternoon from one that waits two weeks, before you promise either to anybody.</p></div>

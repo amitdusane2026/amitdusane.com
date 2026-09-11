@@ -1,0 +1,64 @@
+{{- /* ===========================================================================
+     THE FRONT PAGE OF A BASICS SECTION. Created 11 September 2026, shared by
+     every Basics instance; each instance's own list.html is one line calling
+     this, the same arrangement the procedure worlds use.
+
+     The whole field on one screen. A Basics reader does not read in order: they
+     arrive knowing some of this and none of that. So the page shows every topic
+     at once, grouped, each with the one thing it lets you do, and above them a
+     word picker that lights up the topics covering the words a reader does not
+     know. Nothing is numbered, because there is no sequence to promise.
+
+     Everything is generated from the topics' own front matter: the card line
+     from `cando`, the picker from every topic's `words`, the reading time from
+     the body. Nobody types a count.
+
+     THE PICKER SHOWS EACH TOPIC'S FIRST TWO WORDS, and a button shows the rest.
+     At fourteen topics the full list is around eighty words, which is a wall
+     rather than a question. So the order of `words` in a topic's front matter
+     matters: put the two words a newcomer is most likely to have heard first.
+     =========================================================================== */ -}}
+{{ $w := index .Site.Params.worlds .Section }}
+{{ $topics := (where (where .Site.RegularPages "Section" .Section) "Type" "topic").ByWeight }}
+{{ $groups := slice }}
+{{ range $k, $v := $w.groups }}{{ $groups = $groups | append (merge $v (dict "key" $k)) }}{{ end }}
+{{ $groups = sort $groups "order" }}
+{{ $words := slice }}{{ $seen := slice }}
+{{ range $topics }}{{ range $i, $x := .Params.words }}{{ $k := urlize $x.t }}{{ if not (in $seen $k) }}{{ $seen = $seen | append $k }}{{ $words = $words | append (dict "k" $k "t" $x.t "s" (lower $x.t) "more" (ge $i 2)) }}{{ end }}{{ end }}{{ end }}
+{{ $words = sort $words "s" }}
+{{ $nmore := len (where $words "more" true) }}
+<section class="view active b-front">
+  <div class="eyebrow">Basics</div>
+  <h1>{{ .Title }}</h1>
+  {{ with .Description }}<p class="b-lead">{{ . }}</p>{{ end }}
+  {{ with $w.premise }}<div class="b-premise" id="premise"><span class="b-premise-l">What this section is</span><p>{{ . }}</p></div>{{ end }}
+  {{ with $words }}
+  <div class="b-pick" id="bPick" hidden>
+    <p class="b-pick-q">Which of these words are new to you?</p>
+    <div class="b-chips">{{ range . }}<button type="button" class="b-chip" data-w="{{ .k }}" aria-pressed="false"{{ if .more }} data-more hidden{{ end }}>{{ .t }}</button>{{ end }}</div>
+    {{ if $nmore }}<button type="button" class="b-pick-more" id="bPickMore" aria-expanded="false" data-all="Show all {{ len . }} words" data-less="Show fewer words">Show all {{ len . }} words</button>{{ end }}
+    <div class="b-pick-foot"><p class="b-pick-out" id="bPickOut" aria-live="polite"></p><button type="button" class="b-pick-clear" id="bPickClear" hidden>Clear</button></div>
+  </div>
+  {{ end }}
+  {{ range $g := $groups }}
+    {{ $items := where $topics "Params.group" $g.key }}
+    {{ if $items }}
+    <section class="b-grp">
+      <h2 class="b-grp-h">{{ $g.label }}</h2>
+      {{ with $g.blurb }}<p class="b-grp-blurb">{{ . }}</p>{{ end }}
+      <div class="b-cards">
+        {{ range $items }}
+          {{ $ws := slice }}{{ range .Params.words }}{{ $ws = $ws | append (urlize .t) }}{{ end }}
+          {{ $m := math.Round (div (float (countwords .Content)) 220) }}{{ if lt $m 1 }}{{ $m = 1 }}{{ end }}
+        <a class="b-card" href="{{ .RelPermalink }}" data-words="{{ delimit $ws "|" }}">
+          <span class="b-card-t">{{ .Title }}</span>
+          <span class="b-card-d">{{ .Params.cando | default .Description }}</span>
+          <span class="b-card-m">{{ $m }} min read{{ with .Params.words }} &middot; {{ len . }} words{{ end }}</span>
+        </a>
+        {{ end }}
+      </div>
+    </section>
+    {{ end }}
+  {{ end }}
+  <p class="b-front-foot"><a href="{{ (printf "%s/words/" $w.root) | relURL }}">Every word in this section, explained &rarr;</a></p>
+</section>

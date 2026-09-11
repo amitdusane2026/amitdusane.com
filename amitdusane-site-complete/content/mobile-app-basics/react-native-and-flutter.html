@@ -1,18 +1,44 @@
 ---
 published: 2026-09-06
-lastmod: 2026-09-08
+lastmod: 2026-09-11
 title: "React Native and Flutter"
 seotitle: "React Native and Flutter for Analytics Practitioners"
 description: "What cross-platform frameworks are, why a team chose one, and the three things that change when your tracking runs inside one."
 slug: "react-native-and-flutter"
-type: basics
+aliases: ["/aep-mobile-sdk/mobile-basics/react-native-and-flutter/"]
+type: topic
 weight: 102
 params:
   group: kind
-  grouplabel: "What kind of app is this"
+  oneline: "React Native and Flutter let a team write one app, in one language, and get both an iPhone app and an Android app from it."
+  cando: "Say what React Native and Flutter are, and ask the one question that matters about them."
+  words:
+    - t: "React Native"
+      d: "A cross-platform framework from Meta. The app is written in JavaScript or TypeScript."
+    - t: "Flutter"
+      d: "A cross-platform framework from Google. The app is written in a language called Dart."
+    - t: "JavaScript and TypeScript"
+      d: "The languages most websites are written in, and the languages of a React Native app."
+    - t: "Dart"
+      d: "The language Flutter apps are written in. You will not meet it anywhere else."
+    - t: "Plugin"
+      d: "Adobe's wrapper that lets a React Native or Flutter app use the native Mobile SDK."
+    - t: "npm and Yarn"
+      d: "The tools a JavaScript project uses to fetch libraries, including the Adobe plugin."
+  ask:
+    - "Which Adobe plugin version is the project on, and does it support everything on our list?"
+    - "Are any screens written separately for iPhone or Android, outside the framework?"
+    - "Send me the lines that add the Adobe plugin, from package.json or pubspec.yaml."
+  usedin:
+    - t: "Get the SDK in: React Native"
+      s: "Mobile SDK Implementation, step 6"
+      u: "/aep-mobile-sdk/get-the-sdk-react-native/"
+    - t: "Get the SDK in: Flutter"
+      s: "Mobile SDK Implementation, step 6"
+      u: "/aep-mobile-sdk/get-the-sdk-flutter/"
 ---
-<p class="khook">React Native and Flutter are the two ways of writing one app that runs on both phones. A large share of the apps you will meet are built this way, and the honest answer to what changes for you is short.</p>
-<div class="call margin"><span class="ct">Before you start</span><p>This page will not teach you to build mobile apps. It teaches you enough of the mobile world to understand what a developer is saying, to answer questions in a meeting when no developer is there, and to tell a developer exactly what you need and where it has to change. Words like Xcode, Gradle, native, Flutter and WebView are used here on purpose. You will hear them in every meeting.</p></div>
+<h2>Why it matters to you</h2>
+<p>A large share of the apps you will meet are built with one of these two frameworks. The honest answer to what changes for you is short, and it fits on this page.</p>
 <h2>The problem they solve</h2>
 <p>An iPhone app is written in a language called Swift, in Apple&rsquo;s tool, following Apple&rsquo;s rules. An Android app is written in Kotlin, in Google&rsquo;s tool, following Google&rsquo;s rules. The two share almost nothing.</p>
 <p>So a button has to be built twice. So does a list, a screen, and the animation between screens. Two people do that work, and neither of them can read the other&rsquo;s code.</p>
@@ -41,11 +67,7 @@ params:
 <h2>The one real risk</h2>
 <p>The plugins are wrappers around the native SDK, and a wrapper can fall behind the thing it wraps. When Adobe ships something new, the native SDK gets it first. The React Native and Flutter plugins follow, usually within weeks and sometimes longer.</p>
 <p>In practice this rarely causes trouble. Everything you need for an implementation like this one has been supported for years: sending events, identity, consent, lifecycle and Assurance. It becomes a problem only when somebody wants a newer or unusual feature, and it becomes a problem late, after the schema is agreed and the work has started.</p>
-<p>So there is one question worth asking at the very beginning, and it costs nothing.</p>
-<div class="actionblock"><div class="abh">Ask this in the kick-off</div><div class="do-intro">Two minutes of a developer&rsquo;s time, once.</div><div class="astep"><div class="an">1</div><div>
-  <div class="al"><span class="lbl">Ask</span> Which plugin version is the project on, and does that version support everything on our list?</div>
-  <div class="al"><span class="lbl">Why</span> It is the only cross-platform risk that has ever mattered on a project like this one.</div>
-</div></div></div>
+<p>So at the very beginning, ask which plugin version the project is on and whether it supports everything on your list. It takes a developer two minutes.</p>
 <h2>How to recognise one without asking</h2>
 <p>You can usually tell from the files, and you do not need to read any of them. Recognising the shape is enough.</p>
 <table class="mini-tbl"><tbody>
@@ -53,4 +75,3 @@ params:
 <tr><td>Flutter</td><td>Files ending <span class="mn">.dart</span>, and a file called <span class="mn">pubspec.yaml</span>.</td></tr>
 <tr><td>Native</td><td>Two separate folders, one full of <span class="mn">.swift</span> files and one full of <span class="mn">.kt</span> files.</td></tr>
 </tbody></table>
-<div class="call check"><span class="ct">&#10003; What you can now do</span><p>You can say what React Native and Flutter are in one sentence each, explain why a team would choose one, and state confidently that nothing on the Adobe side changes. You can ask the one question that matters, about plugin version and feature support. And you know that one set of code removes the most common cause of iPhone and Android numbers disagreeing.</p></div>

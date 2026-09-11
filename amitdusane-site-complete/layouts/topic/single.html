@@ -1,0 +1,65 @@
+{{ define "main" }}
+{{- /* ===========================================================================
+     A BASICS TOPIC. Created 11 September 2026.
+
+     One fixed shape, and the template enforces it so no topic can drift:
+
+       1  In one sentence      front matter `oneline`   what the thing is
+       2  the body             .Content                 opens with "Why it
+                                                        matters to you"
+       3  Words you will hear  front matter `words`     term + plain meaning
+       4  What to ask          front matter `ask`
+       5  Where this shows up  front matter `usedin`    the handoff to the
+                                                        guides that use it
+
+     Structured front matter rather than prose for 1, 3, 4 and 5, because the
+     same data feeds the front-page cards, the word picker and the generated
+     word list. Written once, used three times, never out of step.
+
+     No step numbers and no "next step": topics are not a sequence. Previous and
+     next exist only as a convenience for a reader who wants to browse.
+     =========================================================================== */ -}}
+{{ $w := index .Site.Params.worlds .Section }}
+{{ $g := index $w.groups .Params.group }}
+{{ $all := (where (where .Site.RegularPages "Section" .Section) "Type" "topic").ByWeight }}
+{{ $prev := "" }}{{ $next := "" }}{{ $found := false }}
+{{ range $all }}
+  {{ if $found }}{{ if not $next }}{{ $next = . }}{{ end }}{{ end }}
+  {{ if eq .RelPermalink $.RelPermalink }}{{ $found = true }}{{ end }}
+  {{ if not $found }}{{ $prev = . }}{{ end }}
+{{ end }}
+<section class="view active b-topic">
+  <p class="crumb"><a href="{{ (printf "%s/" $w.root) | relURL }}">{{ $w.name }}</a>{{ with $g }} &rsaquo; {{ .label }}{{ end }}</p>
+  <h1>{{ .Title }}</h1>
+  {{ partial "byline.html" (dict "page" . "full" true) }}
+  {{ with .Params.oneline }}<div class="b-one"><span class="b-one-l">In one sentence</span><p>{{ . }}</p></div>{{ end }}
+  <p class="b-remind">Not a course in building apps. Just enough to follow the conversation. <a href="{{ (printf "%s/#premise" $w.root) | relURL }}">About this section</a></p>
+  <div class="b-body">{{ .Content }}</div>
+  <div class="b-end">
+    {{ with .Params.words }}
+    <section class="b-words" id="words">
+      <h2>Words you will hear</h2>
+      <dl class="b-dl">{{ range . }}<div class="b-w" id="w-{{ urlize .t }}"><dt>{{ .t }}</dt><dd>{{ .d }}</dd></div>{{ end }}</dl>
+    </section>
+    {{ end }}
+    {{ with .Params.ask }}
+    <section class="b-ask">
+      <h2>What to ask a developer</h2>
+      <ol>{{ range . }}<li>{{ . }}</li>{{ end }}</ol>
+    </section>
+    {{ end }}
+    {{ with .Params.usedin }}
+    <section class="b-used">
+      <h2>Where this shows up</h2>
+      <div class="b-used-list">{{ range . }}<a class="b-used-a" href="{{ .u | relURL }}"><span class="b-used-t">{{ .t }}</span>{{ with .s }}<span class="b-used-s">{{ . }}</span>{{ end }}</a>{{ end }}</div>
+    </section>
+    {{ end }}
+    {{ if or $prev $next }}
+    <nav class="b-pn" aria-label="More topics">
+      {{ with $prev }}<a class="prev" href="{{ .RelPermalink }}"><span class="k">Previous topic</span><span class="t">{{ .Title }}</span></a>{{ end }}
+      {{ with $next }}<a class="next" href="{{ .RelPermalink }}"><span class="k">Next topic</span><span class="t">{{ .Title }}</span></a>{{ end }}
+    </nav>
+    {{ end }}
+  </div>
+</section>
+{{ end }}

@@ -32,7 +32,7 @@
      world. Aiming at the navigation alone left the bar sitting over the Adobe
      links and the screen path, which are just as much "the reader has finished"
      as the navigation is. */
-  var stop = document.querySelector('.path-box, .ref-box, .lpn, .stepnav');
+  var stop = document.querySelector('.path-box, .ref-box, .lpn, .stepnav, .b-end');
   var addrEl = document.getElementById('askAddr');
   if (!main || !addrEl) return;
 
@@ -63,7 +63,14 @@
      front page, the KB index and the references list, which are a router, a
      card grid and a bibliography -- none of them something a reader finishes
      with a question about the section they just read. */
-  if (document.body.classList.contains('world-migration') &&
+  /* EVERY WORLD BUT LEARNING, since 11 September 2026. This tested for
+     `world-migration` by name, so the Mobile SDK guide never met the guard and
+     offered the bar on its front page, knowledge base index and references
+     list, the three pages it was narrowed away from on 2 Sep. Found on 7 Sep,
+     and fixed here when the Basics section type would have repeated it. Any
+     non-learning world now answers with the `asks` class, which baseof sets
+     on steps, KB topics and Basics topics only. */
+  if (!document.body.classList.contains('world-learning') &&
       !document.body.classList.contains('asks')) return;
 
   /* WHERE IN THE READ THE BAR ARRIVES, and it is per-world because the two

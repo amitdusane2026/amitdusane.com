@@ -15,7 +15,7 @@ params:
   kbids: ["dependency-managers", "android-kotlin-and-studio"]
 ---
 <div class="narrative">Two things happen on Android. A developer adds the libraries in a Gradle file, then starts the SDK in a class that runs before anything else.<br><br>There is a third thing that is easy to miss, and it fails in total silence.</div>
-<div class="why-row"><span class="wl">Why?</span><a class="why" href="/aep-mobile-sdk/mobile-basics/dependency-managers/" data-kb="dependency-managers">What does &ldquo;add the SDK&rdquo; mean? <span class="arr">&#8599;</span></a><a class="why" href="/aep-mobile-sdk/mobile-basics/android-kotlin-and-studio/" data-kb="android-kotlin-and-studio">What is the manifest? <span class="arr">&#8599;</span></a></div>
+<div class="why-row"><span class="wl">Why?</span><a class="why" href="/mobile-app-basics/dependency-managers/" data-kb="dependency-managers">What does &ldquo;add the SDK&rdquo; mean? <span class="arr">&#8599;</span></a><a class="why" href="/mobile-app-basics/android-kotlin-and-studio/" data-kb="android-kotlin-and-studio">What is the manifest? <span class="arr">&#8599;</span></a></div>
 <h2>The Gradle block</h2>
 <div class="code"><button class="copy">Copy</button><pre>// build.gradle.kts (Module :app)
 implementation(platform("com.adobe.marketing.mobile:sdk-bom:3.+"))

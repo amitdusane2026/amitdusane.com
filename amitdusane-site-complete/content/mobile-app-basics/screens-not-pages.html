@@ -1,18 +1,40 @@
 ---
 published: 2026-09-07
-lastmod: 2026-09-08
+lastmod: 2026-09-11
 title: "A screen is not a page view"
 seotitle: "Screens Versus Page Views in Mobile Analytics"
 description: "They look alike in a report and behave differently in real use, which is why app session counts and web visit counts never quite line up."
 slug: "screens-not-pages"
-type: basics
+aliases: ["/aep-mobile-sdk/mobile-basics/screens-not-pages/"]
+type: topic
 weight: 302
 params:
   group: behaviour
-  grouplabel: "How an app behaves"
+  oneline: "A screen is the app's version of a page, but it has no URL, no referrer, and no reload when the person goes back to it."
+  cando: "Explain why pressing back sends no second screen view, and stop the chart that compares app sessions with web visits."
+  words:
+    - t: "Screen view"
+      d: "The event an app sends when a screen is shown. It only fires when somebody decided where it fires."
+    - t: "Stack"
+      d: "How app screens are arranged: each new screen goes on top, and the ones underneath stay in memory."
+    - t: "Referrer"
+      d: "On the web, the page a reader came from. A screen has none."
+    - t: "Visit"
+      d: "On the web, a set of page views that ends after thirty minutes of inactivity."
+  ask:
+    - "Does a screen view fire when the screen is built, or every time it appears?"
+    - "Does going back to a list screen send a screen view?"
+    - "How are screens named in the code, and can we use the words the product team uses?"
+  usedin:
+    - t: "Track screens and actions"
+      s: "Mobile SDK Implementation, step 8"
+      u: "/aep-mobile-sdk/track-screens-and-actions/"
+    - t: "Decide what to track"
+      s: "Mobile SDK Implementation, step 2"
+      u: "/aep-mobile-sdk/decide-what-to-track/"
 ---
-<p class="khook">Both are somebody looking at something. The similarity ends at about that point, and the gap between them is where reconciliation arguments come from.</p>
-<div class="call margin"><span class="ct">Before you start</span><p>This page will not teach you to build mobile apps. It teaches you enough of the mobile world to understand what a developer is saying, to answer questions in a meeting when no developer is there, and to tell a developer exactly what you need and where it has to change. Words like Xcode, Gradle, native, Flutter and WebView are used here on purpose. You will hear them in every meeting.</p></div>
+<h2>Why it matters to you</h2>
+<p>A screen and a page look alike in a report. They behave differently in real use, and the difference is where arguments about numbers that do not match come from.</p>
 <h2>What a page gives you that a screen does not</h2>
 <p>A web page comes with four things you have quietly relied on.</p>
 <table class="mini-tbl"><tbody>
@@ -64,7 +86,7 @@ params:
 <h2>Where sessions diverge</h2>
 <p>The second mismatch is the one that reaches stakeholders. Web visits and app sessions do not end for the same reason.</p>
 <p>A <b>web visit</b> ends after thirty minutes of inactivity. It is a timer. Somebody leaves a tab open, makes a coffee, comes back inside half an hour, and is still in the same visit.</p>
-<p>An <b>app session</b> ends when the app leaves the foreground, which is an event rather than a timer. Reading a message ends it. Taking a call ends it. Locking the phone ends it. Returning starts a new one immediately. <a href="/aep-mobile-sdk/mobile-basics/the-app-lifecycle/">The app lifecycle</a> covers why that boundary sits there.</p>
+<p>An <b>app session</b> ends when the app leaves the foreground, which is an event rather than a timer. Reading a message ends it. Taking a call ends it. Locking the phone ends it. Returning starts a new one immediately. <a href="/mobile-app-basics/the-app-lifecycle/">The app lifecycle</a> covers why that boundary sits there.</p>
 <p>So app sessions are shorter and far more numerous than web visits, from the same behaviour by the same person. That is correct measurement rather than a fault, and it cannot be configured away on either side. Both numbers are right, and they answer different questions.</p>
 <h2>The comparison that will mislead everybody</h2>
 <p><b>Do not put app sessions and web visits in the same trend line.</b> Not with a footnote, and not with a caveat in the title. The chart is the claim, and nobody reads the footnote.</p>
@@ -75,16 +97,9 @@ params:
 <p>The temptation is to reuse the website&rsquo;s page names so the two line up in reporting. It looks tidy. It is really a promise that two products will stay matched, and neither team has made that promise.</p>
 <p>Resist it. A screen that maps neatly onto a web page today will stop doing so at the next redesign, because the two products are redesigned separately. Apps also merge things the web splits: a mobile checkout is often one screen where a site has four pages. The mapping is not one to one even on the day you invent it.</p>
 <p><b>Name screens for what they are in the app</b>, using the words the product team uses in its own meetings. Those words will survive a redesign, and they are the words somebody will use when they ask you about the number.</p>
-<div class="actionblock"><div class="abh">Three decisions to make before anyone builds</div><div class="do-intro">All three are yours, and all three are cheaper now than after the first release.</div><div class="astep"><div class="an">1</div><div>
-  <div class="al"><span class="lbl">Specify</span> Screen views fire when a screen appears, not when it is built.</div>
-  <div class="al"><span class="lbl">Why</span> It is the difference between counting a return to a list and losing it silently.</div>
-</div></div>
-<div class="astep"><div class="an">2</div><div>
-  <div class="al"><span class="lbl">Name</span> Screens after what they are in the app&rsquo;s own language, not after website page names.</div>
-  <div class="al"><span class="lbl">Why</span> The two products get redesigned separately, and a mapping made today survives neither.</div>
-</div></div>
-<div class="astep"><div class="an">3</div><div>
-  <div class="al"><span class="lbl">Agree</span> App sessions and web visits are never compared in one trend.</div>
-  <div class="al"><span class="lbl">Why</span> Say it while it is a principle. After somebody has built the chart it becomes an argument.</div>
-</div></div></div>
-<div class="call check"><span class="ct">&#10003; What you can now do</span><p>You can name the four things a web page gives you free that a screen does not: a URL, a referrer, a load, and destruction on leaving. You can explain why pressing back produces no second screen view unless somebody asked for it deliberately. You can say why app sessions are shorter and more numerous than web visits without it sounding like an apology. And you can push back on the one chart that will mislead everybody who sees it.</p></div>
+<h2>Three decisions that are yours</h2>
+<table class="mini-tbl"><tbody>
+<tr><td>Specify</td><td>Screen views fire when a screen appears, not when it is built. It is the difference between counting a return to a list and losing it silently.</td></tr>
+<tr><td>Name</td><td>Screens after what they are in the app&rsquo;s own language, not after website page names. The two products get redesigned separately, and a mapping made today survives neither.</td></tr>
+<tr><td>Agree</td><td>App sessions and web visits are never compared in one trend. Say it while it is a principle. After somebody has built the chart it becomes an argument.</td></tr>
+</tbody></table>

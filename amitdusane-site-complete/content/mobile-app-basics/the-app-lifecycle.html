@@ -1,18 +1,43 @@
 ---
 published: 2026-09-07
-lastmod: 2026-09-08
+lastmod: 2026-09-11
 title: "The app lifecycle: launch, background, terminate"
 seotitle: "App Lifecycle States Explained for Analytics Practitioners"
 description: "A page loads and unloads. An app does neither, and the states it moves through instead are what decide where your sessions begin and end."
 slug: "the-app-lifecycle"
-type: basics
+aliases: ["/aep-mobile-sdk/mobile-basics/the-app-lifecycle/"]
+type: topic
 weight: 301
 params:
   group: behaviour
-  grouplabel: "How an app behaves"
+  oneline: "An app moves between four states: not running, foreground, background and terminated. A session is only the time it spends in the foreground."
+  cando: "Explain why app sessions are shorter and more numerous than web visits, before anyone asks."
+  words:
+    - t: "Lifecycle"
+      d: "The states an app moves through, and the events the SDK sends as it moves between them."
+    - t: "Session"
+      d: "In an app, the time between coming to the foreground and leaving it."
+    - t: "Foreground"
+      d: "On screen and being used. The only state that counts towards session length."
+    - t: "Background"
+      d: "Off screen but still in memory. Moving here ends the session."
+    - t: "Cold start"
+      d: "Opening an app that was not in memory, so everything is built from nothing."
+    - t: "Warm start"
+      d: "Returning to an app that was still in memory. Nearly instant."
+    - t: "Terminated"
+      d: "Removed from memory, usually by the operating system, without running any code first."
+  ask:
+    - "Is automatic lifecycle on, or does the app call lifecycle start and pause itself?"
+    - "If the tracking plan has an app-close event, what exactly fires it?"
+    - "Show me in Assurance what arrives when the app goes to the background and comes back."
+  usedin:
+    - t: "Turn on lifecycle"
+      s: "Mobile SDK Implementation, step 7"
+      u: "/aep-mobile-sdk/turn-on-lifecycle/"
 ---
-<p class="khook">A web page has two moments that matter: it loads, and it goes away. An app has neither of those. The states it moves through instead are the reason app numbers behave the way they do.</p>
-<div class="call margin"><span class="ct">Before you start</span><p>This page will not teach you to build mobile apps. It teaches you enough of the mobile world to understand what a developer is saying, to answer questions in a meeting when no developer is there, and to tell a developer exactly what you need and where it has to change. Words like Xcode, Gradle, native, Flutter and WebView are used here on purpose. You will hear them in every meeting.</p></div>
+<h2>Why it matters to you</h2>
+<p>A web page has two moments that matter: it loads, and it goes away. An app has neither. The states it moves through instead decide where your sessions begin and end.</p>
 <h2>A page loads and unloads. An app does neither.</h2>
 <p>A web page has a clean life. It is requested, it loads, the reader does things, then they leave and it is destroyed. Nothing survives. The next page is a fresh load.</p>
 <p>Analytics has hooked onto both ends of that for twenty years. Load is a page view, and leaving is the end of one.</p>
@@ -75,19 +100,10 @@ params:
 <p>Three effects follow, and all three arrive without anybody writing a line of tracking code.</p>
 <p><b>Sessions are shorter and far more numerous than web visits.</b> That is correct rather than inflated. Session length measures foreground attention, which is a stricter and more honest measure than a web visit, and it will always look smaller beside one.</p>
 <p><b>Launches are not installs.</b> A launch happens every time the app comes to the foreground, including after a two-second glance at a notification. Installs are the first launch after installation, and upgrades the first after a version change. All of it arrives automatically from two events, switched on in <a href="/aep-mobile-sdk/turn-on-lifecycle/">Turn on lifecycle</a>.</p>
-<p><b>Any chart putting app sessions beside web visits will mislead whoever reads it</b>, permanently, whatever the tracking does. The two measure different things by design. <a href="/aep-mobile-sdk/mobile-basics/screens-not-pages/">A screen is not a page view</a> covers the other half of that mismatch.</p>
-<h2>What to ask, and what to refuse</h2>
+<p><b>Any chart putting app sessions beside web visits will mislead whoever reads it</b>, permanently, whatever the tracking does. The two measure different things by design. <a href="/mobile-app-basics/screens-not-pages/">A screen is not a page view</a> covers the other half of that mismatch.</p>
+<h2>What to tell people early</h2>
 <p>Most of the work here is setting expectations before anybody builds a report, rather than after somebody queries one. None of it is configuration.</p>
-<div class="actionblock"><div class="abh">Three things to settle early</div><div class="do-intro">All three are conversations rather than tickets.</div><div class="astep"><div class="an">1</div><div>
-  <div class="al"><span class="lbl">Say</span> A session ends when the app is backgrounded, so app sessions are shorter and more numerous than web visits.</div>
-  <div class="al"><span class="lbl">Why</span> Said at the start it is a design fact. Said after a stakeholder sees the number it sounds like an excuse.</div>
-</div></div>
-<div class="astep"><div class="an">2</div><div>
-  <div class="al"><span class="lbl">Refuse</span> A reliable app close, or a &ldquo;time until they quit&rdquo; metric.</div>
-  <div class="al"><span class="lbl">Why</span> The operating system terminates apps without running their code, so any number built for this counts one minority case and silently misses the rest.</div>
-</div></div>
-<div class="astep"><div class="an">3</div><div>
-  <div class="al"><span class="lbl">Ask</span> Is automatic lifecycle on, or is the app calling lifecycle start and pause by itself?</div>
-  <div class="al"><span class="lbl">Why</span> Modern startup switches it on for you. Older apps do it manually, and that is where launches and sessions go missing.</div>
-</div></div></div>
-<div class="call check"><span class="ct">&#10003; What you can now do</span><p>You can name the four states an app moves through and say which one your engagement numbers measure. You can explain why backgrounding ends a session, and why that alone makes app sessions shorter and more numerous than web visits. You can tell a stakeholder, before they ask, that a dependable app-close metric does not exist and why. And you can recognise that a chart comparing app sessions to web visits is misleading whatever the tracking underneath it does.</p></div>
+<table class="mini-tbl"><tbody>
+<tr><td>Say</td><td>A session ends when the app is backgrounded, so app sessions are shorter and more numerous than web visits. Said at the start it is a design fact. Said after a stakeholder sees the number it sounds like an excuse.</td></tr>
+<tr><td>Refuse</td><td>A reliable app close, or a &ldquo;time until they quit&rdquo; metric. The operating system terminates apps without running their code, so any number built for this counts one minority case and silently misses the rest.</td></tr>
+</tbody></table>

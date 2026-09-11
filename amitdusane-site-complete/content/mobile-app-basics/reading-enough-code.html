@@ -1,18 +1,42 @@
 ---
 published: 2026-09-07
-lastmod: 2026-09-08
+lastmod: 2026-09-11
 title: "Reading enough code to be useful"
 seotitle: "How Analytics Practitioners Can Read Mobile Tracking Code"
 description: "You will never write Swift or Kotlin. Reading four lines of it with confidence changes what you can settle yourself and what has to become a meeting."
 slug: "reading-enough-code"
-type: basics
+aliases: ["/aep-mobile-sdk/mobile-basics/reading-enough-code/"]
+type: topic
 weight: 402
 params:
   group: team
-  grouplabel: "Working with the team"
+  oneline: "For you, reading code means matching the names and values in a tracking call against your specification. It does not mean judging the code."
+  cando: "Check a pasted tracking call against your specification without asking anybody."
+  words:
+    - t: "Variable"
+      d: "A name with no quotes around it, standing for a value decided while the app runs."
+    - t: "String"
+      d: "Text in quotes. Where your field names and fixed values appear."
+    - t: "Call"
+      d: "A name followed by brackets, such as sendEvent(...). Something is being done."
+    - t: "Condition"
+      d: "A line starting with if. The code under it only runs sometimes."
+    - t: "Comment"
+      d: "A line starting with //. A note for people, ignored by the phone."
+  ask:
+    - "How many places in the code set this field?"
+    - "What is this value when the app runs normally, and what is it when something goes wrong?"
+    - "Can you search the code for sendEvent and send me the list of places?"
+  usedin:
+    - t: "Track screens and actions"
+      s: "Mobile SDK Implementation, step 8"
+      u: "/aep-mobile-sdk/track-screens-and-actions/"
+    - t: "Validate in Assurance"
+      s: "Mobile SDK Implementation, step 13"
+      u: "/aep-mobile-sdk/validate-in-assurance/"
 ---
-<p class="khook">You are not learning to program. You are learning to look at four lines somebody pasted into a ticket and say something useful about them.</p>
-<div class="call margin"><span class="ct">Before you start</span><p>This page will not teach you to build mobile apps. It teaches you enough of the mobile world to understand what a developer is saying, to answer questions in a meeting when no developer is there, and to tell a developer exactly what you need and where it has to change. Words like Xcode, Gradle, native, Flutter and WebView are used here on purpose. You will hear them in every meeting.</p></div>
+<h2>Why it matters to you</h2>
+<p>You will never write Swift or Kotlin. But a developer will paste four lines into a ticket, and reading them with confidence settles questions that would otherwise need a meeting.</p>
 <h2>What you are trying to find out</h2>
 <p>Start with the question, because it keeps everything else in proportion.</p>
 <p>You are almost never asking whether the code is <i>good</i>. That is not your call. Whether it is efficient or well structured is a developer&rsquo;s judgment, and offering one costs you standing rather than earning it.</p>
@@ -87,23 +111,13 @@ xdmData["currencyCode"] = cart.currency       // decided elsewhere, invisible he
 <p>You do not need access to the code yourself. You need to ask for the right search. Searching for <span class="mn">sendEvent</span> finds every place the app sends anything. Searching for a field name from your schema finds every place that field is filled in.</p>
 <p>More usefully, it tells you whether that is <b>one place or nine</b>. A field set in one place is a field you can reason about. The same field set in nine places, by four people, over two years, is the explanation for a value that is right most of the time.</p>
 <h2>What not to do with this</h2>
-<p><b>Do not propose code changes.</b> Reading four lines does not qualify anybody to edit them. An analytics person who arrives with a suggested fix has moved onto somebody else&rsquo;s side of the line, and the developer now has to review your code as well as solve the problem. <a href="/aep-mobile-sdk/mobile-basics/where-your-job-ends/">Where your job ends</a> sets out that line in full.</p>
+<p><b>Do not propose code changes.</b> Reading four lines does not qualify anybody to edit them. An analytics person who arrives with a suggested fix has moved onto somebody else&rsquo;s side of the line, and the developer now has to review your code as well as solve the problem. <a href="/mobile-app-basics/where-your-job-ends/">Where your job ends</a> sets out that line in full.</p>
 <p>Describe what you saw and what you expected. &ldquo;The event fires on the confirmation screen but currencyCode arrives empty for guest checkout&rdquo; is worth a great deal, and it takes no position on how to fix it.</p>
 <p>That sentence is what reading code is for. Everything else on this page exists so you can write it with confidence.</p>
-<div class="actionblock"><div class="abh">What to do with a snippet in a ticket</div><div class="do-intro">Four passes, in this order, and none of them needs the developer present.</div><div class="astep"><div class="an">1</div><div>
-  <div class="al"><span class="lbl">Find</span> The field names and values in quotes, and check them against your specification.</div>
-  <div class="al"><span class="lbl">Why</span> Misspelled field names are the most common fault and the easiest to see.</div>
-</div></div>
-<div class="astep"><div class="an">2</div><div>
-  <div class="al"><span class="lbl">Find</span> The values that are <i>not</i> in quotes.</div>
-  <div class="al"><span class="lbl">Why</span> Those are the ones no snippet can verify, so they are the ones worth a question.</div>
-</div></div>
-<div class="astep"><div class="an">3</div><div>
-  <div class="al"><span class="lbl">Ask</span> For a search rather than a snippet: how many places set this field?</div>
-  <div class="al"><span class="lbl">Why</span> One place is a value you can trust. Nine places is the answer to a discrepancy you have not investigated yet.</div>
-</div></div>
-<div class="astep"><div class="an">4</div><div>
-  <div class="al"><span class="lbl">Confirm</span> In Assurance, on a real phone, before concluding anything.</div>
-  <div class="al"><span class="lbl">Why</span> Code shows intention. Assurance shows what actually left the phone, and only one of those is evidence.</div>
-</div></div></div>
-<div class="call check"><span class="ct">&#10003; What you can now do</span><p>You can recognise a call, a string, a variable, a condition and a comment, which is enough to read a tracking call in either language you will meet. You can check field names and fixed values against your specification without asking anybody. You can spot the values decided elsewhere, and know those are worth a question rather than a guess. You can ask for a search instead of a snippet when the question is whether something exists. And you can describe problems without proposing fixes, which keeps you on your own side of a line worth respecting.</p></div>
+<h2>What to do with a snippet in a ticket</h2>
+<table class="mini-tbl"><tbody>
+<tr><td>Find</td><td>The field names and values in quotes, and check them against your specification. Misspelled field names are the most common fault and the easiest to see.</td></tr>
+<tr><td>Find</td><td>The values that are <i>not</i> in quotes. Those are the ones no snippet can verify, so they are the ones worth a question.</td></tr>
+<tr><td>Ask</td><td>For a search rather than a snippet: how many places set this field? One place is a value you can trust. Nine places is the answer to a discrepancy you have not investigated yet.</td></tr>
+<tr><td>Confirm</td><td>In Assurance, on a real phone, before concluding anything. Code shows intention. Assurance shows what actually left the phone, and only one of those is evidence.</td></tr>
+</tbody></table>

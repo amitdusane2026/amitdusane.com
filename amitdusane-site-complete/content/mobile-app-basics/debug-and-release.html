@@ -1,18 +1,44 @@
 ---
 published: 2026-09-06
-lastmod: 2026-09-08
+lastmod: 2026-09-11
 title: "Debug builds and release builds"
 seotitle: "Debug Versus Release Builds in Adobe Mobile SDK Validation"
 description: "The same code produces two different apps, and the one a developer tests on is not the one your numbers will come from."
 slug: "debug-and-release"
-type: basics
+aliases: ["/aep-mobile-sdk/mobile-basics/debug-and-release/"]
+type: topic
 weight: 205
 params:
   group: world
-  grouplabel: "The developer's world"
+  oneline: "One set of code produces two apps: a debug build that developers test on, and a release build that customers install."
+  cando: "Refuse, politely, to approve anything from a debug build."
+  words:
+    - t: "Debug build"
+      d: "The version a developer runs while working. It keeps logging and usually reports to test services."
+    - t: "Release build"
+      d: "The version that goes to the store. Logging removed, faster, and reporting to production."
+    - t: "Race"
+      d: "A fault where two parts of the code assume an order nobody guaranteed. It often appears only in release builds."
+    - t: "Environment File ID"
+      d: "The value that tells the SDK which Adobe environment to report to. It often differs between debug and release."
+    - t: "TestFlight"
+      d: "Apple's way to send a real release build to a named list of testers before the public."
+    - t: "Internal testing track"
+      d: "Google Play's way to send a real release build to a named list of testers."
+  ask:
+    - "Is this a debug or a release build, and was it produced by the release configuration?"
+    - "Which Environment File ID does this build carry?"
+    - "Is this build available through TestFlight or an internal testing track, so I can install it on my own phone?"
+  usedin:
+    - t: "Validate in Assurance"
+      s: "Mobile SDK Implementation, step 13"
+      u: "/aep-mobile-sdk/validate-in-assurance/"
+    - t: "Get the SDK into the app"
+      s: "Mobile SDK Implementation, step 6"
+      u: "/aep-mobile-sdk/get-the-sdk-into-the-app/"
 ---
-<p class="khook">A developer saying &ldquo;it works on mine&rdquo; is usually telling the truth about a build that nobody else will ever run.</p>
-<div class="call margin"><span class="ct">Before you start</span><p>This page will not teach you to build mobile apps. It teaches you enough of the mobile world to understand what a developer is saying, to answer questions in a meeting when no developer is there, and to tell a developer exactly what you need and where it has to change. Words like Xcode, Gradle, native, Flutter and WebView are used here on purpose. You will hear them in every meeting.</p></div>
+<h2>Why it matters to you</h2>
+<p>A developer saying &ldquo;it works on mine&rdquo; is usually telling the truth about a build that nobody else will ever run. Customers run a different build, and that is the one your numbers come from.</p>
 <h2>One set of code, two apps</h2>
 <p>Every project produces at least two kinds of build from one set of code. A <b>debug build</b> is what a developer runs while working. A <b>release build</b> is what goes to a store.</p>
 <p>They come from identical files and they are not identical programs, because the instructions given to the compiler are different.</p>
@@ -63,24 +89,9 @@ params:
 <p>The SDK is told which Adobe property it belongs to by an <b>Environment File ID</b>. That value very often differs between debug and release, and that is deliberate rather than a mistake. Development traffic should land in a development environment and production traffic in production.</p>
 <p>It also means the build a developer validates on and the build the business reports from point at two different places. Everything can look perfect in the development environment for weeks while the production configuration carries a value nobody has checked.</p>
 <p>The failure runs the other way too, and that version is more embarrassing. A build configured to report to production gets passed round the office for two weeks of testing, and quietly fills the report the business is watching with staff traffic. Nothing errors. The numbers simply include forty people who were never customers and who all behave like unusually thorough shoppers.</p>
-<p>On iPhone this value is usually decided by the build configuration, which is one of the three words in <a href="/aep-mobile-sdk/mobile-basics/ios-swift-and-xcode/">iOS: Swift, Xcode, and the manifest</a>. So asking which configuration produced a build is the same question as asking where its data went, phrased in the words the person answering already uses.</p>
-<div class="call mistake"><span class="ct">Where this goes wrong</span><p>An implementation is signed off from a debug build, on a developer&rsquo;s machine, pointed at the development environment. Every event is correct. The release build carries a placeholder Environment File ID that was never updated, and reports nowhere at all. Nobody finds out until somebody opens the production report after launch, and by then the fix needs another release and another store review.</p></div>
-<h2>The build worth signing off on</h2>
+<p>On iPhone this value is usually decided by the build configuration, which is one of the three words in <a href="/mobile-app-basics/ios-swift-and-xcode/">iOS: Swift, Xcode, and what your developer is looking at</a>. So asking which configuration produced a build is the same question as asking where its data went, phrased in the words the person answering already uses.</p>
+<div class="call mistake"><span class="ct">Where this goes wrong</span><p>An implementation is approved from a debug build, on a developer&rsquo;s machine, pointed at the development environment. Every event is correct. The release build carries a placeholder Environment File ID that was never updated, and reports nowhere at all. Nobody finds out until somebody opens the production report after launch, and by then the fix needs another release and another store review.</p></div>
+<h2>The only build worth approving</h2>
 <p><b>Final validation happens on a release build, and on nothing else.</b> Not a debug build with logging turned down. Not a release-signed debug build either, which sounds close enough and is not. An actual release build, ideally the exact file intended for the store. That validation is <a href="/aep-mobile-sdk/validate-in-assurance/">Validate in Assurance</a>.</p>
 <p>Both platforms give you a way to get one before the public has it. Apple has TestFlight. Google Play has internal and closed testing tracks. Both send a genuine release build to a named list of people, which is the whole reason they exist.</p>
 <p>Validating there costs something, and it is better said now than discovered mid-project. Logging is gone, so you read Assurance instead of a developer&rsquo;s console. Each attempt needs a build rather than a quick rebuild on somebody&rsquo;s machine. That is the price of testing the thing that ships instead of a rehearsal of it, and it is worth paying once at the end rather than never.</p>
-<h2>What to ask</h2>
-<p>Three questions settle every case on this page. All three are about the build rather than the code, which is the shift <a href="/aep-mobile-sdk/mobile-basics/what-a-build-is/">What a build actually is</a> argues for.</p>
-<div class="actionblock"><div class="abh">Before signing anything off</div><div class="do-intro">Ask these of the specific build in front of you, every time.</div><div class="astep"><div class="an">1</div><div>
-  <div class="al"><span class="lbl">Ask</span> Is this a debug or a release build, and was it produced by the release configuration?</div>
-  <div class="al"><span class="lbl">Why</span> Yes to the first half and no to the second is the most common way a sign-off comes to mean nothing.</div>
-</div></div>
-<div class="astep"><div class="an">2</div><div>
-  <div class="al"><span class="lbl">Ask</span> Which Environment File ID does this build carry?</div>
-  <div class="al"><span class="lbl">Why</span> It tells you where the data you are about to look at actually went.</div>
-</div></div>
-<div class="astep"><div class="an">3</div><div>
-  <div class="al"><span class="lbl">Ask</span> Is this build available through TestFlight or an internal testing track?</div>
-  <div class="al"><span class="lbl">Why</span> It puts a genuine release build on your own phone, which is where validation should finish.</div>
-</div></div></div>
-<div class="call check"><span class="ct">&#10003; What you can now do</span><p>You can explain why one set of code produces two different apps, and why the friendlier one is not the one that matters. You can name the three ways they differ: timing, evidence and destination. You can ask which Environment File ID a build carries, and know that the answer decides where the numbers came from. And you can refuse, politely, to sign anything off from a debug build.</p></div>

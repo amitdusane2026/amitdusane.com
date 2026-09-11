@@ -1,0 +1,32 @@
+{{ define "main" }}
+{{- /* THE WORD LIST OF A BASICS SECTION, generated. Created 11 September 2026.
+
+     Every topic's "Words you will hear" entries, gathered A to Z, each linking
+     back to the exact entry in the topic that explains it. Nobody writes this
+     page: add a word to a topic and it appears here, delete the topic and its
+     words go with it. For a reader working in a second language this is the
+     lookup page, which is why it exists at all. */ -}}
+{{ $w := index .Site.Params.worlds .Section }}
+{{ $topics := (where (where .Site.RegularPages "Section" .Section) "Type" "topic").ByWeight }}
+{{ $list := slice }}
+{{ range $p := $topics }}{{ range $p.Params.words }}{{ $list = $list | append (dict "s" (lower .t) "t" .t "d" .d "pt" $p.Title "u" (printf "%s#w-%s" $p.RelPermalink (urlize .t))) }}{{ end }}{{ end }}
+{{ $list = sort $list "s" }}
+{{ $letters := slice }}
+{{ range $list }}{{ $l := upper (substr .s 0 1) }}{{ if not (in $letters $l) }}{{ $letters = $letters | append $l }}{{ end }}{{ end }}
+<section class="view active b-wordlist">
+  <p class="crumb"><a href="{{ (printf "%s/" $w.root) | relURL }}">{{ $w.name }}</a> &rsaquo; {{ .Title }}</p>
+  <h1>{{ .Title }}</h1>
+  {{ with .Description }}<p class="b-lead">{{ . }}</p>{{ end }}
+  <p class="b-count">{{ len $list }} words across {{ len $topics }} topics</p>
+  {{ range $l := $letters }}
+  <section class="b-lsec">
+    <h2 class="b-letter" id="l-{{ lower $l }}">{{ $l }}</h2>
+    <dl class="b-dl">
+      {{ range $list }}{{ if eq (upper (substr .s 0 1)) $l }}
+      <div class="b-w"><dt>{{ .t }}</dt><dd>{{ .d }} <a class="b-w-from" href="{{ .u }}">{{ .pt }} &rarr;</a></dd></div>
+      {{ end }}{{ end }}
+    </dl>
+  </section>
+  {{ end }}
+</section>
+{{ end }}

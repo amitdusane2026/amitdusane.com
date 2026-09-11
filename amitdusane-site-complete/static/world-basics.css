@@ -1,0 +1,199 @@
+/* ===========================================================================
+   world-basics.css — the BASICS section type. Created 11 September 2026.
+
+   A Basics section teaches the vocabulary of a whole field to somebody who is
+   new to it, so they can follow a developer, answer in a meeting, and ask for
+   the right thing. Mobile App Basics is the first; Website Basics will be the
+   second. Both load THIS stylesheet. Only the accent changes per instance, in
+   the per-instance block below, which is how one shell serves many sections.
+
+   It is a new design, not the procedure shell with the steps taken out:
+
+     - no sequence, so nothing is numbered and the rail lists topics in groups
+     - the front page shows the whole field at once, with a word picker that
+       lights up the topics covering the words a reader does not know
+     - every topic has one fixed shape, enforced by the template rather than
+       by the author: one-sentence definition, body, words, what to ask, where
+       this shows up
+
+   Labels are sentence case and carry their weight through size and weight,
+   never through capitals or letter-spacing. That is the site rule, and this
+   stylesheet follows it where the older procedure shell does not.
+   =========================================================================== */
+
+:root{
+  --ink:#1c1f24; --ink-soft:#3b4048; --muted:#6b7280; --faint:#9aa1ab;
+  --line:#e4e6ea; --line-soft:#eef0f3; --bg:#ffffff; --bg-soft:#f7f8fa;
+  --accent:#3b4048; --accent-soft:#f1f2f4; --accent-line:#d6d9de; --on-accent:#ffffff;
+  --ok:#1f7a4d; --ok-soft:#e9f4ee; --warn:#9a5b00; --warn-soft:#fbf2e3;
+  --danger:#a13030; --danger-soft:#f8ecec; --story:#5a4a86; --story-soft:#efecf6;
+  --code-bg:#1c2128; --code-ink:#e7ebf0;
+  --sans:'IBM Plex Sans',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --mono:'IBM Plex Mono',"SFMono-Regular",ui-monospace,Menlo,Consolas,monospace;
+  --b-rail:272px; --measure:720px;
+  --b-fs-h1:32px; --b-fs-h2:21px; --b-fs-body:17px; --b-fs-sm:14.5px; --b-fs-meta:12.5px;
+}
+[data-theme="dark"]{
+  --ink:#e6eaf0; --ink-soft:#bcc3cd; --muted:#8a919b; --faint:#5e6671;
+  --line:#2d333c; --line-soft:#23282f; --bg:#13161b; --bg-soft:#1c2129;
+  --accent:#bcc3cd; --accent-soft:#23282f; --accent-line:#3a414b; --on-accent:#16110e;
+  --ok:#54c08a; --ok-soft:#15291f; --warn:#d39a45; --warn-soft:#2c2412;
+  --danger:#e08a8a; --danger-soft:#2e1b1b; --story:#9c8fd2; --story-soft:#201c30;
+  --code-bg:#0d1014; --code-ink:#e6eaf0;
+}
+
+/* PER-INSTANCE ACCENT. Terracotta for Mobile App Basics: distinct from the
+   learning crimson, the migration blue and the Mobile SDK teal, and clear of
+   the semantic amber, green, blue and violet. 6.4:1 on white; the dark value
+   is 7.3:1 on the dark ground. Repeated under [data-theme="dark"] because that
+   attribute sits on <html>, above body, and would otherwise lose to it. */
+body.world-mab{ --accent:#a3401c; --accent-soft:#fbeee8; --accent-line:#f0cdbd; }
+[data-theme="dark"] body.world-mab{ --accent:#f08a5d; --accent-soft:#2b1a12; --accent-line:#5a3423; }
+
+*{box-sizing:border-box}
+body.world-basics{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+  font-size:var(--b-fs-body);line-height:1.7;-webkit-font-smoothing:antialiased;padding-top:var(--header-h)}
+body.world-basics a{color:var(--accent)}
+
+/* ---------- Layout: rail of groups, then the reading column ---------- */
+.b-layout{display:grid;grid-template-columns:var(--b-rail) minmax(0,1fr);align-items:start}
+.b-main{min-width:0;padding:34px 44px 120px}
+.b-rail{position:sticky;top:var(--header-h);height:calc(100vh - var(--header-h));overflow-y:auto;
+  background:var(--bg-soft);border-right:1px solid var(--line);padding:22px 12px 48px}
+.b-rail a{display:block;text-decoration:none;color:var(--ink-soft);border-radius:8px;padding:6px 12px;font-size:14px;line-height:1.4}
+.b-rail a:hover{background:var(--line-soft);color:var(--ink)}
+.b-rail a.active{background:var(--accent-soft);color:var(--accent);font-weight:600}
+.b-rail-home{font-weight:600;margin-bottom:10px}
+.b-rail-grp{margin:0 0 14px}
+.b-rail-h{font-size:12.5px;font-weight:700;color:var(--ink-soft);padding:8px 12px 4px}
+.b-rail a.b-rail-words{margin-top:6px;border-top:1px solid var(--line);border-radius:0;padding-top:12px}
+.b-scrim{display:none}
+
+/* ---------- Type ---------- */
+.view h1{font-size:var(--b-fs-h1);line-height:1.2;margin:.1em 0 .35em;letter-spacing:-.012em;font-weight:700}
+.b-body{max-width:var(--measure)}
+.b-body h2,.b-end h2{font-size:var(--b-fs-h2);line-height:1.3;margin:1.7em 0 .5em;font-weight:700}
+.b-body p{margin:0 0 .95em}
+.crumb{font-size:13px;color:var(--ink-soft);margin:0 0 10px}
+.crumb a{text-decoration:none}
+.crumb a:hover{text-decoration:underline}
+.eyebrow{font-size:13px;font-weight:700;color:var(--accent);margin:0 0 4px}
+code,.b-body .mn{font-family:var(--mono);font-size:.88em;background:var(--bg-soft);border:1px solid var(--line);border-radius:5px;padding:.05em .35em}
+
+/* ---------- The fixed topic shape ---------- */
+.b-one{max-width:var(--measure);background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:12px;padding:14px 18px;margin:18px 0 10px}
+.b-one-l{display:block;font-size:13px;font-weight:700;color:var(--accent);margin-bottom:3px}
+.b-one p{margin:0;font-size:18px;line-height:1.55;color:var(--ink);font-weight:500}
+.b-remind{max-width:var(--measure);font-size:13.5px;color:var(--ink-soft);margin:0 0 8px}
+
+.b-end{max-width:var(--measure);margin-top:44px;border-top:1px solid var(--line)}
+.b-end h2{margin-top:1.4em}
+.b-dl{margin:0}
+.b-w{display:grid;grid-template-columns:minmax(120px,190px) 1fr;gap:4px 18px;padding:10px 6px;border-bottom:1px solid var(--line-soft)}
+.b-w dt{font-weight:700;color:var(--ink)}
+.b-w dd{margin:0;color:var(--ink-soft);font-size:var(--b-fs-sm)}
+.b-w:target{background:var(--accent-soft);border-radius:6px}
+.b-ask ol{margin:0;padding-left:1.3em}
+.b-ask li{margin:0 0 .6em;font-size:var(--b-fs-sm)}
+.b-used-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+.b-used-a{display:block;text-decoration:none;border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:var(--bg)}
+.b-used-a:hover{border-color:var(--accent)}
+.b-used-t{display:block;font-weight:600;color:var(--ink);font-size:15px}
+.b-used-s{display:block;font-size:var(--b-fs-meta);color:var(--muted)}
+.b-pn{display:flex;justify-content:space-between;gap:12px;margin-top:34px;max-width:var(--measure)}
+.b-pn a{flex:1;max-width:48%;text-decoration:none;border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.b-pn a:hover{border-color:var(--accent)}
+.b-pn .k{display:block;font-size:var(--b-fs-meta);color:var(--muted)}
+.b-pn .t{display:block;font-weight:600;color:var(--ink);font-size:15px}
+.b-pn .next{text-align:right;margin-left:auto}
+
+/* ---------- Components carried from the procedure worlds, same class names
+   so content moves between sections unchanged. Labels in sentence case. ---------- */
+.call{max-width:var(--measure);border:1px solid var(--line);border-left-width:4px;border-radius:8px;padding:12px 16px;margin:16px 0;background:var(--bg-soft);font-size:var(--b-fs-sm)}
+.call .ct{display:block;font-weight:700;font-size:14px;margin-bottom:3px}
+.call p{margin:.25em 0 0}
+.call.check{border-left-color:var(--ok);background:var(--ok-soft)} .call.check .ct{color:var(--ok)}
+.call.warn{border-left-color:var(--warn);background:var(--warn-soft)} .call.warn .ct{color:var(--warn)}
+.call.mistake,.call.danger{border-left-color:var(--danger);background:var(--danger-soft)} .call.mistake .ct,.call.danger .ct{color:var(--danger)}
+.call.margin{border-left-color:var(--faint);background:var(--bg)} .call.margin .ct{color:var(--ink-soft)}
+.mini-tbl{width:100%;max-width:var(--measure);border-collapse:collapse;margin:12px 0 18px;font-size:var(--b-fs-sm)}
+.mini-tbl td{padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+.mini-tbl td:first-child{font-weight:700;color:var(--accent);width:1%;white-space:nowrap}
+.code{position:relative;margin:12px 0;max-width:var(--measure)}
+.code pre{margin:0;background:var(--code-bg);color:var(--code-ink);border-radius:10px;padding:14px 16px;overflow:auto;font-family:var(--mono);font-size:13px;line-height:1.55}
+.code .copy{position:absolute;top:7px;right:7px;background:#2b323b;color:#c9d1d9;border:1px solid #3a424c;border-radius:6px;font-size:11px;padding:3px 9px;cursor:pointer;opacity:.85}
+.code .copy:hover{opacity:1} .code .copy.done{color:#7fe0a6;border-color:#2f6b48}
+.fig-svg{max-width:var(--measure);margin:22px 0;border:1px solid var(--line);border-radius:12px;background:var(--bg);padding:18px 18px 12px}
+.fig-svg svg{display:block;width:100%;height:auto}
+.fig-svg text{font-family:var(--sans);fill:var(--ink)}
+.fig-svg .mn{font-family:var(--mono)}
+.fig-svg figcaption{margin-top:10px;font-size:13px;color:var(--ink-soft);text-align:center;line-height:1.5}
+
+/* ---------- Front page: the whole field on one screen ---------- */
+.b-front{max-width:1000px}
+.b-lead{font-size:18.5px;line-height:1.6;color:var(--ink-soft);max-width:var(--measure);margin:0 0 18px}
+.b-premise{max-width:var(--measure);border-left:4px solid var(--accent);background:var(--bg-soft);border-radius:0 10px 10px 0;padding:12px 16px;margin:0 0 26px}
+.b-premise-l{display:block;font-size:13px;font-weight:700;color:var(--ink);margin-bottom:2px}
+.b-premise p{margin:0;font-size:var(--b-fs-sm);color:var(--ink-soft)}
+.b-pick{border:1px solid var(--line);border-radius:14px;padding:16px 18px 12px;margin:0 0 32px;background:var(--bg)}
+.b-pick-q{margin:0 0 10px;font-weight:700;font-size:16px}
+.b-chips{display:flex;flex-wrap:wrap;gap:8px}
+.b-chip{font:inherit;font-size:14px;line-height:1.2;padding:7px 13px;border-radius:999px;border:1px solid var(--line);background:var(--bg-soft);color:var(--ink);cursor:pointer}
+.b-chip:hover{border-color:var(--accent)}
+.b-chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.b-chip:focus-visible,.b-card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.b-pick-foot{display:flex;align-items:center;gap:14px;min-height:30px;margin-top:8px}
+.b-pick-out{margin:0;font-size:var(--b-fs-sm);color:var(--ink-soft)}
+.b-pick-clear{font:inherit;font-size:13px;background:none;border:0;color:var(--accent);cursor:pointer;text-decoration:underline;padding:0}
+.b-pick-more{font:inherit;font-size:13.5px;font-weight:600;background:none;border:0;color:var(--accent);cursor:pointer;padding:0;margin-top:10px}
+.b-pick-more:hover{text-decoration:underline}
+.b-grp{margin:0 0 30px}
+.b-grp-h{font-size:var(--b-fs-h2);line-height:1.3;margin:0 0 4px;font-weight:700}
+.b-grp-blurb{margin:0 0 12px;color:var(--ink-soft);font-size:var(--b-fs-sm);max-width:var(--measure)}
+.b-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.b-card{display:flex;flex-direction:column;gap:5px;text-decoration:none;border:1px solid var(--line);border-radius:12px;padding:15px 17px;background:var(--bg);
+  transition:border-color .15s,transform .15s,opacity .15s,background-color .15s}
+.b-card:hover{border-color:var(--accent);transform:translateY(-1px)}
+.b-card-t{font-weight:700;color:var(--ink);font-size:16px;line-height:1.35}
+.b-card-d{color:var(--ink-soft);font-size:14px;line-height:1.5}
+.b-card-m{margin-top:auto;padding-top:4px;color:var(--muted);font-size:var(--b-fs-meta)}
+.b-card.is-hit{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent);background:var(--accent-soft)}
+.b-card.is-hit .b-card-m{color:var(--ink-soft)}
+.b-card.is-dim{opacity:.42}
+.b-front-foot{margin:8px 0 0;font-size:var(--b-fs-sm)}
+
+/* ---------- Generated word list ---------- */
+.b-count{color:var(--ink-soft);font-size:var(--b-fs-sm);margin:0 0 10px}
+.b-lsec{max-width:var(--measure)}
+.b-letter{font-size:18px;margin:26px 0 4px;color:var(--accent)}
+.b-w-from{white-space:nowrap;font-size:13px;margin-left:4px}
+
+/* ---------- Global chrome that names worlds by class ---------- */
+body.world-basics .ask-bar b,body.world-basics .ask-kicker{color:var(--accent)}
+
+/* ---------- Phone ---------- */
+@media (max-width:880px){
+  :root{--b-fs-h1:26px;--b-fs-h2:19px;--b-fs-body:16.5px}
+  .b-layout{display:block}
+  .b-rail{position:fixed;top:var(--header-h);left:0;bottom:0;height:auto;width:min(86vw,var(--b-rail));z-index:65;
+    transform:translateX(-100%);transition:transform .2s;box-shadow:0 10px 40px rgba(0,0,0,.18)}
+  body.nav-open .b-rail{transform:none}
+  body.nav-open .b-scrim{display:block;position:fixed;top:var(--header-h);left:0;right:0;bottom:0;background:rgba(0,0,0,.28);z-index:60}
+  .b-main{padding:22px 18px 96px}
+  .b-one p{font-size:17px}
+}
+@media (max-width:560px){
+  .b-w{grid-template-columns:1fr}
+  .b-pn{flex-direction:column}
+  .b-pn a{max-width:none}
+  .b-pn .next{text-align:left;margin-left:0}
+}
+@media (prefers-reduced-motion:reduce){ .b-card,.b-rail{transition:none} }
+
+/* ---------- Paper ---------- */
+@media print{
+  body.world-basics{padding-top:0 !important}
+  .b-rail,.b-scrim,.b-pick{display:none !important}
+  body.world-basics .print-doc thead td{border-bottom-color:var(--accent)}
+  body.world-basics .print-doc tfoot td{border-top-color:var(--accent)}
+}

@@ -1,18 +1,46 @@
 ---
 published: 2026-09-06
-lastmod: 2026-09-08
+lastmod: 2026-09-11
 title: "What “add the SDK” means"
 seotitle: "Swift Package Manager, CocoaPods and Gradle Explained"
 description: "Dependency managers explained for somebody who has never opened a developer tool, and why the version numbers matter even though you never type one."
 slug: "dependency-managers"
-type: basics
+aliases: ["/aep-mobile-sdk/mobile-basics/dependency-managers/"]
+type: topic
 weight: 204
 params:
   group: world
-  grouplabel: "The developer's world"
+  oneline: "Adding the SDK means writing its name and version on a list. A tool called a dependency manager reads that list and fetches the SDK each time the app is built."
+  cando: "Read a dependency block and tell a deliberate setup from an accidental one."
+  words:
+    - t: "Dependency manager"
+      d: "The tool that reads a project's list of libraries and fetches them when the app is built."
+    - t: "Bill of materials"
+      d: "One line that sets matching versions for every Adobe library on Android. Published as sdk-bom."
+    - t: "Library"
+      d: "Code written by somebody else that an app uses, such as one part of the Adobe SDK."
+    - t: "Swift Package Manager"
+      d: "Apple's dependency manager, built into Xcode. The current default on iPhone."
+    - t: "CocoaPods"
+      d: "An older iPhone dependency manager, still used in many working apps."
+    - t: "Extension"
+      d: "One library in the Adobe Mobile SDK, such as Identity or Lifecycle."
+  ask:
+    - "On Android, is the bill of materials in use? On iPhone, is there one version range across the Adobe packages?"
+    - "Paste the Adobe dependency lines as they are today."
+  usedin:
+    - t: "Get the SDK into the app"
+      s: "Mobile SDK Implementation, step 6"
+      u: "/aep-mobile-sdk/get-the-sdk-into-the-app/"
+    - t: "Get the SDK in: iOS"
+      s: "Mobile SDK Implementation, step 6"
+      u: "/aep-mobile-sdk/get-the-sdk-ios/"
+    - t: "Get the SDK in: Android"
+      s: "Mobile SDK Implementation, step 6"
+      u: "/aep-mobile-sdk/get-the-sdk-android/"
 ---
-<p class="khook">Nobody copies the Adobe SDK into an app. They write down its name and a version, and a tool fetches it while the app is being built.</p>
-<div class="call margin"><span class="ct">Before you start</span><p>This page will not teach you to build mobile apps. It teaches you enough of the mobile world to understand what a developer is saying, to answer questions in a meeting when no developer is there, and to tell a developer exactly what you need and where it has to change. Words like Xcode, Gradle, native, Flutter and WebView are used here on purpose. You will hear them in every meeting.</p></div>
+<h2>Why it matters to you</h2>
+<p>Nobody copies the Adobe SDK into an app. They write down its name and a version, and a tool fetches it while the app is being built. That is why two builds from the same code can contain different versions of the SDK.</p>
 <h2>A list, not a parcel</h2>
 <p>The Adobe SDK is not copied into the project. What goes into the project is a <b>list</b>, and that list names each library the app needs.</p>
 <p>When somebody builds the app, a tool reads the list, downloads each library from a public store, and joins the results into the build. The libraries are not kept next to the company&rsquo;s own code. They arrive fresh every time anybody builds.</p>
@@ -56,14 +84,3 @@ implementation 'com.adobe.marketing.mobile:lifecycle'</pre></div>
 </tbody></table>
 <p>That is the whole skill, and it is smaller than it sounds. You are not auditing the build or second-guessing an engineer. You are checking that one decision was made on purpose rather than by accident.</p>
 <div class="call mistake"><span class="ct">Where this goes wrong</span><p>An extension is added months after the original work, pinned manually to whatever version was current that week. Everything builds and the app ships. The mismatch appears later as behaviour nobody can reproduce: events arriving sometimes, or an extension that registers on one platform and not the other. The dependency block held the answer the whole time, and nobody outside the mobile team had ever looked at it.</p></div>
-<h2>What to ask for</h2>
-<p>Two requests cover this page. Neither asks a developer to justify themselves, which is part of why both land well. They are questions about arrangement, not about competence.</p>
-<div class="actionblock"><div class="abh">Two things, once, early</div><div class="do-intro">Ask at the start of the work, not when something is already wrong.</div><div class="astep"><div class="an">1</div><div>
-  <div class="al"><span class="lbl">Ask</span> On Android, is the bill of materials in use? On iPhone, is there one version range across the Adobe packages?</div>
-  <div class="al"><span class="lbl">Why</span> It is the difference between a set that stays coherent by design and one that stays coherent by luck.</div>
-</div></div>
-<div class="astep"><div class="an">2</div><div>
-  <div class="al"><span class="lbl">Ask</span> Paste the Adobe dependency lines as they stand today.</div>
-  <div class="al"><span class="lbl">Why</span> Ten seconds of a developer&rsquo;s time, and it answers the first question and several you have not thought of yet.</div>
-</div></div></div>
-<div class="call check"><span class="ct">&#10003; What you can now do</span><p>You can say what a dependency manager does, and why an app fetches the SDK rather than containing it. You can name the three tools and know the choice between them changes nothing you will ask for. You can explain why the Adobe libraries are a matched set, and why mixing versions gives you either an honest build failure or a dishonest data problem. And you can read a dependency block well enough to tell a deliberate arrangement from an accidental one.</p></div>

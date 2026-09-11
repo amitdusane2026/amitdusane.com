@@ -55,6 +55,32 @@
        version and it is what stops working at ten tiles; confining the colour
        keeps it as wayfinding -- the crimson tile opens the crimson world --
        without turning the section into a paint chart. */ -}}
+  {{- /* START HERE, 11 September 2026. Basics sections get their own row above
+       the guides, because they are where a newcomer begins rather than one
+       guide chosen among several. Same tile component, same generation from
+       the registry; only the count differs, since a Basics section has topics
+       rather than steps or modules. */ -}}
+  {{- $bw := slice -}}
+  {{- range $k, $v := .Site.Params.worlds -}}{{- if eq $v.shape "basics" -}}{{- $bw = $bw | append (merge $v (dict "key" $k)) -}}{{- end -}}{{- end -}}
+  {{- with $bw }}
+  <section class="hm-topics" aria-labelledby="hm-start-h">
+    <h2 class="hm-h2" id="hm-start-h">Start here</h2>
+    <div class="hm-tiles">
+      {{- range sort . "order" }}
+      {{- $w := . -}}
+      {{- $n := len (where (where $.Site.RegularPages "Type" "topic") "Section" $w.key) }}
+      <a class="tile tile-{{ strings.TrimPrefix "world-" $w.bodyclass }}" href="{{ (printf "%s/" $w.root) | relURL }}">
+        <span class="tile-body">
+          <span class="tile-title">{{ $w.fullname }}</span>
+          <span class="tile-sub">{{ $n }} topics{{ with $w.tilesub }} &middot; {{ . }}{{ end }}</span>
+        </span>
+        <span class="tile-go" aria-hidden="true"></span>
+      </a>
+      {{- end }}
+    </div>
+  </section>
+  {{- end }}
+
   <section class="hm-topics" aria-labelledby="hm-topics-h">
     <h2 class="hm-h2" id="hm-topics-h">Guides</h2>
     <div class="hm-tiles">
@@ -72,7 +98,7 @@
      pair in chrome.css and nothing here. */ -}}
       {{- $worlds := slice -}}
       {{- range $k, $v := .Site.Params.worlds -}}{{- $worlds = $worlds | append (merge $v (dict "key" $k)) -}}{{- end -}}
-      {{- range sort $worlds "order" -}}
+      {{- range sort (where $worlds "shape" "!=" "basics") "order" -}}
       {{- $w := . -}}
       {{- $sub := "" -}}
       {{- if eq $w.shape "curriculum" -}}

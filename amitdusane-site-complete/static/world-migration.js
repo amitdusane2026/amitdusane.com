@@ -22,10 +22,14 @@
     if (idx) { cb(); return; }
     if (loading) return; loading = true;
     fetch(window.SEARCH_INDEX || '/index.json').then(function (r) { return r.json(); })
-      .then(function (d) { idx = d; loading = false; cb(); }).catch(function () { loading = false; });
+      .then(function (d) { idx = d; loading = false; cb(); })
+      /* A failed fetch used to stop here and the Why link did nothing. Now the
+         lookup runs against an empty index, finds nothing, and openKB falls
+         back to following the link. */
+      .catch(function () { idx = []; loading = false; cb(); });
   }
   function firstSentences(t, n) { var p = (t || '').split(/(?<=[.!?])\s+/); return p.slice(0, n || 3).join(' '); }
-  function openKB(id) {
+  function openKB(id, href) {
     ensureIdx(function () {
       /* The index keys are one character (u, t, x, g) since they repeat once
          per entry. This panel used to read .url/.title/.text/.group, and when
@@ -40,15 +44,17 @@
       var e = null, first = null, i, u;
       if (idx) for (i = 0; i < idx.length; i++) {
         u = idx[i].u || '';
-        /* Was '/kb/' + id, which is why a Why link could only ever reach a
-           knowledge base article. Part One topics live under a different
-           segment, so match the id as a path segment wherever it sits. */
+        /* Match the id as a path segment wherever it sits, not only under
+           /kb/, so any page in this world's index can be opened. */
         if (u.indexOf('/' + id + '/') === -1) continue;
         if (!first) first = idx[i];
         if (u.indexOf('#') === -1) { e = idx[i]; break; }
       }
       e = e || first;
-      if (!e) return;
+      /* NOTHING FOUND MEANS FOLLOW THE LINK. This returned silently, so a Why
+         link whose page was not in the index did nothing at all when clicked:
+         no panel, no navigation, no error. */
+      if (!e) { if (href) window.location.href = href; return; }
       if (pKind) pKind.textContent = e.g || 'Knowledge Base';
       pBody.innerHTML = '<h2>' + e.t + '</h2><p>' + firstSentences(e.x, 3) + '</p>' +
         '<div class="panel-foot"><a href="' + e.u + '">Read the full topic &rarr;</a></div>';
@@ -89,7 +95,16 @@
 
   document.addEventListener('click', function (ev) {
     var a = ev.target.closest ? ev.target.closest('a.why[data-kb]') : null;
-    if (a) { ev.preventDefault(); openKB(a.getAttribute('data-kb')); return; }
+    /* A WHY LINK INTO ANOTHER SECTION IS AN ORDINARY LINK. Since 11 September
+       2026. The panel reads this world's search index only, so a Why link to
+       Mobile App Basics used to be intercepted, looked up, not found, and
+       dropped: the reader clicked and nothing happened. Links outside this
+       world's root now navigate like any other link. */
+    if (a) {
+      var href = a.getAttribute('href') || '';
+      if (href.charAt(0) === '/' && href.indexOf(worldRoot + '/') !== 0) return;
+      ev.preventDefault(); openKB(a.getAttribute('data-kb'), href); return;
+    }
     var c = ev.target.closest ? ev.target.closest('a.cite') : null;
     if (c) { ev.preventDefault(); var n = c.getAttribute('data-ref') || (c.getAttribute('href') || '').replace(/.*#ref-/, ''); openRef(n); return; }
     if (ev.target === scrim) { closePanel(); closeNav(); }

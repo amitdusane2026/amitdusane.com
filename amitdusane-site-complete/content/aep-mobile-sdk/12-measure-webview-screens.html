@@ -12,7 +12,7 @@ params:
   kbids: ["identity-on-mobile", "webview-and-hybrid", "customer-id"]
 ---
 <div class="narrative">This step applies only if a screen in the app is a web page inside a WebView. Many apps have three or four and nobody mentions them, because to the people who built them they are just screens.<br><br>Skip it if the answer is genuinely none. Do not skip it because nobody has asked.</div>
-<div class="why-row"><span class="wl">Why?</span><a class="why" href="/aep-mobile-sdk/mobile-basics/webview-and-hybrid/" data-kb="webview-and-hybrid">What is a WebView? <span class="arr">&#8599;</span></a><a class="why" href="/aep-mobile-sdk/kb/identity-on-mobile/" data-kb="identity-on-mobile">Why does it get its own ECID? <span class="arr">&#8599;</span></a></div>
+<div class="why-row"><span class="wl">Why?</span><a class="why" href="/mobile-app-basics/webview-and-hybrid/" data-kb="webview-and-hybrid">What is a WebView? <span class="arr">&#8599;</span></a><a class="why" href="/aep-mobile-sdk/kb/identity-on-mobile/" data-kb="identity-on-mobile">Why does it get its own ECID? <span class="arr">&#8599;</span></a></div>
 <h2>First, decide which SDK measures what</h2>
 <p>The Mobile SDK lives in the app and measures the app. <b>A WebView is a browser, and the Mobile SDK cannot see inside it.</b></p>
 <p>The page inside can carry the Web SDK, exactly as your website does. So there are three arrangements, and picking the wrong one is expensive because the cost arrives late.</p>

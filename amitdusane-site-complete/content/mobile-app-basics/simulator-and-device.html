@@ -1,18 +1,37 @@
 ---
 published: 2026-09-06
-lastmod: 2026-09-08
+lastmod: 2026-09-11
 title: "Simulator, emulator and a real phone"
 seotitle: "Why Simulator Testing Is Not Enough for Mobile Analytics"
 description: "A simulator proves the code runs. It says nothing useful about installs, networks, permissions or the identifiers your reports depend on."
 slug: "simulator-and-device"
-type: basics
+aliases: ["/aep-mobile-sdk/mobile-basics/simulator-and-device/"]
+type: topic
 weight: 206
 params:
   group: world
-  grouplabel: "The developer's world"
+  oneline: "A simulator (iPhone) or an emulator (Android) runs the app on a laptop. It can check the tracking code, but not the numbers a real phone produces."
+  cando: "Know when a test on a laptop is enough, and when you need a real phone."
+  words:
+    - t: "Simulator"
+      d: "The iPhone tool that runs an app on a Mac as an ordinary program. Fast, and a weak copy of a phone."
+    - t: "Emulator"
+      d: "The Android tool that runs a complete Android system inside the laptop. Closer to a phone, and slower."
+    - t: "Offline queue"
+      d: "Where the SDK keeps events while the phone has no connection, to send them later."
+    - t: "Advertising identifier"
+      d: "The phone's ID for advertising. It does not behave on a simulator as it does on a real phone."
+  ask:
+    - "Was this shown on a simulator or on a real phone?"
+    - "Is there a TestFlight or internal testing track that can reach my own phone?"
+    - "Which metrics have been checked on a real phone, over a real network?"
+  usedin:
+    - t: "Validate in Assurance"
+      s: "Mobile SDK Implementation, step 13"
+      u: "/aep-mobile-sdk/validate-in-assurance/"
 ---
-<p class="khook">A simulator is the app running on a laptop pretending to be a phone. The pretence is good enough for building and misleading for measuring.</p>
-<div class="call margin"><span class="ct">Before you start</span><p>This page will not teach you to build mobile apps. It teaches you enough of the mobile world to understand what a developer is saying, to answer questions in a meeting when no developer is there, and to tell a developer exactly what you need and where it has to change. Words like Xcode, Gradle, native, Flutter and WebView are used here on purpose. You will hear them in every meeting.</p></div>
+<h2>Why it matters to you</h2>
+<p>A simulator is the app running on a laptop and pretending to be a phone. It is good enough for building the tracking, and it gives the wrong answer about the numbers.</p>
 <h2>Two words that are not the same word</h2>
 <p>The iPhone tool is a <b>simulator</b>. The Android tool is an <b>emulator</b>. The difference is real rather than branding.</p>
 <table class="mini-tbl"><tbody>
@@ -24,7 +43,7 @@ params:
 <p>A simulator is excellent at logic, and logic is most of what fails early. If a tracking call sits in the wrong place, fires twice, or carries the wrong value, a simulator shows you immediately and cheaply. If a screen name is misspelled, it is misspelled there too. Nothing about the pretence hides that kind of fault, because that kind of fault lives entirely in the code.</p>
 <p>It is also fast, free, and available without borrowing hardware from anybody. While tracking is being built it gets corrected several times an hour, and insisting on a real phone would waste real time for no benefit.</p>
 <p>So use the simulator freely while the work is being made. This page is about when to stop, not about whether to start.</p>
-<h2>Excellent for procedure, useless for weather</h2>
+<h2>What a flight simulator can and cannot prove</h2>
 <p>Pilots train in flight simulators, and airlines take that training very seriously. Procedures, sequences, instrument reading and emergency drills are all rehearsed there. Practising an engine failure on a real aircraft full of passengers would be absurd. For those purposes the simulator is the correct tool and the aircraft is the wrong one.</p>
 <p>What no number of simulator hours does is prove that a particular aircraft is safe to fly. The simulator answers whether the pilot knows the procedure. The aircraft answers whether this machine, in this weather, on this runway, actually flies.</p>
 <p>Your split runs along the same line. The simulator answers whether the tracking logic is correct. A real phone on a real network answers whether the measurement works, and that is the question your reports are built on.</p>
@@ -55,20 +74,5 @@ params:
 <p><b>Use a simulator while you are checking behaviour. Move to a real phone the moment you are checking numbers.</b> Everything else on this page explains why the line falls there.</p>
 <p>Building tracking, correcting a screen name, confirming an event fires in the right order: simulator, all day, without apology.</p>
 <p>Validating install attribution, lifecycle metrics, offline behaviour or consent: a real phone, on a real connection, running a release build, which is what <a href="/aep-mobile-sdk/validate-in-assurance/">Validate in Assurance</a> asks for. Anything that will be quoted to the business belongs in that second list.</p>
-<p>This pairs with the build rule in <a href="/aep-mobile-sdk/mobile-basics/debug-and-release/">Debug builds and release builds</a>. A debug build on a real phone is only half the requirement. A release build on a simulator is the other half missing.</p>
+<p>This pairs with the build rule in <a href="/mobile-app-basics/debug-and-release/">Debug builds and release builds</a>. A debug build on a real phone is only half the requirement. A release build on a simulator is the other half missing.</p>
 <div class="call mistake"><span class="ct">Where this goes wrong</span><p>An implementation is demonstrated on a simulator, approved in the meeting, and released. Install numbers arrive looking impossible, and the offline queue has never run at all. Nobody misrepresented anything, and every event shown in that meeting was real. None of the conditions the failing metrics depend on had ever been present on a laptop.</p></div>
-<h2>What to ask for</h2>
-<p>Getting a real phone into the loop is usually an organisational problem rather than a technical one. Somebody has to own a spare handset, or add you to a distribution list. Both are easy in week one and awkward in the week before launch.</p>
-<div class="actionblock"><div class="abh">Three requests worth making early</div><div class="do-intro">All three are easier to arrange in week one than in the week before launch.</div><div class="astep"><div class="an">1</div><div>
-  <div class="al"><span class="lbl">Ask</span> Was this shown on a simulator or a real phone?</div>
-  <div class="al"><span class="lbl">Why</span> It is not an accusation, and it changes what the demonstration proved.</div>
-</div></div>
-<div class="astep"><div class="an">2</div><div>
-  <div class="al"><span class="lbl">Ask</span> Is there a TestFlight or internal testing track that can reach my own phone?</div>
-  <div class="al"><span class="lbl">Why</span> It lets you validate under real conditions yourself, instead of watching somebody else&rsquo;s screen.</div>
-</div></div>
-<div class="astep"><div class="an">3</div><div>
-  <div class="al"><span class="lbl">Ask</span> Which metrics have been checked on a real phone, over a real network?</div>
-  <div class="al"><span class="lbl">Why</span> Installs, lifecycle, offline queueing and consent are the four a simulator cannot answer for.</div>
-</div></div></div>
-<div class="call check"><span class="ct">&#10003; What you can now do</span><p>You can tell a simulator from an emulator, and know why neither one is a phone. You can use one without guilt while tracking is being built, and stop the moment numbers are being judged. You can name the four things it cannot tell you: installs, real network behaviour, permissions and identifiers, and everything physical about a phone somebody actually owns. And you can ask for a release build on your own phone early enough that getting one is a scheduling question rather than a favour.</p></div>

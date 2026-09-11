@@ -1,18 +1,48 @@
 ---
 published: 2026-09-06
-lastmod: 2026-09-08
+lastmod: 2026-09-11
 title: "iOS: Swift, Xcode, and what your developer is looking at"
 seotitle: "Xcode, Swift and Info.plist for Analytics Practitioners"
 description: "One program does the work of five systems you already use, which is most of the reason a one-line tracking change takes two weeks to reach you."
 slug: "ios-swift-and-xcode"
-type: basics
+aliases: ["/aep-mobile-sdk/mobile-basics/ios-swift-and-xcode/"]
+type: topic
 weight: 201
 params:
   group: world
-  grouplabel: "The developer's world"
+  oneline: "An iPhone app is written in Swift, and it is edited, built, signed and sent to Apple from one program called Xcode."
+  cando: "Name the exact build you are testing, and tell a change that needs a release from one that does not."
+  words:
+    - t: "Xcode"
+      d: "Apple's program for writing, building, signing and publishing iPhone apps."
+    - t: "Swift"
+      d: "The main language iPhone apps are written in. It replaced Objective-C, which you will still see."
+    - t: "Target"
+      d: "One thing an Xcode project builds, such as the app, a widget or a watch app."
+    - t: "Configuration"
+      d: "A named set of build settings, usually Debug and Release."
+    - t: "Scheme"
+      d: "Which target is built with which configuration. The dropdown at the top of Xcode."
+    - t: "Info.plist"
+      d: "The file where an iPhone app describes itself: its name, version and permission messages."
+    - t: "App Tracking Transparency"
+      d: "The iPhone prompt that asks permission to track a person across other companies' apps and websites."
+    - t: "AppDelegate"
+      d: "The file where older iPhone apps put their startup code, including starting the Adobe SDK."
+  ask:
+    - "Which scheme and configuration produced this build, and which Environment File ID does that configuration carry?"
+    - "Show me the line that starts the SDK, with enough around it to see that it runs before the first screen appears."
+    - "Which targets have the SDK in them, and what is the current tracking permission prompt text?"
+  usedin:
+    - t: "Get the SDK in: iOS"
+      s: "Mobile SDK Implementation, step 6"
+      u: "/aep-mobile-sdk/get-the-sdk-ios/"
+    - t: "Handle consent"
+      s: "Mobile SDK Implementation, step 10"
+      u: "/aep-mobile-sdk/handle-consent/"
 ---
-<p class="khook">Everything an iPhone app needs happens inside one program called Xcode. Knowing what that program does explains most of what you will find slow, and most of what you can change without waiting for anybody.</p>
-<div class="call margin"><span class="ct">Before you start</span><p>This page will not teach you to build mobile apps. It teaches you enough of the mobile world to understand what a developer is saying, to answer questions in a meeting when no developer is there, and to tell a developer exactly what you need and where it has to change. Words like Xcode, Gradle, native, Flutter and WebView are used here on purpose. You will hear them in every meeting.</p></div>
+<h2>Why it matters to you</h2>
+<p>Everything an iPhone app needs happens inside one program called Xcode. Knowing what that program does explains most of what you will find slow, and most of what you can change without waiting for anybody.</p>
 <h2>Xcode does the job of five systems you already use</h2>
 <p>Xcode is Apple&rsquo;s development program. It is free, and every iPhone app in the world is built in it.</p>
 <p>Think about what publishing a change to a website touches. Somebody edits code in an editor. Configuration values sit somewhere else, in a settings file. A build system packages it. Tags and tracking are published from Adobe&rsquo;s interface, on their own schedule. A web server serves the result. That is five systems, five logins, and you personally hold two or three of them.</p>
@@ -55,15 +85,3 @@ MobileCore.initialize(appId: "a1b2c3d4e5f6")</pre></div>
 <p>An app built more recently with SwiftUI, which is Apple&rsquo;s newer way of describing screens, may have no AppDelegate at all. Its starting point is a small structure marked <span class="mn">@main</span>. Both arrangements are correct and both are common, so &ldquo;put it at startup&rdquo; no longer points at a single file.</p>
 <p>What you need is narrower than the file name, and it works either way. <b>Starting the SDK must finish before the first screen appears.</b> An event fired before the SDK is ready is not queued and not retried. It is simply gone, and it leaves nothing behind for you to find.</p>
 <p>So ask whether the SDK starts before the first screen. That question beats asking which file it sits in, and it catches the fault that actually happens.</p>
-<h2>What to ask to see</h2>
-<p>None of this needs you to read the app. Three short requests get you everything on this page, and any developer can answer all three in a couple of minutes.</p>
-<div class="actionblock"><div class="abh">Three things to ask for</div><div class="do-intro">Ask together, once, rather than one at a time across three weeks.</div><div class="astep"><div class="an">1</div><div>
-  <div class="al"><span class="lbl">Ask</span> Which scheme and configuration produced this build, and which Environment File ID does that configuration carry?</div>
-</div></div>
-<div class="astep"><div class="an">2</div><div>
-  <div class="al"><span class="lbl">Ask</span> Show me the line that starts the SDK, with enough around it to see that it runs before the first screen is drawn.</div>
-</div></div>
-<div class="astep"><div class="an">3</div><div>
-  <div class="al"><span class="lbl">Ask</span> Which targets have the SDK in them, and what is the current tracking permission prompt text?</div>
-</div></div></div>
-<div class="call check"><span class="ct">&#10003; What you can now do</span><p>You can sit beside an iPhone developer and follow what is on the screen. You can name the build you are testing in words that settle the question in one exchange. You can tell a change that needs a release from one that reaches phones this afternoon. And you can tell a nervous stakeholder which numbers the tracking permission prompt puts at risk, and which it leaves alone.</p></div>

@@ -194,6 +194,58 @@ disableKinds = ["taxonomy", "term"]
     # It is an explicit flag rather than a test for `phases`, because the
     # migration guide declares phases too and must render exactly as before.
     railgroups = true
+    # The Basics section this guide leans on. The rail links to it under
+    # "Start here". Its fourteen topics were this guide's Part One until
+    # 11 September 2026.
+    basicsworld = "mobile-app-basics"
+
+# ---------------------------------------------------------------------------
+# THE FIRST BASICS SECTION, 11 September 2026.
+#
+# Basics is a section type of its own, decided by Amit the same day, alongside
+# learning, step-by-step, certification and documentation. A Basics section
+# teaches the vocabulary of a whole field to somebody new to it: enough to
+# follow a developer, answer in a meeting, and ask for the right thing. It is
+# not a course in the field.
+#
+# Mobile App Basics is the first instance and Website Basics will be the
+# second. Both use world-basics.css and world-basics.js; each declares only its
+# own name, accent (by bodyclass), premise and groups here.
+#
+# It sits on the home page in its own "Start here" row, above the guides,
+# because it is where a newcomer begins rather than a guide chosen between.
+# ---------------------------------------------------------------------------
+[params.worlds.mobile-app-basics]
+  css       = "world-basics.css"
+  js        = "world-basics.js"
+  root      = "/mobile-app-basics"
+  shape     = "basics"
+  order     = 10
+  bodyclass = "world-mab"
+  name      = "Mobile App Basics"
+  fullname  = "Mobile App Basics"
+  tilesub   = "The words a mobile developer uses, explained plainly"
+  # Reuses the Mobile SDK card until one is made for this section.
+  og        = "og-aep-mobile-sdk.jpg"
+  premise   = "This section will not teach you to build mobile apps. It teaches you enough of the mobile world to understand what a developer is saying, to answer questions in a meeting when no developer is there, and to tell a developer exactly what you need and where it has to change. Words like Xcode, Gradle, native, Flutter and WebView are used here on purpose, because you will hear them in every meeting."
+
+[params.worlds.mobile-app-basics.groups]
+  [params.worlds.mobile-app-basics.groups.kind]
+    order = 1
+    label = "What kind of app is this"
+    blurb = "Work this out first. The answer decides who builds the app, what they build it in, and sometimes which Adobe product you need."
+  [params.worlds.mobile-app-basics.groups.world]
+    order = 2
+    label = "The developer's world"
+    blurb = "The tools, languages and files a mobile developer uses every day, explained for somebody who will never open them."
+  [params.worlds.mobile-app-basics.groups.behaviour]
+    order = 3
+    label = "How an app behaves"
+    blurb = "The parts of app behaviour that decide what your numbers mean, and where habits from the web give the wrong answer."
+  [params.worlds.mobile-app-basics.groups.team]
+    order = 4
+    label = "Working with the team"
+    blurb = "Where your job ends, where theirs begins, and how to be useful between the two."
 
 # ---------------------------------------------------------------------------
 # Module downloads, added 30 August 2026 for M19.
@@ -373,42 +425,3 @@ disableKinds = ["taxonomy", "term"]
     order = 3
     label = "Failure modes"
 
-# ---------------------------------------------------------------------------
-# PART ONE OF THE MOBILE SDK GUIDE, added 6 September 2026.
-#
-# The world has two parts of different shapes. The steps are a sequence you
-# execute in order. This is not: it is orientation in the mobile app
-# environment, written for a reader who has never shipped an app, and it is a
-# grab-bag rather than a curriculum. Nobody is expected to read all of it, and
-# a reader who already knows Gradle should be able to see that and move on.
-#
-# So it renders as unnumbered cards in groups, not as a numbered spine, and it
-# sits ABOVE the steps on the front page and in the rail. Putting it in the
-# knowledge base was considered and rejected: the KB is a layer readers reach
-# through a Why link, and this material has to be discoverable on arrival.
-#
-# `basicstitle` and `basicsintro` head the section's own index page.
-# ---------------------------------------------------------------------------
-[params.worlds.aep-mobile-sdk.basics]
-  root = "/aep-mobile-sdk/mobile-basics"
-  railtitle = "Mobile app basics"
-  basicstitle = "The ground a mobile implementation stands on"
-  basicsintro = "Enough of the mobile app world to follow what a developer is saying, and to answer questions when no developer is there. Not how to build an app, and not a glossary either: what the pieces are, why teams choose one over another, and which of it changes what you measure. Take what you are missing and skip what you already know."
-
-[params.worlds.aep-mobile-sdk.basicsgroups]
-  [params.worlds.aep-mobile-sdk.basicsgroups.kind]
-    order = 1
-    label = "What kind of app is this"
-    blurb = "Before anything else, work out what you are dealing with. The answer changes who builds it, what they build it in, and occasionally whether this is the right guide at all."
-  [params.worlds.aep-mobile-sdk.basicsgroups.world]
-    order = 2
-    label = "The developer's world"
-    blurb = "The tools, the languages and the vocabulary a mobile developer uses every day, explained for somebody who will never open them."
-  [params.worlds.aep-mobile-sdk.basicsgroups.behaviour]
-    order = 3
-    label = "How an app behaves"
-    blurb = "The parts of app behaviour that decide what your numbers mean, and where web instincts quietly mislead."
-  [params.worlds.aep-mobile-sdk.basicsgroups.team]
-    order = 4
-    label = "Working with the team"
-    blurb = "Where your job ends, where theirs begins, and how to be useful at the seam between them."

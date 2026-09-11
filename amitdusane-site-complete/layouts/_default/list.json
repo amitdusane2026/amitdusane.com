@@ -40,6 +40,8 @@
   {{- $badge := "Page" -}}
   {{- if eq (index .Site.Params.worlds $world).shape "procedure" -}}
     {{- $badge = cond (eq .Type "step") "Step" (cond (eq .Type "kb") "KB" "Reference") -}}
+  {{- else if eq (index .Site.Params.worlds $world).shape "basics" -}}
+    {{- $badge = cond (eq .Type "topic") "Topic" (cond (eq .Type "wordlist") "Words" "Page") -}}
   {{- else -}}
     {{- $badge = cond (eq .Type "lesson") "Section" (cond (eq .Type "module") "Module" (cond (eq .Type "category") "Phase" (cond (eq .Type "glossary") "Glossary" "Page"))) -}}
   {{- end -}}

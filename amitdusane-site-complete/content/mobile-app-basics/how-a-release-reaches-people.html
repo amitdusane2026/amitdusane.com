@@ -1,18 +1,39 @@
 ---
 published: 2026-09-07
-lastmod: 2026-09-08
+lastmod: 2026-09-11
 title: "How a release actually reaches people"
 seotitle: "Why Shipping a Mobile App Is Not Like Publishing a Tag"
 description: "A tag publish reaches everyone in minutes. An app release passes a review, then waits on people choosing to update, and never reaches all of them."
 slug: "how-a-release-reaches-people"
-type: basics
+aliases: ["/aep-mobile-sdk/mobile-basics/how-a-release-reaches-people/"]
+type: topic
 weight: 303
 params:
   group: behaviour
-  grouplabel: "How an app behaves"
+  oneline: "An app release is offered through a store, and each phone takes it when it updates. Several versions of the app are always in use at once."
+  cando: "Answer \"is the fix live?\" with a share of users, not with a date."
+  words:
+    - t: "Staged rollout"
+      d: "Releasing a new version to a percentage of users first, then widening it over days."
+    - t: "App version"
+      d: "The version of the app that sent an event. It arrives on every lifecycle event automatically."
+    - t: "Store review"
+      d: "Apple's or Google's check of a new build before it can be released."
+    - t: "Automatic updates"
+      d: "The phone setting that installs new versions without the person deciding. Most phones have it on."
+    - t: "Minimum OS version"
+      d: "The oldest phone software a new version supports. Older phones are never offered it."
+  ask:
+    - "What share of users is on the version with the fix today?"
+    - "Is this a staged rollout, and when does it reach everyone?"
+    - "What is the minimum OS version for the new release?"
+  usedin:
+    - t: "Release and manage versions"
+      s: "Mobile SDK Implementation, step 15"
+      u: "/aep-mobile-sdk/release-and-manage-versions/"
 ---
-<p class="khook">Publishing a tag is an event. Releasing an app is a process with a long tail, and the tail never quite ends.</p>
-<div class="call margin"><span class="ct">Before you start</span><p>This page will not teach you to build mobile apps. It teaches you enough of the mobile world to understand what a developer is saying, to answer questions in a meeting when no developer is there, and to tell a developer exactly what you need and where it has to change. Words like Xcode, Gradle, native, Flutter and WebView are used here on purpose. You will hear them in every meeting.</p></div>
+<h2>Why it matters to you</h2>
+<p>Publishing a tag reaches everyone within the hour. An app release is offered to people, who each take it when they choose, and some never do. That changes how you check whether a fix worked.</p>
 <h2>A publish is an event. A release is a process.</h2>
 <p>Publishing a tag property is almost instant. The library is written, the next page load fetches it, and within an hour the old version has effectively stopped existing. Nobody chooses to accept it. You made a change and the world has it.</p>
 <p>An app release has almost none of that shape. The build is submitted to a store. It waits for review. It is then <b>made available</b>, which is not the same as delivered. It sits there being offered, and each person decides for themselves whether to take it.</p>
@@ -63,18 +84,11 @@ params:
 <h2>What to move out of the app</h2>
 <p>All of this points at one rule, and it is the most valuable thing on this page.</p>
 <p><b>Anything that can live in configuration rather than in app code should live in configuration.</b></p>
-<p>The datastream, the tag property, the extension settings and the consent default are all changeable in a browser. They reach installed apps within minutes, with no release. Every decision you push out of the app and into one of those is one you can correct in an afternoon. The alternative is a quarter. <a href="/aep-mobile-sdk/mobile-basics/what-a-build-is/">What a build actually is</a> sets out where that boundary sits.</p>
+<p>The datastream, the tag property, the extension settings and the consent default are all changeable in a browser. They reach installed apps within minutes, with no release. Every decision you push out of the app and into one of those is one you can correct in an afternoon. The alternative is a quarter. <a href="/mobile-app-basics/what-a-build-is/">What a build actually is</a> sets out where that boundary sits.</p>
 <p>The test is one sentence: <b>if getting this wrong would need a release to fix, it is in the wrong place.</b> Apply it while the specification is being written, which is the only time it is free.</p>
-<div class="actionblock"><div class="abh">Three habits for the release curve</div><div class="do-intro">All three are about not being surprised by something predictable.</div><div class="astep"><div class="an">1</div><div>
-  <div class="al"><span class="lbl">Do</span> Split any suspicious metric by app version before investigating anything else, which is what <a href="/aep-mobile-sdk/release-and-manage-versions/">Release and manage versions</a> sets up.</div>
-  <div class="al"><span class="lbl">Why</span> It separates a released bug from a live one in about a minute, and they need completely different responses.</div>
-</div></div>
-<div class="astep"><div class="an">2</div><div>
-  <div class="al"><span class="lbl">Say</span> A fix is measurable in weeks rather than days, and quote adoption rather than a release date.</div>
-  <div class="al"><span class="lbl">Why</span> It stops a second fix being specified for a problem the first one already solved.</div>
-</div></div>
-<div class="astep"><div class="an">3</div><div>
-  <div class="al"><span class="lbl">Ask</span> Is this configuration or code, every time you write a requirement.</div>
-  <div class="al"><span class="lbl">Why</span> Configuration is correctable this afternoon. Code is correctable next quarter, and the choice is usually still open while you are writing.</div>
-</div></div></div>
-<div class="call check"><span class="ct">&#10003; What you can now do</span><p>You can explain why shipping an app is an offer rather than a delivery, and name the four things between a build and a person running it. You expect several versions to be live at once, and you treat app version as the first split on any suspicious number. You can answer &ldquo;is the fix live&rdquo; in terms of adoption rather than dates. And you can push every decision you can out of the app and into configuration, while that choice is still free.</p></div>
+<h2>Three habits for the release curve</h2>
+<table class="mini-tbl"><tbody>
+<tr><td>Do</td><td>Split any suspicious metric by app version before investigating anything else, which is what <a href="/aep-mobile-sdk/release-and-manage-versions/">Release and manage versions</a> sets up. It separates a released bug from a live one in about a minute, and they need completely different responses.</td></tr>
+<tr><td>Say</td><td>A fix is measurable in weeks rather than days, and quote adoption rather than a release date. It stops a second fix being specified for a problem the first one already solved.</td></tr>
+<tr><td>Ask</td><td>Is this configuration or code, every time you write a requirement. Configuration is correctable this afternoon. Code is correctable next quarter, and the choice is usually still open while you are writing.</td></tr>
+</tbody></table>
