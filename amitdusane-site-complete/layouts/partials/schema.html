@@ -9,7 +9,13 @@
 {{- with $w -}}{{- $wshape = .shape -}}{{- $wURL = printf "%s%s/" $home (strings.TrimPrefix "/" .root) -}}{{- end -}}
 
 {{- if .IsHome -}}
-  {{- $website := dict "@context" "https://schema.org" "@type" "WebSite" "name" .Site.Title "url" $home "author" $person -}}
+  {{- /* SITE NAME, 11 September 2026. Google builds the name it shows above a
+       result from this, the home page title and og:site_name, and falls back
+       to the bare domain when they disagree. The home title used to end
+       "| amitdusane.com" while this said "Amit G Dusane", so Google showed
+       amitdusane.com. All three now say "Amit G Dusane"; alternateName tells
+       Google the domain is the same site. */ -}}
+  {{- $website := dict "@context" "https://schema.org" "@type" "WebSite" "name" .Site.Title "alternateName" (slice "amitdusane.com") "url" $home "author" $person -}}
   <script type="application/ld+json">{{ $website | jsonify (dict "indent" "  ") | safeJS }}</script>
   <script type="application/ld+json">{{ (merge (dict "@context" "https://schema.org") $person) | jsonify (dict "indent" "  ") | safeJS }}</script>
 {{- end -}}
