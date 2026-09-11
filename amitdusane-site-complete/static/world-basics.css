@@ -224,7 +224,11 @@ body.world-basics .ask-bar b,body.world-basics .ask-kicker{color:var(--accent)}
     max-height:calc(100vh - var(--header-h) - 112px);overflow-y:auto;overscroll-behavior:contain;padding:0 4px 24px 0}
   /* 112px, not 48: the column ends above the round About mark in the bottom
      corner, which otherwise sat on top of its last lines. */
-  .b-side > *{background:var(--bg-soft);border:1px solid var(--line);border-radius:12px;padding:14px 16px 10px;margin:0 0 14px}
+  /* Every block in the side column is a grey card, except the green "See
+     where this fits" button. This rule sits later than .b-wf at equal
+     specificity, so without the :not() it painted the button grey and left its
+     white text on near-white, which is how it shipped on 11 September 2026. */
+  .b-side > :not(.b-wf){background:var(--bg-soft);border:1px solid var(--line);border-radius:12px;padding:14px 16px 10px;margin:0 0 14px}
   .b-side .b-side-h{font-size:13px;line-height:1.3;margin:0 0 8px;color:var(--ink-soft)}
   .b-side .b-w{display:block;padding:8px 0;border-bottom:1px solid var(--line)}
   .b-side .b-w:last-child{border-bottom:0}
