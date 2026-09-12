@@ -696,6 +696,9 @@ This exists because on 10 Aug 2026 a `git add -A` swept up two files that were s
 
 **To verify highlighting is gone, check the source and the tree, not `public/`.** The two authoritative checks are `grep -rl data-newblock amitdusane-site-complete/content/` returning nothing, and `git status --porcelain` returning nothing. The build directory lies in both directions, for two reasons proved on 13 Aug 2026: stale renders survive later builds, and `sed -i` leaves temp files there holding old copies of pages. **Use `Edit` rather than `sed -i` for front-matter changes** so those temp files never appear.
 
+**Every document in the repository root is CRLF** (`CLAUDE.md`, `development-plan.md`, `completion-tracker.tsv`, `hugo.toml`), while the site's content files are LF. A script that edits one of them must anchor on `?
+` wherever its anchor crosses a line, or it matches nothing. On 11 September 2026 that silently cost a registry block, an accent and a tile colour: the script aborted at its own guard, which was the good case. The bad case is the same script chained with `;`, where everything after it runs anyway and reports success from the wrong tree. **Chain with `&&`, give every splice a guard, and read back what the guard claims to have written.**
+
 **Never chain `git checkout` and a build in one command.** This repository sits inside OneDrive, whose sync layer can delay a restored file becoming readable, so Hugo reads the pre-checkout content and writes a stale page carrying that build's own timestamp. It looks exactly like a failed revert and is not one. Restore, verify the source, then build as a separate step.
 
 Before declaring any section done: the rulebook's 20-item checklist, then the QA Rulebook's 13 points, then a real build with the page count asserted.
