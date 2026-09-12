@@ -1,6 +1,6 @@
 ---
 published: 2026-09-06
-lastmod: 2026-09-08
+lastmod: 2026-09-12
 title: "Turn on lifecycle"
 seotitle: "Adobe Mobile SDK Lifecycle Metrics: Setup and What You Get"
 description: "Mostly a step about not writing code. Lifecycle is already running if the SDK was started properly, and the work is confirming it rather than building it."
@@ -12,12 +12,12 @@ params:
   kbids: ["lifecycle-metrics", "install-attribution", "the-app-lifecycle"]
 ---
 <div class="narrative">This is the shortest step in the guide.<br><br>If the app was started with <span class="mn">MobileCore.initialize</span>, lifecycle tracking is <b>already on</b>. No call to add, no rule to build, no ticket to raise.<br><br>The work here is confirming that, and knowing what to do about the older apps where it is not true.</div>
-<div class="why-row"><span class="wl">Why?</span><a class="why" href="/aep-mobile-sdk/kb/lifecycle-metrics/" data-kb="lifecycle-metrics">What does lifecycle measure? <span class="arr">&#8599;</span></a><a class="why" href="/mobile-app-basics/the-app-lifecycle/" data-kb="the-app-lifecycle">Why does backgrounding end a session? <span class="arr">&#8599;</span></a><a class="why" href="/aep-mobile-sdk/kb/install-attribution/" data-kb="install-attribution">Can it tell you where installs came from? <span class="arr">&#8599;</span></a></div>
+<div class="why-row"><span class="wl">Why?</span><a class="why" href="/aep-mobile-sdk/kb/lifecycle-metrics/" data-kb="lifecycle-metrics">What does lifecycle measure? <span class="arr">&#8599;</span></a><a class="why" href="/mobile-app-basics/the-app-lifecycle/" data-kb="the-app-lifecycle">What starts a new session? <span class="arr">&#8599;</span></a><a class="why" href="/aep-mobile-sdk/kb/install-attribution/" data-kb="install-attribution">Can it tell you where installs came from? <span class="arr">&#8599;</span></a></div>
 <h2>Two events carry everything</h2>
 <p><b>Application Launch</b> fires when the app comes to the foreground. <b>Application Close</b> fires when it leaves.</p>
 <p>Session length is the gap between them. Installs and upgrades are flags on the first launch after each.</p>
 <p>Every number a product team asks for in the first month comes out of those two events.</p>
-<figure class="fig-svg"><svg viewBox="0 0 700 190" role="img" aria-label="Across one day a user launches the app, backgrounds it to answer a call, returns, and backgrounds it again, producing a pair of launch and close events for each visit and a session length for each gap." style="width:100%;height:auto;display:block">
+<figure class="fig-svg"><svg viewBox="0 0 700 190" role="img" aria-label="Across one day a user launches the app at 09:12 and closes it at 09:16, takes a phone call, then launches again at 09:24 and closes at 09:29. The call lasted eight minutes, longer than the five-minute session timeout, so the return counts as a second session rather than resuming the first." style="width:100%;height:auto;display:block">
 <line x1="30" y1="112" x2="670" y2="112" style="stroke:var(--line, #e4e6ea);stroke-width:2"/>
 <text x="350" y="176" text-anchor="middle" style="font-size:11.5px;fill:var(--ink-soft, #3b4048)">One person, one day</text>
 <line x1="90" y1="96" x2="90" y2="128" style="stroke:var(--ok, #1f7a4d);stroke-width:2.5"/>
@@ -38,9 +38,10 @@ params:
 <text x="584" y="86" text-anchor="middle" style="font-size:11.5px;fill:var(--ink-soft, #3b4048)">Close</text>
 <text x="584" y="146" text-anchor="middle" style="font-size:11px;fill:var(--ink-soft, #3b4048)">09:29</text>
 <text x="30" y="40" style="font-size:12.5px;font-weight:700;fill:var(--ink-soft, #3b4048)">What lifecycle sees</text>
-</svg><figcaption>Four events and two sessions, with no tracking code written.</figcaption></figure>
+</svg><figcaption>Two sessions, because the call ran past the five-minute timeout. A shorter one would have left a single session.</figcaption></figure>
 
-<p>Backgrounding an app ends a session, and answering a call backgrounds it. So app sessions are shorter and more numerous than web visits by their nature, and comparing the two counts directly will mislead whoever does it.</p>
+<p>Backgrounding pauses a session. A new one starts only if the app stayed in the background longer than the session timeout, which is five minutes by default and is set in tags. So answering a short call does not split a session, and launches still outnumber website visits, because five minutes is shorter than the thirty a visit allows.</p>
+<p>Those are two different metrics, not the app against the site. Compare visits with visits, or give both the same session definition in a Customer Journey Analytics data view.</p>
 <div class="actionblock"><div class="abh">Confirm it, or fix it</div><div class="do-intro">Two questions. The first one usually ends the step.</div><div class="astep"><div class="an">1</div><div>
   <div class="al"><span class="lbl">Ask</span> Does the app call <span class="mn">MobileCore.initialize</span>? If yes, lifecycle is on and this step is finished.</div>
 </div></div>

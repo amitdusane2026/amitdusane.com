@@ -1,6 +1,6 @@
 ---
 published: 2026-09-06
-lastmod: 2026-09-11
+lastmod: 2026-09-12
 title: "Debug builds and release builds"
 linkTitle: "Debug vs release"
 seotitle: "Debug Versus Release Builds in Adobe Mobile SDK Validation"
@@ -76,7 +76,7 @@ params:
 <p>That is the relationship between the two builds. The logging a developer reads is the prompter. The relaxed timing of an unoptimised build is the pause while somebody finds their place. Both disappear on the night, and neither says in advance what it was covering.</p>
 <h2>Three ways the difference bites</h2>
 <p>Most of the time the two builds behave identically, and that is what makes the differences dangerous. A difference that appeared every time would have been found years ago. These appear occasionally: often enough to reach production, rarely enough to survive testing.</p>
-<p><b>1. Optimisation changes timing.</b> A release build runs faster and reorders work that a debug build did in a leisurely sequence. Code can contain a race, where two things assume an order nobody actually guaranteed. That code works for years in debug and fails in release. The version that costs you events is the SDK starting up while the first screen is already drawing. An event fired before the SDK is ready is not queued and not retried. It is gone.</p>
+<p><b>1. Optimisation changes timing.</b> A release build runs faster and reorders work that a debug build did in a leisurely sequence. Code can contain a race, where two things assume an order nobody actually guaranteed. That code works for years in debug and fails in release. The version that costs you events is the SDK starting up while the first screen is already drawing. An event fired before the SDK is ready may never be sent, and nothing reports that it was lost.</p>
 <p><b>2. Removed logging takes the evidence with it.</b> The log lines a developer relied on to prove the tracking worked are not in a release build. So the build you most need to understand is the one that tells you least about itself. Unless validation was planned around that from the start, the natural response is to go back to a debug build, and the whole problem repeats.</p>
 <p><b>3. The two builds usually report to different places.</b> This is the one that produces wrong numbers rather than missing ones, and it deserves its own section.</p>
 <h2>Where the test traffic goes</h2>

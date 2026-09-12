@@ -1,6 +1,6 @@
 ---
 published: 2026-09-06
-lastmod: 2026-09-08
+lastmod: 2026-09-12
 title: "What arrives without asking"
 seotitle: "Adobe Mobile SDK Lifecycle Metrics Explained"
 description: "Installs, upgrades, launches, session length and device detail, all reported from two automatic events that nobody has to write code for."
@@ -17,10 +17,11 @@ params:
 <table class="mini-tbl"><tbody>
 <tr><td>Installs</td><td>The first launch after installation.</td></tr>
 <tr><td>Upgrades</td><td>The first launch after a version change.</td></tr>
-<tr><td>Launches</td><td>A count, every time the app comes to the foreground.</td></tr>
-<tr><td>Sessions</td><td>Length, measured as foreground time between the pair.</td></tr>
+<tr><td>Launches</td><td>A count. Every cold start, and every return from the background after longer than the session timeout.</td></tr>
+<tr><td>Sessions</td><td>Length, measured as foreground time only. Background time is not added to it.</td></tr>
 <tr><td>Device</td><td>Operating system and app version, on every event.</td></tr>
 </tbody></table>
 <p>Lifecycle is switched on by default when the SDK is started with the modern call, so on a correctly built app all of this arrives with no tracking code at all. Older apps using the explicit registration call start and pause lifecycle manually, and that is where the gaps appear.</p>
+<p><b>The session timeout decides how many launches you get.</b> It is five minutes by default, and it is set in tags rather than in the app, so it can be changed without a release. Below that gap the app resumes the session it had; above it, the return is a new launch. Nobody should quote a launch count without knowing this number, and a lifecycle launch is not the same thing as an Adobe Analytics visit, which ends on thirty minutes of inactivity for app and website data alike.</p>
 <p><b>For your implementation:</b> read this list before writing a tracking plan, and delete from the plan anything already on it. That deletion is usually the largest single saving available in the first week.</p>
 <div class="arch"><span class="at">&#9873; Architect&rsquo;s Decision</span><p>Take everything lifecycle gives you before asking for anything custom. A specification that repeats it is not more thorough, it is more expensive for the same result.</p></div>

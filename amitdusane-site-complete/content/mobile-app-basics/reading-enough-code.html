@@ -1,6 +1,6 @@
 ---
 published: 2026-09-07
-lastmod: 2026-09-11
+lastmod: 2026-09-12
 title: "Reading enough code to be useful"
 linkTitle: "Reading tracking code"
 seotitle: "How Analytics Practitioners Can Read Mobile Tracking Code"
@@ -65,7 +65,7 @@ xdmData["sample"] = "data"
 val experienceEvent = ExperienceEvent.Builder()
   .setXdmSchema(xdmData)
   .build()
-Edge.sendEvent(experienceEvent)</pre></div>
+Edge.sendEvent(experienceEvent, null)</pre></div>
 <p>Same three parts, in the same order. Values are collected under field names, an event is built from them, and the event is sent. Notice the words in quotes are identical to the Swift version, because those come from your schema rather than from the language.</p>
 <figure class="fig-svg"><svg viewBox="0 0 700 226" role="img" aria-label="An annotated tracking call. The extension name says which part of the SDK is acting, the method name says what it is doing, text in quotes is a fixed value you can check against your specification, and a bare name without quotes is a value decided elsewhere at run time that no snippet can show you." style="width:100%;height:auto;display:block">
 <text x="24" y="22" style="font-size:12.5px;font-weight:700;fill:var(--ink-soft, #3b4048)">One line, and the four things worth seeing in it</text>

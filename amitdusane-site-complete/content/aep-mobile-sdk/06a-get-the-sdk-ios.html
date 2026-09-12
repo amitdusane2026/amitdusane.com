@@ -1,6 +1,6 @@
 ---
 published: 2026-09-08
-lastmod: 2026-09-08
+lastmod: 2026-09-12
 title: "Get the SDK in: iOS"
 seotitle: "Install the Adobe Mobile SDK on iOS with Swift Package Manager"
 description: "The packages, the import lines, and where the one call that starts the SDK belongs in a Swift app that may or may not have an AppDelegate."
@@ -45,7 +45,7 @@ func application(_ application: UIApplication,
 <p>For most of iOS history the answer was one file: <span class="mn">AppDelegate</span>, in the method that runs once the app has finished launching. Many production apps still work exactly that way.</p>
 <p>An app built more recently with SwiftUI may have no AppDelegate at all. Its starting point is a small structure marked <span class="mn">@main</span>, and startup code goes in that structure or in an AppDelegate deliberately reattached.</p>
 <p>Both arrangements are correct and both are common, so <b>&ldquo;put it at startup&rdquo; does not point at a single file</b>.</p>
-<p>What you actually need is narrower and works either way: <b>the SDK must finish starting before the first screen appears.</b> An event fired before the SDK is ready is not queued and not retried. It is gone.</p>
+<p>What you actually need is narrower and works either way: <b>the SDK must finish starting before the first screen appears.</b> An event fired before the SDK is ready may never be sent, and nothing reports that it was lost.</p>
 <p>So ask whether the SDK starts before the first screen, rather than which file it sits in.</p>
 <div class="call mistake"><span class="ct">Where this goes wrong</span><p>A developer adds the packages to the main app target and the app compiles perfectly. The widget, the watch app and the internal staff build are separate targets, and the SDK is in none of them. Nobody notices until somebody asks why the widget has never reported anything. Say which targets need the SDK, by name, in the ticket.</p></div>
 <div class="call check"><span class="ct">&#10003; Ready when</span><p>The five packages are in the project, the initialise call carries the development Environment File ID, and SDK logs appear at debug level when the app launches. Then continue at <a href="/aep-mobile-sdk/turn-on-lifecycle/">Turn on lifecycle</a>, which is mostly a step about confirming something you have already done.</p></div>

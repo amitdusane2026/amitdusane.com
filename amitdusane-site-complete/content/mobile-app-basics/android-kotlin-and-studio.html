@@ -1,6 +1,6 @@
 ---
 published: 2026-09-06
-lastmod: 2026-09-11
+lastmod: 2026-09-12
 title: "Android: Kotlin, Android Studio, and the manifest"
 linkTitle: "Android: Kotlin and Gradle"
 seotitle: "Android Studio, Kotlin and the Manifest for Analytics Teams"
@@ -29,7 +29,7 @@ params:
   ask:
     - "Send me the merged manifest, not the project file, and confirm it names the Application class."
     - "Which build variant is this, and which Environment File ID does that variant carry?"
-    - "Send me the Discovered extension lines from a debug launch, so I can count them against the ticket."
+    - "Send me the SDK startup log from a debug launch, so I can count the extensions against the ticket."
 ---
 <h2>Why it matters to you</h2>
 <p>Most of what you will ever need from an Android developer is one of three files or one line from a log. If you know their names, a meeting becomes a message, and a problem that takes a week to find takes a minute.</p>
@@ -50,7 +50,7 @@ params:
 <p>One line starts the whole SDK, and it names no extensions at all.</p>
 <div class="code"><button class="copy">Copy</button><pre>MobileCore.initialize(this, "YOUR_ENVIRONMENT_FILE_ID")</pre></div>
 <p>The merged manifest is what makes that work. Each Adobe library adds a note to it naming its own extension, and on startup the SDK reads those notes and loads what it finds. So the extensions that run are exactly the libraries in the app, and there is no second list to fall out of date.</p>
-<p>It also gives you a quick check. At debug log level the SDK writes one line for each extension it finds, starting <span class="mn">Discovered extension:</span>. Ask for those lines and count them against what you asked for in the ticket.</p>
+<p>It also gives you a quick check. At debug log level the SDK logs each extension as it registers. Ask a developer for the startup log and count those lines against what you asked for in the ticket.</p>
 <h2>Build type, flavour and variant</h2>
 <p>One set of Android code can produce several versions of the app. Two words describe them, and a third combines them.</p>
 <table class="mini-tbl"><tbody>

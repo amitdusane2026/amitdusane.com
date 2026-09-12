@@ -1,6 +1,6 @@
 ---
 published: 2026-09-06
-lastmod: 2026-09-11
+lastmod: 2026-09-12
 title: "iOS: Swift, Xcode, and what your developer is looking at"
 linkTitle: "iOS: Swift and Xcode"
 seotitle: "Xcode, Swift and Info.plist for Analytics Practitioners"
@@ -73,5 +73,5 @@ MobileCore.initialize(appId: "a1b2c3d4e5f6")</pre></div>
 <p>The SDK has to be started once, early, before anything tries to send an event.</p>
 <p>For most of the platform&rsquo;s history that meant one place: a file called AppDelegate, and a method inside it that runs once the app has finished launching. Many production apps still work exactly that way.</p>
 <p>An app built more recently with SwiftUI, which is Apple&rsquo;s newer way of describing screens, may have no AppDelegate at all. Its starting point is a small structure marked <span class="mn">@main</span>. Both arrangements are correct and both are common, so &ldquo;put it at startup&rdquo; no longer points at a single file.</p>
-<p>What you need is narrower than the file name, and it works either way. <b>Starting the SDK must finish before the first screen appears.</b> An event fired before the SDK is ready is not queued and not retried. It is simply gone, and it leaves nothing behind for you to find.</p>
+<p>What you need is narrower than the file name, and it works either way. <b>Starting the SDK must finish before the first screen appears.</b> An event fired before the SDK is ready may never be sent, and nothing reports that it was lost.</p>
 <p>So ask whether the SDK starts before the first screen. That question beats asking which file it sits in, and it catches the fault that actually happens.</p>

@@ -1,40 +1,38 @@
 ---
 published: 2026-09-07
-lastmod: 2026-09-11
+lastmod: 2026-09-12
 title: "The app lifecycle: launch, background, terminate"
 linkTitle: "The app lifecycle"
 seotitle: "App Lifecycle States Explained for Analytics Practitioners"
-description: "A page loads and unloads. An app does neither, and the states it moves through instead are what decide where your sessions begin and end."
+description: "A page loads and unloads. An app does neither. The four states it moves through instead, and what really decides where a session begins and ends."
 slug: "the-app-lifecycle"
 aliases: ["/aep-mobile-sdk/mobile-basics/the-app-lifecycle/"]
 type: topic
 weight: 301
 params:
   group: behaviour
-  oneline: "An app moves between four states: not running, foreground, background and terminated. A session is only the time it spends in the foreground."
-  cando: "Explain why app sessions are shorter and more numerous than web visits, before anyone asks."
+  oneline: "An app moves between four states: not running, foreground, background and terminated. Only foreground time counts towards session length, and backgrounding pauses a session rather than ending it."
+  cando: "Say what actually starts a new app session, and know which report decided the number in front of you."
   words:
-    - t: "Lifecycle"
-      d: "The states an app moves through, and the events the SDK sends as it moves between them."
     - t: "Session"
-      d: "In an app, the time between coming to the foreground and leaving it."
+      d: "One visit to the app. A new one starts when the app returns after longer than the session timeout."
+    - t: "Session timeout"
+      d: "How long the app must sit in the background before the next return counts as a new session. Five minutes by default."
     - t: "Foreground"
       d: "On screen and being used. The only state that counts towards session length."
     - t: "Background"
-      d: "Off screen but still in memory. Moving here ends the session."
+      d: "Off screen but still in memory. Session length stops counting here."
     - t: "Cold start"
       d: "Opening an app that was not in memory, so everything is built from nothing."
-    - t: "Warm start"
-      d: "Returning to an app that was still in memory. Nearly instant."
     - t: "Terminated"
       d: "Removed from memory, usually by the operating system, without running any code first."
   ask:
+    - "What is our lifecycle session timeout set to, and has anybody changed it from five minutes?"
     - "Is automatic lifecycle on, or does the app call lifecycle start and pause itself?"
-    - "If the tracking plan has an app-close event, what exactly fires it?"
     - "Show me in Assurance what arrives when the app goes to the background and comes back."
 ---
 <h2>Why it matters to you</h2>
-<p>A web page has two moments that matter: it loads, and it goes away. An app has neither. The states it moves through instead decide where your sessions begin and end.</p>
+<p>A web page has two moments that matter: it loads, and it goes away. An app has neither. The states it moves through instead decide what can be measured at all, and they are the reason an app session and a website visit are not the same thing.</p>
 <h2>A page loads and unloads. An app does neither.</h2>
 <p>A web page has a clean life. It is requested, it loads, the reader does things, then they leave and it is destroyed. Nothing survives. The next page is a fresh load.</p>
 <p>Analytics has hooked onto both ends of that for twenty years. Load is a page view, and leaving is the end of one.</p>
@@ -44,10 +42,10 @@ params:
 <table class="mini-tbl"><tbody>
 <tr><td>Not running</td><td>Installed, not in memory. Opening it now is a <b>cold start</b>: everything is built from nothing. Anything the app wrote to storage is still waiting.</td></tr>
 <tr><td>Foreground</td><td>On screen, being used. The only state in which anybody is looking at anything, and the only state that counts towards session length.</td></tr>
-<tr><td>Background</td><td>Off screen, still in memory. Somebody took a call or locked the phone. Coming back is a <b>warm start</b> and is nearly instant. This state is what ends your sessions.</td></tr>
+<tr><td>Background</td><td>Off screen, still in memory. Somebody took a call or locked the phone. Coming back is a <b>warm start</b> and is nearly instant. Session length stops counting while the app is here.</td></tr>
 <tr><td>Terminated</td><td>Gone from memory. Sometimes a person swiped it away. Far more often the operating system removed it to free memory. Nobody is told.</td></tr>
 </tbody></table>
-<figure class="fig-svg"><svg viewBox="0 0 700 262" role="img" aria-label="An app moves between four states. Launching from not running is a cold start. Leaving the foreground for the background ends the session, and returning starts a new one. The operating system can terminate a backgrounded app without warning and without running any code, after which the next open is a cold start again." style="width:100%;height:auto;display:block">
+<figure class="fig-svg"><svg viewBox="0 0 700 262" role="img" aria-label="An app moves between four states. Launching from not running is a cold start. Leaving the foreground for the background pauses the session, and returning resumes it, or starts a new one if the app stayed in the background longer than the session timeout. The operating system can terminate a backgrounded app without warning and without running any code, after which the next open is a cold start again." style="width:100%;height:auto;display:block">
 <text x="24" y="22" style="font-size:12.5px;font-weight:700;fill:var(--ink-soft, #3b4048)">The four states, and which transitions you can measure</text>
 <rect x="24" y="98" width="124" height="52" rx="8" style="fill:var(--bg-soft, #f7f8fa);stroke:var(--line, #e4e6ea);stroke-width:1.5"/>
 <text x="86" y="120" text-anchor="middle" style="font-size:11.5px;font-weight:700;fill:var(--ink, #1c1f24)">Not running</text>
@@ -60,10 +58,10 @@ params:
 <text x="302" y="94" text-anchor="middle" style="font-size:11px;fill:var(--ink-soft, #3b4048)">the only state being watched</text>
 <line x1="272" y1="108" x2="272" y2="150" style="stroke:var(--warn, #9a5b00);stroke-width:1.8"/>
 <polygon points="272,150 268,141 276,141" style="fill:var(--warn, #9a5b00)"/>
-<text x="266" y="132" text-anchor="end" style="font-size:11px;font-weight:700;fill:var(--warn, #9a5b00)">session ends</text>
+<text x="266" y="132" text-anchor="end" style="font-size:11px;font-weight:700;fill:var(--warn, #9a5b00)">session pauses</text>
 <line x1="336" y1="150" x2="336" y2="108" style="stroke:var(--ok, #1f7a4d);stroke-width:1.8"/>
 <polygon points="336,108 332,117 340,117" style="fill:var(--ok, #1f7a4d)"/>
-<text x="348" y="142" style="font-size:11px;font-weight:700;fill:var(--ok, #1f7a4d)">new session</text>
+<text x="348" y="142" style="font-size:11px;font-weight:700;fill:var(--ok, #1f7a4d)">resumes</text>
 <rect x="214" y="152" width="176" height="56" rx="8" style="fill:var(--bg-soft, #f7f8fa);stroke:var(--line, #e4e6ea);stroke-width:1.5"/>
 <text x="302" y="176" text-anchor="middle" style="font-size:11.5px;font-weight:700;fill:var(--ink, #1c1f24)">Background</text>
 <text x="302" y="194" text-anchor="middle" style="font-size:11px;fill:var(--ink-soft, #3b4048)">still in memory, nothing lost</text>
@@ -83,11 +81,16 @@ params:
 <p>Think of the app as a hotel room with your things in it. While you are in the room, you are in the foreground. Step out for dinner and you are in the background. The room is untouched, your things are where you left them, and walking back in costs nothing. You did not check out.</p>
 <p>At some point the room is reclaimed, and this is the part with no web equivalent. <b>The hotel decides, not you.</b> It happens while you are out, based on who needs the space more. Nobody phones to tell you. You find out the next time you go back, when you have to check in again and the room is empty.</p>
 <p>That is exactly how termination works. The operating system takes memory back from apps that are not on screen whenever something in front needs it. The app is not asked and the person is not told.</p>
-<h2>Why backgrounding is the state that matters</h2>
-<p>The SDK ends a session when the app leaves the foreground, and starts a new one when it comes back. <b>A session is foreground time and nothing else.</b> Time spent in the background is not shortening somebody&rsquo;s session. It is ending it.</p>
-<p>Now think how often an app leaves the foreground. A message arrives and is read. A call comes in. The phone locks in a pocket. Somebody checks a train time and comes back. Each of those ends a session, and each return starts another. One twenty-minute shopping trip can honestly be four sessions.</p>
-<p>On the web the equivalent boundary is thirty minutes of inactivity, which is a timer rather than an event. A reader who leaves a tab open and returns after ten minutes is still in the same visit. In an app they are not.</p>
-<p>That single difference produces most of the gap between app session counts and web visit counts, and no configuration on either side will close it.</p>
+<h2>Backgrounding pauses a session, it does not end it</h2>
+<p>Leaving the foreground stops the clock. The SDK notes the time and waits. Nothing is closed yet.</p>
+<p>A new session begins only if the app stayed in the background for longer than the <b>session timeout</b>. That timeout is five minutes by default, and your team can change it in tags without touching the app.</p>
+<p>So the small interruptions do not each create a session. A call, a message, a quick look at a train time: the person is back inside five minutes and the same session carries on. A twenty-minute shopping trip is usually one session.</p>
+<p>What backgrounding does change is length. Session length counts foreground time only, so the minutes spent on that call are never added to it. The session continues and the clock does not.</p>
+<h2>Which report decides what a session means</h2>
+<p>The app does not decide. The SDK produces one count, your reporting tool produces another, and they are not the same number.</p>
+<p>Adobe Analytics counts its own <b>visits</b> on the server, after the data has arrived. A visit ends after thirty minutes with no hit. That rule is the same for app data and website data, so an app has visits as well as launches.</p>
+<p>Customer Journey Analytics does not fix the rule at all. You choose it yourself in the data view, and the choice covers every dataset in that view, website and app alike. One person on a laptop and a phone can be a single person there, inside a single session.</p>
+<p>So find out which of the three a number is before explaining it. Most arguments about app sessions are two people holding two different metrics and believing they hold the same one.</p>
 <h2>The termination you will never see</h2>
 <p><b>You cannot reliably measure app closes.</b> When the operating system terminates a backgrounded app, it does not run your code first. There is no final event, no chance to send anything, and no notification afterwards. The app stops existing, and the SDK was not told either.</p>
 <p>This is why session length is measured from the foreground events rather than from anything at the end. The close you can see is the app leaving the foreground. What happens after that is invisible by design, on both platforms.</p>
@@ -95,12 +98,13 @@ params:
 <div class="call mistake"><span class="ct">Where this goes wrong</span><p>A tracking plan asks for an app-close event. A developer builds one against the last hook the platform offers. It fires when somebody swipes the app away and stays silent for every operating-system termination, which is most of them. The number that arrives looks like a real count of people leaving. It is a partial count of one particular way of leaving.</p></div>
 <h2>What this does to your numbers</h2>
 <p>Three effects follow, and all three arrive without anybody writing a line of tracking code.</p>
-<p><b>Sessions are shorter and far more numerous than web visits.</b> That is correct rather than inflated. Session length measures foreground attention, which is a stricter and more honest measure than a web visit, and it will always look smaller beside one.</p>
-<p><b>Launches are not installs.</b> A launch happens every time the app comes to the foreground, including after a two-second glance at a notification. Installs are the first launch after installation, and upgrades the first after a version change. All of it arrives automatically from two events, switched on in <a href="/aep-mobile-sdk/turn-on-lifecycle/">Turn on lifecycle</a>.</p>
-<p><b>Any chart putting app sessions beside web visits will mislead whoever reads it</b>, permanently, whatever the tracking does. The two measure different things by design. <a href="/mobile-app-basics/screens-not-pages/">A screen is not a page view</a> covers the other half of that mismatch.</p>
+<p><b>Launches are not installs.</b> A launch is the first foreground moment after the app was not running, and also a return from the background past the session timeout. Installs are the first launch after installation, and upgrades the first after a version change. All of it arrives automatically from two events, switched on in <a href="/aep-mobile-sdk/turn-on-lifecycle/">Turn on lifecycle</a>.</p>
+<p><b>Launches are not visits either.</b> A chart that puts SDK launches beside website visits is comparing two different measurements, whatever the labels say. Compare visits with visits, or build both sides from one Customer Journey Analytics data view, where the definition is yours and is the same for the app and the site. <a href="/mobile-app-basics/screens-not-pages/">A screen is not a page view</a> covers the other half of that mismatch.</p>
+<p><b>Session length measures attention, not time in the app.</b> The minutes an app spends in the background belong to nobody. That makes session length a stricter measure than time on site, and a smaller one, and it is correct rather than deflated.</p>
 <h2>What to tell people early</h2>
-<p>Most of the work here is setting expectations before anybody builds a report, rather than after somebody queries one. None of it is configuration.</p>
+<p>Most of the work here is setting expectations before anybody builds a report, rather than after somebody queries one.</p>
 <table class="mini-tbl"><tbody>
-<tr><td>Say</td><td>A session ends when the app is backgrounded, so app sessions are shorter and more numerous than web visits. Said at the start it is a design fact. Said after a stakeholder sees the number it sounds like an excuse.</td></tr>
+<tr><td>Say</td><td>Which metric a number actually is: an SDK launch, an Adobe Analytics visit, or a session defined in a data view. Three different things, and most disagreements are two people holding two of them.</td></tr>
+<tr><td>Check</td><td>What the session timeout is set to. Five minutes is the default, and a team that changed it has changed every session count in the app, retrospectively for nobody and going forward for everybody.</td></tr>
 <tr><td>Refuse</td><td>A reliable app close, or a &ldquo;time until they quit&rdquo; metric. The operating system terminates apps without running their code, so any number built for this counts one minority case and silently misses the rest.</td></tr>
 </tbody></table>

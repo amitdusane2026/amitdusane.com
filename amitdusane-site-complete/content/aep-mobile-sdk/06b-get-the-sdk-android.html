@@ -1,6 +1,6 @@
 ---
 published: 2026-09-08
-lastmod: 2026-09-08
+lastmod: 2026-09-12
 title: "Get the SDK in: Android"
 seotitle: "Install the Adobe Mobile SDK on Android with Gradle"
 description: "The Gradle block, the bill of materials that keeps the versions matched, and the one line in the manifest that decides whether any of it runs."
@@ -43,6 +43,6 @@ class MainApplication : Application() {
 <p>There is no crash and no error, because from Android&rsquo;s point of view nothing went wrong.</p>
 <div class="call mistake"><span class="ct">Where this goes wrong</span><p>A reviewer reads the change, sees the startup code exactly where it was asked for, and approves it. The line in the manifest was never added. Weeks later the report is empty and the code still looks correct to everybody who opens it. <b>When no data arrives at all on Android, check that the manifest names the Application class before you check anything else.</b></p></div>
 <h2>Checking what is really in the build</h2>
-<p>At debug log level the SDK writes one line for each extension it finds, reading <span class="mn">Discovered extension:</span> and then a class name.</p>
+<p>At debug log level the SDK logs each extension as it registers, naming the class.</p>
 <p>Ask a developer to launch the app and send you those lines, then count them against what you asked for in the ticket. It takes them ten seconds and it answers a question you would otherwise be guessing at.</p>
-<div class="call check"><span class="ct">&#10003; Ready when</span><p>The Gradle block carries the bill of materials line, the Application class starts the SDK with the development Environment File ID, the manifest names that class, and the Discovered extension lines match your list. Then continue at <a href="/aep-mobile-sdk/turn-on-lifecycle/">Turn on lifecycle</a>.</p></div>
+<div class="call check"><span class="ct">&#10003; Ready when</span><p>The Gradle block carries the bill of materials line, the Application class starts the SDK with the development Environment File ID, the manifest names that class, and the extensions in the startup log match your list. Then continue at <a href="/aep-mobile-sdk/turn-on-lifecycle/">Turn on lifecycle</a>.</p></div>

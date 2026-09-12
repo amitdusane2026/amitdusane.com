@@ -1,10 +1,10 @@
 ---
 published: 2026-09-07
-lastmod: 2026-09-11
+lastmod: 2026-09-12
 title: "A screen is not a page view"
 linkTitle: "Screens, not pages"
 seotitle: "Screens Versus Page Views in Mobile Analytics"
-description: "They look alike in a report and behave differently in real use, which is why app session counts and web visit counts never quite line up."
+description: "They look alike in a report and behave differently in real use, which is why pressing back sends nothing and why two session numbers never agree."
 slug: "screens-not-pages"
 aliases: ["/aep-mobile-sdk/mobile-basics/screens-not-pages/"]
 type: topic
@@ -12,7 +12,7 @@ weight: 302
 params:
   group: behaviour
   oneline: "A screen is the app's version of a page, but it has no URL, no referrer, and no reload when the person goes back to it."
-  cando: "Explain why pressing back sends no second screen view, and stop the chart that compares app sessions with web visits."
+  cando: "Explain why pressing back sends no second screen view, and name which session metric a chart is really using."
   words:
     - t: "Screen view"
       d: "The event an app sends when a screen is shown. It only fires when somebody decided where it fires."
@@ -21,7 +21,7 @@ params:
     - t: "Referrer"
       d: "On the web, the page a reader came from. A screen has none."
     - t: "Visit"
-      d: "On the web, a set of page views that ends after thirty minutes of inactivity."
+      d: "A set of events that ends after thirty minutes with no new one. Adobe Analytics counts these for apps too."
   ask:
     - "Does a screen view fire when the screen is built, or every time it appears?"
     - "Does going back to a list screen send a screen view?"
@@ -77,15 +77,15 @@ params:
 </svg><figcaption>The second view is free on the web and invisible in an app.</figcaption></figure>
 
 <div class="call mistake"><span class="ct">Where this goes wrong</span><p>Screen views are wired to the moment each screen is built, which is the obvious place and the wrong one. Every screen reports correctly the first time and never again on the way back. Funnels look like people vanish at the second step, because returning to a list from a product is invisible. The fix needs a developer to move the call, so it is not something you can correct on the Adobe side.</p></div>
-<h2>Where sessions diverge</h2>
-<p>The second mismatch is the one that reaches stakeholders. Web visits and app sessions do not end for the same reason.</p>
-<p>A <b>web visit</b> ends after thirty minutes of inactivity. It is a timer. Somebody leaves a tab open, makes a coffee, comes back inside half an hour, and is still in the same visit.</p>
-<p>An <b>app session</b> ends when the app leaves the foreground, which is an event rather than a timer. Reading a message ends it. Taking a call ends it. Locking the phone ends it. Returning starts a new one immediately. <a href="/mobile-app-basics/the-app-lifecycle/">The app lifecycle</a> covers why that boundary sits there.</p>
-<p>So app sessions are shorter and far more numerous than web visits, from the same behaviour by the same person. That is correct measurement rather than a fault, and it cannot be configured away on either side. Both numbers are right, and they answer different questions.</p>
+<h2>Why the session numbers never agree</h2>
+<p>The second mismatch is the one that reaches stakeholders, and it is not the one most people describe. The gap is not the app against the website. It is one metric against another.</p>
+<p>An <b>Adobe Analytics visit</b> ends after thirty minutes with no new hit. That rule runs on the server, after the data arrives, and it runs the same way for app data and website data. An app has visits, and they can be set beside the site&rsquo;s visits honestly.</p>
+<p>A <b>lifecycle session</b> is a different measurement. The SDK counts it inside the app. It begins a new one when the app comes back from the background after longer than the session timeout. That timeout is five minutes unless somebody changed it. <a href="/mobile-app-basics/the-app-lifecycle/">The app lifecycle</a> covers how that works.</p>
+<p>So launches outnumber visits for the plain reason that five minutes is shorter than thirty. Both numbers are right. They are answers to different questions, and neither one is the app being more popular than the website.</p>
 <h2>The comparison that will mislead everybody</h2>
-<p><b>Do not put app sessions and web visits in the same trend line.</b> Not with a footnote, and not with a caveat in the title. The chart is the claim, and nobody reads the footnote.</p>
+<p><b>Do not put SDK launches and website visits in the same trend line.</b> Not with a footnote, and not with a caveat in the title. The chart is the claim, and nobody reads the footnote.</p>
 <p>They count different things. A line putting them side by side invites exactly one conclusion: either the app is more engaging or the website is collapsing. Neither is supported by the numbers underneath. The arithmetic is not wrong. What the chart implies is wrong, which is worse, because nothing on it admits that.</p>
-<p>If somebody genuinely needs one number across both, that is a Customer Journey Analytics question. It needs the two datasets joined on a shared identity and a considered definition of what a session means across them. That is real work with a real answer, and it is not a chart you assemble in an afternoon.</p>
+<p>Comparing like with like is a different matter and is often right. Visits against visits works inside Adobe Analytics. Customer Journey Analytics goes further. One data view gives the app and the site the same session definition, over one person who may use both. The combined number is then a real answer rather than two metrics pushed together in a chart.</p>
 <h2>Naming screens</h2>
 <p>Since a screen has no URL, somebody has to name it, and that somebody should be you.</p>
 <p>The temptation is to reuse the website&rsquo;s page names so the two line up in reporting. It looks tidy. It is really a promise that two products will stay matched, and neither team has made that promise.</p>
@@ -95,5 +95,5 @@ params:
 <table class="mini-tbl"><tbody>
 <tr><td>Specify</td><td>Screen views fire when a screen appears, not when it is built. It is the difference between counting a return to a list and losing it silently.</td></tr>
 <tr><td>Name</td><td>Screens after what they are in the app&rsquo;s own language, not after website page names. The two products get redesigned separately, and a mapping made today survives neither.</td></tr>
-<tr><td>Agree</td><td>App sessions and web visits are never compared in one trend. Say it while it is a principle. After somebody has built the chart it becomes an argument.</td></tr>
+<tr><td>Agree</td><td>Which session metric a chart uses, before anybody builds it. Launches against visits is the comparison that misleads. Visits against visits, or one data view across both, is the one that does not.</td></tr>
 </tbody></table>

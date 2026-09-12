@@ -1,6 +1,6 @@
 ---
 published: 2026-09-08
-lastmod: 2026-09-08
+lastmod: 2026-09-12
 title: "Get the SDK in: React Native"
 seotitle: "Install the Adobe Mobile SDK in a React Native App"
 description: "Five npm packages and one call in JavaScript. Since version 7 there is no native code to write, which removes the step that used to cause the trouble."
@@ -30,7 +30,7 @@ npm install @adobe/react-native-aepassurance</pre></div>
 
 MobileCore.setLogLevel(LogLevel.DEBUG);
 MobileCore.initializeWithAppId("YOUR_ENVIRONMENT_FILE_ID");</pre></div>
-<p>Put that where the app starts, before the first screen is drawn. An event fired before the SDK is ready is not queued and not retried.</p>
+<p>Put that where the app starts, before the first screen is drawn. An event fired before the SDK is ready may never be sent, and nothing reports that it was lost.</p>
 <h2>The one risk cross-platform adds</h2>
 <p>The plugins wrap the native SDK, and a wrapper can fall behind the thing it wraps. When Adobe ships something new, the native SDK gets it first and the plugins follow, usually within weeks.</p>
 <p>In practice this rarely causes trouble. Everything this guide needs has been supported for years: sending events, identity, consent, lifecycle and Assurance.</p>
