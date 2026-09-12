@@ -820,15 +820,37 @@ body.world-migration .ask-route.is-copied .ask-route-act,body.world-mobile .ask-
    in one world and load-bearing in the other.
    ============================================================================ */
 @media print{
+  /* PAPER IS LIGHT, WHICHEVER THEME THE READER CHOSE, and this is the rule that
+     makes that true rather than nearly true. head.html's pre-paint script writes
+     color-scheme onto documentElement as an INLINE style, so in dark mode the UA
+     paints the print canvas dark -- and the canvas includes the @page margin
+     area, which no stylesheet background can reach. The sheet came out with a
+     black border on all four sides while the content box stayed white. Amit
+     reported it from a Mobile App Basics topic, 12 September 2026.
+
+     An author !important beats an inline declaration, which is the same lever
+     chrome.css already pulls for the home and About pages further down. Every
+     world prints through this block, so it is fixed once here. */
+  html{color-scheme:light !important}
   .print-doc{display:table !important;width:100%;border-collapse:collapse;table-layout:fixed}
   .print-doc thead{display:table-header-group}
   .print-doc tfoot{display:table-footer-group}
   .print-doc td{padding:0}
   .print-doc thead td{border-bottom:2px solid #ba2142;padding-bottom:5px}
   .print-doc thead .ph-row{display:flex;justify-content:space-between;align-items:baseline;gap:14px}
-  .print-doc thead .ph-brand{display:inline-flex;align-items:center;gap:8px}
-  .print-doc thead .ph-title{font-size:10.5pt;font-weight:700;color:#1c2129}
-  .print-doc thead .ph-ctx{font-size:8.5pt;color:#6b7280;white-space:nowrap}
+  .print-doc thead .ph-brand{display:inline-flex;align-items:center;gap:8px;min-width:0;flex:0 1 auto}
+  .print-doc thead .ph-title{font-size:10.5pt;font-weight:700;color:#1c2129;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  /* THE RUNNING HEADER MUST NEVER OUTGROW THE SHEET. .ph-ctx is the page's own
+     h1, filled by printdoc.js, and it carries white-space:nowrap so it stays on
+     one line beside the section name. A flex item cannot shrink below its
+     content without min-width:0, so on narrow paper, a wide margin, or a long
+     title, that nowrap ran off the right edge and the last word was cut by the
+     page boundary. Reported by Amit on a Mobile App Basics topic, 12 September
+     2026. Both halves may now shrink and ellipsize instead; on paper wide
+     enough for the full string nothing changes at all. */
+  .print-doc thead .ph-ctx{font-size:8.5pt;color:#6b7280;white-space:nowrap;
+    min-width:0;flex:0 1 auto;overflow:hidden;text-overflow:ellipsis}
   .print-doc thead .ph-by{font-size:9pt;font-weight:600;color:#4b5563;margin-top:2px}
   /* The running header already says "Created by Amit G Dusane" on every sheet,
      so the article byline must not say it a second line later. What the byline
@@ -838,6 +860,13 @@ body.world-migration .ask-route.is-copied .ask-route-act,body.world-mobile .ask-
      because it is the same argument in both worlds. */
   .byline .by-who{display:none !important}
   .byline .by-sep:first-of-type{display:none !important}
+  /* And the "Created by" label with it. It only renders on a byline-lite
+     (full=false), so while that shape was used solely by the learning world's
+     landings -- which nobody prints -- hiding the name alone was enough. Basics
+     topics took byline-lite on 12 September 2026 and printed "Created by"
+     followed by a gap where the hidden name had been, then the credential.
+     Hide the label wherever the name it introduces is hidden. */
+  .byline .by-pre{display:none !important}
   .print-doc tfoot td{border-top:2px solid #ba2142;padding-top:5px;text-align:center}
   .print-doc tfoot span{font-size:8.5pt;color:#4b5563}
   .print-doc tbody td{padding:16px 0;color:#1c2129}

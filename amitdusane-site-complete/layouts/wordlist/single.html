@@ -19,7 +19,14 @@
 {{ $have := slice }}
 {{ range $list }}{{ $l := upper (substr .s 0 1) }}{{ if not (in $have $l) }}{{ $have = $have | append $l }}{{ end }}{{ end }}
 <section class="view active b-wordlist">
-  <p class="crumb"><a href="{{ (printf "%s/" $w.root) | relURL }}">{{ $w.name }}</a> &rsaquo; Glossary</p>
+  {{- /* The switcher rides along here too, since 12 September 2026. The rail
+       used to be how a reader left the glossary for a topic; with the rail
+       gone this page would otherwise offer only its own term links and the
+       crumb. */ -}}
+  <div class="b-crumbrow">
+    <p class="crumb"><a href="{{ (printf "%s/" $w.root) | relURL }}">{{ $w.name }}</a> &rsaquo; Glossary</p>
+    {{ partial "topicswitch.html" . }}
+  </div>
   <h1>{{ .Title }}</h1>
   <p class="gl-intro">Every term links to the topic that explains it in full.</p>
   <nav class="gl-az" aria-label="Jump to a letter">

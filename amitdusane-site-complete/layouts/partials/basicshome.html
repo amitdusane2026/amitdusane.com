@@ -1,49 +1,67 @@
 {{- /* ===========================================================================
-     THE FRONT PAGE OF A BASICS SECTION. Created 11 September 2026, shared by
-     every Basics instance; each instance's own list.html is one line calling
-     this, the same arrangement the procedure worlds use.
+     THE FRONT PAGE OF A BASICS SECTION. Created 11 September 2026, rebuilt as
+     a deck on 12 September 2026. Shared by every Basics instance; each
+     instance's own list.html is one line calling this, the same arrangement
+     the procedure worlds use.
 
-     SIMPLE ON PURPOSE, rebuilt the same day on Amit's review. The first
-     version opened on a premise box and a word picker, and on a phone the
-     picker alone filled the first screen before any topic appeared. For
-     fourteen topics that was a tool with a learning curve doing a list's job.
+     IT IS A DECK, NOT A MENU, and that is the whole change. Every card carries
+     its topic's one-sentence answer (`oneline`), so a reader who never clicks
+     anything still leaves with twelve answers in about ninety seconds. Amit
+     asked for the answers on 12 September 2026 after seeing both side by side.
 
-     So: the title, one line saying what the section is for, then every topic
-     as a plainly tappable row, grouped, each with the one thing it lets you do
-     and an arrow, because a phone has no hover to say "this opens".
+     This is only possible because a Basics section is small. Twelve topics can
+     all be seen at once; a hundred and sixteen curriculum sections cannot,
+     which is why the learning world needs maps and rails and this does not.
+     The deck IS the orientation, and on a topic page the switcher
+     (partials/topicswitch.html) is the way back into it.
+
+     SIMPLE ON PURPOSE, which is Amit's ruling from 11 September and still
+     holds. The first version of this page opened on a word picker that filled
+     a phone's first screen before any topic appeared. A card is plainly
+     tappable without hover -- a border, a whole-card target, an arrow in the
+     accent -- because a phone has no hover to say "this opens".
 
      THE PREMISE COMES FIRST, right under the lead. It sat under the list for
      an hour, in the order the learning landings use, and Amit moved it back
      the same day: "What this section is" is the thing a learner needs to read
-     before anything else, so it cannot wait at the foot of the page. Every
-     topic links back to it as #premise.
+     before anything else. Every topic links back to it as #premise.
 
      Nothing is numbered, because there is no sequence to promise, and
-     everything comes from the topics' own front matter: the row line is
-     `cando`. Nobody types a count. "See where this fits" (wherefits.html) does
-     the orienting on each topic page. */ -}}
+     everything comes from the topics' own front matter. Nobody types a count.
+     =========================================================================== */ -}}
 {{ $w := index .Site.Params.worlds .Section }}
 {{ $topics := (where (where .Site.RegularPages "Section" .Section) "Type" "topic").ByWeight }}
 {{ $groups := slice }}
 {{ range $k, $v := $w.groups }}{{ $groups = $groups | append (merge $v (dict "key" $k)) }}{{ end }}
 {{ $groups = sort $groups "order" }}
+{{ $nw := 0 }}{{ range $topics }}{{ $nw = add $nw (len .Params.words) }}{{ end }}
 <section class="view active b-front">
   <div class="eyebrow">Basics</div>
   <h1>{{ .Title }}</h1>
-  {{ with .Description }}<p class="b-lead">{{ . }}</p>{{ end }}
+  {{ with $w.tilesub }}<p class="b-lead">{{ . }}</p>{{ end }}
+  <p class="b-front-meta"><b>{{ len $topics }} topics</b> &middot; a few minutes each &middot; <b>{{ $nw }} words</b> explained</p>
   {{ with $w.premise }}<div class="b-premise" id="premise"><span class="b-premise-l">What this section is</span><p>{{ . }}</p></div>{{ end }}
-  {{ range $g := $groups }}
-    {{ $items := where $topics "Params.group" $g.key }}
-    {{ if $items }}
-    <section class="b-grp" aria-labelledby="g-{{ $g.key }}">
-      <h2 class="b-grp-h" id="g-{{ $g.key }}">{{ $g.label }}</h2>
-      <ul class="b-list">
-        {{ range $items }}
-        <li><a class="b-item" href="{{ .RelPermalink }}"><span class="b-item-tx"><span class="b-item-t">{{ .Title }}</span><span class="b-item-d">{{ .Params.cando | default .Description }}</span></span><span class="b-item-go" aria-hidden="true">&rsaquo;</span></a></li>
-        {{ end }}
-      </ul>
-    </section>
+  <div class="b-deck">
+    {{ range $g := $groups }}
+      {{ $items := where $topics "Params.group" $g.key }}
+      {{ if $items }}
+      <section class="b-grp" aria-labelledby="g-{{ $g.key }}">
+        <div class="b-grp-l">
+          <h2 class="b-grp-h" id="g-{{ $g.key }}">{{ $g.label }}</h2>
+          <span class="b-grp-n">{{ len $items }} topic{{ if ne (len $items) 1 }}s{{ end }}</span>
+        </div>
+        <div class="b-grp-c">
+          {{ range $items }}
+          <a class="b-card" href="{{ .RelPermalink }}">
+            <b>{{ .Title }}</b>
+            <svg class="b-card-go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+            <p>{{ .Params.oneline | default .Params.cando | default .Description }}</p>
+          </a>
+          {{ end }}
+        </div>
+      </section>
+      {{ end }}
     {{ end }}
-  {{ end }}
+  </div>
   <p class="b-front-foot"><a href="{{ (printf "%s/glossary/" $w.root) | relURL }}">Glossary: every word in this section, explained &rarr;</a></p>
 </section>

@@ -120,37 +120,23 @@
   </aside>
   {{ partial "printdoc.html" . }}
 {{ else if $basics }}
-  {{- /* A BASICS SECTION, 11 September 2026. Its own shell, not the procedure
-       one with the steps removed: a rail of topic groups with no numbers, and
-       the generated glossary pinned above them (see the note inside the rail).
-       Groups come from [params.worlds.<world>.groups]; a group with no
-       topics renders nothing, so a section can be written a group at a time. */ -}}
-  {{ $bTopics := (where (where .Site.RegularPages "Section" .Section) "Type" "topic").ByWeight }}
-  {{ $bGroups := slice }}
-  {{ range $k, $v := $world.groups }}{{ $bGroups = $bGroups | append (merge $v (dict "key" $k)) }}{{ end }}
-  {{ $bGroups = sort $bGroups "order" }}
+  {{- /* A BASICS SECTION. Created 11 September 2026, redesigned 12 September.
+
+       NO RAIL. The shell is the header and one centred column, and that is the
+       single biggest reason a Basics section no longer reads as the
+       curriculum: a persistent left column of contents is what a course looks
+       like. Navigation between topics is partials/topicswitch.html, rendered
+       in the topic's own crumb row, and the deck on the front page.
+
+       The glossary moved with it, to the foot of the switcher panel, so it
+       keeps a route from every page rather than only from the front page.
+
+       "See where this fits" is no longer rendered here. It stays the learning
+       world's, unchanged; the switcher does that job for twelve topics, and
+       the two were the loudest thing the two sections had in common. Amit's
+       call, 12 September 2026. */ -}}
   {{ partial "siteheader.html" . }}
-  <div class="b-layout">
-    <nav class="b-rail" id="bRail" aria-label="{{ $world.name }} topics">
-      {{- /* No "Overview" row: the section name in the header already goes to
-           the front page, as in the learning world. The glossary sits at the
-           top, as it does there, with a count taken from the topics' own
-           words so it cannot drift. */ -}}
-      {{ with .Site.GetPage (printf "%s/glossary" $world.root) }}
-      {{ $nw := 0 }}{{ range $bTopics }}{{ $nw = add $nw (len .Params.words) }}{{ end }}
-      <a class="b-rail-gloss{{ if eq $.RelPermalink .RelPermalink }} active{{ end }}" href="{{ .RelPermalink }}"><span>Glossary</span><span class="b-rail-gloss-n">{{ $nw }}</span></a>
-      {{ end }}
-      {{ range $g := $bGroups }}{{ with where $bTopics "Params.group" $g.key }}
-      <div class="b-rail-grp">
-        <div class="b-rail-h">{{ $g.label }}</div>
-        {{ range . }}<a class="b-rail-a{{ if eq $.RelPermalink .RelPermalink }} active{{ end }}" href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>{{ end }}
-      </div>
-      {{ end }}{{ end }}    </nav>
-    <main class="main b-main">{{ block "main" . }}{{ end }}</main>
-  </div>
-  <div class="b-scrim" id="bScrim"></div>
-  {{- /* "See where this fits" on every topic, since 11 September 2026. */ -}}
-  {{ if eq .Type "topic" }}{{ partial "wherefits.html" . }}{{ end }}
+  <main class="main b-main">{{ block "main" . }}{{ end }}</main>
   {{ partial "printdoc.html" . }}
 {{ else if $learn }}
   {{ $modules := (where .Site.Pages "Type" "module").ByParam "modulenum" }}

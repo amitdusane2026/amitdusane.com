@@ -1,23 +1,46 @@
 /* ===========================================================================
-   world-basics.css — the BASICS section type. Created 11 September 2026.
+   world-basics.css — the BASICS section type. Created 11 September 2026,
+   redesigned 12 September 2026.
 
-   A Basics section teaches the vocabulary of a whole field to somebody who is
-   new to it, so they can follow a developer, answer in a meeting, and ask for
-   the right thing. Mobile App Basics is the first; Website Basics will be the
-   second. Both load THIS stylesheet. Only the accent changes per instance, in
-   the per-instance block below, which is how one shell serves many sections.
+   A Basics section teaches the vocabulary of a whole field to somebody new to
+   it, so they can follow a developer, answer in a meeting, and ask for the
+   right thing. Mobile App Basics and Website Basics both load THIS stylesheet;
+   only the accent changes per instance, in the per-instance block below.
 
-   It is a new design, not the procedure shell with the steps taken out:
+   ---------------------------------------------------------------------------
+   THE 12 SEPTEMBER REDESIGN, and why.
 
-     - no sequence, so nothing is numbered and the rail lists topics in groups
-     - the front page lists every topic as a tappable row, in its group
-     - every topic has one fixed shape, enforced by the template rather than
-       by the author: one-sentence definition, body, what to ask a developer,
-       and the words you will hear
+   Readers who knew the learning section could not tell the two apart. The
+   cause was the SILHOUETTE, not the palette: a 280px left rail, a 760px
+   column, a 250px right rail, a green floating map tab and an "8 min read"
+   byline are what a learning section looks like from across the room, and
+   Basics wore all of them.
+
+   The fix separates two things that had been treated as one:
+
+     SITE-level furniture  — the header, search, theme, the About mark, these
+       tokens, .call/.mini-tbl/.code/.fig-svg, the glossary, print. Every world
+       has these. They make a Basics section look like THIS SITE. All kept.
+
+     LEARNING-level furniture — the three-column measurement, the left contents
+       rail, the pocket-map tab, read time, previous/next. These make it look
+       like THE CURRICULUM. All removed.
+
+   What replaces them comes from the shape of the content: twelve topics is a
+   thing a reader can see all of at once, so the front page is a DECK carrying
+   every topic's one-sentence answer, and a topic LEADS WITH THAT ANSWER rather
+   than working up to it. That inversion is deliberate and is the whole
+   editorial difference from the learning world, which delays its answer on
+   purpose. Navigation between topics is a SWITCHER (partials/topicswitch.html)
+   rather than a persistent rail: with twelve items a picker beats a column,
+   and it shares no component with the curriculum.
+
+   Amit's call, 12 September 2026: the switcher REPLACES "See where this fits"
+   in a Basics section rather than sitting beside it. wherefits stays the
+   learning world's, untouched.
 
    Labels are sentence case and carry their weight through size and weight,
-   never through capitals or letter-spacing. That is the site rule, and this
-   stylesheet follows it where the older procedure shell does not.
+   never through capitals or letter-spacing.
    =========================================================================== */
 
 :root{
@@ -29,10 +52,14 @@
   --code-bg:#1c2128; --code-ink:#e7ebf0;
   --sans:'IBM Plex Sans',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
   --mono:'IBM Plex Mono',"SFMono-Regular",ui-monospace,Menlo,Consolas,monospace;
-  /* The three columns take the learning world's measurements (11 September
-     2026): a 280px rail, a 760px reading column, a 250px right rail 40px away. */
-  --b-rail:280px; --measure:760px; --b-side:250px; --b-side-gap:40px;
-  --b-fs-h1:32px; --b-fs-h2:21px; --b-fs-body:17px; --b-fs-sm:14.5px; --b-fs-meta:12.5px;
+  /* Two columns, not three. The reading column keeps the site's 760px measure
+     and the words keep the 250px side column, but there is no left rail, so
+     the pair is CENTRED on the page (1050px total) instead of pushed right.
+     That asymmetric shape reads as an article with sidenotes rather than as a
+     course, which is the point. */
+  --measure:760px; --b-side:250px; --b-side-gap:40px;
+  --b-fs-h1:33px; --b-fs-answer:21px; --b-fs-h2:21px; --b-fs-body:17px;
+  --b-fs-sm:14.5px; --b-fs-label:15px; --b-fs-meta:12.5px;
 }
 [data-theme="dark"]{
   --ink:#e6eaf0; --ink-soft:#bcc3cd; --muted:#8a919b; --faint:#5e6671;
@@ -65,74 +92,122 @@ body.world-basics{margin:0;background:var(--bg);color:var(--ink);font-family:var
    a`, which also caught the header's section name -- a link too -- and turned
    it terracotta, when every world sets it in the shared header ink. */
 .b-main a{color:var(--accent)}
+/* NO LEFT RAIL, so the header's hamburger has nothing to open. It is the
+   shared header's button and every other world needs it, so it is hidden here
+   rather than removed there. */
+body.world-basics .site-menu-btn{display:none}
 
-/* ---------- Layout: rail of groups, then the reading column ---------- */
-.b-layout{display:grid;grid-template-columns:var(--b-rail) minmax(0,1fr);align-items:start}
-.b-main{min-width:0;padding:34px 48px 120px}
-/* Centred in the space right of the rail, rather than hugging it and leaving
-   an empty band on a wide screen. */
-.b-topic,.b-front{max-width:1120px;margin:0 auto}
-.b-wordlist{max-width:var(--measure);margin:0 auto}
-.b-rail{position:sticky;top:var(--header-h);height:calc(100vh - var(--header-h));overflow-y:auto;
-  background:var(--bg-soft);border-right:1px solid var(--line);padding:22px 12px 48px}
-.b-rail a{display:block;text-decoration:none;color:var(--ink-soft);border-radius:8px;padding:6px 12px;font-size:14px;line-height:1.4}
-.b-rail a:hover{background:var(--line-soft);color:var(--ink)}
-.b-rail a.active{background:var(--accent-soft);color:var(--accent);font-weight:600}
-/* The glossary link, pinned at the top of the rail as in the learning world:
-   a boxed row with the word count on the right, quiet enough not to compete
-   with the topics, present enough that a reader mid-sentence finds it. */
-.b-rail a.b-rail-gloss{display:flex;align-items:center;gap:8px;padding:8px 12px;margin:0 0 14px;
-  border:1px solid var(--line);border-radius:8px;font-weight:600;color:var(--ink)}
-.b-rail a.b-rail-gloss:hover,.b-rail a.b-rail-gloss.active{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
-.b-rail-gloss-n{margin-left:auto;font-size:12px;font-weight:700;color:var(--ink-soft);font-variant-numeric:tabular-nums}
-.b-rail a.b-rail-gloss:hover .b-rail-gloss-n,.b-rail a.b-rail-gloss.active .b-rail-gloss-n{color:var(--accent)}
-.b-rail-grp{margin:0 0 14px}
-.b-rail-h{font-size:12.5px;font-weight:700;color:var(--ink-soft);padding:8px 12px 4px}
-.b-scrim{display:none}
+/* ---------- Layout: one centred column, with the words beside it ---------- */
+.b-main{min-width:0;padding:34px 24px 120px}
+.b-topic,.b-front,.b-wordlist{margin:0 auto}
+.b-front{max-width:1050px}
+.b-topic{max-width:var(--measure)}
+.b-wordlist{max-width:var(--measure)}
 
 /* ---------- Type ---------- */
-.view h1{font-size:var(--b-fs-h1);line-height:1.2;margin:.1em 0 .35em;letter-spacing:-.012em;font-weight:700}
+.view h1{font-size:var(--b-fs-h1);line-height:1.18;margin:.1em 0 .35em;letter-spacing:-.017em;font-weight:700}
 .b-body{max-width:var(--measure)}
-.b-body h2,.b-side-h,.b-ask h2{font-size:var(--b-fs-h2);line-height:1.3;margin:1.7em 0 .5em;font-weight:700}
+.b-side-h,.b-ask h2{font-size:var(--b-fs-label);line-height:1.3;font-weight:700}
+/* A body heading carries a short accent rule above it. It is the one piece of
+   ornament in the section and it does a job: it marks a topic's h2 as
+   something other than the learning world's h3.subsec-title at a glance. */
+.b-body h2{font-size:var(--b-fs-h2);line-height:1.32;margin:1.9em 0 .5em;font-weight:700;letter-spacing:-.012em}
+.b-body h2::before{content:"";display:block;width:24px;height:3px;border-radius:2px;background:var(--accent);margin:0 0 13px}
+.b-body h2:first-child{margin-top:0}
 /* Every anchor target lands below the fixed header, not under it. "About
    this section" links to #premise, and without this the box landed with its
    first lines hidden behind the header. */
 body.world-basics [id]{scroll-margin-top:calc(var(--header-h) + 20px)}
 .b-body p{margin:0 0 .95em}
-.crumb{font-size:13px;color:var(--ink-soft);margin:0 0 10px}
+.crumb{font-size:13px;color:var(--ink-soft);margin:0}
 .crumb a{text-decoration:none}
 .crumb a:hover{text-decoration:underline}
 .eyebrow{font-size:13px;font-weight:700;color:var(--accent);margin:0 0 4px}
 code,.b-body .mn{font-family:var(--mono);font-size:.88em;background:var(--bg-soft);border:1px solid var(--line);border-radius:5px;padding:.05em .35em}
 
-/* ---------- The fixed topic shape ---------- */
-.b-one{max-width:var(--measure);background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:12px;padding:14px 18px;margin:18px 0 10px}
-.b-one-l{display:block;font-size:13px;font-weight:700;color:var(--accent);margin-bottom:3px}
-.b-one p{margin:0;font-size:18px;line-height:1.55;color:var(--ink);font-weight:500}
-.b-remind{max-width:var(--measure);font-size:13.5px;color:var(--ink-soft);margin:0 0 8px}
+/* ---------- The fixed topic shape ----------
+   THE ANSWER LEADS. It is the first thing on the page after the title, set at
+   21px on the accent wash with a heavy accent edge, because a reader who came
+   for one fact should be able to leave with it. */
+.b-crumbrow{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin:0 0 12px}
+.b-crumbrow .crumb{flex:1;min-width:0}
+.b-one{background:var(--accent-soft);border:1px solid var(--accent-line);border-left:4px solid var(--accent);
+  border-radius:4px 12px 12px 4px;padding:18px 22px;margin:20px 0 0}
+.b-one-l{display:block;font-size:13px;font-weight:700;color:var(--accent);margin-bottom:8px}
+.b-one p{margin:0;font-size:var(--b-fs-answer);line-height:1.5;color:var(--ink);letter-spacing:-.008em}
+.b-remind{font-size:13.5px;color:var(--ink-soft);margin:14px 0 0}
 
-/* The side column. Narrow screens: it simply follows the article. */
-.b-side{max-width:var(--measure);margin-top:44px;border-top:1px solid var(--line)}
-/* Ask a developer: in the article at every width, boxed in the accent wash
-   because it is the part of a topic a reader acts on. */
-.b-ask{max-width:var(--measure);margin:36px 0 0;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:12px;padding:4px 20px 12px}
-.b-ask-row{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
-.b-ask h2{margin:.8em 0 .4em}
-.b-copyq{font:inherit;font-size:12.5px;font-weight:600;border:1px solid var(--line);background:var(--bg);color:var(--ink-soft);border-radius:6px;padding:3px 10px;cursor:pointer;flex:none}
+/* Ask a developer: in the article at every width, because it is the part of a
+   topic a reader acts on and a side column buried it. Accent numerals, one
+   question per row, hairline between. */
+.b-ask{margin:44px 0 0;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:18px 22px 4px}
+.b-ask-row{display:flex;align-items:center;gap:12px;margin:0 0 4px}
+.b-ask h2{flex:1;margin:0}
+.b-copyq{font:inherit;font-size:12.5px;font-weight:600;border:1px solid var(--line);background:var(--bg);
+  color:var(--ink-soft);border-radius:7px;padding:6px 11px;cursor:pointer;flex:none}
 .b-copyq:hover{border-color:var(--accent);color:var(--accent)}
-.b-dl{margin:0}
-.b-w{display:grid;grid-template-columns:minmax(120px,190px) 1fr;gap:4px 18px;padding:10px 6px;border-bottom:1px solid var(--line-soft)}
-.b-w dt{font-weight:700;color:var(--ink)}
-.b-w dd{margin:0;color:var(--ink-soft);font-size:var(--b-fs-sm)}
-.b-w:target{background:var(--accent-soft);border-radius:6px}
-.b-ask ol{margin:0;padding-left:1.3em}
-.b-ask li{margin:0 0 .6em;font-size:var(--b-fs-sm)}
-.b-pn{display:flex;justify-content:space-between;gap:12px;margin-top:34px;max-width:var(--measure)}
-.b-pn a{flex:1;max-width:48%;text-decoration:none;border:1px solid var(--line);border-radius:10px;padding:12px 14px}
-.b-pn a:hover{border-color:var(--accent)}
-.b-pn .k{display:block;font-size:var(--b-fs-meta);color:var(--muted)}
-.b-pn .t{display:block;font-weight:600;color:var(--ink);font-size:15px}
-.b-pn .next{text-align:right;margin-left:auto}
+.b-ask ol{list-style:none;margin:0;padding:0;counter-reset:bq}
+.b-ask li{counter-increment:bq;position:relative;margin:0;padding:12px 0 12px 28px;
+  border-top:1px solid var(--line);font-size:var(--b-fs-body);line-height:1.6;color:var(--ink)}
+.b-ask li::before{content:counter(bq);position:absolute;left:0;top:13px;font-weight:700;font-size:13px;color:var(--accent)}
+
+/* THE PAYOFF. `cando` was written for the old front-page rows and showed
+   nowhere a reader could use it; it closes the topic now, which is where a
+   "you can do this now" line belongs. */
+.b-can{display:flex;gap:13px;align-items:flex-start;margin:28px 0 0;padding:15px 19px;
+  background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:12px}
+.b-can svg{flex:none;width:19px;height:19px;color:var(--accent);margin-top:3px}
+.b-can p{margin:0;font-size:var(--b-fs-sm);line-height:1.6;color:var(--ink-soft)}
+.b-can b{color:var(--ink);font-weight:700}
+
+/* MORE IN THIS GROUP. Sibling topics, which orient without promising an
+   order the way previous/next did. Previous/next was removed on 12 September
+   2026: the section states that nothing here is numbered because there is no
+   sequence, and a "Next topic" button promised exactly that sequence. */
+.b-more{margin:54px 0 0;border-top:1px solid var(--line);padding:22px 0 0}
+.b-more-h{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin:0 0 14px}
+.b-more-h h2{margin:0;font-size:var(--b-fs-label);font-weight:700;color:var(--ink)}
+.b-more-h a{margin-left:auto;font-size:13px;font-weight:600;text-decoration:none}
+.b-more-h a:hover{text-decoration:underline}
+.b-more .b-grp-c{grid-template-columns:repeat(auto-fit,minmax(232px,1fr))}
+
+/* The words. Narrow screens: they simply follow the article. */
+.b-side{margin-top:40px;border-top:1px solid var(--line);padding-top:18px}
+.b-side-h{margin:0 0 14px;color:var(--ink)}
+.b-dl{margin:0;display:grid;grid-template-columns:1fr 1fr;gap:16px 30px}
+.b-w{min-width:0}
+.b-w dt{font-weight:650;font-size:var(--b-fs-sm);color:var(--ink);display:inline;
+  box-shadow:inset 0 -2px 0 var(--accent-line);line-height:1.9}
+.b-w dd{margin:5px 0 0;color:var(--ink-soft);font-size:var(--b-fs-sm);line-height:1.55}
+.b-w:target dt{box-shadow:inset 0 -2px 0 var(--accent)}
+
+/* ---------- The switcher ----------
+   Replaces both the left rail and "See where this fits", on Amit's call,
+   12 September 2026. Twelve topics is a picker's job, not a column's: one
+   button, every topic grouped, the current one marked, and the glossary at
+   its foot so the lookup page keeps a route from every page. */
+.b-switch{position:relative;flex:none}
+.b-switch-btn{display:inline-flex;align-items:center;gap:8px;font:inherit;font-size:13px;font-weight:600;
+  color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:9px;padding:7px 12px;cursor:pointer}
+.b-switch-btn:hover{border-color:var(--accent);color:var(--accent)}
+.b-switch-btn svg{flex:none;width:15px;height:15px;color:var(--accent)}
+.b-switch-btn .chev{width:12px;height:12px;color:var(--muted);transition:transform .15s}
+.b-switch-btn[aria-expanded="true"] .chev{transform:rotate(180deg)}
+.b-switch-panel{position:absolute;top:calc(100% + 8px);right:0;z-index:70;width:min(92vw,420px);
+  background:var(--bg);border:1px solid var(--line);border-radius:12px;box-shadow:0 18px 48px -18px rgba(12,16,22,.42);
+  max-height:min(70vh,560px);overflow-y:auto;overscroll-behavior:contain;padding:8px}
+[data-theme="dark"] .b-switch-panel{box-shadow:0 18px 48px -14px rgba(0,0,0,.7)}
+.b-switch-g{padding:6px 4px 8px}
+.b-switch-g + .b-switch-g{border-top:1px solid var(--line-soft)}
+.b-switch-h{font-size:12.5px;font-weight:700;color:var(--muted);padding:2px 8px 6px}
+.b-main a.b-switch-a{display:block;text-decoration:none;color:var(--ink);font-size:14px;line-height:1.4;
+  padding:8px 10px;border-radius:8px}
+.b-main a.b-switch-a:hover{background:var(--accent-soft);color:var(--accent)}
+.b-main a.b-switch-a.current{background:var(--accent-soft);color:var(--accent);font-weight:700}
+.b-main a.b-switch-foot{display:flex;align-items:center;gap:8px;margin:4px 2px 2px;padding:10px;
+  border-top:1px solid var(--line);text-decoration:none;font-size:13.5px;font-weight:600;color:var(--ink)}
+.b-main a.b-switch-foot:hover{color:var(--accent)}
+.b-switch-foot span{margin-left:auto;font-size:12px;font-weight:700;color:var(--muted);font-variant-numeric:tabular-nums}
 
 /* ---------- Components carried from the procedure worlds, same class names
    so content moves between sections unchanged. Labels in sentence case. ---------- */
@@ -156,48 +231,37 @@ code,.b-body .mn{font-family:var(--mono);font-size:.88em;background:var(--bg-sof
 .fig-svg .mn{font-family:var(--mono)}
 .fig-svg figcaption{margin-top:10px;font-size:13px;color:var(--ink-soft);text-align:center;line-height:1.5}
 
-/* ---------- Front page: simple, every topic one tap away ----------
-   Rebuilt 11 September 2026 on Amit's review. The word picker is gone, and a
-   topic is a row that looks tappable without hover: a border, a whole-row
-   target of at least 56px, and an arrow in an accent disc at the end. Two
-   columns where there is room, one on a phone. The premise comes first, under
-   the lead, because it is what a learner reads before anything else. */
-.b-lead{font-size:18px;line-height:1.6;color:var(--ink-soft);max-width:var(--measure);margin:0 0 16px}
-.b-grp{margin:0 0 26px}
-.b-grp-h{font-size:16px;line-height:1.3;margin:0 0 10px;font-weight:700;color:var(--ink)}
-.b-list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px}
-.b-list li{margin:0}
-.b-item{display:flex;align-items:center;gap:12px;min-height:56px;padding:12px 14px 12px 16px;border:1px solid var(--line);border-radius:12px;
-  background:var(--bg);text-decoration:none;transition:border-color .15s,background-color .15s}
-.b-item:hover{border-color:var(--accent)}
-.b-item:active{background:var(--accent-soft)}
-.b-item:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.b-item-tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
-.b-item-t{font-weight:700;font-size:15.5px;line-height:1.35;color:var(--ink)}
-.b-item-d{font-size:13.5px;line-height:1.45;color:var(--ink-soft)}
-.b-item-go{flex:none;display:flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;
-  background:var(--accent-soft);color:var(--accent);font-size:20px;line-height:1;padding-bottom:2px;box-sizing:border-box}
-.b-item:hover .b-item-go{background:var(--accent);color:var(--on-accent)}
-.b-premise{max-width:var(--measure);border-left:4px solid var(--accent);background:var(--bg-soft);border-radius:0 10px 10px 0;padding:12px 16px;margin:0 0 30px}
-.b-premise-l{display:block;font-size:13px;font-weight:700;color:var(--ink);margin-bottom:2px}
-.b-premise p{margin:0;font-size:var(--b-fs-sm);color:var(--ink-soft)}
-.b-front-foot{margin:8px 0 0;font-size:var(--b-fs-sm)}
+/* ---------- Front page: the deck ----------
+   Redesigned 12 September 2026. It was a list of links, which meant the page
+   had to be passed through on the way somewhere. It is a DECK now, and every
+   card carries that topic's one-sentence answer, so ninety seconds on this
+   page alone leaves a reader better off in a meeting. That is only possible
+   because there are twelve topics; it is the reason a Basics section can have
+   a front page the learning world cannot.
 
-/* ---------- "See where this fits" ----------
-   On a topic page from 1240px, a green button heads the side column, the way
-   the learning world puts its pocket map at the top of its right rail; the
-   floating tab steps aside there so the two are never on screen together.
-   Below 1240px the floating tab (chrome.css) is the way in. Both open the one
-   map, wherefits.js. Green #15803d carries white text at 5:1. */
-.b-wf{display:none;width:100%;align-items:center;gap:10px;margin:0 0 16px;padding:11px 14px;border:0;border-radius:12px;
-  background:#15803d;color:#fff;font:inherit;text-align:left;cursor:pointer;box-shadow:0 4px 14px rgba(21,128,61,.28)}
-.b-wf:hover{background:#166534}
-.b-wf:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
-.b-wf svg{flex:none;width:18px;height:18px}
-.b-wf b{display:block;font-size:14px;font-weight:700;line-height:1.3}
-.b-wf em{display:block;font-style:normal;font-size:12px;opacity:.92;line-height:1.3}
-@media (min-width:1240px){ .b-wf{display:flex} body.world-basics .wf-tab{display:none} }
-@media print{ .b-wf{display:none !important} }
+   Desktop reads as an index: the group name in a narrow left column with its
+   cards beside it. Amit, 12 September 2026: show the answers. */
+.b-lead{font-size:19px;line-height:1.55;color:var(--ink-soft);max-width:46ch;margin:0 0 12px}
+.b-front-meta{font-size:13px;color:var(--muted);margin:0 0 22px}
+.b-front-meta b{color:var(--ink-soft);font-weight:600}
+.b-premise{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:18px 22px;margin:0 0 8px}
+.b-premise-l{display:block;font-size:var(--b-fs-label);font-weight:700;color:var(--accent);margin-bottom:7px}
+.b-premise p{margin:0;font-size:var(--b-fs-sm);line-height:1.62;color:var(--ink-soft)}
+.b-deck{margin:26px 0 0}
+.b-grp{display:grid;grid-template-columns:186px minmax(0,1fr);gap:30px;padding:28px 0;border-top:1px solid var(--line)}
+.b-grp-l{position:sticky;top:calc(var(--header-h) + 22px);align-self:start}
+.b-grp-h{margin:0;font-size:var(--b-fs-label);font-weight:700;color:var(--ink);line-height:1.3}
+.b-grp-n{display:block;font-size:var(--b-fs-meta);color:var(--muted);margin-top:3px}
+.b-grp-c{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
+.b-card{position:relative;display:block;background:var(--bg);border:1px solid var(--line);border-radius:12px;
+  padding:17px 19px 19px;text-decoration:none;transition:border-color .15s,box-shadow .15s,transform .15s}
+.b-card b{display:block;font-weight:650;font-size:16.5px;line-height:1.34;color:var(--ink);padding-right:28px;letter-spacing:-.008em}
+.b-card p{margin:9px 0 0;font-size:var(--b-fs-sm);line-height:1.56;color:var(--ink-soft)}
+.b-card .b-card-go{position:absolute;top:18px;right:17px;width:20px;height:20px;color:var(--accent);transition:transform .15s}
+.b-card:hover{border-color:var(--accent-line);box-shadow:0 6px 22px -14px rgba(12,16,22,.5);transform:translateY(-2px)}
+.b-card:hover .b-card-go{transform:translateX(3px)}
+.b-card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.b-front-foot{margin:26px 0 0;font-size:var(--b-fs-sm);border-top:1px solid var(--line);padding-top:18px}
 
 /* ---------- Glossary ----------
    The pattern of the Adobe Analytics glossary: an A to Z strip pinned under
@@ -222,77 +286,61 @@ body.world-basics .gl-letter{font-size:18px;font-weight:700;color:var(--accent);
 /* ---------- Global chrome that names worlds by class ---------- */
 body.world-basics .ask-bar b,body.world-basics .ask-kicker{color:var(--accent)}
 
-/* ---------- Wide: three columns, on the learning world's measurements ----------
-   From 1240px a topic is laid out the way a learning-world section is: the
-   rail on the left, the reading column centred in the space that remains, and
-   a 250px right rail against the page's right edge, 40px from the text. Amit,
-   11 September 2026: the first version centred a 1120px block, which left a
-   band of empty page to the right of a 300px side column that still had to
-   scroll. The words take the right rail's smaller type so they fit.
+/* ---------- Wide: the words come alongside ----------
+   From 1240px the topic becomes a two-column grid, centred: the 760px reading
+   column and a 250px words column 40px away, the pair centred on the page
+   rather than pushed right by a rail that no longer exists.
 
-   The topic becomes the grid and .b-cols steps aside (display:contents), so
-   the title, the article and the previous/next links share the reading column
-   while the right rail spans all three rows and stays in view as the reader
-   scrolls. It still scrolls on its own as a last resort, and ends 112px above
-   the bottom so the round About mark never sits on its last lines. */
+   .b-cols steps aside (display:contents) so the head, the article and the
+   "more" block share column one while the words span every row and stay in
+   view as the reader scrolls. Term and meaning run on one line, the way a
+   printed glossary sets them: that is what keeps six words inside a 1280x720
+   screen without scrolling. */
 @media (min-width:1240px){
-  .b-main{padding:34px 32px 120px}
-  .b-topic{max-width:none;display:grid;grid-template-columns:minmax(0,1fr) var(--b-side);column-gap:var(--b-side-gap);align-items:start}
+  .b-topic{max-width:calc(var(--measure) + var(--b-side) + var(--b-side-gap));
+    display:grid;grid-template-columns:minmax(0,var(--measure)) var(--b-side);
+    column-gap:var(--b-side-gap);align-items:start}
   .b-cols{display:contents}
-  .b-topic > .b-head,.b-cols > .b-art,.b-topic > .b-pn{grid-column:1;width:100%;max-width:var(--measure);margin-left:auto;margin-right:auto}
-  .b-side{grid-column:2;grid-row:1 / span 3;position:sticky;top:calc(var(--header-h) + 24px);margin-top:4px;border-top:0;max-width:none;
-    max-height:calc(100vh - var(--header-h) - 112px);overflow-y:auto;overscroll-behavior:contain;padding:0 2px 8px 0}
-  /* Every block in the side column is a grey card, except the green "See
-     where this fits" button. This rule sits later than .b-wf at equal
-     specificity, so without the :not() it painted the button grey and left its
-     white text on near-white, which is how it shipped on 11 September 2026. */
-  .b-side > :not(.b-wf){background:var(--bg-soft);border:1px solid var(--line);border-radius:10px;padding:10px 12px 4px;margin:0 0 10px}
-  .b-side .b-side-h{font-size:12px;line-height:1.3;margin:0 0 4px;color:var(--ink-soft)}
-  /* Term and meaning run on one line, the way a printed glossary sets them,
-     rather than stacked. Stacked, the two heaviest topics (8 words) overran a
-     1366x768 screen by up to 161px; one line saved per word is what brings
-     them inside it. */
-  .b-side .b-w{display:block;padding:5px 0;border-bottom:1px solid var(--line);font-size:12.5px;line-height:1.45}
+  .b-topic > .b-head,.b-art,.b-more{grid-column:1;min-width:0}
+  .b-side{grid-column:2;grid-row:1 / span 4;position:sticky;top:calc(var(--header-h) + 28px);
+    margin-top:6px;border-top:0;padding:12px 14px 6px;background:var(--bg-soft);border:1px solid var(--line);border-radius:12px;
+    max-height:calc(100vh - var(--header-h) - 112px);overflow-y:auto;overscroll-behavior:contain}
+  .b-side .b-side-h{font-size:12px;line-height:1.3;margin:0 0 6px;color:var(--muted)}
+  .b-side .b-dl{display:block}
+  .b-side .b-w{display:block;padding:6px 0;border-bottom:1px solid var(--line);font-size:12.5px;line-height:1.45}
   .b-side .b-w:last-child{border-bottom:0}
-  .b-side .b-w dt{display:inline;font-size:inherit;line-height:inherit;font-weight:700;color:var(--ink)}
+  .b-side .b-w dt{display:inline;font-size:inherit;line-height:inherit;font-weight:700;color:var(--ink);box-shadow:none}
   .b-side .b-w dt::after{content:" "}
   .b-side .b-w dd{display:inline;margin:0;font-size:inherit;line-height:inherit;color:var(--ink-soft)}
-  .b-wf{padding:9px 12px;margin:0 0 10px;gap:9px}
-  .b-wf svg{width:16px;height:16px}
-  .b-wf b{font-size:13px}
-  .b-wf em{font-size:11.5px}
+  .b-side .b-w:target dt{color:var(--accent)}
 }
 
 /* ---------- Phone ---------- */
 @media (max-width:880px){
-  :root{--b-fs-h1:26px;--b-fs-h2:19px;--b-fs-body:16.5px}
-  .b-layout{display:block}
-  .b-rail{position:fixed;top:var(--header-h);left:0;bottom:0;height:auto;width:min(86vw,var(--b-rail));z-index:65;
-    transform:translateX(-100%);transition:transform .2s;box-shadow:0 10px 40px rgba(0,0,0,.18)}
-  body.nav-open .b-rail{transform:none}
-  body.nav-open .b-scrim{display:block;position:fixed;top:var(--header-h);left:0;right:0;bottom:0;background:rgba(0,0,0,.28);z-index:60}
+  :root{--b-fs-h1:26px;--b-fs-answer:18.5px;--b-fs-h2:19px;--b-fs-body:16.5px}
   .b-main{padding:22px 18px 96px}
-  .b-one p{font-size:17px}
+  .b-grp{grid-template-columns:1fr;gap:14px;padding:20px 0 24px}
+  .b-grp-l{position:static}
+  .b-grp-c,.b-more .b-grp-c{grid-template-columns:1fr;gap:12px}
+  .b-lead{font-size:17.5px;max-width:none}
+  .b-one{padding:16px 18px;border-radius:3px 10px 10px 3px}
+  .b-ask{padding:16px 18px 2px}
+  .b-premise{padding:16px 18px}
+  .b-dl{grid-template-columns:1fr;gap:15px}
   /* Code wraps on a phone instead of scrolling sideways, as in every world
      since 11 September 2026; the padding clears the Copy button. */
   .code pre{white-space:pre-wrap;overflow-wrap:anywhere;overflow-x:visible;padding-top:36px}
 }
 @media (max-width:560px){
-  .b-w{grid-template-columns:1fr}
-  .b-pn{flex-direction:column}
-  .b-pn a{max-width:none}
-  .b-pn .next{text-align:left;margin-left:0}
+  .b-switch-panel{right:auto;left:0;width:min(94vw,360px)}
+  .mini-tbl td:first-child{white-space:normal}
 }
-@media (prefers-reduced-motion:reduce){ .b-card,.b-rail{transition:none} }
+@media (prefers-reduced-motion:reduce){ .b-card,.b-card .b-card-go,.b-switch-btn .chev{transition:none} .b-card:hover{transform:none} }
 
 /* ---------- Paper ----------
    Only the print document prints, as in every other world: partials/
    printdoc.html is a table whose header and footer repeat on every sheet, and
-   printdoc.js copies the article into it. The live layout never prints.
-
-   Until 11 September 2026 this file hid neither. On screen the copy showed
-   under the rail as a second, unstyled page; on paper the live page printed
-   first, prev/next and all, and the proper document followed it. */
+   printdoc.js copies the article into it. The live layout never prints. */
 .print-doc{display:none}
 @media print{
   :root,[data-theme="dark"]{
@@ -303,20 +351,21 @@ body.world-basics .ask-bar b,body.world-basics .ask-kicker{color:var(--accent)}
     --code-bg:#1c2128; --code-ink:#e7ebf0;
   }
   body.world-mab,[data-theme="dark"] body.world-mab{ --accent:#a3401c; --accent-soft:#fbeee8; --accent-line:#f0cdbd; }
+  body.world-wsb,[data-theme="dark"] body.world-wsb{ --accent:#8a2c6e; --accent-soft:#f8ecf4; --accent-line:#ecc6df; }
   html,body{background:#fff !important}
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   body.world-basics{padding-top:0 !important}
-  .b-layout,.b-scrim,.search-overlay{display:none !important}
+  .b-main,.search-overlay{display:none !important}
   body.world-basics .print-doc thead td{border-bottom-color:var(--accent)}
   body.world-basics .print-doc tfoot td{border-top-color:var(--accent)}
   /* Screen navigation inside the copied article. */
-  .print-doc .b-remind,.print-doc .b-pn,.print-doc .b-pick,.print-doc .code .copy{display:none !important}
-  /* The side column prints as a plain block after the article. */
+  .print-doc .b-remind,.print-doc .b-switch,.print-doc .b-more,.print-doc .code .copy{display:none !important}
   .print-doc .b-copyq,.print-doc .gl-az{display:none !important}
   .print-doc .b-ask{background:none !important;border:1px solid var(--line)}
   .print-doc .b-cols{display:block !important}
-  .print-doc .b-side{position:static !important;max-height:none !important;overflow:visible !important;margin-top:28px;border-top:1px solid var(--line)}
-  .print-doc .b-side > *{background:none !important;border:0 !important;padding:0 !important}
+  .print-doc .b-side{position:static !important;max-height:none !important;overflow:visible !important;
+    margin-top:28px;border:0 !important;border-top:1px solid var(--line) !important;border-radius:0 !important;
+    background:none !important;padding:12px 0 0 !important}
   .print-doc .b-body,.print-doc .b-side,.print-doc .b-head,.print-doc .b-one,.print-doc .call,.print-doc .mini-tbl,
   .print-doc .code,.print-doc .fig-svg,.print-doc .b-lead,.print-doc .b-premise{max-width:none}
   .print-doc .fig-svg svg{max-width:100%;height:auto}

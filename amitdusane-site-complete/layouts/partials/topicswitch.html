@@ -1,0 +1,45 @@
+{{- /* ===========================================================================
+     THE TOPIC SWITCHER. Created 12 September 2026.
+
+     One button that opens every topic in the section, grouped, with the
+     current one marked, and the glossary at its foot.
+
+     IT REPLACES TWO THINGS: the persistent left rail, and "See where this
+     fits". Amit's call, the same day, and the reasoning is the count. Twelve
+     topics is a thing a reader can hold in their head, so a picker they open
+     when they want it beats a column that is on screen always -- and the
+     column, at the learning world's own measurements, was one of the reasons
+     readers could not tell a Basics section from the curriculum.
+
+     wherefits.html is untouched and stays the learning world's; it is simply
+     no longer rendered for a Basics topic.
+
+     THE GLOSSARY SITS AT THE FOOT because the rail used to carry it. Without
+     that, the lookup page would be reachable only from the section front page,
+     which is a route nobody takes mid-sentence. The count is COUNTED from the
+     topics' own words, never typed, so it cannot drift.
+     =========================================================================== */ -}}
+{{ $w := index .Site.Params.worlds .Section }}
+{{ $topics := (where (where .Site.RegularPages "Section" .Section) "Type" "topic").ByWeight }}
+{{ $groups := slice }}
+{{ range $k, $v := $w.groups }}{{ $groups = $groups | append (merge $v (dict "key" $k)) }}{{ end }}
+{{ $groups = sort $groups "order" }}
+{{ $nw := 0 }}{{ range $topics }}{{ $nw = add $nw (len .Params.words) }}{{ end }}
+<div class="b-switch" data-switch>
+  <button type="button" class="b-switch-btn" id="bSwitchBtn" aria-expanded="false" aria-controls="bSwitchPanel">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+    <span>All {{ len $topics }} topics</span>
+    <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+  </button>
+  <div class="b-switch-panel" id="bSwitchPanel" hidden>
+    {{ range $g := $groups }}{{ with where $topics "Params.group" $g.key }}
+    <div class="b-switch-g">
+      <div class="b-switch-h">{{ $g.label }}</div>
+      {{ range . }}<a class="b-switch-a{{ if eq $.RelPermalink .RelPermalink }} current{{ end }}" href="{{ .RelPermalink }}"{{ if eq $.RelPermalink .RelPermalink }} aria-current="page"{{ end }}>{{ .LinkTitle | default .Title }}</a>{{ end }}
+    </div>
+    {{ end }}{{ end }}
+    {{ with .Site.GetPage (printf "%s/glossary" $w.root) }}
+    <a class="b-switch-foot" href="{{ .RelPermalink }}">Glossary<span>{{ $nw }} words</span></a>
+    {{ end }}
+  </div>
+</div>

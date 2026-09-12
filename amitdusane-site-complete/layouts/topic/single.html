@@ -1,6 +1,6 @@
 {{ define "main" }}
 {{- /* ===========================================================================
-     A BASICS TOPIC. Created 11 September 2026.
+     A BASICS TOPIC. Created 11 September 2026, redesigned 12 September 2026.
 
      One fixed shape, and the template enforces it so no topic can drift:
 
@@ -8,37 +8,65 @@
        2  the body             .Content                 opens with "Why it
                                                         matters to you"
        3  Ask a developer      front matter `ask`       closes the article
-       4  Words you will hear  front matter `words`     term + plain meaning
+       4  With this you can    front matter `cando`     the payoff
+       5  Words you will hear  front matter `words`     term + plain meaning
 
-     Structured front matter rather than prose for 1, 3 and 4, because the
-     same data feeds the front-page cards, the word picker and the glossary.
-     Written once, used three times, never out of step.
+     Structured front matter rather than prose, because the same data feeds the
+     deck on the front page, the switcher and the glossary. Written once, used
+     several times, never out of step.
 
-     THE WORDS SIT BESIDE THE ARTICLE ON A WIDE SCREEN, held in view while the
+     THE ANSWER LEADS. `oneline` is the first thing after the title, set large.
+     That is the deliberate inverse of the learning world, which delays its
+     answer on purpose because its reader has time; a Basics reader came for
+     one fact and should be able to leave with it. Amit's section-type rule of
+     8 September says as much -- this is the layout finally showing it.
+
+     `cando` now closes the topic. It was written for the old front-page rows
+     and, once the deck started carrying `oneline` instead, showed nowhere a
+     reader could use it.
+
+     THE WORDS SIT BESIDE THE ARTICLE from 1240px, held in view while the
      reader scrolls, so a word's meaning is next to the sentence that uses it.
-     Below 1240px, and on paper, they follow the article. "Ask a developer"
-     stays IN the article at every width: Amit's call, the same day, because it
-     is the part a reader acts on and a side column buried it. An "On this
-     page" list was tried there too and removed, because a topic is not long
-     enough to need one.
+     Below that, and on paper, they follow the article -- and "More in this
+     group" sits AFTER them in the document so the phone order stays
+     answer, body, ask, payoff, words, more.
 
-     `linkTitle` is the short name used in the rail and in previous/next; the
-     page headline stays the full title. "Where this shows up" was built and
-     removed the same day at Amit's request.
+     "Ask a developer" stays IN the article at every width: Amit's call,
+     11 September, because it is the part a reader acts on and a side column
+     buried it.
+
+     REMOVED 12 September 2026, and not to be brought back:
+
+       previous/next  It promised a sequence the section states it does not
+                      have. "More in this group" orients instead.
+       read time      byline full=false. A commitment device for an article you
+                      sit down with; on a lookup page it says "come back later".
+       wherefits      The switcher in the crumb row does that job now.
+
+     `linkTitle` is the short name used in the switcher and in "more"; the page
+     headline stays the full title.
      =========================================================================== */ -}}
 {{ $w := index .Site.Params.worlds .Section }}
 {{ $g := index $w.groups .Params.group }}
 {{ $all := (where (where .Site.RegularPages "Section" .Section) "Type" "topic").ByWeight }}
-{{ $prev := "" }}{{ $next := "" }}{{ $found := false }}
-{{ range $all }}
-  {{ if $found }}{{ if not $next }}{{ $next = . }}{{ end }}{{ end }}
-  {{ if eq .RelPermalink $.RelPermalink }}{{ $found = true }}{{ end }}
-  {{ if not $found }}{{ $prev = . }}{{ end }}
-{{ end }}
+{{ $sibs := where (where $all "Params.group" .Params.group) "RelPermalink" "!=" .RelPermalink }}
 <section class="view active b-topic">
   <header class="b-head">
-    <p class="crumb"><a href="{{ (printf "%s/" $w.root) | relURL }}">{{ $w.name }}</a>{{ with $g }} &rsaquo; {{ .label }}{{ end }}</p>
+    <div class="b-crumbrow">
+      <p class="crumb"><a href="{{ (printf "%s/" $w.root) | relURL }}">{{ $w.name }}</a>{{ with $g }} &rsaquo; {{ .label }}{{ end }}</p>
+      {{ partial "topicswitch.html" . }}
+    </div>
     <h1>{{ .Title }}</h1>
+    {{- /* THE SAME BYLINE AS A LEARNING SECTION, on Amit's call of 12 September
+         2026: name, credential, dates, read time, in that order, on screen and
+         on paper. It was briefly the landing-page variant (full=false), which
+         prefixes "Created by" and drops the dates -- a third byline shape on a
+         site that had settled on two, and inconsistent with the section a
+         reader most likely arrived from.
+
+         That variant also broke the printed byline, because print hides the
+         name it introduces, leaving "Created by" in front of a gap. Both are
+         fixed by using the same shape here as everywhere else. */ -}}
     {{ partial "byline.html" (dict "page" . "full" true) }}
   </header>
   <div class="b-cols">
@@ -48,29 +76,47 @@
       <div class="b-body">{{ .Content }}</div>
       {{ with .Params.ask }}
       <section class="b-ask" id="ask">
-        <div class="b-ask-row"><h2>Ask a developer</h2><button type="button" class="b-copyq" hidden>Copy</button></div>
+        <div class="b-ask-row"><h2>Ask a developer</h2><button type="button" class="b-copyq" hidden>Copy all</button></div>
         <ol>{{ range . }}<li>{{ . }}</li>{{ end }}</ol>
       </section>
+      {{ end }}
+      {{ with .Params.cando }}
+      <div class="b-can">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+        {{- /* `cando` was written as a standalone line and so starts with a
+             capital ("Explain why..."). It is a continuation of the label
+             here, so the first letter is lowered. Every one of the 26 across
+             both sections opens with a verb, checked 12 September 2026, so
+             there is no proper noun to damage. */ -}}
+        <p><b>With this you can</b> {{ printf "%s%s" (lower (substr . 0 1)) (substr . 1) }}</p>
+      </div>
       {{ end }}
     </div>
     {{ with .Params.words }}
     <aside class="b-side" aria-label="Words you will hear">
-      {{- /* "See where this fits" heads the side column from 1240px, where the
-           column is on screen; below that the floating green tab does the
-           same job. Both open the one map (wherefits.js). */ -}}
-      <button type="button" class="b-wf" data-wf-open><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><polygon points="15.5 8.5 13 13 8.5 15.5 11 11 15.5 8.5"/></svg><span><b>See where this fits</b><em>Across all {{ len $all }} topics</em></span></button>
       <section class="b-words" id="words">
         <h2 class="b-side-h">Words you will hear</h2>
         <dl class="b-dl">{{ range . }}<div class="b-w" id="w-{{ urlize .t }}"><dt>{{ .t }}</dt><dd>{{ .d }}</dd></div>{{ end }}</dl>
       </section>
     </aside>
     {{ end }}
+    {{ if $sibs }}
+    <section class="b-more">
+      <div class="b-more-h">
+        <h2>More in {{ with $g }}{{ .label }}{{ else }}this section{{ end }}</h2>
+        <a href="{{ (printf "%s/" $w.root) | relURL }}">All {{ len $all }} topics &rarr;</a>
+      </div>
+      <div class="b-grp-c">
+        {{ range first 3 $sibs }}
+        <a class="b-card" href="{{ .RelPermalink }}">
+          <b>{{ .Title }}</b>
+          <svg class="b-card-go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+          <p>{{ .Params.oneline | default .Params.cando | default .Description }}</p>
+        </a>
+        {{ end }}
+      </div>
+    </section>
+    {{ end }}
   </div>
-  {{ if or $prev $next }}
-  <nav class="b-pn" aria-label="More topics">
-    {{ with $prev }}<a class="prev" href="{{ .RelPermalink }}"><span class="k">Previous topic</span><span class="t">{{ .LinkTitle }}</span></a>{{ end }}
-    {{ with $next }}<a class="next" href="{{ .RelPermalink }}"><span class="k">Next topic</span><span class="t">{{ .LinkTitle }}</span></a>{{ end }}
-  </nav>
-  {{ end }}
 </section>
 {{ end }}

@@ -32,7 +32,11 @@
      world. Aiming at the navigation alone left the bar sitting over the Adobe
      links and the screen path, which are just as much "the reader has finished"
      as the navigation is. */
-  var stop = document.querySelector('.path-box, .ref-box, .lpn, .stepnav, .b-pn');
+  /* Basics lost .b-pn on 12 September 2026 when previous/next was removed. Its
+     ending now opens with "Ask a developer", which is the same kind of marker
+     as the Adobe links: the reader has finished and is about to act. .b-can
+     and .b-more follow it for a topic that carries no questions. */
+  var stop = document.querySelector('.path-box, .ref-box, .lpn, .stepnav, .b-ask, .b-can, .b-more');
   var addrEl = document.getElementById('askAddr');
   if (!main || !addrEl) return;
 
