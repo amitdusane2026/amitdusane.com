@@ -73,7 +73,12 @@
     <div class="b-art">
       {{ with .Params.oneline }}<div class="b-one"><span class="b-one-l">In one sentence</span><p>{{ . }}</p></div>{{ end }}
       <p class="b-remind">{{ $w.remind | default "Just enough to follow the conversation." }} <a href="{{ (printf "%s/#premise" $w.root) | relURL }}">About this section</a></p>
-      <div class="b-body">{{ .Content }}</div>
+      {{- /* Through the shared anchoring partial, since 13 September 2026, so each
+           <h2> carries the id that search lands on. It is the same partial
+           _default/list.json reads, which is what guarantees every indexed
+           #anchor exists on the page. safeHTML as in lesson/single.html: the
+           partial returns a string, and without it the body is escaped. */ -}}
+      <div class="b-body">{{ partial "anchored-content.html" . | safeHTML }}</div>
       {{ with .Params.ask }}
       <section class="b-ask" id="ask">
         <div class="b-ask-row"><h2>Ask a developer</h2><button type="button" class="b-copyq" hidden>Copy all</button></div>

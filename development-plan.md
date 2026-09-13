@@ -3085,11 +3085,64 @@ colour was always needed and was missing from the list; the list now has it.
 
 **Page baseline 273 production, 274 staging.**
 
+---
+
+## 13 September 2026: Mobile App Basics accepted, and search on Basics made real
+
+Amit read Mobile App Basics end to end and accepted it, so its fourteen topics
+are marked QA'd in the tracker. Website Basics is still waiting for his reading.
+
+He then asked for search on the section. It already existed and did not work,
+and neither fault was visible without measuring.
+
+- **The panel had no styling on a Basics page.** search.js and the overlay
+  markup are global, but every rule that draws the overlay lives in
+  world-shell.css and world-learning.css, never in chrome.css, and
+  world-basics.css had none. Opening search dropped unstyled results into the
+  page. The procedure world's rules now sit in world-basics.css, whose token
+  names they already share. That is knowingly a third copy of one component.
+  Moving all three into chrome.css means giving two token vocabularies one,
+  which reaches both live worlds, so it is recorded as separate work.
+- **The index was nearly empty.** A topic's headings are plain h2, and
+  list.json split only on h3.subsec-title, so each topic was one entry with no
+  anchor. The answer, the words and the questions live in front matter and were
+  not indexed at all. Measured: 14 entries, no anchors, no glossary, and four of
+  74 words findable nowhere.
+
+What changed. anchored-content.html now anchors a topic's h2 at build time,
+gated on type: topic because the Mobile SDK guide's eighteen steps also carry
+bare h2. topic/single.html renders through it. list.json splits a topic on its
+h2 and adds the answer, one entry per word landing on its #w- anchor, the
+questions on #ask, the glossary and the premise. Mobile App Basics now has 208
+entries, 192 anchored; Website Basics has 181 and 167.
+
+Testing found one more fault, fixed in the shared search.js: choosing a result
+on the page already open is only a #hash change, so the panel stayed open over
+the paragraph it had found. It now closes first, by keyboard or by mouse. It was
+latent in every world, and it is the one change here that reaches the live
+learning and migration search.
+
+Verified on a clean build against a baseline taken before any edit: 273 pages;
+the learning, migration, Mobile SDK and cross-world indexes byte-identical; and
+across all 277 HTML files, the only differences outside the 26 Basics topic
+pages are asset version hashes. Every indexed anchor exists, with no duplicate
+ids and no empty entries. Contrast is lowest 4.83 in light and 5.7 in dark, the
+panel fits a 375px phone, and a result on the open page closes the panel and
+lands below the header.
+
+The dev server runs in Fast Render Mode, which does not re-render a section's
+JSON after a template change. localhost:1313 kept serving the old 14-entry index
+throughout, while its HTML and CSS were current. Restarting the server shows the
+new index.
+
+Also corrected, because the redesign commit left them describing the old design:
+CLAUDE.md's Basics section (the deck, the switcher, two columns, and what
+oneline, cando and linkTitle now feed) and site-architecture.md.
+
 ### What the next session should pick up first
 
-**Amit reads Website Basics and Mobile App Basics end to end** and gives his
-verdict. Neither is marked QA'd in the tracker, deliberately: his reading is
-the acceptance step, not the gate. Neither is launched.
+**Amit reads Website Basics end to end** and gives his verdict. Mobile App
+Basics is accepted. Neither section is launched.
 
-After that, the parked Web SDK Implementation and the Web SDK Migration
-rewrite, in that order, and only when he says so.
+After that, the parked Web SDK Implementation and the Web SDK Migration rewrite,
+in that order, and only when he says so.

@@ -28,4 +28,25 @@
   {{- $new := replaceRE `^(<h[34] class="subsec-title")` (printf `${1} id="%s"` $id) $h 1 -}}
   {{- $content = replace $content $h $new 1 -}}
 {{- end -}}
+{{- /* A BASICS TOPIC'S PLAIN <h2>, anchored by the same rule. Added 13 September
+     2026 so search can land a reader on the heading that matched rather than at
+     the top of a thousand-word topic. Topics use bare <h2>, never the learning
+     world's h3.subsec-title, so the rule above never touched them and no topic
+     heading had an id at all.
+
+     GATED ON type: topic, and that gate is load-bearing. The Mobile SDK guide's
+     eighteen step pages also carry bare <h2>, and _default/list.json runs every
+     page in a world through this partial. Ungated, this block would reach those
+     steps. Only the exact bare tag is matched, so a heading that ever gains an
+     attribute is skipped rather than mangled. */ -}}
+{{- if eq .Type "topic" -}}
+{{- range $h := findRE `<h2>(?s).*?</h2>` $content -}}
+  {{- $id := $h | plainify | htmlUnescape | chomp | urlize -}}
+  {{- if gt (len $id) 60 }}{{ $id = replaceRE `-[^-]*$` "" (substr $id 0 60) }}{{ end -}}
+  {{- if in $seen $id }}{{ $id = printf "%s-%d" $id (len $seen) }}{{ end -}}
+  {{- $seen = $seen | append $id -}}
+  {{- $new := replaceRE `^<h2>` (printf `<h2 id="%s">` $id) $h 1 -}}
+  {{- $content = replace $content $h $new 1 -}}
+{{- end -}}
+{{- end -}}
 {{- return $content -}}

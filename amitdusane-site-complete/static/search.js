@@ -167,11 +167,21 @@
     var items = results.querySelectorAll('.sresult');
     if (!items.length) return;
     var el = sel >= 0 ? items[sel] : items[0];
-    if (el) window.location.href = el.getAttribute('href');
+    if (el) { close(); window.location.href = el.getAttribute('href'); }
   }
 
   if (btn) btn.addEventListener('click', open);
   input.addEventListener('input', function () { run(input.value); });
+  /* CLOSE BEFORE FOLLOWING A RESULT, by keyboard (go, above) or by mouse (here).
+     A result on the page the reader is already on is only a #hash change: the
+     browser scrolls to it and nothing reloads, so the panel used to stay open
+     on top of the very paragraph it had just found. Latent in every world, and
+     made common on 13 September 2026, when a Basics topic's words, headings and
+     questions each became an in-page result. Closing only sets `hidden`, so the
+     link's own navigation still runs. */
+  results.addEventListener('click', function (e) {
+    if (e.target.closest && e.target.closest('.sresult')) close();
+  });
   overlay.addEventListener('click', function (e) { if (e.target === overlay) close(); });
   document.addEventListener('keydown', function (e) {
     if ((e.key === '/' || ((e.metaKey || e.ctrlKey) && (e.key === 'k' || e.key === 'K'))) &&

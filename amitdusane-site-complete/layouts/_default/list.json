@@ -30,17 +30,37 @@
        p  page title            g  group label, the module or parent
        x  the searchable prose
      =========================================================================== */ -}}
+{{- /* BASICS, 13 September 2026. Until then a Basics section produced one entry
+     per topic with no anchor, because a topic's headings are plain <h2> and this
+     template split only on h3.subsec-title. Worse, the most searchable parts of a
+     topic are not in its body at all: the one-sentence answer, the words and the
+     questions live in front matter. Measured on Mobile App Basics: 14 entries, no
+     anchors, the glossary not indexed, and four of 74 words ("npm and Yarn",
+     "Minimum OS version") findable nowhere.
+
+     So a topic now splits on its <h2>, and adds three kinds of entry from front
+     matter: the answer and the payoff folded into the page's own entry, one entry
+     per word landing on that word's #w- anchor, and one for the questions landing
+     on #ask. The glossary and the front page's premise get an entry each.
+
+     EVERY NON-BASICS PATH IS BYTE-IDENTICAL. The split string, the closing tag and
+     the badge chain are unchanged for any page that is not a topic, a wordlist or
+     a Basics front page, and the other worlds' index.json were hashed before and
+     after to prove it. */ -}}
 {{- $world := .Section -}}
+{{- $wcfg := index .Site.Params.worlds $world -}}
 {{- $idx := slice -}}
 {{- $pages := where (where .Site.Pages "Section" $world) "Kind" "!=" "home" -}}
 {{- range $pages -}}
+  {{- $pg := . -}}
   {{- $u := .RelPermalink -}}
   {{- $ptitle := .Title -}}
+  {{- $isTopic := eq .Type "topic" -}}
   {{- /* Short badge for the result row. Each world names its own page kinds. */ -}}
   {{- $badge := "Page" -}}
-  {{- if eq (index .Site.Params.worlds $world).shape "procedure" -}}
+  {{- if eq $wcfg.shape "procedure" -}}
     {{- $badge = cond (eq .Type "step") "Step" (cond (eq .Type "kb") "KB" "Reference") -}}
-  {{- else if eq (index .Site.Params.worlds $world).shape "basics" -}}
+  {{- else if eq $wcfg.shape "basics" -}}
     {{- $badge = cond (eq .Type "topic") "Topic" (cond (eq .Type "wordlist") "Glossary" "Page") -}}
   {{- else -}}
     {{- $badge = cond (eq .Type "lesson") "Section" (cond (eq .Type "module") "Module" (cond (eq .Type "category") "Phase" (cond (eq .Type "glossary") "Glossary" "Page"))) -}}
@@ -52,16 +72,38 @@
   {{- with .Parent -}}
     {{- if ne .Kind "home" -}}{{- $group = .Title -}}{{- end -}}
   {{- end -}}
+  {{- /* A topic's parent is the section itself, so its group would read
+         "Mobile App Basics" on every result. The topic's own group label says
+         something instead. */ -}}
+  {{- if $isTopic -}}
+    {{- with index $wcfg.groups $pg.Params.group -}}{{- $group = .label -}}{{- end -}}
+  {{- end -}}
   {{- /* Anchored through the shared partial, because .Content itself carries no
          ids: they are injected at render time. Indexing .Content directly
          produced entries whose #anchor did not exist on the page. */ -}}
   {{- $c := partial "anchored-content.html" . -}}
-  {{- $parts := split $c `<h3 class="subsec-title"` -}}
+  {{- $splitOn := cond $isTopic `<h2` `<h3 class="subsec-title"` -}}
+  {{- $close := cond $isTopic `</h2>` `</h3>` -}}
+  {{- $parts := split $c $splitOn -}}
 
   {{- /* Part 0 is whatever precedes the first h3: the untitled opener on a
          section, or the whole body on a landing page and the glossary. */ -}}
   {{- $opener := index $parts 0 -}}
   {{- $otext := trim (replaceRE `\s+` " " (plainify $opener)) " " -}}
+  {{- /* A topic's answer and payoff lead its page entry, so a search that
+         matches the one sentence lands on the page where that sentence is the
+         first thing shown. */ -}}
+  {{- if $isTopic -}}
+    {{- $otext = trim (printf "%s %s %s" ($pg.Params.oneline | default "") ($pg.Params.cando | default "") $otext) " " -}}
+  {{- end -}}
+  {{- /* A Basics front page and its glossary are front matter only, so they
+         had no text and were dropped. Each gets a line worth matching. */ -}}
+  {{- if and (eq $wcfg.shape "basics") (eq .Type $world) -}}
+    {{- $otext = trim (printf "%s %s" ($pg.Description | default "") ($wcfg.premise | default "")) " " -}}
+  {{- end -}}
+  {{- if eq .Type "wordlist" -}}
+    {{- $otext = trim (printf "%s Every word in this section, A to Z, each linked to the topic that explains it." ($pg.Description | default "")) " " -}}
+  {{- end -}}
   {{- if gt (len $otext) 40 -}}
     {{- $idx = $idx | append (dict "t" $ptitle "u" $u "p" $ptitle "g" $group "b" $badge "x" $otext) -}}
   {{- end -}}
@@ -76,12 +118,26 @@
       {{- with (findRE `id="[^"]+"` $open 1) -}}
         {{- $id = replaceRE `^id="|"$` "" (index . 0) -}}
       {{- end -}}
-      {{- $head := trim (plainify (replaceRE `(?s)^[^>]*>(.*?)</h3>.*$` "$1" $part)) " " -}}
-      {{- $body := replaceRE `(?s)^.*?</h3>` "" $part -}}
+      {{- $head := trim (plainify (replaceRE (printf `(?s)^[^>]*>(.*?)%s.*$` $close) "$1" $part)) " " -}}
+      {{- $body := replaceRE (printf `(?s)^.*?%s` $close) "" $part -}}
       {{- $btext := trim (replaceRE `\s+` " " (plainify $body)) " " -}}
       {{- if and (ne $head "") (ne $id "") -}}
         {{- $idx = $idx | append (dict "t" $head "u" (printf "%s#%s" $u $id) "p" $ptitle "g" $group "b" $badge "x" $btext) -}}
       {{- end -}}
+    {{- end -}}
+  {{- end -}}
+
+  {{- /* The words and the questions. A word is its own entry, titled by the term,
+         so a search for "session timeout" ranks the definition first and lands on
+         #w-session-timeout, which topic/single.html already renders and
+         world-basics.css already highlights with :target. Same urlize as that
+         template and the glossary, so the anchor always exists. */ -}}
+  {{- if $isTopic -}}
+    {{- range $pg.Params.words -}}
+      {{- $idx = $idx | append (dict "t" .t "u" (printf "%s#w-%s" $u (urlize .t)) "p" $ptitle "g" $group "b" "Word" "x" .d) -}}
+    {{- end -}}
+    {{- with $pg.Params.ask -}}
+      {{- $idx = $idx | append (dict "t" "Ask a developer" "u" (printf "%s#ask" $u) "p" $ptitle "g" $group "b" $badge "x" (delimit . " ")) -}}
     {{- end -}}
   {{- end -}}
 {{- end -}}
