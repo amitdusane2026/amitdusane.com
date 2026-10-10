@@ -53,7 +53,7 @@
   {{ $isFront := eq .RelPermalink (printf "%s/" $world.root) }}
   <div class="layout{{ if not $isFront }} has-side{{ end }}">
     <nav class="rail" id="rail">
-      <div class="grp do">&#9656; {{ $world.railtitle }}</div>
+      <div class="grp do" data-nosnippet>&#9656; {{ $world.railtitle }}</div>
       {{- /* THE SPINE: every step, flat, with sub-steps always open. Since
            11 September 2026.
 
@@ -72,7 +72,7 @@
            both on 11 September: the rail shows the steps, and the steps
            themselves link to Mobile App Basics where a reader needs it. */ -}}
       {{ $spine := where $steps "Params.substep" nil }}
-      <div id="stepNav">
+      <div id="stepNav" data-nosnippet>
         {{ range $spine }}
           {{ $parent := . }}
           {{ $here := eq .RelPermalink $.RelPermalink }}
@@ -87,7 +87,7 @@
       {{- /* Pinned to the foot of the rail below 1240px, one row of two, so no
            number of steps can push them off the screen. From 1240px the
            right-hand card carries them and this is hidden. */ -}}
-      <div class="railfoot">
+      <div class="railfoot" data-nosnippet>
         <a class="navlink{{ if eq .Type "kb" }} active{{ end }}" href="{{ (printf "%s/kb/" $world.root) | relURL }}"><span class="ic">&#9671;</span><span>Knowledge Base</span></a>
         <a class="navlink{{ if eq .Type "ref" }} active{{ end }}" href="{{ (printf "%s/references/" $world.root) | relURL }}"><span class="ic">&#167;</span><span>References</span></a>
       </div>
@@ -105,7 +105,7 @@
     {{ $kbN := len (where (where .Site.RegularPages "Section" .Section) "Type" "kb") }}
     {{ $refN := 0 }}{{ with .Site.GetPage (printf "%s/references" $world.root) }}{{ $refN = len (findRE `id="ref-\d+"` .Content) }}{{ end }}
     <aside class="gside" aria-label="Look it up">
-      <div class="gs-card">
+      <div class="gs-card" data-nosnippet>
         <div class="gs-h">Look it up</div>
         <a class="gs-link{{ if eq .Type "kb" }} active{{ end }}" href="{{ (printf "%s/kb/" $world.root) | relURL }}"><span class="gs-ic" aria-hidden="true">&#9671;</span><span class="gs-t">Knowledge Base</span><span class="gs-d">Why each step works the way it does</span><span class="gs-n">{{ $kbN }} articles</span></a>
         <a class="gs-link{{ if eq .Type "ref" }} active{{ end }}" href="{{ (printf "%s/references/" $world.root) | relURL }}"><span class="gs-ic" aria-hidden="true">&#167;</span><span class="gs-t">References</span><span class="gs-d">The Adobe documentation behind every claim</span><span class="gs-n">{{ $refN }} sources</span></a>
@@ -150,7 +150,7 @@
   {{ partial "siteheader.html" . }}
   <div class="loverlay" id="lOverlay"></div>
   <nav class="lsidebar" id="lSidebar">
-    <div class="lsidebar-content">
+    <div class="lsidebar-content" data-nosnippet>
       {{/* "All modules" and "Glossary" were both removed on 2 Sep 2026, and the
            note left here at the time said the cost of the second one out loud:
            it left the glossary reachable from the section front page and from
@@ -269,7 +269,7 @@
 {{ end }}
 
   <button class="author-fab" id="authorFab" aria-label="About the author" title="About the author">{{ partial "logo.html" (dict "size" 30 "hidden" true) }}</button>
-  <div class="about-overlay" id="aboutOverlay" hidden>
+  <div class="about-overlay" id="aboutOverlay" hidden data-nosnippet>
     <div class="about-card" role="dialog" aria-modal="true" aria-label="About Amit G Dusane">
       <button class="about-x" id="aboutClose" aria-label="Close">&times;</button>
       <div class="about-head">
@@ -313,7 +313,7 @@
        The subject carries the page title, so an arriving mail is already
        labelled with the section that prompted it. That is the whole triage,
        and it costs the reader nothing. */ -}}
-  <div class="ask-overlay" id="askOverlay" hidden>
+  <div class="ask-overlay" id="askOverlay" hidden data-nosnippet>
     <div class="ask-card" role="dialog" aria-modal="true" aria-labelledby="askHeading">
       <button class="ask-x" id="askClose" aria-label="Close">&times;</button>
       {{- /* Same 58px as the header mark, and the same 48px step below 880, so
@@ -369,7 +369,7 @@
        the learning world shipped a search button that did nothing for months.
        The only per-world part is which index it reads. */}}
   {{ if or $proc $learn $basics }}
-  <div class="search-overlay" id="searchOverlay" hidden>
+  <div class="search-overlay" id="searchOverlay" hidden data-nosnippet>
     <div class="search-box" role="dialog" aria-modal="true" aria-label="Search this section">
       <div class="search-in"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg><input id="searchInput" type="text" placeholder="{{ if $learn }}Search sections, concepts, and terms&hellip;{{ else if $basics }}Search topics and words&hellip;{{ else }}Search steps, topics, and references&hellip;{{ end }}" autocomplete="off" spellcheck="false" aria-label="Search"><kbd>Esc</kbd></div>
       <div class="search-results" id="searchResults"><div class="search-hint">Type to search.</div></div>
