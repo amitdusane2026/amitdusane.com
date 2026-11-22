@@ -1430,10 +1430,20 @@ body.page-plain .guide a{color:var(--hdr-accent)}
 /* Certifications and organisations: plain lists, one line each, the only
    decoration a right-aligned identifier or year. */
 .ab-certs,.ab-orgs{list-style:none;margin:0;padding:0}
-.ab-certs li{display:flex;align-items:baseline;justify-content:space-between;gap:16px;
+.ab-certs li{display:flex;align-items:center;justify-content:space-between;gap:14px;
   padding:10px 0;border-bottom:1px solid var(--hdr-line);font-size:15px}
 .ab-certs li:first-child{border-top:1px solid var(--hdr-line)}
-.ab-cert-n{color:var(--hdr-ink);font-weight:600}
+/* THE TIER BADGE, 22 November 2026. Adobe issues one emblem per LEVEL rather
+   than per certification, so two Professionals carry the same image and that is
+   correct: it reads as a rank marker beside the name, not as an award tile.
+   The download carries an opaque white background, which would have been a
+   bright tile on the dark theme; it is flood-filled to transparency from the
+   edge inward, which leaves the white lettering on the red band intact because
+   that is not connected to the outside. Width and height are on the element as
+   well, so a row never changes height while the image loads.
+   `align-items` above moved from baseline to center for the same reason. */
+.ab-cert-b{flex:none;width:34px;height:34px;object-fit:contain}
+.ab-cert-n{flex:1;min-width:0;color:var(--hdr-ink);font-weight:600}
 .ab-cert-id{flex:none;font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:12.5px;
   color:var(--hdr-muted);font-variant-numeric:tabular-nums}
 
