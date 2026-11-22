@@ -1,5 +1,35 @@
 {{- $home := .Site.Home.Permalink -}}
 {{- $person := dict "@type" "Person" "name" .Site.Params.author "url" $home "jobTitle" .Site.Params.jobTitle "sameAs" (slice .Site.Params.linkedin) -}}
+
+{{- /* CERTIFICATIONS, 22 November 2026, as machine-readable credentials.
+     The same three the About page lists, in the same order and the same words,
+     so the page and the markup can never disagree. `identifier` carries Adobe's
+     exam code and `url` the verification page, which is the whole point: a
+     credential a search engine can check is worth more than a claim it cannot.
+     Only the CJA Developer carries a verify link so far; the other two are
+     asserted without one rather than invented.
+
+     THIS IS DELIBERATELY NOT MERGED INTO $person. That object is reused as both
+     `author` and `publisher` inside every TechArticle, so credentials there
+     would repeat twice on each of 273 pages to say what one page already says
+     properly. $personFull is used on the home page and the About page only. */ -}}
+{{- $adobe := dict "@type" "Organization" "name" "Adobe" -}}
+{{- $certs := slice
+      (dict "@type" "EducationalOccupationalCredential"
+            "name" "Adobe Customer Journey Analytics Developer Professional"
+            "credentialCategory" "certification" "identifier" "AD0-E610"
+            "recognizedBy" $adobe
+            "url" "https://certification.adobe.com/credential/verify/304c249c-e359-11f1-bdd6-42010a400002"
+            "sameAs" "https://certification.adobe.com/certification/adobe-customer-journey-analytics-developer-professional/604")
+      (dict "@type" "EducationalOccupationalCredential"
+            "name" "Adobe Customer Journey Analytics Business Practitioner"
+            "credentialCategory" "certification" "identifier" "AD0-E608"
+            "recognizedBy" $adobe)
+      (dict "@type" "EducationalOccupationalCredential"
+            "name" "Adobe Analytics Developer Expert"
+            "credentialCategory" "certification" "identifier" "AD0-E209"
+            "recognizedBy" $adobe) -}}
+{{- $personFull := merge $person (dict "hasCredential" $certs) -}}
 {{- /* World-aware since 6 September 2026. A second procedure world needs the
        same HowTo and the same breadcrumbs; both now read the registry rather
        than naming the migration guide. $w is nil off-world, so $wshape guards
@@ -17,7 +47,17 @@
        Google the domain is the same site. */ -}}
   {{- $website := dict "@context" "https://schema.org" "@type" "WebSite" "name" .Site.Title "alternateName" (slice "amitdusane.com") "url" $home "author" $person -}}
   <script type="application/ld+json">{{ $website | jsonify (dict "indent" "  ") | safeJS }}</script>
-  <script type="application/ld+json">{{ (merge (dict "@context" "https://schema.org") $person) | jsonify (dict "indent" "  ") | safeJS }}</script>
+  <script type="application/ld+json">{{ (merge (dict "@context" "https://schema.org") $personFull) | jsonify (dict "indent" "  ") | safeJS }}</script>
+{{- end -}}
+
+{{- /* THE ABOUT PAGE, 22 November 2026, and it emitted nothing until now. The
+     one page on the site that is entirely about the author carried no Person
+     markup at all, while every section page carried him as an author string.
+     mainEntityOfPage is what says this page IS the person, rather than merely
+     mentioning him, which is the difference Google reads. */ -}}
+{{- if eq .Type "about" -}}
+  {{- $aboutPerson := merge $personFull (dict "mainEntityOfPage" (dict "@type" "WebPage" "@id" .Permalink)) -}}
+  <script type="application/ld+json">{{ (merge (dict "@context" "https://schema.org") $aboutPerson) | jsonify (dict "indent" "  ") | safeJS }}</script>
 {{- end -}}
 
 {{- /* Guide landing: HowTo listing the 13 steps */ -}}
